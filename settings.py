@@ -46,6 +46,8 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+SUPPORTED_NONLOCALES = ('media',)
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')
@@ -76,6 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'l10n.middleware.LocaleURLRewriter',
 )
 
 ROOT_URLCONF = 'batucada.urls'
