@@ -1,0 +1,4 @@
+Django==1.2
+
+-e git://github.com/jbalogh/jingo.git#egg=jingo
+-e git://github.com/clouserw/tower.git#egg=tower
