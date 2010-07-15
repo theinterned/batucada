@@ -46,7 +46,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media',)
+SUPPORTED_NONLOCALES = ('media','openid',)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -94,5 +94,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django_openid_auth',
     'dashboard',
 )
+
+# Auth settings
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

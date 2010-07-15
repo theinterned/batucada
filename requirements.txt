@@ -1,4 +1,6 @@
 Django==1.2
+python-openid=2.2.5
+django-openid-auth==0.2
 
 -e git://github.com/jbalogh/jingo.git#egg=jingo
 -e git://github.com/clouserw/tower.git#egg=tower
