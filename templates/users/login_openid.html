@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ _('OpenID Sign In') }}{% endblock %}
+{% block body %}
+<style type="text/css">
+input.openid {
+  background: url('{{ MEDIA_URL }}images/openid_logo.gif') no-repeat;
+  background-position: 0 50%;
+  padding-left: 16px;
+}
+</style>
+<form name="openid" action="{{ url('users.views.login') }}" method="post">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  <fieldset>
+    <legend>{{ _("Sign In Using Your OpenID") }}</legend>
+    <label for="openid">{{ _("OpenID:") }}</label>
+    <input class="openid" id="openid" name="openid_identifier" />
+    <input name="signin" type="submit" value="{{ _('Sign In') }}" />
+  </fieldset>
+</form>
+{% endblock %}

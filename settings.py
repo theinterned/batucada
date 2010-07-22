@@ -46,7 +46,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media','openid',)
+SUPPORTED_NONLOCALES = ('media',)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -60,7 +60,7 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'std3j$ropgs216z1aa#8+p3a2w2q06mns_%2vfx_#$$i!+6o+x'
@@ -95,9 +95,19 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django_openid_auth',
+    'users',
+    'l10n',
     'dashboard',
+    'registration',
 )
 
 # Auth settings
-LOGIN_URL = '/login/'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_ACTIVATION_DAYS = 7
+
+AUTHENTICATION_BACKENDS = (
+    'users.auth.CustomOpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
