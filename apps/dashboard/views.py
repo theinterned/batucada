@@ -1,8 +1,6 @@
 import jingo
 
-from django.contrib.auth.decorators import login_required
-
-@login_required
-def dashboard(request):
-    """Stub View"""
-    return jingo.render(request, 'dashboard.html')
+def index(request):
+    if not request.user.is_authenticated():
+        return jingo.render(request, 'dashboard/signin.html')
+    return jingo.render(request, 'dashboard/dashboard.html')
