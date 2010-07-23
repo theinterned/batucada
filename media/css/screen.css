@@ -17,7 +17,7 @@ div.form {
     padding: 10px;
 }
 
-input#openid {
+input[name=openid_identifier] {
     background: url(/media/images/openid_logo.gif) no-repeat;
     background-position: 0 50%;
     padding-left: 16px;

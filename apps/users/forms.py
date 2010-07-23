@@ -51,18 +51,11 @@ class RegisterForm(forms.Form):
                 email=self.cleaned_data['email']
             )
             user.set_password(self.cleaned_data['password'])
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             user.save()
             return user
         else:
             raise forms.ValidationError("Cannot save user")
 
 class OpenIDRegisterForm(forms.Form):
-    openid_identifier = forms.URLField(required=True)
-
-    def clean_openid_identifier(self):
-        """Verify that the openid identifier isn't taken already."""
-        return self.cleaned_data['openid_identifier']
-
-    def save(self):
-        """Create user account and associate it to the OpenID identifier."""
-        pass
+    openid_identifier = forms.URLField(label=_("OpenID:"))
