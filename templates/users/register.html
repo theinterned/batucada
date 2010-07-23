@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Sign Up') }}{% endblock %}
+{% block body %}
+<h1><a href="{{ url('dashboard.views.index') }}">{{ _('Sign Up') }}</a></h1>
+<div class="form">
+{% if form.errors %}
+<div class="error">
+  <p>{{ _('The following errors were encountered') }}:</p>
+  <ul>
+    {% for error in form.errors %}
+    <li>{{ form.errors[error]|striptags }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="form">
+  <fieldset>
+    <form action="{{ url('users.views.register') }}" method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+    {% for field in form %}
+    <p>
+      {{ field.label_tag()|safe }}
+      {{ field.as_widget()|safe }}
+    </p>
+    {% endfor %}
+    <p>
+      <input type="submit" value="{{ _('Sign Up') }}" />
+    </p>
+    </form>
+    <p>
+      <a href="{{ url('users.views.register_openid') }}">{{ _('Sign Up with an OpenID') }}</a>.
+    </p>
+  </fieldset>
+</div>
+<p>
+{{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.
+</p>
+</div>
+{% endblock %}

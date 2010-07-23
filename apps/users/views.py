@@ -7,7 +7,8 @@ import jingo
 
 import registration.views
 
-from users.models import authenticate 
+from users.models import authenticate
+from users.forms import RegisterForm
 from users.auth import users_login_begin, users_login_complete
 from users.auth import OpenIDAuthError
 
@@ -57,8 +58,21 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 def register(request):
-    """Just punt to django-registration for now."""
-    return registration.views.register(request)
+    """Present user registration form and handle registrations."""
+    if request.method == 'POST':
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = RegisterForm()
+    return jingo.render(request, 'users/register.html', {
+        'form': form
+    })
+
+def register_openid(request):
+    """Register with an OpenID (not a username / password)."""
+    return HttpResponseRedirect('/')
 
 def forgot(request):
     """Stub method."""

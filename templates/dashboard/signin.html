@@ -1,19 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ _('Sign In') }}{% endblock %}
-{% block style %}
-<style type="text/css">
-input#openid {
-  background: url('{{ MEDIA_URL }}images/openid_logo.gif') no-repeat;
-  background-position: 0 50%;
-  padding-left: 16px;
-}
-</style>
-{% endblock %}
 {% block script %}
 <script type="text/javascript">
 var resetErrors = function() {
-    if ($('fieldset > p.error').length != 0) {
-        $('fieldset > p.error').remove();
+    if ($('div.error').length != 0) {
+        $('div.error').remove();
     }
 };
 
@@ -45,18 +36,19 @@ $(document).ready(function() {
 </script>
 {% endblock %}
 {% block body %}
-<h1>Drumbeat</h1>
+<h1><a href="{{ url('dashboard.views.index') }}">Drumbeat</a></h1>
+<div class="form">
+{% if error %}
+<div class="error">
+  <p>{{ error }}</p>
+</div>
+{% endif %}
 <fieldset>
   <legend>{{ _('Sign In') }}</legend>
-  {% if error %}
-  <p class="error">
-    {{ error }}
-  </p>
-  {% endif %}
   <form action="{{ url('users.views.login') }}" method="post" id="username_password_form">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />
     <p id="username_field"{%if openid %} style="display: none;"{% endif %}>
-      <label for="username">{{ _('Login or Email') }}: </label>
+      <label for="username">{{ _('Username or Email') }}: </label>
       <br />
       <input type="text" name="username" id="username" />
     </p>
@@ -84,4 +76,5 @@ $(document).ready(function() {
 <p>
   Not a member? <a href="{{ url('users.views.register') }}">Sign up</a>!
 </p>
+</div>
 {% endblock %}

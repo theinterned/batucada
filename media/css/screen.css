@@ -1,0 +1,32 @@
+body {
+    color: rgba(0, 0, 0, 0.8);
+    font: 14px/1.8 "trebuchet ms", sans-serif;
+}
+
+h1 > a {
+    color: #000;
+}
+
+a {
+    text-decoration: none;
+    color: #934141;
+}
+
+div.form {
+    width: 500px;
+    padding: 10px;
+}
+
+input#openid {
+    background: url(/media/images/openid_logo.gif) no-repeat;
+    background-position: 0 50%;
+    padding-left: 16px;
+}
+
+div.error {
+    color: #8b0000;
+    background-color: #ffa07a;
+    border: 1px solid red;
+    padding: 5px;
+    margin: 0px 5px 10px 5px;
+}

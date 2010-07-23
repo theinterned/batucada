@@ -8,4 +8,5 @@ urlpatterns = patterns('',
 
   (r'^openid/login/',   'users.views.login_openid'),
   (r'^login_complete/', 'users.views.login_complete'),
+  (r'^openid/register/', 'users.views.register_openid'),
 )
