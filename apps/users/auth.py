@@ -3,7 +3,6 @@ import urllib
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from openid.extensions import sreg
 from openid.consumer.consumer import SUCCESS
 from openid.consumer.discover import DiscoveryFailure
 from openid.consumer.consumer import Consumer, SUCCESS, CANCEL, FAILURE
