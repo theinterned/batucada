@@ -1,3 +1,0 @@
-Activation Key: {{ activation_key }}
-Expires in: {{ expiration_days }}
-Site: http://{{ site }}/account/activate/{{activation_key}}/
