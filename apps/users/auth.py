@@ -63,26 +63,26 @@ def users_login_complete(request):
     if not openid_response:
         raise OpenIDAuthError(_('This is an OpenID relying party endpoint'))
 
-    if openid_response.status == SUCCESS:
-        user = auth.authenticate(
-            openid_response=openid_response,
-            request=request)
-        if user is not None:
-            if user.is_active:
-                auth.login(request, user)
-                return HttpResponseRedirect('/')
-            else:
-                raise OpenIDAuthError(_('This account is not active.'))
-        else:
-            raise OpenIDAuthError(_('No user found with that OpenID.'))
-    elif openid_response.status == FAILURE:
+    if openid_response.status == FAILURE:
         raise OpenIDAuthError(_(
             'OpenID authentication failed') + ': %s' % openid_response.message
         )
-    elif openid_response.status == CANCEL:
+
+    if openid_response.status == CANCEL:
         raise OpenIDAuthError(_('Authentication cancelled'))
-    else:
+
+    if openid_response.status != SUCCESS:
         assert False, "Unknown OpenID response type: %r" % openid_response.status
+
+    user = auth.authenticate(openid_response=openid_response, request=request)
+    if user is None:
+        raise OpenIDAuthError(_('No user found with that OpenID.'))
+    if not user.is_active:
+        raise OpenIDAuthError(_('This account is not active.'))
+
+    auth.login(request, user)
+    return HttpResponseRedirect('/')
+
 
 class CustomOpenIDBackend(OpenIDBackend):
     """
