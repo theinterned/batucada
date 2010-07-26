@@ -98,7 +98,6 @@ INSTALLED_APPS = (
     'users',
     'l10n',
     'dashboard',
-    'registration',
 )
 
 # Auth settings

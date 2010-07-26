@@ -5,8 +5,6 @@ from django.views.decorators.http import require_http_methods
 
 import jingo
 
-import registration.views
-
 from users.models import authenticate
 from users.forms import RegisterForm, OpenIDRegisterForm
 from users.auth import users_login_begin, users_login_complete
