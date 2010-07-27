@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_openid_auth',
     'users',
+    'profiles',
     'l10n',
     'dashboard',
 )
@@ -110,3 +111,5 @@ AUTHENTICATION_BACKENDS = (
     'users.auth.CustomOpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+AUTH_PROFILE_MODULE = 'users.Profile'
