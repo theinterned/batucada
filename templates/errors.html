@@ -1,0 +1,14 @@
+{% if form.errors or error %}
+<div class="errors">
+  {% if form and form.errors %}
+  <p>{{ _('The following errors were encountered') }}:</p>
+  <ul>
+    {% for error in form.errors %}
+    <li>{{ form.errors[error]|striptags }}</li>
+    {% endfor %}
+  </ul>
+  {% elif error %}
+  <p>{{ error }}</p>
+  {% endif %}
+</div>
+{% endif %}

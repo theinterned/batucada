@@ -57,5 +57,10 @@ class RegisterForm(forms.Form):
         else:
             raise forms.ValidationError("Cannot save user")
 
-class OpenIDRegisterForm(forms.Form):
-    openid_identifier = forms.URLField(label=_("OpenID:"))
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label=_("Username or Email:"),
+        error_messages={'required': _('You must provide a username or email.')})
+    password = forms.CharField(
+        widget=forms.PasswordInput(render_value=False),
+        error_messages={'required': _('Password is required.')})

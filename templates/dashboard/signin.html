@@ -1,54 +1,35 @@
 {% extends "base.html" %}
 {% block title %}{{ _('Sign In') }}{% endblock %}
-{% block script %}
-<script type="text/javascript">
-$(document).ready(function() {
-    $('a#openid_signin').click(openidLogin);
-    $('a#password_signin').click(passwordLogin);
-    $('a#forgot_password').click(function() {});
-});
-</script>
-{% endblock %}
 {% block body %}
-<h1><a href="{{ url('dashboard.views.index') }}">Drumbeat</a></h1>
+
 <div class="form">
-{% if error %}
-<div class="error">
-  <p>{{ error }}</p>
-</div>
-{% endif %}
+
+{% include "errors.html" %}
+
 <fieldset>
   <legend>{{ _('Sign In') }}</legend>
-  <form action="{{ url('users.views.login') }}" method="post" id="username_password_form">
+  <form action="{{ url('users.views.login') }}" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />
-    <p id="username_field"{%if openid %} style="display: none;"{% endif %}>
-      <label for="username">{{ _('Username or Email') }}: </label>
-      <br />
-      <input type="text" name="username" id="username" />
-    </p>
-    <p id="password_field"{%if openid %} style="display: none;"{% endif %}>
-      <label for="password">{{ _('Password') }}: </label>
-      (<a id="forgot_password" href="{{ url('users.views.forgot') }}">{{ _('Forgot?') }}</a>)
-      <br />
-      <input type="password" name="password" id="password" />
-    </p>
-    <p id="openid_field"{%if not openid %} style="display: none;"{% endif %}>
-      <label for="openid">{{ _('OpenID') }}: </label>
-      <input type="text" name="openid_identifier" id="openid" />
-    </p>
-    <input type="submit" value="{{ _('Sign In') }}" />
+    {% for field in form %}
     <p>
-      <a href="{{ url('users.views.login_openid') }}" id="openid_signin" 
-	 {%if openid %}style="display: none;"{% endif %}>
-	{{ _('Sign in with OpenID')}}</a>
-      <a href="{{ url('users.views.login') }}" id="password_signin" 
-	 {%if not openid %}style="display: none;"{% endif %}>
-	{{ _('Sign in with Login / Password') }}</a>
+      {{ field.label_tag()|safe }}
+      {{ field.as_widget()|safe }}
+    </p>
+    {% endfor %}
+    <p>
+      <input type="submit" value="{{ _('Sign In') }}" />
+    </p>
+    <p>
+      <a id="forgot_password" href="{{ url('users.views.forgot') }}">{{ _('Forgot your password?') }}</a>
+      <br />
+      <a href="{{ url('users.views.login_openid') }}">{{ _('Sign in with OpenID')}}</a>
     </p>
   </form>
 </fieldset>
+
 <p>
   Not a member? <a href="{{ url('users.views.register') }}">Sign up</a>!
 </p>
+
 </div>
 {% endblock %}

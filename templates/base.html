@@ -3,12 +3,9 @@
 <head>
   <title>Batucada | {% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css" media="screen" />
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/drumbeat.js"></script>
-  {% block script %}{% endblock %}
-  {% block style %}{% endblock %}
 </head>
 <body>
+  <h1><a href="{{ url('dashboard.views.index') }}">Batucada</a></h1>
   {% block body %}{% endblock %}
 </body>
 </html>

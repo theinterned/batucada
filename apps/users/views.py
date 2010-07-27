@@ -1,12 +1,16 @@
 from django.contrib import auth
-from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from django.views.decorators.http import require_http_methods
 
 import jingo
+from django_openid_auth.forms import OpenIDLoginForm
+from profiles import utils
 
-from users.models import authenticate
-from users.forms import RegisterForm, OpenIDRegisterForm
+from l10n.urlresolvers import reverse
+from users.models import authenticate, Profile
+from users.forms import RegisterForm, LoginForm
 from users.auth import users_login_begin, users_login_complete
 from users.auth import OpenIDAuthError
 
@@ -15,9 +19,9 @@ def login_begin(request, registration=False):
     try:
         return users_login_begin(request, registration)
     except OpenIDAuthError, exc:
-        return jingo.render(request, 'dashboard/signin.html', {
+        return jingo.render(request, 'users/login_openid.html', {
             'error' : exc.message,
-            'openid' : True
+            'form' : OpenIDLoginForm()
         }, status=403)
 
 def login_complete(request):
@@ -25,30 +29,48 @@ def login_complete(request):
     try:
         return users_login_complete(request)
     except OpenIDAuthError, exc:
-        return jingo.render(request, 'dashboard/signin.html', {
+        return jingo.render(request, 'users/login_openid.html', {
             'error' : exc.message,
-            'openid' : True
+            'form' : OpenIDLoginForm()
         }, status=403)
 
 def login(request):
     """Log the user in."""
     if request.user.is_authenticated() or request.method == 'GET':
         return HttpResponseRedirect('/')
-    if request.POST.get('openid_identifier', False):
-        return login_begin(request)
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
+
+    form = LoginForm(data=request.POST)
+    if not form.is_valid():
+        return jingo.render(request, 'dashboard/signin.html', {
+            'form' : form
+        })
+    username = form.cleaned_data['username']
+    password = form.cleaned_data['password']
     user = authenticate(username=username, password=password)
+
     if user is not None and user.is_active:
         auth.login(request, user)
         return HttpResponseRedirect('/')
+
     return jingo.render(request, 'dashboard/signin.html', {
+        'form' : form,
         'error': _('Incorrect login or password.'),
     })
 
 def login_openid(request):
-    """TODO: Render an OpenID login dialogue for those without JavaScript."""
-    return jingo.render(request, 'users/login_openid.html')
+    """Handle OpenID logins."""
+    if request.method == 'GET':
+        return jingo.render(request, 'users/login_openid.html', {
+            'form': OpenIDLoginForm()
+        })
+        
+    form = OpenIDLoginForm(data=request.POST)
+    if form.is_valid():
+        return login_begin(request)
+    
+    return jingo.render(request, 'users/login_openid.html', {
+        'form' : form
+    })
 
 def logout(request):
     """Destroy user session."""
@@ -57,31 +79,82 @@ def logout(request):
 
 def register(request):
     """Present user registration form and handle registrations."""
-    form = None
-    openid_form = None
     if request.method == 'POST':
-        if request.POST.get('openid_identifier', False):
-            openid_form = OpenIDRegisterForm(data=request.POST)
-            if openid_form.is_valid():
-                return login_begin(request, registration=True)
-        else:
-            form = RegisterForm(data=request.POST)
-            if form.is_valid():
-                user = form.save()
-                auth.login(request, user)
-                return HttpResponseRedirect('/')
-    else:
-        form = RegisterForm()
-        openid_form = OpenIDRegisterForm()
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.login(request, user)
+            return HttpResponseRedirect('/')
     return jingo.render(request, 'users/register.html', {
-        'form': form,
-        'openid_form' : openid_form
+        'form': RegisterForm(),
     })
 
 def register_openid(request):
-    """Register with an OpenID (not a username / password)."""
-    return HttpResponseRedirect('/')
+    """Handle OpenID registrations."""
+    form = OpenIDLoginForm()
+    if request.method == 'POST':
+        form = OpenIDLoginForm(data=request.POST)
+        if form.is_valid():
+            return login_begin(request, registration=True)
+    return jingo.render(request, 'users/register_openid.html', {
+        'form' : form
+    })
 
 def forgot(request):
     """Stub method."""
     return HttpResponseRedirect('/')
+
+@login_required
+def profile(request):
+    """Save profile."""
+    user = User.objects.get(username__exact=request.user.username)
+    if request.method == 'POST':
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.save()
+
+        form_class = utils.get_profile_form()
+        try:
+            profile = user.get_profile()
+            form = form_class(data=request.POST, instance=profile)
+            if form.is_valid():
+                form.save()
+        except Profile.DoesNotExist:
+            form = form_class(data=request.POST)
+            if form.is_valid():
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
+        return HttpResponseRedirect(reverse('users.views.profile_detail',
+                                            kwargs={'username':user.username}))
+    profile = user.get_profile()
+    form_class = utils.get_profile_form()
+    form = form_class(instance=profile)
+    return jingo.render(request, 'users/profile_edit.html', {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'form': form,
+    })
+
+@login_required
+def profile_detail(request, username):
+    user = User.objects.get(username__exact=username)
+    return jingo.render(request, 'users/profile_detail.html', {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'profile': user.get_profile()
+    })
+
+@login_required
+def profile_create(request):
+    user = User.objects.get(username__exact=request.user.username)
+    try:
+        profile = user.get_profile()
+        return HttpResponseRedirect(reverse('users.views.profile_edit',))
+    except Profile.DoesNotExist:
+        form_class = utils.get_profile_form()
+        form = form_class()
+        return jingo.render(request, 'users/profile_edit.html', {
+            'user' : user,
+            'form' : form,
+        })

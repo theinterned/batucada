@@ -2,14 +2,12 @@
 {% block title %}{{ _('Sign Up') }}{% endblock %}
 {% block body %}
 
-<div class="form">
-
 {% include "errors.html" %}
 
 <fieldset>
-  <legend>{{ _('Sign Up') }}</legend>
-  <form action="{{ url('users.views.register') }}" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  <legend>{{ _('Sign Up Using Your OpenID') }}</legend>
+  <form action="{{ url('users.views.register_openid') }}" method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />  
     {% for field in form %}
     <p>
       {{ field.label_tag()|safe }}
@@ -19,15 +17,11 @@
     <p>
       <input type="submit" value="{{ _('Sign Up') }}" />
     </p>
-    <p>
-      <a id="signup_openid" href="{{ url('users.views.register_openid') }}">{{ _('Sign Up with an OpenID') }}</a>.
-    </p>
   </form>
 </fieldset>
 
 <p>
 {{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.
 </p>
-
 </div>
 {% endblock %}
