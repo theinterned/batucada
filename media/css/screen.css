@@ -23,7 +23,7 @@ input[name=openid_identifier] {
     padding-left: 16px;
 }
 
-div.error {
+div.errors {
     color: #8b0000;
     background-color: #ffa07a;
     border: 1px solid red;
