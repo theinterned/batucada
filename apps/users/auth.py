@@ -99,6 +99,10 @@ class CustomOpenIDBackend(OpenIDBackend):
             return None
 
         request = kwargs.get('request')
+
+        if request is None:
+            return None
+
         registering = request.GET.get('registration', False)
 
         try:
