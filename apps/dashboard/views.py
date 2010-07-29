@@ -9,8 +9,6 @@ from l10n.urlresolvers import reverse
 
 def splash(request):
     """Splash page we show to users who are not authenticated."""
-    if request.user.is_authenticated():
-        return dashboard(request)
     form = LoginForm()
     return jingo.render(request, 'dashboard/signin.html', {
         'form': form
