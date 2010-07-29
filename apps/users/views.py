@@ -14,6 +14,7 @@ from users.forms import RegisterForm, LoginForm
 from users.auth import users_login_begin, users_login_complete
 from users.auth import OpenIDAuthError
 from users.decorators import anonymous_only
+from relationships.models import UserRelationship
 
 def login_begin(request, registration=False):
     """Begin OpenID auth workflow."""
@@ -165,3 +166,14 @@ def profile_create(request):
             'user' : user,
             'form' : form,
         })
+
+@login_required
+def user_list(request):
+    """Display a list of users on the site. TODO: Paginate."""
+    users = User.objects.exclude(id__exact=request.user.id)
+    following = UserRelationship.get_relationships_from(request.user)
+    return jingo.render(request, 'users/user_list.html', {
+        'heading' : _('Users'),
+        'users' : users,
+        'following' : following
+    })
