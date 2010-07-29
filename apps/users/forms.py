@@ -62,5 +62,6 @@ class LoginForm(forms.Form):
         label=_("Username or Email:"),
         error_messages={'required': _('You must provide a username or email.')})
     password = forms.CharField(
+        label=_("Password:"),
         widget=forms.PasswordInput(render_value=False),
         error_messages={'required': _('Password is required.')})
