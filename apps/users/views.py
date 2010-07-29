@@ -13,6 +13,7 @@ from users.models import authenticate, Profile
 from users.forms import RegisterForm, LoginForm
 from users.auth import users_login_begin, users_login_complete
 from users.auth import OpenIDAuthError
+from users.decorators import anonymous_only
 
 def login_begin(request, registration=False):
     """Begin OpenID auth workflow."""
@@ -34,6 +35,7 @@ def login_complete(request):
             'form' : OpenIDLoginForm()
         }, status=403)
 
+@anonymous_only
 def login(request):
     """Log the user in."""
     if request.user.is_authenticated() or request.method == 'GET':
@@ -57,6 +59,7 @@ def login(request):
         'error': _('Incorrect login or password.'),
     })
 
+@anonymous_only
 def login_openid(request):
     """Handle OpenID logins."""
     if request.method == 'GET':
@@ -72,11 +75,13 @@ def login_openid(request):
         'form' : form
     })
 
+@login_required
 def logout(request):
     """Destroy user session."""
     auth.logout(request)
     return HttpResponseRedirect('/')
 
+@anonymous_only
 def register(request):
     """Present user registration form and handle registrations."""
     if request.method == 'POST':
@@ -89,6 +94,7 @@ def register(request):
         'form': RegisterForm(),
     })
 
+@anonymous_only
 def register_openid(request):
     """Handle OpenID registrations."""
     form = OpenIDLoginForm()
@@ -100,6 +106,7 @@ def register_openid(request):
         'form' : form
     })
 
+@anonymous_only
 def forgot(request):
     """Stub method."""
     return HttpResponseRedirect('/')
