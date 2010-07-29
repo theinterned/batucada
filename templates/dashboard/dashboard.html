@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}My Drumbeat{% endblock %}
+{% block title %}Your Dashboard{% endblock %}
 {% block body %}
 
-<h2>My Drumbeat</h2>
+<h2>Your Dashboard</h2>
 <p>
   {% if user.get_full_name() %}
   Hello {{ user.get_full_name() }}! 
@@ -11,7 +11,7 @@
 </p>
 
 <ul>
-  <li><a href="{{ url('users.views.profile') }}">My Profile</a></li>
+  <li><a href="{{ url('users.views.profile') }}">Your Profile</a></li>
   <li><a href="{{ url('relationships.views.following') }}">Following</a></li>
   <li><a href="{{ url('relationships.views.followers') }}">Followers</a></li>
   <li><a href="{{ url('users.views.user_list') }}">Users</a></li>

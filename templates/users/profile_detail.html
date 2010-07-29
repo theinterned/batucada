@@ -2,7 +2,7 @@
 {% block title %}Profile{% endblock %}
 {% block body %}
 <fieldset>
-  <legend>My Profile</legend>
+  <legend>Edit Your Profile</legend>
   <p>
     First Name: {{ first_name }}<br />
     Last Name: {{ last_name }}<br />
@@ -12,6 +12,6 @@
   </p>
 </fieldset>
 <p>
-  <a href="{{ url('dashboard.views.index') }}">My Dashboard</a>
+  <a href="{{ url('dashboard.views.index') }}">Dashboard</a>
 </p>
 {% endblock %}
