@@ -1,6 +1,7 @@
 import urllib
 
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from openid.consumer.consumer import SUCCESS
@@ -15,6 +16,24 @@ from django_openid_auth.views import make_consumer, render_openid_request, \
      parse_openid_response
 
 from l10n.urlresolvers import reverse
+
+def authenticate(username=None, password=None):
+    """
+    Allow model backed user objects to support authentication by
+    email / password as well as username / password.
+    """
+    backend = 'django.contrib.auth.backends.ModelBackend'
+    try:
+        if '@' in username:
+            kwargs = dict(email=username)
+        else:
+            kwargs = dict(username=username)
+        user = User.objects.get(**kwargs)
+        if user.check_password(password):
+            user.backend = backend
+            return user
+    except User.DoesNotExist:
+        return None
 
 class OpenIDAuthError(Exception):
     """Exception raised for OpenID authentication errors."""

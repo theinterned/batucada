@@ -9,9 +9,9 @@ from django_openid_auth.forms import OpenIDLoginForm
 from profiles import utils
 
 from l10n.urlresolvers import reverse
-from users.models import authenticate, Profile
+from users.models import Profile
 from users.forms import RegisterForm, LoginForm
-from users.auth import users_login_begin, users_login_complete
+from users.auth import users_login_begin, users_login_complete, authenticate
 from users.auth import OpenIDAuthError
 from users.decorators import anonymous_only
 from relationships.models import UserRelationship
