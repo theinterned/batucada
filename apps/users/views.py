@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
 
 import jingo
@@ -147,6 +147,10 @@ def profile(request):
 @login_required
 def profile_detail(request, username):
     user = User.objects.get(username__exact=username)
+    try:
+        profile = user.get_profile()
+    except Profile.DoesNotExist:
+        raise Http404
     return jingo.render(request, 'users/profile_detail.html', {
         'first_name': user.first_name,
         'last_name': user.last_name,
