@@ -135,7 +135,11 @@ def profile(request):
                 profile.save()
         return HttpResponseRedirect(reverse('users.views.profile_detail',
                                             kwargs={'username':user.username}))
-    profile = user.get_profile()
+    try:
+        profile = user.get_profile()
+    except Profile.DoesNotExist:
+        return HttpResponseRedirect(reverse('users.views.profile_create'))
+    
     form_class = utils.get_profile_form()
     form = form_class(instance=profile)
     return jingo.render(request, 'users/profile_edit.html', {

@@ -17,13 +17,6 @@ def splash(request):
 @login_required
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
-    
-    # Encourage the user to create a profile if they have not already done so.
-    try:
-        profile = request.user.get_profile()
-    except Profile.DoesNotExist:
-        return HttpResponseRedirect(reverse('users.views.profile_create'))
-    
     return jingo.render(request, 'dashboard/dashboard.html', {
         'user': request.user,
     })
