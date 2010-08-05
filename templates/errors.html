@@ -1,4 +1,4 @@
-{% if form.errors or error %}
+{% if (form and form.errors) or error %}
 <div class="errors">
   {% if form and form.errors %}
   <p>{{ _('The following errors were encountered') }}:</p>
