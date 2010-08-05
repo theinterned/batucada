@@ -2,8 +2,6 @@
 {% block title %}{{ _('Sign Up') }}{% endblock %}
 {% block body %}
 
-{% include "errors.html" %}
-
 <fieldset>
   <legend>{{ _('Sign Up Using Your OpenID') }}</legend>
   <form action="{{ url('users.views.register_openid') }}" method="post">
@@ -23,5 +21,5 @@
 <p>
 {{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.
 </p>
-</div>
+
 {% endblock %}

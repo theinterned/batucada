@@ -1,11 +1,15 @@
+from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext as _
 
 import jingo
 
 from l10n.urlresolvers import reverse
+from users.auth import authenticate
 from users.decorators import anonymous_only
-from forgetful.forms import ForgotPasswordForm
+from forgetful.forms import ForgotPasswordForm, PasswordResetForm
 from forgetful.models import PasswordResetToken
 
 @anonymous_only
@@ -35,6 +39,10 @@ def forgot(request):
                 user.email_user(_('Password Reset'),
                                 _('Visit the following URL:\n%(uri)s' %
                                   dict(uri=uri)))
+                message = _("""An email has been sent to %(email)s with
+                instructions for resetting your password.""" % {
+                    'email': user.email})
+                messages.add_message(request, messages.INFO, message)
                 return HttpResponseRedirect(reverse('dashboard.views.index'))
             except User.DoesNotExist:
                 error = _('Email address not found.')
@@ -64,9 +72,16 @@ def reset(request, token, username):
                 user = User.objects.get(username__exact=username)
                 token_obj = PasswordResetToken.objects.get(user__exact=user.id)
                 if token_obj.check_token(token):
-                    user.set_password(form.cleaned_data['password'])
+                    password = form.cleaned_data['password']
+                    user.set_password(password)
                     user.save()
                     token_obj.delete()
+                    messages.add_message(
+                        request, messages.INFO,
+                        _('Your password has been reset!'))
+                    user = authenticate(username=user.username, password=password)
+                    if user is not None and user.is_active:
+                        auth.login(request, user)
                     return HttpResponseRedirect('/')
                 else:
                     error = _('Invalid Token.')

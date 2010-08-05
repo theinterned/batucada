@@ -2,10 +2,6 @@
 {% block title %}{{ _('Sign In') }}{% endblock %}
 {% block body %}
 
-<div class="form">
-
-{% include "errors.html" %}
-
 <fieldset>
   <legend>{{ _('Sign In') }}</legend>
   <form action="{{ url('users.views.login') }}" method="post">
@@ -31,5 +27,4 @@
   Not a member? <a href="{{ url('users.views.register') }}">Sign up</a>!
 </p>
 
-</div>
 {% endblock %}

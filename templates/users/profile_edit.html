@@ -2,8 +2,6 @@
 {% block title %}Edit Profile{% endblock %}
 {% block body %}
 
-{% include "errors.html" %}
-
 <fieldset>
   <legend>{{ _('Edit Profile') }}</legend>
   <form action="{{ url('users.views.profile') }}" method="post">
