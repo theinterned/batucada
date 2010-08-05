@@ -26,15 +26,8 @@ class DashboardTests(TestCase):
         # username element in the response body instead.
         self.assertContains(response, 'id_username', status_code=200)
 
-    def test_authorized_request_no_profile(self):
-        """Authorized requests with no profile should be made to create one."""
-        self.client.login(username=self.test_username,
-                          password=self.test_password)
-        response = self.client.get('/%s/' % (self.locale,))
-        self.assertRedirects(response, '/%s/profile/create/' % (self.locale,),
-                             status_code=302)
-
-    def test_authorized_request_with_profile(self):
+    def test_authorized_request(self):
+        """Authorized requests should land on a personalized dashboard."""
         self.client.login(username=self.test_username,
                           password=self.test_password)
         form_class = utils.get_profile_form()
