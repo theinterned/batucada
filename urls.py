@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'',                include('dashboard.urls')),
     (r'',                include('users.urls')),
+    (r'',                include('forgetful.urls')),
     (r'^relationships/', include('relationships.urls')),
     (r'^admin/',         include(admin.site.urls)),
 )

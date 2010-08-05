@@ -107,11 +107,6 @@ def register_openid(request):
         'form' : form
     })
 
-@anonymous_only
-def forgot(request):
-    """Stub method."""
-    return HttpResponseRedirect('/')
-
 @login_required
 def profile(request):
     """Save profile."""

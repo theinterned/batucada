@@ -100,6 +100,7 @@ INSTALLED_APPS = (
     'l10n',
     'dashboard',
     'relationships',
+    'forgetful',
 )
 
 # Auth settings
