@@ -2,7 +2,7 @@ import hashlib
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.test import TestCase
+from django.test import TestCase, Client
 
 from forgetful.models import PasswordResetToken
 
@@ -14,6 +14,7 @@ class TestPasswordResets(TestCase):
     
     def setUp(self):
         self.locale = 'en-US'
+        self.client = Client()
         self.user = User.objects.create_user(self.test_username,
                                              self.test_email,
                                              self.test_password)
@@ -45,3 +46,47 @@ class TestPasswordResets(TestCase):
         self.assertTrue(token.check_token(token_string))
         self.assertFalse(token.check_token('fedcba'))
 
+    def test_password_reset_form_invalid_token(self):
+        """Test that invalid reset form tokens are rejected."""
+        new_password = 'foobar'
+        error_message = 'Sorry, invalid username or token'
+        PasswordResetToken(user=self.user, token='abcdef')
+        path = '/%s/reset/%s/%s/' % (self.locale, 'badtoken', self.user.username)
+        response = self.client.get(path)
+        self.assertContains(response, error_message)
+        response = self.client.post(path, {
+            'password': new_password, 'password_confirm': new_password
+        })
+        self.assertContains(response, error_message)
+
+    def test_password_reset_form_valid_token(self):
+        """Test that valid reset tokens are accepted."""
+        error_message = 'Sorry, invalid username or token'
+        token_string = 'abcdef'
+        new_password = 'foobar'
+        PasswordResetToken(user=self.user, token=token_string).save()
+        path = '/%s/reset/%s/%s/' % (self.locale, token_string, self.user.username)
+        response = self.client.get(path)
+        self.assertNotContains(response, error_message)
+        response = self.client.post(path, {
+            'password': new_password, 'password_confirm': new_password
+        })
+        self.assertRedirects(response, '/', status_code=302,
+                             target_status_code=301)
+        # refresh user object
+        self.user = User.objects.get(username__exact=self.user.username)
+        self.assertTrue(self.user.check_password(new_password))
+
+    def test_password_reset_form_invalid_username(self):
+        """Test that invalid usernames are rejected."""
+        token_string = 'abcdef'
+        error_message = 'Sorry, invalid username or token'
+        new_password = 'foobar'
+        PasswordResetToken(user=self.user, token=token_string).save()
+        path = '/%s/reset/%s/%s/' % (self.locale, token_string, 'foo')
+        response = self.client.get(path)
+        self.assertContains(response, error_message)
+        response = self.client.post(path, {
+            'password': new_password, 'password_confirm': new_password
+        })
+        self.assertContains(response, error_message)

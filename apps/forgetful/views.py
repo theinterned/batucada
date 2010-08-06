@@ -27,18 +27,18 @@ def forgot(request):
 
                 # delete existing reset token for user (if exists)
                 PasswordResetToken.objects.filter(user__exact=user.id).delete()
-
-                # store new token
+                
+                # create new token and send it to user
                 token = User.objects.make_random_password(length=32)
                 PasswordResetToken(user=user, token=token).save()
-
-                # send email to user with URI for resetting password
-                path = reverse('forgetful.views.reset',
-                               kwargs=dict(token=token, username=user.username))
+                path = reverse('forgetful.views.reset', kwargs=dict(
+                    token=token,
+                    username=user.username
+                ))
                 uri = request.build_absolute_uri(path)
                 user.email_user(_('Password Reset'),
-                                _('Visit the following URL:\n%(uri)s' %
-                                  dict(uri=uri)))
+                                _('Use the following link:\n%(uri)s' % dict(
+                                    uri=uri))
                 message = _("""An email has been sent to %(email)s with
                 instructions for resetting your password.""" % {
                     'email': user.email})
@@ -56,6 +56,7 @@ def reset(request, token, username):
     """Allow user to reset their password."""
     error = None
     form = PasswordResetForm()
+    invalid_data_message = _('Sorry, invalid username or token')
 
     try:
         user = User.objects.get(username__exact=username)
@@ -63,7 +64,7 @@ def reset(request, token, username):
         if not token_obj.check_token(token):
             raise
     except:
-        error = _('Invalid token or username.')
+        error = invalid_data_message
 
     if request.method == 'POST':
         form = PasswordResetForm(data=request.POST)
@@ -84,9 +85,9 @@ def reset(request, token, username):
                         auth.login(request, user)
                     return HttpResponseRedirect('/')
                 else:
-                    error = _('Invalid Token.')
+                    error = invalid_data_message
             except:
-                error = _('Sorry, username and token do not match.')
+                error = invalid_data_message
                 
     return jingo.render(request, 'forgetful/reset_password.html', {
         'username': username,
