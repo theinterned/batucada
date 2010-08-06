@@ -38,7 +38,7 @@ def forgot(request):
                 uri = request.build_absolute_uri(path)
                 user.email_user(_('Password Reset'),
                                 _('Use the following link:\n%(uri)s' % dict(
-                                    uri=uri))
+                                    uri=uri)))
                 message = _("""An email has been sent to %(email)s with
                 instructions for resetting your password.""" % {
                     'email': user.email})
