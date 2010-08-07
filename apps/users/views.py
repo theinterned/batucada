@@ -1,16 +1,20 @@
 from django.contrib import auth
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_http_methods
 
 import jingo
 from django_openid_auth.forms import OpenIDLoginForm
 from profiles import utils
 
 from l10n.urlresolvers import reverse
-from users.models import Profile
-from users.forms import RegisterForm, LoginForm
+from users.mail import send_reset_email
+from users.models import Profile, ConfirmationToken, unique_confirmation_token
+from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
+                         ResetPasswordForm)
 from users.auth import users_login_begin, users_login_complete, authenticate
 from users.auth import OpenIDAuthError
 from users.decorators import anonymous_only
@@ -85,15 +89,24 @@ def logout(request):
 @anonymous_only
 def register(request):
     """Present user registration form and handle registrations."""
+    form = RegisterForm()
     if request.method == 'POST':
         form = RegisterForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            auth.login(request, user)
+            messages.add_message(request, messages.INFO,
+                _("""Thanks! We have sent an email to %(email)s with
+                instructions for completing your registration.""" % {
+                      'email': user.email }))
             return HttpResponseRedirect('/')
     return jingo.render(request, 'users/register.html', {
-        'form': RegisterForm(),
+        'form': form,
     })
+
+@anonymous_only
+def confirm(request, token, username):
+    """Confirm ownership of an email address to complete registration."""
+    return HttpResponseRedirect('/')
 
 @anonymous_only
 def register_openid(request):
@@ -180,3 +193,90 @@ def user_list(request):
         'users' : users,
         'following' : following
     })
+
+@anonymous_only
+def forgot_password(request):
+    """Allow users to reset their password by validating email ownership."""
+    if request.method == 'GET':
+        return jingo.render(request, 'users/forgot_password.html', {
+            'form': ForgotPasswordForm()
+        })
+    error = None
+    form = ForgotPasswordForm(request.POST)
+    if not form.is_valid():
+        return jingo.render(request, 'users/forgot_password.html', {
+            form: 'form'
+        })
+    try:
+        email = form.cleaned_data['email']
+        user = User.objects.get(email__exact=email)
+        token = unique_confirmation_token(user)
+        send_reset_email(user, token.plaintext, request.build_absolute_uri)
+        messages.add_message(
+            request,
+            messages.INFO,
+            _("""An email has been sent to %(email)s with instructions
+            for resetting your password.""" % dict(email=email))
+        )
+        return HttpResponseRedirect(reverse('dashboard.views.index'))
+    except User.DoesNotExist:
+        error = _('Email address not found.')
+
+    return jingo.render(request, 'users/forgot_password.html', {
+        'form': form,
+        'error': error
+    })
+
+@anonymous_only
+def reset_password(request, token, username):
+    """Reset users password."""
+    form = ResetPasswordForm(data=request.POST)
+    if not form.is_valid():
+        return jingo.render(request, 'users/reset_password.html', {
+            'form': form,
+            'token': token,
+            'username': username
+        })
+    password = form.cleaned_data['password']
+    user = User.objects.get(username=form.cleaned_data['username'])
+    user.set_password(password)
+    user.save()
+
+    # clean up
+    ConfirmationToken.objects.filter(user__exact=user.id).delete()
+
+    messages.add_message(request, messages.INFO,
+                         _('Your password has been reset.'))
+
+    user = authenticate(username=user.username, password=password)
+    if user is not None and user.is_active:
+        auth.login(request, user)
+    return HttpResponseRedirect('/')
+
+@anonymous_only
+def reset_password_form(request, token, username):
+    """Render the reset password form, validating username and token."""
+    if request.method == 'POST':
+        return reset_password(request, token, username)
+
+    error = None
+    try:
+        user = User.objects.get(username__exact=username)
+        token_obj = ConfirmationToken.objects.get(user__exact=user.id)
+        if not token_obj.check_token(token):
+            raise
+    except:
+        error = 'Sorry, invalid user or token'
+
+    form = ResetPasswordForm()
+    return jingo.render(request, 'users/reset_password.html', {
+        'form': form,
+        'error': error,
+        'token': token,
+        'username': username
+    })
+
+@anonymous_only
+def confirm_registration(request, token, user):
+    """Stub method."""
+    return HttpResponseRedirect('/')
