@@ -4,15 +4,35 @@ from django.db import models
 from django.contrib.auth.models import User, get_hexdigest
 
 class Profile(models.Model):
-    """
-    Basic user profile for now.
-
-    TODO: Make a full list of profile fields.
-    """
+    """User profile."""
     user = models.ForeignKey(User, unique=True)
-    homepage = models.CharField(max_length=300)
-    location = models.CharField(max_length=300)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    location = models.CharField(max_length=255)
+    image = models.CharField(max_length=255)
     bio = models.TextField()
+
+class ProfilePhoneNumber(models.Model):
+    """A user can store multiple phone numbers in their profile."""
+    profile = models.ForeignKey(Profile)
+    number = models.CharField(max_length=25)
+    label = models.CharField(max_length=20)
+
+class ProfileLink(models.Model):
+    """A user profile can have zero or more links associated with it."""
+    profile = models.ForeignKey(Profile)
+    title = models.CharField(max_length=50)
+    uri = models.CharField(max_length=320)
+
+class ProfileSkill(models.Model):
+    """A user profile can have zero or more skills."""
+    profile = models.ForeignKey(Profile)
+    name = models.CharField(max_length=30)
+
+class ProfileInterest(models.Model):
+    """A user profile can have zero or more interests."""
+    profile = models.ForeignKey(Profile)
+    name = models.CharField(max_length=30)
 
 class ConfirmationToken(models.Model):
     """Store a unique token related to a user account."""

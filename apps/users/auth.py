@@ -17,7 +17,7 @@ from django_openid_auth.views import make_consumer, render_openid_request, \
 
 from l10n.urlresolvers import reverse
 
-def authenticate(username=None, password=None):
+def authenticate(username=None, password=None, force=False):
     """
     Allow model backed user objects to support authentication by
     email / password as well as username / password.
@@ -29,7 +29,7 @@ def authenticate(username=None, password=None):
         else:
             kwargs = dict(username=username)
         user = User.objects.get(**kwargs)
-        if user.check_password(password):
+        if force or user.check_password(password):
             user.backend = backend
             return user
     except User.DoesNotExist:

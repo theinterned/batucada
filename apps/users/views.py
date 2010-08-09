@@ -11,7 +11,7 @@ from django_openid_auth.forms import OpenIDLoginForm
 from profiles import utils
 
 from l10n.urlresolvers import reverse
-from users.mail import send_reset_email
+from users.mail import send_reset_email, send_registration_email
 from users.models import Profile, ConfirmationToken, unique_confirmation_token
 from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
                          ResetPasswordForm)
@@ -93,7 +93,12 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(data=request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            token = unique_confirmation_token(user)
+            send_registration_email(user, token.plaintext, 
+                                    request.build_absolute_uri)
             messages.add_message(request, messages.INFO,
                 _("""Thanks! We have sent an email to %(email)s with
                 instructions for completing your registration.""" % {
@@ -102,11 +107,6 @@ def register(request):
     return jingo.render(request, 'users/register.html', {
         'form': form,
     })
-
-@anonymous_only
-def confirm(request, token, username):
-    """Confirm ownership of an email address to complete registration."""
-    return HttpResponseRedirect('/')
 
 @anonymous_only
 def register_openid(request):
@@ -125,10 +125,6 @@ def profile(request):
     """Save profile."""
     user = User.objects.get(username__exact=request.user.username)
     if request.method == 'POST':
-        user.first_name = request.POST['first_name']
-        user.last_name = request.POST['last_name']
-        user.save()
-
         form_class = utils.get_profile_form()
         try:
             profile = user.get_profile()
@@ -151,8 +147,6 @@ def profile(request):
     form_class = utils.get_profile_form()
     form = form_class(instance=profile)
     return jingo.render(request, 'users/profile_edit.html', {
-        'first_name': user.first_name,
-        'last_name': user.last_name,
         'form': form,
     })
 
@@ -277,6 +271,26 @@ def reset_password_form(request, token, username):
     })
 
 @anonymous_only
-def confirm_registration(request, token, user):
-    """Stub method."""
+def confirm_registration(request, token, username):
+    """Confirm a users registration."""
+    try:
+        user = User.objects.get(username__exact=username)
+        token_obj = ConfirmationToken.objects.get(user__exact=user.id)
+        if not token_obj.check_token(token):
+            raise
+        user.is_active = True
+        user.save()
+        user = authenticate(username=user.username, force=True)
+        auth.login(request, user)
+        messages.add_message(
+            request,
+            messages.INFO,
+            _('Congratulations. Your have completed your registration.')
+        )
+    except:
+        return jingo.render(request, 'users/register.html', {
+            'form': RegisterForm(),
+            'error': _('Confirmation failed. Invalid token or username.'),
+        })
+
     return HttpResponseRedirect('/')

@@ -6,14 +6,6 @@
   <legend>{{ _('Edit Profile') }}</legend>
   <form action="{{ url('users.views.profile') }}" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-    <p>
-      <label for="first_name">First Name: </label>
-      <input type="text" name="first_name" id="first_name" value="{{ first_name }}" />
-    </p>
-    <p>
-      <label for="last_name">Last Name: </label>
-      <input type="text" name="last_name" id="last_name" value="{{ last_name }}" />
-    </p>
     {{ form.as_p()|safe }}
     <input type="submit" value="Save" />
   </form>

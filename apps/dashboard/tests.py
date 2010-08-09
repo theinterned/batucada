@@ -32,8 +32,10 @@ class DashboardTests(TestCase):
                           password=self.test_password)
         form_class = utils.get_profile_form()
         form = form_class(data=dict(
-            homepage='http://example.com/',
+            first_name='Joe',
+            last_name='Smith',
             location='Toronto, ON',
+            image='/tmp/pic.jpg',
             bio='I like testing'
         ))
         profile = form.save(commit=False)
