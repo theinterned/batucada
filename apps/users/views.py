@@ -235,10 +235,7 @@ def reset_password(request, token, username):
     user = User.objects.get(username=form.cleaned_data['username'])
     user.set_password(password)
     user.save()
-
-    # clean up
     ConfirmationToken.objects.filter(user__exact=user.id).delete()
-
     messages.add_message(request, messages.INFO,
                          _('Your password has been reset.'))
 
@@ -282,6 +279,7 @@ def confirm_registration(request, token, username):
         user.save()
         user = authenticate(username=user.username, force=True)
         auth.login(request, user)
+        ConfirmationToken.objects.filter(user__exact=user.id).delete()
         messages.add_message(
             request,
             messages.INFO,
