@@ -37,3 +37,21 @@ class ContactNumberForm(forms.Form):
                 _('Invalid characters. Allowed: 0-9, -, (, ), space')
             )
         return self.cleaned_data['number']
+
+class LinkForm(forms.Form):
+    uri = forms.CharField(error_messages={
+        'required': _('URL is required.')})
+    title = forms.CharField(error_messages={
+        'required': _('Link name is required.')})
+
+    def clean_uri(self):
+        # todo: clean out any unsupported uri schemes (i.e. javascript)
+        return self.cleaned_data['uri']
+
+class InterestForm(forms.Form):
+    name = forms.CharField(error_messages={
+        'required': _('Interest is required.')})
+
+class SkillForm(forms.Form):
+    name = forms.CharField(error_messages={
+        'required': _('Skill is required.')})

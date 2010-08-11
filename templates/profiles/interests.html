@@ -1,6 +1,26 @@
 {% extends "profiles/main.html" %}
 {% block form %}
-<form action="{{ url('profiles.views.contact_numbers') }}" method="post">
-  
+{% if profile.interest_set.count() %}
+<h3>Interests</h3>
+<ul>
+  {% for interest in profile.interest_set.all() %}
+  <li>
+    {{ interest.name }}
+    <form action="{{ url('profiles.views.delete_interest') }}" method="post">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+      <input type="hidden" name="interest" value="{{ interest.id }}" />
+      <input type="submit" value="Delete" />
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+<form action="{{ url('profiles.views.interests') }}" method="post">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  <p>
+    <label for="name">Interest:</label>
+    <input type="text" name="name" id="name" />
+  </p>
+  <input type="submit" value="Add" />
 </form>
 {% endblock %}

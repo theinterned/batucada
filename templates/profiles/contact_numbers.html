@@ -10,7 +10,8 @@
       <form action="{{ url('profiles.views.delete_number') }}" method="post">
 	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
 	<input type="hidden" name="number" value="{{ number.id }}" />
-	<input type="submit" value="Delete" /></form>
+	<input type="submit" value="Delete" />
+      </form>
     </li>
   {% endfor %}
 </ul>

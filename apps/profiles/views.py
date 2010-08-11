@@ -7,8 +7,24 @@ import jingo
 
 from l10n.urlresolvers import reverse
 
-from profiles.forms import ImageForm, ProfileForm, ContactNumberForm
-from profiles.models import Profile, ContactNumber
+from profiles.forms import (ImageForm, ProfileForm, ContactNumberForm,
+                            LinkForm, InterestForm, SkillForm)
+from profiles.models import Profile, ContactNumber, Link, Skill, Interest
+
+def delete_profile_element(request, param_name, cls, viewname):
+    """Delete a skill, interest, number, etc from users profile."""
+    try:
+        obj_id = int(request.POST.get(param_name, 0))
+        if obj_id:
+            obj = cls.objects.get(id=obj_id)
+            if obj.profile.user.id != request.user.id:
+                return HttpResponse('Unauthorized', status=401)
+            obj.delete()
+    except ValueError:
+        return HttpResponse('Bad Request', status=400)
+    except cls.DoesNotExist:
+        raise Http404
+    return HttpResponseRedirect(reverse(viewname))
 
 @login_required
 def edit(request):
@@ -65,16 +81,8 @@ def upload_image(request):
 @require_http_methods(['POST'])
 def delete_number(request):
     """Delete a contact number after verifying ownership."""
-    try:
-        number_id = int(request.POST.get('number', 0))
-        number = ContactNumber.objects.get(id=number_id)
-        if number.profile.user.id != request.user.id:
-            return HttpResponse('Unauthorized', status=401)
-        number.delete()
-    except ValueError:
-        return HttpResponse('Bad Request', status=400)
-    
-    return HttpResponseRedirect(reverse('profiles.views.contact_numbers'))
+    return delete_profile_element(
+        request, 'number', ContactNumber, 'profiles.views.contact_numbers')
 
 @login_required
 def contact_numbers(request):
@@ -98,21 +106,77 @@ def contact_numbers(request):
     })
 
 @login_required
-def profile_links(request):
-    """Not Implemented Yet."""
-    return jingo.render(request, 'profiles/links.html', {
+@require_http_methods(['POST'])
+def delete_link(request):
+    """Delete a link from the users profile."""
+    return delete_profile_element(
+        request, 'link', Link, 'profiles.views.links')
 
+@login_required
+def links(request):
+    """Add links to other sites to a profile."""
+    form = LinkForm()
+    if request.method == 'POST':
+        form = LinkForm(data=request.POST)
+        if form.is_valid():
+            link = Link(
+                profile=request.user.get_profile(),
+                title=form.cleaned_data['title'],
+                uri=form.cleaned_data['uri'],
+            )
+            link.save()
+            return HttpResponseRedirect(reverse('profiles.views.links'))
+    return jingo.render(request, 'profiles/links.html', {
+        'profile': request.user.get_profile(),
+        'form': form
     })
+
+@login_required
+@require_http_methods(['POST'])
+def delete_skill(request):
+    """Delete a skill from the users profile."""
+    return delete_profile_element(
+        request, 'skill', Skill, 'profiles.views.skills')
 
 @login_required
 def skills(request):
-    """Not Implemented Yet."""
+    """Add a list of skills to profile."""
+    form = SkillForm()
+    if request.method == 'POST':
+        form = SkillForm(data=request.POST)
+        if form.is_valid():
+            skill = Skill(
+                profile=request.user.get_profile(),
+                name=form.cleaned_data['name']
+            )
+            skill.save()
+            return HttpResponseRedirect(reverse('profiles.views.skills'))
     return jingo.render(request, 'profiles/skills.html', {
-
+        'form': form,
+        'profile': request.user.get_profile()
     })
 
 @login_required
+@require_http_methods(['POST'])
+def delete_interest(request):
+    """Delete an interest from the users profile."""
+    return delete_profile_element(
+        request, 'interest', Interest, 'profiles.views.interests')
+
+@login_required
 def interests(request):
-    """Not implemented Yet."""
+    """Add a list of interests to profile."""
+    form = InterestForm()
+    if request.method == 'POST':
+        form = InterestForm(data=request.POST)
+        if form.is_valid():
+            interest = Interest(
+                profile=request.user.get_profile(),
+                name=form.cleaned_data['name']
+            )
+            interest.save()
+            return HttpResponseRedirect(reverse('profiles.views.interests'))
     return jingo.render(request, 'profiles/interests.html', {
+        'form': form,
+        'profile': request.user.get_profile()
     })
