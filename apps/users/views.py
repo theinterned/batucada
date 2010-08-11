@@ -8,11 +8,10 @@ from django.views.decorators.http import require_http_methods
 
 import jingo
 from django_openid_auth.forms import OpenIDLoginForm
-from profiles import utils
 
 from l10n.urlresolvers import reverse
 from users.mail import send_reset_email, send_registration_email
-from users.models import Profile, ConfirmationToken, unique_confirmation_token
+from users.models import ConfirmationToken, unique_confirmation_token
 from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
                          ResetPasswordForm)
 from users.auth import users_login_begin, users_login_complete, authenticate
@@ -119,63 +118,6 @@ def register_openid(request):
     return jingo.render(request, 'users/register_openid.html', {
         'form' : form
     })
-
-@login_required
-def profile(request):
-    """Save profile."""
-    user = User.objects.get(username__exact=request.user.username)
-    if request.method == 'POST':
-        form_class = utils.get_profile_form()
-        try:
-            profile = user.get_profile()
-            form = form_class(data=request.POST, instance=profile)
-            if form.is_valid():
-                form.save()
-        except Profile.DoesNotExist:
-            form = form_class(data=request.POST)
-            if form.is_valid():
-                profile = form.save(commit=False)
-                profile.user = request.user
-                profile.save()
-        return HttpResponseRedirect(reverse('users.views.profile_detail',
-                                            kwargs={'username':user.username}))
-    try:
-        profile = user.get_profile()
-    except Profile.DoesNotExist:
-        return HttpResponseRedirect(reverse('users.views.profile_create'))
-    
-    form_class = utils.get_profile_form()
-    form = form_class(instance=profile)
-    return jingo.render(request, 'users/profile_edit.html', {
-        'form': form,
-    })
-
-@login_required
-def profile_detail(request, username):
-    user = User.objects.get(username__exact=username)
-    try:
-        profile = user.get_profile()
-    except Profile.DoesNotExist:
-        raise Http404
-    return jingo.render(request, 'users/profile_detail.html', {
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'profile': user.get_profile()
-    })
-
-@login_required
-def profile_create(request):
-    user = User.objects.get(username__exact=request.user.username)
-    try:
-        profile = user.get_profile()
-        return HttpResponseRedirect(reverse('users.views.profile_edit',))
-    except Profile.DoesNotExist:
-        form_class = utils.get_profile_form()
-        form = form_class()
-        return jingo.render(request, 'users/profile_edit.html', {
-            'user' : user,
-            'form' : form,
-        })
 
 @login_required
 def user_list(request):

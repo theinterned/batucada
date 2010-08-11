@@ -1,9 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 
-from profiles import utils
-from users.models import Profile
-
 class DashboardTests(TestCase):
 
     test_username = 'testuser'
@@ -30,17 +27,6 @@ class DashboardTests(TestCase):
         """Authorized requests should land on a personalized dashboard."""
         self.client.login(username=self.test_username,
                           password=self.test_password)
-        form_class = utils.get_profile_form()
-        form = form_class(data=dict(
-            first_name='Joe',
-            last_name='Smith',
-            location='Toronto, ON',
-            image='/tmp/pic.jpg',
-            bio='I like testing'
-        ))
-        profile = form.save(commit=False)
-        profile.user = self.user
-        profile.save()
         response = self.client.get('/%s/' % (self.locale,))
         self.assertContains(response, 'You are logged in', status_code=200)
         

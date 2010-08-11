@@ -1,0 +1,23 @@
+{% extends "profiles/main.html" %}
+{% block form %}
+<form action="{{ url('profiles.views.edit') }}" method="post">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  <p>
+    <label for="first_name">{{ _('First Name:') }}</label>
+    <input type="text" name="first_name" id="first_name" value="{{ profile.first_name }}" />
+  </p>
+  <p>
+    <label for="last_name">{{ _('Last Name:') }}</label>
+    <input type="text" name="last_name" id="last_name" value="{{ profile.last_name }}" />
+  </p>
+  <p>
+    <label for="location">{{ _('Location:') }}</label>
+    <input type="text" name="location" id="location" value="{{ profile.location }}" />
+  </p>
+  <p>
+    <label for="bio">{{ _('About You:') }}</label>
+    <textarea name="bio" id="bio" rows="15" cols="50">{{ profile.bio }}</textarea>
+  </p>
+  <input type="submit" value="Save" />
+</form>
+{% endblock %}

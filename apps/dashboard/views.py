@@ -3,7 +3,7 @@ import jingo
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
-from users.models import Profile
+from profiles.models import Profile
 from users.forms import LoginForm
 from l10n.urlresolvers import reverse
 

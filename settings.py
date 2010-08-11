@@ -115,4 +115,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_PROFILE_MODULE = 'users.Profile'
+AUTH_PROFILE_MODULE = 'profiles.Profile'
+
+MAX_IMAGE_SIZE = 1024 * 700

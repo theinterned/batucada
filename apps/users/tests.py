@@ -34,17 +34,6 @@ class TestLogins(TestCase):
                                  target_status_code=301)
         self.client.logout()
         
-    def test_unauthenticated_redirects(self):
-        """Test that views requiring authentication redirect correctly."""
-        paths = ('profile/edit/', 'profile/create/',
-                 'profile/%s' % (self.test_username,))
-        for path in paths:
-            full = "/%s/%s" % (self.locale, path)
-            response = self.client.get(full)
-            self.assertRedirects(response, '/?next=%s' % (full,),
-                                 status_code=302,
-                                 target_status_code=301)        
-
     def test_reset_token_uniqueness_constraint(self):
         """Test that only one password reset token can exist per user."""
         token = ConfirmationToken(user=self.user, token='abcdef')

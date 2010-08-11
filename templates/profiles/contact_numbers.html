@@ -1,0 +1,32 @@
+{% extends "profiles/main.html" %}
+{% block form %}
+
+{% if profile.contactnumber_set.count() %}
+<h3>{{ _('Numbers') }}</h3>
+<ul>
+  {% for number in profile.contactnumber_set.all() %}
+    <li>
+      {{ number.number }} - {{ number.label }}
+      <form action="{{ url('profiles.views.delete_number') }}" method="post">
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+	<input type="hidden" name="number" value="{{ number.id }}" />
+	<input type="submit" value="Delete" /></form>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<form action="{{ url('profiles.views.contact_numbers') }}" method="post">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  <p>
+    <input type="text" name="number" id="number" />
+    <select name="label" id="label">
+      <option value="Home">{{ _('Home') }}</option>
+      <option value="Work">{{ _('Work') }}</option>
+      <option value="Mobile">{{ _('Mobile') }}</option>
+      <option value="Other">{{ _('Other') }}</option>
+    </select>
+  </p>
+  <input type="submit" value="Add" />
+</form>
+{% endblock %}
