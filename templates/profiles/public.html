@@ -1,21 +1,71 @@
 {% extends "base.html" %}
-{% block title %}{{ user.get_full_name() }}{% endblock %}
+{% block title %}{{ profile.get_full_name() }}{% endblock %}
+{% block links %}
+<link rel="profile" href="http://microformats.org/profile/hcard" />
+{% endblock %}
 {% block body %}
-<fieldset>
+<fieldset class="vcard">
   <legend>{{ _('Profile') }}</legend>
   {% if profile.image %}
   <p>
     <img src="{{ MEDIA_URL }}/{{ profile.image }}" />
   </p>
   {% endif %}
-  {% if profile.get_full_name() %}
-  <p><strong>{{ _('Name:') }}</strong> {{ profile.get_full_name() }}</p>
+  <p>
+    {% if profile.get_full_name() %}
+    <strong>{{ _('Name:') }}</strong> 
+    <span class="fn">{{ profile.get_full_name() }}</span><br />
+    {% else %}
+    <strong>{{ _('Username:') }}</strong> 
+    <span class="fn nickname">{{ user.username }}</span><br />
+    {% endif %}
+    {% if profile.location %}
+    <strong>{{ _('Location:') }}</strong> 
+    <span class="adr">{{ profile.location }}</span><br />
+    {% endif %}
+    {% if profile.bio %}
+    <strong>{{ _('About:') }}</strong> {{ profile.bio }}
+    {% endif %}
+  </p>
+  {% if profile.contactnumber_set.count() %}
+  <h3>Phone</h3>
+  <ul>
+    {% for number in profile.contactnumber_set.all() %}
+    <li class="tel">
+      {{ number.number }} <span class="type">{{ number.label }}</span>
+    </li>
+    {% endfor %}
+  </ul>
   {% endif %}
-  {% if profile.location %}
-  <p><strong>{{ _('Location:') }}</strong> {{ profile.location }}</p>
+  {% if profile.link_set.count() %}
+  <h3>Links</h3>
+  <ul>
+    {% for link in profile.link_set.all() %}
+    <li><a class="url" href="{{ link.uri }}" rel="me">{{ link.title }}</a></li>
+    {% endfor %}
+  </ul>
   {% endif %}
-  {% if profile.bio %}
-  <p><strong>{{ _('About:') }}</strong> {{ profile.bio }}</p>
+  {% if profile.skill_set.count() %}
+  <h3>Skills</h3>
+  <ul>
+    {% for skill in profile.skill_set.all() %}
+    <li>{{ skill.name }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if profile.interest_set.count() %}
+  <h3>Interests</h3>
+  <ul>
+    {% for interest in profile.interest_set.all() %}
+    <li>{{ interest.name }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if user.id == profile.user.id %}
+  <p>
+    <a href="{{ url('profiles.views.edit') }}">{{ _('Edit Profile') }}</a>
+  </p>
   {% endif %}
 </fieldset>
 

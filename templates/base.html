@@ -3,6 +3,7 @@
 <head>
   <title>Batucada | {% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css" media="screen" />
+  {% block links %}{% endblock %}
 </head>
 <body>
   <h1><a href="{{ url('dashboard.views.index') }}">Batucada</a></h1>  
