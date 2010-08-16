@@ -46,7 +46,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media',)
+SUPPORTED_NONLOCALES = ('media', '.well-known', 'meta')
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -97,12 +97,17 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django_openid_auth',
+    'wellknown',
     'users',
     'profiles',
     'l10n',
     'dashboard',
     'relationships',
+    'accountmanager',
 )
+
+WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
+MOZILLA_AMCD_HREF = '/meta/amcd.json'
 
 # Auth settings
 LOGIN_URL = '/'
