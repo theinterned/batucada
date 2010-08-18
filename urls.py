@@ -4,14 +4,17 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+from accountmanager.views import handle as accountmanager_handle
+
 urlpatterns = patterns('',
     (r'',                include('dashboard.urls')),
     (r'',                include('users.urls')),
     (r'',                include('wellknown.urls')),
-    (r'',                include('accountmanager.urls')),
     (r'^profile/',       include('profiles.urls')),
     (r'^relationships/', include('relationships.urls')),
     (r'^admin/',         include(admin.site.urls)),
+
+    (r'^meta/amcd.json$',accountmanager_handle),
 )
 
 if settings.DEBUG:
