@@ -46,7 +46,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known', 'meta')
+SUPPORTED_NONLOCALES = ('media', '.well-known', 'accountmanager')
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -77,7 +77,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'l10n.middleware.LocaleURLRewriter',
@@ -124,3 +124,19 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PROFILE_MODULE = 'profiles.Profile'
 
 MAX_IMAGE_SIZE = 1024 * 700
+
+AMCD_RESOLVER_FUNCTION = 'l10n.urlresolvers.reverse'
+AMCD_CONFIG = {
+    'connect': {
+        'method': 'POST',
+        'path_view': 'users.views.login',
+        'params': {
+            'username': 'username',
+            'password': 'password'
+        }
+    },
+    'disconnect': {
+        'method': 'GET',
+        'path_view': 'users.views.logout'
+    }
+}
