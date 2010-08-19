@@ -138,5 +138,14 @@ AMCD_CONFIG = {
     'disconnect': {
         'method': 'GET',
         'path_view': 'users.views.logout'
+    },
+    'register': {
+        'method': 'POST',
+        'path_view': 'users.views.register',
+        'type': 'email',
+        'params': {
+            'id': 'email',
+            'secret': 'password'
+        }
     }
 }
