@@ -123,11 +123,10 @@ def register_openid(request):
 def user_list(request):
     """Display a list of users on the site. TODO: Paginate."""
     users = User.objects.exclude(id__exact=request.user.id)
-    following = UserRelationship.get_relationships_from(request.user)
     return jingo.render(request, 'users/user_list.html', {
         'heading' : _('Users'),
         'users' : users,
-        'following' : following
+        'following' : [user.id for user in request.user.following()]
     })
 
 @anonymous_only

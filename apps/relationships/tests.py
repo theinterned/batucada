@@ -26,9 +26,7 @@ class RelationshipsTests(TestCase):
             to_user=self.user_two
         )
         relationship.save()
-
-        following = UserRelationship.get_relationships_from(self.user_one)
-        self.assertEqual(following, [self.user_two.id])
+        self.assertEqual(self.user_one.following(), [self.user_two])
 
     def test_unique_constraint(self):
         """Test that a user can't follow another user twice."""
@@ -59,10 +57,10 @@ class RelationshipsTests(TestCase):
         UserRelationship(from_user=self.user_one, to_user=self.user_two).save()
         UserRelationship(from_user=self.user_two, to_user=self.user_one).save()
         
-        rels_one = UserRelationship.get_relationships_from(self.user_one)
-        rels_two = UserRelationship.get_relationships_from(self.user_two)
+        rels_one = self.user_one.following()
+        rels_two = self.user_two.following()
 
-        self.assertTrue(self.user_one.id in rels_two)
-        self.assertTrue(self.user_two.id not in rels_two)
-        self.assertTrue(self.user_two.id in rels_one)
-        self.assertTrue(self.user_one.id not in rels_one)
+        self.assertTrue(self.user_one in rels_two)
+        self.assertTrue(self.user_two not in rels_two)
+        self.assertTrue(self.user_two in rels_one)
+        self.assertTrue(self.user_one not in rels_one)

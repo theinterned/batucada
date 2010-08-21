@@ -11,22 +11,20 @@ from relationships.models import UserRelationship
 
 @login_required
 def following(request):
-    following = UserRelationship.get_relationships_from(request.user)
-    users = [User.objects.get(id=user) for user in following]
+    following = request.user.following()
     return jingo.render(request, 'users/user_list.html', {
         'heading' : _('Users you follow'),
-        'users' : users,
-        'following' : following
+        'users' : following,
+        'following' : [user.id for user in following]
     })
 
 @login_required
 def followers(request):
-    followers = UserRelationship.get_relationships_to(request.user)
-    users = [User.objects.get(id=user) for user in followers]
+    followers = request.user.followers()
     return jingo.render(request, 'users/user_list.html', {
         'heading' : _('Users following you'),
-        'users' : users,
-        'following' : followers
+        'users' : followers,
+        'following' : [user.id for user in request.user.following()]
     })
 
 @login_required

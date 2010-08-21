@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 class UserRelationship(models.Model):
-    from_user = models.ForeignKey(User, unique=False, related_name='from_user')
-    to_user = models.ForeignKey(User, unique=False, related_name='to_user')
+    from_user = models.ForeignKey(User, unique=False, related_name='from_user_rels')
+    to_user = models.ForeignKey(User, unique=False, related_name='to_user_rels')
 
     def save(self, *args, **kwargs):
         if self.from_user.id == self.to_user.id:
@@ -15,13 +15,12 @@ class UserRelationship(models.Model):
     class Meta:
         unique_together = (('from_user', 'to_user'),)
 
-    @classmethod
-    def get_relationships_from(cls, user):
-        return [u.to_user.id for u in cls.objects.filter(
-            from_user__exact=user.id)]
+class UserMixin(object):
+    def followers(self):
+        return [rel.from_user for rel in self.to_user_rels.all()]
 
-    @classmethod
-    def get_relationships_to(cls, user):
-        return [u.from_user.id for u in cls.objects.filter(
-            to_user__exact=user.id)]
+    def following(self):
+        return [rel.to_user for rel in self.from_user_rels.all()]
 
+if len(User.__bases__) == 1:
+    User.__bases__ += (UserMixin,)
