@@ -101,6 +101,7 @@ INSTALLED_APPS = (
     'dashboard',
     'relationships',
     'accountmanager',
+    'activity',
 )
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)

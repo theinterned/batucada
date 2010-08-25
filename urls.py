@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.conf.urls.defaults import *
 
@@ -11,8 +10,9 @@ urlpatterns = patterns('',
     (r'',                include('wellknown.urls')),
     (r'^profile/',       include('profiles.urls')),
     (r'^relationships/', include('relationships.urls')),
-    (r'^admin/',         include(admin.site.urls)),
     (r'^accountmanager/',include('accountmanager.urls')),
+    (r'^activity/',      include('activity.urls')),
+    (r'^admin/',         include(admin.site.urls)),
 )
 
 if settings.DEBUG:
