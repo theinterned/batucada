@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from relationships.models import UserRelationship
+from relationships.models import Relationship
 
-class UserRelationshipAdmin(admin.ModelAdmin):
+class RelationshipAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(UserRelationship, UserRelationshipAdmin)
+admin.site.register(Relationship, RelationshipAdmin)
