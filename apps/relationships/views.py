@@ -34,7 +34,7 @@ def follow(request):
         # todo - report error usefully
         return HttpResponse("error")
     user = User.objects.get(id=int(request.POST['user']))
-    rel = Relationship(from_user=request.user, to_user=user)
+    rel = Relationship(source=request.user, target=user)
     rel.save()
     # todo - redirect user to whatever page they were on before.
     return HttpResponseRedirect(reverse('users.views.user_list'))
@@ -47,8 +47,8 @@ def unfollow(request):
         return HttpResponse("error")
     user = User.objects.get(id=int(request.POST['user']))
     rel = Relationship.objects.get(
-        from_user__exact=request.user.id,
-        to_user__exact=user.id)
+        source_object_id__exact=request.user.id,
+        target_object_id__exact=user.id)
     rel.delete()
     # todo - redirect user to whatever page they were on before.
     return HttpResponseRedirect(reverse('users.views.user_list'))
