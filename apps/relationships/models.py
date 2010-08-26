@@ -33,10 +33,14 @@ class Relationship(models.Model):
 
 class UserMixin(object):
     def followers(self):
-        return [rel.source for rel in Relationship.objects.filter(target_object_id=self.id)]
+        return [rel.source for rel in Relationship.objects.filter(
+            target_object_id=self.id).filter(
+                    target_content_type=ContentType.objects.get_for_model(self))]
 
     def following(self):
-        return [rel.target for rel in Relationship.objects.filter(source_object_id=self.id)]
+        return [rel.target for rel in Relationship.objects.filter(
+            source_object_id=self.id).filter(
+                    source_content_type=ContentType.objects.get_for_model(self))]
 
 if len(User.__bases__) == 1:
     User.__bases__ += (UserMixin,)
