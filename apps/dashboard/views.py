@@ -3,6 +3,7 @@ import jingo
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
+from activity.models import Activity
 from profiles.models import Profile
 from users.forms import LoginForm
 from l10n.urlresolvers import reverse
@@ -17,8 +18,12 @@ def splash(request):
 @login_required
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
+    # TODO - this is for testing, replace with activites from users
+    #        and projects that the user follows. 
+    activities = Activity.objects.from_user(request.user, limit=5)
     return jingo.render(request, 'dashboard/dashboard.html', {
         'user': request.user,
+        'activities': activities
     })
        
 def index(request):

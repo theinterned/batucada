@@ -1,14 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Your Dashboard{% endblock %}
+{% block title %}{{ _('Your Dashboard') }}{% endblock %}
 {% block body %}
 
-<h2>Your Dashboard</h2>
+<h2>{{ _('Your Dashboard') }}</h2>
 <p>
   {% if user.get_full_name() %}
   Hello {{ user.get_full_name() }}! 
   {% endif %}
-  You are logged in.
+  {{ _('You are logged in.') }}
 </p>
+
+{% if activities %}
+<h3>{{ _('Recent Activity') }}</h3>
+<ul>
+  {% for activity in activities %}
+  <li>{{ activity }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
 
 <ul>
   <li><a href="{{ url('profiles.views.edit') }}">Your Profile</a></li>

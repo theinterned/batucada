@@ -7,16 +7,22 @@ from django.utils.timesince import timesince
 from activity import humanize_verb
 
 class ActivityManager(models.Manager):
-    def from_user(self, user):
+    def from_user(self, user, limit=None):
         if not isinstance(user, User):
             return []
-        return self.filter(actor=user).order_by('-timestamp')
+        activities = self.filter(actor=user).order_by('-timestamp')
+        if limit:
+            activities = activities[:limit]
+        return activities
 
-    def from_object(self, obj):
+    def from_object(self, obj, limit=None):
         if not isinstance(obj, models.Model):
             return []
-        return self.filter(obj=obj).order_by('-timestamp')
-
+        activities = self.filter(obj=obj).order_by('-timestamp')
+        if limit:
+            activities = activities[:limit]
+        return activities
+    
 class Activity(models.Model):
     actor = models.ForeignKey(User)
     verb = models.CharField(max_length=120)
