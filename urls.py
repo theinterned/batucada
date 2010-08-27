@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     (r'^relationships/', include('relationships.urls')),
     (r'^accountmanager/',include('accountmanager.urls')),
     (r'^admin/',         include(admin.site.urls)),
+
+    (r'^(?P<username>[\w ]+)/$', 'profiles.views.show'),
 )
 
 if settings.DEBUG:
