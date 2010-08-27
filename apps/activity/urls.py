@@ -3,6 +3,7 @@ from django.conf.urls.defaults import *
 from activity.feeds import UserActivityFeed, ObjectActivityFeed
 
 urlpatterns = patterns('',
-    (r'^people/(?P<actor>[\w ]+)/feed/$', UserActivityFeed()),
-    (r'^objects/(?P<object_id>)/feed/$', ObjectActivityFeed()),
+    (r'activity/(?P<activity_id>\d+)/$', 'activity.views.index'),
+    (r'(?P<username>[\w ]+)/stream/$', UserActivityFeed()),
+    (r'(?P<object_id>\d+)/stream/$', ObjectActivityFeed()),
 )

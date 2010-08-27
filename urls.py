@@ -8,10 +8,10 @@ urlpatterns = patterns('',
     (r'',                include('dashboard.urls')),
     (r'',                include('users.urls')),
     (r'',                include('wellknown.urls')),
+    (r'',                include('activity.urls')),
     (r'^profile/',       include('profiles.urls')),
     (r'^relationships/', include('relationships.urls')),
     (r'^accountmanager/',include('accountmanager.urls')),
-    (r'^activity/',      include('activity.urls')),
     (r'^admin/',         include(admin.site.urls)),
 )
 
