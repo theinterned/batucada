@@ -147,3 +147,7 @@ AMCD_CONFIG = {
         }
     }
 }
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user' : lambda o: "/%s/" % o.username,
+}

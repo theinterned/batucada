@@ -2,22 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-from django.utils.timesince import timesince 
+from django.utils.timesince import timesince
+from django.utils.translation import ugettext as _
 
 from activity import humanize_verb
+from l10n.urlresolvers import reverse
 
 class ActivityManager(models.Manager):
     def from_user(self, user, limit=None):
-        if not isinstance(user, User):
-            return []
         activities = self.filter(actor=user).order_by('-timestamp')
         if limit:
             activities = activities[:limit]
         return activities
 
     def from_object(self, obj, limit=None):
-        if not isinstance(obj, models.Model):
-            return []
         activities = self.filter(obj=obj).order_by('-timestamp')
         if limit:
             activities = activities[:limit]
@@ -40,10 +38,15 @@ class Activity(models.Model):
     objects = ActivityManager()
     
     def __unicode__(self):
+        r = u"%s %s %s" % (self.actor, humanize_verb(self.verb), self.obj)
         if self.target:
-            return u'%s %s %s %s ago' % \
-                   (self.actor, humanize_verb(self.verb), self.target, self.timesince())
-        return u'%s %s %s %s ago' % (self.actor, humanize_verb(self.verb), self.obj, self.timesince())
+            r += u" on %s" % (self.target,)
+        return r + _(" %(timesince)s ago") % {'timesince': self.timesince()}
 
+    def get_absolute_url(self):
+        return reverse('activity.views.index', kwargs=dict(activity_id=self.id))
+    
     def timesince(self, now=None):
-        return timesince(self.timestamp, now)    
+        t = timesince(self.timestamp, now)
+        c = lambda x: x == "0 minutes" and _("less than a minute") or x
+        return c(t)
