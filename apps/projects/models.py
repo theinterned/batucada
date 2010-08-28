@@ -6,6 +6,8 @@ from activity import action
 
 class Project(models.Model):
     """Placeholder model for projects."""
+    object_type = 'http://drumbeat.org/activity/schema/1.0/project'
+    generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
     name = models.CharField(max_length=100)
     description = models.TextField()
     created_by = models.ForeignKey(User, related_name='projects')

@@ -7,6 +7,26 @@ from django.shortcuts import get_object_or_404
 from activity.models import Activity
 from l10n.urlresolvers import reverse
 
+def object_type(obj):
+    """
+    Given an object, determine its type, either through inference in the case
+    of models from contrib packages, or by inspecting the value of the
+    ``object_type`` attribute.
+    """
+    inferred = {
+        User: 'http://activitystrea.ms/schema/1.0/person'
+    }
+    for k, v in inferred.items():
+        if isinstance(obj, k):
+            return v
+    if hasattr(obj, 'object_type'):
+        attr = getattr(obj, 'object_type')
+        if callable(attr):
+            return attr()
+        return attr
+    return None
+
+
 class ActivityStreamAtomFeed(Atom1Feed):
     """Tweaks to Atom feed generator to include Activity Stream data."""
     def root_attributes(self):
@@ -18,6 +38,10 @@ class ActivityStreamAtomFeed(Atom1Feed):
 
     def add_item_elements(self, handler, item):
         handler.addQuickElement(u'activity:verb', item['activity']['verb'])
+        obj = item['activity']['object']
+        handler.startElement(u'activity:object', {})
+        handler.addQuickElement(u'activity:object-type', obj['object-type'])
+        handler.endElement(u'activity:object')
         super(ActivityStreamAtomFeed, self).add_item_elements(handler, item)
 
     
@@ -45,10 +69,13 @@ class UserActivityAtomFeed(Feed):
     def items(self):
         return Activity.objects.all()
 
-    def item_extra_kwargs(self, obj):
+    def item_extra_kwargs(self, item):
         return {
             'activity': {
-                'verb': obj.verb,
+                'verb': item.verb,
+                'object': {
+                    'object-type': object_type(item.obj),
+                }
             }
        }
     
