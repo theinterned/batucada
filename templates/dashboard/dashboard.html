@@ -14,7 +14,7 @@
 <h3>{{ _('Recent Activity') }}</h3>
 <ul>
   {% for activity in activities %}
-  <li>{{ activity }}</li>
+  <li>{{ activity }} (<small><a href="{{ activity.get_absolute_url() }}">{{ activity.timesince() }} {{_(' ago')}}</small></a>)</li>
   {% endfor %}
 </ul>
 {% endif %}

@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models.signals import pre_save, pre_delete
 from django.utils.translation import ugettext as _
 
-from activity import action
+import activity
 
 class Relationship(models.Model):
     source_content_type = models.ForeignKey(ContentType, related_name='source_relationships')
@@ -49,6 +49,6 @@ def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     if not isinstance(rel, Relationship):
         return
-    action.send(rel.source, 'follow', rel.target)
+    activity.send(rel.source, 'follow', rel.target)
 
 pre_save.connect(follow_handler, sender=Relationship)
