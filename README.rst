@@ -13,16 +13,18 @@ To install Batucada, you must clone the repository: ::
 
    git clone git://github.com/paulosman/batucada.git
 
-Next, create a virtual environment and install dependencies. ::
+I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``batucada`` and install the dependencies ::
 
-   pip install virtualenvwrapper
+   cd batucada
    mkvirtualenv batucada 
-   pip install -f requirements.txt 
+   pip install -r requirements.txt 
 
 Finally, sync the database and start the development server. ::
 
    python manage.py syncdb --noinput 
    python manage.py runserver 
+
+.. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
 
 Get Involved
 ------------
