@@ -54,7 +54,7 @@ def show(request, username):
     except User.DoesNotExist:
         raise Http404
     return jingo.render(request, 'profiles/public.html', {
-        'user': user,
+        'profile_user': user,
         'profile': user.get_profile()
     })
 
