@@ -17,7 +17,7 @@
     <span class="fn">{{ profile.get_full_name() }}</span><br />
     {% else %}
     <strong>{{ _('Username:') }}</strong> 
-    <span class="fn nickname">{{ user.username }}</span><br />
+    <span class="fn nickname">{{ profile_user.username }}</span><br />
     {% endif %}
     {% if profile.location %}
     <strong>{{ _('Location:') }}</strong> 
