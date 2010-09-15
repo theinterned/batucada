@@ -59,7 +59,27 @@ class Activity(models.Model):
         r = u"%s %s %s" % (name, self.verb_obj.past_tense, self.obj)
         if self.target:
             r += u" on %s" % (self.target,)
-        return r 
+        return r
+
+    def get_resource_details(self):
+        name = self.actor
+        if name.get_full_name() not in '':
+            name = self.actor.get_full_name()
+        print self.actor.get_absolute_url()
+        resource = {
+            'id':      self.pk,
+            'source':  name,
+            'source_uri': self.actor.get_absolute_url(),
+            'verb':    self.verb_obj.past_tense,
+            'obj':     self.obj,
+            'obj_uri': self.obj.get_absolute_url()
+        }
+        if self.target:
+            resource.update({
+                'target': self.target,
+                'target_uri': self.target.get_absolute_url()
+            })
+        return resource
 
     def get_absolute_url(self):
         return reverse('activity.views.index', kwargs=dict(activity_id=self.id))
