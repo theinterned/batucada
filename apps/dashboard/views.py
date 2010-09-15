@@ -19,11 +19,16 @@ def splash(request):
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
     # TODO - this is for testing, replace with activites from users
-    #        and projects that the user follows. 
+    #        and projects that the user follows.
     activities = Activity.objects.from_user(request.user, limit=5)
+    activity_data = {}
+    for activity in activities:
+        details = activity.get_resource_details()
+        activity_data[activity.id] = details
     return jingo.render(request, 'dashboard/dashboard.html', {
         'user': request.user,
-        'activities': activities
+        'activities': activities,
+        'metadata': activity_data
     })
        
 def index(request):
