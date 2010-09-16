@@ -15,10 +15,7 @@
 <ul>
   {% for activity in activities %}
   <li>
-    <a href="{{ metadata[activity.id]['source_uri'] }}">{{ metadata[activity.id]['source'] }}</a> 
-    {{ metadata[activity.id]['verb'] }}
-    <a href="{{ metadata[activity.id]['obj_uri'] }}">{{ metadata[activity.id]['obj'] }}</a>
-    (<small><a href="{{ activity.get_absolute_url() }}">{{ activity.timesince() }} {{_(' ago')}}</a></small>)
+    {% include "activity/_activity_resource.html" %}
   </li>
   {% endfor %}
 </ul>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -25,6 +26,18 @@ class ActivityManager(models.Manager):
     def from_target(self, target, limit=None):
         """Return a chronological list of activities performed on ```target```."""
         return self.__results(dict(target=target), limit)
+
+    def for_user(self, user, limit=None):
+        """
+        Return a chronological list of activities performed by users that
+        ```user``` is following or on objects that ```user``` is interested
+        in.
+        """
+        if not (hasattr(user, 'following') and callable(user.following)):
+            return []
+        ids = [u.id for u in user.following()]
+        ids.append(user.id)
+        return self.__results(dict(actor__in=ids), None)
     
 class Activity(models.Model):
     actor = models.ForeignKey(User)
@@ -52,6 +65,30 @@ class Activity(models.Model):
             raise activity.UnknownActivityError("Unknown verb: %s" % (self.verb,))
         return activity.schema_verbs[self.verb]
 
+    @property
+    def source_name(self):
+        return self._get_full_name_or_username(self.actor)
+    
+    @property
+    def source_uri(self):
+        return self.actor.get_absolute_url()
+
+    @property
+    def obj_name(self):
+        return self._get_full_name_or_username(self.obj)
+
+    @property
+    def obj_uri(self):
+        return self.obj.get_absolute_url()
+
+    @property
+    def target_name(self):
+        return self._get_full_name_or_username(self.target)
+
+    @property
+    def target_uri(self):
+        return self.target.get_absolute_url()
+    
     def __unicode__(self):
         name = self.actor
         if name.get_full_name() not in '':
@@ -61,30 +98,18 @@ class Activity(models.Model):
             r += u" on %s" % (self.target,)
         return r
 
-    def get_resource_details(self):
-        name = self.actor
-        if name.get_full_name() not in '':
-            name = self.actor.get_full_name()
-        print self.actor.get_absolute_url()
-        resource = {
-            'id':      self.pk,
-            'source':  name,
-            'source_uri': self.actor.get_absolute_url(),
-            'verb':    self.verb_obj.past_tense,
-            'obj':     self.obj,
-            'obj_uri': self.obj.get_absolute_url()
-        }
-        if self.target:
-            resource.update({
-                'target': self.target,
-                'target_uri': self.target.get_absolute_url()
-            })
-        return resource
-
+    def _get_full_name_or_username(self, obj):
+        if isinstance(obj, User):
+            if obj.get_full_name() not in '':
+                return obj.get_full_name()
+        return obj
+        
     def get_absolute_url(self):
         return reverse('activity.views.index', kwargs=dict(activity_id=self.id))
     
     def timesince(self, now=None):
         t = timesince(self.timestamp, now)
         c = lambda x: x == "0 minutes" and _("less than a minute") or x
-        return c(t)
+        d = lambda x: ("hours," in x or "hour," in x) and x.split(',')[0] or x
+        
+        return d(c(t)) + _(" ago")

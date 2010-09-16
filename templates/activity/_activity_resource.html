@@ -1,0 +1,4 @@
+<a href="{{ activity.source_uri }}">{{ activity.source_name }}</a>
+{{ activity.verb_obj.past_tense }}
+<a href="{{ activity.obj_uri }}">{{ activity.obj_name }}</a>
+(<small><a href="{{ activity.get_absolute_url() }}">{{ activity.timesince() }}</a></small>)
