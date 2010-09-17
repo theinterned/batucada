@@ -79,6 +79,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'accountmanager.middleware.StatusHeader',
+    'commonware.middleware.HidePasswordOnException',
 )
 
 ROOT_URLCONF = 'batucada.urls'

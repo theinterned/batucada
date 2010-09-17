@@ -7,3 +7,4 @@ django-openid-auth==0.2
 -e git://github.com/paulosman/python-xrd#egg=xrd
 -e git://github.com/paulosman/django-wellknown.git#egg=wellknown
 -e git://github.com/paulosman/django-accountmanager.git#egg=accountmanager
+-e git://github.com/jsocol/commonware.git#egg=commonware
