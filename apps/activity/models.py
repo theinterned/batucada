@@ -75,7 +75,10 @@ class Activity(models.Model):
 
     @property
     def obj_name(self):
-        return self._get_full_name_or_username(self.obj)
+        name = self._get_full_name_or_username(self.obj)
+        if self.obj == name:
+            return u"%(obj)s" % { 'obj': self.obj }
+        return name
 
     @property
     def obj_uri(self):
@@ -88,6 +91,10 @@ class Activity(models.Model):
     @property
     def target_uri(self):
         return self.target.get_absolute_url()
+
+    @property
+    def actor_name(self):
+        return self._get_full_name_or_username(self.actor)
     
     def __unicode__(self):
         name = self.actor

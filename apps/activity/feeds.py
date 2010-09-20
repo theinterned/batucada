@@ -4,6 +4,8 @@ from django.utils.feedgenerator import Atom1Feed
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 
+import jingo
+
 from activity.models import Activity
 from l10n.urlresolvers import reverse
 
@@ -26,7 +28,6 @@ def object_type(obj):
         return attr
     return None
 
-
 class ActivityStreamAtomFeed(Atom1Feed):
     """Tweaks to Atom feed generator to include Activity Stream data."""
     def root_attributes(self):
@@ -41,6 +42,8 @@ class ActivityStreamAtomFeed(Atom1Feed):
         obj = item['activity']['object']
         handler.startElement(u'activity:object', {})
         handler.addQuickElement(u'activity:object-type', obj['object-type'])
+        handler.addQuickElement(u'title', obj['title'])
+        handler.addQuickElement(u'id', obj['id'])
         handler.endElement(u'activity:object')
         super(ActivityStreamAtomFeed, self).add_item_elements(handler, item)
 
@@ -53,32 +56,53 @@ class UserActivityAtomFeed(Feed):
     feed_type = ActivityStreamAtomFeed
 
     def get_object(self, request, username):
+        self.request = request
         return get_object_or_404(User, username=username)
 
     def title(self, obj):
-        return _("Activities for %(username)s") % {
-            'username': obj
+        f = lambda u: u.get_full_name() in '' and u or u.get_full_name()
+        return _("Activity Stream for %(username)s") % {
+            'username': f(obj)
         }
     
     def link(self, obj):
         return obj.get_absolute_url()
 
     def item_author_name(self, obj):
-        return u"%(username)s" % { 'username': obj.actor.username }
+        return u"%(username)s" % { 'username': obj.actor_name }
+
+    def item_author_link(self, obj):
+        return self.request.build_absolute_uri(obj.actor.get_absolute_url())
+
+    def item_link(self, obj):
+        return self.request.build_absolute_uri(obj.get_absolute_url())
     
-    def items(self):
-        return Activity.objects.all()
+    def items(self, user):
+        return Activity.objects.for_user(user)
+
+    def item_description(self, item):
+        template = 'activity/_activity_resource.html'
+        return jingo.render_to_string(self.request, template, {
+            'activity': item
+        })
+
+    def item_pubdate(self, item):
+        return item.timestamp
 
     def item_extra_kwargs(self, item):
+        obj_id = self.request.build_absolute_uri(
+            item.obj.get_absolute_url()
+        )
         return {
             'activity': {
                 'verb': item.verb,
                 'object': {
                     'object-type': object_type(item.obj),
+                    'title': item.obj_name,
+                    'id': obj_id
                 }
             }
        }
-    
 
 class ObjectActivityAtomFeed(Feed):
     feed_type = ActivityStreamAtomFeed
