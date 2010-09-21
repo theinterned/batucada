@@ -24,13 +24,17 @@ class Type(object):
         }
         self.past_tense = past_tense
 
-    @property
-    def human_readable(self):
+    def human_readable(self, noun=False, capitalize=False):
         """Generate a human readable form of this type."""
         term = self.name.split('/')[-1]
         if '-' in term:
             return ' '.join(map(lambda s: s.capitalize(), term.split('-')))
-        return term.capitalize()
+        if capitalize:
+            term = term.capitalize()
+        if noun:
+            p = lambda t: t[0] in 'aeiou' and _('an %(term)s' % {'term':t}) or _('a %(term)s' % {'term':t})
+            return p(term)
+        return term
 
     def __eq__(self, other):
         return self.name == other or self.abbrev_name == other

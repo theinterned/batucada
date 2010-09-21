@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
 
-from activity.schema import verbs, UnknownActivityError
+from activity.schema import verbs, object_types, UnknownActivityError
 
 class ActivityManager(models.Manager):
 
@@ -57,7 +57,7 @@ class Activity(models.Model):
 
     @property
     def readable_verb(self):
-        self.verb_obj.human_readable
+        self.verb_obj.human_readable()
 
     @property
     def verb_abbrev(self):
@@ -90,6 +90,24 @@ class Activity(models.Model):
         return self.obj.get_absolute_url()
 
     @property
+    def obj_type(self):
+        if hasattr(self.obj, 'object_type'):
+            attr = getattr(self.obj, 'object_type')
+            if callable(attr):
+                return attr()
+            return attr
+        return None
+            
+    @property
+    def obj_type_friendly(self):
+        obj_type = self.obj_type
+        if obj_type:
+            for k, v in object_types.iteritems():
+                if v == obj_type:
+                    return v.human_readable(noun=True)
+        return None
+
+    @property
     def target_name(self):
         return self._get_full_name_or_username(self.target)
 
@@ -105,7 +123,10 @@ class Activity(models.Model):
         name = self.actor
         if name.get_full_name() not in '':
             name = self.actor.get_full_name()
-        r = u"%s %s %s" % (name, self.verb_obj.past_tense, self.obj)
+        if self.obj_type:
+            r = u"%s %s %s: %s" % (name, self.verb_obj.past_tense, self.obj_type_friendly, self.obj)
+        else:
+            r = u"%s %s %s" % (name, self.verb_obj.past_tense, self.obj)
         if self.target:
             r += u" on %s" % (self.target,)
         return r
