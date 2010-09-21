@@ -38,6 +38,11 @@ class ActivityStreamAtomFeed(Atom1Feed):
         return attrs
 
     def add_item_elements(self, handler, item):
+
+        handler.startElement(u'content', {'type': 'html'})
+        handler.characters(item['description'])
+        handler.endElement(u'content')
+        
         handler.addQuickElement(u'activity:verb', item['activity']['verb'])
         obj = item['activity']['object']
         handler.startElement(u'activity:object', {})
