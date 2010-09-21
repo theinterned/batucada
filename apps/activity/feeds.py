@@ -39,25 +39,11 @@ class ActivityStreamAtomFeed(Atom1Feed):
         })
         return attrs
 
-    def add_item_elements(self, handler, item):
-        handler.startElement(u'content', {'type': 'html'})
-        handler.characters(item['description'])
-        handler.endElement(u'content')
-        
-        # if this is a specialized verb, add generalization
-        for key, verb in verbs.iteritems():
-            if verb == item['activity']['verb']:
-                if isinstance(verb, DerivedType):
-                    handler.addQuickElement(u'activity:verb', verb.parent.name)
-
-        handler.addQuickElement(u'activity:verb', item['activity']['verb'])
-
-        obj = item['activity']['object']
+    def _add_object_element(self, handler, obj):
         handler.startElement(u'activity:object', {})
-        
-        # if this is a specialized object-type, add generalization
-        for key, o in object_types.iteritems():
-            if o == item['activity']['object']['object-type']:
+
+        for k, o in object_types.iteritems():
+            if o == obj['object-type']:
                 if isinstance(o, DerivedType):
                     handler.addQuickElement(u'activity:object-type', o.parent.name)
 
@@ -66,6 +52,22 @@ class ActivityStreamAtomFeed(Atom1Feed):
         handler.addQuickElement(u'id', obj['id'])
         handler.addQuickElement(u'link', attrs=obj['link'])
         handler.endElement(u'activity:object')
+
+    def add_item_elements(self, handler, item):
+        handler.startElement(u'content', {'type': 'html'})
+        handler.characters(item['description'])
+        handler.endElement(u'content')
+
+        for key, verb in verbs.iteritems():
+            if verb == item['activity']['verb']:
+                if isinstance(verb, DerivedType):
+                    handler.addQuickElement(u'activity:verb', verb.parent.name)
+        handler.addQuickElement(u'activity:verb', item['activity']['verb'])
+
+        self._add_object_element(handler, item['activity']['object'])
+        if 'target' in item['activity']:
+            self._add_object_element(handler, item['activity']['target'])
+
         super(ActivityStreamAtomFeed, self).add_item_elements(handler, item)
 
     
@@ -114,7 +116,7 @@ class UserActivityAtomFeed(Feed):
         obj_id = self.request.build_absolute_uri(
             item.obj.get_absolute_url()
         )
-        return {
+        kwargs = {
             'activity': {
                 'verb': item.verb,
                 'object': {
@@ -129,6 +131,21 @@ class UserActivityAtomFeed(Feed):
                 }
             }
         }
+        if item.target:
+            target_id = self.request.build_absolute_uri(
+                item.target.get_absolute_url()
+            )
+            kwargs['activity']['target'] = {
+                'object-type': object_type(item.target),
+                'title': item.target_name,
+                'id': target_id,
+                'link': {
+                    'rel': 'alternate',
+                    'type': 'text/html',
+                    'href': target_id
+                }
+            }
+        return kwargs
 
 class ObjectActivityAtomFeed(Feed):
     feed_type = ActivityStreamAtomFeed
