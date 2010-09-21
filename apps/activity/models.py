@@ -56,41 +56,34 @@ class Activity(models.Model):
     objects = ActivityManager()
 
     @property
-    def readable_verb(self):
-        self.verb_obj.human_readable()
-
-    @property
-    def verb_abbrev(self):
-        return self.verb.split('/')[-1]
-
-    @property
-    def verb_obj(self):
-        abbrev = self.verb_abbrev
+    def verb_object(self):
+        """
+        Given a URI that identified a verb, return the corresponding
+        ```Type``` object.
+        """
+        abbrev = self.verb.split('/')[-1]
         if abbrev not in verbs:
             raise UnknownActivityError("Unknown verb: %s" % (self.verb,))
         return verbs[abbrev]
-
-    @property
-    def source_name(self):
-        return self._get_full_name_or_username(self.actor)
     
-    @property
-    def source_uri(self):
-        return self.actor.get_absolute_url()
-
-    @property
-    def obj_name(self):
-        name = self._get_full_name_or_username(self.obj)
+    @property    
+    def object_name(self):
+        """
+        Some classes of objects (e.g., ```User```) have special naming
+        rules (e.g., use full name if it is not null, otherwise username).
+        Apply those rules here to get a friendly name for ```self.obj```.
+        """
+        name = self._get_object_name(self.obj)
         if self.obj == name:
             return u"%(obj)s" % { 'obj': self.obj }
         return name
 
     @property
-    def obj_uri(self):
-        return self.obj.get_absolute_url()
-
-    @property
-    def obj_type(self):
+    def object_type(self):
+        """
+        Given an object, try to determine it's type, which will usually be
+        identified by a URI.
+        """
         if hasattr(self.obj, 'object_type'):
             attr = getattr(self.obj, 'object_type')
             if callable(attr):
@@ -99,39 +92,56 @@ class Activity(models.Model):
         return None
             
     @property
-    def obj_type_friendly(self):
-        obj_type = self.obj_type
-        if obj_type:
+    def object_type_friendly(self):
+        """
+        If the type URI for an object can be determined, try to find the
+        friendly version. For instance, http://activitystrea.ms/schema/1.0/article
+        would be 'an article'.
+        """
+        object_type = self.object_type
+        if object_type:
             for k, v in object_types.iteritems():
-                if v == obj_type:
+                if v == object_type:
                     return v.human_readable(noun=True)
         return None
 
     @property
     def target_name(self):
-        return self._get_full_name_or_username(self.target)
-
-    @property
-    def target_uri(self):
-        return self.target.get_absolute_url()
+        """
+        Apply special rules (if they exist) to determining the name of the
+        target of this activity.
+        """
+        return self._get_object_name(self.target)
 
     @property
     def actor_name(self):
-        return self._get_full_name_or_username(self.actor)
-    
+        """
+        Apply special rules (if they exist) to determine the name of the
+        actor of this activity.
+        """
+        return self._get_object_name(self.actor)
+
     def __unicode__(self):
-        name = self.actor
-        if name.get_full_name() not in '':
-            name = self.actor.get_full_name()
-        if self.obj_type:
-            r = u"%s %s %s: %s" % (name, self.verb_obj.past_tense, self.obj_type_friendly, self.obj)
-        else:
-            r = u"%s %s %s" % (name, self.verb_obj.past_tense, self.obj)
+        name = self._get_object_name(self.actor)
+        r = u"%(name)s %(verb)s" % {
+            'name': name,
+            'verb': self.verb_object.past_tense,
+        }
+        if self.object_type:
+            r += u" %(object_type)s:" % {
+                'object_type': self.object_type_friendly,
+            }
+        r += u" %(object)s" % { 'object': self.obj }
         if self.target:
             r += u" on %s" % (self.target,)
         return r
 
-    def _get_full_name_or_username(self, obj):
+    def _get_object_name(self, obj):
+        """
+        Some objects (in the Python sense, not the Activity Streams sense)
+        have special rules concerning naming. Since they're only useful for
+        activity streams, process them here instead of monkey patching.
+        """
         if isinstance(obj, User):
             if obj.get_full_name() not in '':
                 return obj.get_full_name()
@@ -141,8 +151,8 @@ class Activity(models.Model):
         return reverse('activity.views.index', kwargs=dict(activity_id=self.id))
     
     def timesince(self, now=None):
+        """A slightly modified version of ```django.utils.timesince.timesince```."""
         t = timesince(self.timestamp, now)
         c = lambda x: x == "0 minutes" and _("less than a minute") or x
         d = lambda x: ("hours," in x or "hour," in x) and x.split(',')[0] or x
-        
         return d(c(t)) + _(" ago")

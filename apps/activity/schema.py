@@ -32,7 +32,8 @@ class Type(object):
         if capitalize:
             term = term.capitalize()
         if noun:
-            p = lambda t: t[0] in 'aeiou' and _('an %(term)s' % {'term':t}) or _('a %(term)s' % {'term':t})
+            p = lambda t: (t[0] in 'aeio' and _('an %(term)s' % {'term':t})
+                           or _('a %(term)s' % {'term':t}))
             return p(term)
         return term
 

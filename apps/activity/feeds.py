@@ -119,7 +119,7 @@ class UserActivityAtomFeed(Feed):
                 'verb': item.verb,
                 'object': {
                     'object-type': object_type(item.obj),
-                    'title': item.obj_name,
+                    'title': item.object_name,
                     'id': obj_id,
                     'link': {
                         'rel': 'alternate',
