@@ -60,10 +60,15 @@ class Activity(models.Model):
         self.verb_obj.human_readable
 
     @property
+    def verb_abbrev(self):
+        return self.verb.split('/')[-1]
+
+    @property
     def verb_obj(self):
-        if self.verb not in activity.schema_verbs:
+        abbrev = self.verb_abbrev
+        if abbrev not in activity.schema_verbs:
             raise activity.UnknownActivityError("Unknown verb: %s" % (self.verb,))
-        return activity.schema_verbs[self.verb]
+        return activity.schema_verbs[abbrev]
 
     @property
     def source_name(self):

@@ -40,6 +40,7 @@ class DerivedType(Type):
         super(DerivedType, self).__init__(name, past_tense)
         self.parent = parent
 
+# a list of object-types defined in the activity schema
 object_types = [
     'article', 'audio', 'bookmark', 'comment', 'file', 'folder', 'group',
     'note', 'person', 'photo', 'photo-album', 'place', 'playlist', 'product',
@@ -49,11 +50,7 @@ schema_object_types = {}
 for object_type in object_types:
     schema_object_types[object_type] = Type(object_type)   
 
-# Custom types 
-schema_object_types.update({
-    'project':  DerivedType('project', schema_object_types['group']),
-})
-
+# a list of verbs defined in the activity schema
 schema_verbs = {
     'favorite':    Type('favorite', past_tense=_('favorited')),
     'follow':      Type('follow', past_tense=_('started following')),
@@ -71,6 +68,11 @@ schema_verbs = {
     'rsvp-maybe':  Type('rsvp-maybe', past_tense=_('might be attending')),
 }
 
+# Custom types 
+schema_object_types.update({
+    'project':  DerivedType('project', schema_object_types['group']),
+})
+
 # Custom verbs
 schema_verbs.update({
     'create':      DerivedType('create',
@@ -79,13 +81,18 @@ schema_verbs.update({
 })
 
 def send(actor, verb, obj, target=None):
-    if type(verb) == type(""):
-        if verb not in schema_verbs:
-            raise UnknownActivityError("Unknown verb: %s" % (verb,))
-        verb = schema_verbs[verb]
+    """
+    Receive and handle an activity sent by another part of the project.
+    Activities are represented as <actor> <verb> <object> [<target>]
+    where actor is a ```User``` object, ```verb``` is a string and
+    ```obj``` and optionally ```target``` are model classes.
+    """
+    if verb not in schema_verbs:
+        raise UnknownActivityError("Unknown verb: %s" % (verb,))
+    verb = schema_verbs[verb]
     activity = Activity(
         actor=actor,
-        verb=verb.abbrev_name,
+        verb=verb.name,
         obj_content_type=ContentType.objects.get_for_model(obj),
         obj_id=obj.pk
     )
