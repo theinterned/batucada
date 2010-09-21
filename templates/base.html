@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Batucada | {% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css" media="screen" />
+  <link rel="stylesheet" href="{{MEDIA_URL}}css/base.css?v=1">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css?v=1" media="screen" />
+  <!-- bring on the html5 -->
+  <script src="{{ MEDIA_URL }}js/modernizr-1.5.min.js"></script>
   {% block links %}{% endblock %}
 </head>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> 
 <body>
+<!--<![endif]-->
   <header>
   <h1><a href="{{ url('dashboard.views.index') }}">Batucada</a></h1>
   <nav id="site">
@@ -30,5 +41,14 @@
   {% endif %}
   {% include "errors.html" %}
   {% block body %}{% endblock %}
+  
+<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script>!window.jQuery && document.write('<script src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js"><\/script>');</script>
+<script src="js/plugins.js?v=1"></script><!-- third party -->
+<script src="js/script.js?v=1"></script><!-- first party -->
+<!--[if lt IE 7 ]>
+<script src="js/dd_belatedpng.js?v=1"></script>
+<![endif]-->
 </body>
 </html>
