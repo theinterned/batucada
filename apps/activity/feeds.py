@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404
 import jingo
 
 from activity.models import Activity
+from activity.schema import verbs, object_types, DerivedType
+
 from l10n.urlresolvers import reverse
 
 def object_type(obj):
@@ -38,17 +40,31 @@ class ActivityStreamAtomFeed(Atom1Feed):
         return attrs
 
     def add_item_elements(self, handler, item):
-
         handler.startElement(u'content', {'type': 'html'})
         handler.characters(item['description'])
         handler.endElement(u'content')
         
+        # if this is a specialized verb, add generalization
+        for key, verb in verbs.iteritems():
+            if verb == item['activity']['verb']:
+                if isinstance(verb, DerivedType):
+                    handler.addQuickElement(u'activity:verb', verb.parent.name)
+
         handler.addQuickElement(u'activity:verb', item['activity']['verb'])
+
         obj = item['activity']['object']
         handler.startElement(u'activity:object', {})
+        
+        # if this is a specialized object-type, add generalization
+        for key, o in object_types.iteritems():
+            if o == item['activity']['object']['object-type']:
+                if isinstance(o, DerivedType):
+                    handler.addQuickElement(u'activity:object-type', o.parent.name)
+
         handler.addQuickElement(u'activity:object-type', obj['object-type'])
         handler.addQuickElement(u'title', obj['title'])
         handler.addQuickElement(u'id', obj['id'])
+        handler.addQuickElement(u'link', attrs=obj['link'])
         handler.endElement(u'activity:object')
         super(ActivityStreamAtomFeed, self).add_item_elements(handler, item)
 
@@ -104,10 +120,15 @@ class UserActivityAtomFeed(Feed):
                 'object': {
                     'object-type': object_type(item.obj),
                     'title': item.obj_name,
-                    'id': obj_id
+                    'id': obj_id,
+                    'link': {
+                        'rel': 'alternate',
+                        'type': 'text/html',
+                        'href': obj_id
+                    }
                 }
             }
-       }
+        }
 
 class ObjectActivityAtomFeed(Feed):
     feed_type = ActivityStreamAtomFeed

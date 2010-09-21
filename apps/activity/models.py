@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
 
-import activity
+from activity.schema import verbs, UnknownActivityError
 
 class ActivityManager(models.Manager):
 
@@ -66,9 +66,9 @@ class Activity(models.Model):
     @property
     def verb_obj(self):
         abbrev = self.verb_abbrev
-        if abbrev not in activity.schema_verbs:
-            raise activity.UnknownActivityError("Unknown verb: %s" % (self.verb,))
-        return activity.schema_verbs[abbrev]
+        if abbrev not in verbs:
+            raise UnknownActivityError("Unknown verb: %s" % (self.verb,))
+        return verbs[abbrev]
 
     @property
     def source_name(self):
