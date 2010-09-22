@@ -102,6 +102,8 @@ INSTALLED_APPS = (
     'dashboard',
     'relationships',
     'accountmanager',
+    'activity',
+    'projects',
 )
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
@@ -145,4 +147,8 @@ AMCD_CONFIG = {
             'secret': 'password'
         }
     }
+}
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user' : lambda o: "/%s/" % o.username,
 }

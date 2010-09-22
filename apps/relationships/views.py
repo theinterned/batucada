@@ -7,7 +7,7 @@ from django.views.decorators.http import require_http_methods
 import jingo
 
 from l10n.urlresolvers import reverse
-from relationships.models import UserRelationship
+from relationships.models import Relationship
 
 @login_required
 def following(request):
@@ -34,7 +34,7 @@ def follow(request):
         # todo - report error usefully
         return HttpResponse("error")
     user = User.objects.get(id=int(request.POST['user']))
-    rel = UserRelationship(from_user=request.user, to_user=user)
+    rel = Relationship(source=request.user, target=user)
     rel.save()
     # todo - redirect user to whatever page they were on before.
     return HttpResponseRedirect(reverse('users.views.user_list'))
@@ -46,9 +46,9 @@ def unfollow(request):
         # todo - report error usefully
         return HttpResponse("error")
     user = User.objects.get(id=int(request.POST['user']))
-    rel = UserRelationship.objects.get(
-        from_user__exact=request.user.id,
-        to_user__exact=user.id)
+    rel = Relationship.objects.get(
+        source_object_id__exact=request.user.id,
+        target_object_id__exact=user.id)
     rel.delete()
     # todo - redirect user to whatever page they were on before.
     return HttpResponseRedirect(reverse('users.views.user_list'))

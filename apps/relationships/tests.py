@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
 
-from relationships.models import UserRelationship
+from relationships.models import Relationship
 
 class RelationshipsTests(TestCase):
 
@@ -21,9 +21,9 @@ class RelationshipsTests(TestCase):
     def test_unidirectional_relationship(self):
         """Test a one way relationship between two users."""
         # User 1 follows User 2
-        relationship = UserRelationship(
-            from_user=self.user_one,
-            to_user=self.user_two
+        relationship = Relationship(
+            source=self.user_one,
+            target=self.user_two
         )
         relationship.save()
         self.assertEqual(self.user_one.following(), [self.user_two])
@@ -31,31 +31,31 @@ class RelationshipsTests(TestCase):
     def test_unique_constraint(self):
         """Test that a user can't follow another user twice."""
         # User 1 follows User 2
-        relationship = UserRelationship(
-            from_user=self.user_one,
-            to_user=self.user_two
+        relationship = Relationship(
+            source=self.user_one,
+            target=self.user_two
         )
         relationship.save()
 
         # Try again
-        relationship = UserRelationship(
-            from_user=self.user_one,
-            to_user=self.user_two
+        relationship = Relationship(
+            source=self.user_one,
+            target=self.user_two
         )
         self.assertRaises(IntegrityError, relationship.save)
 
     def test_narcissistic_user(self):
         """Test that one cannot follow oneself."""
-        relationship = UserRelationship(
-            from_user=self.user_one,
-            to_user=self.user_one
+        relationship = Relationship(
+            source=self.user_one,
+            target=self.user_one
         )
         self.assertRaises(ValidationError, relationship.save)
 
     def test_bidirectional_relationship(self):
         """Test symmetric relationship."""
-        UserRelationship(from_user=self.user_one, to_user=self.user_two).save()
-        UserRelationship(from_user=self.user_two, to_user=self.user_one).save()
+        Relationship(source=self.user_one, target=self.user_two).save()
+        Relationship(source=self.user_two, target=self.user_one).save()
         
         rels_one = self.user_one.following()
         rels_two = self.user_two.following()

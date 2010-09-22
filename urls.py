@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.conf.urls.defaults import *
 
@@ -9,10 +8,14 @@ urlpatterns = patterns('',
     (r'',                include('dashboard.urls')),
     (r'',                include('users.urls')),
     (r'',                include('wellknown.urls')),
+    (r'',                include('activity.urls')),
     (r'^profile/',       include('profiles.urls')),
+    (r'^project/',       include('projects.urls')),
     (r'^relationships/', include('relationships.urls')),
-    (r'^admin/',         include(admin.site.urls)),
     (r'^accountmanager/',include('accountmanager.urls')),
+    (r'^admin/',         include(admin.site.urls)),
+
+    (r'^(?P<username>[\w ]+)/$', 'profiles.views.show'),
 )
 
 if settings.DEBUG:

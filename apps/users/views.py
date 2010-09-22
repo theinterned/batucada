@@ -17,7 +17,6 @@ from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
 from users.auth import users_login_begin, users_login_complete, authenticate
 from users.auth import OpenIDAuthError
 from users.decorators import anonymous_only
-from relationships.models import UserRelationship
 
 def login_begin(request, registration=False):
     """Begin OpenID auth workflow."""
