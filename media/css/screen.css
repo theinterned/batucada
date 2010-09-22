@@ -1,16 +1,19 @@
+/* @override http://127.0.0.1:8000/media/css/screen.css?v=1 */
+
+/* @group Basics */
+html{	
+	background: #f0f0f0;
+}
 body {
-    color: rgba(0, 0, 0, 0.8);
-    font: 14px/1.8 "trebuchet ms", sans-serif;
-    width: 500px;
+    font: 16px/24px sans-serif;
+    display: block;
+    width: 1020px;
+    margin: 0 auto;
+	background: #fff;
+	position: relative;
 }
-
-h1 > a {
-    color: #000;
-}
-
-a {
-    text-decoration: none;
-    color: #900;
+body > * {
+	padding: 24px 40px; /*content width = 940px*/
 }
 
 input[name=openid_identifier] {
@@ -18,6 +21,55 @@ input[name=openid_identifier] {
     background-position: 0 50%;
     padding-left: 16px;
 }
+/* @end */
+
+/* @group Layout */
+header{
+	background: #e0e0e0;
+	clear: both;
+}
+header h1{
+	background: url(../images/drumbeat_logo.png) no-repeat 0 0;
+	line-height: 72px; padding-left: 76px;
+	font-size: 36px;
+}
+header h1 a{
+	color: #444;
+	text-decoration: none;
+}
+header nav ul{
+	padding: 0 10px; margin: 0;
+	background: #fff;
+	float: left;	
+	position: absolute;
+	top: 36px; right: 40px;
+	border-radius:20px;
+	-moz-border-radius:20px;
+}
+header nav ul:after{content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+header nav ul li{
+	display: inline-block;
+}
+header nav ul li a{
+	display: block;
+	padding: 0 10px;
+	line-height: 48px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+/* @end */
+
+/* @group Sections */
+
+
+/* @end */
+
+
+
+
+
+
 
 div.errors {
     color: #fff;
