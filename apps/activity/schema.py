@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext as _
 
 class UnknownActivityError(Exception):
@@ -14,7 +15,7 @@ class Type(object):
     """Represent an entity defined in Atom Activity Base Schema."""
 
     past_tense = None
-    ns = 'http://activitystrea.ms/schema/1.0/'
+    ns = 'http://activitystrea.ms/schema/1.0'
     
     def __init__(self, name, past_tense=None):
         self.abbrev_name = name
@@ -88,3 +89,23 @@ verbs.update({
                                verbs['post'],
                                past_tense=_('created')),
 })
+
+def object_type(obj):
+    """
+    Given an object, determine its type, either through inference in the case
+    of models from contrib packages, or by inspecting the value of the
+    ``object_type`` attribute.
+    """
+    inferred = {
+        User: object_types['person'].name,
+        Group: object_types['group'].name,
+    }
+    for k, v in inferred.items():
+        if isinstance(obj, k):
+            return v
+    if hasattr(obj, 'object_type'):
+        attr = getattr(obj, 'object_type')
+        if callable(attr):
+            return attr()
+        return attr
+    return None

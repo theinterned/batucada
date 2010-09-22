@@ -7,28 +7,9 @@ from django.shortcuts import get_object_or_404
 import jingo
 
 from activity.models import Activity
-from activity.schema import verbs, object_types, DerivedType
+from activity.schema import object_type, verbs, object_types, DerivedType
 
 from l10n.urlresolvers import reverse
-
-def object_type(obj):
-    """
-    Given an object, determine its type, either through inference in the case
-    of models from contrib packages, or by inspecting the value of the
-    ``object_type`` attribute.
-    """
-    inferred = {
-        User: 'http://activitystrea.ms/schema/1.0/person'
-    }
-    for k, v in inferred.items():
-        if isinstance(obj, k):
-            return v
-    if hasattr(obj, 'object_type'):
-        attr = getattr(obj, 'object_type')
-        if callable(attr):
-            return attr()
-        return attr
-    return None
 
 class ActivityStreamAtomFeed(Atom1Feed):
     """Tweaks to Atom feed generator to include Activity Stream data."""
