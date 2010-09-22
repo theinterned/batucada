@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
 
-from activity.schema import verbs, object_types, UnknownActivityError
+from activity.schema import object_type, verbs, object_types, UnknownActivityError
 
 class ActivityManager(models.Manager):
 
@@ -21,11 +21,17 @@ class ActivityManager(models.Manager):
 
     def from_object(self, obj, limit=None):
         """Return a chronological list of activities involving ```obj```."""
-        return self.__results(dict(obj=obj), limit)
+        return self.__results({
+            'obj_id': obj.id,
+            'obj_content_type': ContentType.objects.get_for_model(obj)
+        }, limit)
 
     def from_target(self, target, limit=None):
         """Return a chronological list of activities performed on ```target```."""
-        return self.__results(dict(target=target), limit)
+        return self.__results({
+            'target_id': target.id,
+            'target_content_type': ContentType.objects.get_for_model(target)
+        }, limit)
 
     def for_user(self, user, limit=None):
         """
@@ -84,12 +90,7 @@ class Activity(models.Model):
         Given an object, try to determine it's type, which will usually be
         identified by a URI.
         """
-        if hasattr(self.obj, 'object_type'):
-            attr = getattr(self.obj, 'object_type')
-            if callable(attr):
-                return attr()
-            return attr
-        return None
+        return object_type(self.obj)
             
     @property
     def object_type_friendly(self):
@@ -112,6 +113,28 @@ class Activity(models.Model):
         target of this activity.
         """
         return self._get_object_name(self.target)
+
+    @property
+    def target_type(self):
+        """
+        Given a target, try to determine it's type, which will usually be
+        identified by a URI.
+        """
+        return object_type(self.target)
+
+    @property
+    def target_type_friendly(self):
+        """
+        If the type URI for a target can be determined, try to find the
+        friendly version. For instance, http://activitystrea.ms/schema/1.0/article
+        would be 'an article'.
+        """
+        target_type = self.target_type
+        if target_type:
+            for k, v in object_types.iteritems():
+                if v == target_type:
+                    return v.human_readable(noun=True)
+        return None
 
     @property
     def actor_name(self):
@@ -145,7 +168,7 @@ class Activity(models.Model):
         if isinstance(obj, User):
             if obj.get_full_name() not in '':
                 return obj.get_full_name()
-        return obj
+        return str(obj)
         
     def get_absolute_url(self):
         return reverse('activity.views.index', kwargs=dict(activity_id=self.id))
