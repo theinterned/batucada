@@ -23,3 +23,4 @@ def send(actor, verb, obj, target=None):
         activity.target_content_type = ContentType.objects.get_for_model(target)
         activity.target_id = target.pk
     activity.save()
+    return activity
