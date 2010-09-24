@@ -61,7 +61,7 @@ class RegisterForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        label=_("Username or Email:"),
+        label=_("Username or email:"),
         error_messages={'required': _('You must provide a username or email.')})
     password = forms.CharField(
         label=_("Password:"),

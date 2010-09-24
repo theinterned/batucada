@@ -3,29 +3,20 @@
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
 
-<fieldset>
-  <legend>{{ _('Sign In') }}</legend>
-  <form action="{{ url('users.views.login') }}" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />
-    {% for field in form %}
-    <p>
-      {{ field.label_tag()|safe }}
-      {{ field.as_widget()|safe }}
-    </p>
-    {% endfor %}
-    <p>
-      <input type="submit" value="{{ _('Sign In') }}" />
-    </p>
-    <p>
+<form action="{{ url('users.views.login') }}" method="post">
+  <fieldset>
+    <legend>{{ _('Sign In') }} <span class="pester">(Not a member? <a href="{{ url('users.views.register') }}">Sign up</a>)</span></legend>  
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />
+      {% for field in form %}
+      <p>
+        {{ field.label_tag()|safe }}
+        {{ field.as_widget()|safe }}
+      </p>
+      {% endfor %}
       <a id="forgot_password" href="{{ url('users.views.forgot_password') }}">{{ _('Forgot your password?') }}</a>
-      <br />
-      <a href="{{ url('users.views.login_openid') }}">{{ _('Sign in with OpenID')}}</a>
-    </p>
-  </form>
-</fieldset>
-
-<p>
-  Not a member? <a href="{{ url('users.views.register') }}">Sign up</a>!
-</p>
+      <p><button type="submit">{{ _('Sign In') }}</button></p>    
+  </fieldset>
+</form>
+<p class="openid"><a href="{{ url('users.views.login_openid') }}">{{ _('Sign in with OpenID')}}</a></p>
 
 {% endblock %}
