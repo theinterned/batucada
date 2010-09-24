@@ -1,7 +1,7 @@
 <a href="{{ activity.actor.get_absolute_url() }}">{{ activity.actor_name }}</a>
 {{ activity.verb_object.past_tense }}
-{% if activity.object_type %}
-{{ activity.object_type_friendly }}
+{% if activity.object_type and activity.object_type_friendly != 'a person' %}
+{{ activity.object_type_friendly }}:
 {% endif %}
 <a href="{{ activity.obj.get_absolute_url() }}">{{ activity.object_name }}</a>
 (<small><a href="{{ activity.get_absolute_url() }}">{{ activity.timesince() }}</a></small>)
