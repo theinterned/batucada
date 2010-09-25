@@ -1,23 +1,139 @@
+/* @override http://127.0.0.1:8000/media/css/screen.css?v=1 */
+
+/* @group Basics */
+html{	
+	background: #f0f0f0;
+}
 body {
-    color: rgba(0, 0, 0, 0.8);
-    font: 14px/1.8 "trebuchet ms", sans-serif;
-    width: 500px;
+    font: 16px/24px sans-serif;
+    display: block;
+    width: 1020px;
+    margin: 0 auto;
+	background: #fff;
+	position: relative;
+}
+body > * {
+	padding: 24px 40px; /*content width = 940px*/
 }
 
-h1 > a {
-    color: #000;
+/* @group forms */
+legend{
+	font-size: 18px;
+	font-weight: bold;
+}
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="password"]{
+	border: 1px solid #ddd;
+	background: #fafafa;
+	font-size: 13px;
+	line-height: 20px; height: 20px;
+	padding: 0 4px;
+	vertical-align: bottom;
+	-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3) inset;
+	-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3) inset;
+}
+input:focus{
+	background: #B5D5FF;
+}
+input[name=openid_identifier],
+p.openid {
+    background: url(/media/images/openid_logo.gif) no-repeat 6px 50%;
+    padding-left: 26px;
+}
+/* @end */
+
+/* @end */
+
+/* @group Layout */
+header{
+	background: #e0e0e0;
+	clear: both;
+}
+header h1{
+	background: url(../images/drumbeat_logo.png) no-repeat 0 0;
+	line-height: 72px; padding-left: 76px;
+	font-size: 36px;
+}
+header h1 a{
+	color: #444;
+	text-decoration: none;
+}
+header nav ul{
+	padding: 0 10px; margin: 0;
+	background: #fff;
+	float: left;	
+	position: absolute;
+	top: 36px; right: 40px;
+	border-radius:20px;
+	-moz-border-radius:20px;
+}
+header nav ul:after{content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+header nav ul li{
+	display: inline-block;
+}
+header nav ul li a{
+	display: block;
+	padding: 0 10px;
+	line-height: 48px;
+	font-weight: bold;
+	text-decoration: none;
 }
 
-a {
-    text-decoration: none;
-    color: #900;
-}
+/* @end */
 
-input[name=openid_identifier] {
-    background: url(/media/images/openid_logo.gif) no-repeat;
-    background-position: 0 50%;
-    padding-left: 16px;
+/* @group Sections */
+
+/* @group Signin */
+html.signin #body{
+	width: 480px;
+	margin: auto;
 }
+html.signin #body legend {
+	display: block;
+	font-size: 36px;
+	line-height: 36px;
+	padding-bottom: 24px;
+}
+html.signin #body legend .pester{
+	font-size: 14px;
+}
+html.signin #body p{
+	line-height: 24px;
+	margin-bottom: 24px;
+}
+html.signin #body label{
+	font-size: 24px;
+	line-height: 36px;
+	display: block;
+}
+html.signin #body input[type="text"],
+html.signin #body input[type="email"],
+html.signin #body input[type="password"],
+html.signin #body button{
+	font-size: 24px;
+	line-height: 46px; height: 46px;
+	width: 470px;
+}
+html.signin #body button{
+	display: block;
+	width: auto;
+
+	padding: 0 20px;
+	float: right;
+}
+/* @end */
+
+
+/* @end */
+
+
+
+
+
+
 
 div.errors {
     color: #fff;

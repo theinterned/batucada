@@ -1,28 +1,21 @@
 {% extends "base.html" %}
 {% block title %}{{ _('Sign Up') }}{% endblock %}
+{% block pageclasses %}signin{% endblock %}
 {% block body %}
 
-<fieldset>
-  <legend>{{ _('Sign Up') }}</legend>
-  <form action="{{ url('users.views.register') }}" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-    {% for field in form %}
-    <p>
-      {{ field.label_tag()|safe }}
-      {{ field.as_widget()|safe }}
-    </p>
-    {% endfor %}
-    <p>
-      <input type="submit" value="{{ _('Sign Up') }}" />
-    </p>
-    <p>
-      <a id="signup_openid" href="{{ url('users.views.register_openid') }}">{{ _('Sign Up with an OpenID') }}</a>.
-    </p>
-  </form>
-</fieldset>
-
-<p>
-{{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.
-</p>
+<form action="{{ url('users.views.register') }}" method="post">
+  <fieldset>
+    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.)</span></legend>
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+      {% for field in form %}
+      <p>
+        {{ field.label_tag()|safe }}
+        {{ field.as_widget()|safe }}
+      </p>
+      {% endfor %}
+      <p><button type="submit">{{ _('Sign Up') }}</button></p>    
+  </fieldset>
+</form>
+<p class="openid"><a id="signup_openid" href="{{ url('users.views.register_openid') }}">{{ _('Sign Up with an OpenID') }}</a>.</p>
 
 {% endblock %}
