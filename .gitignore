@@ -1,3 +1,4 @@
 *.py[co]
 *.db
 locale/
+media/images/profiles/
