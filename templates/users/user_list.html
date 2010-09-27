@@ -7,17 +7,17 @@
 <ul>
 {% for user in users %}
 <li>
-  <a href="{{ url('profiles.views.show', username=user.username) }}">
+  <a href="{% url profiles.views.show username=user.username %}">
     {{ user.username }}
   </a>
   {% if user.id in following %}
-    <form action="{{ url('relationships.views.unfollow') }}" method="post">
+    <form action="{% url relationships.views.unfollow %}" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
         <input type="hidden" name="user" value="{{ user.id }}" />
 	<input type="submit" value="Unfollow" />
     </form>
   {% else %}
-    <form action="{{ url('relationships.views.follow') }}" method="post">
+    <form action="{% url relationships.views.follow %}" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
         <input type="hidden" name="user" value="{{ user.id }}" />
 	<input type="submit" value="Follow" />
@@ -28,7 +28,7 @@
 </ul>
 
 <p>
-  <a href="{{ url('dashboard.views.index') }}">Your Dashboard</a>
+  <a href="{% url dashboard.views.index %}">Your Dashboard</a>
 </p>
 
 {% endblock %}

@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
-import jingo
 from django_openid_auth.forms import OpenIDLoginForm
 
 from l10n.urlresolvers import reverse
@@ -23,20 +24,24 @@ def login_begin(request, registration=False):
     try:
         return users_login_begin(request, registration)
     except OpenIDAuthError, exc:
-        return jingo.render(request, 'users/login_openid.html', {
-            'error' : exc.message,
-            'form' : OpenIDLoginForm()
-        }, status=403)
+        response = render_to_response('users/login_openid.html', {
+            'error': exc.message,
+            'form': OpenIDLoginForm()
+        }, context_instance=RequestContext(request))
+        response.status_code = 403
+        return response
 
 def login_complete(request):
     """Parse response from OpenID provider."""
     try:
         return users_login_complete(request)
     except OpenIDAuthError, exc:
-        return jingo.render(request, 'users/login_openid.html', {
-            'error' : exc.message,
-            'form' : OpenIDLoginForm()
-        }, status=403)
+        response = render_to_response('users/login_openid.html', {
+            'error': exc.message,
+            'form': OpenIDLoginForm()
+        }, context_instance=RequestContext(request))
+        response.status_code = 403
+        return response
 
 @anonymous_only
 def login(request):
@@ -46,9 +51,9 @@ def login(request):
 
     form = LoginForm(data=request.POST)
     if not form.is_valid():
-        return jingo.render(request, 'dashboard/signin.html', {
+        return render_to_response('dashboard/signin.html', {
             'form' : form
-        })
+        }, context_instance=RequestContext(request))
     username = form.cleaned_data['username']
     password = form.cleaned_data['password']
     user = authenticate(username=username, password=password)
@@ -57,26 +62,26 @@ def login(request):
         auth.login(request, user)
         return HttpResponseRedirect('/')
 
-    return jingo.render(request, 'dashboard/signin.html', {
+    return render_to_response('dashboard/signin.html', {
         'form' : form,
         'error': _('Incorrect login or password.'),
-    })
+    }, context_instance=RequestContext(request))
 
 @anonymous_only
 def login_openid(request):
     """Handle OpenID logins."""
     if request.method == 'GET':
-        return jingo.render(request, 'users/login_openid.html', {
+        return render_to_response('users/login_openid.html', {
             'form': OpenIDLoginForm()
-        })
+        }, context_instance=RequestContext(request))
         
     form = OpenIDLoginForm(data=request.POST)
     if form.is_valid():
         return login_begin(request)
     
-    return jingo.render(request, 'users/login_openid.html', {
+    return render_to_response('users/login_openid.html', {
         'form' : form
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 def logout(request):
@@ -102,9 +107,9 @@ def register(request):
                 instructions for completing your registration.""" % {
                       'email': user.email }))
             return HttpResponseRedirect('/')
-    return jingo.render(request, 'users/register.html', {
+    return render_to_response('users/register.html', {
         'form': form,
-    })
+    }, context_instance=RequestContext(request))
 
 @anonymous_only
 def register_openid(request):
@@ -114,33 +119,33 @@ def register_openid(request):
         form = OpenIDLoginForm(data=request.POST)
         if form.is_valid():
             return login_begin(request, registration=True)
-    return jingo.render(request, 'users/register_openid.html', {
+    return render_to_response('users/register_openid.html', {
         'form' : form
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 def user_list(request):
     """Display a list of users on the site. TODO: Paginate."""
     users = User.objects.exclude(id__exact=request.user.id)
-    return jingo.render(request, 'users/user_list.html', {
+    return render_to_response('users/user_list.html', {
         'heading' : _('Users'),
         'users' : users,
         'following' : [user.id for user in request.user.following()]
-    })
+    }, context_instance=RequestContext(request))
 
 @anonymous_only
 def forgot_password(request):
     """Allow users to reset their password by validating email ownership."""
     if request.method == 'GET':
-        return jingo.render(request, 'users/forgot_password.html', {
+        return render_to_response('users/forgot_password.html', {
             'form': ForgotPasswordForm()
-        })
+        }, context_instance=RequestContext(request))
     error = None
     form = ForgotPasswordForm(request.POST)
     if not form.is_valid():
-        return jingo.render(request, 'users/forgot_password.html', {
+        return render_to_response('users/forgot_password.html', {
             form: 'form'
-        })
+        }, context_instance=RequestContext(request))
     try:
         email = form.cleaned_data['email']
         user = User.objects.get(email__exact=email)
@@ -156,21 +161,21 @@ def forgot_password(request):
     except User.DoesNotExist:
         error = _('Email address not found.')
 
-    return jingo.render(request, 'users/forgot_password.html', {
+    return render_to_response('users/forgot_password.html', {
         'form': form,
         'error': error
-    })
+    }, context_instance=RequestContext(request))
 
 @anonymous_only
 def reset_password(request, token, username):
     """Reset users password."""
     form = ResetPasswordForm(data=request.POST)
     if not form.is_valid():
-        return jingo.render(request, 'users/reset_password.html', {
+        return render_to_response('users/reset_password.html', {
             'form': form,
             'token': token,
             'username': username
-        })
+        }, context_instance=RequestContext(request))
     password = form.cleaned_data['password']
     user = User.objects.get(username=form.cleaned_data['username'])
     user.set_password(password)
@@ -200,12 +205,12 @@ def reset_password_form(request, token, username):
         error = 'Sorry, invalid user or token'
 
     form = ResetPasswordForm()
-    return jingo.render(request, 'users/reset_password.html', {
+    return render_to_response('users/reset_password.html', {
         'form': form,
         'error': error,
         'token': token,
         'username': username
-    })
+    }, context_instance=RequestContext(request))
 
 @anonymous_only
 def confirm_registration(request, token, username):
@@ -226,9 +231,9 @@ def confirm_registration(request, token, username):
             _('Congratulations. Your have completed your registration.')
         )
     except:
-        return jingo.render(request, 'users/register.html', {
+        return render_to_response('users/register.html', {
             'form': RegisterForm(),
             'error': _('Confirmation failed. Invalid token or username.'),
-        })
+        }, context_instance=RequestContext(request))
 
     return HttpResponseRedirect('/')
