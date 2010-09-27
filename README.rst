@@ -11,7 +11,7 @@ Installation
 
 To install Batucada, you must clone the repository: ::
 
-   git clone git://github.com/paulosman/batucada.git
+   git clone git://github.com/mozilla/batucada.git
 
 I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``batucada`` and install the dependencies ::
 
