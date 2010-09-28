@@ -17,32 +17,75 @@ body > * {
 }
 
 /* @group forms */
-legend{
-	font-size: 18px;
+legend {
+	display: block;
+	font-size: 36px;
 	font-weight: bold;
+	line-height: 36px;
+	padding-bottom: 24px;
+}
+legend .pester{
+	font-size: 14px;
+	font-weight: normal;
 }
 input[type="text"],
 input[type="email"],
 input[type="url"],
 input[type="search"],
-input[type="password"]{
-	border: 1px solid #ddd;
+input[type="password"],
+textarea,
+button,
+input[type="submit"],
+input[type="button"]{
+	width: 470px;
+	border: 2px solid #ddd;
 	background: #fafafa;
 	font-size: 13px;
-	line-height: 20px; height: 20px;
+	line-height: 32px; height: 32px;
 	padding: 0 4px;
 	vertical-align: bottom;
-	-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3) inset;
-	-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3) inset;
+	font-size: 18px;
 }
-input:focus{
-	background: #B5D5FF;
+textarea {
+	height: 96px;
+}
+button,
+input[type="submit"],
+input[type="button"]{
+	display: block;
+	width: auto;
+	padding: 0 20px;
+	float: right;
+	background: #607890;
+	border: 2px solid #2d3d4c;
+	color: #fff;
+}
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover{
+	opacity: 0.8;
+}
+button:focus,
+input:focus,
+textarea:focus {
+	background: #e5f0ff;
+	border-color: #bfd9ff;
 }
 input[name=openid_identifier],
 p.openid {
     background: url(/media/images/openid_logo.gif) no-repeat 6px 50%;
     padding-left: 26px;
 }
+form p{
+	line-height: 24px;
+	margin-bottom: 12px;
+}
+label{
+	font-size: 20px;
+	line-height: 24px;
+	display: block;
+}
+
 /* @end */
 
 /* @end */
@@ -91,39 +134,14 @@ html.signin #body{
 	width: 480px;
 	margin: auto;
 }
-html.signin #body legend {
-	display: block;
-	font-size: 36px;
-	line-height: 36px;
-	padding-bottom: 24px;
-}
-html.signin #body legend .pester{
-	font-size: 14px;
-	font-weight: normal;
-}
-html.signin #body p{
-	line-height: 24px;
-	margin-bottom: 12px;
-}
-html.signin #body label{
-	font-size: 20px;
-	line-height: 24px;
-	display: block;
-}
-html.signin #body input[type="text"],
+/*html.signin #body input[type="text"],
 html.signin #body input[type="email"],
+html.signin #body input[type="url"],
+html.signin #body input[type="search"],
 html.signin #body input[type="password"],
-html.signin #body button{
-	font-size: 18px;
-	line-height: 36px; height: 36px;
-	width: 470px;
-}
-html.signin #body button{
-	display: block;
-	width: auto;
-	padding: 0 20px;
-	float: right;
-}
+html.signin #body textarea {
+		width: 470px;
+}*/
 #forgot_password {
 	float: left;
 }
