@@ -3,6 +3,12 @@
 
 import os
 
+try:
+    from settings_local import *
+except ImportError:
+    print u'File settings_local.py is not found. Continuing with production settings.'
+
+
 # Make filepaths relative to settings.
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)

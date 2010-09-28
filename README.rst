@@ -19,12 +19,21 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
    mkvirtualenv batucada 
    pip install -r requirements.txt 
 
+It is necessary to install the Python Image Libray: ::
+	
+   pip install pil
+   [FIXME: Can this be done automatically in the previous step?]
+   
+You may need to create a settings_local.py file to override some of the default settings.
+For example, you may need to `configure your email backend`_.
+   
 Finally, sync the database and start the development server. ::
 
    python manage.py syncdb --noinput 
    python manage.py runserver 
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
+.. _configure your email backend: http://docs.djangoproject.com/en/dev/topics/email/
 
 Get Involved
 ------------
