@@ -15,7 +15,9 @@ body {
 body > * {
 	padding: 24px 40px; /*content width = 940px*/
 }
-
+p {
+	margin-bottom: 24px;
+}
 
 /* @group forms */
 form{
