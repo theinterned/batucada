@@ -99,31 +99,35 @@ html.signin #body legend {
 }
 html.signin #body legend .pester{
 	font-size: 14px;
+	font-weight: normal;
 }
 html.signin #body p{
 	line-height: 24px;
-	margin-bottom: 24px;
+	margin-bottom: 12px;
 }
 html.signin #body label{
-	font-size: 24px;
-	line-height: 36px;
+	font-size: 20px;
+	line-height: 24px;
 	display: block;
 }
 html.signin #body input[type="text"],
 html.signin #body input[type="email"],
 html.signin #body input[type="password"],
 html.signin #body button{
-	font-size: 24px;
-	line-height: 46px; height: 46px;
+	font-size: 18px;
+	line-height: 36px; height: 36px;
 	width: 470px;
 }
 html.signin #body button{
 	display: block;
 	width: auto;
-
 	padding: 0 20px;
 	float: right;
 }
+#forgot_password {
+	float: left;
+}
+
 /* @end */
 
 
