@@ -16,7 +16,11 @@ body > * {
 	padding: 24px 40px; /*content width = 940px*/
 }
 
+
 /* @group forms */
+form{
+	width: 480px;
+}
 legend {
 	display: block;
 	font-size: 36px;
@@ -63,13 +67,14 @@ input[type="button"]{
 button:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover{
-	opacity: 0.8;
+	opacity: 0.8;	
 }
 button:focus,
 input:focus,
 textarea:focus {
 	background: #e5f0ff;
 	border-color: #bfd9ff;
+	color: #444;
 }
 input[name=openid_identifier],
 p.openid {
@@ -77,7 +82,6 @@ p.openid {
     padding-left: 26px;
 }
 form p{
-	line-height: 24px;
 	margin-bottom: 12px;
 }
 label{
