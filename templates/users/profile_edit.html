@@ -4,9 +4,9 @@
 
 <fieldset>
   <legend>{{ _('Edit Profile') }}</legend>
-  <form action="{{ url('users.views.profile') }}" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-    {{ form.as_p()|safe }}
+  <form action="{% url users.views.profile %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
     <input type="submit" value="Save" />
   </form>
 </fieldset>

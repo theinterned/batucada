@@ -1,14 +1,14 @@
 {% extends "profiles/main.html" %}
 {% block form %}
 
-{% if profile.link_set.count() %}
+{% if profile.link_set.count %}
 <h3>Links</h3>
 <ul>
-  {% for link in profile.link_set.all() %}
+  {% for link in profile.link_set.all %}
   <li>
     <a href="{{ link.uri }}">{{ link.title }}</a>
-    <form action="{{ url('profiles.views.delete_link') }}" method="post">
-      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+    <form action="{% url profiles.views.delete_link %}" method="post">
+      {% csrf_token %}
       <input type="hidden" name="link" value="{{ link.id }}" />
       <input type="submit" value="Delete" />
     </form>
@@ -16,8 +16,8 @@
   {% endfor %}
 </ul>
 {% endif %}
-<form action="{{ url('profiles.views.links') }}" method="post">
-  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+<form action="{% url profiles.views.links %}" method="post">
+  {% csrf_token %}
   <p>
     <label for="uri">URL:</label>
     <input type="text" name="uri" id="uri" />

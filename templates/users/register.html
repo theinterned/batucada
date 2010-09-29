@@ -3,19 +3,19 @@
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
 
-<form action="{{ url('users.views.register') }}" method="post">
+<form action="{% url users.views.register %}" method="post">
   <fieldset>
-    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.)</span></legend>
-      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% url dashboard.views.index %}">{{_('Sign in here')}}</a>.)</span></legend>
+    {% csrf_token %}
       {% for field in form %}
       <p>
-        {{ field.label_tag()|safe }}
-        {{ field.as_widget()|safe }}
+        {{ field.label_tag }}
+        {{ field.as_widget }}
       </p>
       {% endfor %}
       <p><button type="submit">{{ _('Sign Up') }}</button></p>    
   </fieldset>
 </form>
-<p class="openid"><a id="signup_openid" href="{{ url('users.views.register_openid') }}">{{ _('Sign Up with an OpenID') }}</a>.</p>
+<p class="openid"><a id="signup_openid" href="{% url users.views.register_openid %}">{{ _('Sign Up with an OpenID') }}</a>.</p>
 
 {% endblock %}
