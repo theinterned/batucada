@@ -19,11 +19,6 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
    mkvirtualenv batucada 
    pip install -r requirements.txt 
 
-It is necessary to install the Python Image Libray: ::
-	
-   pip install pil
-   [FIXME: Can this be done automatically in the previous step?]
-   
 You may need to create a settings_local.py file to override some of the default settings.
 For example, you may need to `configure your email backend`_.
    
