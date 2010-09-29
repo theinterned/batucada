@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Your Profile{% endblock %}
+{% block pageclasses %}profile{% endblock %} 
 {% block body %}
 <fieldset>
-  <legend>{{ _('Edit Profile') }}</legend>
-  <ul>
-    <li><a href="{{ url('profiles.views.edit') }}">General Info</a></li>
-    <li><a href="{{ url('profiles.views.upload_image') }}">Profile Image</a></li>
-    <li><a href="{{ url('profiles.views.contact_numbers') }}">Contact numbers</a></li>
-    <li><a href="{{ url('profiles.views.links') }}">Links</a></li>
-    <li><a href="{{ url('profiles.views.skills') }}">Skills</a></li>
-    <li><a href="{{ url('profiles.views.interests') }}">Interests</a></li>
-  </ul>
+  <legend>{{ _('Edit Profile') }} <span class="pester">(<a href="{{ url('profiles.views.show', username=profile.user.username) }}">View Profile</a>)</span></legend>
+  <nav id="profile-edit-nav">
+    <ul>
+      <li class="info"><a href="{{ url('profiles.views.edit') }}">General Info</a></li>
+      <li class="image"><a href="{{ url('profiles.views.upload_image') }}">Profile Image</a></li>
+      <li class="phone"><a href="{{ url('profiles.views.contact_numbers') }}">Contact numbers</a></li>
+      <li class="links"><a href="{{ url('profiles.views.links') }}">Links</a></li>
+      <li class="skills"><a href="{{ url('profiles.views.skills') }}">Skills</a></li>
+      <li class="interests"><a href="{{ url('profiles.views.interests') }}">Interests</a></li>
+    </ul>
+  </nav>
   {% block form %}{% endblock %}
-  <p>
-    <a href="{{ url('profiles.views.show', username=profile.user.username) }}">View Profile</a>
-  </p>
 </fieldset>
 {% endblock %}

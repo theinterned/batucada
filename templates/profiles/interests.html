@@ -1,4 +1,5 @@
 {% extends "profiles/main.html" %}
+{% block pageclasses %}profile edit interests{% endblock %}
 {% block form %}
 {% if profile.interest_set.count() %}
 <h3>Interests</h3>

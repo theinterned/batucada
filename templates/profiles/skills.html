@@ -1,4 +1,5 @@
 {% extends "profiles/main.html" %}
+{% block pageclasses %}profile edit skills{% endblock %}
 {% block form %}
 {% if profile.skill_set.count() %}
 <h3>Skills</h3>

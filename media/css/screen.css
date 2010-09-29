@@ -94,6 +94,37 @@ label{
 
 /* @end */
 
+/* @group Navigation */
+
+nav ul{
+	padding: 0 10px; margin: 0 -10px 24px;
+	border-bottom: 1px solid #e0e0e0;
+}
+nav ul li{
+	display: inline-block;
+	opacity: 0.75;
+	background: #eee;
+	border:  1px solid #e0e0e0;
+	border-bottom: 0;
+	border-radius:20px 20px 0 0;
+
+}
+nav ul li.active,
+nav ul li:hover{
+	opacity: 1;
+}
+nav ul li a{
+	display: block;
+	padding: 0 20px;
+	line-height: 36px;
+	font-weight: bold;
+	text-decoration: none;
+	}
+
+/* @end */
+
+
+
 /* @end */
 
 /* @group Layout */
@@ -122,6 +153,10 @@ header nav ul{
 header nav ul:after{content: "."; display: block; height: 0; clear: both; visibility: hidden;}
 header nav ul li{
 	display: inline-block;
+		border: none;
+	border-radius:0;
+	-moz-border-radius:0;
+	background: none;
 }
 header nav ul li a{
 	display: block;
@@ -134,6 +169,33 @@ header nav ul li a{
 /* @end */
 
 /* @group Sections */
+
+/* @group Profile */
+
+html.profile.edit.info nav#profile-edit-nav li.info,
+html.profile.edit.image nav#profile-edit-nav li.image,
+html.profile.edit.phone nav#profile-edit-nav li.phone,
+html.profile.edit.links nav#profile-edit-nav li.links,
+html.profile.edit.skills nav#profile-edit-nav li.skills,
+html.profile.edit.interests nav#profile-edit-nav li.interests
+{
+	opacity: 1;
+	background: none;
+	border-bottom: 1px solid #fff;
+	margin-bottom: -1px;
+}
+/*html.profile.edit.info nav#profile-edit-nav li.edit-info a,
+html.profile.edit.image nav#profile-edit-nav li.image a,
+html.profile.edit.phone nav#profile-edit-nav li.phone a,
+html.profile.edit.links nav#profile-edit-nav li.links a,
+html.profile.edit.skills nav#profile-edit-nav li.skills,
+html.profile.edit.interests nav#profile-edit-nav li.interests {
+	background: none;
+	border-bottom: 1px solid #fff;
+	margin-bottom: -1px;
+}*/
+
+/* @end */
 
 /* @group Signin */
 html.signin #body{
@@ -153,6 +215,7 @@ html.signin #body textarea {
 }
 
 /* @end */
+
 
 
 /* @end */
