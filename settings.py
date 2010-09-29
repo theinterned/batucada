@@ -77,7 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'l10n.middleware.LocaleURLRewriter',
+#    'l10n.middleware.LocaleURLRewriter',
     'accountmanager.middleware.StatusHeader',
     'commonware.middleware.HidePasswordOnException',
 )
