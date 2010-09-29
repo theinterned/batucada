@@ -11,7 +11,7 @@ Installation
 
 To install Batucada, you must clone the repository: ::
 
-   git clone git://github.com/paulosman/batucada.git
+   git clone git://github.com/mozilla/batucada.git
 
 I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``batucada`` and install the dependencies ::
 
@@ -19,12 +19,16 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
    mkvirtualenv batucada 
    pip install -r requirements.txt 
 
+You may need to create a settings_local.py file to override some of the default settings.
+For example, you may need to `configure your email backend`_.
+   
 Finally, sync the database and start the development server. ::
 
    python manage.py syncdb --noinput 
    python manage.py runserver 
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
+.. _configure your email backend: http://docs.djangoproject.com/en/dev/topics/email/
 
 Get Involved
 ------------
