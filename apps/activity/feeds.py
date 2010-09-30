@@ -3,13 +3,10 @@ from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
-
-import jingo
+from django.template.loader import render_to_string
 
 from activity.models import Activity
 from activity.schema import object_type, verbs, object_types, DerivedType
-
-from l10n.urlresolvers import reverse
 
 class ActivityStreamAtomFeed(Atom1Feed):
     """Tweaks to Atom feed generator to include Activity Stream data."""
@@ -86,7 +83,8 @@ class UserActivityAtomFeed(Feed):
 
     def item_description(self, item):
         template = 'activity/_activity_resource.html'
-        return jingo.render_to_string(self.request, template, {
+        
+        return render_to_string(template, {
             'activity': item
         })
 

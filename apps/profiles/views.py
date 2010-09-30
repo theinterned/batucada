@@ -2,11 +2,14 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
-import jingo
-
-from l10n.urlresolvers import reverse
-
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+    
 from profiles.forms import (ImageForm, ProfileForm, ContactNumberForm,
                             LinkForm, InterestForm, SkillForm)
 from profiles.models import Profile, ContactNumber, Link, Skill, Interest
@@ -41,10 +44,10 @@ def edit(request):
                 'profiles.views.show',
                 kwargs=dict(username=request.user.username)
             ))
-    return jingo.render(request, 'profiles/edit.html', {
+    return render_to_response('profiles/edit.html', {
         'form': form,
         'profile': request.user.get_profile()
-    })
+    }, context_instance=RequestContext(request))
     
 @require_http_methods(['GET'])
 def show(request, username):
@@ -53,10 +56,10 @@ def show(request, username):
         user = User.objects.get(username__exact=username)
     except User.DoesNotExist:
         raise Http404
-    return jingo.render(request, 'profiles/public.html', {
+    return render_to_response('profiles/public.html', {
         'profile_user': user,
         'profile': user.get_profile()
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 def upload_image(request):
@@ -72,10 +75,10 @@ def upload_image(request):
                 'profiles.views.show',
                 kwargs=dict(username=request.user.username)
             ))
-    return jingo.render(request, 'profiles/upload_image.html', {
+    return render_to_response('profiles/upload_image.html', {
         'profile': request.user.get_profile(),
         'form': form
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 @require_http_methods(['POST'])
@@ -100,10 +103,10 @@ def contact_numbers(request):
             return HttpResponseRedirect(reverse(
                 'profiles.views.contact_numbers',
             ))
-    return jingo.render(request, 'profiles/contact_numbers.html', {
+    return render_to_response('profiles/contact_numbers.html', {
         'form': form,
         'profile': request.user.get_profile()
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 @require_http_methods(['POST'])
@@ -126,10 +129,10 @@ def links(request):
             )
             link.save()
             return HttpResponseRedirect(reverse('profiles.views.links'))
-    return jingo.render(request, 'profiles/links.html', {
+    return render_to_response('profiles/links.html', {
         'profile': request.user.get_profile(),
         'form': form
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 @require_http_methods(['POST'])
@@ -151,10 +154,10 @@ def skills(request):
             )
             skill.save()
             return HttpResponseRedirect(reverse('profiles.views.skills'))
-    return jingo.render(request, 'profiles/skills.html', {
+    return render_to_response('profiles/skills.html', {
         'form': form,
         'profile': request.user.get_profile()
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 @require_http_methods(['POST'])
@@ -176,7 +179,7 @@ def interests(request):
             )
             interest.save()
             return HttpResponseRedirect(reverse('profiles.views.interests'))
-    return jingo.render(request, 'profiles/interests.html', {
+    return render_to_response('profiles/interests.html', {
         'form': form,
         'profile': request.user.get_profile()
-    })
+    }, context_instance=RequestContext(request))

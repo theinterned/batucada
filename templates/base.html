@@ -20,15 +20,15 @@
 <body>
 <!--<![endif]-->
   <header>
-  <h1><a href="{{ url('dashboard.views.index') }}">Batucada</a></h1>
+  <h1><a href="{% url dashboard.views.index %}">Batucada</a></h1>
   <nav id="site">
     <ul>
-      <li><a href="{{ url('dashboard.views.index') }}">Dashboard</a></li>
-      <li><a href="{{ url('profiles.views.edit') }}">Your Profile</a></li>
-      <li><a href="{{ url('relationships.views.following') }}">Following</a></li>
-      <li><a href="{{ url('relationships.views.followers') }}">Followers</a></li>
-      <li><a href="{{ url('users.views.user_list') }}">Users</a></li>
-      <li><a href="{{ url('users.views.logout') }}">Sign out</a></li>
+      <li><a href="{% url dashboard.views.index %}">Dashboard</a></li>
+      <li><a href="{% url profiles.views.edit %}">Your Profile</a></li>
+      <li><a href="{% url relationships.views.following %}">Following</a></li>
+      <li><a href="{% url relationships.views.followers %}">Followers</a></li>
+      <li><a href="{% url users.views.user_list %}">Users</a></li>
+      <li><a href="{% url users.views.logout %}">Sign out</a></li>
     </ul>
   </nav>
   </header>

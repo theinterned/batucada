@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ profile.get_full_name() }}{% endblock %}
+{% block title %}{{ profile.get_full_name }}{% endblock %}
 {% block links %}
 <link rel="profile" href="http://microformats.org/profile/hcard" />
 {% endblock %}
@@ -12,9 +12,9 @@
   </p>
   {% endif %}
   <p>
-    {% if profile.get_full_name() %}
+    {% if profile.get_full_name %}
     <strong>{{ _('Name:') }}</strong> 
-    <span class="fn">{{ profile.get_full_name() }}</span><br />
+    <span class="fn">{{ profile.get_full_name }}</span><br />
     {% else %}
     <strong>{{ _('Username:') }}</strong> 
     <span class="fn nickname">{{ profile_user.username }}</span><br />
@@ -27,36 +27,36 @@
     <strong>{{ _('About:') }}</strong> {{ profile.bio }}
     {% endif %}
   </p>
-  {% if profile.contactnumber_set.count() %}
+  {% if profile.contactnumber_set.count %}
   <h3>Phone</h3>
   <ul>
-    {% for number in profile.contactnumber_set.all() %}
+    {% for number in profile.contactnumber_set.all %}
     <li class="tel">
       {{ number.number }} <span class="type">{{ number.label }}</span>
     </li>
     {% endfor %}
   </ul>
   {% endif %}
-  {% if profile.link_set.count() %}
+  {% if profile.link_set.count %}
   <h3>Links</h3>
   <ul>
-    {% for link in profile.link_set.all() %}
+    {% for link in profile.link_set.all %}
     <li><a class="url" href="{{ link.uri }}" rel="me">{{ link.title }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
-  {% if profile.skill_set.count() %}
+  {% if profile.skill_set.count %}
   <h3>Skills</h3>
   <ul>
-    {% for skill in profile.skill_set.all() %}
+    {% for skill in profile.skill_set.all %}
     <li>{{ skill.name }}</li>
     {% endfor %}
   </ul>
   {% endif %}
-  {% if profile.interest_set.count() %}
+  {% if profile.interest_set.count %}
   <h3>Interests</h3>
   <ul>
-    {% for interest in profile.interest_set.all() %}
+    {% for interest in profile.interest_set.all %}
     <li>{{ interest.name }}</li>
     {% endfor %}
   </ul>
@@ -64,12 +64,12 @@
 
   {% if user.id == profile.user.id %}
   <p>
-    <a href="{{ url('profiles.views.edit') }}">{{ _('Edit Profile') }}</a>
+    <a href="{% url profiles.views.edit %}">{{ _('Edit Profile') }}</a>
   </p>
   {% endif %}
 </fieldset>
 
 <p>
-  <a href="{{ url('dashboard.views.index') }}">Your Dashboard</a>
+  <a href="{% url dashboard.views.index %}">Your Dashboard</a>
 </p>
 {% endblock %}

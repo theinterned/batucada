@@ -4,8 +4,11 @@ from django.db.models.signals import post_save
 
 import activity
 
-from l10n.urlresolvers import reverse
-
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+    
 class Project(models.Model):
     """Placeholder model for projects."""
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'

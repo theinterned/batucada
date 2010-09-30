@@ -15,8 +15,11 @@ from django_openid_auth.models import UserOpenID
 from django_openid_auth.views import make_consumer, render_openid_request, \
      parse_openid_response
 
-from l10n.urlresolvers import reverse
-
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+    
 def authenticate(username=None, password=None, force=False):
     """
     Allow model backed user objects to support authentication by

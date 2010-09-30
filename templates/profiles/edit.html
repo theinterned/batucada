@@ -1,7 +1,7 @@
 {% extends "profiles/main.html" %}
 {% block form %}
-<form action="{{ url('profiles.views.edit') }}" method="post">
-  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+<form action="{% url profiles.views.edit %}" method="post">
+  {% csrf_token %}
   <p>
     <label for="first_name">{{ _('First Name:') }}</label>
     <input type="text" name="first_name" id="first_name" value="{{ profile.first_name }}" />

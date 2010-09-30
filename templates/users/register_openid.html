@@ -3,14 +3,14 @@
 {% block pageclasses %}signin openid{% endblock %}
 {% block body %}
 
-<form action="{{ url('users.views.register_openid') }}" method="post">
+<form action="{% url users.views.register_openid %}" method="post">
   <fieldset>
     <legend>{{ _('Sign Up Using Your OpenID') }}</legend>  
-      <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" />  
+    {% csrf_token %}
       {% for field in form %}
       <p>
-        {{ field.label_tag()|safe }}
-        {{ field.as_widget()|safe }}
+        {{ field.label_tag }}
+        {{ field.as_widget }}
       </p>
       {% endfor %}
       <p>
@@ -18,6 +18,6 @@
       </p>
   </fieldset>
 </form>
-<p>{{  _('Already have an account?') }} <a href="{{ url('dashboard.views.index') }}">{{_('Sign in here')}}</a>.</p>
+<p>{{  _('Already have an account?') }} <a href="{% url dashboard.views.index %}">{{_('Sign in here')}}</a>.</p>
 
 {% endblock %}

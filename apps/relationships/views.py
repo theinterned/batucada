@@ -3,29 +3,33 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
-import jingo
-
-from l10n.urlresolvers import reverse
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+    
 from relationships.models import Relationship
 
 @login_required
 def following(request):
     following = request.user.following()
-    return jingo.render(request, 'users/user_list.html', {
+    return render_to_response('users/user_list.html', {
         'heading' : _('Users you follow'),
         'users' : following,
         'following' : [user.id for user in following]
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 def followers(request):
     followers = request.user.followers()
-    return jingo.render(request, 'users/user_list.html', {
+    return render_to_response('users/user_list.html', {
         'heading' : _('Users following you'),
         'users' : followers,
         'following' : [user.id for user in request.user.following()]
-    })
+    }, context_instance=RequestContext(request))
 
 @login_required
 @require_http_methods(['POST'])

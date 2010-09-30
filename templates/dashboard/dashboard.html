@@ -4,8 +4,8 @@
 
 <h2>{{ _('Your Dashboard') }}</h2>
 <p>
-  {% if user.get_full_name() %}
-  Hello {{ user.get_full_name() }}! 
+  {% if user.get_full_name %}
+  Hello {{ user.get_full_name }}! 
   {% endif %}
   {{ _('You are logged in.') }}
 </p>

@@ -6,7 +6,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext as _
 
-from l10n.urlresolvers import reverse
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 from activity.schema import object_type, verbs, object_types, UnknownActivityError
 
