@@ -23,14 +23,22 @@
   <header>
   <h1><a href="{% locale_url dashboard.views.index %}">Batucada</a></h1>
   <nav id="site">
+{% if user.is_authenticated %}
     <ul>
-      <li><a href="{% locale_url dashboard.views.index %}">Dashboard</a></li>
-      <li><a href="{% locale_url profiles.views.edit %}">Your Profile</a></li>
-      <li><a href="{% locale_url relationships.views.following %}">Following</a></li>
-      <li><a href="{% locale_url relationships.views.followers %}">Followers</a></li>
-      <li><a href="{% locale_url users.views.user_list %}">Users</a></li>
-      <li><a href="{% locale_url users.views.logout %}">Sign out</a></li>
+      <li><a href="{% locale_url profiles.views.edit %}">{{ _('Your Profile') }}</a></li>
+      <li><a href="{% locale_url relationships.views.following %}">{{ _('Following') }}</a></li>
+      <li><a href="{% locale_url relationships.views.followers %}">{{ _('Followers') }}</a></li>
+      <li><a href="{% locale_url users.views.user_list %}">{{ _('Users') }}</a></li>
+      <li><a href="{% locale_url users.views.logout %}">{{ _('Sign out') }}</a></li>
     </ul>
+{% else %}
+    <ul>
+      <li><a href="#">{{ _('About') }}</a></li>
+      <li><a href="#">{{ _('Projects') }}</a></li>
+      <li><a href="#">{{ _('People') }}</a></li>
+      <li><a href="#">{{ _('Events') }}</a></li>
+    </ul>
+{% endif %}
   </nav>
   </header>
   <div id="body">
