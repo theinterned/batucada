@@ -10,12 +10,12 @@
   <legend>{{ _('Edit Profile') }} <span class="pester">(<a href="{% locale_url profiles.views.show username=profile.user.username %}">View Profile</a>)</span></legend>
   <nav id="profile-edit-nav">
   <ul>
-    <li><a href="{% locale_url profiles.views.edit %}">General Info</a></li>
-    <li><a href="{% locale_url profiles.views.upload_image %}">Profile Image</a></li>
-    <li><a href="{% locale_url profiles.views.contact_numbers %}">Contact numbers</a></li>
-    <li><a href="{% locale_url profiles.views.links %}">Links</a></li>
-    <li><a href="{% locale_url profiles.views.skills %}">Skills</a></li>
-    <li><a href="{% locale_url profiles.views.interests %}">Interests</a></li>
+    <li class="info"><a href="{% locale_url profiles.views.edit %}">General Info</a></li>
+    <li class="image"><a href="{% locale_url profiles.views.upload_image %}">Profile Image</a></li>
+    <li class="phone"><a href="{% locale_url profiles.views.contact_numbers %}">Contact numbers</a></li>
+    <li class="links"><a href="{% locale_url profiles.views.links %}">Links</a></li>
+    <li class="skills"><a href="{% locale_url profiles.views.skills %}">Skills</a></li>
+    <li class="interests"><a href="{% locale_url profiles.views.interests %}">Interests</a></li>
   </ul>
   </nav>
   {% block form %}{% endblock %}
