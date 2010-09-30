@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+
+{% load l10n_tags %}
+
 {% block title %}Edit Profile{% endblock %}
 {% block body %}
 
 <fieldset>
   <legend>{{ _('Edit Profile') }}</legend>
-  <form action="{% url users.views.profile %}" method="post">
+  <form action="{% locale_url users.views.profile %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />

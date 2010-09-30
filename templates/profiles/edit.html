@@ -1,7 +1,10 @@
 {% extends "profiles/main.html" %}
+
+{% load l10n_tags %}
+
 {% block pageclasses %}profile edit info{% endblock %} 
 {% block form %}
-<form action="{% url profiles.views.edit %}" method="post">
+<form action="{% locale_url profiles.views.edit %}" method="post">
   {% csrf_token %}
   <p>
     <label for="first_name">{{ _('First Name:') }}</label>

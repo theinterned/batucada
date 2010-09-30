@@ -1,4 +1,7 @@
 {% extends "profiles/main.html" %}
+
+{% load l10n_tags %}
+
 {% block pageclasses %}profile edit interests{% endblock %}
 {% block form %}
 {% if profile.interest_set.count %}
@@ -7,7 +10,7 @@
   {% for interest in profile.interest_set.all %}
   <li>
     {{ interest.name }}
-    <form action="{% url profiles.views.delete_interest %}" method="post">
+    <form action="{% locale_url profiles.views.delete_interest %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="interest" value="{{ interest.id }}" />
       <input type="submit" value="Delete" />
@@ -16,7 +19,7 @@
   {% endfor %}
 </ul>
 {% endif %}
-<form action="{% url profiles.views.interests %}" method="post">
+<form action="{% locale_url profiles.views.interests %}" method="post">
   {% csrf_token %}
   <p>
     <label for="name">Interest:</label>

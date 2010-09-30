@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% load l10n_tags %}
+
 {% block title %}Profile{% endblock %}
 {% block body %}
 <fieldset>
@@ -12,6 +15,6 @@
   </p>
 </fieldset>
 <p>
-  <a href="{% url dashboard.views.index %}">Dashboard</a>
+  <a href="{% locale_url dashboard.views.index %}">Dashboard</a>
 </p>
 {% endblock %}

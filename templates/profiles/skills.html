@@ -1,4 +1,7 @@
 {% extends "profiles/main.html" %}
+
+{% load l10n_tags %}
+
 {% block pageclasses %}profile edit skills{% endblock %}
 {% block form %}
 {% if profile.skill_set.count %}
@@ -7,7 +10,7 @@
   {% for skill in profile.skill_set.all %}
   <li>
     {{ skill.name }}
-    <form action="{% url profiles.views.delete_skill %}" method="post">
+    <form action="{% locale_url profiles.views.delete_skill %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="skill" value="{{ skill.id }}" />
       <input type="submit" value="Delete" />
@@ -16,7 +19,7 @@
   {% endfor %}
 </ul>
 {% endif %}
-<form action="{% url profiles.views.skills %}" method="post">
+<form action="{% locale_url profiles.views.skills %}" method="post">
   {% csrf_token %}
   <p>
     <label for="name">Skill:</label>

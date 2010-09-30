@@ -1,4 +1,7 @@
 {% extends "profiles/main.html" %}
+
+{% load l10n_tags %}
+
 {% block pageclasses %}profile edit phone{% endblock %}
 {% block form %}
 
@@ -8,7 +11,7 @@
   {% for number in profile.contactnumber_set.all %}
     <li>
       {{ number.number }} - {{ number.label }}
-      <form action="{% url profiles.views.delete_number %}" method="post">
+      <form action="{% locale_url profiles.views.delete_number %}" method="post">
 	{% csrf_token %}
 	<input type="hidden" name="number" value="{{ number.id }}" />
 	<input type="submit" value="Delete" />
@@ -18,7 +21,7 @@
 </ul>
 {% endif %}
 
-<form action="{% url profiles.views.contact_numbers %}" method="post">
+<form action="{% locale_url profiles.views.contact_numbers %}" method="post">
   {% csrf_token %}
   <p>
     <input type="text" name="number" id="number" />

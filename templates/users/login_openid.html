@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+
+{% load l10n_tags %}
+
 {% block title %}{{ _('OpenID Sign In') }}{% endblock %}
 {% block pageclasses %}signin openid{% endblock %}
 {% block body %}
 
-<form action="{% url users.views.login_openid %}" method="post">
+<form action="{% locale_url users.views.login_openid %}" method="post">
   <fieldset>
     <legend>{{ _('Sign In Using Your OpenID') }}</legend>
     {% csrf_token %}
@@ -18,7 +21,7 @@
       </p>
   </fieldset>
 </form>
-<p><a href="{% url users.views.login %}">{{ _('Sign in with a username and password') }}</a></p>
-<p>{{_('Not a member?') }} <a href="{% url users.views.register %}">{{_('Sign up')}}</a>!</p>
+<p><a href="{% locale_url users.views.login %}">{{ _('Sign in with a username and password') }}</a></p>
+<p>{{_('Not a member?') }} <a href="{% locale_url users.views.register %}">{{_('Sign up')}}</a>!</p>
 
 {% endblock %}
