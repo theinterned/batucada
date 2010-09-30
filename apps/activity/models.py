@@ -3,9 +3,13 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext as _
+
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 from activity.schema import object_type, verbs, object_types, UnknownActivityError
 

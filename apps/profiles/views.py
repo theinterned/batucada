@@ -5,8 +5,11 @@ from django.views.decorators.http import require_http_methods
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from l10n.urlresolvers import reverse
-
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+    
 from profiles.forms import (ImageForm, ProfileForm, ContactNumberForm,
                             LinkForm, InterestForm, SkillForm)
 from profiles.models import Profile, ContactNumber, Link, Skill, Interest

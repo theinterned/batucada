@@ -6,7 +6,11 @@ from django.template import RequestContext
 from activity.models import Activity
 from profiles.models import Profile
 from users.forms import LoginForm
-from l10n.urlresolvers import reverse
+
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 def splash(request):
     """Splash page we show to users who are not authenticated."""
