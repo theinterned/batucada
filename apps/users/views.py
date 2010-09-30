@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -97,15 +98,20 @@ def register(request):
         form = RegisterForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            user.is_active = False
+            if not settings.DEBUG:
+                user.is_active = False
             user.save()
-            token = unique_confirmation_token(user)
-            send_registration_email(user, token.plaintext, 
-                                    request.build_absolute_uri)
-            messages.add_message(request, messages.INFO,
-                _("""Thanks! We have sent an email to %(email)s with
-                instructions for completing your registration.""" % {
-                      'email': user.email }))
+            if settings.DEBUG:
+                user = authenticate(username=user.username, force=True)
+                auth.login(request, user)
+            else:
+                token = unique_confirmation_token(user)
+                send_registration_email(user, token.plaintext, 
+                                        request.build_absolute_uri)
+                messages.add_message(request, messages.INFO,
+                    _("""Thanks! We have sent an email to %(email)s with
+                    instructions for completing your registration.""" % {
+                          'email': user.email }))
             return HttpResponseRedirect('/')
     return render_to_response('users/register.html', {
         'form': form,
