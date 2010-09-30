@@ -1,4 +1,5 @@
 {% extends "profiles/main.html" %}
+{% block pageclasses %}profile edit info{% endblock %} 
 {% block form %}
 <form action="{% url profiles.views.edit %}" method="post">
   {% csrf_token %}
