@@ -3,6 +3,7 @@ python-openid==2.2.5
 django-openid-auth==0.2
 pil
 
+-e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower
 -e git://github.com/paulosman/python-xrd#egg=xrd
 -e git://github.com/paulosman/django-wellknown.git#egg=wellknown
