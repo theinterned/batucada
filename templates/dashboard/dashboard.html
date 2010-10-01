@@ -12,7 +12,7 @@
 
 {% if activities %}
 <h3>{{ _('Recent Activity') }}</h3>
-<ul>
+<ul id="activityfeed">
   {% for activity in activities %}
   <li>
     {% include "activity/_activity_resource.html" %}
