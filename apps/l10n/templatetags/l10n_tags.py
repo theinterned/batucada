@@ -15,9 +15,8 @@ class LocaleURLNode(template.Node):
         kwargs = dict([(smart_str(k,'ascii'), v.resolve(context))
                        for k, v in self.node.kwargs.items()])
         return reverse(self.node.view_name, args=args, kwargs=kwargs)
-        
+
+@register.tag
 def locale_url(parser, token):
     node = template.defaulttags.url(parser, token)
     return LocaleURLNode(node)
-
-locale_url = register.tag(locale_url)

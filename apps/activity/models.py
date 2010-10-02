@@ -64,6 +64,10 @@ class Activity(models.Model):
 
     objects = ActivityManager()
 
+    class Meta:
+        verbose_name_plural = 'activities'
+        ordering = ('-timestamp', 'actor')
+
     @property
     def verb_object(self):
         """
