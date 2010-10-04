@@ -3,12 +3,6 @@
 
 import os
 
-try:
-    from settings_local import *
-except ImportError:
-    print u'File settings_local.py is not found. Continuing with production settings.'
-
-
 # Make filepaths relative to settings.
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
@@ -100,6 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django_nose',
     'django_openid_auth',
     'wellknown',
     'users',
@@ -111,6 +106,8 @@ INSTALLED_APPS = (
     'activity',
     'projects',
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 MOZILLA_AMCD_HREF = '/meta/amcd.json'
