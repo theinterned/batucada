@@ -14,18 +14,6 @@ class Profile(models.Model):
     def get_full_name(self):
         return self.user.get_full_name()
 
-class ContactNumber(models.Model):
-    """A user can store multiple phone numbers in their profile."""
-    profile = models.ForeignKey(Profile)
-    number = models.CharField(max_length=25)
-    label = models.CharField(max_length=20)
-
-class Link(models.Model):
-    """A user profile can have zero or more links associated with it."""
-    profile = models.ForeignKey(Profile)
-    title = models.CharField(max_length=50)
-    uri = models.CharField(max_length=320)
-
 class Skill(models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)

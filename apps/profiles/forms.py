@@ -22,32 +22,6 @@ class ImageForm(forms.Form):
         
         return self.cleaned_data['image']
 
-class ContactNumberForm(forms.Form):
-    number = forms.CharField()
-    label = forms.CharField()
-
-    def clean_number(self):
-        if len(self.cleaned_data['number']) > 25:
-            raise forms.ValidationError(
-                _('Exceeds maximum length for number')
-            )
-        m = re.match(r'^[0-9\-\(\) ]+$', self.cleaned_data['number'])
-        if m is None:
-            raise forms.ValidationError(
-                _('Invalid characters. Allowed: 0-9, -, (, ), space')
-            )
-        return self.cleaned_data['number']
-
-class LinkForm(forms.Form):
-    uri = forms.CharField(error_messages={
-        'required': _('URL is required.')})
-    title = forms.CharField(error_messages={
-        'required': _('Link name is required.')})
-
-    def clean_uri(self):
-        # todo: clean out any unsupported uri schemes (i.e. javascript)
-        return self.cleaned_data['uri']
-
 class InterestForm(forms.Form):
     name = forms.CharField(error_messages={
         'required': _('Interest is required.')})

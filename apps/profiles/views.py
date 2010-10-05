@@ -10,9 +10,8 @@ try:
 except ImportError:
     from django.core.urlresolvers import reverse
     
-from profiles.forms import (ImageForm, ProfileForm, ContactNumberForm,
-                            LinkForm, InterestForm, SkillForm)
-from profiles.models import Profile, ContactNumber, Link, Skill, Interest
+from profiles.forms import ImageForm, ProfileForm, InterestForm, SkillForm
+from profiles.models import Profile, Skill, Interest
 
 def delete_profile_element(request, param_name, cls, viewname):
     """Delete a skill, interest, number, etc from users profile."""
@@ -76,60 +75,6 @@ def upload_image(request):
                 kwargs=dict(username=request.user.username)
             ))
     return render_to_response('profiles/upload_image.html', {
-        'profile': request.user.get_profile(),
-        'form': form
-    }, context_instance=RequestContext(request))
-
-@login_required
-@require_http_methods(['POST'])
-def delete_number(request):
-    """Delete a contact number after verifying ownership."""
-    return delete_profile_element(
-        request, 'number', ContactNumber, 'profiles.views.contact_numbers')
-
-@login_required
-def contact_numbers(request):
-    """Add contact numbers to a user profile."""
-    form = ContactNumberForm()
-    if request.method == 'POST':
-        form = ContactNumberForm(request.POST)
-        if form.is_valid():
-            number = ContactNumber(
-                profile=request.user.get_profile(),
-                number=form.cleaned_data['number'],
-                label=form.cleaned_data['label']
-            )
-            number.save()
-            return HttpResponseRedirect(reverse(
-                'profiles.views.contact_numbers',
-            ))
-    return render_to_response('profiles/contact_numbers.html', {
-        'form': form,
-        'profile': request.user.get_profile()
-    }, context_instance=RequestContext(request))
-
-@login_required
-@require_http_methods(['POST'])
-def delete_link(request):
-    """Delete a link from the users profile."""
-    return delete_profile_element(
-        request, 'link', Link, 'profiles.views.links')
-
-@login_required
-def links(request):
-    """Add links to other sites to a profile."""
-    form = LinkForm()
-    if request.method == 'POST':
-        form = LinkForm(data=request.POST)
-        if form.is_valid():
-            link = Link(
-                profile=request.user.get_profile(),
-                title=form.cleaned_data['title'],
-                uri=form.cleaned_data['uri'],
-            )
-            link.save()
-            return HttpResponseRedirect(reverse('profiles.views.links'))
-    return render_to_response('profiles/links.html', {
         'profile': request.user.get_profile(),
         'form': form
     }, context_instance=RequestContext(request))
