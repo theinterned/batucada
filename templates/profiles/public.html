@@ -30,24 +30,7 @@
     <strong>{{ _('About:') }}</strong> {{ profile.bio }}
     {% endif %}
   </p>
-  {% if profile.contactnumber_set.count %}
-  <h3>Phone</h3>
-  <ul>
-    {% for number in profile.contactnumber_set.all %}
-    <li class="tel">
-      {{ number.number }} <span class="type">{{ number.label }}</span>
-    </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% if profile.link_set.count %}
-  <h3>Links</h3>
-  <ul>
-    {% for link in profile.link_set.all %}
-    <li><a class="url" href="{{ link.uri }}" rel="me">{{ link.title }}</a></li>
-    {% endfor %}
-  </ul>
-  {% endif %}
+  
   {% if profile.skill_set.count %}
   <h3>Skills</h3>
   <ul>
