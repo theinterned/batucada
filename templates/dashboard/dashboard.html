@@ -1,17 +1,21 @@
 {% extends "base.html" %}
+{% load l10n_tags %}
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
 {% block body %}
 
-<h2>{{ _('Your Dashboard') }}</h2>
-<p>
-  {% if user.get_full_name %}
-  Hello {{ user.get_full_name }}! 
-  {% endif %}
-  {{ _('You are logged in.') }}
-</p>
+<div class="status_update">
+  <h3>{{ _('What are you up to now?') }}</h3>
+  <p>
+    <form action="{% locale_url statuses.views.create %}" method="post">
+      {% csrf_token %}
+      <textarea name="status" rows="20" cols="15"></textarea>
+      <input type="submit" value="Post" />
+    </form>
+  </p>
+</div>
 
 {% if activities %}
-<h3>{{ _('Recent Activity') }}</h3>
+<h3>{{ _('Recent Activity') }} <a href="{% locale_url activity_feed_user username=user.username %}"><img src="{{ MEDIA_URL }}images/feed-icon-14x14.png"></a></h3>
 <ul id="activityfeed">
   {% for activity in activities %}
   <li>

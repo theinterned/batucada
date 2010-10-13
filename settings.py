@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     'accountmanager',
     'activity',
     'projects',
+    'statuses',
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

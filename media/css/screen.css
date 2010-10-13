@@ -251,3 +251,7 @@ ul#activityfeed li {
     padding: 20px 0px 20px 0px;
     border-bottom: 1px solid #ccc;
 }
+
+div.status_update {
+    margin-bottom: 40px;
+}
