@@ -1,19 +1,13 @@
-"""
-Middleware component that detects locales and rewrites URLs
-if necessary to be locale specific. Taken from zamboni and
-kitsune.
-"""
 import urllib
 
-from django.http import HttpResponsePermanentRedirect, HttpResponse
+from django.http import HttpResponsePermanentRedirect
+from django.middleware.locale import LocaleMiddleware
 from django.utils.encoding import smart_str
-
-import tower
 
 from l10n import urlresolvers
 from l10n.locales import LANGUAGE_URL_MAP
 
-class LocaleURLRewriter(object):
+class LocaleURLRewriter(LocaleMiddleware):
     
     def process_request(self, request):
         prefixer = urlresolvers.Prefixer(request)
@@ -48,5 +42,6 @@ class LocaleURLRewriter(object):
 
         request.path_info = '/' + prefixer.shortened_path
         request.locale = prefixer.locale
-        tower.activate(prefixer.locale)
-
+        request.META['HTTP_ACCEPT_LANGUAGE'] = request.locale
+        
+        super(LocaleURLRewriter, self).process_request(request)
