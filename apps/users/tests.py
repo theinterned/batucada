@@ -85,8 +85,7 @@ class TestLogins(TestCase):
             'password': new_password, 'password_confirm': new_password,
             'username' : self.user.username, 'token': token_string
         })
-        self.assertRedirects(response, '/', status_code=302,
-                             target_status_code=301)
+        self.assertRedirects(response, '/%s/' % (self.locale,), status_code=302)
         # refresh user object
         self.user = User.objects.get(username__exact=self.user.username)
         self.assertTrue(self.user.check_password(new_password))

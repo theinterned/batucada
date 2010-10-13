@@ -11,7 +11,11 @@ from django.template import RequestContext
 
 from django_openid_auth.forms import OpenIDLoginForm
 
-from l10n.urlresolvers import reverse
+try:
+    from l10n.urlresolvers import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+    
 from users.mail import send_reset_email, send_registration_email
 from users.models import ConfirmationToken, unique_confirmation_token
 from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
@@ -48,7 +52,7 @@ def login_complete(request):
 def login(request):
     """Log the user in."""
     if request.user.is_authenticated() or request.method == 'GET':
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('dashboard.views.index'))
 
     form = LoginForm(data=request.POST)
     if not form.is_valid():
@@ -61,7 +65,7 @@ def login(request):
 
     if user is not None and user.is_active:
         auth.login(request, user)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('dashboard.views.index'))
 
     return render_to_response('dashboard/signin.html', {
         'form' : form,
@@ -88,7 +92,7 @@ def login_openid(request):
 def logout(request):
     """Destroy user session."""
     auth.logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('dashboard.views.index'))
 
 @anonymous_only
 def register(request):
@@ -112,7 +116,7 @@ def register(request):
                     _("""Thanks! We have sent an email to %(email)s with
                     instructions for completing your registration.""" % {
                           'email': user.email }))
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('dashboard.views.index'))
     return render_to_response('users/register.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -193,7 +197,7 @@ def reset_password(request, token, username):
     user = authenticate(username=user.username, password=password)
     if user is not None and user.is_active:
         auth.login(request, user)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('dashboard.views.index'))
 
 @anonymous_only
 def reset_password_form(request, token, username):
@@ -242,4 +246,4 @@ def confirm_registration(request, token, username):
             'error': _('Confirmation failed. Invalid token or username.'),
         }, context_instance=RequestContext(request))
 
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('dashboard.views.index'))

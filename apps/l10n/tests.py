@@ -1,6 +1,7 @@
 import re
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.test import Client, TestCase
 
 from l10n.locales import LOCALES
@@ -53,3 +54,16 @@ class TestLocaleURLs(TestCase):
         self.assertRedirects(response, '/en-US/', status_code=301)
 
     
+    def test_login_post_redirect(self):
+        """Test that post requests are treated properly."""
+        user = User.objects.create_user(
+            'testuser', 'test@mozilla.com', 'testpass'
+        )
+        response = self.client.get('/de/')
+        self.assertContains(response, 'csrfmiddlewaretoken')
+        response = self.client.post('/de/login/', {
+            'username': user.username,
+            'password': 'testpass',
+        })
+        self.assertRedirects(response, '/de/', status_code=302)
+
