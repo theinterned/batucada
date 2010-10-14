@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block title %}{{ project.name }}{% endblock %}
+{% block body %}
+<h3>{{ project.name }}</h3>
+<p>
+{{ project.description }}
+</p>
+{% endblock %}
