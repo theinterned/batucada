@@ -14,7 +14,7 @@ class ConfirmationToken(models.Model):
 
     def _hash_token(self, raw_token):
         import random
-        algo = 'sha1'
+        algo = 'sha256'
         salt = get_hexdigest(algo, str(random.random()),
                              str(random.random()))[:5]
         hsh = get_hexdigest(algo, salt, raw_token)

@@ -1,7 +1,11 @@
+import os
+import hashlib
 import urllib
 
 from django.contrib import auth
+from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from openid.consumer.consumer import SUCCESS
@@ -19,7 +23,25 @@ try:
     from l10n.urlresolvers import reverse
 except ImportError:
     from django.core.urlresolvers import reverse
-    
+
+def get_hexdigest(algorithm, salt, raw_password):
+    """Generate SHA-256 hash."""
+    if algorithm == 'sha256':
+        return hashlib.sha256(salt + raw_password).hexdigest()
+    else:
+        return get_hexdigest_old(algorithm, salt, raw_password)
+
+get_hexdigest_old = auth_models.get_hexdigest
+auth_models.get_hexdigest = get_hexdigest
+
+def set_password(self, raw_password):
+    """Set SHA-256 password."""
+    algo = 'sha256'
+    salt = os.urandom(5).encode('hex') # Random, 10-digit (hex) salt.
+    hsh = get_hexdigest(algo, salt, raw_password)
+    self.password = '$'.join((algo, salt, hsh))
+auth_models.User.set_password = set_password
+
 def authenticate(username=None, password=None, force=False):
     """
     Allow model backed user objects to support authentication by
