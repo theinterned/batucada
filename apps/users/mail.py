@@ -5,7 +5,7 @@ try:
 except ImportError:
     from django.core.urlresolvers import reverse
     
-def send_reset_email(user, token, uri_func, view='users.views.reset_password_form'):
+def send_reset_email(user, token, uri_func, view='users_reset_password_form'):
     """Send instructions to user on how to reset their password."""
     path = reverse(view, kwargs={'username':user.username, 'token':token})
     uri = uri_func(path)
@@ -14,7 +14,7 @@ def send_reset_email(user, token, uri_func, view='users.views.reset_password_for
         _('Use the following link:\n%(uri)s' % {'uri':uri})
     )
 
-def send_registration_email(user, token, uri_func, view='users.views.confirm_registration'):
+def send_registration_email(user, token, uri_func, view='users_confirm_registration'):
     """Send instructions for completing registration."""
     path = reverse(view, kwargs={'username':user.username, 'token':token})
     uri = uri_func(path)

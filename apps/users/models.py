@@ -1,7 +1,8 @@
 import hashlib
 
 from django.db import models
-from django.contrib.auth.models import User, get_hexdigest
+from django.contrib.auth.models import User
+from users import auth
 
 class ConfirmationToken(models.Model):
     """Store a unique token related to a user account."""
@@ -15,14 +16,14 @@ class ConfirmationToken(models.Model):
     def _hash_token(self, raw_token):
         import random
         algo = 'sha256'
-        salt = get_hexdigest(algo, str(random.random()),
+        salt = auth.get_hexdigest(algo, str(random.random()),
                              str(random.random()))[:5]
-        hsh = get_hexdigest(algo, salt, raw_token)
+        hsh = auth.get_hexdigest(algo, salt, raw_token)
         return '%s$%s$%s' % (algo, salt, hsh)
 
     def check_token(self, raw_token):
         algo, salt, hsh = self.token.split('$')
-        return hsh == get_hexdigest(algo, salt, raw_token)
+        return hsh == auth.get_hexdigest(algo, salt, raw_token)
 
     def save(self, *args, **kwargs):
         self.token = self._hash_token(self.token)

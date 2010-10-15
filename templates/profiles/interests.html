@@ -10,7 +10,7 @@
   {% for interest in profile.interest_set.all %}
   <li>
     {{ interest.name }}
-    <form action="{% locale_url profiles.views.delete_interest %}" method="post">
+    <form action="{% locale_url profiles_delete_interest %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="interest" value="{{ interest.id }}" />
       <input type="submit" value="Delete" />
@@ -19,7 +19,7 @@
   {% endfor %}
 </ul>
 {% endif %}
-<form action="{% locale_url profiles.views.interests %}" method="post">
+<form action="{% locale_url profiles_interests %}" method="post">
   {% csrf_token %}
   <p>
     <label for="name">Interest:</label>

@@ -5,12 +5,12 @@
 <h3>{{ _('Projects') }}</h3>
 <ul>
 {% for project in projects %}
-  <li><a href="{% locale_url projects.views.show slug=project.slug %}">{{ project.name }}</a></li>
+  <li><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></li>
 {% endfor %}
 </ul>
 {% if user.is_authenticated %}
 <p>
-  <a href="{% locale_url projects.views.create %}">Create a project</a>
+  <a href="{% locale_url projects_create %}">Create a project</a>
 </p>
 {% endif %}
 {% endblock %}

@@ -1,7 +1,10 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-  (r'^gallery/$',          'projects.views.gallery'),
-  (r'^create/$',           'projects.views.create'),
-  (r'^(?P<slug>[\w-]+)/$', 'projects.views.show', {}, 'projects_show'),
+  url(r'^gallery/$', 'projects.views.gallery',
+      name='projects_gallery'),
+  url(r'^create/$', 'projects.views.create',
+      name='projects_create'),
+  url(r'^(?P<slug>[\w-]+)/$', 'projects.views.show',
+      name='projects_show'),
 )

@@ -41,7 +41,7 @@ def follow(request):
     rel = Relationship(source=request.user, target=user)
     rel.save()
     # todo - redirect user to whatever page they were on before.
-    return HttpResponseRedirect(reverse('users.views.user_list'))
+    return HttpResponseRedirect(reverse('users_user_list'))
 
 @login_required
 @require_http_methods(['POST'])
@@ -55,4 +55,4 @@ def unfollow(request):
         target_object_id__exact=user.id)
     rel.delete()
     # todo - redirect user to whatever page they were on before.
-    return HttpResponseRedirect(reverse('users.views.user_list'))
+    return HttpResponseRedirect(reverse('users_user_list'))

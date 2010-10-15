@@ -10,7 +10,7 @@
   {% for skill in profile.skill_set.all %}
   <li>
     {{ skill.name }}
-    <form action="{% locale_url profiles.views.delete_skill %}" method="post">
+    <form action="{% locale_url profiles_delete_skill %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="skill" value="{{ skill.id }}" />
       <input type="submit" value="Delete" />
@@ -19,7 +19,7 @@
   {% endfor %}
 </ul>
 {% endif %}
-<form action="{% locale_url profiles.views.skills %}" method="post">
+<form action="{% locale_url profiles_skills %}" method="post">
   {% csrf_token %}
   <p>
     <label for="name">Skill:</label>

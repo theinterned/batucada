@@ -1,6 +1,8 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-  (r'^(?P<status_id>\d+)/$', 'statuses.views.show'),
-  (r'^create/$', 'statuses.views.create'),
+  url(r'^(?P<status_id>\d+)/$', 'statuses.views.show',
+      name='statuses_show'),
+  url(r'^create/$', 'statuses.views.create',
+      name='statuses_create'),
 )

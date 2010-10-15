@@ -59,7 +59,7 @@ class ActivityTests(TestCase):
         
     def test_valid_stream(self):
         """Test that requesting a valid stream results in a 200 OK."""
-        response = self.client.get('/%s/%s/stream/' % (self.locale, self.testuser_1.username))
+        response = self.client.get('/%s/activity/%s/stream/' % (self.locale, self.testuser_1.username))
         self.assertEqual(200, response.status_code)
         self.assertEqual('application/atom+xml', response['content-type'])
 

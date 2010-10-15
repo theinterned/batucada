@@ -52,12 +52,12 @@
 
   {% if user.id == profile.user.id %}
   <p>
-    <a href="{% locale_url profiles.views.edit %}">{{ _('Edit Profile') }}</a>
+    <a href="{% locale_url profiles_edit %}">{{ _('Edit Profile') }}</a>
   </p>
   {% endif %}
 </fieldset>
 
 <p>
-  <a href="{% locale_url dashboard.views.index %}">Your Dashboard</a>
+  <a href="{% locale_url dashboard_index %}">Your Dashboard</a>
 </p>
 {% endblock %}

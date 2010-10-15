@@ -40,7 +40,7 @@ def edit(request):
                 setattr(profile, key, value)
             profile.save()
             return HttpResponseRedirect(reverse(
-                'profiles.views.show',
+                'profiles_show',
                 kwargs=dict(username=request.user.username)
             ))
     return render_to_response('profiles/edit.html', {
@@ -71,7 +71,7 @@ def upload_image(request):
             profile.image = form.cleaned_data['image']
             profile.save()
             return HttpResponseRedirect(reverse(
-                'profiles.views.show',
+                'profiles_show',
                 kwargs=dict(username=request.user.username)
             ))
     return render_to_response('profiles/upload_image.html', {
@@ -84,7 +84,7 @@ def upload_image(request):
 def delete_skill(request):
     """Delete a skill from the users profile."""
     return delete_profile_element(
-        request, 'skill', Skill, 'profiles.views.skills')
+        request, 'skill', Skill, 'profiles_skills')
 
 @login_required
 def skills(request):
@@ -98,7 +98,7 @@ def skills(request):
                 name=form.cleaned_data['name']
             )
             skill.save()
-            return HttpResponseRedirect(reverse('profiles.views.skills'))
+            return HttpResponseRedirect(reverse('profiles_skills'))
     return render_to_response('profiles/skills.html', {
         'form': form,
         'profile': request.user.get_profile()
@@ -109,7 +109,7 @@ def skills(request):
 def delete_interest(request):
     """Delete an interest from the users profile."""
     return delete_profile_element(
-        request, 'interest', Interest, 'profiles.views.interests')
+        request, 'interest', Interest, 'profiles_interests')
 
 @login_required
 def interests(request):
@@ -123,7 +123,7 @@ def interests(request):
                 name=form.cleaned_data['name']
             )
             interest.save()
-            return HttpResponseRedirect(reverse('profiles.views.interests'))
+            return HttpResponseRedirect(reverse('profiles_interests'))
     return render_to_response('profiles/interests.html', {
         'form': form,
         'profile': request.user.get_profile()

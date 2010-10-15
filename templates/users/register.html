@@ -6,9 +6,9 @@
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
 
-<form action="{% locale_url users.views.register %}" method="post">
+<form action="{% locale_url users_register %}" method="post">
   <fieldset>
-    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url dashboard.views.index %}">{{_('Sign in here')}}</a>.)</span></legend>
+    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url dashboard_index %}">{{_('Sign in here')}}</a>.)</span></legend>
     {% csrf_token %}
       {% for field in form %}
       <p>
@@ -19,6 +19,6 @@
       <p><button type="submit">{{ _('Sign Up') }}</button></p>    
   </fieldset>
 </form>
-<p class="openid"><a id="signup_openid" href="{% locale_url users.views.register_openid %}">{{ _('Sign Up with an OpenID') }}</a>.</p>
+<p class="openid"><a id="signup_openid" href="{% locale_url users_register_openid %}">{{ _('Sign Up with an OpenID') }}</a>.</p>
 
 {% endblock %}

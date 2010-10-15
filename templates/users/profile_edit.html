@@ -7,7 +7,7 @@
 
 <fieldset>
   <legend>{{ _('Edit Profile') }}</legend>
-  <form action="{% locale_url users.views.profile %}" method="post">
+  <form action="{% locale_url users_profile %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />

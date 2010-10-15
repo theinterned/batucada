@@ -87,7 +87,7 @@ def users_login_begin(request, registration=False):
     openid_request.addExtension(
         sreg.SRegRequest(optional=['email', 'fullname', 'nickname']))
 
-    viewname = 'users.views.login_complete'
+    viewname = 'users_login_complete'
     return_to = request.build_absolute_uri(reverse(viewname))
     if registration:
         return_to += ('?' in return_to) and '&' or '?'

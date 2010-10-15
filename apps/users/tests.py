@@ -1,6 +1,5 @@
 import hashlib
 
-from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.test import Client, TestCase
@@ -50,7 +49,7 @@ class TestLogins(TestCase):
         token.save()
         self.assertNotEqual(token_string, token.token)
         (algo, salt, hsh) = token.token.split('$')
-        expected = hashlib.sha1(salt + token_string).hexdigest()
+        expected = hashlib.sha256(salt + token_string).hexdigest()
         self.assertEqual(expected, hsh)
 
     def test_check_reset_token(self):

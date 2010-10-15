@@ -6,9 +6,9 @@
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
 
-<form action="{% locale_url users.views.login %}" method="post">
+<form action="{% locale_url users_login %}" method="post">
   <fieldset>
-    <legend>{{ _('Sign In') }} <span class="pester">(Not a member? <a href="{% locale_url users.views.register %}">Sign up</a>)</span></legend>  
+    <legend>{{ _('Sign In') }} <span class="pester">(Not a member? <a href="{% locale_url users_register %}">Sign up</a>)</span></legend>  
     {% csrf_token %}
       {% for field in form %}
       <p>
@@ -16,10 +16,10 @@
         {{ field.as_widget }}
       </p>
       {% endfor %}
-      <a id="forgot_password" href="{% locale_url users.views.forgot_password %}">{{ _('Forgot your password?') }}</a>
+      <a id="forgot_password" href="{% locale_url users_forgot_password %}">{{ _('Forgot your password?') }}</a>
       <p><button type="submit">{{ _('Sign In') }}</button></p>    
   </fieldset>
 </form>
-<p class="openid"><a href="{% locale_url users.views.login_openid %}">{{ _('Sign in with OpenID')}}</a></p>
+<p class="openid"><a href="{% locale_url users_login_openid %}">{{ _('Sign in with OpenID')}}</a></p>
 
 {% endblock %}

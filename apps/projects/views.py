@@ -31,7 +31,7 @@ def create(request):
             project = form.save(commit=False)
             project.created_by = request.user
             project.save()
-            return HttpResponseRedirect(reverse('projects.views.show',
+            return HttpResponseRedirect(reverse('projects_show',
                                                 kwargs={'slug': project.slug}))
     return render_to_response('projects/create.html', {
         'form': form

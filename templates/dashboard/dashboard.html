@@ -6,7 +6,7 @@
 <div class="status_update">
   <h3>{{ _('What are you up to now?') }}</h3>
   <p>
-    <form action="{% locale_url statuses.views.create %}" method="post">
+    <form action="{% locale_url statuses_create %}" method="post">
       {% csrf_token %}
       <textarea name="status" rows="20" cols="15"></textarea>
       <input type="submit" value="Post" />

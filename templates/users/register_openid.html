@@ -6,7 +6,7 @@
 {% block pageclasses %}signin openid{% endblock %}
 {% block body %}
 
-<form action="{% locale_url users.views.register_openid %}" method="post">
+<form action="{% locale_url users_register_openid %}" method="post">
   <fieldset>
     <legend>{{ _('Sign Up Using Your OpenID') }}</legend>  
     {% csrf_token %}
@@ -21,6 +21,6 @@
       </p>
   </fieldset>
 </form>
-<p>{{  _('Already have an account?') }} <a href="{% locale_url dashboard.views.index %}">{{_('Sign in here')}}</a>.</p>
+<p>{{  _('Already have an account?') }} <a href="{% locale_url dashboard_index %}">{{_('Sign in here')}}</a>.</p>
 
 {% endblock %}

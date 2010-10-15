@@ -28,6 +28,6 @@ class DashboardTests(TestCase):
         self.client.login(username=self.test_username,
                           password=self.test_password)
         response = self.client.get('/%s/' % (self.locale,))
-        self.assertContains(response, 'You are logged in', status_code=200)
+        self.assertContains(response, 'status_update', status_code=200)
         
     

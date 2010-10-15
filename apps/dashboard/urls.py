@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-    (r'^$', 'dashboard.views.index'),
+    url(r'^$', 'dashboard.views.index', name='dashboard_index'),
 )
