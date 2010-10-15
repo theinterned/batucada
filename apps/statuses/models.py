@@ -1,11 +1,7 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
-
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 class Status(models.Model):
     author = models.ForeignKey(User)

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -6,11 +7,6 @@ from django.template import RequestContext
 from activity.models import Activity
 from profiles.models import Profile
 from users.forms import LoginForm
-
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 def splash(request):
     """Splash page we show to users who are not authenticated."""

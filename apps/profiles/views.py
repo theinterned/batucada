@@ -1,14 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
     
 from profiles.forms import ImageForm, ProfileForm, InterestForm, SkillForm
 from profiles.models import Profile, Skill, Interest

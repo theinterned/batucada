@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import User
 from django.contrib.auth.backends import ModelBackend
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from openid.consumer.consumer import SUCCESS
@@ -18,11 +19,6 @@ from django_openid_auth.forms import OpenIDLoginForm
 from django_openid_auth.models import UserOpenID
 from django_openid_auth.views import make_consumer, render_openid_request, \
      parse_openid_response
-
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 def get_hexdigest(algorithm, salt, raw_password):
     """Generate SHA-256 hash."""

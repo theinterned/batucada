@@ -1,15 +1,11 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
     
 from relationships.models import Relationship
 

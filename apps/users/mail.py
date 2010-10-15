@@ -1,9 +1,5 @@
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
     
 def send_reset_email(user, token, uri_func, view='users_reset_password_form'):
     """Send instructions to user on how to reset their password."""

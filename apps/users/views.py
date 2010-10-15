@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
@@ -11,11 +12,6 @@ from django.template import RequestContext
 
 from django_openid_auth.forms import OpenIDLoginForm
 
-try:
-    from l10n.urlresolvers import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-    
 from users.mail import send_reset_email, send_registration_email
 from users.models import ConfirmationToken, unique_confirmation_token
 from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
