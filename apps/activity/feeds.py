@@ -81,7 +81,7 @@ class UserActivityAtomFeed(Feed):
         return self.request.build_absolute_uri(obj.get_absolute_url())
     
     def items(self, user):
-        return Activity.objects.for_user(user)
+        return Activity.objects.from_user(user)
 
     def item_description(self, item):
         template = 'activity/_activity_resource.html'
@@ -127,6 +127,17 @@ class UserActivityAtomFeed(Feed):
                 }
             }
         return kwargs
+
+class UserNewsActivityAtomFeed(UserActivityAtomFeed):
+
+    def title(self, obj):
+        f = lambda u: u.get_full_name() in '' and u or u.get_full_name()
+        return _("News Feed for %(username)s") % {
+            'username': f(obj)
+        }
+    
+    def items(self, user):
+        return Activity.objects.for_user(user)
 
 class ObjectActivityAtomFeed(Feed):
     feed_type = ActivityStreamAtomFeed
