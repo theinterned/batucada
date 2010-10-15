@@ -20,6 +20,7 @@ class Profile(models.Model):
             'username': self.user.username
         })
 
+@property
 def get_user_profile(self):
     """Return a profile for this user."""
     return Profile.objects.get(id=self.pk)
