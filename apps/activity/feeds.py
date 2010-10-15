@@ -73,7 +73,9 @@ class UserActivityAtomFeed(Feed):
         return u"%(username)s" % { 'username': obj.actor_name }
 
     def item_author_link(self, obj):
-        return self.request.build_absolute_uri(obj.actor.get_absolute_url())
+        return self.request.build_absolute_uri(
+            obj.actor.profile.get_absolute_url()
+        )
 
     def item_link(self, obj):
         return self.request.build_absolute_uri(obj.get_absolute_url())

@@ -176,9 +176,12 @@ class Activity(models.Model):
             if obj.get_full_name() not in '':
                 return obj.get_full_name()
         return str(obj)
-        
+
+    @models.permalink
     def get_absolute_url(self):
-        return reverse('activity.views.index', kwargs=dict(activity_id=self.id))
+        return ('activity_index', (), {
+            'activity_id': self.id
+        })
     
     def timesince(self, now=None):
         """A slightly modified version of ```django.utils.timesince.timesince```."""

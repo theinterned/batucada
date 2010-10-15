@@ -14,6 +14,18 @@ class Profile(models.Model):
     def get_full_name(self):
         return self.user.get_full_name()
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('profiles_show', (), {
+            'username': self.user.username
+        })
+
+def get_user_profile(self):
+    """Return a profile for this user."""
+    return Profile.objects.get(id=self.pk)
+
+User.profile = get_user_profile
+
 class Skill(models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)

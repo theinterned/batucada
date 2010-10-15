@@ -17,9 +17,11 @@ class Status(models.Model):
     def __unicode__(self):
         return self.status
 
+    @models.permalink
     def get_absolute_url(self):
-        return reverse('statuses.views.show',
-                       kwargs=dict(status_id=self.pk))
+        return ('statuses_show', (), {
+            'status_id': self.pk
+        })
     
 def status_creation_handler(sender, **kwargs):
     status = kwargs.get('instance', None)
