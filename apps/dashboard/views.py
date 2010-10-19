@@ -6,22 +6,21 @@ from django.template import RequestContext
 
 from activity.models import Activity
 from profiles.models import Profile
-from users.forms import LoginForm
+from users.decorators import anonymous_only
 
+@anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
-    form = LoginForm()
-    return render_to_response('dashboard/signin.html', {
-        'form': form
+    return render_to_response('dashboard/splash.html', {
+        'activities': Activity.objects.public(limit=25),
     }, context_instance=RequestContext(request))
 
 @login_required
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
-    activities = Activity.objects.for_user(request.user, limit=5)    
     return render_to_response('dashboard/dashboard.html', {
         'user': request.user,
-        'activities': activities,
+        'activities': Activity.objects.for_user(request.user, limit=5),
     }, context_instance=RequestContext(request))
        
 def index(request):

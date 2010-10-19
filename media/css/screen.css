@@ -242,12 +242,12 @@ div.messages {
     margin: 0px 5px 10px 5px;
 }
 
-ul#activityfeed {
+ul.activityfeed {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
 }
-ul#activityfeed li {
+ul.activityfeed li {
     padding: 20px 0px 20px 0px;
     border-bottom: 1px solid #ccc;
 }

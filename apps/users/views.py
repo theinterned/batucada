@@ -47,8 +47,10 @@ def login_complete(request):
 @anonymous_only
 def login(request):
     """Log the user in."""
-    if request.user.is_authenticated() or request.method == 'GET':
-        return HttpResponseRedirect(reverse('dashboard_index'))
+    if request.method == 'GET':
+        return render_to_response('users/signin.html', {
+            'form': LoginForm(),
+        }, context_instance=RequestContext(request))
 
     form = LoginForm(data=request.POST)
     if not form.is_valid():

@@ -43,6 +43,10 @@ class ActivityManager(models.Manager):
         ids = [u.id for u in user.following()]
         ids.append(user.id)
         return self.__results(dict(actor__in=ids), None)
+
+    def public(self, limit=None):
+        # todo - determine visibility
+        return self.__results({}, limit)
     
 class Activity(models.Model):
     actor = models.ForeignKey(User)

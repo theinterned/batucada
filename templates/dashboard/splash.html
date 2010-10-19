@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block title %}{{ _('Sign In') }}{% endblock %}
+{% block body %}
+
+<p>
+  <a href="{% locale_url users_login %}">Sign in</a>
+</p>
+<div id="public_activity">
+  <h2>{{ _('Recent Activity') }}</h2>
+  <ul class="activityfeed">
+  {% for activity in activities %}
+  <li>
+    {% include "activity/_activity_resource.html" %}
+  </li>
+  {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
