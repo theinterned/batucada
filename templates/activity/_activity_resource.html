@@ -1,13 +1,21 @@
-<a href="{{ activity.actor.profile.get_absolute_url }}">
-  {{ activity.actor_name }}
-</a>
-{% if activity.object_type and activity.object_type_friendly == 'a status' %}
-{{ activity.object_name }}
-{% else %}
-  {{ activity.verb_object.past_tense }}
-  {% if activity.object_type and activity.object_type_friendly != 'a person' %}
-    {{ activity.object_type_friendly }}:
-  {% endif %}
-<a href="{{ activity.obj.get_absolute_url }}">{{ activity.object_name }}</a>
-{% endif %}
-(<small><a href="{{ activity.get_absolute_url }}">{{ activity.timesince }}</a></small>)
+<div class="activity_entry">
+  <div class="user_icon">
+    <a href="{{ activity.actor.profile.get_absolute_url }}">
+      <img width="45" height="45" src="{{ MEDIA_URL }}{{ activity.actor.profile.image }}" />
+    </a>
+  </div>
+  <div class="user_activity">
+    <a href="{{ activity.actor.profile.get_absolute_url }}">
+      {{ activity.actor_name }}
+    </a>
+    {% if activity.object_type and activity.object_type_friendly == 'a status' %}
+      {{ activity.object_name }}
+    {% else %}
+      {{ activity.verb_object.past_tense }}
+      {% if activity.object_type and activity.object_type_friendly != 'a person' %}
+        {{ activity.object_type_friendly }}:
+      {% endif %}
+      <a href="{{ activity.obj.get_absolute_url }}">{{ activity.object_name }}</a>
+    {% endif %}
+      (<small><a href="{{ activity.get_absolute_url }}">{{ activity.timesince }}</a></small>)
+</div>
