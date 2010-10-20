@@ -27,16 +27,15 @@
     <ul>
       <li><a href="{% locale_url profiles_edit %}">{{ _('Your Profile') }}</a></li>
       <li><a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a></li>
-      <li><a href="{% locale_url relationships_following %}">{{ _('Following') }}</a></li>
-      <li><a href="{% locale_url relationships_followers %}">{{ _('Followers') }}</a></li>
-      <li><a href="{% locale_url users_user_list %}">{{ _('Users') }}</a></li>
+      <li><a href="{% locale_url users_user_list %}">{{ _('People') }}</a></li>
+      <li><a href="#">{{ _('Events') }}</a></li>
       <li><a href="{% locale_url users_logout %}">{{ _('Sign out') }}</a></li>
     </ul>
 {% else %}
     <ul>
       <li><a href="#">{{ _('About') }}</a></li>
       <li><a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a></li>
-      <li><a href="#">{{ _('People') }}</a></li>
+      <li><a href="{% locale_url users_user_list %}">{{ _('People') }}</a></li>
       <li><a href="#">{{ _('Events') }}</a></li>
     </ul>
 {% endif %}
