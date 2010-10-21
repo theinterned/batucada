@@ -18,12 +18,14 @@ class Relationship(models.Model):
     target = generic.GenericForeignKey('target_content_type', 'target_object_id')
     
     def save(self, *args, **kwargs):
-        if self.source.pk == self.target.pk:
+        if (self.source_content_type == self.target_content_type) and (
+            self.source.pk == self.target.pk):
             raise ValidationError(_('Cannot create self referencing relationship.'))
         super(Relationship, self).save(*args, **kwargs)
 
     class Meta:
-        unique_together = (('source_object_id', 'target_object_id'),)
+        unique_together = ('source_content_type', 'target_content_type',
+                           'source_object_id', 'target_object_id',)
 
     def __unicode__(self):
         return "%(from)s => %(to)s" % {
@@ -41,8 +43,16 @@ def following(self):
         source_object_id=self.id).filter(
                 source_content_type=ContentType.objects.get_for_model(self))]
 
+def is_following(self, model):
+    obj_type_id = ContentType.objects.get_for_model(model)
+    return len(Relationship.objects.filter(
+        source_object_id=self.id,
+        target_object_id=model.pk,
+        target_content_type=obj_type_id)) > 0
+
 User.followers = followers
 User.following = following
+User.is_following = is_following
 
 def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)

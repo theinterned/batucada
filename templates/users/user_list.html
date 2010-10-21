@@ -16,13 +16,15 @@
   {% if user.id in following %}
     <form action="{% locale_url relationships_unfollow %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="user" value="{{ user.id }}" />
+	<input type="hidden" name="object_type_id" value="{{ type.id }}" />
+        <input type="hidden" name="object_id" value="{{ user.id }}" />
 	<input type="submit" value="Unfollow" />
     </form>
   {% else %}
     <form action="{% locale_url relationships_follow %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="user" value="{{ user.id }}" />
+	<input type="hidden" name="object_type_id" value="{{ type.id }}" />
+        <input type="hidden" name="object_id" value="{{ user.id }}" />
 	<input type="submit" value="Follow" />
     </form>
   {% endif %}

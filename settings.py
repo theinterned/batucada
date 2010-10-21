@@ -115,7 +115,7 @@ WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 MOZILLA_AMCD_HREF = '/meta/amcd.json'
 
 # Auth settings
-LOGIN_URL = '/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
 ACCOUNT_ACTIVATION_DAYS = 7

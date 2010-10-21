@@ -59,7 +59,7 @@ class TestLocaleURLs(TestCase):
         user = User.objects.create_user(
             'testuser', 'test@mozilla.com', 'testpass'
         )
-        response = self.client.get('/de/')
+        response = self.client.get('/de/login/')
         self.assertContains(response, 'csrfmiddlewaretoken')
         response = self.client.post('/de/login/', {
             'username': user.username,

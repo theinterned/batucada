@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
@@ -138,7 +139,8 @@ def user_list(request):
     return render_to_response('users/user_list.html', {
         'heading' : _('Users'),
         'users' : users,
-        'following' : [user.id for user in request.user.following()]
+        'following' : [user.id for user in request.user.following()],
+        'type': ContentType.objects.get_for_model(request.user),
     }, context_instance=RequestContext(request))
 
 @anonymous_only

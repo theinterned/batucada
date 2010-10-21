@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
@@ -30,25 +31,33 @@ def followers(request):
 @login_required
 @require_http_methods(['POST'])
 def follow(request):
-    if 'user' not in request.POST:
+    
+    if 'object_id' not in request.POST or 'object_type_id' not in request.POST:
         # todo - report error usefully
         return HttpResponse("error")
-    user = User.objects.get(id=int(request.POST['user']))
-    rel = Relationship(source=request.user, target=user)
+
+    obj_type = ContentType.objects.get(id=int(request.POST['object_type_id']))
+    target = obj_type.get_object_for_this_type(id=int(request.POST['object_id']))
+    rel = Relationship(source=request.user, target=target)
     rel.save()
-    # todo - redirect user to whatever page they were on before.
-    return HttpResponseRedirect(reverse('users_user_list'))
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 @login_required
 @require_http_methods(['POST'])
 def unfollow(request):
-    if 'user' not in request.POST:
+
+    if 'object_id' not in request.POST or 'object_type_id' not in request.POST:
         # todo - report error usefully
         return HttpResponse("error")
-    user = User.objects.get(id=int(request.POST['user']))
+    
+    obj_type = ContentType.objects.get(id=int(request.POST['object_type_id']))
+    target = obj_type.get_object_for_this_type(id=int(request.POST['object_id']))
+
     rel = Relationship.objects.get(
         source_object_id__exact=request.user.id,
-        target_object_id__exact=user.id)
+        target_object_id__exact=target.pk,
+        target_content_type__exact=obj_type)
     rel.delete()
-    # todo - redirect user to whatever page they were on before.
-    return HttpResponseRedirect(reverse('users_user_list'))
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
