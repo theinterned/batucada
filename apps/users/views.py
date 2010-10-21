@@ -51,22 +51,27 @@ def login(request):
     if request.method == 'GET':
         return render_to_response('users/signin.html', {
             'form': LoginForm(),
+            'target': request.GET.get('next', None),
         }, context_instance=RequestContext(request))
 
     form = LoginForm(data=request.POST)
     if not form.is_valid():
         return render_to_response('users/signin.html', {
-            'form' : form
+            'form' : form,
+            'target' : request.POST.get('next', None),
         }, context_instance=RequestContext(request))
+
     username = form.cleaned_data['username']
     password = form.cleaned_data['password']
     user = authenticate(username=username, password=password)
 
     if user is not None and user.is_active:
         auth.login(request, user)
-        return HttpResponseRedirect(reverse('dashboard_index'))
+        target = request.POST.get('next', reverse('dashboard_index'))
+        return HttpResponseRedirect(target)
 
     return render_to_response('users/signin.html', {
+        'target' : request.POST.get('next', None),
         'form' : form,
         'error': _('Incorrect login or password.'),
     }, context_instance=RequestContext(request))
@@ -132,15 +137,19 @@ def register_openid(request):
         'form' : form
     }, context_instance=RequestContext(request))
 
-@login_required
 def user_list(request):
     """Display a list of users on the site. TODO: Paginate."""
     users = User.objects.exclude(id__exact=request.user.id)
+    following = []
+    object_type = None
+    if request.user.is_authenticated():
+        following = [user.id for user in request.user.following()]
+        object_type = ContentType.objects.get_for_model(request.user)
     return render_to_response('users/user_list.html', {
         'heading' : _('Users'),
         'users' : users,
-        'following' : [user.id for user in request.user.following()],
-        'type': ContentType.objects.get_for_model(request.user),
+        'following' : following,
+        'type': object_type,
     }, context_instance=RequestContext(request))
 
 @anonymous_only

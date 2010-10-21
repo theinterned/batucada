@@ -101,3 +101,42 @@ class TestLogins(TestCase):
             'password': new_password, 'password_confirm': new_password
         })
         self.assertContains(response, 'Invalid username')
+
+    def test_next_get_parameter(self):
+        """
+        Test that upon successful login, users are sent a Location header
+        with the value of the ``next`` GET parameter, if present.
+        """
+        path = '/%s/login/?next=/%s/profile/edit/' % (self.locale, self.locale)
+        response = self.client.get(path)
+        self.assertContains(response, '/%s/profile/edit/' % (self.locale,))
+        response = self.client.post(path, {
+            'username': self.test_username,
+            'password': self.test_password,
+            'next': '/%s/profile/edit/' % (self.locale,)
+        })
+        self.assertTrue(response.has_header('location'))
+        self.assertEqual(response['location'],
+                         'http://testserver/%s/profile/edit/' % (self.locale,))
+
+    def test_header_injection_next_parameter(self):
+        """
+        Test that a user cannot inject content into the HTTP response headers
+        through selectively formatted values of the ``next`` GET parameter.
+        """
+        path = '/%s/login/' % (self.locale,)
+        qs = '?next=/%s/profile/edit/\n\nFoo' % (self.locale,)
+        response = self.client.get(path + qs)
+        self.assertContains(response, '/%s/profile/edit/' % (self.locale,))
+        self.assertFalse(response.has_header('location'))
+
+    def test_html_injection_next_parameter(self):
+        """
+        Test that a user cannot inject content into the HTML response
+        through selectively formatted values of the ``next`` GET parameter.
+        """
+        path = '/%s/login/' % (self.locale,)
+        qs = '?next=/%s/profile/edit/" /><blink>Damn!</blink>'
+        response = self.client.get(path + qs)
+        self.assertNotContains(response, '<blink>')
+        self.assertContains(response, '&lt;blink&gt;')
