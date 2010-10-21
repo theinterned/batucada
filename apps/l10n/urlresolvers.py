@@ -20,13 +20,13 @@ def get_url_prefix():
     """Get the prefix for the current thread, or None."""
     return getattr(_locals, 'prefix', None)
 
-def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None):
+def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None, current_app=None):
     """Wraps Django's reverse to prepend the correct locale."""
     prefixer = get_url_prefix()
 
     if prefixer:
         prefix = prefix or '/'
-    url = django_reverse(viewname, urlconf, args, kwargs, prefix)
+    url = django_reverse(viewname, urlconf, args, kwargs, prefix, current_app)
     if prefixer:
         return prefixer.fix(url)
     else:
