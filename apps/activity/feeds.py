@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
@@ -85,9 +86,9 @@ class UserActivityAtomFeed(Feed):
 
     def item_description(self, item):
         template = 'activity/_activity_resource.html'
-        
         return render_to_string(template, {
-            'activity': item
+            'activity': item,
+            'MEDIA_URL': settings.MEDIA_URL,
         })
 
     def item_pubdate(self, item):
