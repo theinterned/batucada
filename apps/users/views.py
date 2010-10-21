@@ -54,7 +54,7 @@ def login(request):
 
     form = LoginForm(data=request.POST)
     if not form.is_valid():
-        return render_to_response('dashboard/signin.html', {
+        return render_to_response('users/signin.html', {
             'form' : form
         }, context_instance=RequestContext(request))
     username = form.cleaned_data['username']
@@ -65,7 +65,7 @@ def login(request):
         auth.login(request, user)
         return HttpResponseRedirect(reverse('dashboard_index'))
 
-    return render_to_response('dashboard/signin.html', {
+    return render_to_response('users/signin.html', {
         'form' : form,
         'error': _('Incorrect login or password.'),
     }, context_instance=RequestContext(request))
