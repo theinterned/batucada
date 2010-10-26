@@ -8,7 +8,7 @@
 
 <form action="{% locale_url users_register %}" method="post">
   <fieldset>
-    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url dashboard_index %}">{{_('Sign in here')}}</a>.)</span></legend>
+    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.)</span></legend>
     {% csrf_token %}
       {% for field in form %}
       <p>
