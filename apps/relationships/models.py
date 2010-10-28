@@ -18,8 +18,8 @@ class Relationship(models.Model):
     target = generic.GenericForeignKey('target_content_type', 'target_object_id')
     
     def save(self, *args, **kwargs):
-        if (self.source_content_type == self.target_content_type) and (
-            self.source.pk == self.target.pk):
+        """Check that the source and the target are not the same object."""
+        if (self.source == self.target):
             raise ValidationError(_('Cannot create self referencing relationship.'))
         super(Relationship, self).save(*args, **kwargs)
 
