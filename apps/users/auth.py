@@ -12,13 +12,20 @@ from django.utils.translation import ugettext as _
 from openid.consumer.consumer import SUCCESS
 from openid.consumer.discover import DiscoveryFailure
 from openid.consumer.consumer import Consumer, SUCCESS, CANCEL, FAILURE
-from openid.extensions import sreg
+from openid.extensions import sreg, ax
 
 from django_openid_auth.auth import OpenIDBackend
 from django_openid_auth.forms import OpenIDLoginForm
 from django_openid_auth.models import UserOpenID
 from django_openid_auth.views import make_consumer, render_openid_request, \
      parse_openid_response
+
+ax_attributes = {
+    'email': ('http://axschema.org/contact/email', True),
+    'username': ('http://axschema.org/namePerson/friendly', True),
+    'first_name': ('http://axschema.org/namePerson/first', True),
+    'last_name': ('http://axschema.org/namePerson/last', True),
+}
 
 def get_hexdigest(algorithm, salt, raw_password):
     """Generate SHA-256 hash."""
@@ -81,7 +88,12 @@ def users_login_begin(request, registration=False):
         raise OpenIDAuthError(_("OpenID discovery error") + ": %s" % (str(exc),))
 
     openid_request.addExtension(
-        sreg.SRegRequest(optional=['email', 'fullname', 'nickname']))
+        sreg.SRegRequest(required=['email', 'fullname']))
+
+    ax_request = ax.FetchRequest()
+    for key, val in ax_attributes.iteritems():
+        ax_request.add(ax.AttrInfo(val[0], alias=key, required=val[1]))
+    openid_request.addExtension(ax_request)
 
     viewname = 'users_login_complete'
     return_to = request.build_absolute_uri(reverse(viewname))
@@ -129,7 +141,66 @@ class CustomOpenIDBackend(OpenIDBackend):
     Custom backend implementation. Create new accounts based on OpenID
     credentials *only* on registration, not on sign in attempts.
     """
+
+    def unique_username(self, nickname):
+        """
+        Given a base username, determine a unique one by appending an
+        incrementing integer to it until it's unique.
+        """
+        i = 1
+        while True:
+            username = nickname
+            if i > 1:
+                username += str(i)
+            try:
+                User.objects.get(username__exact=username)
+            except User.DoesNotExist:
+                break
+            i += 1
+        return username
+
+    def update_user_details_from_ax(self, user, ax_response):
+        """
+        Update ```user``` and associated ```profile``` object with information
+        obtained using OpenID attribute exchange.
+        """
+        if not ax_response:
+            return
+        profile = user.get_profile()
+        for key, val in ax_attributes.iteritems():
+            attr = ax_response.getSingle(val[0])
+            if not attr:
+                continue
+            if key == 'first_name' or key == 'last_name':
+                setattr(profile, key, attr)
+            elif key == 'username':
+                user.username = self.unique_username(attr)
+            else:
+                setattr(user, key, attr)
+        user.save()
+        profile.save()
+
+    def update_user_details_from_sreg(self, user, sreg_response):
+        """
+        Override ```update_user_details_from_sreg``` to update a user profile,
+        which will then update the user object using a post_save signal.
+        """
+        fullname = sreg_response.get('fullname')
+        profile = user.get_profile()
+        if fullname:
+            if ' ' in fullname:
+                profile.first_name, profile.last_name = fullname.rsplit(None, 1)
+            else:
+                profile.first_name = u''
+                profile.last_name = fullname
+            profile.save()
+        email = sreg_response.get('email')
+        if email:
+            user.email = email
+        user.save()
+    
     def authenticate(self, **kwargs):
+        """Authenticate a user using an OpenID response."""
         openid_response = kwargs.get('openid_response')
 
         if openid_response is None:
@@ -151,5 +222,8 @@ class CustomOpenIDBackend(OpenIDBackend):
         except UserOpenID.DoesNotExist:
             if registering:
                 user = self.create_user_from_openid(openid_response)
-        
+                update_user_details_from_ax(
+                    user,
+                    ax.FetchResponse.fromSuccessResponse(openid_response))
+
         return OpenIDBackend.authenticate(self, **kwargs)
