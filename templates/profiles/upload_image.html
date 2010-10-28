@@ -7,6 +7,8 @@
 
 {% if profile.image %}
 <p><img src="{{ MEDIA_URL }}/{{ profile.image }}" /></p>
+{% else %}
+<p><img src="{{ MEDIA_URL }}images/default_profile.jpg" /></p>
 {% endif %}
 <p>{{ _('Max size of 700k. JPG, GIF, PNG.') }}</p>
 <form action="{% locale_url profiles_upload_image %}" method="post" enctype="multipart/form-data">

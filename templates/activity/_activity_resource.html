@@ -1,7 +1,11 @@
 <div class="activity_entry">
   <div class="user_icon">
     <a href="{{ activity.actor.profile.get_absolute_url }}">
+      {% if activity.actor.profile.image %}
       <img width="45" height="45" src="{{ MEDIA_URL }}{{ activity.actor.profile.image }}" />
+      {% else %}
+      <img width="45" height="45" src="{{ MEDIA_URL }}images/default_profile.jpg" />
+      {% endif %}
     </a>
   </div>
   <div class="user_activity">

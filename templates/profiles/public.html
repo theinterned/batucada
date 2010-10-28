@@ -15,6 +15,10 @@
   <p>
     <img src="{{ MEDIA_URL }}/{{ profile.image }}" />
   </p>
+  {% else %}
+  <p>
+    <img src="{{ MEDIA_URL }}images/default_profile.jpg" />
+  </p>
   {% endif %}
   <p>
     {% if profile.get_full_name %}
