@@ -24,9 +24,11 @@ from users.decorators import anonymous_only
 def login_begin(request, registration=False):
     """Begin OpenID auth workflow."""
     try:
+        request.session['registration'] = registration
         return users_login_begin(request, registration)
     except OpenIDAuthError, exc:
-        response = render_to_response('users/login_openid.html', {
+        template = lambda r: r and 'users/register_openid.html' or 'users/login_openid.html'
+        response = render_to_response(template(registration), {
             'error': exc.message,
             'form': OpenIDLoginForm()
         }, context_instance=RequestContext(request))
@@ -38,7 +40,15 @@ def login_complete(request):
     try:
         return users_login_complete(request)
     except OpenIDAuthError, exc:
-        response = render_to_response('users/login_openid.html', {
+        if request.session.get('registration', False):
+            template = 'users/register_openid.html'
+        else:
+            template = 'users/login_openid.html'
+        try:
+            del request.session['registration']
+        except KeyError:
+            pass
+        response = render_to_response(template, {
             'error': exc.message,
             'form': OpenIDLoginForm()
         }, context_instance=RequestContext(request))
