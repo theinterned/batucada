@@ -222,8 +222,7 @@ class CustomOpenIDBackend(OpenIDBackend):
         except UserOpenID.DoesNotExist:
             if registering:
                 user = self.create_user_from_openid(openid_response)
-                update_user_details_from_ax(
-                    user,
-                    ax.FetchResponse.fromSuccessResponse(openid_response))
+                ax_response = ax.FetchResponse.fromSuccessResponse(openid_response)
+                self.update_user_details_from_ax(user, ax_response)
 
         return OpenIDBackend.authenticate(self, **kwargs)
