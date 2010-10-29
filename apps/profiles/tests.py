@@ -30,7 +30,16 @@ class ProfileTests(TestCase):
         self.assertEqual(profile.last_name, self.user.last_name)
 
     def test_profile_get_full_name(self):
-        """Test ``get_full_name`` method on Profile."""
+        """Test ``get_full_name`` method on ``Profile``."""
         profile = self.user.get_profile()
         self.assertEqual(profile.get_full_name(), self.user.get_full_name())
 
+    def test_profile_get_full_name_or_username(self):
+        """Test ``get_full_name_or_username`` method on ``Profile``."""
+        profile = self.user.get_profile()
+        self.assertEqual(profile.get_full_name_or_username(), self.user.username)
+        profile.first_name = 'Jon'
+        profile.last_name = 'Smith'
+        profile.save()
+        self.assertEqual(profile.get_full_name_or_username(), 'Jon Smith')
+        

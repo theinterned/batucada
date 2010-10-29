@@ -14,6 +14,12 @@ class Profile(models.Model):
     def get_full_name(self):
         return self.user.get_full_name()
 
+    def get_full_name_or_username(self):
+        full_name = self.get_full_name()
+        if full_name in ['', None]:
+            return self.user.username
+        return full_name
+    
     @models.permalink
     def get_absolute_url(self):
         return ('profiles_show', (), {
