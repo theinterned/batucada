@@ -14,6 +14,14 @@
   </p>
 </div>
 
+<p>
+  {% if message_count > 0 %}
+  <a href="{% locale_url messages_inbox %}"><strong>{{ _('Messages') }} ({{ message_count }})</strong></a>
+  {% else %}
+  <a href="{% locale_url messages_inbox %}">{{ _('Messages') }}</a>
+  {% endif %}
+</p>
+
 {% if activities %}
 <h3>{{ _('Recent Activity') }} <a href="{% locale_url activity_feed_user_news username=user.username %}"><img src="{{ MEDIA_URL }}images/feed-icon-14x14.png"></a></h3>
 <ul class="activityfeed">

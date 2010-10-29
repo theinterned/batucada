@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
-
+{% load i18n %}
 {% block title %}{{ profile.get_full_name }}{% endblock %}
 
 {% block links %}
@@ -60,6 +60,14 @@
   </p>
   {% endif %}
 </fieldset>
+
+<p>
+  <a href="{% locale_url messages_compose_to recipient=profile.user.username %}">
+    {% blocktrans with profile.first_name as first_name %}
+    Send {{ first_name }} a Message
+    {% endblocktrans %}
+  </a>
+</p>
 
 <p>
   <a href="{% locale_url dashboard_index %}">Your Dashboard</a>
