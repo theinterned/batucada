@@ -52,8 +52,11 @@ class Link(models.Model):
     
 def project_creation_handler(sender, **kwargs):
     project = kwargs.get('instance', None)
-    if not isinstance(project, Project):
+    created = kwargs.get('created', False)
+
+    if not created or not isinstance(project, Project):
         return
+    
     try:
         import activity
         activity.send(project.created_by, 'create', project)
