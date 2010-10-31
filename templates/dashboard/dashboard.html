@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
+{% block links %}
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_feed_user_news username=user.username %}">
+{% endblock %}
 {% block body %}
 
 <div class="status_update">
