@@ -40,7 +40,7 @@ class ProjectContactUsersForm(forms.Form):
     )
 
     def save(self, sender, parent_msg=None):
-        project = self.cleaned_data['recipient']
+        project = self.cleaned_data['project']
         try:
             project = Project.objects.get(id=int(project))
         except Project.DoesNotExist:
