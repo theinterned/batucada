@@ -35,8 +35,18 @@ def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.user != project.created_by:
         return HttpResponseForbidden
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(
+                reverse('projects_show', kwargs=dict(slug=project.slug)))
+    else:
+        form = ProjectForm(instance=project)
+        
     return render_to_response('projects/edit.html', {
-        'form': ProjectForm(instance=project),
+        'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
 
@@ -47,7 +57,6 @@ def gallery(request):
 
 @login_required
 def create(request):
-    form = ProjectForm(request.user)
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
@@ -56,6 +65,8 @@ def create(request):
             project.save()
             return HttpResponseRedirect(reverse('projects_show',
                                                 kwargs={'slug': project.slug}))
+    else:
+        form = ProjectForm()
     return render_to_response('projects/create.html', {
         'form': form
     }, context_instance=RequestContext(request))
