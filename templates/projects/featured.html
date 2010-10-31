@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% block title %}{{ project.name }}{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{% locale_url projects_featured_css slug=project.slug %}" />
+{% endblock %}
 {% block body %}
 {{ custom_content }}
 
@@ -8,6 +11,7 @@
 {% include "projects/_project_admin.html" %}
 {% include "projects/_followers.html" %}
 {% include "projects/_message_followers.html" %}
+
 {% if admin %}
 <p>
   <a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>

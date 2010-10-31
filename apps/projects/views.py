@@ -3,7 +3,7 @@ import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context, Template
 
@@ -70,3 +70,7 @@ def contact_followers(request, slug):
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
+def featured_css(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    return HttpResponse(project.css, mimetype='text/css')

@@ -11,4 +11,6 @@ urlpatterns = patterns('',
       name='projects_show'),
   url(r'^(?P<slug>[\w-]+)/contactfollowers/$', 'projects.views.contact_followers',
       name='projects_contact_followers'),
+  url(r'^(?P<slug>[\w-]+)/style.css$', 'projects.views.featured_css',
+      name='projects_featured_css'),
 )
