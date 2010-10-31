@@ -1,11 +1,13 @@
 import re
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context, Template
+from django.utils.translation import ugettext as _
 
 from projects.models import Project
 from projects.forms import ProjectForm, ProjectContactUsersForm
@@ -63,8 +65,9 @@ def create(request):
             project = form.save(commit=False)
             project.created_by = request.user
             project.save()
-            return HttpResponseRedirect(reverse('projects_show',
-                                                kwargs={'slug': project.slug}))
+            return HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug
+            }))
     else:
         form = ProjectForm()
     return render_to_response('projects/create.html', {
@@ -76,7 +79,18 @@ def contact_followers(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.created_by != request.user:
         return HttpResponseForbidden
-    form = ProjectContactUsersForm()
+    if request.method == 'POST':
+        form = ProjectContactUsersForm(request.POST)
+        if form.is_valid():
+            form.save(sender=request.user)
+            messages.add_message(request, messages.INFO,
+                                 _("Message successfully sent."))
+            return HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug
+            }))
+    else:
+        form = ProjectContactUsersForm()
+        form.fields['project'].initial = project.pk
     return render_to_response('projects/contact_users.html', {
         'form': form,
         'project': project,
