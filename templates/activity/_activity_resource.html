@@ -9,9 +9,7 @@
     </a>
   </div>
   <div class="user_activity">
-    <a href="{{ activity.actor.profile.get_absolute_url }}">
-      {{ activity.actor_name }}
-    </a>
+    <a href="{{ activity.actor.profile.get_absolute_url }}">{{ activity.actor_name }}</a>
     {% if activity.object_type and activity.object_type_friendly == 'a status' %}
       {{ activity.object_name }}
     {% else %}
