@@ -12,8 +12,8 @@ class ProtectedProjectForm(forms.ModelForm):
         
         protected = getattr(self.Meta, 'protected')
         project = kwargs.get('instance', None)
-
-        if project and not project.featured:
+        
+        if not project or not project.featured:
             for field in protected:
                 self.fields.pop(field)
 
