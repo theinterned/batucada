@@ -1,0 +1,6 @@
+{% load l10n_tags %}
+{% if admin %}
+<p>
+  <a href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Send Message to Followers') }}</a>
+</p>
+{% endif %}

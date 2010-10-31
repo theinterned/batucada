@@ -1,0 +1,7 @@
+{% load l10n_tags %}
+<h3>{{ _('Users following this project') }}</h3>
+<ul>
+  {% for user in followers %}
+  <li><a href="{{ user.get_profile.get_absolute_url }}">{{ user.get_profile.get_full_name_or_username }}</a></li>
+  {% endfor %}
+</ul>
