@@ -82,6 +82,12 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.HidePasswordOnException',
 )
 
+if DEBUG:
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    INTERNAL_IPS = ('127.0.0.1',)
+
 ROOT_URLCONF = 'batucada.urls'
 
 TEMPLATE_DIRS = (
@@ -108,6 +114,11 @@ INSTALLED_APPS = (
     'statuses',
     'messages',
 )
+
+if DEBUG:
+    INSTALLED_APPS += (
+        'debug_toolbar',
+    )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
