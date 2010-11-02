@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'projects',
     'statuses',
     'messages',
+    'south',
 )
 
 if DEBUG:
