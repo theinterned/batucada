@@ -22,6 +22,7 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
 
    cd batucada
    mkvirtualenv batucada 
+   workon batucada
    pip install -r requirements.txt 
 
 You may need to create a settings_local.py file to override some of the default settings.
