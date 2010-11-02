@@ -14,7 +14,7 @@ from users.decorators import anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
     return render_to_response('dashboard/splash.html', {
-        'activities': Activity.objects.public(limit=25),
+        'activities': Activity.objects.public(limit=10),
     }, context_instance=RequestContext(request))
 
 @login_required
