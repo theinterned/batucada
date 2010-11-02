@@ -13,7 +13,6 @@ urlpatterns = patterns('',
     (r'^profile/',       include('profiles.urls')),
     (r'^project/',       include('projects.urls')),
     (r'^relationships/', include('relationships.urls')),
-    (r'^accountmanager/',include('accountmanager.urls')),
     (r'^messages/',      include('messages.urls')),
     (r'^admin/',         include(admin.site.urls)),
 
