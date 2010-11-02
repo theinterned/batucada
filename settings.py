@@ -44,7 +44,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known', 'accountmanager')
+SUPPORTED_NONLOCALES = ('media', '.well-known')
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -108,7 +108,6 @@ INSTALLED_APPS = (
     'l10n',
     'dashboard',
     'relationships',
-    'accountmanager',
     'activity',
     'projects',
     'statuses',
@@ -123,7 +122,6 @@ if DEBUG:
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
-MOZILLA_AMCD_HREF = '/meta/amcd.json'
 
 # Auth settings
 LOGIN_URL = '/login/'
@@ -140,31 +138,10 @@ AUTH_PROFILE_MODULE = 'profiles.Profile'
 
 MAX_IMAGE_SIZE = 1024 * 700
 
-AMCD_RESOLVER_FUNCTION = 'l10n.urlresolvers.reverse'
-AMCD_CONFIG = {
-    'connect': {
-        'method': 'POST',
-        'path_view': 'users.views.login',
-        'params': {
-            'username': 'username',
-            'password': 'password'
-        }
-    },
-    'disconnect': {
-        'method': 'GET',
-        'path_view': 'users.views.logout'
-    },
-    'register': {
-        'method': 'POST',
-        'path_view': 'users.views.register',
-        'type': 'email',
-        'params': {
-            'id': 'email',
-            'secret': 'password'
-        }
-    }
-}
-
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user' : lambda o: "/%s/" % o.username,
+}
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
 }
