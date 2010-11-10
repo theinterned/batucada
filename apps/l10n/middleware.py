@@ -2,10 +2,8 @@ import urllib
 
 from django.http import HttpResponsePermanentRedirect
 from django.middleware.locale import LocaleMiddleware
-from django.utils.encoding import smart_str
 
 from l10n import urlresolvers
-from l10n.locales import LANGUAGE_URL_MAP
 
 class LocaleURLRewriter(LocaleMiddleware):
     
@@ -13,15 +11,6 @@ class LocaleURLRewriter(LocaleMiddleware):
         prefixer = urlresolvers.Prefixer(request)
         urlresolvers.set_url_prefix(prefixer)
         full_path = prefixer.fix(prefixer.shortened_path)
-
-        if 'lang' in request.GET:
-            # Blank out the locale so that we can set a new one. Remove lang
-            # from the query params so we don't have an infinite loop.
-            prefixer.locale = ''
-            new_path = prefixer.fix(prefixer.shortened_path)
-            query = dict((smart_str(k), request.GET[k]) for k in request.GET)
-            query.pop('lang')
-            return HttpResponsePermanentRedirect(urlparams(new_path, **query))
 
         if full_path != request.path:
             query_string = request.META.get('QUERY_STRING', '')
