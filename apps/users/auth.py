@@ -5,13 +5,11 @@ import urllib
 from django.contrib import auth
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import User
-from django.contrib.auth.backends import ModelBackend
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from openid.consumer.consumer import SUCCESS
 from openid.consumer.discover import DiscoveryFailure
-from openid.consumer.consumer import Consumer, SUCCESS, CANCEL, FAILURE
+from openid.consumer.consumer import SUCCESS, CANCEL, FAILURE
 from openid.extensions import sreg, ax
 
 from django_openid_auth.auth import OpenIDBackend
@@ -217,7 +215,7 @@ class CustomOpenIDBackend(OpenIDBackend):
         registering = request.GET.get('registration', False)
 
         try:
-            user_openid = UserOpenID.objects.get(
+            UserOpenID.objects.get(
                 claimed_id__exact=openid_response.identity_url)
         except UserOpenID.DoesNotExist:
             if registering:

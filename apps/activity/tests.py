@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from django.test import TestCase, Client
 
 import activity
-from activity.schema import verbs, object_types, UnknownActivityError
+from activity.schema import UnknownActivityError
 from activity.models import Activity
 
 class ActivityTests(TestCase):
