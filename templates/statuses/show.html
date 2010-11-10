@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="status">
+  <div class="user_icon">
+    <a href="{{ status.get_absolute_url }}">
+      {% if status.author.profile.image %}
+      <img width="45" height="45" src="{{ MEDIA_URL }}{{ status.author.profile.image }}" />
+      {% else %}
+      <img width="45" height="45" src="{{ MEDIA_URL }}images/default_profile.jpg" />
+      {% endif %}
+    </a>
+  </div>
+  <a href="{{ status.author.profile.get_absolute_url }}">{{ status.author.profile.get_full_name_or_username }}</a>
+  {{ status.status }} (<small><a href="{{ status.get_absolute_url }}">{{ status.timesince }} ago</a></small>)
+</div>
+{% endblock %}
