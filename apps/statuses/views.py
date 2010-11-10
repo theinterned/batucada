@@ -1,9 +1,14 @@
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext
 
 from statuses.models import Status
 
 def show(request, status_id):
-    return HttpResponse('wahey')
+    status = get_object_or_404(Status, id=status_id)
+    return render_to_response('statuses/show.html', {
+        'status': status,
+    }, context_instance=RequestContext(request))
 
 def create(request):
     if 'status' not in request.POST:

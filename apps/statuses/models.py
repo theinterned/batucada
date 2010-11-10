@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
+from django.utils.timesince import timesince
 
 class Status(models.Model):
     author = models.ForeignKey(User)
@@ -18,7 +18,10 @@ class Status(models.Model):
         return ('statuses_show', (), {
             'status_id': self.pk
         })
-    
+
+    def timesince(self, now=None):
+        return timesince(self.timestamp, now)
+
 def status_creation_handler(sender, **kwargs):
     status = kwargs.get('instance', None)
     if not isinstance(status, Status):
