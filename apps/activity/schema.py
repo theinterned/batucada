@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext as _
 
+
 class UnknownActivityError(Exception):
     """Can't find a specified activity verb or object-type."""
 
     def __init__(self, value):
         self.value = value
-        
+
     def __str__(self):
         return repr(self.value)
 
@@ -16,12 +17,12 @@ class Type(object):
 
     past_tense = None
     ns = 'http://activitystrea.ms/schema/1.0'
-    
+
     def __init__(self, name, past_tense=None):
         self.abbrev_name = name
         self.name = "%(namespace)s/%(name)s" % {
             'namespace': self.ns,
-            'name': name
+            'name': name,
         }
         self.past_tense = past_tense
 
@@ -33,17 +34,18 @@ class Type(object):
         if capitalize:
             term = term.capitalize()
         if noun:
-            p = lambda t: (t[0] in 'aeio' and _('an %(term)s' % {'term':t})
-                           or _('a %(term)s' % {'term':t}))
+            p = lambda t: (t[0] in 'aeio' and _('an %(term)s' % {'term': t})
+                           or _('a %(term)s' % {'term': t}))
             return p(term)
         return term
 
     def __eq__(self, other):
         return self.name == other or self.abbrev_name == other
-            
+
+
 class DerivedType(Type):
     """Represent an entity defined by this site. Should extend a base type."""
-    
+
     ns = 'http://drumbeat.org/activity/schema/1.0'
 
     def __init__(self, name, parent, past_tense=None):
@@ -54,7 +56,7 @@ class DerivedType(Type):
 type_names = [
     'article', 'audio', 'bookmark', 'comment', 'file', 'folder', 'group',
     'note', 'person', 'photo', 'photo-album', 'place', 'playlist', 'product',
-    'review', 'service', 'status', 'video', 'event', 'song'
+    'review', 'service', 'status', 'video', 'event', 'song',
 ]
 object_types = {}
 for name in type_names:
@@ -78,17 +80,16 @@ verbs = {
     'rsvp-maybe':  Type('rsvp-maybe', past_tense=_('might be attending')),
 }
 
-# Custom types 
+# Custom types
 object_types.update({
-    'project':  DerivedType('project', object_types['group']),
+    'project': DerivedType('project', object_types['group']),
 })
 
 # Custom verbs
 verbs.update({
-    'create':      DerivedType('create',
-                               verbs['post'],
-                               past_tense=_('created')),
+    'create': DerivedType('create', verbs['post'], past_tense=_('created')),
 })
+
 
 def object_type(obj):
     """

@@ -1,13 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from messages.models import inbox_count_for
 
 from activity.models import Activity
-from profiles.models import Profile
 from users.decorators import anonymous_only
 
 @anonymous_only

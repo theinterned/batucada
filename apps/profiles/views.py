@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
     
 from profiles.forms import ImageForm, ProfileForm, InterestForm, SkillForm
-from profiles.models import Profile, Skill, Interest
+from profiles.models import Skill, Interest
 
 def delete_profile_element(request, param_name, cls, viewname):
     """Delete a skill, interest, number, etc from users profile."""

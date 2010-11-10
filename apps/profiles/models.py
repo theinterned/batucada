@@ -53,7 +53,7 @@ def user_save_handler(sender, **kwargs):
     if user is None:
         return
     try:
-        profile = user.get_profile()
+        user.get_profile()
     except Profile.DoesNotExist:
         Profile(
             user=user,
