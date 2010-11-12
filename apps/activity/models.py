@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -188,3 +188,6 @@ class Activity(models.Model):
         c = lambda x: x == "0 minutes" and _("less than a minute") or x
         d = lambda x: ("hours," in x or "hour," in x) and x.split(',')[0] or x
         return d(c(t)) + _(" ago")
+
+
+admin.site.register(Activity)
