@@ -6,8 +6,6 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.translation import ugettext as _
 
-import activity
-
 class Relationship(models.Model):
     source_content_type = models.ForeignKey(ContentType, related_name='source_relationships')
     source_object_id = models.PositiveIntegerField()
@@ -55,9 +53,13 @@ User.following = following
 User.is_following = is_following
 
 def follow_handler(sender, **kwargs):
-    rel = kwargs.get('instance', None)
-    if not isinstance(rel, Relationship):
-        return
-    activity.send(rel.source, 'follow', rel.target)
+    try:
+        import activity
+        rel = kwargs.get('instance', None)
+        if not isinstance(rel, Relationship):
+            return
+        activity.send(rel.source, 'follow', rel.target)
+    except ImportError:
+        pass
 
 pre_save.connect(follow_handler, sender=Relationship)
