@@ -6,7 +6,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext as _
 
-from activity.schema import object_type, verbs, object_types, UnknownActivityError
+from activity.schema import object_type, object_types
+from activity.schema import verbs, UnknownActivityError
+
 
 class ActivityManager(models.Manager):
 
@@ -14,21 +16,25 @@ class ActivityManager(models.Manager):
         return self.filter(**predicate).order_by('-timestamp')[:limit]
 
     def from_user(self, user, limit=None):
-        """Return a chronological list of activities performed by ```user```."""
+        """
+        Return a chronological list of activities performed by ```user```.
+        """
         return self.__results(dict(actor=user), limit)
 
     def from_object(self, obj, limit=None):
         """Return a chronological list of activities involving ```obj```."""
         return self.__results({
             'obj_id': obj.id,
-            'obj_content_type': ContentType.objects.get_for_model(obj)
+            'obj_content_type': ContentType.objects.get_for_model(obj),
         }, limit)
 
     def from_target(self, target, limit=None):
-        """Return a chronological list of activities performed on ```target```."""
+        """
+        Return a chronological list of activities performed on ```target```.
+        """
         return self.__results({
             'target_id': target.id,
-            'target_content_type': ContentType.objects.get_for_model(target)
+            'target_content_type': ContentType.objects.get_for_model(target),
         }, limit)
 
     def for_user(self, user, limit=None):
@@ -46,7 +52,8 @@ class ActivityManager(models.Manager):
     def public(self, limit=None):
         # todo - determine visibility
         return self.__results({}, limit)
-    
+
+
 class Activity(models.Model):
     actor = models.ForeignKey(User)
     verb = models.CharField(max_length=120)
@@ -55,7 +62,8 @@ class Activity(models.Model):
     obj_id = models.PositiveIntegerField()
     obj = generic.GenericForeignKey('obj_content_type', 'obj_id')
 
-    target_content_type = models.ForeignKey(ContentType, related_name='target', null=True)
+    target_content_type = models.ForeignKey(
+        ContentType, related_name='target', null=True)
     target_id = models.PositiveIntegerField(null=True)
     target = generic.GenericForeignKey('target_content_type', 'target_id')
 
@@ -77,8 +85,8 @@ class Activity(models.Model):
         if abbrev not in verbs:
             raise UnknownActivityError("Unknown verb: %s" % (self.verb,))
         return verbs[abbrev]
-    
-    @property    
+
+    @property
     def object_name(self):
         """
         Some classes of objects (e.g., ```User```) have special naming
@@ -87,7 +95,7 @@ class Activity(models.Model):
         """
         name = self._get_object_name(self.obj)
         if self.obj == name:
-            return u"%(obj)s" % { 'obj': self.obj }
+            return u"%(obj)s" % {'obj': self.obj}
         return name
 
     @property
@@ -97,13 +105,13 @@ class Activity(models.Model):
         identified by a URI.
         """
         return object_type(self.obj)
-            
+
     @property
     def object_type_friendly(self):
         """
         If the type URI for an object can be determined, try to find the
-        friendly version. For instance, http://activitystrea.ms/schema/1.0/article
-        would be 'an article'.
+        friendly version. For instance,
+        http://activitystrea.ms/schema/1.0/article would be 'an article'.
         """
         object_type = self.object_type
         if object_type:
@@ -132,8 +140,8 @@ class Activity(models.Model):
     def target_type_friendly(self):
         """
         If the type URI for a target can be determined, try to find the
-        friendly version. For instance, http://activitystrea.ms/schema/1.0/article
-        would be 'an article'.
+        friendly version. For instance,
+        http://activitystrea.ms/schema/1.0/article would be 'an article'.
         """
         target_type = self.target_type
         if target_type:
@@ -160,7 +168,7 @@ class Activity(models.Model):
             r += u" %(object_type)s:" % {
                 'object_type': self.object_type_friendly,
             }
-        r += u" %(object)s" % { 'object': self.obj }
+        r += u" %(object)s" % {'object': self.obj}
         if self.target:
             r += u" on %s" % (self.target,)
         return r
@@ -179,11 +187,13 @@ class Activity(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('activity_index', (), {
-            'activity_id': self.id
+            'activity_id': self.id,
         })
-    
+
     def timesince(self, now=None):
-        """A slightly modified version of ```django.utils.timesince.timesince```."""
+        """
+        A slightly modified version of ```django.utils.timesince.timesince```.
+        """
         t = timesince(self.timestamp, now)
         c = lambda x: x == "0 minutes" and _("less than a minute") or x
         d = lambda x: ("hours," in x or "hour," in x) and x.split(',')[0] or x

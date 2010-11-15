@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from activity.models import Activity
 from activity.schema import object_type, verbs, object_types, DerivedType
 
+
 class ActivityStreamAtomFeed(Atom1Feed):
     """Tweaks to Atom feed generator to include Activity Stream data."""
     def root_attributes(self):
@@ -23,8 +24,9 @@ class ActivityStreamAtomFeed(Atom1Feed):
 
         for k, o in object_types.iteritems():
             if o == obj['object-type']:
-                if isinstance(o, DerivedType):
-                    handler.addQuickElement(u'activity:object-type', o.parent.name)
+                if not isinstance(o, DerivedType):
+                    continue
+                handler.addQuickElement(u'activity:object-type', o.parent.name)
 
         handler.addQuickElement(u'activity:object-type', obj['object-type'])
         handler.addQuickElement(u'title', obj['title'])
@@ -49,7 +51,7 @@ class ActivityStreamAtomFeed(Atom1Feed):
 
         super(ActivityStreamAtomFeed, self).add_item_elements(handler, item)
 
-    
+
 class UserActivityAtomFeed(Feed):
     """
     An Atom feed that uses the Activity Atom Extensions to express activities
@@ -64,23 +66,23 @@ class UserActivityAtomFeed(Feed):
     def title(self, obj):
         f = lambda u: u.get_full_name() in '' and u or u.get_full_name()
         return _("Activity Stream for %(username)s") % {
-            'username': f(obj)
+            'username': f(obj),
         }
-    
+
     def link(self, obj):
         return obj.get_absolute_url()
 
     def item_author_name(self, obj):
-        return u"%(username)s" % { 'username': obj.actor_name }
+        return u"%(username)s" % {'username': obj.actor_name, }
 
     def item_author_link(self, obj):
         return self.request.build_absolute_uri(
-            obj.actor.profile.get_absolute_url()
+            obj.actor.profile.get_absolute_url(),
         )
 
     def item_link(self, obj):
         return self.request.build_absolute_uri(obj.get_absolute_url())
-    
+
     def items(self, user):
         return Activity.objects.from_user(user)
 
@@ -96,7 +98,7 @@ class UserActivityAtomFeed(Feed):
 
     def item_extra_kwargs(self, item):
         obj_id = self.request.build_absolute_uri(
-            item.obj.get_absolute_url()
+            item.obj.get_absolute_url(),
         )
         kwargs = {
             'activity': {
@@ -108,14 +110,14 @@ class UserActivityAtomFeed(Feed):
                     'link': {
                         'rel': 'alternate',
                         'type': 'text/html',
-                        'href': obj_id
+                        'href': obj_id,
                     }
                 }
             }
         }
         if item.target:
             target_id = self.request.build_absolute_uri(
-                item.target.get_absolute_url()
+                item.target.get_absolute_url(),
             )
             kwargs['activity']['target'] = {
                 'object-type': object_type(item.target),
@@ -124,27 +126,29 @@ class UserActivityAtomFeed(Feed):
                 'link': {
                     'rel': 'alternate',
                     'type': 'text/html',
-                    'href': target_id
+                    'href': target_id,
                 }
             }
         return kwargs
+
 
 class UserNewsActivityAtomFeed(UserActivityAtomFeed):
 
     def title(self, obj):
         f = lambda u: u.get_full_name() in '' and u or u.get_full_name()
         return _("News Feed for %(username)s") % {
-            'username': f(obj)
+            'username': f(obj),
         }
-    
+
     def items(self, user):
         return Activity.objects.for_user(user)
+
 
 class ObjectActivityAtomFeed(Feed):
     feed_type = ActivityStreamAtomFeed
     title = "Activity Stream Example"
     link = "/foo/"
-    
+
     def items(self):
         """Obviously a placeholder."""
         return Activity.objects.all()
