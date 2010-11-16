@@ -4,6 +4,7 @@ django-openid-auth==0.2
 pil
 django-messages
 south
+jogging
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower

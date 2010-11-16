@@ -2,6 +2,7 @@
 # Django settings for batucada project.
 
 import os
+import logging
 
 # Make filepaths relative to settings.
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -79,6 +80,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'commonware.middleware.HidePasswordOnException',
+    'jogging.middleware.LoggingMiddleware',
 )
 
 if DEBUG:
@@ -112,6 +114,7 @@ INSTALLED_APPS = (
     'statuses',
     'messages',
     'south',
+    'jogging',
 )
 
 if DEBUG:
@@ -139,9 +142,12 @@ AUTH_PROFILE_MODULE = 'profiles.Profile'
 MAX_IMAGE_SIZE = 1024 * 700
 
 ABSOLUTE_URL_OVERRIDES = {
-    'auth.user' : lambda o: "/%s/" % o.username,
+    'auth.user': lambda o: "/%s/" % o.username,
 }
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
+
+GLOBAL_LOG_LEVEL = logging.DEBUG
+GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
