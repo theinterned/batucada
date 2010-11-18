@@ -1,14 +1,21 @@
+import urllib
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context, Template
 from django.utils.translation import ugettext as _
 
+from BeautifulSoup import BeautifulSoup
+
 from projects.models import Project
 from projects.forms import ProjectForm, ProjectContactUsersForm
+from projects.forms import ProjectLinkForm
+
 
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -30,6 +37,7 @@ def show(request, slug):
     return render_to_response('projects/featured.html', context,
                               context_instance=RequestContext(request))
 
+
 @login_required
 def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -44,16 +52,18 @@ def edit(request, slug):
                 reverse('projects_show', kwargs=dict(slug=project.slug)))
     else:
         form = ProjectForm(instance=project)
-        
+
     return render_to_response('projects/edit.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
 
-def gallery(request):
+
+def list(request):
     return render_to_response('projects/gallery.html', {
-        'projects': Project.objects.all()
+        'projects': Project.objects.all(),
     }, context_instance=RequestContext(request))
+
 
 @login_required
 def create(request):
@@ -64,19 +74,20 @@ def create(request):
             project.created_by = request.user
             project.save()
             return HttpResponseRedirect(reverse('projects_show', kwargs={
-                'slug': project.slug
+                'slug': project.slug,
             }))
     else:
         form = ProjectForm()
     return render_to_response('projects/create.html', {
-        'form': form
+        'form': form,
     }, context_instance=RequestContext(request))
+
 
 @login_required
 def contact_followers(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.created_by != request.user:
-        return HttpResponseForbidden
+        return HttpResponseForbidden()
     if request.method == 'POST':
         form = ProjectContactUsersForm(request.POST)
         if form.is_valid():
@@ -84,7 +95,7 @@ def contact_followers(request, slug):
             messages.add_message(request, messages.INFO,
                                  _("Message successfully sent."))
             return HttpResponseRedirect(reverse('projects_show', kwargs={
-                'slug': project.slug
+                'slug': project.slug,
             }))
     else:
         form = ProjectContactUsersForm()
@@ -94,6 +105,31 @@ def contact_followers(request, slug):
         'project': project,
     }, context_instance=RequestContext(request))
 
+
 def featured_css(request, slug):
     project = get_object_or_404(Project, slug=slug)
     return HttpResponse(project.css, mimetype='text/css')
+
+
+def link_create(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if project.created_by != request.user:
+        return HttpResponseForbidden()
+    form = ProjectLinkForm(initial=dict(project=project.pk))
+    if request.method == 'POST':
+        form = ProjectLinkForm(data=request.POST)
+        if form.is_valid():
+            messages.add_message(request, messages.INFO,
+                                 _("Your link has been created"))
+            link = form.save()
+            feed_url = link.get_syndication_url()
+            if feed_url:
+                link.feed_url = feed_url
+                link.save()
+            return HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+    return render_to_response('projects/create_link.html', {
+        'form': form,
+        'project': project,
+    }, context_instance=RequestContext(request))

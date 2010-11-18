@@ -10,9 +10,20 @@
 {% include "projects/_project_admin.html" %}
 {% include "projects/_followers.html" %}
 {% include "projects/_message_followers.html" %}
+<h4>{{ _('Links') }}</h4>
+<ul>
+{% for link in project.link_set.all %}
+  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+{% endfor %}
+</ul>
 {% if user == project.created_by %}
 <p>
   <a href="{% locale_url projects_edit slug=project.slug %}">Edit</a>
+</p>
+{% endif %}
+{% if user == project.created_by %}
+<p>
+  <a href="{% locale_url projects_link_create slug=project.slug %}">Add Link</a>
 </p>
 {% endif %}
 {% endblock %}
