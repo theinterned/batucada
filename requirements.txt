@@ -5,6 +5,10 @@ pil
 django-messages
 south
 jogging
+feedparser
+Celery==2.1.3
+django-celery
+BeautifulSoup
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower

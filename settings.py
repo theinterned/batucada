@@ -3,6 +3,9 @@
 
 import os
 import logging
+import djcelery
+
+djcelery.setup_loader()
 
 # Make filepaths relative to settings.
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -103,6 +106,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_nose',
     'django_openid_auth',
+    'south',
+    'jogging',
+    'djcelery',
     'wellknown',
     'users',
     'profiles',
@@ -113,8 +119,7 @@ INSTALLED_APPS = (
     'projects',
     'statuses',
     'messages',
-    'south',
-    'jogging',
+    'feeds',
 )
 
 if DEBUG:
