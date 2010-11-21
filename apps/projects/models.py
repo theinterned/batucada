@@ -57,7 +57,11 @@ class Link(models.Model):
     class Meta:
         unique_together = ('project', 'url',)
 
-    def get_syndication_url(self):
+    def save(self, *args, **kwargs):
+        self.feed_url = self._get_syndication_url()
+        super(Link, self).save(*args, **kwargs)
+
+    def _get_syndication_url(self):
         """
         Parse the contents of this link and return the first Atom
         or RSS feed URI we find.

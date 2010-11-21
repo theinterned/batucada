@@ -1,5 +1,3 @@
-import urllib
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -9,8 +7,6 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, Context, Template
 from django.utils.translation import ugettext as _
-
-from BeautifulSoup import BeautifulSoup
 
 from projects.models import Project
 from projects.forms import ProjectForm, ProjectContactUsersForm
@@ -121,11 +117,7 @@ def link_create(request, slug):
         if form.is_valid():
             messages.add_message(request, messages.INFO,
                                  _("Your link has been created"))
-            link = form.save()
-            feed_url = link.get_syndication_url()
-            if feed_url:
-                link.feed_url = feed_url
-                link.save()
+            form.save()
             return HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
