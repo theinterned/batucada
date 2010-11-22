@@ -9,7 +9,11 @@
     </a>
   </div>
   <div class="user_activity">
+    {% if activity.actor %}
     <a href="{{ activity.actor.profile.get_absolute_url }}">{{ activity.actor_name }}</a>
+    {% else %}
+    {{ activity.actor_name }}
+    {% endif %}
     {% if activity.object_type and activity.object_type_friendly == 'a status' %}
       {{ activity.object_name }}
     {% else %}
@@ -18,6 +22,10 @@
         {{ activity.object_type_friendly }}:
       {% endif %}
       <a href="{{ activity.obj.get_absolute_url }}">{{ activity.object_name }}</a>
+    {% endif %}
+    {% if activity.target %}
+      {{ _('to') }}
+      <a href="{{ activity.target.get_absolute_url }}">{{ activity.target_name }}</a>
     {% endif %}
       (<small><a href="{{ activity.get_absolute_url }}">{{ activity.timesince }}</a></small>)
 </div>

@@ -45,17 +45,21 @@ class ActivityManager(models.Manager):
         """
         if not (hasattr(user, 'following') and callable(user.following)):
             return []
-        ids = [u.id for u in user.following()]
-        ids.append(user.id)
-        return self.__results(dict(actor__in=ids), None)
+        user_ids = [u.id for u in user.following() if isinstance(u, User)]
+        user_ids.append(user.id)
+        ids = [u.id for u in user.following() if not isinstance(u, User)]
+        return self.filter(
+            models.Q(actor__in=user_ids) | models.Q(target_id__in=ids),
+        ).order_by('-timestamp')[:limit]
 
     def public(self, limit=None):
-        # todo - determine visibility
+        """Return a chronological list of activities performed recently."""
         return self.__results({}, limit)
 
 
 class Activity(models.Model):
-    actor = models.ForeignKey(User)
+    actor = models.ForeignKey(User, null=True)
+    actor_string = models.CharField(max_length=120)
     verb = models.CharField(max_length=120)
 
     obj_content_type = models.ForeignKey(ContentType, related_name='object')
@@ -94,7 +98,7 @@ class Activity(models.Model):
         Apply those rules here to get a friendly name for ```self.obj```.
         """
         name = self._get_object_name(self.obj)
-        if self.obj == name:
+        if self.obj == str(name):
             return u"%(obj)s" % {'obj': self.obj}
         return name
 
@@ -156,12 +160,12 @@ class Activity(models.Model):
         Apply special rules (if they exist) to determine the name of the
         actor of this activity.
         """
-        return self._get_object_name(self.actor)
+        return self._get_object_name(self.actor) or self.actor_string
 
     def __unicode__(self):
         name = self._get_object_name(self.actor)
         r = u"%(name)s %(verb)s" % {
-            'name': name,
+            'name': str(name),
             'verb': self.verb_object.past_tense,
         }
         if self.object_type:
@@ -182,7 +186,7 @@ class Activity(models.Model):
         if isinstance(obj, User):
             if obj.get_full_name() not in '':
                 return obj.get_full_name()
-        return str(obj)
+        return obj
 
     @models.permalink
     def get_absolute_url(self):
