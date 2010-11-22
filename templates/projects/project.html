@@ -26,4 +26,16 @@
   <a href="{% locale_url projects_link_create slug=project.slug %}">Add Link</a>
 </p>
 {% endif %}
+
+{% if activities %}
+<h3>{{ _('Recent Activity') }}</h3>
+<ul class="activityfeed">
+  {% for activity in activities %}
+  <li>
+    {% include "activity/_activity_resource.html" %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
 {% endblock %}
