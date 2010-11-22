@@ -12,6 +12,8 @@ from projects.models import Project
 from projects.forms import ProjectForm, ProjectContactUsersForm
 from projects.forms import ProjectLinkForm
 
+from activity.models import Activity
+
 
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -23,6 +25,7 @@ def show(request, slug):
         'following': following,
         'admin': project.created_by == request.user,
         'followers': project.followers(),
+        'activities': Activity.objects.from_target(project, limit=10),
     }
     if not project.featured:
         return render_to_response('projects/project.html', context,
