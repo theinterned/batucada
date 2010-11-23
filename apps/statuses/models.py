@@ -4,9 +4,13 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
 
+from projects.models import Project
+
 
 class Status(models.Model):
     author = models.ForeignKey(User)
+    project = models.ForeignKey(Project, null=True)
+
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
     status = models.CharField(max_length=1024)
