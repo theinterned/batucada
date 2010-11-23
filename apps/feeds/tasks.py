@@ -35,6 +35,8 @@ def _process_feed_entry(link, entry):
 def load_project_feeds():
     links = Link.objects.all()
     for link in links:
+        if not link.feed_url:
+            continue
         feed = feedparser.parse(link.feed_url)
         for entry in feed.entries:
             _process_feed_entry(link, entry)
