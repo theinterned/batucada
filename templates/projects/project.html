@@ -2,10 +2,26 @@
 {% load l10n_tags %}
 {% block title %}{{ project.name }}{% endblock %}
 {% block body %}
+{% block links %}
+{% comment %}
+TODO - Add target Atom activity feed
+{% endcomment %}
+{% endblock %}
+
 <h3>{{ project.name }}</h3>
 <p>
 {{ project.description }}
 </p>
+<div class="status_update">
+  <h3>{{ _('What are you up to now?') }}</h3>
+  <p>
+    <form action="{% locale_url statuses_create %}" method="post">
+      {% csrf_token %}
+      <textarea name="status" rows="20" cols="15"></textarea>
+      <input type="submit" value="Post" />
+    </form>
+  </p>
+</div>
 {% include "projects/_follow_links.html" %}
 {% include "projects/_project_admin.html" %}
 {% include "projects/_followers.html" %}
