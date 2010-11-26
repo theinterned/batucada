@@ -30,9 +30,13 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
 You may need to create a settings_local.py file to override some of the default settings.
 For example, you may need to `configure your email backend`_.
    
-Finally, sync the database and start the development server. ::
+Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
+   python manage.py migrate
+
+Finally, start the development server to take it for a spin. ::
+
    python manage.py runserver 
 
 .. _configure your email backend: http://docs.djangoproject.com/en/dev/topics/email/
