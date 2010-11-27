@@ -1,5 +1,8 @@
+import logging
+
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from django.utils.translation import ugettext as _
@@ -9,9 +12,12 @@ from django.template.loader import render_to_string
 from activity.models import Activity
 from activity.schema import object_type, verbs, object_types, DerivedType
 
+log = logging.getLogger(__name__)
+
 
 class ActivityStreamAtomFeed(Atom1Feed):
     """Tweaks to Atom feed generator to include Activity Stream data."""
+
     def root_attributes(self):
         attrs = super(ActivityStreamAtomFeed, self).root_attributes()
         attrs.update({
@@ -105,7 +111,7 @@ class UserActivityAtomFeed(Feed):
                 'verb': item.verb,
                 'object': {
                     'object-type': object_type(item.obj),
-                    'title': item.object_name,
+                    'title': str(item.object_name),
                     'id': obj_id,
                     'link': {
                         'rel': 'alternate',
@@ -121,7 +127,7 @@ class UserActivityAtomFeed(Feed):
             )
             kwargs['activity']['target'] = {
                 'object-type': object_type(item.target),
-                'title': item.target_name,
+                'title': str(item.target_name),
                 'id': target_id,
                 'link': {
                     'rel': 'alternate',
@@ -144,11 +150,20 @@ class UserNewsActivityAtomFeed(UserActivityAtomFeed):
         return Activity.objects.for_user(user)
 
 
-class ObjectActivityAtomFeed(Feed):
-    feed_type = ActivityStreamAtomFeed
-    title = "Activity Stream Example"
-    link = "/foo/"
+class ObjectActivityAtomFeed(UserActivityAtomFeed):
 
-    def items(self):
-        """Obviously a placeholder."""
-        return Activity.objects.all()
+    def get_object(self, request, object_id, type_id):
+        content_type = ContentType.objects.get(id=type_id)
+        obj = content_type.get_object_for_this_type(id=object_id)
+        self.request = request
+        log.debug("get_object(): " + str(obj))
+        return obj
+
+    def title(self, obj):
+        return _("Activity Feed for %(project)s") % {
+            'project': str(obj),
+        }
+
+    def items(self, obj):
+        items = Activity.objects.from_target(obj)
+        return items

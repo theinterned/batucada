@@ -5,6 +5,7 @@ import activity
 from activity.schema import UnknownActivityError
 from activity.models import Activity
 
+
 class ActivityTests(TestCase):
 
     fixtures = ['activity_users.json']
@@ -18,9 +19,11 @@ class ActivityTests(TestCase):
         self.testuser_1 = self.users[0]
         self.testuser_2 = self.users[1]
         self.testgroup_1 = self.groups[0]
-        
+
     def test_invalid_verb(self):
-        """Test that sending an activity with an unknown verb throws an exception."""
+        """
+        Test that sending an activity with an unknown verb throws an exception.
+        """
         try:
             activity.send(self.testuser_1, 'blah', self.testuser_2)
             self.fail("Expected exception")
@@ -28,7 +31,10 @@ class ActivityTests(TestCase):
             self.assertTrue(True)
 
     def test_valid_verb(self):
-        """Test that sending an activity with a valid verb does not throw an exception."""
+        """
+        Test that sending an activity with a valid verb does not
+        throw an exception.
+        """
         try:
             activity.send(self.testuser_1, 'follow', self.testuser_2)
             self.assertTrue(True)
@@ -37,34 +43,42 @@ class ActivityTests(TestCase):
 
     def test_activity_with_target(self):
         """Test that an activity can be sent with an object *and* a target."""
-        act = activity.send(self.testuser_1, 'like', self.testuser_2, self.testgroup_1)
+        act = activity.send(
+            self.testuser_1, 'like', self.testuser_2, self.testgroup_1)
         self.assertEqual(self.testuser_1, act.actor)
         self.assertEqual(self.testuser_2, act.obj)
         self.assertEqual(self.testgroup_1, act.target)
 
     def test_activity_repr(self):
-        act = activity.send(self.testuser_1, 'post', self.testuser_2, self.testgroup_1)
+        act = activity.send(
+            self.testuser_1, 'post', self.testuser_2, self.testgroup_1)
         self.assertEqual(
             "testuser posted a person: testuser2 on TestGroup",
-            str(act)
+            str(act),
         )
         self.assertEqual('http://activitystrea.ms/schema/1.0/post', act.verb)
-        self.assertEqual('testuser', act.actor_name)
-        self.assertEqual('testuser2', act.object_name)
-        self.assertEqual('TestGroup', act.target_name)
-        self.assertEqual('http://activitystrea.ms/schema/1.0/person', act.object_type)
+        self.assertEqual('testuser', str(act.actor_name))
+        self.assertEqual('testuser2', str(act.object_name))
+        self.assertEqual('TestGroup', str(act.target_name))
+        self.assertEqual(
+            'http://activitystrea.ms/schema/1.0/person', act.object_type)
         self.assertEqual('a person', act.object_type_friendly)
-        self.assertEqual('http://activitystrea.ms/schema/1.0/group', act.target_type)
+        self.assertEqual(
+            'http://activitystrea.ms/schema/1.0/group', act.target_type)
         self.assertEqual('a group', act.target_type_friendly)
-        
+
     def test_valid_stream(self):
         """Test that requesting a valid stream results in a 200 OK."""
-        response = self.client.get('/%s/activity/%s/stream/' % (self.locale, self.testuser_1.username))
+        response = self.client.get(
+            '/%s/activity/%s/stream/' % (
+                self.locale, self.testuser_1.username))
         self.assertEqual(200, response.status_code)
         self.assertEqual('application/atom+xml', response['content-type'])
 
     def test_nonexistent_stream(self):
-        """Test that requesting a stream for a non-existent user returns a 404."""
+        """
+        Test that requesting a stream for a non-existent user returns a 404.
+        """
         response = self.client.get('/en-US/foo/stream/')
         self.assertEqual(404, response.status_code)
 
@@ -93,4 +107,3 @@ class ActivityTests(TestCase):
         activities = Activity.objects.from_object(self.testuser_1)
         self.assertEqual(1, len(activities))
         self.assertEqual(act2, activities[0])
-        

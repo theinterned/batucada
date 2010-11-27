@@ -1,8 +1,10 @@
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 
 from statuses.models import Status
+from projects.models import Project
 
 
 def show(request, status_id):
@@ -21,5 +23,13 @@ def create(request):
     return HttpResponseRedirect('/')
 
 
-def create_project_status(request, project):
-    pass
+def create_project_status(request, project_id):
+    if 'status' not in request.POST:
+        return HttpResponseRedirect('/')
+    project = get_object_or_404(Project, id=project_id)
+    status = Status(author=request.user,
+                    status=request.POST['status'],
+                    project=project)
+    status.save()
+    return HttpResponseRedirect(
+        reverse('projects_show', kwargs=dict(slug=project.slug)))
