@@ -37,7 +37,7 @@ def status_creation_handler(sender, **kwargs):
         return
     try:
         import activity
-        activity.send(status.author, 'post', status, project=status.project)
+        activity.send(status.author, 'post', status, target=status.project)
     except ImportError:
         return
 
