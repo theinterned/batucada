@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from messages.models import inbox_count_for
-
 from activity.models import Activity
 from users.decorators import anonymous_only
 
@@ -27,7 +25,6 @@ def dashboard(request):
     return render_to_response('dashboard/dashboard.html', {
         'user': request.user,
         'activities': Activity.objects.for_user(request.user, limit=5),
-        'message_count': inbox_count_for(request.user),
     }, context_instance=RequestContext(request))
 
 
