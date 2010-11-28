@@ -1,0 +1,5 @@
+.svn/
+publish/
+build/buildinfo.properties
+build
+.DS_Store
