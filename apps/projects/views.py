@@ -13,6 +13,7 @@ from projects.forms import ProjectForm, ProjectContactUsersForm
 from projects.forms import ProjectLinkForm
 
 from activity.models import Activity
+from statuses.models import Status
 
 
 def show(request, slug):
@@ -24,8 +25,10 @@ def show(request, slug):
         'type': ContentType.objects.get_for_model(project),
         'following': following,
         'admin': project.created_by == request.user,
-        'followers': project.followers(),
+        'followers_count': project.followers_count(),
         'activities': Activity.objects.from_target(project, limit=10),
+        'update_count': Status.objects.filter(project=project).count(),
+        'links': project.link_set.all(),
     }
     if not project.featured:
         return render_to_response('projects/project.html', context,

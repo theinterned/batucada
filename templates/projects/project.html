@@ -1,55 +1,127 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% block title %}{{ project.name }}{% endblock %}
-{% block body %}
 {% block links %}
 <link rel="alternate" type="atom/xml" href="{% locale_url activity_feed_object object_id=project.id type_id=type.id %}" />
 {% endblock %}
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+    </nav>
 
-<h3>{{ project.name }}</h3>
-<p>
-{{ project.description }}
-</p>
-<div class="status_update">
-  <h3>{{ _('What are you up to now?') }}</h3>
-  <p>
-    <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post">
-      {% csrf_token %}
-      <textarea name="status" rows="20" cols="15"></textarea>
-      <input type="submit" value="Post" />
-    </form>
-  </p>
-</div>
-{% include "projects/_follow_links.html" %}
-{% include "projects/_project_admin.html" %}
-{% include "projects/_followers.html" %}
-{% include "projects/_message_followers.html" %}
-<h4>{{ _('Links') }}</h4>
-<ul>
-{% for link in project.link_set.all %}
-  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-{% endfor %}
-</ul>
-{% if user == project.created_by %}
-<p>
-  <a href="{% locale_url projects_edit slug=project.slug %}">Edit</a>
-</p>
-{% endif %}
-{% if user == project.created_by %}
-<p>
-  <a href="{% locale_url projects_link_create slug=project.slug %}">Add Link</a>
-</p>
-{% endif %}
+    {% if user == project.created_by %}
+      <div id="project-actions">
+	<div class="button"><a href="#">{{ _('Edit Project') }}</a></div>
+	<div class="button"><a href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a></div>
+      </div>
+    {% endif %}
 
-{% if activities %}
-<h3>{{ _('Recent Activity') }}</h3>
-<ul class="activityfeed">
-  {% for activity in activities %}
-  <li>
-    {% include "activity/_activity_resource.html" %}
-  </li>
-  {% endfor %}
-</ul>
-{% endif %}
+  </div> <!-- /.container -->
+{% endblock %}
+{% block body %}
+
+
+<div id="sidebar">
+
+  <div id="project">
+    <h1 id="project-name">{{ project.name }}</h1>
+    
+    <div id="project-follow" class="button">
+      <form id="project-follow-form" method="post" action="{% locale_url relationships_follow %}">
+	{% csrf_token %}
+	<input type="hidden" name="object_id" value="{{ project.id }}">
+	<input type="hidden" name="object_type_id" value="{{ type.id }}">
+	<a href="#" id="follow-project">Follow Project</a>
+      </form>
+    </div>
+
+    <dl id="project-stats">
+      <dt>Followers</dt>
+      <dd>
+	<a href="#">{{ followers_count }}</a>
+      </dd>
+      <dt>Updates</dt>
+      <dd>{{ update_count }}</dd>
+
+      <dt>Created</dt>
+      <dd>August 2009</dd>
+    </dl> <!-- /#project-stats -->
+
+    <div id="project-summary">
+      {{ project.description }}
+    </div>
+
+    <!-- TODO: support project media 
+    <div id="project-icons">
+      <img src="..." height="86" width="96">
+      <img src="..." height="86" width="96">
+    </div>-->
+
+    <a id="project-description-link" href="#">View Full Project Description</a>
+
+    <nav id="project-links">
+      {% if links %}
+	<ul>
+	  {% for link in links %}
+	    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+	  {% endfor %}
+	</ul>
+      {% endif %}  
+    </nav>
+
+    <div id="project-lead">
+      <a href="{% locale_url profiles_show username=project.created_by.username %}">
+	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.profile.image_or_default }}" height="54" width="54">
+      </a>
+
+      <div class="member-details">
+	<h3 class="member-name">
+	  <a href="{% locale_url profiles_show username=project.created_by.username %}">{{ project.created_by.username }}</a>
+	</h3>
+
+	<div class="member-actions">
+	  <div class="button">
+	    <a href="#">{{ _('Follow User') }}</a>
+	  </div>
+	  <div class="button">
+	    <a href="#">{{ _('Message') }}</a>
+	  </div>
+	</div>
+
+	<div class="member-bio">
+	  
+	</div>
+	
+      </div> <!-- /.member-details -->
+    </div> <!-- /#project-lead -->
+  </div> <!-- /#project -->
+</div> <!-- /#sidebar -->
+
+<div id="main">
+  <div class="status_update">
+    <h3>{{ _('What are you up to now?') }}</h3>
+    <p>
+      <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post">
+	{% csrf_token %}
+	<textarea name="status" rows="20" cols="15"></textarea>
+	<input type="submit" value="Post" />
+      </form>
+    </p>
+  </div>
+
+  {% if activities %}
+    <h3>{{ _('Recent Activity') }}</h3>
+    <ul class="activityfeed">
+      {% for activity in activities %}
+	<li>
+	  {% include "activity/_activity_resource.html" %}
+	</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div> <!-- /#main -->
 
 {% endblock %}
