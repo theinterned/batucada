@@ -1,31 +1,43 @@
-<div class="activity_entry">
-  <div class="user_icon">
-    <a href="{{ activity.actor.profile.get_absolute_url }}">
-      {% if activity.actor.profile.image %}
-      <img width="45" height="45" src="{{ MEDIA_URL }}{{ activity.actor.profile.image }}" />
-      {% else %}
-      <img width="45" height="45" src="{{ MEDIA_URL }}images/default_profile.jpg" />
-      {% endif %}
-    </a>
-  </div>
-  <div class="user_activity">
+<li class="post-container">
+
+  <a href="#" class="reply-to">Reply</a>
+
+  <a href="{{ activity.actor.profile.get_absolute_url }}">
+    {% if activity.actor.profile.image %}
+      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.profile.image }}">
+    {% else %}
+      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png">
+    {% endif %}
+  </a>
+
+  <div class="post-contents">
+
+    <div class="post-details">
     {% if activity.actor %}
-    <a href="{{ activity.actor.profile.get_absolute_url }}">{{ activity.actor_name }}</a>
+      <a class="member-name" href="{{ activity.actor.profile.get_absolute_url }}">{{ activity.actor_name }}</a>
     {% else %}
-    {{ activity.actor_name }}
+      {{ activity.actor_name }}
     {% endif %}
-    {% if activity.object_type and activity.object_type_friendly == 'a status' %}
-      {{ activity.object_name }}
-    {% else %}
-      {{ activity.verb_object.past_tense }}
-      {% if activity.object_type and activity.object_type_friendly != 'a person' %}
-        {{ activity.object_type_friendly }}:
+    <a href="{{ activity.get_absolute_url }}">{{ activity.timesince }}</a>
+    </div>
+
+    <div class="post-body">
+      {% if activity.object_type and activity.object_type_friendly == 'a status' %}
+	{{ activity.object_name }}
+      {% else %}
+	{{ activity.verb_object.past_tense }}
+	{% if activity.object_type and activity.object_type_friendly != 'a person' %}
+          {{ activity.object_type_friendly }}:
+	{% endif %}
+	<a href="{{ activity.obj.get_absolute_url }}">{{ activity.object_name }}</a>
       {% endif %}
-      <a href="{{ activity.obj.get_absolute_url }}">{{ activity.object_name }}</a>
-    {% endif %}
-    {% if activity.target %}
-      {{ _('to') }}
-      <a href="{{ activity.target.get_absolute_url }}">{{ activity.target_name }}</a>
-    {% endif %}
-      (<small><a href="{{ activity.get_absolute_url }}">{{ activity.timesince }}</a></small>)
-</div>
+      {% if activity.target %}
+	{{ _('to') }}
+	<a href="{{ activity.target.get_absolute_url }}">{{ activity.target_name }}</a>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</li>
