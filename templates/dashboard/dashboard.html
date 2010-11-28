@@ -6,34 +6,33 @@
 {% endblock %}
 {% block body %}
 
-<div class="status_update">
-  <h3>{{ _('What are you up to now?') }}</h3>
-  <p>
-    <form action="{% locale_url statuses_create %}" method="post">
-      {% csrf_token %}
-      <textarea name="status" rows="20" cols="15"></textarea>
-      <input type="submit" value="Post" />
-    </form>
-  </p>
-</div>
+<div id="sidebar">
 
-<p>
-  {% if message_count > 0 %}
-  <a href="{% locale_url messages_inbox %}"><strong>{{ _('Messages') }} ({{ message_count }})</strong></a>
-  {% else %}
-  <a href="{% locale_url messages_inbox %}">{{ _('Messages') }}</a>
-  {% endif %}
-</p>
+</div> <!-- /#sidebar -->
 
-{% if activities %}
-<h3>{{ _('Recent Activity') }} <a href="{% locale_url activity_feed_user_news username=user.username %}"><img src="{{ MEDIA_URL }}images/feed-icon-14x14.png"></a></h3>
-<ul class="activityfeed">
-  {% for activity in activities %}
-  <li>
-    {% include "activity/_activity_resource.html" %}
-  </li>
-  {% endfor %}
-</ul>
-{% endif %}
+<div id="main">
+  <div id="create-post">
+    <div class="post-container">
+      <form id="post-status-update" method="post" action="{% locale_url statuses_create %}">
+	{% csrf_token %}
+	<input type="text" value="{{ _('Post a message to your followers') }}">
+	<textarea name="status"></textarea>
+
+	<div class="status-and-actions">
+	  <div class="post-char-count">750</div>
+	  <div class="button update">
+	    <a id="post-update-button" href="#">Post Update</a>
+	  </div>
+	</div> <!-- /.status-and-actions -->
+
+      </form>
+    </div> <!-- /.post-container -->
+  </div> <!-- /#create-post -->
+
+  <ul id="posts">
+    {% for activity in activities %}
+      {% include "activity/_activity_resource.html" %}
+    {% endfor %}
+  </ul>
 
 {% endblock %}
