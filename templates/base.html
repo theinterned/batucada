@@ -41,7 +41,7 @@
 	  <ul>
 	    <li id="user" class="menu">
 	      <a href="#" id="user-link" class="top-level">
-		{% if user.profile.image %}
+		{% if not user.profile.image %}
 		  <img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19">
 		{% else %}
 		  <img id="user-picture" src="{{ MEDIA_URL }}{{ user.profile.image }}" height="19" width="19">
@@ -84,8 +84,8 @@
 
 	    <li class="separator ir"></li>
 
-	    <li id="signout">
-	      <a href="{% locale_url users_logout %}">Sign Out</a>
+	    <li id="logout">
+	      <a class="top-level" href="{% locale_url users_logout %}">Sign Out</a>
 	    </li>
 	  </ul>
 
