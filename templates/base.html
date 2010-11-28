@@ -37,6 +37,7 @@
 	  </ul>
 	</nav>
 
+	{% if user.is_authenticated %}
 	<div id="user-nav">
 	  <ul>
 	    <li id="user" class="menu">
@@ -90,6 +91,8 @@
 	  </ul>
 
 	</div> <!-- /#user-nav -->
+	{% endif %}
+
       </div> <!-- /.container -->
     </div> <!-- /#masthead -->
 
