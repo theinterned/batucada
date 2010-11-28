@@ -50,9 +50,10 @@
 		<span id="user-name">{{ user.username }}</span>
 	      </a>
 	      <ul id="user-actions">
+		<li><a href="{% locale_url dashboard_index %}">{{ _('Your Dashboard') }}</a></li>
 		<li><a href="{% locale_url profiles_show username=user.username %}">{{ _('Your Profile') }}</a></li>
-		<li><a href="#">{{ _('Donate') }}</a></li>
 		<li><a href="#">{{ _('Account Settings') }}</a></li>
+		<li><a href="#">{{ _('Donate to Drumbeat') }}</a></li>
 	      </ul>
 	    </li> <!-- /#user -->
 
@@ -61,8 +62,8 @@
 	    <li id="inbox" class="menu">
 	      <a href="#" id="inbox-link" class="top-level">
 		{{ _('Inbox') }}
-		{% if message_count > 0 %}
-		  <span id="inbox-count" class="new-messages">{{ message_count }}</span>
+		{% if messages_inbox_count > 0 %}
+		  <span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>
 		{% endif %}
 	      </a>
 
@@ -116,45 +117,5 @@
   <script src="{{ MEDIA_URL }}js/script.js"></script>
   <!-- end concatenated and minified scripts-->
   
-  <!-- test/example scripts.
-       these are hastily written just to give an idea of the user interaction.
-       you'll more than likely want to do something more robust for production. -->
-  <script>
-    (function(){
-      $('#user-nav').find('li.menu').bind('click', function(){$(this).toggleClass('open')});
-      
-      $('#create-post').find('input').bind('focus', function(){
-        $('#create-post').addClass('expanded');
-        $('#create-post').find('textarea').trigger('focus');
-      })
-      
-      $('#create-post').find('textarea').bind('keydown', function(){
-        var max = 750;
-        var counter = $('#create-post').find('div.post-char-count');
-        var count = max - $(this).val().length;
-        counter.html(count);
-        if (count < 0) {
-          counter.addClass('danger');
-          counter.removeClass('warning');
-        }
-        else if (count < 50) {
-          counter.removeClass('danger');
-          counter.addClass('warning');
-        }
-        else {
-          counter.removeClass('danger');
-          counter.removeClass('warning');
-        }
-      })
-    
-      $('#create-post').find('textarea').bind('blur', function(){
-        if (jQuery.trim($(this).val()).length === 0) {
-          $('#create-post').removeClass('expanded');
-        }
-      })
-    
-    })()
-  </script>
-
 </body>
 </html>
