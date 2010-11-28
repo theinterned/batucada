@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 
 from BeautifulSoup import BeautifulSoup
 
-from relationships.models import followers
+from relationships.models import followers, followers_count
 
 
 class Project(models.Model):
@@ -46,6 +46,7 @@ class Project(models.Model):
         super(Project, self).save()
 
 Project.followers = followers
+Project.followers_count = followers_count
 
 
 class Link(models.Model):
