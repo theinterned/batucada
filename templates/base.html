@@ -1,23 +1,157 @@
-<!DOCTYPE html>
-<html>
+{% load l10n_tags %}
+<!doctype html>
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
   <title>Batucada | {% block title %}{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico">
+  <link rel="apple-touch-icon" href="{{ MEDIA_URL }}images/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=1">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/batucada.css?v=1">
+  <script src="{{ MEDIA_URL }}js/libs/modernizr-1.6.min.js"></script>
+
   {% block links %}{% endblock %}
 </head>
-{% load l10n_tags %}
 <body>
-  <div id="body">
-    {% if messages %}
-      <div class="messages">
-	<ul>
-	  {% for message in messages %}
-	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-	  {% endfor %}
-	</ul>
-      </div>
-    {% endif %}
-    {% include "errors.html" %}
+
+  <header>
+    <div id="masthead">
+      <div class="container">
+	<a id="logo" class="ir" href="{% locale_url dashboard_index %}">mozilla Drumbeat</a>
+	
+	<nav id="main-nav">
+	  <ul>
+	    <li><a href="{% locale_url projects_gallery %}">Projects</a></li>
+	    <li><a href="{% locale_url users_user_list %}">People</a></li>
+	    <li><a href="#">Events</a></li>
+	  </ul>
+	</nav>
+
+	<div id="user-nav">
+	  <ul>
+	    <li id="user" class="menu">
+	      <a href="#" id="user-link" class="top-level">
+		{% if user.profile.image %}
+		  <img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19">
+		{% else %}
+		  <img id="user-picture" src="{{ MEDIA_URL }}{{ user.profile.image }}" height="19" width="19">
+		{% endif %}
+		<span id="user-name">{{ user.username }}</span>
+	      </a>
+	      <ul id="user-actions">
+		<li><a href="{% locale_url profiles_show username=user.username %}">Your Profile</a></li>
+		<li><a href="#">Donate</a></li>
+		<li><a href="#">Account Settings</a></li>
+	      </ul>
+	    </li> <!-- /#user -->
+
+	    <li class="separator ir"></li>
+
+	    <li id="inbox" class="menu">
+	      <a href="#" id="inbox-link" class="top-level">
+		{{ _('Inbox') }}
+		{% if message_count > 0 %}
+		  <span id="inbox-count" class="new-messages">{{ message_count }}</span>
+		{% endif %}
+	      </a>
+
+	      <ul id="inbox-messages">
+		{% for message in preview_messages %}
+		  <li class="message">
+		    <a href="#">
+		      <span class="from">{{ message.sender.username }}:</span>
+		      <span class="snippet">{{ message.body|truncatewords_html:10 }}</span>
+		    </a>
+		  </li>
+		{% endfor %}
+		
+		<li id="view-all">
+		  <a href="{% locale_url messages_inbox %}">{{ _('View All Messages') }}</a>
+		</li>
+
+	      </ul> <!-- /#inbox-messages -->
+	    </li> <!-- /#inbox -->
+
+	    <li class="separator ir"></li>
+
+	    <li id="signout">
+	      <a href="{% locale_url users_logout %}">Sign Out</a>
+	    </li>
+	  </ul>
+
+	</div> <!-- /#user-nav -->
+      </div> <!-- /.container -->
+    </div> <!-- /#masthead -->
+
+    {% block breadcrumbs %}{% endblock %}
+
+  </header>
+
+  <div class="container">
     {% block body %}{% endblock %}
-  </div> <!-- #body -->
+  </div>
+
+  <footer class="clearfix">
+    <div class="container">
+    </div>
+  </footer>
+
+  <script src="{{ MEDIA_URL }}js/libs/jquery-1.4.2.min.js"></script>
+  
+  <!-- scripts concatenated and minified via ant build script-->
+  <script src="{{ MEDIA_URL }}js/plugins.js"></script>
+  <script src="{{ MEDIA_URL }}js/script.js"></script>
+  <!-- end concatenated and minified scripts-->
+  
+  <!-- test/example scripts.
+       these are hastily written just to give an idea of the user interaction.
+       you'll more than likely want to do something more robust for production. -->
+  <script>
+    (function(){
+      $('#user-nav').find('li.menu').bind('click', function(){$(this).toggleClass('open')});
+      
+      $('#create-post').find('input').bind('focus', function(){
+        $('#create-post').addClass('expanded');
+        $('#create-post').find('textarea').trigger('focus');
+      })
+      
+      $('#create-post').find('textarea').bind('keydown', function(){
+        var max = 750;
+        var counter = $('#create-post').find('div.post-char-count');
+        var count = max - $(this).val().length;
+        counter.html(count);
+        if (count < 0) {
+          counter.addClass('danger');
+          counter.removeClass('warning');
+        }
+        else if (count < 50) {
+          counter.removeClass('danger');
+          counter.addClass('warning');
+        }
+        else {
+          counter.removeClass('danger');
+          counter.removeClass('warning');
+        }
+      })
+    
+      $('#create-post').find('textarea').bind('blur', function(){
+        if (jQuery.trim($(this).val()).length === 0) {
+          $('#create-post').removeClass('expanded');
+        }
+      })
+    
+    })()
+  </script>
+
 </body>
 </html>
