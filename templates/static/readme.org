@@ -1,0 +1,13 @@
+* Drumbeat.org Redesign
+** Started with Paul Irish's HTML5 boilerplate
+  http://html5boilerplate.com/
+
+** Pretty much everything is CSS, there are very few images
+   - CSS3 PIE to get some box-shadow/border-radius sweetness for IE
+   - modernizer to provide fallbacks for IE, where necessary
+
+** I'm using two presentational (non-semantic) hacks
+   Search for "α" to find them.
+
+** There's some javascript at the bottom that was written for testing
+   you'll probably want to pull that out.

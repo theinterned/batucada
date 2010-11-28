@@ -1,0 +1,480 @@
+<!doctype html>  
+
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Drumbeat</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/batucada.css">
+  <script src="js/libs/modernizr-1.6.min.js"></script>
+
+</head>
+
+<body>
+  <header>
+    <div id="masthead">
+      <div class="container">
+        <a id="logo" class='ir' href="#">mozilla Drumbeat</a>
+        
+        <nav id="main-nav">
+          <ul>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">People</a></li>
+            <li><a href="#">Events</a></li>
+          </ul>
+        </nav>
+        
+        <!-- dynamic:: user related navigation -->
+        <div id="user-nav">
+          <ul>
+            <li id="user" class="menu">
+              <a href="#" id="user-link" class="top-level">
+                <img id="user-picture" src="/images/fake-user.png" height="19" width="19">
+                <span id="user-name">brianlovesthings</span>
+              </a>
+              <ul id="user-actions">
+                <li><a href="#">View Profile</a></li>
+                <li><a href="#">Donate!</a></li>
+                <li><a href="#">Settings</a></li>
+              </ul>
+            </li> <!-- /#user -->
+            
+            <li class="separator ir">α</li>
+            
+            <!-- dynamic:: user messages -->
+            <li id="inbox" class="menu">
+              <a href="#" id="inbox-link" class="top-level">
+                Inbox
+                <!-- dymamic:: message count -->
+                <span id="inbox-count" class="new-messages">200</span>
+              </a>
+              
+              <!-- dynamic:: message contents -->
+              <ul id="inbox-messages">
+                <li class="message">
+                  <a href="#">
+                    <span class="from">username:</span>
+                    <span class="snippet">This is a part of the message...</span>
+                  </a>
+                </li>
+                
+                <li class="message">
+                  <a href="#">
+                    <span class="from">username:</span>
+                    <span class="snippet">This is a part of the message...</span>
+                  </a>
+                </li>
+                
+                <li class="message">
+                  <a href="#">
+                    <span class="from">username:</span>
+                    <span class="snippet">This is a part of the message...</span>
+                  </a>
+                </li>
+                
+                <li id="view-all">
+                  <a href="#">View All Messages</a>
+                </li>
+                
+              </ul> <!-- /#inbox-messages -->
+            </li> <!-- /#inbox -->
+            
+            <li class="separator ir">α</li>
+            
+            <li id="logout">
+              <a href="#" class="top-level">Log Out</a>
+            </li>
+          </ul>
+          
+        </div> <!-- /#user-nav -->
+      </div> <!-- /.container -->
+    </div> <!-- /#masthead -->
+    
+    
+    <div id="breadcrumbs">
+      <div class="container">  
+        <nav>
+          <!-- dynamic:: navigation breadcrumbs -->
+          <a href="#">Projects</a>
+          <span class="arrow">&rsaquo;</span>
+          <a href="#">Featured Projects</a>
+          <span class="arrow">&rsaquo;</span>
+          <a href="#">Project Name</a>
+        </nav>
+
+        
+        <!-- dynamic:: probably based on authentication -->
+        <div id="project-actions">
+          <div class="button"><a href="#">Edit Project</a></div>
+          <div class="button"><a href="#">Message Project Followers</a></div>
+        </div>
+        
+      </div> <!-- /.container -->
+    </div> <!-- /#breadcrumbs -->
+  </header>
+  
+  <div class="container">
+    <div id="sidebar">
+      
+      <!-- dynamic:: project details -->
+      <div id="project">
+        <h1 id="project-name">Web Made Movies</h1>
+        
+        <div id="project-follow" class="button">
+          <a href="#">Follow Project</a>
+        </div>
+
+        <dl id="project-stats">
+          <dt>Followers</dt>
+          <dd>
+            <a href="#">233</a>
+          </dd>
+          
+          <dt>Updates</dt>
+          <dd>1,254</dd>
+          
+          <dt>Created</dt>
+          <dd>August 2009</dd>
+        </dl> <!-- /#project-stats -->
+
+        <div id="project-summary">
+          <p>
+            WebMadeMovies is Mozilla's open video lab and production
+            studio. We're bringing together the world's most innovative
+            filmmakers and web developers to show what open video and HTML5
+            can do.
+          </p>
+
+          <p>
+            Producing cutting-edge examples and reference implementations that
+            showcase new ways of telling stories online. And collaborating on
+            new web tools for filmmakers and developers everywhere.
+          </p>
+
+          <p>
+            Our goal: a new kind of cinema that works like the web.
+          </p>
+        </div> <!-- /#project-summary -->
+        
+        <!-- NOTE: I'm not sure I understand what this section is for -->
+        <div id="project-icons">
+          <img src="/images/project-icon1.png" height="86" width="96">
+          <img src="/images/project-icon2.png" height="86" width="96">
+        </div>
+      
+        <a id="project-description-link" href="#">View Full Project Description</a>
+      
+        
+        <!-- dynamic:: project links -->
+        <nav id="project-links">
+          <ul>
+            <li><a href="#">GitHub Repository</a></li>
+            <li><a href="#">Discussion Board</a></li>
+            <li><a href="#">Twitter: @webmademovies</a></li>
+          </ul>
+        </nav>
+        
+        
+        
+        <!-- NOTE: Again, not sure I'm sure I got this section right -->
+        <!-- dynamic:: project member -->
+        <div id="project-lead">
+          
+          <a href="#member-profile">
+            <img class="member-picture" src="/images/member-picture.png" height="54px" width="54px">
+          </a>
+          
+          <div class="member-details">
+            <h3 class="member-name">
+              <a href="#member-profile">jacojoubert</a>
+            </h3>
+            
+            <div class="member-actions">
+              <div class="button">
+                <a href="#">Follow User</a>
+              </div>
+              <div class="button">
+                <a href="#">Message</a>
+              </div>
+            </div>
+          
+            <div class="member-bio">
+              <p>
+                Curabitur volutpat ultricies libero, nec sollicitudin nulla
+                fringilla at. Mauris posuere urna a neque convallis a
+                fringilla ipsum varius. Nulla tempor aliquet viverra.
+              </p>
+            </div>
+          
+          </div> <!-- /.member-details -->
+        </div> <!-- /#project-lead -->
+      </div> <!-- /#project -->
+    </div> <!-- /#sidebar -->
+
+    <div id="main">
+      <div id="create-post">
+        <div class="post-container">
+          <input type="text" value="Post a message to this project">
+          <textarea></textarea>
+          
+          <div class="status-and-actions">
+            <div class="post-char-count">750</div>
+            
+            <!-- dynamic:: the name of the project -->
+            <ul class="post-tags">
+              <li>WebMadeMovies</li>
+            </ul>
+
+            <div class="button update">
+              <a href="#">Post Update</a>
+            </div>
+          
+          </div> <!-- /.status-and-actions -->
+        </div> <!-- /.post-container -->
+      </div> <!-- /#create-post -->
+        
+      
+      <!-- dynamic:: posts for this project -->
+      <ul id="posts">
+        <li class="post-container">
+          <a class="reply-to" href="#">Reply</a>
+          
+          <!-- dynamic:: link to user profile and user picture -->
+          <a href="#member-profile">
+            <img class="member-picture" src="/images/member-missing.png" height="54px" width="54px">
+          </a>
+          
+          <div class="post-contents">
+            
+            <!-- dynamic:: who posted and when -->
+            <div class="post-details">
+              <a class="member-name" href="#member-profile">somedude</a>
+              3 hours ago
+            </div>
+            
+            
+            <!-- dynamic:: actual post contents -->
+            <div class="post-body">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                ipsum nulla, sodales quis malesuada vel, rhoncus id
+                tellus. Nam rhoncus blandit commodo.
+              </p>
+              <p>
+                Donec pellentesque lacus sed nulla rhoncus quis dapibus magna
+                dictum. Integer vitae arcu libero.
+              </p>
+            </div> <!-- /.post-body -->
+            
+            
+            <!-- dynamic:: tags for this post. should these be links? -->
+            <ul class="post-tags">
+              <li>@johndoe</li>
+              <li>#weekendcrunch</li>
+              <li>@johndoe</li>
+              <li>#weekendcrunch</li>
+              <li>@johndoe</li>
+              <li>#weekendcrunch</li>
+              <li>@johndoe</li>
+              <li>#weekendcrunch</li>
+              <li>@johndoe</li>
+              <li>#weekendcrunch</li>
+              <li>@johndoe</li>
+              <li>#weekendcrunch</li>
+            </ul>
+            
+            <!-- NOTE: this odd little guy is necessary so the tags don't
+                 overflow out of the post container -->
+            <div class="clear ir">α</div>
+          
+          </div> <!-- /.post-contents -->
+        </li> <!-- /li.post-container -->
+        
+        
+        
+        <li class="post-container">
+          <a class="reply-to" href="#">Reply</a>
+          <a href="#member-profile">
+            <img class="member-picture" src="/images/member-missing.png" height="54px" width="54px">
+          </a>
+          <div class="post-contents">
+            <div class="post-details">
+              <a class="member-name" href="#member-profile">somedude</a>
+              12 hours ago via
+              <a href="#">Twitter</a>
+            </div>
+            <div class="post-body">
+              <p>
+                Donec pellentesque lacus sed nulla rhoncus quis dapibus magna
+                dictum. Integer vitae arcu libero.
+              </p>
+            </div> <!-- /.post-body -->
+            <ul class="post-tags"></ul>
+            <div class="clear ir">α</div>
+          </div> <!-- /.post-contents -->
+        </li>
+        
+        
+        <li class="post-container">
+          <a class="reply-to" href="#">Reply</a>
+          <a href="#member-profile">
+            <img class="member-picture" src="/images/member-missing.png" height="54px" width="54px">
+          </a>
+          <div class="post-contents">
+            <div class="post-details">
+              <a class="member-name" href="#member-profile">somedude</a>
+              13 hours ago
+            </div>
+            <div class="post-body">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                ipsum nulla, sodales quis malesuada vel, rhoncus id
+                tellus. Nam rhoncus blandit commodo.
+              </p>
+            </div> <!-- /.post-body -->
+            <ul class="post-tags">
+              <li>#weekendcrunch</li>
+            </ul>
+            <div class="clear ir">α</div>
+          </div> <!-- /.post-contents -->
+        </li>
+        
+        
+        <li class="post-container">
+          <a class="reply-to" href="#">Reply</a>
+          <a href="#member-profile">
+            <img class="member-picture" src="/images/member-missing.png" height="54px" width="54px">
+          </a>
+          <div class="post-contents">
+            <div class="post-details">
+              <a class="member-name" href="#member-profile">somedude</a>
+              23 hours ago
+            </div>
+            <div class="post-body">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                ipsum nulla, sodales quis malesuada vel, rhoncus id
+                tellus. Nam rhoncus blandit commodo.
+              </p>
+              <p>
+                Donec pellentesque lacus sed nulla rhoncus quis dapibus magna
+                dictum. Integer vitae arcu libero.
+              </p>
+            </div> <!-- /.post-body -->
+            <ul class="post-tags">
+              <li>#weekendcrunch</li>
+            </ul>
+            <div class="clear ir">α</div>
+          </div> <!-- /.post-contents -->
+        </li>
+      
+        
+        <li class="post-container">
+          <a class="reply-to" href="#">Reply</a>
+          <a href="#member-profile">
+            <img class="member-picture" src="/images/member-missing.png" height="54px" width="54px">
+          </a>
+          <div class="post-contents">
+            <div class="post-details">
+              <a class="member-name" href="#member-profile">somedude</a>
+              1 day ago via
+              <a href="#">Twitter</a>
+            </div>
+            <div class="post-body">
+              <p>
+                Donec pellentesque lacus sed nulla rhoncus quis dapibus magna
+                dictum. Integer vitae arcu libero.
+              </p>
+            </div> <!-- /.post-body -->
+            <ul class="post-tags">
+              <li>#shortmessage</li>
+            </ul>
+            <div class="clear ir">α</div>
+          </div> <!-- /.post-contents -->
+        </li>
+      
+      </ul> <!-- /#posts -->
+    </div> <!-- /#main -->
+  
+  
+  </div> <!-- /.container -->
+  
+  <footer class="clearfix">
+    <div class="container">
+    </div>
+  </footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.4.2.js"%3E%3C/script%3E'))</script>
+  
+  
+  <!-- scripts concatenated and minified via ant build script-->
+  <script src="js/plugins.js"></script>
+  <script src="js/script.js"></script>
+  <!-- end concatenated and minified scripts-->
+  
+  <!-- change the UA-XXXXX-X to be your site's ID -->
+  <script>
+   var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+   (function(d, t) {
+    var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.async = true;
+    g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+   })(document, 'script');
+  </script>
+  
+  <!-- test/example scripts.
+       these are hastily written just to give an idea of the user interaction.
+       you'll more than likely want to do something more robust for production. -->
+  <script>
+    (function(){
+      $('#user-nav').find('li.menu').bind('click', function(){$(this).toggleClass('open')});
+      
+      $('#create-post').find('input').bind('focus', function(){
+        $('#create-post').addClass('expanded');
+        $('#create-post').find('textarea').trigger('focus');
+      })
+      
+      $('#create-post').find('textarea').bind('keydown', function(){
+        var max = 750;
+        var counter = $('#create-post').find('div.post-char-count');
+        var count = max - $(this).val().length;
+        counter.html(count);
+        if (count < 0) {
+          counter.addClass('danger');
+          counter.removeClass('warning');
+        }
+        else if (count < 50) {
+          counter.removeClass('danger');
+          counter.addClass('warning');
+        }
+        else {
+          counter.removeClass('danger');
+          counter.removeClass('warning');
+        }
+      })
+    
+      $('#create-post').find('textarea').bind('blur', function(){
+        if (jQuery.trim($(this).val()).length === 0) {
+          $('#create-post').removeClass('expanded');
+        }
+      })
+    
+    })()
+  </script>
+</body>
+</html>
