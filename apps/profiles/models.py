@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
+
 class Profile(models.Model):
     """Main User profile model."""
     user = models.ForeignKey(User, unique=True)
@@ -19,12 +20,20 @@ class Profile(models.Model):
         if full_name in ['', None]:
             return self.user.username
         return full_name
-    
+
     @models.permalink
     def get_absolute_url(self):
         return ('profiles_show', (), {
-            'username': self.user.username
+            'username': self.user.username,
         })
+
+    @property
+    def image_or_default(self):
+        if self.image:
+            return self.image
+        else:
+            return 'images/member-missing.png'
+
 
 @property
 def get_user_profile(self):
@@ -33,15 +42,18 @@ def get_user_profile(self):
 
 User.profile = get_user_profile
 
+
 class Skill(models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)
     name = models.CharField(max_length=30)
 
+
 class Interest(models.Model):
     """A user profile can have zero or more interests."""
     profile = models.ForeignKey(Profile)
     name = models.CharField(max_length=30)
+
 
 def user_save_handler(sender, **kwargs):
     """
@@ -58,8 +70,9 @@ def user_save_handler(sender, **kwargs):
         Profile(
             user=user,
             first_name=user.first_name,
-            last_name=user.last_name
+            last_name=user.last_name,
         ).save()
+
 
 def profile_save_handler(sender, **kwargs):
     """
