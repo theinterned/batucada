@@ -127,6 +127,16 @@ if DEBUG:
         'debug_toolbar',
     )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
+    'messages.context_processors.inbox',
+    'users.context_processors.messages',
+)
+
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
