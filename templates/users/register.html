@@ -6,6 +6,9 @@
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
 
+<div id="sidebar">
+</div>
+<div id="main">
 <form action="{% locale_url users_register %}" method="post">
   <fieldset>
     <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.)</span></legend>
@@ -20,5 +23,5 @@
   </fieldset>
 </form>
 <p class="openid"><a id="signup_openid" href="{% locale_url users_register_openid %}">{{ _('Sign Up with an OpenID') }}</a>.</p>
-
+</div>
 {% endblock %}
