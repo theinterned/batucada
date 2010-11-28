@@ -1,4 +1,8 @@
 {% extends "base.html" %}
 {% block body %}
-{% include "activity/_activity_resource.html" %}
+<div id="main">
+  <ul id="posts">
+    {% include "activity/_activity_resource.html" %}
+  </ul>
+</div>
 {% endblock %}

@@ -5,18 +5,28 @@
 {% block title %}{{ _('Sign In') }}{% endblock %}
 {% block body %}
 
-<p>
-  <a href="{% locale_url users_login %}">Sign in</a><br />
-  <a href="{% locale_url users_register %}">Sign up</a>
-</p>
-<div id="public_activity">
-  <h2>{{ _('Recent Activity') }}</h2>
-  <ul class="activityfeed">
-  {% for activity in activities %}
-  <li>
-    {% include "activity/_activity_resource.html" %}
-  </li>
-  {% endfor %}
+<div id="sidebar">
+
+</div>
+
+<div id="main">
+  
+  <h1>{{ _('Mozilla Drumbeat') }}</h1>
+
+  <div id="signup-buttons">
+    <div class="button signup">
+      <a href="{% locale_url users_login %}">Sign in</a>
+    </div>
+    <div class="button signup">
+      <a href="{% locale_url users_register %}">Sign up</a>
+    </div>
+  </div>
+
+  <h1>{{ _('Recent Activity') }}</h1>
+  <ul id="posts">
+    {% for activity in activities %}
+      {% include "activity/_activity_resource.html" %}
+    {% endfor %}
   </ul>
 </div>
 
