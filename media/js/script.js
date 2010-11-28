@@ -37,6 +37,10 @@
     $('#post-update').bind('click', function() {
 	$('#post-status-update').submit();
     });
+
+    $('#follow-project').bind('click', function() {
+	$('#project-follow-form').submit();
+    });
 })();
 
 
