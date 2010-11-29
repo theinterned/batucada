@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+
 {% block title %}{{ project.name }}{% endblock %}
+
 {% block links %}
 <link rel="alternate" type="atom/xml" href="{% locale_url activity_feed_object object_id=project.id type_id=type.id %}" />
 {% endblock %}
+
 {% block breadcrumbs %}
   <div class="container">
     <nav>
@@ -21,22 +24,30 @@
 
   </div> <!-- /.container -->
 {% endblock %}
+
 {% block body %}
-
-
 <div id="sidebar">
-
   <div id="project">
+
     <h1 id="project-name">{{ project.name }}</h1>
-    
+
     <div id="project-follow" class="button">
-      <form id="project-follow-form" method="post" action="{% locale_url relationships_follow %}">
-	{% csrf_token %}
-	<input type="hidden" name="object_id" value="{{ project.id }}">
-	<input type="hidden" name="object_type_id" value="{{ type.id }}">
-	<a href="#" id="follow-project">Follow Project</a>
-      </form>
-    </div>
+      {% if following %}
+	<form id="project-unfollow-form" method="post" action="{% locale_url relationships_unfollow %}">
+	  {% csrf_token %}
+	  <input type="hidden" name="object_id" value="{{ project.id }}">
+	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
+          <a href="#" id="unfollow-project">{{ _('Unfollow') }}</a>
+        </form>
+      {% else %}
+	<form id="project-follow-form" method="post" action="{% locale_url relationships_follow %}">
+	  {% csrf_token %}
+	  <input type="hidden" name="object_id" value="{{ project.id }}">
+	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
+	  <a href="#" id="follow-project">{{ _('Follow Project') }}</a>
+	</form>
+      {% endif %}
+    </div> <!-- /#project-follow -->
 
     <dl id="project-stats">
       <dt>Followers</dt>
@@ -79,7 +90,7 @@
 
       <div class="member-details">
 	<h3 class="member-name">
-	  <a href="{% locale_url profiles_show username=project.created_by.username %}">{{ project.created_by.username }}</a>
+	  <a href="{% locale_url profiles_show username=project.created_by.username %}">{{ project.created_by.profile.get_full_name_or_username }}</a>
 	</h3>
 
 	<div class="member-actions">
@@ -92,7 +103,7 @@
 	</div>
 
 	<div class="member-bio">
-	  
+	  {{ project.created_by.profile.bio }}
 	</div>
 	
       </div> <!-- /.member-details -->
@@ -101,27 +112,34 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
-  <div class="status_update">
-    <h3>{{ _('What are you up to now?') }}</h3>
-    <p>
-      <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post">
+  <div id="create-post">
+    <div class="post-container">
+      <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
 	{% csrf_token %}
-	<textarea name="status" rows="20" cols="15"></textarea>
-	<input type="submit" value="Post" />
-      </form>
-    </p>
-  </div>
+	<input type="text" value="{{ _('Post a message to this project') }}">
+	<textarea name="status"></textarea>
+	
+	<div class="status-and-actions">
+	  <div class="post-char-count">750</div>
+	  
+	  <ul class="post-tags">
+	    <li>{{ project.name }}</li>
+	  </ul>
 
-  {% if activities %}
-    <h3>{{ _('Recent Activity') }}</h3>
-    <ul class="activityfeed">
+	  <div class="button update">
+	    <a id="post-project-update" href="#">Post Update</a>
+	  </div>
+
+	</div> <!-- /.status-and-actions -->
+      </div> <!-- /.post-container -->
+    </div> <!-- /.#create-post -->
+
+    <ul id="posts">
       {% for activity in activities %}
-	<li>
 	  {% include "activity/_activity_resource.html" %}
-	</li>
       {% endfor %}
     </ul>
-  {% endif %}
+
 </div> <!-- /#main -->
 
 {% endblock %}
