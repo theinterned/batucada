@@ -5,7 +5,7 @@ from users import auth
 class ConfirmationToken(models.Model):
     """Store a unique token related to a user account."""
     user = models.ForeignKey(User, unique=True)
-    token = models.CharField(max_length=60)
+    token = models.CharField(max_length=128)
     plaintext = ""
 
     def __unicode__(self):
