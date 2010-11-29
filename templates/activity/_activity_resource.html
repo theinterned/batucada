@@ -31,13 +31,16 @@
 	{% endif %}
 	<a href="{{ activity.obj.get_absolute_url }}">{{ activity.object_name }}</a>
       {% endif %}
-      {% if activity.target %}
-	{{ _('to') }}
-	<a href="{{ activity.target.get_absolute_url }}">{{ activity.target_name }}</a>
-      {% endif %}
+    </div> <!-- /.post-body -->
 
-    </div>
+    {% if activity.target %}
+    <ul class="post-tags">
+      <li><a href="{{ activity.target.get_absolute_url }}">{{ activity.target_name }}</a></li>
+    </ul>
+    {% endif %}
 
-  </div>
+    <div class="clear ir"></div>
 
-</li>
+  </div> <!-- /.post-contents -->
+
+</li> <!-- /li.post-container -->

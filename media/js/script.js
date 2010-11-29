@@ -38,8 +38,16 @@
 	$('#post-status-update').submit();
     });
 
+    $('#post-project-update').bind('click', function() {
+	$('#post-project-status-update').submit();
+    });
+
     $('#follow-project').bind('click', function() {
 	$('#project-follow-form').submit();
+    });
+    
+    $('#unfollow-project').bind('click', function() {
+	$('#project-unfollow-form').submit();
     });
 })();
 
