@@ -25,6 +25,7 @@ ax_attributes = {
     'last_name': ('http://axschema.org/namePerson/last', True),
 }
 
+
 def get_hexdigest(algorithm, salt, raw_password):
     """Generate SHA-256 hash."""
     if algorithm == 'sha256':
@@ -35,6 +36,7 @@ def get_hexdigest(algorithm, salt, raw_password):
 get_hexdigest_old = auth_models.get_hexdigest
 auth_models.get_hexdigest = get_hexdigest
 
+
 def set_password(self, raw_password):
     """Set SHA-256 password."""
     algo = 'sha256'
@@ -42,6 +44,7 @@ def set_password(self, raw_password):
     hsh = get_hexdigest(algo, salt, raw_password)
     self.password = '$'.join((algo, salt, hsh))
 auth_models.User.set_password = set_password
+
 
 def authenticate(username=None, password=None, force=False):
     """
@@ -61,11 +64,14 @@ def authenticate(username=None, password=None, force=False):
     except User.DoesNotExist:
         return None
 
+
 class OpenIDAuthError(Exception):
     """Exception raised for OpenID authentication errors."""
+
     def __init__(self, message):
         self.message = message
-    
+
+
 def users_login_begin(request, registration=False):
     """
     Begin an OpenID auth request. We have to use our own instead of
@@ -83,7 +89,8 @@ def users_login_begin(request, registration=False):
     try:
         openid_request = consumer.begin(openid_url)
     except DiscoveryFailure, exc:
-        raise OpenIDAuthError(_("OpenID discovery error") + ": %s" % (str(exc),))
+        msg = _("OpenID discovery error") + ": %s" % (str(exc),)
+        raise OpenIDAuthError(msg)
 
     openid_request.addExtension(
         sreg.SRegRequest(required=['email', 'fullname']))
@@ -98,10 +105,11 @@ def users_login_begin(request, registration=False):
     if registration:
         return_to += ('?' in return_to) and '&' or '?'
         return_to += urllib.urlencode({
-            'registration': registration
+            'registration': registration,
         })
     return render_openid_request(request, openid_request, return_to)
-        
+
+
 def users_login_complete(request):
     """
     Complete OpenID auth request. We use this instead of
@@ -115,14 +123,14 @@ def users_login_complete(request):
 
     if openid_response.status == FAILURE:
         raise OpenIDAuthError(_(
-            'OpenID authentication failed') + ': %s' % openid_response.message
-        )
+            'OpenID authentication failed') + ': %s' % openid_response.message)
 
     if openid_response.status == CANCEL:
         raise OpenIDAuthError(_('Authentication cancelled'))
 
     if openid_response.status != SUCCESS:
-        assert False, "Unknown OpenID response type: %r" % openid_response.status
+        msg = _("Unknown response type: %r" % openid_response.status)
+        raise OpenIDAuthError(msg)
 
     user = auth.authenticate(openid_response=openid_response, request=request)
     if user is None:
@@ -196,7 +204,7 @@ class CustomOpenIDBackend(OpenIDBackend):
         if email:
             user.email = email
         user.save()
-    
+
     def authenticate(self, **kwargs):
         """Authenticate a user using an OpenID response."""
         openid_response = kwargs.get('openid_response')

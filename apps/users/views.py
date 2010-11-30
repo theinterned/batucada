@@ -20,19 +20,22 @@ from users.auth import users_login_begin, users_login_complete, authenticate
 from users.auth import OpenIDAuthError
 from users.decorators import anonymous_only
 
+
 def login_begin(request, registration=False):
     """Begin OpenID auth workflow."""
     try:
         request.session['registration'] = registration
         return users_login_begin(request, registration)
     except OpenIDAuthError, exc:
-        template = lambda r: r and 'users/register_openid.html' or 'users/login_openid.html'
+        template = lambda r: (r and 'users/register_openid.html'
+                              or 'users/login_openid.html')
         response = render_to_response(template(registration), {
             'error': exc.message,
-            'form': OpenIDLoginForm()
+            'form': OpenIDLoginForm(),
         }, context_instance=RequestContext(request))
         response.status_code = 403
         return response
+
 
 def login_complete(request):
     """Parse response from OpenID provider."""
@@ -49,10 +52,11 @@ def login_complete(request):
             pass
         response = render_to_response(template, {
             'error': exc.message,
-            'form': OpenIDLoginForm()
+            'form': OpenIDLoginForm(),
         }, context_instance=RequestContext(request))
         response.status_code = 403
         return response
+
 
 @anonymous_only
 def login(request):
@@ -66,8 +70,8 @@ def login(request):
     form = LoginForm(data=request.POST)
     if not form.is_valid():
         return render_to_response('users/signin.html', {
-            'form' : form,
-            'target' : request.POST.get('next', None),
+            'form': form,
+            'target': request.POST.get('next', None),
         }, context_instance=RequestContext(request))
 
     username = form.cleaned_data['username']
@@ -80,32 +84,35 @@ def login(request):
         return HttpResponseRedirect(target)
 
     return render_to_response('users/signin.html', {
-        'target' : request.POST.get('next', None),
-        'form' : form,
+        'target': request.POST.get('next', None),
+        'form': form,
         'error': _('Incorrect login or password.'),
     }, context_instance=RequestContext(request))
+
 
 @anonymous_only
 def login_openid(request):
     """Handle OpenID logins."""
     if request.method == 'GET':
         return render_to_response('users/login_openid.html', {
-            'form': OpenIDLoginForm()
+            'form': OpenIDLoginForm(),
         }, context_instance=RequestContext(request))
-        
+
     form = OpenIDLoginForm(data=request.POST)
     if form.is_valid():
         return login_begin(request)
-    
+
     return render_to_response('users/login_openid.html', {
-        'form' : form
+        'form': form,
     }, context_instance=RequestContext(request))
+
 
 @login_required
 def logout(request):
     """Destroy user session."""
     auth.logout(request)
     return HttpResponseRedirect(reverse('dashboard_index'))
+
 
 @anonymous_only
 def register(request):
@@ -123,16 +130,17 @@ def register(request):
                 auth.login(request, user)
             else:
                 token = unique_confirmation_token(user)
-                send_registration_email(user, token.plaintext, 
+                send_registration_email(user, token.plaintext,
                                         request.build_absolute_uri)
                 messages.add_message(request, messages.INFO,
                     _("""Thanks! We have sent an email to %(email)s with
                     instructions for completing your registration.""" % {
-                          'email': user.email }))
+                          'email': user.email}))
             return HttpResponseRedirect(reverse('dashboard_index'))
     return render_to_response('users/register.html', {
         'form': form,
     }, context_instance=RequestContext(request))
+
 
 @anonymous_only
 def register_openid(request):
@@ -143,8 +151,9 @@ def register_openid(request):
         if form.is_valid():
             return login_begin(request, registration=True)
     return render_to_response('users/register_openid.html', {
-        'form' : form
+        'form': form,
     }, context_instance=RequestContext(request))
+
 
 def user_list(request):
     """Display a list of users on the site. TODO: Paginate."""
@@ -155,35 +164,37 @@ def user_list(request):
         following = [user.id for user in request.user.following()]
         object_type = ContentType.objects.get_for_model(request.user)
     return render_to_response('users/user_list.html', {
-        'heading' : _('Users'),
-        'users' : users,
-        'following' : following,
+        'heading': _('Users'),
+        'users': users,
+        'following': following,
         'type': object_type,
     }, context_instance=RequestContext(request))
+
 
 @anonymous_only
 def forgot_password(request):
     """Allow users to reset their password by validating email ownership."""
     if request.method == 'GET':
         return render_to_response('users/forgot_password.html', {
-            'form': ForgotPasswordForm()
+            'form': ForgotPasswordForm(),
         }, context_instance=RequestContext(request))
     error = None
     form = ForgotPasswordForm(request.POST)
     if not form.is_valid():
         return render_to_response('users/forgot_password.html', {
-            form: 'form'
+            form: 'form',
         }, context_instance=RequestContext(request))
     try:
         email = form.cleaned_data['email']
         user = User.objects.get(email__exact=email)
         token = unique_confirmation_token(user)
         send_reset_email(user, token.plaintext, request.build_absolute_uri)
+        message = _("""An email has been sent to %(email)s with instructions
+        for resetting your password.""" % {'email': email})
         messages.add_message(
             request,
             messages.INFO,
-            _("""An email has been sent to %(email)s with instructions
-            for resetting your password.""" % dict(email=email))
+            message,
         )
         return HttpResponseRedirect(reverse('dashboard_index'))
     except User.DoesNotExist:
@@ -191,8 +202,9 @@ def forgot_password(request):
 
     return render_to_response('users/forgot_password.html', {
         'form': form,
-        'error': error
+        'error': error,
     }, context_instance=RequestContext(request))
+
 
 @anonymous_only
 def reset_password(request, token, username):
@@ -202,7 +214,7 @@ def reset_password(request, token, username):
         return render_to_response('users/reset_password.html', {
             'form': form,
             'token': token,
-            'username': username
+            'username': username,
         }, context_instance=RequestContext(request))
     password = form.cleaned_data['password']
     user = User.objects.get(username=form.cleaned_data['username'])
@@ -216,6 +228,7 @@ def reset_password(request, token, username):
     if user is not None and user.is_active:
         auth.login(request, user)
     return HttpResponseRedirect(reverse('dashboard_index'))
+
 
 @anonymous_only
 def reset_password_form(request, token, username):
@@ -237,8 +250,9 @@ def reset_password_form(request, token, username):
         'form': form,
         'error': error,
         'token': token,
-        'username': username
+        'username': username,
     }, context_instance=RequestContext(request))
+
 
 @anonymous_only
 def confirm_registration(request, token, username):
@@ -256,7 +270,7 @@ def confirm_registration(request, token, username):
         messages.add_message(
             request,
             messages.INFO,
-            _('Congratulations. Your have completed your registration.')
+            _('Congratulations. Your have completed your registration.'),
         )
     except:
         return render_to_response('users/register.html', {
