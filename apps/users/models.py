@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from users import auth
 
+
 class ConfirmationToken(models.Model):
     """Store a unique token related to a user account."""
     user = models.ForeignKey(User, unique=True)
@@ -27,13 +28,14 @@ class ConfirmationToken(models.Model):
         self.token = self._hash_token(self.token)
         super(ConfirmationToken, self).save(*args, **kwargs)
 
+
 def unique_confirmation_token(user, length=32):
     """Create a confirmation token for the given user, deleting existing."""
     ConfirmationToken.objects.filter(user__exact=user.id).delete()
     plaintext = User.objects.make_random_password(length=length)
     token = ConfirmationToken(
         user=user,
-        token=plaintext
+        token=plaintext,
     )
     token.plaintext = plaintext
     token.save()
