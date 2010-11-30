@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -8,13 +10,13 @@ from projects.models import Project
 
 
 class Status(models.Model):
-    author = models.ForeignKey(User)
-    project = models.ForeignKey(Project, null=True)
-
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
+    author = models.ForeignKey(User)
+    project = models.ForeignKey(Project, null=True)
     status = models.CharField(max_length=1024)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     def __unicode__(self):
         return self.status
@@ -26,7 +28,7 @@ class Status(models.Model):
         })
 
     def timesince(self, now=None):
-        return timesince(self.timestamp, now)
+        return timesince(self.created_on, now)
 
 admin.site.register(Status)
 
