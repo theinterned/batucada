@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -11,6 +13,8 @@ class Profile(models.Model):
     location = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/profiles/public')
     bio = models.TextField()
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     def get_full_name(self):
         return self.user.get_full_name()
@@ -47,12 +51,16 @@ class Skill(models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)
     name = models.CharField(max_length=30)
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
 
 class Interest(models.Model):
     """A user profile can have zero or more interests."""
     profile = models.ForeignKey(Profile)
     name = models.CharField(max_length=30)
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
 
 def user_save_handler(sender, **kwargs):

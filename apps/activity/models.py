@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -13,7 +15,7 @@ from activity.schema import verbs, UnknownActivityError
 class ActivityManager(models.Manager):
 
     def __results(self, predicate, limit):
-        return self.filter(**predicate).order_by('-timestamp')[:limit]
+        return self.filter(**predicate).order_by('-created_on')[:limit]
 
     def from_user(self, user, limit=None):
         """
@@ -50,7 +52,7 @@ class ActivityManager(models.Manager):
         ids = [u.id for u in user.following() if not isinstance(u, User)]
         return self.filter(
             models.Q(actor__in=user_ids) | models.Q(target_id__in=ids),
-        ).order_by('-timestamp')[:limit]
+        ).order_by('-created_on')[:limit]
 
     def public(self, limit=None):
         """Return a chronological list of activities performed recently."""
@@ -71,13 +73,14 @@ class Activity(models.Model):
     target_id = models.PositiveIntegerField(null=True)
     target = generic.GenericForeignKey('target_content_type', 'target_id')
 
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     objects = ActivityManager()
 
     class Meta:
         verbose_name_plural = 'activities'
-        ordering = ('-timestamp', 'actor')
+        ordering = ('-created_on', 'actor')
 
     @property
     def verb_object(self):
@@ -198,7 +201,7 @@ class Activity(models.Model):
         """
         A slightly modified version of ```django.utils.timesince.timesince```.
         """
-        t = timesince(self.timestamp, now)
+        t = timesince(self.created_on, now)
         c = lambda x: x == "0 minutes" and _("less than a minute") or x
         d = lambda x: ("hours," in x or "hour," in x) and x.split(',')[0] or x
         return d(c(t)) + _(" ago")

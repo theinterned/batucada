@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -19,6 +21,9 @@ class Relationship(models.Model):
     target_object_id = models.PositiveIntegerField()
     target = generic.GenericForeignKey(
         'target_content_type', 'target_object_id')
+
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     def save(self, *args, **kwargs):
         """Check that the source and the target are not the same object."""

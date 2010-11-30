@@ -37,7 +37,7 @@ def send(actor, verb, obj, target=None, timestamp=None):
         activity.target_id = target.pk
     activity.save()
     if timestamp:
-        log.debug("Setting timestamp to %r" % (repr(timestamp),))
-        activity.timestamp = timestamp
+        log.debug("Setting created_on to %r" % (repr(timestamp),))
+        activity.created_on = timestamp
         activity.save()
     return activity

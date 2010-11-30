@@ -100,7 +100,7 @@ class UserActivityAtomFeed(Feed):
         })
 
     def item_pubdate(self, item):
-        return item.timestamp
+        return item.created_on
 
     def item_extra_kwargs(self, item):
         obj_id = self.request.build_absolute_uri(

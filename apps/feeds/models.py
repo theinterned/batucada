@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from projects.models import Link
@@ -6,12 +8,15 @@ from projects.models import Link
 class Entry(models.Model):
     link = models.ForeignKey(Link, related_name='feed_entries')
     signature = models.CharField(max_length=32)
-    processed_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
 
 class RemoteObject(models.Model):
     title = models.CharField(max_length=255)
     url = models.URLField()
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     def __unicode__(self):
         return self.title

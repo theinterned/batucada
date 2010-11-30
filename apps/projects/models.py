@@ -1,4 +1,5 @@
 import urllib
+import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -22,6 +23,8 @@ class Project(models.Model):
     featured = models.BooleanField()
     template = models.TextField()
     css = models.TextField()
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     def __unicode__(self):
         return self.name
@@ -54,6 +57,8 @@ class Link(models.Model):
     url = models.URLField()
     project = models.ForeignKey(Project)
     feed_url = models.URLField(editable=False, default='')
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     class Meta:
         unique_together = ('project', 'url',)
