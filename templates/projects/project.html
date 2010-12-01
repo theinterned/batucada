@@ -87,12 +87,12 @@
 
     <div id="project-lead">
       <a href="{% locale_url profiles_show username=project.created_by.username %}">
-	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.profile.image_or_default }}" height="54" width="54">
+	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.get_profile.image_or_default }}" height="54" width="54">
       </a>
 
       <div class="member-details">
 	<h3 class="member-name">
-	  <a href="{% locale_url profiles_show username=project.created_by.username %}">{{ project.created_by.profile.get_full_name_or_username }}</a>
+	  <a href="{% locale_url profiles_show username=project.created_by.username %}">{{ project.created_by.get_profile.get_full_name_or_username }}</a>
 	</h3>
 
 	<div class="member-actions">
@@ -105,7 +105,7 @@
 	</div>
 
 	<div class="member-bio">
-	  {{ project.created_by.profile.bio }}
+	  {{ project.created_by.get_profile.bio }}
 	</div>
 	
       </div> <!-- /.member-details -->

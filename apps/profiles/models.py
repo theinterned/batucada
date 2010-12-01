@@ -39,14 +39,6 @@ class Profile(models.Model):
             return 'images/member-missing.png'
 
 
-@property
-def get_user_profile(self):
-    """Return a profile for this user."""
-    return Profile.objects.get(id=self.pk)
-
-User.profile = get_user_profile
-
-
 class Skill(models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)
