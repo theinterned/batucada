@@ -50,12 +50,10 @@ var batucada = {
 	    $('#post-project-update').bind('click', function() {
 		$('#post-project-status-update').submit();
 	    });
-	    $('#follow-project').bind('click', function() {
-		$('#project-follow-form').submit();
-	    });	
-	    $('#unfollow-project').bind('click', function() {
-		$('#project-unfollow-form').submit();
-	    });
+	}
+    },
+    user_profile: {
+	onload: function() {
 	}
     }
 };
@@ -71,6 +69,11 @@ $(document).ready(function() {
     // attach handlers for elements that appear on most pages
     $('#user-nav').find('li.menu').bind('click', function() {
 	$(this).toggleClass('open');
+    });
+
+    // find submit buttons and bind them to an event that submits their form
+    $('.submit-button').bind('click', function(e) {
+	$(e.target).parent('form[method="post"]').first().submit();
     });
 });
 
