@@ -2,9 +2,9 @@
 
   <a href="#" class="reply-to">Reply</a>
 
-  <a href="{{ activity.actor.profile.get_absolute_url }}">
-    {% if activity.actor.profile.image %}
-      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.profile.image }}">
+  <a href="{{ activity.actor.get_profile.get_absolute_url }}">
+    {% if activity.actor.get_profile.image %}
+      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image }}">
     {% else %}
       <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png">
     {% endif %}
@@ -14,7 +14,7 @@
 
     <div class="post-details">
     {% if activity.actor %}
-      <a class="member-name" href="{{ activity.actor.profile.get_absolute_url }}">{{ activity.actor_name }}</a>
+      <a class="member-name" href="{{ activity.actor.get_profile.get_absolute_url }}">{{ activity.actor_name }}</a>
     {% else %}
       {{ activity.actor_name }}
     {% endif %}

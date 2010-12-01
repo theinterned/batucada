@@ -83,7 +83,7 @@ class UserActivityAtomFeed(Feed):
 
     def item_author_link(self, obj):
         return self.request.build_absolute_uri(
-            obj.actor.profile.get_absolute_url(),
+            obj.actor.get_profile().get_absolute_url(),
         )
 
     def item_link(self, obj):
