@@ -8,6 +8,8 @@
 <link rel="profile" href="http://microformats.org/profile/hcard" />
 {% endblock %}
 
+{% block bodyid %}user_profile{% endblock %}
+
 {% block body %}
 <fieldset class="vcard">
   <legend>{{ _('Profile') }}</legend>
@@ -68,5 +70,23 @@
     {% endblocktrans %}
   </a>
 </p>
+
+{% if user != profile_user %}
+{% if profile_user in following %}
+<form action="{% locale_url relationships_unfollow %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="object_id" value="{{ profile_user.id }}">
+  <input type="hidden" name="object_type_id" value="{{ type.id }}">
+  <a class="submit-button" id="unfollow-user" href="#">Unfollow</a>
+</form>
+{% else %}
+<form action="{% locale_url relationships_follow %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="object_id" value="{{ profile_user.id }}">
+  <input type="hidden" name="object_type_id" value="{{ type.id }}">
+  <a class="submit-button" id="follow-user" href="#">Follow</a>
+</form>
+{% endif %}
+{% endif %}
 
 {% endblock %}

@@ -35,18 +35,18 @@
 
     <div id="project-follow" class="button">
       {% if following %}
-	<form id="project-unfollow-form" method="post" action="{% locale_url relationships_unfollow %}">
+	<form method="post" action="{% locale_url relationships_unfollow %}">
 	  {% csrf_token %}
 	  <input type="hidden" name="object_id" value="{{ project.id }}">
 	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
-          <a href="#" id="unfollow-project">{{ _('Unfollow') }}</a>
+          <a class="submit-button" href="#">{{ _('Unfollow') }}</a>
         </form>
       {% else %}
-	<form id="project-follow-form" method="post" action="{% locale_url relationships_follow %}">
+	<form method="post" action="{% locale_url relationships_follow %}">
 	  {% csrf_token %}
 	  <input type="hidden" name="object_id" value="{{ project.id }}">
 	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
-	  <a href="#" id="follow-project">{{ _('Follow Project') }}</a>
+	  <a class="submit-button" href="#">{{ _('Follow Project') }}</a>
 	</form>
       {% endif %}
     </div> <!-- /#project-follow -->
