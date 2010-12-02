@@ -6,19 +6,20 @@ from django.test import Client, TestCase
 
 from users.models import ConfirmationToken
 
+
 class TestLogins(TestCase):
 
     test_username = 'testuser'
     test_password = 'testpassword'
     test_email = 'test@mozillafoundation.org'
-    
+
     def setUp(self):
         self.locale = 'en-US'
         self.client = Client()
         self.user = User.objects.create_user(self.test_username,
                                              self.test_email,
                                              self.test_password)
-                                                  
+
     def test_authenticated_redirects(self):
         """Test that authenticated users are redirected in specific views."""
         self.client.login(username=self.test_username,
@@ -31,7 +32,7 @@ class TestLogins(TestCase):
             self.assertRedirects(response, '/', status_code=302,
                                  target_status_code=301)
         self.client.logout()
-        
+
     def test_reset_token_uniqueness_constraint(self):
         """Test that only one password reset token can exist per user."""
         token = ConfirmationToken(user=self.user, token='abcdef')
@@ -42,7 +43,9 @@ class TestLogins(TestCase):
         token_two.save()
 
     def test_automatic_reset_token_hashing(self):
-        """Password reset tokens should be hashed, transparent to the caller."""
+        """
+        Password reset tokens should be hashed, transparent to the caller.
+        """
         token_string = 'abcdef'
         token = ConfirmationToken(user=self.user, token=token_string)
         token.save()
@@ -63,27 +66,33 @@ class TestLogins(TestCase):
         """Test that invalid reset form tokens are rejected."""
         new_password = 'foobar'
         ConfirmationToken(user=self.user, token='abcdef').save()
-        path = '/%s/reset/%s/%s/' % (self.locale, 'badtoken', self.user.username)
+        path = '/%s/reset/%s/%s/' % (
+            self.locale, 'badtoken', self.user.username)
         response = self.client.get(path)
         self.assertContains(response, 'Sorry, invalid user or token')
         response = self.client.post(path, {
-            'password': new_password, 'password_confirm': new_password
+            'password': new_password,
+            'password_confirm': new_password,
         })
-        self.assertContains(response, 'Invalid token value')
+        self.assertContains(response,
+                            'Our bad. Something must have gone wrong.')
 
     def test_password_reset_form_valid_token(self):
         """Test that valid reset tokens are accepted."""
         token_string = 'abcdef'
         new_password = 'foobar'
         ConfirmationToken(user=self.user, token=token_string).save()
-        path = '/%s/reset/%s/%s/' % (self.locale, token_string, self.user.username)
+        path = '/%s/reset/%s/%s/' % (
+            self.locale, token_string, self.user.username)
         response = self.client.get(path)
         self.assertNotContains(response, 'Sorry, invalid user or token')
         response = self.client.post(path, {
             'password': new_password, 'password_confirm': new_password,
-            'username' : self.user.username, 'token': token_string
+            'username': self.user.username,
+            'token': token_string,
         })
-        self.assertRedirects(response, '/%s/' % (self.locale,), status_code=302)
+        self.assertRedirects(response, '/%s/' % (self.locale,),
+                             status_code=302)
         # refresh user object
         self.user = User.objects.get(username__exact=self.user.username)
         self.assertTrue(self.user.check_password(new_password))
@@ -97,9 +106,11 @@ class TestLogins(TestCase):
         response = self.client.get(path)
         self.assertContains(response, 'Sorry, invalid user or token')
         response = self.client.post(path, {
-            'password': new_password, 'password_confirm': new_password
+            'password': new_password,
+            'password_confirm': new_password,
         })
-        self.assertContains(response, 'Invalid username')
+        self.assertContains(response,
+                            'Our bad. Something must have gone wrong.')
 
     def test_next_get_parameter(self):
         """
@@ -112,7 +123,7 @@ class TestLogins(TestCase):
         response = self.client.post(path, {
             'username': self.test_username,
             'password': self.test_password,
-            'next': '/%s/profile/edit/' % (self.locale,)
+            'next': '/%s/profile/edit/' % (self.locale,),
         })
         self.assertTrue(response.has_header('location'))
         self.assertEqual(response['location'],

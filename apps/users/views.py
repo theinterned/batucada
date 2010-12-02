@@ -211,6 +211,8 @@ def reset_password(request, token, username):
     """Reset users password."""
     form = ResetPasswordForm(data=request.POST)
     if not form.is_valid():
+        messages.add_message(request, messages.ERROR,
+                             _("Our bad. Something must have gone wrong."))
         return render_to_response('users/reset_password.html', {
             'form': form,
             'token': token,
@@ -236,19 +238,18 @@ def reset_password_form(request, token, username):
     if request.method == 'POST':
         return reset_password(request, token, username)
 
-    error = None
     try:
         user = User.objects.get(username__exact=username)
         token_obj = ConfirmationToken.objects.get(user__exact=user.id)
         if not token_obj.check_token(token):
             raise
     except:
-        error = 'Sorry, invalid user or token'
+        messages.add_message(request, messages.ERROR,
+                             _("Sorry, invalid user or token"))
 
     form = ResetPasswordForm()
     return render_to_response('users/reset_password.html', {
         'form': form,
-        'error': error,
         'token': token,
         'username': username,
     }, context_instance=RequestContext(request))
