@@ -1,8 +1,9 @@
 import urllib
 import datetime
 
+from django.contrib import admin
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, IntegrityError
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 
@@ -48,11 +49,20 @@ class Project(models.Model):
             count += 1
         super(Project, self).save()
 
+
+# Monkey patch the Project model with methods from the relationships app.
 Project.followers = followers
 Project.followers_count = followers_count
 
 
 class Link(models.Model):
+    """
+    A link in this context refers to an external resource attached to a
+    project. Project admins can add as many links as they like to their
+    project. Links with URLs that have an Atom or RSS feed refered in the
+    link element with rel="alternate" will be polled regularly, and entries
+    will be added to the activity stream for the project.
+    """
     title = models.CharField(max_length=250)
     url = models.URLField()
     project = models.ForeignKey(Project)
@@ -64,6 +74,14 @@ class Link(models.Model):
         unique_together = ('project', 'url',)
 
     def save(self, *args, **kwargs):
+        """
+        Before saving, try and find a link element with a rel attribute
+        value of alternate. The href will be stored as the syndication url.
+        """
+        existing = Link.objects.filter(
+            url=self.url, project=self.project).count()
+        if existing > 0:
+            raise IntegrityError('Duplicate Entry')
         self.feed_url = self._get_syndication_url()
         super(Link, self).save(*args, **kwargs)
 
@@ -97,6 +115,12 @@ class Link(models.Model):
             return rss[0]
 
         return None
+
+admin.site.register(Project)
+
+###########
+# Signals #
+###########
 
 
 def project_creation_handler(sender, **kwargs):
