@@ -12,13 +12,13 @@ class Migration(SchemaMigration):
         db.delete_column('activity_activity', 'timestamp')
 
         # Adding field 'Activity.created_on'
-        db.add_column('activity_activity', 'created_on', self.gf('django.db.models.fields.DateTimeField')(default=datetime.date(2010, 11, 29), auto_now_add=True, blank=True), keep_default=False)
+        db.add_column('activity_activity', 'created_on', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2010, 11, 29, 0, 0), auto_now_add=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
         
         # Adding field 'Activity.timestamp'
-        db.add_column('activity_activity', 'timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=datetime.date(2010, 11, 29), blank=True), keep_default=False)
+        db.add_column('activity_activity', 'timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=datetime.datetime(2010, 11, 29, 0, 0), blank=True), keep_default=False)
 
         # Deleting field 'Activity.created_on'
         db.delete_column('activity_activity', 'created_on')
@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "('-created_on', 'actor')", 'object_name': 'Activity'},
             'actor': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
             'actor_string': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 11, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2010, 11, 29, 0, 0)', 'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'obj_content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'object'", 'to': "orm['contenttypes.ContentType']"}),
             'obj_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
