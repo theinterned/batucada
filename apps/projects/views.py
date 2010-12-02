@@ -18,17 +18,19 @@ from statuses.models import Status
 
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    following = (request.user.is_authenticated() and
+    is_following = (request.user.is_authenticated() and
                  request.user.is_following(project) or False)
+    project_type = ContentType.objects.get_for_model(project)
+    project_activities = Activity.objects.from_target(project, limit=10)
+    nstatuses = Status.objects.filter(project=project).count()
+    links = project.link_set.all()
     context = {
         'project': project,
-        'type': ContentType.objects.get_for_model(project),
-        'following': following,
-        'admin': project.created_by == request.user,
-        'followers_count': project.followers_count(),
-        'activities': Activity.objects.from_target(project, limit=10),
-        'update_count': Status.objects.filter(project=project).count(),
-        'links': project.link_set.all(),
+        'type': project_type,
+        'following': is_following,
+        'activities': project_activities,
+        'update_count': nstatuses,
+        'links': links,
     }
     if not project.featured:
         return render_to_response('projects/project.html', context,
@@ -44,7 +46,7 @@ def show(request, slug):
 def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.user != project.created_by:
-        return HttpResponseForbidden
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
@@ -113,6 +115,7 @@ def featured_css(request, slug):
     return HttpResponse(project.css, mimetype='text/css')
 
 
+@login_required
 def link_create(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.created_by != request.user:

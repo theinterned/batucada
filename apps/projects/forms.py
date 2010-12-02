@@ -8,6 +8,7 @@ from projects.models import Project, Link
 
 
 class ProtectedProjectForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(ProtectedProjectForm, self).__init__(*args, **kwargs)
         protected = getattr(self.Meta, 'protected')
@@ -19,6 +20,7 @@ class ProtectedProjectForm(forms.ModelForm):
 
 
 class ProjectForm(ProtectedProjectForm):
+
     class Meta:
         model = Project
         exclude = ('created_by', 'slug', 'featured')
@@ -26,6 +28,7 @@ class ProjectForm(ProtectedProjectForm):
 
 
 class ProjectLinkForm(forms.ModelForm):
+
     class Meta:
         model = Link
         widgets = {
