@@ -39,6 +39,16 @@ class Profile(models.Model):
             return 'images/member-missing.png'
 
 
+@models.permalink
+def get_absolute_url(self):
+    """User get_absolute_url should return URL to profile."""
+    return ('profiles_show', (), {
+        'username': self.username,
+    })
+
+User.get_absolute_url = get_absolute_url
+
+
 class Skill(models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)
