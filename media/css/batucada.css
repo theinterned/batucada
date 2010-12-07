@@ -285,7 +285,10 @@ header {}
   #breadcrumbs {
     height: 31px;
     border-bottom: 1px solid #ccc;
-    background: url("/media/images/breadcrumbs.bg.png") repeat-x;
+	box-shadow:  0 1px 0 rgba(255,255,255,0.8);
+    -moz-box-shadow:  0 1px 0 rgba(255,255,255,0.8);
+    -webkit-box-shadow:  0 1px 0 rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.4);
     font-size: 11px;
     line-height: 31px;
   }
