@@ -2,7 +2,7 @@
 
   <a href="#" class="reply-to">Reply</a>
 
-  <a href="{{ activity.actor.get_profile.get_absolute_url }}">
+  <a href="{{ activity.actor.get_absolute_url }}">
     {% if activity.actor.get_profile.image %}
       <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image }}" alt="{{ activity.actor_name }}'s profile picture">
     {% else %}
@@ -14,7 +14,7 @@
 
     <div class="post-details">
     {% if activity.actor %}
-      <a class="member-name" href="{{ activity.actor.get_profile.get_absolute_url }}">{{ activity.actor_name }}</a>
+      <a class="member-name" href="{{ activity.actor.get_absolute_url }}">{{ activity.actor_name }}</a>
     {% else %}
       {{ activity.actor_name }}
     {% endif %}
