@@ -1,3 +1,5 @@
+/* @override http://127.0.0.1:8000/media/css/batucada.css?v=1 */
+
 html {
   height: 100%;
 }
@@ -9,8 +11,16 @@ body {
 }
 
 .container {
-  width: 1000px;
+  width: 960px;
+  height: 100%;
   margin: auto;
+    zoom: 1;    
+}
+.container:before, .container:after{
+	content: "\0020"; display: block; height: 0; visibility: hidden;
+}
+.container:after{
+	clear: both;
 }
 
 h1 {
@@ -297,10 +307,13 @@ header {}
       float: left;
       margin-left: 15px;
     }
-  
+#content {
+	padding-top: 25px;
+}  
   #sidebar {
     float: left;
     width: 300px;
+
   }
     #project {
       border-bottom: 1px solid #f7f9fa;
@@ -415,9 +428,9 @@ header {}
        
   
   #main {
-    margin-top: 25px;
-    padding-left: 340px;
+    margin-left: 40px;
     width: 620px;
+    float: left;
   }
     #main .post-container {
       background: -webkit-gradient(linear,0 top,0 bottom,from(#fff),to(#f4f4f4));
@@ -428,11 +441,13 @@ header {}
       -o-border-radius: 6px;
       -webkit-border-radius: 6px;
       min-height: 56px;
-      margin: 10px 0;
+      margin: 0 0 20px;
       border: 1px solid #c6c6c6;
       border-bottom: 2px solid #c6c6c6;
       padding: 8px;
       behavior: url("/media/css/PIE.htc");
+      float: left;
+      width: 602px;
     }
 
 
@@ -471,10 +486,11 @@ header {}
     }
   
     #main .post-tags {
-      margin: 0;
+      margin: 0 0 -5px;
       padding: 0;
       list-style: none;
-    }
+      float: left;     
+    }    
     #main .post-tags li {
       line-height: 20px;
       height: 20px;
@@ -625,8 +641,7 @@ header {}
         margin: 10px 0;
       }
           
-footer {
-}
+footer {}
 
 /* Rewrite everything below here :-) */
 
