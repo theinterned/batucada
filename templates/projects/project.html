@@ -87,7 +87,7 @@
 
     <div id="project-lead">
       <a href="{% locale_url profiles_show username=project.created_by.username %}">
-	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.get_profile.image_or_default }}" height="54" width="54">
+	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.get_profile.image_or_default }}" height="54" width="54" alt="{{ project.created_by.username }}{{ _('\'s profile picture') }}">
       </a>
 
       <div class="member-details">
