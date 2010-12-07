@@ -4,9 +4,9 @@
 
   <a href="{{ activity.actor.get_profile.get_absolute_url }}">
     {% if activity.actor.get_profile.image %}
-      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image }}">
+      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image }}" alt="{{ activity.actor_name }}'s profile picture">
     {% else %}
-      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png">
+      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png" alt="Default avatar">
     {% endif %}
   </a>
 
