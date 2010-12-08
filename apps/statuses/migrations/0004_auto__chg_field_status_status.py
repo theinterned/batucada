@@ -8,40 +8,17 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Activity'
-        db.create_table('activity_activity', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('actor', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
-            ('actor_string', self.gf('django.db.models.fields.CharField')(max_length=120)),
-            ('verb', self.gf('django.db.models.fields.CharField')(max_length=120)),
-            ('obj_content_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='object', to=orm['contenttypes.ContentType'])),
-            ('obj_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('target_content_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='target', null=True, to=orm['contenttypes.ContentType'])),
-            ('target_id', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('activity', ['Activity'])
+        # Changing field 'Status.status'
+        db.alter_column('statuses_status', 'status', self.gf('django.db.models.fields.CharField')(max_length=750))
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Activity'
-        db.delete_table('activity_activity')
+        # Changing field 'Status.status'
+        db.alter_column('statuses_status', 'status', self.gf('django.db.models.fields.CharField')(max_length=1024))
 
 
     models = {
-        'activity.activity': {
-            'Meta': {'ordering': "('-timestamp', 'actor')", 'object_name': 'Activity'},
-            'actor': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
-            'actor_string': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'obj_content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'object'", 'to': "orm['contenttypes.ContentType']"}),
-            'obj_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'target_content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'target'", 'null': 'True', 'to': "orm['contenttypes.ContentType']"}),
-            'target_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'verb': ('django.db.models.fields.CharField', [], {'max_length': '120'})
-        },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -77,7 +54,28 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'projects.project': {
+            'Meta': {'object_name': 'Project'},
+            'call_to_action': ('django.db.models.fields.TextField', [], {}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projects'", 'to': "orm['auth.User']"}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 7)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'css': ('django.db.models.fields.TextField', [], {}),
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
+            'template': ('django.db.models.fields.TextField', [], {})
+        },
+        'statuses.status': {
+            'Meta': {'object_name': 'Status'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 7)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
+            'status': ('django.db.models.fields.CharField', [], {'max_length': '750'})
         }
     }
 
-    complete_apps = ['activity']
+    complete_apps = ['statuses']

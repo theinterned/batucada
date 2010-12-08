@@ -14,7 +14,7 @@ class Status(models.Model):
 
     author = models.ForeignKey(User)
     project = models.ForeignKey(Project, null=True)
-    status = models.CharField(max_length=1024)
+    status = models.CharField(max_length=750)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 

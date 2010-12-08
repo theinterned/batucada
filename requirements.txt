@@ -9,10 +9,12 @@ feedparser
 Celery==2.1.3
 django-celery
 BeautifulSoup
+IPython
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower
 -e git://github.com/paulosman/python-xrd#egg=xrd
 -e git://github.com/paulosman/django-wellknown.git#egg=wellknown
+-e git://github.com/paulosman/django-activity.git#egg=activity
 -e git://github.com/jsocol/commonware.git#egg=commonware
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar

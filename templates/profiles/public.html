@@ -4,7 +4,10 @@
 {% block title %}{{ profile.get_full_name }}{% endblock %}
 
 {% block links %}
+{% comment %}
+Temporarily comment out atom feed link while refactoring activity application.
 <link rel="alternate" type="application/atom+xml" href="{% locale_url activity_feed_user username=profile_user.username %}">
+{% endcomment %}
 <link rel="profile" href="http://microformats.org/profile/hcard" />
 {% endblock %}
 
