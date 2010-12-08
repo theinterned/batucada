@@ -1,15 +1,17 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db.models import Q
 
 from activity.models import Activity
 from users.decorators import anonymous_only
+from projects.models import Project
 
 
 @anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
-    activities = Activity.objects.public(limit=10)
+    activities = Activity.objects.all().order_by('-created_on')[0:10]
     return render_to_response('dashboard/splash.html', {
         'activities': activities,
     }, context_instance=RequestContext(request))
@@ -18,7 +20,14 @@ def splash(request):
 @login_required
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
-    activities = Activity.objects.for_user(request.user, limit=5)
+    projects = [p.id for p in request.user.following(model=Project)]
+    users = [u.id for u in request.user.following(
+        model=request.user.__class__)]
+    activities = Activity.objects.filter(
+        Q(actor_id__exact=request.user.id) |
+        Q(actor_id__in=users) | Q(target_id__in=projects) |
+        Q(object_id__in=projects),
+    ).order_by('-created_on')
     return render_to_response('dashboard/dashboard.html', {
         'user': request.user,
         'activities': activities,
