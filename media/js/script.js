@@ -29,6 +29,7 @@ var createPostTextArea = function() {
 	$('#create-post').addClass('expanded');
 	$('#create-post').find('textarea').trigger('focus');
     });
+
 };
 
 var batucada = {
@@ -41,6 +42,10 @@ var batucada = {
 	    createPostTextArea();
 	    $('#post-update').bind('click', function() {
 		$('#post-status-update').submit();
+	    });
+	    $('a.activity-delete').bind('click', function(e) {
+		$(e.target).parent().submit();
+		return false;
 	    });
 	}
     },
@@ -69,6 +74,7 @@ $(document).ready(function() {
     // attach handlers for elements that appear on most pages
     $('#user-nav').find('li.menu').bind('click', function() {
 	$(this).toggleClass('open');
+	return false;
     });
 
     // find submit buttons and bind them to an event that submits their form
