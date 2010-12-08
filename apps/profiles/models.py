@@ -4,8 +4,10 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
+import caching.base
 
-class Profile(models.Model):
+
+class Profile(caching.base.CachingMixin, models.Model):
     """Main User profile model."""
     user = models.ForeignKey(User, unique=True)
     first_name = models.CharField(max_length=30)
@@ -15,6 +17,8 @@ class Profile(models.Model):
     bio = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
+
+    objects = caching.base.CachingManager()
 
     def get_full_name(self):
         return self.user.get_full_name()
@@ -49,20 +53,24 @@ def get_absolute_url(self):
 User.get_absolute_url = get_absolute_url
 
 
-class Skill(models.Model):
+class Skill(caching.base.CachingMixin, models.Model):
     """A user profile can have zero or more skills."""
     profile = models.ForeignKey(Profile)
     name = models.CharField(max_length=30)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
+    objects = caching.base.CachingManager()
 
-class Interest(models.Model):
+
+class Interest(caching.base.CachingMixin, models.Model):
     """A user profile can have zero or more interests."""
     profile = models.ForeignKey(Profile)
     name = models.CharField(max_length=30)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
+
+    objects = caching.base.CachingManager()
 
 
 def user_save_handler(sender, **kwargs):

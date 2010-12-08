@@ -11,8 +11,10 @@ from BeautifulSoup import BeautifulSoup
 
 from relationships.models import followers, followers_count
 
+import caching.base
 
-class Project(models.Model):
+
+class Project(caching.base.CachingMixin, models.Model):
     """Placeholder model for projects."""
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
@@ -26,6 +28,7 @@ class Project(models.Model):
     css = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
+    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return self.name
@@ -55,7 +58,7 @@ Project.followers = followers
 Project.followers_count = followers_count
 
 
-class Link(models.Model):
+class Link(caching.base.CachingMixin, models.Model):
     """
     A link in this context refers to an external resource attached to a
     project. Project admins can add as many links as they like to their
@@ -70,6 +73,7 @@ class Link(models.Model):
     feed_url = models.URLField(editable=False, default='')
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
+    objects = caching.base.CachingManager()
 
     class Meta:
         unique_together = ('project', 'url',)

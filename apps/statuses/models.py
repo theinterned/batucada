@@ -8,8 +8,10 @@ from django.utils.timesince import timesince
 
 from projects.models import Project
 
+import caching.base
 
-class Status(models.Model):
+
+class Status(caching.base.CachingMixin, models.Model):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
     author = models.ForeignKey(User)
@@ -18,6 +20,8 @@ class Status(models.Model):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
+    objects = caching.base.CachingManager()
+    
     def __unicode__(self):
         return self.status
 
