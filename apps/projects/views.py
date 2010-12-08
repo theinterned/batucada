@@ -21,14 +21,16 @@ def show(request, slug):
     is_following = (request.user.is_authenticated() and
                  request.user.is_following(project) or False)
     project_type = ContentType.objects.get_for_model(project)
-    project_activities = Activity.objects.from_target(project, limit=10)
+    activities = Activity.objects.filter(
+        target_id=project.id,
+        target_content_type=project_type)[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
     context = {
         'project': project,
         'type': project_type,
         'following': is_following,
-        'activities': project_activities,
+        'activities': activities,
         'update_count': nstatuses,
         'links': links,
     }

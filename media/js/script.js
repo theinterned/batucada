@@ -74,7 +74,6 @@ $(document).ready(function() {
     // attach handlers for elements that appear on most pages
     $('#user-nav').find('li.menu').bind('click', function() {
 	$(this).toggleClass('open');
-	return false;
     });
 
     // find submit buttons and bind them to an event that submits their form
