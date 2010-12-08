@@ -1,0 +1,16 @@
+{% load l10n_tags %}
+<figure>
+  <!-- TODO: add support for project images. -->
+  <img src="" width="201" height="120" alt="project image"/>
+</figure>
+<h3><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></h3>
+<div class="description">{{project.description}}</div>
+<dl class="meta">
+  <dd>{{project.followers_count}}</dd>
+  <dt>Followers</dt>
+  <!-- TODO: support project updates count -->
+  <dd>XXX</dd>
+  <dt>Updates</dt>
+  <dd>{{project.created_on|date:"M j, y"}}</dd>
+  <dt>Created</dt>
+</dl>
