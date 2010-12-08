@@ -64,6 +64,7 @@ class Relationship(models.Model):
 # Duck Punching #
 #################
 
+
 def followers(obj):
     """
     Return a list of ```User``` objects that follow ```obj```.
@@ -83,20 +84,28 @@ def followers_count(obj):
     return len(obj.followers())
 
 
-def following(obj):
+def following(obj, model=None):
     """
     Return a list of objects that ```obj``` is following. All objects returned
-    will be ```Model``` instances.
+    will be ```Model``` instances. Optionally filter by type by including a
+    ```model``` parameter.
     """
     content_type = ContentType.objects.get_for_model(obj)
-    relationships = Relationship.objects.filter(
-        source_object_id=obj.id, source_content_type=content_type)
+    if model is None:
+        relationships = Relationship.objects.filter(
+            source_object_id=obj.id, source_content_type=content_type)
+    else:
+        target_content_type = ContentType.objects.get_for_model(model)
+        relationships = Relationship.objects.filter(
+            source_object_id=obj.id,
+            source_content_type=content_type,
+            target_content_type=target_content_type)
     return [rel.target for rel in relationships]
 
 
-def following_count(obj):
+def following_count(obj, model=None):
     """Return the number of objects that ```obj``` is following."""
-    return len(obj.following())
+    return len(obj.following(model))
 
 
 def is_following(obj, model):

@@ -615,11 +615,25 @@ header {}
       height: 16px;
       line-height: 16px;
     }
+    #posts .delete {
+	display: none;
+	float: right;
+	color: #ababab;
+	text-decoration: none;
+	padding-right: 7px;
+	height: 16px;
+	line-height: 16px;
+    }
     #posts .post-container:hover .reply-to {
       display: block;
     }
-    
+    #posts .post-container:hover .delete {
+	display: block;
+    }
     #posts .reply-to:hover {
+      color: #777;
+    }
+    #posts .delete:hover {
       color: #777;
     }
     
