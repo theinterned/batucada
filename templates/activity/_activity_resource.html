@@ -5,11 +5,7 @@
   <a href="#" class="reply-to">Reply</a>
 
   <a href="{{ activity.actor.get_absolute_url }}">
-    {% if activity.actor.get_profile.image %}
-      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image }}">
-    {% else %}
-      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png">
-    {% endif %}
+    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image_or_default }}">
   </a>
 
   <div class="post-contents">
