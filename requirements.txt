@@ -10,6 +10,7 @@ Celery==2.1.3
 django-celery
 BeautifulSoup
 IPython
+django-cache-machine
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower
