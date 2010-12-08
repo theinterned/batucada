@@ -61,7 +61,8 @@ class Link(models.Model):
     project. Project admins can add as many links as they like to their
     project. Links with URLs that have an Atom or RSS feed refered in the
     link element with rel="alternate" will be polled regularly, and entries
-    will be added to the activity stream for the project.
+    will be added to the activity
+    stream for the project.
     """
     title = models.CharField(max_length=250)
     url = models.URLField()
@@ -132,7 +133,7 @@ def project_creation_handler(sender, **kwargs):
 
     try:
         import activity
-        activity.send(project.created_by, 'create', project)
+        activity.send(project.created_by, 'post', project)
     except ImportError:
         return
 

@@ -4,7 +4,10 @@
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block links %}
+{% comment %}
+Comment out until we're finished refactoring activity
 <link rel="alternate" type="atom/xml" href="{% locale_url activity_feed_object object_id=project.id type_id=type.id %}" />
+{% endcomment %}
 {% endblock %}
 
 {% block breadcrumbs %}
