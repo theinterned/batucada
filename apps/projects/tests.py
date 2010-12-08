@@ -51,13 +51,10 @@ class ProjectTests(TestCase):
         project.save()
         self.assertEqual(1, Activity.objects.count())
         activity = Activity.objects.get(id=1)
-        self.assertEqual(self.user, activity.actor)
-        self.assertEqual(project, activity.obj)
+        self.assertEqual(self.user, activity.actor.user)
+        self.assertEqual(project, activity.object)
         self.assertEqual(
-            'http://drumbeat.org/activity/schema/1.0/project',
-            activity.object_type)
-        self.assertEqual(
-            'http://drumbeat.org/activity/schema/1.0/create',
+            'http://activitystrea.ms/schema/1.0/post',
             activity.verb)
 
     def test_uniqueness_constraint(self):
