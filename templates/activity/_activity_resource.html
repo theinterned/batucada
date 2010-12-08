@@ -21,7 +21,7 @@
 
     <div class="post-body">
       {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' %}
-	{{ activity.object }}
+	{{ activity.object|urlize }}
       {% else %}
 	{{ activity.verb|friendly }} <a href="{{ activity.obj.get_absolute_url }}">{{ activity.object }}</a>
       {% endif %}
