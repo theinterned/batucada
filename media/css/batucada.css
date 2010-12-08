@@ -39,7 +39,7 @@ img.member-picture {
 }
 
 div.button {
-  display: block;
+  display: inline-block;
   border: 1px solid #c0c0c0;
 }
 
@@ -323,8 +323,7 @@ header {}
       margin-bottom: 50px;
     }
       #project-follow {
-        margin: 10px 0;
-        width: 100px;
+        margin: 10px 0;        
         text-align: center;
       }
       
@@ -412,10 +411,10 @@ header {}
           margin-top: 5px;
           height: 24px;
         }
-          #project-lead .member-actions .button {
+          /*#project-lead .member-actions .button {
             float: left;
             margin-right: 6px;
-          }
+          }*/
         #project-lead .member-bio {
           margin-top: 12px;
         }
@@ -427,7 +426,7 @@ header {}
             -webkit-text-shadow: #fff 1px 1px 0px;
           }
 
-     
+  #project_gallery{}
        
   
   #main {
