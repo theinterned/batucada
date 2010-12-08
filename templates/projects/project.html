@@ -121,8 +121,8 @@ Comment out until we're finished refactoring activity
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
 	{% csrf_token %}
-	<input type="text" value="{{ _('Post a message to this project') }}">
-	<textarea name="status"></textarea>
+	<input type="text" value="{{ _('Post a message to this project') }}" title="{{_('Post a message to this project')}}">
+	<textarea name="status" title="{{_('Post a message to this project')}}"></textarea>
 	
 	<div class="status-and-actions">
 	  <div class="post-char-count">750</div>
@@ -136,6 +136,7 @@ Comment out until we're finished refactoring activity
 	  </div>
 
 	</div> <!-- /.status-and-actions -->
+	</form>
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
 
