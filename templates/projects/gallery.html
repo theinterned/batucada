@@ -16,10 +16,13 @@
 {% endblock %}
 {% block body %}
 
-<h1>{{ _('Browse Projects') }}</h1>
-<ul class="project-list">
-{% for project in projects %}
-  <li>{% include "projects/_project_card.html" %}</li>
-{% endfor %}
-</ul>
-{% endblock %}
+<h1>{{ _('Browse <b>Projects</b>') }}</h1>
+<section>
+  <h1><span>{{_('Featured')}}</span></h1>
+  <ul class="project-list">
+  {% for project in projects %}
+    <li>{% include "projects/_project_card.html" %}</li>
+  {% endfor %}
+  </ul>
+  {% endblock %}
+</section>
