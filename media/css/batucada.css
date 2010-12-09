@@ -482,7 +482,16 @@ header {}
 		background: #fff;
 	}
 	#project_gallery .project-list li .project.card img{
-		margin-bottom: 0.5em;
+		margin-bottom: 0.5em;		
+		box-shadow: white 1px 1px 1px;
+		-moz-box-shadow: white 1px 1px 1px;
+		-webkit-box-shadow: white 1px 1px 1px;
+		border: 1px solid #999;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-o-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		behavior: url("/media/css/PIE.htc");
 	}
 	#project_gallery .project-list li .project.card h3{
 		margin: 0 0 0.5em;
