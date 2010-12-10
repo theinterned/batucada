@@ -1,16 +1,28 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% block title %}{{ _('Projects') }}{% endblock %}
-{% block body %}
-<h3>{{ _('Projects') }}</h3>
-<ul>
-{% for project in projects %}
-  <li><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></li>
-{% endfor %}
-</ul>
-{% if user.is_authenticated %}
-<p>
-  <a href="{% locale_url projects_create %}">Create a project</a>
-</p>
-{% endif %}
+{% block bodyid %}project_gallery{% endblock %}
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+    </nav>
+    {% if user.is_authenticated %}
+    <div id="project-actions">
+      <div id="create-project" class="button"><a class="submit-button" href="{% locale_url projects_create %}">Create a project</a></div>
+    </div>
+    {% endif %}
+  </div> <!-- /.container -->
 {% endblock %}
+{% block body %}
+
+<h1>{{ _('Browse <b>Projects</b>') }}</h1>
+<section>
+  <h1><span>{{_('Featured')}}</span></h1>
+  <ul class="project-list">
+  {% for project in projects %}
+    <li>{% include "projects/_project_card.html" %}</li>
+  {% endfor %}
+  </ul>
+  {% endblock %}
+</section>
