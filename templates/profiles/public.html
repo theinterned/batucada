@@ -12,84 +12,96 @@ Temporarily comment out atom feed link while refactoring activity application.
 {% endblock %}
 
 {% block bodyid %}user_profile{% endblock %}
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url users_user_list %}">{{ _('Users') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <span>All Users</span>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url profiles_show username=profile_user.username %}">{{ profile_user.username }}</a>
+    </nav>
+
+    {% if user.id == profile.user.id %}
+    <div id="project-actions">      
+    	<div class="button"><a href="{% locale_url profiles_edit %}">{{ _('Edit Profile') }}</a></div>
+    </div>
+    {% endif %}
+
+  </div> <!-- /.container -->
+{% endblock %}
 
 {% block body %}
+<div id="sidebar">
 <fieldset class="vcard">
-  <legend>{{ _('Profile') }}</legend>
-  {% if profile.image %}
-  <p>
-    <img src="{{ MEDIA_URL }}/{{ profile.image }}" />
-  </p>
-  {% else %}
-  <p>
-    <img src="{{ MEDIA_URL }}images/member-missing.png" />
-  </p>
+  <img class="member-picture" src="{{ MEDIA_URL }}{{ profile.image_or_default }}" height="54" width="54">
+  <div class="member-details">
+    <h1 class="member-name">
+      {% if profile.get_full_name %}        
+      <span class="fn">{{ profile.get_full_name }}</span>
+      {% else %}
+      <span class="fn nickname">{{ profile_user.username }}</span>
+      {% endif %}
+    </h1>
+    <div class="member-actions">
+      {% if user == profile_user %}
+      <div class="button"><a href="{% locale_url profiles_edit %}">{{ _('Edit Profile') }}</a></div>
+      {% else %}
+      <div class="button">
+        {% if profile_user in following %}
+        <form action="{% locale_url relationships_unfollow %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ profile_user.id }}">
+          <input type="hidden" name="object_type_id" value="{{ type.id }}">
+          <a class="submit-button" id="unfollow-user" href="#">Unfollow User</a>
+        </form>
+        {% else %}
+        <form action="{% locale_url relationships_follow %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ profile_user.id }}">
+          <input type="hidden" name="object_type_id" value="{{ type.id }}">
+          <a class="submit-button" id="follow-user" href="#">Follow User</a>
+        </form>
+        {% endif %}
+                
+      </div>
+      <div class="button">
+        <a href="{% locale_url messages_compose_to recipient=profile.user.username %}">{{ _('Private Message')}}</a>
+      </div>
+      {% endif %}
+    </div>
+  </div> 
+  
+  <div class="member-bio">
+	  {{ profile.bio }}
+	</div>
+	
+	{% if profile.location %}
+  <dl class="member-location">
+  <dt>{{ _('Location:') }}</dt> 
+  <dd class="adr">{{ profile.location }}</dd>
+  </dl>
   {% endif %}
-  <p>
-    {% if profile.get_full_name %}
-    <strong>{{ _('Name:') }}</strong> 
-    <span class="fn">{{ profile.get_full_name }}</span><br />
-    {% else %}
-    <strong>{{ _('Username:') }}</strong> 
-    <span class="fn nickname">{{ profile_user.username }}</span><br />
-    {% endif %}
-    {% if profile.location %}
-    <strong>{{ _('Location:') }}</strong> 
-    <span class="adr">{{ profile.location }}</span><br />
-    {% endif %}
-    {% if profile.bio %}
-    <strong>{{ _('About:') }}</strong> {{ profile.bio }}
-    {% endif %}
-  </p>
   
   {% if profile.skill_set.count %}
-  <h3>Skills</h3>
-  <ul>
+  <ul clas="skills">
     {% for skill in profile.skill_set.all %}
     <li>{{ skill.name }}</li>
     {% endfor %}
   </ul>
   {% endif %}
   {% if profile.interest_set.count %}
-  <h3>Interests</h3>
-  <ul>
+  <ul class="interests">
     {% for interest in profile.interest_set.all %}
     <li>{{ interest.name }}</li>
     {% endfor %}
   </ul>
   {% endif %}
 
-  {% if user.id == profile.user.id %}
-  <p>
-    <a href="{% locale_url profiles_edit %}">{{ _('Edit Profile') }}</a>
-  </p>
-  {% endif %}
+  
 </fieldset>
+<div id="sidebar">
 
-<p>
-  <a href="{% locale_url messages_compose_to recipient=profile.user.username %}">
-    {% blocktrans with profile.first_name as first_name %}
-    Send {{ first_name }} a Message
-    {% endblocktrans %}
-  </a>
-</p>
 
-{% if user != profile_user %}
-{% if profile_user in following %}
-<form action="{% locale_url relationships_unfollow %}" method="post">
-  {% csrf_token %}
-  <input type="hidden" name="object_id" value="{{ profile_user.id }}">
-  <input type="hidden" name="object_type_id" value="{{ type.id }}">
-  <a class="submit-button" id="unfollow-user" href="#">Unfollow</a>
-</form>
-{% else %}
-<form action="{% locale_url relationships_follow %}" method="post">
-  {% csrf_token %}
-  <input type="hidden" name="object_id" value="{{ profile_user.id }}">
-  <input type="hidden" name="object_type_id" value="{{ type.id }}">
-  <a class="submit-button" id="follow-user" href="#">Follow</a>
-</form>
-{% endif %}
-{% endif %}
 
 {% endblock %}
