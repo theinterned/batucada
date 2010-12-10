@@ -392,13 +392,15 @@ header {}
         border-bottom: 1px solid #cfd1d2;
         padding-bottom: 15px;
       }
+        #user_profile .member-picture,
         #project-lead .member-picture {
           float: left;
           
         }
+        #user_profile .member-details,
         #project-lead .member-details {
           padding-left: 67px;
-          min-height: 120px;
+          min-height: 60px;
         }
         
         #project-lead .member-name a {
