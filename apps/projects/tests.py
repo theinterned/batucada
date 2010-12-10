@@ -66,6 +66,16 @@ class ProjectTests(TestCase):
             created_by=self.user,
         )
         project.save()
-        Link(title='My Blog', url='http://foo.com/', project=project).save()
-        link2 = Link(title='Blah', url='http://foo.com/', project=project)
+        Link(
+            title='My Blog',
+            url='http://foo.com/',
+            project=project,
+            feed_url='http://foo.com/feed',
+        ).save()
+        link2 = Link(
+            title='Blah',
+            url='http://foo.com/',
+            project=project,
+            feed_url='http://foo.com/feed',
+        )
         self.assertRaises(IntegrityError, link2.save)
