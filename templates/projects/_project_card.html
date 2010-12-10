@@ -1,0 +1,33 @@
+{% load l10n_tags %}
+<div class="project card">
+  <figure>
+    <!-- TODO: add support for project images. -->
+    <!-- TODO: add a default image for projects -->
+    {% if project.image %}
+    <img src="" width="195" height="120" alt="project image"/>
+    {% else %}
+    <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
+    {% endif %}
+  </figure>
+  <h3><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></h3>
+  <!-- 
+   ! TODO: set a character maximum for project.description that works
+   ! with this layout. See also /media/css/batucada.css line ~485
+   -->  
+  <div class="description">{{project.description}}</div>
+  <div class="meta">
+    <dl class="followers">
+      <dd>{{project.followers_count}}</dd>
+      <dt>Followers</dt>
+    </dl>
+    <!-- TODO: support project updates count -->
+    <dl class="updates">
+      <dd>XXX</dd>
+      <dt>Updates</dt>
+    </dl>
+    <dl class="creation_date">
+      <dd>{{project.created_on|date:"M j, y"}}</dd>
+      <dt>Created</dt>
+    </dl>
+  </div>
+</div>
