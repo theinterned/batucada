@@ -83,7 +83,8 @@ class Link(models.Model):
             url=self.url, project=self.project).count()
         if existing > 0:
             raise IntegrityError('Duplicate Entry')
-        #self.feed_url = self._get_syndication_url()
+        if not self.feed_url:
+            self.feed_url = self._get_syndication_url()
         super(Link, self).save(*args, **kwargs)
 
     def _get_syndication_url(self):
