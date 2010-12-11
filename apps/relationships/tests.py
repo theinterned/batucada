@@ -88,18 +88,6 @@ class RelationshipsTests(TestCase):
         Relationship(source=self.user_one, target=self.user_two).save()
         self.assertTrue(self.user_one.is_following(self.user_two))
 
-    def test_user_followers_count(self):
-        """Test the followers_count method of the User model."""
-        self.assertEqual(0, self.user_one.followers_count())
-        Relationship(source=self.user_two, target=self.user_one).save()
-        self.assertEqual(1, self.user_one.followers_count())
-
-    def test_user_following_count(self):
-        """Test the following_count method of the User model."""
-        self.assertEqual(0, self.user_one.following_count())
-        Relationship(source=self.user_one, target=self.user_two).save()
-        self.assertEqual(1, self.user_one.following_count())
-
     def test_activity_creation(self):
         """Test that an activity is created when a relationship is created."""
         self.assertEqual(0, Activity.objects.count())
