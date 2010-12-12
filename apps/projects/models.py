@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 
 from BeautifulSoup import BeautifulSoup
 
-from relationships.models import followers, followers_count
+from relationships.models import followers
 
 import caching.base
 
@@ -55,7 +55,6 @@ class Project(caching.base.CachingMixin, models.Model):
 
 # Monkey patch the Project model with methods from the relationships app.
 Project.followers = followers
-Project.followers_count = followers_count
 
 
 class Link(caching.base.CachingMixin, models.Model):
@@ -87,7 +86,8 @@ class Link(caching.base.CachingMixin, models.Model):
             url=self.url, project=self.project).count()
         if existing > 0:
             raise IntegrityError('Duplicate Entry')
-        self.feed_url = self._get_syndication_url()
+        if not self.feed_url:
+            self.feed_url = self._get_syndication_url()
         super(Link, self).save(*args, **kwargs)
 
     def _get_syndication_url(self):

@@ -11,7 +11,38 @@ Temporarily comment out atom feed link while refactoring activity application.
 {% block body %}
 
 <div id="sidebar">
+  <img width="54" height="54" src="{{ MEDIA_URL }}{{ user.get_profile.image_or_default }}">
+  {{ user.username }}
+  <a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a>
+  <hr />
+  <br />
+  {{ _('Followers:') }} {{ users_followers|length }}
+  <br />
+  {% if users_followers %}
+  <ul>
+  {% for user in users_followers %}
+    <li>{{ user.username }}</li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+  <br />
+  {{ _('Following:') }} {{ users_following|length }}
+  {% if users_following %}
+  <ul>
+    {% for user in users_following %}
+      <li>{{ user.username }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
+  {% if projects_following %}
+  <h3>{{ _('Projects') }} {{ projects_following|length }}</h3>
+  <ul>
+    {% for project in projects_following %}
+      <li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 </div> <!-- /#sidebar -->
 
 <div id="main">
