@@ -76,14 +76,6 @@ def followers(obj):
     return [rel.source for rel in relationships]
 
 
-def followers_count(obj):
-    """
-    Return the number of followers belonging to ```obj```.
-    Note that ```obj``` can be any ```Model``` instance.
-    """
-    return len(obj.followers())
-
-
 def following(obj, model=None):
     """
     Return a list of objects that ```obj``` is following. All objects returned
@@ -103,19 +95,12 @@ def following(obj, model=None):
     return [rel.target for rel in relationships]
 
 
-def following_count(obj, model=None):
-    """Return the number of objects that ```obj``` is following."""
-    return len(obj.following(model))
-
-
 def is_following(obj, model):
     """Determine whether ```obj``` is following ```model```."""
     return model in obj.following()
 
 User.followers = followers
-User.followers_count = followers_count
 User.following = following
-User.following_count = following_count
 User.is_following = is_following
 
 
