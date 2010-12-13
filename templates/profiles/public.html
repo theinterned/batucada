@@ -33,7 +33,7 @@ Temporarily comment out atom feed link while refactoring activity application.
 
 {% block body %}
 <div id="sidebar">
-<fieldset class="vcard">
+<div class="vcard panel">
   <img class="member-picture" src="{{ MEDIA_URL }}{{ profile.image_or_default }}" height="54" width="54">
   <div class="member-details">
     <h1 class="member-name">
@@ -97,42 +97,52 @@ Temporarily comment out atom feed link while refactoring activity application.
     {% endfor %}
   </ul>
   {% endif %}
-
-  
-</fieldset>
+</div> <!-- /.vcard -->
+<div id="member_relationships" class="panel">
+  <h2>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h2>
+  <ul>
+  {% for user_follower in users_followers %}
+    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.get_full_name_or_username }}"></a></li>
+  {% endfor %}
+  </ul>
+  <h2>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h2>
+  <ul>
+  {% for user_following in users_following %}
+    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.get_full_name_or_username }}"></a></li>
+  {% endfor %}
+  </ul>
+  <h2>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h2>
+  <ul>
+  <!-- TODO: add support for porject owner badge -->
+  {% for project in projects_following %}
+    <li>
+      <a href="" alt="{{project.name}}">
+        {% if project.image %}
+        <img src="" width="26" height="26" alt="project image"/>
+        {% else %}
+        <img src="/media/images/project-missing.png" width="26" height="26" alt="project image"/>
+        {% endif %}
+        {{ project.name }}
+      </a>
+    </li>
+  {% endfor %}
+  </ul>
+</div> <!-- /#member_relationships-->
+<!-- TODO: add support for user links -->
+<div id="member_links" class="panel">
+  <ul>
+    <li><a href="#" title="Github">Github</a></li>
+    <li><a href="#" title="Twitter">Twitter</a></li>
+  </ul>
+</div> <!-- /#member_links -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
-  <div id="create-post">
-    <div class="post-container">
-      <!-- TODO: need statuses_create to properly write to the user -->
-      <!-- also the redirect should return to this user -->
-      <form action="{% locale_url statuses_create_user user_id=profile_user.id %}" method="post" id="post-user-status-update">
-        {% csrf_token %}
-        <input type="text" value="{{ _('Post a message to') }} {% if profile.get_full_name %}{{ profile.get_full_name }}{% else %}{{ profile_user.username }}{% endif %}" title="{{ _('Post a message to') }} {% if profile.get_full_name %}{{ profile.get_full_name }}{% else %}{{ profile_user.username }}{% endif %}">
-        <textarea name="status" title="{{ _('Post a message to') }} {% if profile.get_full_name %}{{ profile.get_full_name }}{% else %}{{ profile_user.username }}{% endif %}"></textarea>
-        <div class="status-and-actions">
-          <div class="post-char-count">750</div>
-  
-          <ul class="post-tags">
-            <li>{{ project.name }}</li>
-          </ul>
-
-          <div class="button update">
-            <a id="post-user-update" href="#">Post Update</a>
-          </div>
-
-        </div> <!-- /.status-and-actions -->
-        </form>
-      </div> <!-- /.post-container -->
-    </div> <!-- /.#create-post -->
-
     <ul id="posts">
       {% for activity in activities %}
       {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
-
 </div> <!-- /#main -->
 
 
