@@ -5,6 +5,7 @@ from django.template import RequestContext
 
 from statuses.models import Status
 from projects.models import Project
+from projects.models import User
 
 
 def show(request, status_id):
@@ -33,3 +34,15 @@ def create_project_status(request, project_id):
     status.save()
     return HttpResponseRedirect(
         reverse('projects_show', kwargs=dict(slug=project.slug)))
+
+
+def create_user_status(request, user_id):
+    if 'status' not in request.POST:
+        return HttpResponseRedirect('/')
+    user = get_object_or_404(Project, id=user_id)
+    status = Status(author=request.user,
+                    status=request.POST['status'],
+                    user=user)
+    status.save()
+    return HttpResponseRedirect(
+        reverse('user_show', kwargs=dict(username=user.username)))

@@ -8,4 +8,7 @@ urlpatterns = patterns('',
   url(r'^create/project/(?P<project_id>\d+)/$',
       'statuses.views.create_project_status',
       name='statuses_create_project'),
+  url(r'^create/user/(?P<user_id>\d+)/$',
+        'statuses.views.create_user_status',
+        name='statuses_create_user'),
 )

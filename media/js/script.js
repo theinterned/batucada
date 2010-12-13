@@ -59,6 +59,10 @@ var batucada = {
     },
     user_profile: {
 	onload: function() {
+		createPostTextArea();
+	    $('#post-user-update').bind('click', function() {
+		$('#post-user-status-update').submit();
+	    });
 	}
     }
 };

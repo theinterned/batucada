@@ -100,7 +100,40 @@ Temporarily comment out atom feed link while refactoring activity application.
 
   
 </fieldset>
-<div id="sidebar">
+</div> <!-- /#sidebar -->
+
+<div id="main">
+  <div id="create-post">
+    <div class="post-container">
+      <!-- TODO: need statuses_create to properly write to the user -->
+      <!-- also the redirect should return to this user -->
+      <form action="{% locale_url statuses_create_user user_id=profile_user.id %}" method="post" id="post-user-status-update">
+        {% csrf_token %}
+        <input type="text" value="{{ _('Post a message to') }} {% if profile.get_full_name %}{{ profile.get_full_name }}{% else %}{{ profile_user.username }}{% endif %}" title="{{ _('Post a message to') }} {% if profile.get_full_name %}{{ profile.get_full_name }}{% else %}{{ profile_user.username }}{% endif %}">
+        <textarea name="status" title="{{ _('Post a message to') }} {% if profile.get_full_name %}{{ profile.get_full_name }}{% else %}{{ profile_user.username }}{% endif %}"></textarea>
+        <div class="status-and-actions">
+          <div class="post-char-count">750</div>
+  
+          <ul class="post-tags">
+            <li>{{ project.name }}</li>
+          </ul>
+
+          <div class="button update">
+            <a id="post-user-update" href="#">Post Update</a>
+          </div>
+
+        </div> <!-- /.status-and-actions -->
+        </form>
+      </div> <!-- /.post-container -->
+    </div> <!-- /.#create-post -->
+
+    <ul id="posts">
+      {% for activity in activities %}
+      {% include "activity/_activity_resource.html" %}
+      {% endfor %}
+    </ul>
+
+</div> <!-- /#main -->
 
 
 
