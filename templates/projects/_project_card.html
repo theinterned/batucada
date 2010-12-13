@@ -17,12 +17,12 @@
   <div class="description">{{project.description}}</div>
   <div class="meta">
     <dl class="followers">
-      <dd>{{project.followers_count}}</dd>
+      <dd>{{project.followers|length}}</dd>
       <dt>Followers</dt>
     </dl>
     <!-- TODO: support project updates count -->
     <dl class="updates">
-      <dd>{{ update_count }}</dd>
+      <dd>{{ project.status_set.all|length }}</dd>
       <dt>Updates</dt>
     </dl>
     <dl class="creation_date">
