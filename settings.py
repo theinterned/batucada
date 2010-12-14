@@ -157,10 +157,6 @@ AUTH_PROFILE_MODULE = 'profiles.Profile'
 
 MAX_IMAGE_SIZE = 1024 * 700
 
-ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda o: "/%s/" % o.username,
-}
-
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
