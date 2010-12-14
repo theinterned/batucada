@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import Q
@@ -21,7 +22,7 @@ def splash(request):
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
     projects_following = request.user.following(model=Project)
-    users_following = request.user.following(model=request.user.__class__)
+    users_following = request.user.following(model=User)
     users_followers = request.user.followers()
     project_ids = [p.pk for p in projects_following]
     user_ids = [u.pk for u in users_following]
