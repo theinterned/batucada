@@ -21,25 +21,25 @@ Temporarily comment out atom feed link while refactoring activity application.
       <span class="fn nickname">{{ user.username }}</span>
       {% endif %}
     </h2>
-    <a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a>
+    <p><a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a></p>
   </div> 
 </div> <!-- /.vcard -->  
   
 <div id="member_relationships" class="panel">
   <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
-  <ul>
+  <ul class="followers">
   {% for user_follower in users_followers %}
     <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.get_full_name_or_username }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
-  <ul>
+  <ul class="following">
   {% for user_following in users_following %}
     <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.get_full_name_or_username }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h3>
-  <ul>
+  <ul class="projects following">
   <!-- TODO: add support for project owner; hide owned projects form this list as they appear below -->
   {% for project in projects_following %}
     <li>
@@ -47,7 +47,7 @@ Temporarily comment out atom feed link while refactoring activity application.
         {% if project.image %}
         <img src="" width="26" height="26" alt="project image"/>
         {% else %}
-        <img src="/media/images/project-missing.png" width="26" height="26" alt="project image"/>
+        <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
         {% endif %}
         {{ project.name }}
       </a>

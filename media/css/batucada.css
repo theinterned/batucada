@@ -22,13 +22,19 @@ body {
 .container:after{
 	clear: both;
 }
-
-h1 {
-  font-size: 24px;
+h1, h2, h3, h4, h5, h6{
   text-shadow:  1px 2px #fff;
 }
+h1 {
+  font-size: 24px;
+}
+p {
+	line-height: 1.4;
+	margin-bottom: 1.4em;
+}
 
-img.member-picture {
+img.member-picture,
+img.project.picture {
   border: 1px solid #999;
   box-shadow: #fff 1px 1px 1px;
   -moz-box-shadow: #fff 1px 1px 1px;
@@ -124,6 +130,7 @@ header {}
           -moz-border-radius: 6px;
           -o-border-radius: 6px;
           -webkit-border-radius: 6px;
+          text-shadow: 1px 2px 2px rgba(0,0,0,0.2);
         }
         #main-nav a:hover {
           color: #dbfdff;
@@ -317,8 +324,29 @@ header {}
   #sidebar {
     float: left;
     width: 300px;
-
   }
+  	#sidebar h2{
+		font-size: 18px;
+		line-height: 1;
+		font-weight: bold;
+	}
+	#sidebar h3{
+		font-size: 14px;
+		line-height: 1.5;
+		margin-bottom: 0.5em;
+		font-weight: normal;
+	}
+	#sidebar .panel{
+		padding-bottom: 18px;
+		margin-top:18px ;
+		border-bottom: 1px solid #ccc;
+	    box-shadow:  0 1px 0 rgba(255,255,255,0.8);
+	    -moz-box-shadow:  0 1px 0 rgba(255,255,255,0.8);
+	    -webkit-box-shadow:  0 1px 0 rgba(255,255,255,0.8);	    
+	}
+	#sidebar .panel:first-child{
+		margin-top: 10px;
+	}
     #project {
       border-bottom: 1px solid #f7f9fa;
       margin-bottom: 50px;
@@ -392,16 +420,48 @@ header {}
         border-bottom: 1px solid #cfd1d2;
         padding-bottom: 15px;
       }
-        #user_profile .member-picture,
-        #project-lead .member-picture {
+        #user_profile .vcard .member-picture,
+        #project-lead .member-picture,
+        #dashboard #sidebar .vcard .member-picture {
           float: left;
           
         }
         #user_profile .member-details,
-        #project-lead .member-details {
+        #project-lead .member-details,
+        #dashboard #sidebar .vcard .member-details {
           padding-left: 67px;
           min-height: 60px;
         }
+        #dashboard #sidebar .vcard .member-details {
+			padding-left: 53px;
+			min-height: 40px;
+		}
+        #dashboard #sidebar .vcard .member-details p{
+			margin-bottom: 0;
+		}
+		#member_relationships .count {
+			font-weight: bold;
+			color: #2084ca;
+		}
+		#member_relationships h3{
+			clear: both;
+		}
+		#member_relationships ul{
+			margin-bottom: 18px;
+			margin-left: 0;
+			list-style: none;			
+		}
+		#member_relationships ul li {
+			display: inline-block;
+		}
+		#member_relationships .projects.following li{
+			display: block;
+			font-size: 18px;
+			margin-bottom: 3px;
+		}
+		#member_relationships .projects.following li img{
+			vertical-align: middle;
+		}        
         
         #project-lead .member-name a {
           font-size: 16px;
