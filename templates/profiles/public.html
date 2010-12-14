@@ -99,21 +99,21 @@ Temporarily comment out atom feed link while refactoring activity application.
   {% endif %}
 </div> <!-- /.vcard -->
 <div id="member_relationships" class="panel">
-  <h2>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h2>
+  <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
   <ul>
   {% for user_follower in users_followers %}
     <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.get_full_name_or_username }}"></a></li>
   {% endfor %}
   </ul>
-  <h2>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h2>
+  <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
   <ul>
   {% for user_following in users_following %}
     <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.get_full_name_or_username }}"></a></li>
   {% endfor %}
   </ul>
-  <h2>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h2>
+  <h3>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h3>
   <ul>
-  <!-- TODO: add support for porject owner badge -->
+  <!-- TODO: add support for project owner badge -->
   {% for project in projects_following %}
     <li>
       <a href="" alt="{{project.name}}">
