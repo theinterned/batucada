@@ -27,8 +27,8 @@ def dashboard(request):
     project_ids = [p.pk for p in projects_following]
     user_ids = [u.pk for u in users_following]
     activities = Activity.objects.filter(
-        Q(actor_id__exact=request.user.id) |
-        Q(actor_id__in=user_ids) | Q(target_id__in=project_ids) |
+        Q(actor__user__exact=request.user) |
+        Q(actor__user__in=user_ids) | Q(target_id__in=project_ids) |
         Q(object_id__in=project_ids),
     ).order_by('-created_on')
     user_projects = Project.objects.filter(created_by=request.user)
