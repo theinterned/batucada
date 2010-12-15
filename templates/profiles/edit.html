@@ -1,8 +1,7 @@
 {% extends "profiles/main.html" %}
 
 {% load l10n_tags %}
-
-{% block pageclasses %}profile edit info{% endblock %} 
+{% block bodyclasses %}profile edit info{% endblock %}
 {% block form %}
 <form action="{% locale_url profiles_edit %}" method="post">
   {% csrf_token %}
