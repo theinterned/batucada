@@ -106,7 +106,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_nose',
     'django_openid_auth',
-    'drumbeat',
     'south',
     'jogging',
     'djcelery',
