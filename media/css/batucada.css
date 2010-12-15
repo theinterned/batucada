@@ -707,10 +707,10 @@ header {}
 	}
 	#main .post-tags li a:hover,
 	.tags li a:hover{
-		background-color: #5bace5;
-		border-color: #649fc9;
-		color: #fff;		
-		text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
+		background-color: #DFEFFB;
+		border-color: #b7d1e5;
+		color: #2084CA;		
+		/*text-shadow: -1px -1px 0 rgba(0,0,0,0.2);*/
 		text-decoration: none;
 		cursor: pointer;
 	}	
