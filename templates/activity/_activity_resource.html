@@ -10,16 +10,30 @@
     <a href="#" class="delete activity-delete">Delete</a>
   </form>
 
-  <a href="{{ activity.actor.get_absolute_url }}">
-    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.get_profile.image_or_default }}">
+  {% if activity.actor.is_remote %}
+
+  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png">
+    
+  <div class="post-contents">
+    <div class="post-details">
+      {{ activity.actor.get_full_name }}
+      <a href="{{ activity.get_absolute_url }}">{{ activity.created_on|timesince }} {{ _('ago') }}</a>
+    </div>
+
+  {% else %}
+
+  <a href="{{ activity.actor.user.get_absolute_url }}">
+    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.user.get_profile.image_or_default }}">
   </a>
 
   <div class="post-contents">
 
     <div class="post-details">
-      <a class="member-name" href="{{ activity.actor.get_profile.get_absolute_url }}">{{ activity.actor.get_full_name }}</a>
+      <a class="member-name" href="{{ activity.actor.user.get_profile.get_absolute_url }}">{{ activity.actor.get_full_name }}</a>
       <a href="{{ activity.get_absolute_url }}">{{ activity.created_on|timesince }} {{ _(' ago') }}</a>
     </div>
+
+  {% endif %}
 
     <div class="post-body">
       {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' %}
