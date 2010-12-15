@@ -6,9 +6,12 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db.models import Q
 
 from profiles.forms import ImageForm, ProfileForm, InterestForm, SkillForm
 from profiles.models import Skill, Interest
+from activity.models import Activity
+from projects.models import Project
 
 
 def delete_profile_element(request, param_name, cls, viewname):
@@ -55,12 +58,24 @@ def show(request, username):
         user = User.objects.get(username__exact=username)
     except User.DoesNotExist:
         raise Http404
-    following = []
+    projects_following = user.following(model=Project)
+    users_following = user.following(model=request.user.__class__)
+    users_followers = user.followers()
+    project_ids = [p.pk for p in projects_following]
+    user_ids = [u.pk for u in users_following]
+    activities = Activity.objects.filter(
+        Q(actor_id__exact=user.id) |
+        Q(actor_id__in=user_ids) | Q(target_id__in=project_ids) |
+        Q(object_id__in=project_ids),
+    ).order_by('-created_on')
     if request.user.is_authenticated():
         following = request.user.following()
     return render_to_response('profiles/public.html', {
         'profile_user': user,
-        'following': following,
+        'projects_following': projects_following,
+        'users_following': users_following,
+        'users_followers': users_followers,
+        'activities': activities,
         'type': ContentType.objects.get_for_model(user),
         'profile': user.get_profile(),
     }, context_instance=RequestContext(request))

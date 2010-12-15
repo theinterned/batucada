@@ -18,16 +18,15 @@
   <div class="meta">
     <dl class="followers">
       <dd>{{project.followers|length}}</dd>
-      <dt>Followers</dt>
+      <dt>{{ _('Followers') }}</dt>
     </dl>
-    <!-- TODO: support project updates count -->
     <dl class="updates">
       <dd>{{ project.status_set.all|length }}</dd>
-      <dt>Updates</dt>
+      <dt>{{ _('Updates') }}</dt>
     </dl>
     <dl class="creation_date">
       <dd>{{project.created_on|date:"M j, y"}}</dd>
-      <dt>Created</dt>
+      <dt>{{ _('Created') }}</dt>
     </dl>
   </div>
 </div>
