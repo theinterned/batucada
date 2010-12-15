@@ -79,21 +79,21 @@ Temporarily comment out atom feed link while refactoring activity application.
 	{% if profile.location %}
   <dl class="member-location">
   <dt>{{ _('Location:') }}</dt> 
-  <dd class="adr">{{ profile.location }}</dd>
+  <dd class="adr"><a href="#" title="{{ _('See more in ') }}{{ profile.location }}">{{ profile.location }}</a></dd>
   </dl>
   {% endif %}
   
   {% if profile.skill_set.count %}
-  <ul clas="skills">
+  <ul class="tags skills">
     {% for skill in profile.skill_set.all %}
-    <li>{{ skill.name }}</li>
+    <li><a href="#" title="{{ _('See more about ') }}{{ skill.name }}">{{ skill.name }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
   {% if profile.interest_set.count %}
-  <ul class="interests">
+  <ul class="tags interests">
     {% for interest in profile.interest_set.all %}
-    <li>{{ interest.name }}</li>
+    <li><a href="#" title="{{ _('See more about ') }}{{ interest.name }}">{{ interest.name }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
