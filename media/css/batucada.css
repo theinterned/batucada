@@ -404,16 +404,17 @@ header {}
         border-top: 1px solid #cfd1d2;
         border-bottom: 1px solid #f7f9fa;
       }
-        #project-links ul {
-          padding: 15px 0;
-          border-top: 1px solid #f7f9fa;
-          border-bottom: 1px solid #cfd1d2;
+        #project-links ul,
+        #member_links ul {
+          list-style:none;
+          font-size: 14px;
+		  line-height: 1.5;
+		  margin-left: 0;
         }
-          #project-links a {
-            line-height: 24px;
-            padding-left: 20px;
-            background: url("/media/images/link-indicator.png") no-repeat left -1px;
-            margin: 5px 0;
+          #project-links li a,
+          #member_links li a{
+			background: url("/media/images/link-indicator.png") 0 0 no-repeat;
+			padding-left: 20px;
           }
       
       #project-lead {
@@ -461,8 +462,50 @@ header {}
 		}
 		#member_relationships .projects.following li img{
 			vertical-align: middle;
-		}        
-        
+		}
+		#member_projects .project.summary > h1 {
+			margin-top: -28px;
+			margin-bottom: 18px;
+			font-size: 16px;
+			line-height: 18px;
+			font-family: Georgia, 'Times New Roman', Times, serif;
+			font-style: italic;
+			text-align: center;
+		}
+		#member_projects .project.summary > h1 a{
+			background: #F3F4F6;
+			padding: 0px 6px;
+		}
+		.member-location{
+			margin: 1.3em 0;
+		} 
+		.member-location dt,
+        .member-location dd,
+		#member_projects .project.summary dt,
+		#member_projects .project.summary dd {
+			display: inline;
+			font-size: 14px;
+			line-height:1.5;
+		}
+		.member-location dd,
+		#member_projects .project.summary dd{
+			font-weight: bold;
+		}
+		#member_projects .project.summary dd .update{
+			font-size: 12px;
+			font-weight: normal;
+		}
+		#member_projects .project.summary .project.update {
+			margin-top: 18px;
+			font-size: 12px;
+			line-height: 1.5em;
+		}
+        #member_projects .project.summary .project.update  h1 {
+			font-size: 14px;
+			line-height: 1.5;
+			margin-bottom: 0.8em;
+			font-weight: normal;
+		}
         #project-lead .member-name a {
           font-size: 16px;
           text-shadow: #fff 1px 1px 0px;
@@ -626,24 +669,51 @@ header {}
     }
 
 
+    .tags li,
     #main .post-tags li, #main .post-char-count {
-      float: left;
-      background: #eee;
-      color: #919191;
-      border-radius: 6px;
-      -moz-border-radius: 6px;
-      -o-border-radius: 6px;
-      -webkit-border-radius: 6px;
-      text-shadow: #fff 1px 1px 0px;
-      -moz-text-shadow: #fff 1px 1px 0px;
-      -webkit-text-shadow: #fff 1px 1px 0px;
-      box-shadow: #fff 1px 1px 2px;
-      -webkit-box-shadow: #fff 1px 1px 2px;
-      -moz-box-shadow: #fff 1px 1px 2px;
-      border: 1px solid #c6c6c6;
-      margin-right: 10px;
-      behavior: url("/media/css/PIE.htc");
+		display: inline-block;
+		float: none;
+		margin: 0;
     }
+    #main .post-char-count {
+		float: left;
+		margin-right: 10px;
+	}
+    .tags li a,
+    #main .post-tags li a,
+    #main .post-tags li span,
+    #main .post-char-count {
+		display: block;
+		background: #eee;
+		color: #919191;
+		font-size: 11px;
+		font-weight: normal;	
+		line-height: 20px;
+		height: 20px;      
+		padding: 1px 6px;
+		margin-bottom: 5px;		
+		border-radius: 6px;
+		-moz-border-radius: 6px;
+		-o-border-radius: 6px;
+		-webkit-border-radius: 6px;
+		text-shadow: #fff 1px 1px 0px;
+		-moz-text-shadow: #fff 1px 1px 0px;
+		-webkit-text-shadow: #fff 1px 1px 0px;
+		box-shadow: #fff 1px 1px 2px;
+		-webkit-box-shadow: #fff 1px 1px 2px;
+		-moz-box-shadow: #fff 1px 1px 2px;
+		border: 1px solid #c6c6c6;		
+		behavior: url("/media/css/PIE.htc");
+	}
+	#main .post-tags li a:hover,
+	.tags li a:hover{
+		background-color: #5bace5;
+		border-color: #649fc9;
+		color: #fff;		
+		text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
+		text-decoration: none;
+		cursor: pointer;
+	}	
     
     #main .post-char-count {
       font-size: 20px;
@@ -659,21 +729,16 @@ header {}
     #main .post-char-count.danger {
       color: #d00;
     }
-  
     #main .post-tags {
       margin: 0 0 -5px;
       padding: 0;
       list-style: none;
       float: left;     
-    }    
-    #main .post-tags li {
-      line-height: 20px;
-      height: 20px;
-      font-size: 11px;
-      font-weight: normal;
-      padding: 1px 6px;
-      margin-bottom: 5px;
     }
+    .tags {
+		list-style: none;
+		margin: 0; padding: 0;
+	}
     
     #create-post {
     }
