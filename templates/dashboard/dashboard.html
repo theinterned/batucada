@@ -11,38 +11,69 @@ Temporarily comment out atom feed link while refactoring activity application.
 {% block body %}
 
 <div id="sidebar">
-  <img width="54" height="54" src="{{ MEDIA_URL }}{{ user.get_profile.image_or_default }}">
-  {{ user.username }}
-  <a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a>
-  <hr />
-  <br />
-  {{ _('Followers:') }} {{ users_followers|length }}
-  <br />
-  {% if users_followers %}
-  <ul>
-  {% for user in users_followers %}
-    <li>{{ user.username }}</li>
+<div class="vcard panel">
+  <img class="member-picture" src="{{ MEDIA_URL }}{{ user.get_profile.image_or_default }}" height="40" width="40" alt="{{ user.username}}{{ _('\'s profile picture') }}">
+  <div class="member-details">
+    <h2 class="member-name">
+      {% if profile.get_full_name %}        
+      <span class="fn">{{ user.get_full_name }}</span>
+      {% else %}
+      <span class="fn nickname">{{ user.username }}</span>
+      {% endif %}
+    </h2>
+    <p><a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a></p>
+  </div> 
+</div> <!-- /.vcard -->  
+  
+<div id="member_relationships" class="panel">
+  <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
+  <ul class="followers">
+  {% for user_follower in users_followers %}
+    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.get_full_name_or_username }}"></a></li>
   {% endfor %}
   </ul>
-  {% endif %}
-  <br />
-  {{ _('Following:') }} {{ users_following|length }}
-  {% if users_following %}
-  <ul>
-    {% for user in users_following %}
-      <li>{{ user.username }}</li>
-    {% endfor %}
+  <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
+  <ul class="following">
+  {% for user_following in users_following %}
+    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.get_full_name_or_username }}"></a></li>
+  {% endfor %}
   </ul>
-  {% endif %}
-
-  {% if projects_following %}
-  <h3>{{ _('Projects') }} {{ projects_following|length }}</h3>
-  <ul>
-    {% for project in projects_following %}
-      <li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li>
-    {% endfor %}
+  <h3>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h3>
+  <ul class="projects following">
+  <!-- TODO: add support for project owner; hide owned projects form this list as they appear below -->
+  {% for project in projects_following %}
+    <li>
+      <a href="" alt="{{project.name}}">
+        {% if project.image %}
+        <img src="" width="26" height="26" alt="project image"/>
+        {% else %}
+        <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
+        {% endif %}
+        {{ project.name }}
+      </a>
+    </li>
+  {% endfor %}
   </ul>
-  {% endif %}
+</div> <!-- /#member_relationships-->
+<!-- TODO: add support for owned project summary card -->
+<div id="member_projects" class="panel">
+  <article id="memeber_project_web-made-movies" class="project summary">
+    <h1><a href="/projects/webmademovies" title="WebMadeMovies">WebMadeMovies</a></h1>
+    <dl class="followers">
+      <dt>{{ _('Followers') }}</dt>
+      <dd><a href="#" title="{{ _('See all followers') }}">312</a> <span class="update week">(<a href="#" title="{{ _('See new folowers this week') }}">2 {{ _('this week') }}</a>)</span></dd>
+    </dl>
+    <dl class="updates">
+      <dt>{{ _('Updates') }}</dt>
+      <dd><a href="#" title="{{ _('See all updates') }}">1232</a> <span class="update week">(<a href="#" title="{{ _('See this weeks updates') }}">23 {{ _('this week') }}</a>)</span></dd>      
+    </dl>
+    <article class="update project">
+      <h1>Project Status Update</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+  </article>
+</div> <!-- /#member_projects -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
