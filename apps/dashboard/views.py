@@ -33,7 +33,6 @@ def dashboard(request):
     ).order_by('-created_on')
     user_projects = Project.objects.filter(created_by=request.user)
     return render_to_response('dashboard/dashboard.html', {
-        'user': request.user,
         'users_following': users_following,
         'users_followers': users_followers,
         'projects_following': projects_following,
