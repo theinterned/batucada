@@ -64,8 +64,8 @@ def show(request, username):
     project_ids = [p.pk for p in projects_following]
     user_ids = [u.pk for u in users_following]
     activities = Activity.objects.filter(
-        Q(actor_id__exact=user.id) |
-        Q(actor_id__in=user_ids) | Q(target_id__in=project_ids) |
+        Q(actor__user=user.id) |
+        Q(actor__user__in=user_ids) | Q(target_id__in=project_ids) |
         Q(object_id__in=project_ids),
     ).order_by('-created_on')
     if request.user.is_authenticated():
