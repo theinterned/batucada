@@ -1,9 +1,6 @@
-import os
-import hashlib
 import urllib
 
 from django.contrib import auth
-from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -24,26 +21,6 @@ ax_attributes = {
     'first_name': ('http://axschema.org/namePerson/first', True),
     'last_name': ('http://axschema.org/namePerson/last', True),
 }
-
-
-def get_hexdigest(algorithm, salt, raw_password):
-    """Generate SHA-256 hash."""
-    if algorithm == 'sha256':
-        return hashlib.sha256(salt + raw_password).hexdigest()
-    else:
-        return get_hexdigest_old(algorithm, salt, raw_password)
-
-get_hexdigest_old = auth_models.get_hexdigest
-auth_models.get_hexdigest = get_hexdigest
-
-
-def set_password(self, raw_password):
-    """Set SHA-256 password."""
-    algo = 'sha256'
-    salt = os.urandom(5).encode('hex') # Random, 10-digit (hex) salt.
-    hsh = get_hexdigest(algo, salt, raw_password)
-    self.password = '$'.join((algo, salt, hsh))
-auth_models.User.set_password = set_password
 
 
 def authenticate(username=None, password=None, force=False):
