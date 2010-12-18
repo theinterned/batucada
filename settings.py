@@ -148,11 +148,12 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 AUTHENTICATION_BACKENDS = (
-    'users.auth.CustomOpenIDBackend',
+    'users.backends.CustomUserBackend',
+    'users.backends.CustomOpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_PROFILE_MODULE = 'profiles.Profile'
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 MAX_IMAGE_SIZE = 1024 * 700
 
