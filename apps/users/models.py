@@ -5,9 +5,7 @@ import hashlib
 import os
 
 from django.db import models
-from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
@@ -57,6 +55,7 @@ class UserProfile(models.Model):
         self.user = User(id=self.pk)
         self.user.username = self.email
         self.user.password = self.password
+        self.user.email = self.email
         self.user.date_joined = self.created_on
         self.user.backend = 'django.contrib.auth.backends.ModelBackend'
         self.user.save()
