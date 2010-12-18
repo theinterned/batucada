@@ -1,6 +1,5 @@
 import logging
 
-from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
@@ -10,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
 from django_openid_auth.forms import OpenIDLoginForm
@@ -224,8 +223,17 @@ def reset_password(request, token, username):
 @anonymous_only
 def confirm_registration(request, token, username):
     """Confirm a users registration."""
-    from django.http import HttpResponse
-    return HttpResponse('TODO - Implement')
+    profile = get_object_or_404(UserProfile, username=username)
+    if profile.confirmation_code != token:
+        messages.error(
+            request,
+           _('Hmm, that doesn\'t look like the correct confirmation code'))
+        log.info('Account confirmation failed for %s' % (profile,))
+        return HttpResponseRedirect(reverse('users_login'))
+    profile.confirmation_code = ''
+    profile.save()
+    messages.success(request, 'Success! You have verified your account.')
+    return HttpResponseRedirect(reverse('users_login'))
 
 
 @anonymous_only
