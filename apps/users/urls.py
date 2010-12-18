@@ -41,10 +41,10 @@ urlpatterns = patterns('',
   # Registration urls
   url(r'^register/', 'users.views.register',
       name='users_register'),
-  url(r'^confirm/(?P<token>\w+)/(?P<username>[\w ]+)/$',
-      'users.views.confirm_registration',
-      name='users_confirm_registration'),
   url(r'^confirm/resend/(?P<username>[\w ]+)/$',
       'users.views.confirm_resend',
       name='users_confirm_resend'),
+  url(r'^confirm/(?P<token>\w+)/(?P<username>[\w ]+)/$',
+      'users.views.confirm_registration',
+      name='users_confirm_registration'),
 )
