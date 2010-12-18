@@ -111,7 +111,6 @@ INSTALLED_APPS = (
     'djcelery',
     'wellknown',
     'users',
-    'profiles',
     'l10n',
     'dashboard',
     'relationships',
