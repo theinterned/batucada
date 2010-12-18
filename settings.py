@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django_nose',
-    'django_openid_auth',
     'south',
     'jogging',
     'djcelery',
@@ -149,7 +148,6 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 AUTHENTICATION_BACKENDS = (
     'users.backends.CustomUserBackend',
-    'users.backends.CustomOpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

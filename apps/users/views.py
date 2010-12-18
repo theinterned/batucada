@@ -12,54 +12,13 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from django_openid_auth.forms import OpenIDLoginForm
-
 from users import forms
-from users.auth import users_login_begin, users_login_complete
-from users.auth import OpenIDAuthError
 from users.models import UserProfile
 from users.decorators import anonymous_only
 
 from drumbeat import messages
 
 log = logging.getLogger(__name__)
-
-
-def login_begin(request, registration=False):
-    """Begin OpenID auth workflow."""
-    try:
-        request.session['registration'] = registration
-        return users_login_begin(request, registration)
-    except OpenIDAuthError, exc:
-        template = lambda r: (r and 'users/register_openid.html'
-                              or 'users/login_openid.html')
-        response = render_to_response(template(registration), {
-            'error': exc.message,
-            'form': OpenIDLoginForm(),
-        }, context_instance=RequestContext(request))
-        response.status_code = 403
-        return response
-
-
-def login_complete(request):
-    """Parse response from OpenID provider."""
-    try:
-        return users_login_complete(request)
-    except OpenIDAuthError, exc:
-        if request.session.get('registration', False):
-            template = 'users/register_openid.html'
-        else:
-            template = 'users/login_openid.html'
-        try:
-            del request.session['registration']
-        except KeyError:
-            pass
-        response = render_to_response(template, {
-            'error': exc.message,
-            'form': OpenIDLoginForm(),
-        }, context_instance=RequestContext(request))
-        response.status_code = 403
-        return response
 
 
 @anonymous_only
@@ -100,23 +59,6 @@ def login(request):
         user = UserProfile.objects.filter(email=request.POST['username'])
 
     return r
-
-
-@anonymous_only
-def login_openid(request):
-    """Handle OpenID logins."""
-    if request.method == 'GET':
-        return render_to_response('users/login_openid.html', {
-            'form': OpenIDLoginForm(),
-        }, context_instance=RequestContext(request))
-
-    form = OpenIDLoginForm(data=request.POST)
-    if form.is_valid():
-        return login_begin(request)
-
-    return render_to_response('users/login_openid.html', {
-        'form': form,
-    }, context_instance=RequestContext(request))
 
 
 @login_required
@@ -161,20 +103,6 @@ def register(request):
     else:
         form = forms.RegisterForm()
     return render_to_response('users/register.html', {
-        'form': form,
-    }, context_instance=RequestContext(request))
-
-
-@anonymous_only
-def register_openid(request):
-    """Handle OpenID registrations."""
-    if request.method == 'POST':
-        form = OpenIDLoginForm(data=request.POST)
-        if form.is_valid():
-            return login_begin(request, registration=True)
-    else:
-        form = OpenIDLoginForm()
-    return render_to_response('users/register_openid.html', {
         'form': form,
     }, context_instance=RequestContext(request))
 

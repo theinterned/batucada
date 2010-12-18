@@ -13,13 +13,6 @@ urlpatterns = patterns('',
   url(r'^users/list/', 'users.views.user_list',
       name='users_user_list'),
 
-  url(r'^openid/login/', 'users.views.login_openid',
-      name='users_login_openid'),
-  url(r'^openid/login_complete/', 'users.views.login_complete',
-      name='users_login_complete'),
-  url(r'^openid/register/', 'users.views.register_openid',
-      name='users_register_openid'),
-
   url(r'^reset/(?P<token>\w+)/(?P<username>[\w ]+)/$',
       'users.views.reset_password',
       name='users_reset_password'),
