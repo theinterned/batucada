@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'statuses',
     'messages',
     'feeds',
+    'drumbeat',
 )
 
 if DEBUG:
