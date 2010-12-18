@@ -14,17 +14,16 @@
 
 <form action="{% locale_url users_register_openid %}" method="post">
   <fieldset>
-    <legend>{{ _('Sign Up Using Your OpenID') }}</legend>  
+    <legend>{{ _('Sign Up Using Your OpenID') }}</legend>
     {% csrf_token %}
-      {% for field in form %}
-      <p>
-        {{ field.label_tag }}
-        {{ field.as_widget }}
-      </p>
-      {% endfor %}
-      <p>
-        <button type="submit">{{ _('Sign Up') }}</button>
-      </p>
+    <p>
+      <label for="id_openid_identifier">{{ _('OpenID URL') }}</label>
+      {{ form.openid_identifier }}
+      {{ form.openid_identifier.errors }}
+    </p>
+    <p>
+      <button type="submit">{{ _('Sign Up') }}</button>
+    </p>
   </fieldset>
 </form>
 <p>{{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.</p>

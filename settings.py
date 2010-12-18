@@ -167,3 +167,6 @@ GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
 CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 CACHE_PREFIX = 'batucada'
 CACHE_COUNT_TIMEOUT = 60
+
+# Email goes to the console by default.  s/console/smtp/ for regular delivery
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -47,11 +47,11 @@
 		{% else %}
 		  <img id="user-picture" src="{{ MEDIA_URL }}{{ user.get_profile.image }}" height="19" width="19">
 		{% endif %}
-		<span id="user-name">{{ user.username }}</span>
+		<span id="user-name">{{ user.get_profile.username }}</span>
 	      </a>
 	      <ul id="user-actions">
 		<li><a href="{% locale_url dashboard_index %}">{{ _('Your Dashboard') }}</a></li>
-		<li><a href="{% locale_url profiles_show username=user.username %}">{{ _('Your Profile') }}</a></li>
+		<li><a href="#">{{ _('Your Profile') }}</a></li>
 		<li><a href="#">{{ _('Account Settings') }}</a></li>
 		<li><a href="#">{{ _('Donate to Drumbeat') }}</a></li>
 	      </ul>
