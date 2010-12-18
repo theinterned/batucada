@@ -1,6 +1,9 @@
+import logging
+
 from django.conf import settings
 from django.contrib import auth
-from django.contrib import messages
+from django.contrib.auth import views as auth_views
+from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -12,13 +15,15 @@ from django.template import RequestContext
 
 from django_openid_auth.forms import OpenIDLoginForm
 
-from users.mail import send_reset_email, send_registration_email
-from users.models import ConfirmationToken, unique_confirmation_token
-from users.forms import (RegisterForm, LoginForm, ForgotPasswordForm,
-                         ResetPasswordForm)
-from users.auth import users_login_begin, users_login_complete, authenticate
+from users import forms
+from users.auth import users_login_begin, users_login_complete
 from users.auth import OpenIDAuthError
+from users.models import UserProfile
 from users.decorators import anonymous_only
+
+from drumbeat import messages
+
+log = logging.getLogger(__name__)
 
 
 def login_begin(request, registration=False):
@@ -60,34 +65,42 @@ def login_complete(request):
 
 @anonymous_only
 def login(request):
-    """Log the user in."""
-    if request.method == 'GET':
-        return render_to_response('users/signin.html', {
-            'form': LoginForm(),
-            'target': request.GET.get('next', None),
-        }, context_instance=RequestContext(request))
+    """Log the user in. Lifted most of this code from zamboni."""
+    logout(request)
 
-    form = LoginForm(data=request.POST)
-    if not form.is_valid():
-        return render_to_response('users/signin.html', {
-            'form': form,
-            'target': request.POST.get('next', None),
-        }, context_instance=RequestContext(request))
+    r = auth_views.login(request, template_name='users/signin.html')
 
-    username = form.cleaned_data['username']
-    password = form.cleaned_data['password']
-    user = authenticate(username=username, password=password)
+    if isinstance(r, HttpResponseRedirect):
+        # Succsesful log in according to django.  Now we do our checks.  I do
+        # the checks here instead of the form's clean() because I want to use
+        # the messages framework and it's not available in the request there
+        user = request.user.get_profile()
 
-    if user is not None and user.is_active:
-        auth.login(request, user)
-        target = request.POST.get('next', reverse('dashboard_index'))
-        return HttpResponseRedirect(target)
+        if user.confirmation_code:
+            logout(request)
+            log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
+            msg1 = _(('A link to activate your user account was sent by email '
+                      'to your address {0}. You have to click it before you '
+                      'can log in.').format(user.email))
+            url = request.build_absolute_uri(
+                reverse('users_confirm_resend',
+                        kwargs=dict(username=user.username)))
+            msg2 = _(('If you did not receive the confirmation email, make '
+                      'sure your email service did not mark it as "junk '
+                      'mail" or "spam". If you need to, you can have us '
+                      '<a href="%s">resend the confirmation message</a> '
+                      'to your email address mentioned above.') % url)
+            messages.error(request, msg1)
+            messages.info(request, msg2, safe=True)
+            return render_to_response('users/signin.html', {
+                'form': auth_forms.AuthenticationForm(),
+            }, context_instance=RequestContext(request))
 
-    return render_to_response('users/signin.html', {
-        'target': request.POST.get('next', None),
-        'form': form,
-        'error': _('Incorrect login or password.'),
-    }, context_instance=RequestContext(request))
+    elif 'username' in request.POST:
+        # Hitting POST directly because cleaned_data doesn't exist
+        user = UserProfile.objects.filter(email=request.POST['username'])
+
+    return r
 
 
 @anonymous_only
@@ -117,26 +130,37 @@ def logout(request):
 @anonymous_only
 def register(request):
     """Present user registration form and handle registrations."""
-    form = RegisterForm()
     if request.method == 'POST':
-        form = RegisterForm(data=request.POST)
+        form = forms.RegisterForm(data=request.POST)
+
         if form.is_valid():
-            user = form.save()
-            if not settings.DEBUG:
-                user.is_active = False
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.generate_confirmation_code()
             user.save()
-            if settings.DEBUG:
-                user = authenticate(username=user.username, force=True)
-                auth.login(request, user)
-            else:
-                token = unique_confirmation_token(user)
-                send_registration_email(user, token.plaintext,
-                                        request.build_absolute_uri)
-                messages.add_message(request, messages.INFO,
-                    _("""Thanks! We have sent an email to %(email)s with
-                    instructions for completing your registration.""" % {
-                          'email': user.email}))
+            user.create_django_user()
+
+            log.info(u"Registered new account for user (%s)", user)
+
+            messages.success(request, _('Congratulations! Your user account '
+                                        'was successfully created.'))
+            path = reverse('users_confirm_registration', kwargs={
+                'username': user.username,
+                'token': user.confirmation_code,
+            })
+            url = request.build_absolute_uri(path)
+            user.email_confirmation_code(url)
+            msg = _('Thanks! We have sent an email to {0} with '
+                    'instructions for completing your '
+                    'registration.').format(user.email)
+            messages.info(request, msg)
+
             return HttpResponseRedirect(reverse('dashboard_index'))
+        else:
+            messages.error(request, _('There are errors in this form. Please '
+                                      'correct them and resubmit.'))
+    else:
+        form = forms.RegisterForm()
     return render_to_response('users/register.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -145,11 +169,12 @@ def register(request):
 @anonymous_only
 def register_openid(request):
     """Handle OpenID registrations."""
-    form = OpenIDLoginForm()
     if request.method == 'POST':
         form = OpenIDLoginForm(data=request.POST)
         if form.is_valid():
             return login_begin(request, registration=True)
+    else:
+        form = OpenIDLoginForm()
     return render_to_response('users/register_openid.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -176,40 +201,15 @@ def forgot_password(request):
     """Allow users to reset their password by validating email ownership."""
     if request.method == 'GET':
         return render_to_response('users/forgot_password.html', {
-            'form': ForgotPasswordForm(),
+            'form': forms.ForgotPasswordForm(),
         }, context_instance=RequestContext(request))
-    error = None
-    form = ForgotPasswordForm(request.POST)
-    if not form.is_valid():
-        return render_to_response('users/forgot_password.html', {
-            form: 'form',
-        }, context_instance=RequestContext(request))
-    try:
-        email = form.cleaned_data['email']
-        user = User.objects.get(email__exact=email)
-        token = unique_confirmation_token(user)
-        send_reset_email(user, token.plaintext, request.build_absolute_uri)
-        message = _("""An email has been sent to %(email)s with instructions
-        for resetting your password.""" % {'email': email})
-        messages.add_message(
-            request,
-            messages.INFO,
-            message,
-        )
-        return HttpResponseRedirect(reverse('dashboard_index'))
-    except User.DoesNotExist:
-        error = _('Email address not found.')
-
-    return render_to_response('users/forgot_password.html', {
-        'form': form,
-        'error': error,
-    }, context_instance=RequestContext(request))
+    # TODO - Implement
 
 
 @anonymous_only
 def reset_password(request, token, username):
     """Reset users password."""
-    form = ResetPasswordForm(data=request.POST)
+    form = forms.ResetPasswordForm(data=request.POST)
     if not form.is_valid():
         messages.add_message(request, messages.ERROR,
                              _("Our bad. Something must have gone wrong."))
@@ -218,65 +218,17 @@ def reset_password(request, token, username):
             'token': token,
             'username': username,
         }, context_instance=RequestContext(request))
-    password = form.cleaned_data['password']
-    user = User.objects.get(username=form.cleaned_data['username'])
-    user.set_password(password)
-    user.save()
-    ConfirmationToken.objects.filter(user__exact=user.id).delete()
-    messages.add_message(request, messages.INFO,
-                         _('Your password has been reset.'))
-
-    user = authenticate(username=user.username, password=password)
-    if user is not None and user.is_active:
-        auth.login(request, user)
-    return HttpResponseRedirect(reverse('dashboard_index'))
-
-
-@anonymous_only
-def reset_password_form(request, token, username):
-    """Render the reset password form, validating username and token."""
-    if request.method == 'POST':
-        return reset_password(request, token, username)
-
-    try:
-        user = User.objects.get(username__exact=username)
-        token_obj = ConfirmationToken.objects.get(user__exact=user.id)
-        if not token_obj.check_token(token):
-            raise
-    except:
-        messages.add_message(request, messages.ERROR,
-                             _("Sorry, invalid user or token"))
-
-    form = ResetPasswordForm()
-    return render_to_response('users/reset_password.html', {
-        'form': form,
-        'token': token,
-        'username': username,
-    }, context_instance=RequestContext(request))
+    # TODO - Implement
 
 
 @anonymous_only
 def confirm_registration(request, token, username):
     """Confirm a users registration."""
-    try:
-        user = User.objects.get(username__exact=username)
-        token_obj = ConfirmationToken.objects.get(user__exact=user.id)
-        if not token_obj.check_token(token):
-            raise
-        user.is_active = True
-        user.save()
-        user = authenticate(username=user.username, force=True)
-        auth.login(request, user)
-        ConfirmationToken.objects.filter(user__exact=user.id).delete()
-        messages.add_message(
-            request,
-            messages.INFO,
-            _('Congratulations. Your have completed your registration.'),
-        )
-    except:
-        return render_to_response('users/register.html', {
-            'form': RegisterForm(),
-            'error': _('Confirmation failed. Invalid token or username.'),
-        }, context_instance=RequestContext(request))
+    from django.http import HttpResponse
+    return HttpResponse('TODO - Implement')
 
-    return HttpResponseRedirect(reverse('dashboard_index'))
+
+@anonymous_only
+def confirm_resend(request, username):
+    from django.http import HttpResponse
+    return HttpResponse('TODO - Implement')

@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
   url(r'^users/list/', 'users.views.user_list',
       name='users_user_list'),
-  
+
   url(r'^openid/login/', 'users.views.login_openid',
       name='users_login_openid'),
   url(r'^openid/login_complete/', 'users.views.login_complete',
@@ -21,10 +21,12 @@ urlpatterns = patterns('',
       name='users_register_openid'),
 
   url(r'^reset/(?P<token>\w+)/(?P<username>[\w ]+)/$',
-      'users.views.reset_password_form',
-      name='users_reset_password_form'),
-                       
+      'users.views.reset_password',
+      name='users_reset_password'),
   url(r'^confirm/(?P<token>\w+)/(?P<username>[\w ]+)/$',
       'users.views.confirm_registration',
       name='users_confirm_registration'),
+  url(r'^confirm/resend/(?P<username>[\w ]+)/$',
+      'users.views.confirm_resend',
+      name='users_confirm_resend'),
 )
