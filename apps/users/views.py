@@ -124,31 +124,6 @@ def user_list(request):
 
 
 @anonymous_only
-def forgot_password(request):
-    """Allow users to reset their password by validating email ownership."""
-    if request.method == 'GET':
-        return render_to_response('users/forgot_password.html', {
-            'form': forms.ForgotPasswordForm(),
-        }, context_instance=RequestContext(request))
-    # TODO - Implement
-
-
-@anonymous_only
-def reset_password(request, token, username):
-    """Reset users password."""
-    form = forms.ResetPasswordForm(data=request.POST)
-    if not form.is_valid():
-        messages.add_message(request, messages.ERROR,
-                             _("Our bad. Something must have gone wrong."))
-        return render_to_response('users/reset_password.html', {
-            'form': form,
-            'token': token,
-            'username': username,
-        }, context_instance=RequestContext(request))
-    # TODO - Implement
-
-
-@anonymous_only
 def confirm_registration(request, token, username):
     """Confirm a users registration."""
     profile = get_object_or_404(UserProfile, username=username)
@@ -160,7 +135,8 @@ def confirm_registration(request, token, username):
         return HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
-    messages.success(request, 'Success! You have verified your account.')
+    messages.success(request, 'Success! You have verified your account. '
+                     'You may now sign in.')
     return HttpResponseRedirect(reverse('users_login'))
 
 
