@@ -142,5 +142,16 @@ def confirm_registration(request, token, username):
 
 @anonymous_only
 def confirm_resend(request, username):
-    from django.http import HttpResponse
-    return HttpResponse('TODO - Implement')
+    """Resend a confirmation code."""
+    profile = get_object_or_404(UserProfile, username=username)
+    if profile.confirmation_code:
+        path = reverse('users_confirm_registration', kwargs={
+            'username': profile.username,
+            'token': profile.confirmation_code,
+        })
+        url = request.build_absolute_uri(path)
+        profile.email_confirmation_code(url)
+        msg = _('A confirmation code has been sent to the email address '
+                'associated with your account.')
+        messages.info(request, msg)
+    return HttpResponseRedirect(reverse('users_login'))
