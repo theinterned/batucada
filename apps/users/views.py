@@ -193,7 +193,7 @@ def profile_edit(request):
     else:
         form = forms.ProfileEditForm(instance=profile)
 
-    return render_to_response('users/profile_edit.html', {
+    return render_to_response('users/profile_edit_main.html', {
         'profile': profile,
         'form': form,
     }, context_instance=RequestContext(request))

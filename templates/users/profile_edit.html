@@ -2,38 +2,29 @@
 
 {% load l10n_tags %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}{{ _('Edit Profile') }}{% endblock %}
 {% block bodyid %}profile_edit{% endblock %}
+{% block bodyclasses %}profile edit info{% endblock %}
+
 {% block body %}
+<section class="modal">
+  <article>
 
-<h2>{{ _('Edit Profile') }}</h2>
+    <h1>{{ _('Edit Profile') }} <span class="pester">(<a href="{{ profile.get_absolute_url }}">View Profile</a>)</span></h1>
+    <nav id="profile-edit-nav">
+      <ul>
+	<li class="info"><a href="{% locale_url users_profile_edit %}">{{ _('General Info') }}</a></li>
+	<li class="image"><a href="#">{{ _('Profile Image') }}</a></li>
+	<li class="skills"><a href="#">{{ _('Skills') }}</a></li>
+	<li class="interests"><a href="#">{{ _('Interests') }}</a></li>
+      </ul>
+    </nav>
 
-<fieldset>
-  <form action="{% locale_url users_profile_edit %}" method="post"
-	enctype="multipart/form-data">
-    {% csrf_token %}
-    <p>
-      <label for="id_display_name">{{ _('Display Name') }}</label>
-      {{ form.display_name }}
-      {{ form.display_name.errors }}
-    </p>
-    <p>
-      <label form="id_location">{{ _('Location') }}</label>
-      {{ form.location }}
-      {{ form.location.errors }}
-    </p>
-    <p>
-      <label for="id_bio">{{ _('Bio') }}</label>
-      {{ form.bio }}
-      {{ form.bio.errors }}
-    </p>
-    <p>
-      <label for="id_image">{{ _('Profile Picture') }}</label>
-      {{ form.image }}
-      {{ form.image.errors }}
-    </p>
-    <input type="submit" value="Save" />
-  </form>
-</fieldset>
+    <fieldset>
+      {% block form %}{% endblock %}
+    </fieldset>
 
+  </article>
+</section>
 {% endblock %}
+
