@@ -38,10 +38,19 @@ class RegisterForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
+
     class Meta:
         model = UserProfile
         exclude = ('confirmation_code', 'password', 'username', 'email',
-                   'created_on', 'user')
+                   'created_on', 'user', 'image')
+
+
+class ProfileImageForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        exclude = ('confirmation_code', 'password', 'username',
+                   'email', 'created_on', 'user')
 
     def clean_image(self):
         if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:

@@ -3,8 +3,7 @@
 {% load l10n_tags %}
 {% block bodyclasses %}profile edit info{% endblock %}
 {% block form %}
-<form action="{% locale_url users_profile_edit %}" method="post"
-      enctype="multipart/form-data">
+<form action="{% locale_url users_profile_edit %}" method="post">
   {% csrf_token %}
   <p>
     <label for="id_display_name">{{ _('Full Name') }}</label>
@@ -20,11 +19,6 @@
       <label for="id_bio">{{ _('Bio') }}</label>
       {{ form.bio }}
       {{ form.bio.errors }}
-    </p>
-    <p>
-      <label for="id_image">{{ _('Profile Picture') }}</label>
-      {{ form.image }}
-      {{ form.image.errors }}
     </p>
     <input type="submit" value="Save" />
 </form>
