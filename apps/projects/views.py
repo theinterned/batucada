@@ -46,8 +46,9 @@ def show(request, slug):
 
 @login_required
 def edit(request, slug):
+    user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
-    if request.user != project.created_by:
+    if user != project.created_by:
         return HttpResponseForbidden()
 
     if request.method == 'POST':
@@ -73,11 +74,12 @@ def list(request):
 
 @login_required
 def create(request):
+    user = request.user.get_profile()
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
-            project.created_by = request.user
+            project.created_by = user
             project.save()
             return HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
@@ -91,8 +93,9 @@ def create(request):
 
 @login_required
 def contact_followers(request, slug):
+    user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
-    if project.created_by != request.user:
+    if project.created_by != user:
         return HttpResponseForbidden()
     if request.method == 'POST':
         form = ProjectContactUsersForm(request.POST)
@@ -119,8 +122,9 @@ def featured_css(request, slug):
 
 @login_required
 def link_create(request, slug):
+    user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
-    if project.created_by != request.user:
+    if project.created_by != user:
         return HttpResponseForbidden()
     form = ProjectLinkForm(initial=dict(project=project.pk))
     if request.method == 'POST':
