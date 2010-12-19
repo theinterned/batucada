@@ -10,18 +10,37 @@
 </div>
 <div id="main">
 <form action="{% locale_url users_register %}" method="post">
+  {% csrf_token %}
   <fieldset>
     <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.)</span></legend>
-    {% csrf_token %}
-      {% for field in form %}
-      <p>
-        {{ field.label_tag }}
-        {{ field.as_widget }}
-      </p>
-      {% endfor %}
+    <p>
+      <label for="id_username">{{ _('Username') }}</label>
+      {{ form.username }} @drumbeat.org
+      {{ form.username.errors }}
+    </p>
+    <p>
+      <label for="id_display_name">{{ _('Display name') }}</label>
+      {{ form.display_name }}
+      {{ form.display_name.errors }}
+    </p>
+    <p>
+      <label for="id_email">{{ _('Email Address') }}</label>
+      {{ form.email }}
+      {{ form.email.errors }}
+    </p>
+    <p>
+      <label for="id_password">{{ _('Password') }}</label>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </p>
+    <p>
+      <label for="id_password_confirm">{{ _('Confirm password') }}</label>
+      {{ form.password_confirm }}
+      {{ form.password_confirm.errors }}
+    </p>
       <p><button type="submit">{{ _('Sign Up') }}</button></p>    
   </fieldset>
 </form>
-<p class="openid"><a id="signup_openid" href="{% locale_url users_register_openid %}">{{ _('Sign Up with an OpenID') }}</a>.</p>
+<p class="openid"><a id="signup_openid" href="#">{{ _('Sign Up with an OpenID') }}</a>.</p>
 </div>
 {% endblock %}

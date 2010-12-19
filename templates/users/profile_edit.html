@@ -2,16 +2,29 @@
 
 {% load l10n_tags %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}{{ _('Edit Profile') }}{% endblock %}
+{% block bodyid %}profile_edit{% endblock %}
+{% block bodyclasses %}profile edit info{% endblock %}
+
 {% block body %}
+<section class="modal">
+  <article>
 
-<fieldset>
-  <legend>{{ _('Edit Profile') }}</legend>
-  <form action="{% locale_url users_profile %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save" />
-  </form>
-</fieldset>
+    <h1>{{ _('Edit Profile') }} <span class="pester">(<a href="{{ profile.get_absolute_url }}">View Profile</a>)</span></h1>
+    <nav id="profile-edit-nav">
+      <ul>
+	<li class="info"><a href="{% locale_url users_profile_edit %}">{{ _('General Info') }}</a></li>
+	<li class="image"><a href="{% locale_url users_profile_edit_image %}">{{ _('Profile Image') }}</a></li>
+	<li class="skills"><a href="#">{{ _('Skills & Interests') }}</a></li>
+	<li class="links"><a href="#">{{ _('Links') }}</a></li>
+      </ul>
+    </nav>
 
+    <fieldset>
+      {% block form %}{% endblock %}
+    </fieldset>
+
+  </article>
+</section>
 {% endblock %}
+

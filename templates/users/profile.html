@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load i18n %}
+{% block title %}{{ profile.name }}{% endblock %}
+
+{% block links %}
+{% comment %}
+Temporarily comment out atom feed link while refactoring activity application.
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_feed_user username=profile_user.username %}">
+{% endcomment %}
+<link rel="profile" href="http://microformats.org/profile/hcard" />
+{% endblock %}
+
+{% block bodyid %}user_profile{% endblock %}
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url users_user_list %}">{{ _('Users') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <span>All Users</span>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
+    </nav>
+
+    {% if user == profile.user %}
+    <div id="project-actions">      
+    	<div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
+    </div>
+    {% endif %}
+
+  </div> <!-- /.container -->
+{% endblock %}
+
+{% block body %}
+<div id="sidebar">
+<div class="vcard panel">
+  <img class="member-picture" src="{{ MEDIA_URL }}{{ profile.image_or_default }}" height="54" width="54">
+  <div class="member-details">
+    <h1 class="member-name">
+      <span class="fn">{{ profile.name }}</span>
+    </h1>
+    <div class="member-actions">
+      {% if user == profile.user %}
+      <div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
+      {% else %}
+      <div class="button">
+        {% if profile.user in following %}
+        <form action="{% locale_url relationships_unfollow %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ profile_user.id }}">
+          <input type="hidden" name="object_type_id" value="{{ type.id }}">
+          <a class="submit-button" id="unfollow-user" href="#">Unfollow User</a>
+        </form>
+        {% else %}
+        <form action="{% locale_url relationships_follow %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ profile_user.id }}">
+          <input type="hidden" name="object_type_id" value="{{ type.id }}">
+          <a class="submit-button" id="follow-user" href="#">Follow User</a>
+        </form>
+        {% endif %}
+                
+      </div>
+      <div class="button">
+        <a href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>
+      </div>
+      {% endif %}
+    </div>
+  </div> 
+  
+  <div class="member-bio">
+	  {{ profile.bio }}
+	</div>
+	
+	{% if profile.location %}
+  <dl class="member-location">
+  <dt>{{ _('Location:') }}</dt> 
+  <dd class="adr"><a href="#" title="{{ _('See more in ') }}{{ profile.location }}">{{ profile.location }}</a></dd>
+  </dl>
+  {% endif %}
+  
+  {% if skills %}
+  <ul class="tags skills">
+    {% for skill in skills %}
+    <li><a href="#" title="{{ _('See more about ') }}{{ skill.name }}">{{ skill.name }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if interests %}
+  <ul class="tags interests">
+    {% for interest in interests %}
+    <li><a href="#" title="{{ _('See more about ') }}{{ interest.name }}">{{ interest.name }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div> <!-- /.vcard -->
+
+<div id="member_relationships" class="panel">
+  <h3>{{ _('Followers') }} <span class="followers count">{{ followers|length }}</span></h3>
+  <ul class="users followers">
+  {% for user_follower in followers %}
+    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.name }}"></a></li>
+  {% endfor %}
+  </ul>
+  <h3>{{ _('Following') }} <span class="following count">{{ following|length }}</span></h3>
+  <ul class="users following">
+  {% for user_following in following %}
+    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.name }}"></a></li>
+  {% endfor %}
+  </ul>
+  <h3>{{ _('Projects') }} <span class="projects count">{{ projects|length}}</span></h3>
+  <ul class="projects following">
+  <!-- TODO: add support for project owner badge -->
+  {% for project in projects %}
+    <li>
+      <a href="" alt="{{project.name}}">
+        {% if project.image %}
+        <img src="" width="26" height="26" alt="project image"/>
+        {% else %}
+        <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
+        {% endif %}
+        {{ project.name }}
+      </a>
+    </li>
+  {% endfor %}
+  </ul>
+</div> <!-- /#member_relationships-->
+<!-- TODO: add support for user links -->
+<div id="member_links" class="panel">
+  <ul>
+    <li><a href="#" title="Github">Github</a></li>
+    <li><a href="#" title="Twitter">Twitter</a></li>
+  </ul>
+</div> <!-- /#member_links -->
+</div> <!-- /#sidebar -->
+
+<div id="main">
+    <ul id="posts">
+      {% for activity in activities %}
+      {% include "activity/_activity_resource.html" %}
+      {% endfor %}
+    </ul>
+</div> <!-- /#main -->
+
+
+
+{% endblock %}
