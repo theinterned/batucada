@@ -12,8 +12,8 @@
 <ul>
 {% for user in users %}
 <li>
-  <a href="{% locale_url profiles_show username=user.username %}">
-    {{ user.username }}
+  <a href="{{ user.get_profile.get_absolute_url }}">
+    {{ user.get_profile.name }}
   </a>
   {% if user.id in following %}
     <form action="{% locale_url relationships_unfollow %}" method="post">

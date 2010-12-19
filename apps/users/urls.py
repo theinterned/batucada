@@ -47,4 +47,10 @@ urlpatterns = patterns('',
   url(r'^confirm/(?P<token>\w+)/(?P<username>[\w ]+)/$',
       'users.views.confirm_registration',
       name='users_confirm_registration'),
+
+  # Profile urls
+  url('^(?P<username>[\w ]+)/$',
+      'users.views.profile_view',
+      name='users_profile_view'),
+
 )
