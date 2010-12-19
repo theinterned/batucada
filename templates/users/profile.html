@@ -24,7 +24,7 @@ Temporarily comment out atom feed link while refactoring activity application.
 
     {% if user == profile.user %}
     <div id="project-actions">      
-    	<div class="button"><a href="#">{{ _('Edit Profile') }}</a></div>
+    	<div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
     </div>
     {% endif %}
 
@@ -41,7 +41,7 @@ Temporarily comment out atom feed link while refactoring activity application.
     </h1>
     <div class="member-actions">
       {% if user == profile.user %}
-      <div class="button"><a href="#">{{ _('Edit Profile') }}</a></div>
+      <div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
       {% else %}
       <div class="button">
         {% if profile.user in following %}

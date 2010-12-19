@@ -3,13 +3,35 @@
 {% load l10n_tags %}
 
 {% block title %}Edit Profile{% endblock %}
+{% block bodyid %}profile_edit{% endblock %}
 {% block body %}
 
+<h2>{{ _('Edit Profile') }}</h2>
+
 <fieldset>
-  <legend>{{ _('Edit Profile') }}</legend>
-  <form action="{% locale_url users_profile %}" method="post">
+  <form action="{% locale_url users_profile_edit %}" method="post"
+	enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p>
+      <label for="id_display_name">{{ _('Display Name') }}</label>
+      {{ form.display_name }}
+      {{ form.display_name.errors }}
+    </p>
+    <p>
+      <label form="id_location">{{ _('Location') }}</label>
+      {{ form.location }}
+      {{ form.location.errors }}
+    </p>
+    <p>
+      <label for="id_bio">{{ _('Bio') }}</label>
+      {{ form.bio }}
+      {{ form.bio.errors }}
+    </p>
+    <p>
+      <label for="id_image">{{ _('Profile Picture') }}</label>
+      {{ form.image }}
+      {{ form.image.errors }}
+    </p>
     <input type="submit" value="Save" />
   </form>
 </fieldset>
