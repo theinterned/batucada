@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load i18n %}
-{% block title %}{{ profile.get_full_name }}{% endblock %}
+{% block title %}{{ profile.name }}{% endblock %}
 
 {% block links %}
 {% comment %}
@@ -19,12 +19,12 @@ Temporarily comment out atom feed link while refactoring activity application.
       <span class="arrow">&rsaquo;</span>
       <span>All Users</span>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url profiles_show username=profile_user.username %}">{{ profile_user.username }}</a>
+      <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
     </nav>
 
-    {% if user.id == profile.user.id %}
+    {% if user == profile.user %}
     <div id="project-actions">      
-    	<div class="button"><a href="{% locale_url profiles_edit %}">{{ _('Edit Profile') }}</a></div>
+    	<div class="button"><a href="#">{{ _('Edit Profile') }}</a></div>
     </div>
     {% endif %}
 
@@ -37,18 +37,14 @@ Temporarily comment out atom feed link while refactoring activity application.
   <img class="member-picture" src="{{ MEDIA_URL }}{{ profile.image_or_default }}" height="54" width="54">
   <div class="member-details">
     <h1 class="member-name">
-      {% if profile.get_full_name %}        
-      <span class="fn">{{ profile.get_full_name }}</span>
-      {% else %}
-      <span class="fn nickname">{{ profile_user.username }}</span>
-      {% endif %}
+      <span class="fn">{{ profile.name }}</span>
     </h1>
     <div class="member-actions">
-      {% if user == profile_user %}
-      <div class="button"><a href="{% locale_url profiles_edit %}">{{ _('Edit Profile') }}</a></div>
+      {% if user == profile.user %}
+      <div class="button"><a href="#">{{ _('Edit Profile') }}</a></div>
       {% else %}
       <div class="button">
-        {% if profile_user in following %}
+        {% if profile.user in following %}
         <form action="{% locale_url relationships_unfollow %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="object_id" value="{{ profile_user.id }}">
@@ -66,7 +62,7 @@ Temporarily comment out atom feed link while refactoring activity application.
                 
       </div>
       <div class="button">
-        <a href="{% locale_url messages_compose_to recipient=profile.user.username %}">{{ _('Private Message')}}</a>
+        <a href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>
       </div>
       {% endif %}
     </div>
@@ -83,38 +79,39 @@ Temporarily comment out atom feed link while refactoring activity application.
   </dl>
   {% endif %}
   
-  {% if profile.skill_set.count %}
+  {% if skills %}
   <ul class="tags skills">
-    {% for skill in profile.skill_set.all %}
+    {% for skill in skills %}
     <li><a href="#" title="{{ _('See more about ') }}{{ skill.name }}">{{ skill.name }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
-  {% if profile.interest_set.count %}
+  {% if interests %}
   <ul class="tags interests">
-    {% for interest in profile.interest_set.all %}
+    {% for interest in interests %}
     <li><a href="#" title="{{ _('See more about ') }}{{ interest.name }}">{{ interest.name }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
 </div> <!-- /.vcard -->
+
 <div id="member_relationships" class="panel">
-  <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
+  <h3>{{ _('Followers') }} <span class="followers count">{{ followers|length }}</span></h3>
   <ul class="users followers">
-  {% for user_follower in users_followers %}
-    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.get_full_name_or_username }}"></a></li>
+  {% for user_follower in followers %}
+    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.name }}"></a></li>
   {% endfor %}
   </ul>
-  <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
+  <h3>{{ _('Following') }} <span class="following count">{{ following|length }}</span></h3>
   <ul class="users following">
-  {% for user_following in users_following %}
-    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.get_full_name_or_username }}"></a></li>
+  {% for user_following in following %}
+    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.name }}"></a></li>
   {% endfor %}
   </ul>
-  <h3>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h3>
+  <h3>{{ _('Projects') }} <span class="projects count">{{ projects|length}}</span></h3>
   <ul class="projects following">
   <!-- TODO: add support for project owner badge -->
-  {% for project in projects_following %}
+  {% for project in projects %}
     <li>
       <a href="" alt="{{project.name}}">
         {% if project.image %}

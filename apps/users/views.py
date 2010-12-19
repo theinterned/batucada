@@ -15,6 +15,7 @@ from django.template import RequestContext
 from users import forms
 from users.models import UserProfile
 from users.decorators import anonymous_only
+from projects.models import Project
 
 from drumbeat import messages
 
@@ -155,3 +156,18 @@ def confirm_resend(request, username):
                 'associated with your account.')
         messages.info(request, msg)
     return HttpResponseRedirect(reverse('users_login'))
+
+
+def profile_view(request, username):
+    profile = get_object_or_404(UserProfile, username=username)
+    following = profile.user.following(model=User)
+    projects = profile.user.following(model=Project)
+    followers = profile.user.followers()
+    return render_to_response('users/profile.html', {
+        'profile': profile,
+        'following': following,
+        'followers': followers,
+        'projects': projects,
+        'skills': profile.tags.filter(category='skill'),
+        'interests': profile.tags.filter(category='interest'),
+    }, context_instance=RequestContext(request))

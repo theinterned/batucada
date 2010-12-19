@@ -67,7 +67,7 @@ class UserProfile(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('profiles_show', (), {
+        return ('users_profile_view', (), {
             'username': self.username,
         })
 

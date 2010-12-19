@@ -51,7 +51,7 @@
 	      </a>
 	      <ul id="user-actions">
 		<li><a href="{% locale_url dashboard_index %}">{{ _('Your Dashboard') }}</a></li>
-		<li><a href="#">{{ _('Your Profile') }}</a></li>
+		<li><a href="{{ user.get_profile.get_absolute_url }}">{{ _('Your Profile') }}</a></li>
 		<li><a href="#">{{ _('Account Settings') }}</a></li>
 		<li><a href="#">{{ _('Donate to Drumbeat') }}</a></li>
 	      </ul>
