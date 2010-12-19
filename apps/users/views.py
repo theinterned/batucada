@@ -197,3 +197,24 @@ def profile_edit(request):
         'profile': profile,
         'form': form,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_edit_image(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        form = forms.ProfileImageForm(request.POST, request.FILES,
+                                      instance=profile)
+        if form.is_valid():
+            messages.success(request, _('Profile image updated'))
+            form.save()
+            return HttpResponseRedirect(reverse('users_profile_edit_image'))
+        else:
+            messages.error(request, _('There was an error uploading '
+                                      'your image.'))
+    else:
+        form = forms.ProfileImageForm(instance=profile)
+    return render_to_response('users/profile_edit_image.html', {
+        'profile': profile,
+        'form': form,
+    }, context_instance=RequestContext(request))
