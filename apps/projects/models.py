@@ -2,13 +2,13 @@ import urllib
 import datetime
 
 from django.contrib import admin
-from django.contrib.auth.models import User
 from django.db import models, IntegrityError
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 
 from BeautifulSoup import BeautifulSoup
 
+from users.models import UserProfile
 from relationships.models import followers
 
 import caching.base
@@ -22,7 +22,7 @@ class Project(caching.base.CachingMixin, models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField()
     call_to_action = models.TextField()
-    created_by = models.ForeignKey(User, related_name='projects')
+    created_by = models.ForeignKey(UserProfile, related_name='projects')
     featured = models.BooleanField()
     template = models.TextField()
     css = models.TextField()
