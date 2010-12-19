@@ -3,7 +3,8 @@
 {% load l10n_tags %}
 {% block bodyclasses %}profile edit info{% endblock %}
 {% block form %}
-<form action="{% locale_url users_profile_edit %}" method="post">
+<form action="{% locale_url users_profile_edit %}" method="post"
+      enctype="multipart/form-data">
   {% csrf_token %}
   <p>
     <label for="id_display_name">{{ _('Full Name') }}</label>
