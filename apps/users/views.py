@@ -171,3 +171,29 @@ def profile_view(request, username):
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_edit(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        form = forms.ProfileEditForm(request.POST, request.FILES,
+                                     instance=profile)
+        if form.is_valid():
+            messages.success(request, _('Profile updated'))
+            form.save()
+            return HttpResponseRedirect(
+                reverse('users_profile_view', kwargs={
+                    'username': profile.username,
+            }))
+        else:
+            messages.error(request, _('There were problems updating your '
+                                      'profile. Please correct the problems '
+                                      'and submit again.'))
+    else:
+        form = forms.ProfileEditForm(instance=profile)
+
+    return render_to_response('users/profile_edit.html', {
+        'profile': profile,
+        'form': form,
+    }, context_instance=RequestContext(request))

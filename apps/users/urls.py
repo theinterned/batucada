@@ -49,8 +49,8 @@ urlpatterns = patterns('',
       name='users_confirm_registration'),
 
   # Profile urls
-  url('^(?P<username>[\w ]+)/$',
-      'users.views.profile_view',
+  url('^(?P<username>[\w ]+)/$', 'users.views.profile_view',
       name='users_profile_view'),
-
+  url('^profile/edit/$', 'users.views.profile_edit',
+      name='users_profile_edit'),
 )
