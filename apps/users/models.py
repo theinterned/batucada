@@ -10,6 +10,9 @@ from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 
+from taggit.models import GenericTaggedItemBase, Tag
+from taggit.managers import TaggableManager
+
 
 def get_hexdigest(algorithm, salt, raw_password):
     """Generate password hash."""
@@ -21,6 +24,23 @@ def create_password(algorithm, raw_password):
     salt = os.urandom(5).encode('hex')
     hsh = get_hexdigest(algorithm, salt, raw_password)
     return '$'.join((algorithm, salt, hsh))
+
+
+class ProfileTag(Tag):
+    CATEGORY_CHOICES = (
+        ('skill', 'Skill'),
+        ('interest', 'Interest'),
+    )
+    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
+
+
+class TaggedProfile(GenericTaggedItemBase):
+    tag = models.ForeignKey(
+        ProfileTag, related_name="%(app_label)s_%(class)s_items")
+
+    class Meta:
+        verbose_name = "Tagged User Profile"
+        verbose_name_plural = "Tagged User Profiles"
 
 
 class UserProfile(models.Model):
@@ -40,6 +60,7 @@ class UserProfile(models.Model):
         auto_now_add=True, default=datetime.date.today())
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
+    tags = TaggableManager(through=TaggedProfile)
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.display_name or self.username)

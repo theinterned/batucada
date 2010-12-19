@@ -9,6 +9,7 @@ django-celery
 BeautifulSoup
 IPython
 django-cache-machine
+django-taggit
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower

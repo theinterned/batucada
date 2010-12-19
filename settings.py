@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'messages',
     'feeds',
     'drumbeat',
+    'taggit',
 )
 
 if DEBUG:
