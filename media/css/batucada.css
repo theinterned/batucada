@@ -894,7 +894,117 @@ header {}
       #posts .post-body, #posts .post-body p {
         margin: 10px 0;
       }
-          
+
+	#profile_edit {}
+		.modal{
+			width: 780px;
+			margin: 0 auto;
+			padding: 6px;
+			box-shadow: rgba(255, 255, 255, 0.2) 1px 1px 0px inset, rgba(0,0,0,0.25) 3px 3px 5px;
+			-moz-box-shadow: rgba(255, 255, 255, 0.2) 1px 1px 0px inset, rgba(0,0,0,0.25) 3px 3px 5px;
+			-webkit-box-shadow: rgba(255, 255, 255, 0.2) 1px 1px 0px inset, rgba(0,0,0,0.25) 3px 3px 5px;
+			background: #848484; /* old browsers */
+			background: -moz-linear-gradient(top, 
+				#848484 0%, 
+				#777 100%); /* firefox */
+			background: -webkit-gradient(linear, left top, left bottom, 
+				color-stop(0%,#848484), 
+				color-stop(100%,#777)); /* webkit */
+			filter: progid:DXImageTransform.Microsoft.gradient( 
+				startColorstr='#848484', 
+				endColorstr='#777',GradientType=0 ); /* ie */
+			border: 1px solid #636363;
+			border-radius:8px;
+			-moz-border-radius:8px;		
+		}
+		.modal article{
+			background: #fff url(/media/images/panel-bg.png) 0 0 repeat-y;
+			border: 1px solid #525252;
+			border-radius:5px;
+			-moz-border-radius:5px;
+			padding-bottom: 40px;
+		}
+		.modal > article > h1{
+			width: 742px;
+			padding: 18px;
+			margin-bottom: 1em;
+			color: #777;
+			font-size: 18px;
+			line-height: 1;
+			text-shadow: 1px 1px 0 #fff;			
+			background: #EBEBEB; /* old browsers */
+			background: -moz-linear-gradient(top, #f0f9ff 0%, #cbebff 47%, #4AA4E3 56%, #a1dbff 100%);
+			background: -moz-linear-gradient(top, 
+				#F9F9F9 0%,
+				#F6F6F6 50%,
+				#F2F2F2 51%, 
+				#EBEBEB 100%); /* firefox */
+			background: -webkit-gradient(linear, left top, left bottom, 
+				color-stop(100%,#EBEBEB), 
+				color-stop(51%,#F2F2F2), 
+				color-stop(50%,#F6F6F6), 
+				color-stop(0%,#F9F9F9)); /* webkit */
+			filter: progid:DXImageTransform.Microsoft.gradient( 
+				startColorstr='#EBEBEB', 
+				endColorstr='#F9F9F9',GradientType=0 ); /* ie */
+			border-bottom: 1px solid #d6d6d6;
+			border-radius:5px 5px 0 0;
+			-moz-border-radius:5px 5px 0 0;
+		}
+        .modal #profile-edit-nav {
+			float: left;
+			width: 190px;
+			height: 100%;
+		}
+		.modal #profile-edit-nav a {
+			display: block;
+			padding-left: 18px;
+			font-size: 12px;
+			line-height: 25px;
+			margin-bottom: 5px;
+		}
+		.modal fieldset {
+			margin-left: 228px;
+		}
+		.modal #profile-edit-nav .selected a,
+		.modal #profile-edit-nav a:hover,
+		#profile_edit.info #profile-edit-nav .info a,
+		#profile_edit.image #profile-edit-nav .image a,
+		#profile_edit.skills #profile-edit-nav .skills a,
+		#profile_edit.interests #profile-edit-nav .interests a{
+			position: relative;
+			color: #fff;
+			text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+			background: #4AA4E3;
+			background: -moz-linear-gradient(top, 
+				#4AA4E3 0%, 
+				#2084CA 100%);
+			background: -webkit-gradient(linear, left top, left bottom, 
+				color-stop(0%,#4AA4E3), 
+				color-stop(100%,#2084CA));
+			filter: progid:DXImageTransform.Microsoft.gradient( 
+				startColorstr='#4AA4E3', 
+				endColorstr='#2084CA',GradientType=0 );
+		}
+		.modal #profile-edit-nav a:hover{
+			background: #2084CA;
+			text-decoration: none;
+		}
+		.modal #profile-edit-nav .selected a:after,
+		#profile_edit.info #profile-edit-nav .info a:after,
+		#profile_edit.image #profile-edit-nav .image a:after,
+		#profile_edit.skills #profile-edit-nav .skills a:after,
+		#profile_edit.interests #profile-edit-nav .interests a:after{
+			content: "\0020";
+			display: block;
+			width: 12px;
+			height: 25px;
+			position: absolute;
+			right: -12px; top: 0;
+			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
+		}
+		
+		
 footer {}
 
 /* Rewrite everything below here :-) */
