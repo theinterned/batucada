@@ -15,11 +15,7 @@ Temporarily comment out atom feed link while refactoring activity application.
   <img class="member-picture" src="{{ MEDIA_URL }}{{ user.get_profile.image_or_default }}" height="40" width="40" alt="{{ user.username}}{{ _('\'s profile picture') }}">
   <div class="member-details">
     <h2 class="member-name">
-      {% if profile.get_full_name %}        
-      <span class="fn">{{ user.get_full_name }}</span>
-      {% else %}
-      <span class="fn nickname">{{ user.username }}</span>
-      {% endif %}
+      <span class="fn">{{ user.get_profile.name }}</span>
     </h2>
     <p><a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a></p>
   </div> 

@@ -1,0 +1,20 @@
+{% extends "users/profile_edit.html" %}
+
+{% load l10n_tags %}
+
+{% block bodyclasses %}profile edit image{% endblock %}
+{% block form %}
+
+<p><img src="{{ MEDIA_URL }}{{ profile.image_or_default }}" /></p>
+<p>{{ _('Max size of 700k. JPG, GIF, PNG.') }}</p>
+
+<form action="{% locale_url users_profile_edit_image %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <p>
+    <label for="image_id">{{ _('Profile Picture') }}</label>
+    {{ form.image }}
+    {{ form.image.errors }}
+  </p>
+  <input type="submit" value="Upload" />
+</form>
+{% endblock %}

@@ -5,7 +5,6 @@ from django.template import RequestContext
 
 from statuses.models import Status
 from projects.models import Project
-from projects.models import User
 
 
 def show(request, status_id):
@@ -18,7 +17,7 @@ def show(request, status_id):
 def create(request):
     if 'status' not in request.POST:
         return HttpResponseRedirect('/')
-    status = Status(author=request.user,
+    status = Status(author=request.user.get_profile(),
         status=request.POST['status'])
     status.save()
     return HttpResponseRedirect('/')
@@ -28,7 +27,7 @@ def create_project_status(request, project_id):
     if 'status' not in request.POST:
         return HttpResponseRedirect('/')
     project = get_object_or_404(Project, id=project_id)
-    status = Status(author=request.user,
+    status = Status(author=request.user.get_profile(),
                     status=request.POST['status'],
                     project=project)
     status.save()
@@ -40,7 +39,7 @@ def create_user_status(request, user_id):
     if 'status' not in request.POST:
         return HttpResponseRedirect('/')
     user = get_object_or_404(Project, id=user_id)
-    status = Status(author=request.user,
+    status = Status(author=request.user.get_profile(),
                     status=request.POST['status'],
                     user=user)
     status.save()

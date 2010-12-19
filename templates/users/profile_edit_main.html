@@ -1,0 +1,25 @@
+{% extends "users/profile_edit.html" %}
+
+{% load l10n_tags %}
+{% block bodyclasses %}profile edit info{% endblock %}
+{% block form %}
+<form action="{% locale_url users_profile_edit %}" method="post">
+  {% csrf_token %}
+  <p>
+    <label for="id_display_name">{{ _('Full Name') }}</label>
+    {{ form.display_name }}
+    {{ form.display_name.errors }}
+  </p>
+    <p>
+      <label form="id_location">{{ _('Location') }}</label>
+      {{ form.location }}
+      {{ form.location.errors }}
+    </p>
+    <p>
+      <label for="id_bio">{{ _('Bio') }}</label>
+      {{ form.bio }}
+      {{ form.bio.errors }}
+    </p>
+    <input type="submit" value="Save" />
+</form>
+{% endblock %}

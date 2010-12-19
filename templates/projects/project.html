@@ -18,7 +18,7 @@ Comment out until we're finished refactoring activity
       <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
     </nav>
 
-    {% if user == project.created_by %}
+    {% if user.get_profile == project.created_by %}
       <div id="project-actions">
 	<div class="button"><a href="#">{{ _('Edit Project') }}</a></div>
 	<div class="button"><a href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a></div>
@@ -89,13 +89,13 @@ Comment out until we're finished refactoring activity
     </nav>
 
     <div id="project-lead">
-      <a href="{% locale_url profiles_show username=project.created_by.username %}">
-	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.get_profile.image_or_default }}" height="54" width="54">
+      <a href="{{ project.created_by.get_absolute_url }}">
+	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
       </a>
 
       <div class="member-details">
 	<h3 class="member-name">
-	  <a href="{% locale_url profiles_show username=project.created_by.username %}">{{ project.created_by.get_profile.get_full_name_or_username }}</a>
+	  <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
 	</h3>
 
 	<div class="member-actions">
@@ -108,7 +108,7 @@ Comment out until we're finished refactoring activity
 	</div>
 
 	<div class="member-bio">
-	  {{ project.created_by.get_profile.bio }}
+	  {{ project.created_by.bio }}
 	</div>
 	
       </div> <!-- /.member-details -->

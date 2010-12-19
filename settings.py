@@ -105,13 +105,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django_nose',
-    'django_openid_auth',
     'south',
     'jogging',
     'djcelery',
     'wellknown',
     'users',
-    'profiles',
     'l10n',
     'dashboard',
     'relationships',
@@ -120,6 +118,8 @@ INSTALLED_APPS = (
     'statuses',
     'messages',
     'feeds',
+    'drumbeat',
+    'taggit',
 )
 
 if DEBUG:
@@ -148,17 +148,13 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 AUTHENTICATION_BACKENDS = (
-    'users.auth.CustomOpenIDBackend',
+    'users.backends.CustomUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_PROFILE_MODULE = 'profiles.Profile'
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 MAX_IMAGE_SIZE = 1024 * 700
-
-ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda o: "/%s/" % o.username,
-}
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
@@ -166,3 +162,10 @@ DEBUG_TOOLBAR_CONFIG = {
 
 GLOBAL_LOG_LEVEL = logging.DEBUG
 GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
+
+CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
+CACHE_PREFIX = 'batucada'
+CACHE_COUNT_TIMEOUT = 60
+
+# Email goes to the console by default.  s/console/smtp/ for regular delivery
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

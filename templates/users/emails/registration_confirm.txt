@@ -1,0 +1,10 @@
+Welcome to Drumbeat!
+
+To complete the sign up process, please confirm your email address by clicking here:
+
+{{ confirmation_url }}
+
+Thank you!
+
+Sincerely,
+The Drumbeat Team
