@@ -10,12 +10,12 @@ from django.db import models, IntegrityError
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
-import caching.base
+from drumbeat.models import ModelBase
 
 log = logging.getLogger(__name__)
 
 
-class Relationship(caching.base.CachingMixin, models.Model):
+class Relationship(ModelBase):
     """
     A relationship between two objects. Source is usually a user but can
     be any ```Model``` instance. Target can also be any ```Model``` instance.
@@ -34,8 +34,6 @@ class Relationship(caching.base.CachingMixin, models.Model):
 
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-
-    objects = caching.base.CachingManager()
 
     def save(self, *args, **kwargs):
         """Check that the source and the target are not the same object."""

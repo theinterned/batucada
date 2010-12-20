@@ -7,11 +7,10 @@ from django.utils.timesince import timesince
 
 from users.models import UserProfile
 from projects.models import Project
+from drumbeat.models import ModelBase
 
-import caching.base
 
-
-class Status(caching.base.CachingMixin, models.Model):
+class Status(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
     author = models.ForeignKey(UserProfile)
@@ -19,8 +18,6 @@ class Status(caching.base.CachingMixin, models.Model):
     status = models.CharField(max_length=750)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-
-    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return self.status
