@@ -13,6 +13,8 @@ from django.utils.translation import ugettext as _
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
 
+from drumbeat.models import ModelBase
+
 
 def get_hexdigest(algorithm, salt, raw_password):
     """Generate password hash."""
@@ -43,7 +45,7 @@ class TaggedProfile(GenericTaggedItemBase):
         verbose_name_plural = "Tagged User Profiles"
 
 
-class UserProfile(models.Model):
+class UserProfile(ModelBase):
     """Each user gets a profile."""
     username = models.CharField(max_length=255, default='', unique=True)
     display_name = models.CharField(

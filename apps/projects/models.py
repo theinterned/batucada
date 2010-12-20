@@ -8,13 +8,12 @@ from django.template.defaultfilters import slugify
 
 from BeautifulSoup import BeautifulSoup
 
+from drumbeat.models import ModelBase
 from users.models import UserProfile
 from relationships.models import followers
 
-import caching.base
 
-
-class Project(caching.base.CachingMixin, models.Model):
+class Project(ModelBase):
     """Placeholder model for projects."""
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
@@ -28,7 +27,6 @@ class Project(caching.base.CachingMixin, models.Model):
     css = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return self.name
@@ -57,7 +55,7 @@ class Project(caching.base.CachingMixin, models.Model):
 Project.followers = followers
 
 
-class Link(caching.base.CachingMixin, models.Model):
+class Link(ModelBase):
     """
     A link in this context refers to an external resource attached to a
     project. Project admins can add as many links as they like to their
@@ -72,7 +70,6 @@ class Link(caching.base.CachingMixin, models.Model):
     feed_url = models.URLField(editable=False, default='')
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-    objects = caching.base.CachingManager()
 
     class Meta:
         unique_together = ('project', 'url',)
