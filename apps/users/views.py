@@ -5,7 +5,6 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
@@ -110,17 +109,17 @@ def register(request):
 
 def user_list(request):
     """Display a list of users on the site. TODO: Paginate."""
-    users = User.objects.exclude(id__exact=request.user.id)
+    users = UserProfile.objects.exclude(id__exact=request.user.id)
     following = []
-    object_type = None
     if request.user.is_authenticated():
-        following = [user.id for user in request.user.following()]
-        object_type = ContentType.objects.get_for_model(request.user)
+        print 'hoooo'
+        profile = request.user.get_profile()
+        following = profile.following()
+        print following
     return render_to_response('users/user_list.html', {
         'heading': _('Users'),
         'users': users,
         'following': following,
-        'type': object_type,
     }, context_instance=RequestContext(request))
 
 
@@ -160,9 +159,9 @@ def confirm_resend(request, username):
 
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, username=username)
-    following = profile.user.following(model=User)
-    projects = profile.user.following(model=Project)
-    followers = profile.user.followers()
+    following = profile.following()
+    projects = profile.following(model=Project)
+    followers = profile.followers()
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,

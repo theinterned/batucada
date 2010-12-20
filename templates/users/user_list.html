@@ -13,20 +13,16 @@
 {% for user in users %}
 <li>
   <a href="{{ user.get_profile.get_absolute_url }}">
-    {{ user.get_profile.name }}
+    {{ user.name }}
   </a>
-  {% if user.id in following %}
-    <form action="{% locale_url relationships_unfollow %}" method="post">
+  {% if user in following %}
+    <form action="{% locale_url relationships_unfollow object_type='user' slug=user.username %}" method="post">
         {% csrf_token %}
-	<input type="hidden" name="object_type_id" value="{{ type.id }}" />
-        <input type="hidden" name="object_id" value="{{ user.id }}" />
 	<input type="submit" value="Unfollow" />
     </form>
   {% else %}
-    <form action="{% locale_url relationships_follow %}" method="post">
+    <form action="{% locale_url relationships_follow object_type='user' slug=user.username %}" method="post">
         {% csrf_token %}
-	<input type="hidden" name="object_type_id" value="{{ type.id }}" />
-        <input type="hidden" name="object_id" value="{{ user.id }}" />
 	<input type="submit" value="Follow" />
     </form>
   {% endif %}
