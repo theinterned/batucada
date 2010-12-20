@@ -18,8 +18,10 @@ from statuses.models import Status
 
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    is_following = (request.user.is_authenticated() and
-                 request.user.is_following(project) or False)
+    is_following = False
+    if request.user.is_authenticated():
+        profile = request.user.get_profile()
+        is_following = profile.is_following(project)
     project_type = ContentType.objects.get_for_model(project)
     activities = Activity.objects.filter(
         target_id=project.id,
@@ -28,20 +30,13 @@ def show(request, slug):
     links = project.link_set.all()
     context = {
         'project': project,
-        'type': project_type,
         'following': is_following,
         'activities': activities,
         'update_count': nstatuses,
         'links': links,
     }
-    if not project.featured:
-        return render_to_response('projects/project.html', context,
-                                  context_instance=RequestContext(request))
-    c = Context(context)
-    t = Template(project.template)
-    context.update(dict(custom_content=t.render(c)))
-    return render_to_response('projects/featured.html', context,
-                              context_instance=RequestContext(request))
+    return render_to_response('projects/project.html', context,
+                          context_instance=RequestContext(request))
 
 
 @login_required

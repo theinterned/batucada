@@ -2,16 +2,14 @@ import datetime
 import logging
 
 from django.contrib import admin
-from django.contrib.auth.models import User
-from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from django.db import models, IntegrityError
+from django.db import models
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
 from users.models import UserProfile
 from drumbeat.models import ModelBase
+from projects.models import Project
 
 log = logging.getLogger(__name__)
 
@@ -21,45 +19,28 @@ class Relationship(ModelBase):
     A relationship between two objects. Source is usually a user but can
     be any ```Model``` instance. Target can also be any ```Model``` instance.
     """
-    source_content_type = models.ForeignKey(
-        ContentType, related_name='source_relationships')
-    source_object_id = models.PositiveIntegerField()
-    source = generic.GenericForeignKey(
-        'source_content_type', 'source_object_id')
-
-    target_content_type = models.ForeignKey(
-        ContentType, related_name='target_relationships')
-    target_object_id = models.PositiveIntegerField()
-    target = generic.GenericForeignKey(
-        'target_content_type', 'target_object_id')
+    source = models.ForeignKey(
+        UserProfile, related_name='source_relationships')
+    target_user = models.ForeignKey(UserProfile, null=True, blank=True)
+    target_project = models.ForeignKey(Project, null=True, blank=True)
 
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
     def save(self, *args, **kwargs):
-        """Check that the source and the target are not the same object."""
-        if (self.source == self.target):
+        """Check that the source and the target are not the same user."""
+        if (self.source == self.target_user):
             raise ValidationError(
                 _('Cannot create self referencing relationship.'))
-        # redundant check for databases that don't support
-        # multi-column UNIQUE constraints
-        existing = Relationship.objects.filter(
-            source_content_type__exact=self.source_content_type,
-            source_object_id__exact=self.source_object_id,
-            target_content_type__exact=self.target_content_type,
-            target_object_id__exact=self.target_object_id).count()
-        if existing > 0:
-            raise IntegrityError('Duplicate Entry')
         super(Relationship, self).save(*args, **kwargs)
 
     class Meta:
-        unique_together = ('source_content_type', 'target_content_type',
-                           'source_object_id', 'target_object_id',)
+        unique_together = ('source', 'target_user')
 
     def __unicode__(self):
-        return "%(from)s => %(to)s" % {
-            'from': self.source,
-            'to': self.target,
+        return "%(from)r => %(to)r" % {
+            'from': repr(self.source),
+            'to': repr(self.target_user or self.target_project),
         }
 
 
@@ -70,42 +51,39 @@ class Relationship(ModelBase):
 
 def followers(obj):
     """
-    Return a list of ```User``` objects that follow ```obj```.
-    Note that ```obj``` can be any ```Model``` instance.
+    Return a list of ```UserProfile``` objects that follow ```obj```.
+    Note that ```obj``` can be a ```UserProfile``` or ```Project```
+    instance.
     """
-    relationships = Relationship.objects.filter(
-        target_object_id=obj.id,
-        target_content_type=ContentType.objects.get_for_model(obj))
+    kwargs = {'target_user': obj}
+    if isinstance(obj, Project):
+        kwargs = {'target_project': obj}
+    relationships = Relationship.objects.filter(**kwargs)
     return [rel.source for rel in relationships]
 
 
-def following(obj, model=None):
+def following(user, model=UserProfile):
     """
-    Return a list of objects that ```obj``` is following. All objects returned
-    will be ```Model``` instances. Optionally filter by type by including a
-    ```model``` parameter.
+    Return a list of objects that ```user``` is following. All objects returned
+    will be ```Project``` or ```UserProfile``` instances. Optionally filter by
+    type by including a ```model``` parameter.
     """
-    content_type = ContentType.objects.get_for_model(obj)
-    if model is None:
-        relationships = Relationship.objects.filter(
-            source_object_id=obj.id, source_content_type=content_type)
-    else:
-        target_content_type = ContentType.objects.get_for_model(model)
-        relationships = Relationship.objects.filter(
-            source_object_id=obj.id,
-            source_content_type=content_type,
-            target_content_type=target_content_type)
-    return [rel.target for rel in relationships]
+    relationships = Relationship.objects.filter(source=user)
+    if isinstance(model, Project) or model == Project:
+        return [rel.target_project for
+                rel in relationships.exclude(target_project__isnull=True)]
+    return [rel.target_user for
+            rel in relationships.exclude(target_user__isnull=True)]
 
 
 def is_following(obj, model):
     """Determine whether ```obj``` is following ```model```."""
-    return model in obj.following()
+    return model in obj.following(model=model)
 
-User.followers = followers
-User.following = following
-User.is_following = is_following
-
+UserProfile.followers = followers
+UserProfile.following = following
+UserProfile.is_following = is_following
+Project.followers = followers
 
 admin.site.register(Relationship)
 
@@ -114,19 +92,31 @@ admin.site.register(Relationship)
 ###########
 
 
+def project_creation_handler(sender, **kwargs):
+    project = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+
+    if not created or not isinstance(project, Project):
+        return
+
+    rel = Relationship(source=project.created_by,
+                       target_project=project)
+    rel.save()
+
+
 def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     if not isinstance(rel, Relationship):
         return
     try:
         import activity
-        if isinstance(rel.source, UserProfile):
-            source = rel.source.user
+        if rel.target_user:
+            activity.send(rel.source.user, 'follow', rel.target_user)
         else:
-            source = rel.source
-        activity.send(source, 'follow', rel.target)
+            activity.send(rel.source.user, 'follow', rel.target_project)
     except ImportError:
         pass
 
 
+post_save.connect(project_creation_handler, sender=Project)
 post_save.connect(follow_handler, sender=Relationship)

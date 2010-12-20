@@ -38,17 +38,13 @@ Comment out until we're finished refactoring activity
 
     <div id="project-follow" class="button">
       {% if following %}
-	<form method="post" action="{% locale_url relationships_unfollow %}">
+	<form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
 	  {% csrf_token %}
-	  <input type="hidden" name="object_id" value="{{ project.id }}">
-	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
           <a class="submit-button" href="#">{{ _('Unfollow') }}</a>
         </form>
       {% else %}
-	<form method="post" action="{% locale_url relationships_follow %}">
+	<form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
 	  {% csrf_token %}
-	  <input type="hidden" name="object_id" value="{{ project.id }}">
-	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
 	  <a class="submit-button" href="#">{{ _('Follow Project') }}</a>
 	</form>
       {% endif %}

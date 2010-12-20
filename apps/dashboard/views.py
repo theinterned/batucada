@@ -21,9 +21,10 @@ def splash(request):
 @login_required
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
-    projects_following = request.user.following(model=Project)
-    users_following = request.user.following(model=User)
-    users_followers = request.user.followers()
+    profile = request.user.get_profile()
+    projects_following = profile.following(model=Project)
+    users_following = profile.following()
+    users_followers = profile.followers()
     project_ids = [p.pk for p in projects_following]
     user_ids = [u.pk for u in users_following]
     activities = Activity.objects.filter(
@@ -31,7 +32,7 @@ def dashboard(request):
         Q(actor__user__in=user_ids) | Q(target_id__in=project_ids) |
         Q(object_id__in=project_ids),
     ).order_by('-created_on')
-    user_projects = Project.objects.filter(created_by=request.user)
+    user_projects = Project.objects.filter(created_by=profile)
     return render_to_response('dashboard/dashboard.html', {
         'users_following': users_following,
         'users_followers': users_followers,

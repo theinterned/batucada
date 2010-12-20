@@ -10,7 +10,6 @@ from BeautifulSoup import BeautifulSoup
 
 from drumbeat.models import ModelBase
 from users.models import UserProfile
-from relationships.models import Relationship, followers
 
 
 class Project(ModelBase):
@@ -49,10 +48,6 @@ class Project(ModelBase):
             self.slug = slug + str(count)
             count += 1
         super(Project, self).save()
-
-
-# Monkey patch the Project model with methods from the relationships app.
-Project.followers = followers
 
 
 class Link(ModelBase):
@@ -131,9 +126,6 @@ def project_creation_handler(sender, **kwargs):
 
     if not created or not isinstance(project, Project):
         return
-
-    rel = Relationship(source=project.created_by, target=project)
-    rel.save()
 
     try:
         import activity
