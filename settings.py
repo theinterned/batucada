@@ -163,7 +163,7 @@ DEBUG_TOOLBAR_CONFIG = {
 GLOBAL_LOG_LEVEL = logging.DEBUG
 GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
 
-CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
+# CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 CACHE_PREFIX = 'batucada'
 CACHE_COUNT_TIMEOUT = 60
 

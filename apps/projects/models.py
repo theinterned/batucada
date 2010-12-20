@@ -137,7 +137,7 @@ def project_creation_handler(sender, **kwargs):
 
     try:
         import activity
-        activity.send(project.created_by, 'post', project)
+        activity.send(project.created_by.user, 'post', project)
     except ImportError:
         return
 
