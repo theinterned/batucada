@@ -10,6 +10,7 @@ from django.db import models, IntegrityError
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
+from users.models import UserProfile
 from drumbeat.models import ModelBase
 
 log = logging.getLogger(__name__)
@@ -119,7 +120,11 @@ def follow_handler(sender, **kwargs):
         return
     try:
         import activity
-        activity.send(rel.source, 'follow', rel.target)
+        if isinstance(rel.source, UserProfile):
+            source = rel.source.user
+        else:
+            source = rel.source
+        activity.send(source, 'follow', rel.target)
     except ImportError:
         pass
 
