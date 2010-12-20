@@ -29,7 +29,7 @@
   <div class="post-contents">
 
     <div class="post-details">
-      <a class="member-name" href="{{ activity.actor.user.get_profile.get_absolute_url }}">{{ activity.actor.get_full_name }}</a>
+      <a class="member-name" href="{{ activity.actor.user.get_profile.get_absolute_url }}">{{ activity.actor.user.get_profile.name }}</a>
       <a href="{{ activity.get_absolute_url }}">{{ activity.created_on|timesince }} {{ _(' ago') }}</a>
     </div>
 

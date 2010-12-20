@@ -65,7 +65,7 @@ class UserProfile(ModelBase):
     tags = TaggableManager(through=TaggedProfile)
 
     def __unicode__(self):
-        return '%s: %s' % (self.id, self.display_name or self.username)
+        return self.display_name or self.username
 
     @models.permalink
     def get_absolute_url(self):
