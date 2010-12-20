@@ -10,7 +10,7 @@ from BeautifulSoup import BeautifulSoup
 
 from drumbeat.models import ModelBase
 from users.models import UserProfile
-from relationships.models import followers
+from relationships.models import Relationship, followers
 
 
 class Project(ModelBase):
@@ -131,6 +131,9 @@ def project_creation_handler(sender, **kwargs):
 
     if not created or not isinstance(project, Project):
         return
+
+    rel = Relationship(source=project.created_by, target=project)
+    rel.save()
 
     try:
         import activity
