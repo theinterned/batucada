@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect, Http404
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404
