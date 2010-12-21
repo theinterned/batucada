@@ -4,7 +4,6 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
@@ -24,6 +23,10 @@ log = logging.getLogger(__name__)
 @anonymous_only
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
+
+    if 'next' in request.GET:
+        request.session['next'] = request.GET['next']
+
     logout(request)
 
     r = auth_views.login(request, template_name='users/signin.html')
@@ -53,6 +56,11 @@ def login(request):
             return render_to_response('users/signin.html', {
                 'form': auth_forms.AuthenticationForm(),
             }, context_instance=RequestContext(request))
+
+        next_param = request.session.get('next', None)
+        if next_param:
+            del request.session['next']
+            return HttpResponseRedirect(next_param)
 
     elif 'username' in request.POST:
         # Hitting POST directly because cleaned_data doesn't exist
