@@ -105,7 +105,7 @@ class UserProfile(ModelBase):
                                                            string.digits, 60))
         return self.confirmation_code
 
-    def set_password(self, raw_password, algorithm='sha512'):
+    def set_password(self, raw_password, algorithm='sha256'):
         self.password = create_password(algorithm, raw_password)
 
     def check_password(self, raw_password):
