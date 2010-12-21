@@ -1,19 +1,17 @@
-from django.contrib import messages
+from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.http import HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext, Context, Template
+from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
+from projects import forms as project_forms
 from projects.models import Project
-from projects.forms import ProjectForm, ProjectContactUsersForm
-from projects.forms import ProjectLinkForm
 
 from activity.models import Activity
 from statuses.models import Status
+from drumbeat import messages
 
 
 def show(request, slug):
@@ -44,16 +42,16 @@ def edit(request, slug):
     user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
     if user != project.created_by:
-        return HttpResponseForbidden()
+        return http.HttpResponseForbidden()
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)
+        form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(
+            return http.HttpResponseRedirect(
                 reverse('projects_show', kwargs=dict(slug=project.slug)))
     else:
-        form = ProjectForm(instance=project)
+        form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/edit.html', {
         'form': form,
@@ -71,16 +69,16 @@ def list(request):
 def create(request):
     user = request.user.get_profile()
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = project_forms.ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
             project.created_by = user
             project.save()
-            return HttpResponseRedirect(reverse('projects_show', kwargs={
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
     else:
-        form = ProjectForm()
+        form = project_forms.ProjectForm()
     return render_to_response('projects/create.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -91,18 +89,18 @@ def contact_followers(request, slug):
     user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
     if project.created_by != user:
-        return HttpResponseForbidden()
+        return http.HttpResponseForbidden()
     if request.method == 'POST':
-        form = ProjectContactUsersForm(request.POST)
+        form = project_forms.ProjectContactUsersForm(request.POST)
         if form.is_valid():
             form.save(sender=request.user)
             messages.add_message(request, messages.INFO,
                                  _("Message successfully sent."))
-            return HttpResponseRedirect(reverse('projects_show', kwargs={
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
     else:
-        form = ProjectContactUsersForm()
+        form = project_forms.ProjectContactUsersForm()
         form.fields['project'].initial = project.pk
     return render_to_response('projects/contact_users.html', {
         'form': form,
@@ -110,25 +108,20 @@ def contact_followers(request, slug):
     }, context_instance=RequestContext(request))
 
 
-def featured_css(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    return HttpResponse(project.css, mimetype='text/css')
-
-
 @login_required
 def link_create(request, slug):
     user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
     if project.created_by != user:
-        return HttpResponseForbidden()
-    form = ProjectLinkForm(initial=dict(project=project.pk))
+        return http.HttpResponseForbidden()
+    form = project_forms.ProjectLinkForm(initial=dict(project=project.pk))
     if request.method == 'POST':
-        form = ProjectLinkForm(data=request.POST)
+        form = project_forms.ProjectLinkForm(data=request.POST)
         if form.is_valid():
             messages.add_message(request, messages.INFO,
                                  _("Your link has been created"))
             form.save()
-            return HttpResponseRedirect(reverse('projects_show', kwargs={
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
     return render_to_response('projects/create_link.html', {
