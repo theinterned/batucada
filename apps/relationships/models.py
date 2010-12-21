@@ -111,7 +111,7 @@ def follow_handler(sender, **kwargs):
     try:
         import activity
         if rel.target_user:
-            activity.send(rel.source.user, 'follow', rel.target_user)
+            activity.send(rel.source.user, 'follow', rel.target_user.user)
         else:
             activity.send(rel.source.user, 'follow', rel.target_project)
     except ImportError:
