@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'feeds',
     'drumbeat',
     'taggit',
+    'preferences',
 )
 
 if DEBUG:
