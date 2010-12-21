@@ -30,7 +30,7 @@ def dashboard(request):
         Q(actor__user__exact=request.user) |
         Q(actor__user__in=user_ids) | Q(target_id__in=project_ids) |
         Q(object_id__in=project_ids),
-    ).order_by('-created_on')
+    ).order_by('-created_on')[0:25]
     user_projects = Project.objects.filter(created_by=profile)
     return render_to_response('dashboard/dashboard.html', {
         'users_following': users_following,
