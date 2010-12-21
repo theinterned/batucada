@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import forms as auth_forms
 from django.utils.translation import ugettext as _
 
+from captcha import fields as captcha_fields
+
 from users.models import UserProfile
 
 from drumbeat.utils import slug_validator
@@ -16,9 +18,16 @@ class RegisterForm(forms.ModelForm):
     password_confirm = forms.CharField(
         max_length=255,
         widget=forms.PasswordInput(render_value=False))
+    recaptcha = captcha_fields.ReCaptchaField()
 
     class Meta:
         model = UserProfile
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+
+        if not settings.RECAPTCHA_PRIVATE_KEY:
+            del self.fields['recaptcha']
 
     def clean_username(self):
         """Make sure that username has no invalid characters."""
