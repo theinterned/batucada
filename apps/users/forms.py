@@ -11,6 +11,10 @@ from users.models import UserProfile
 from drumbeat.utils import slug_validator
 
 
+class AuthenticationForm(auth_forms.AuthenticationForm):
+    remember_me = forms.BooleanField(required=False)
+
+
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(
         max_length=255,

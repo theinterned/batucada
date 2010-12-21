@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
@@ -29,7 +30,8 @@ def login(request):
 
     logout(request)
 
-    r = auth_views.login(request, template_name='users/signin.html')
+    r = auth_views.login(request, template_name='users/signin.html',
+                         authentication_form=forms.AuthenticationForm)
 
     if isinstance(r, HttpResponseRedirect):
         # Succsesful log in according to django.  Now we do our checks.  I do
@@ -56,6 +58,10 @@ def login(request):
             return render_to_response('users/signin.html', {
                 'form': auth_forms.AuthenticationForm(),
             }, context_instance=RequestContext(request))
+
+        if request.POST.get('remember_me', None):
+            request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+            log.debug(u'User signed in with remember_me option')
 
         next_param = request.session.get('next', None)
         if next_param:
