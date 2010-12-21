@@ -1,7 +1,8 @@
 from django.conf import settings
-from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
+
+from drumbeat import messages
 
 
 def anonymous_only(func):
@@ -10,6 +11,7 @@ def anonymous_only(func):
     decorator is for views that redirect users to the redirect field name
     if they are already logged in.
     """
+
     def decorator(*args, **kwargs):
         request = args[0]
         if request.user.is_authenticated():
