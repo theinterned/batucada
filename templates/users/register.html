@@ -42,6 +42,11 @@
     <p>
       {{ form.recaptcha }}
       {{ form.recaptcha.errors }}
+      <script type="text/javascript">
+	var RecaptchaOptions = {
+	    theme: 'clean'
+        };
+      </script>
       <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
     </p>
     {% else %}
