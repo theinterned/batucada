@@ -25,7 +25,7 @@ Temporarily comment out atom feed link while refactoring activity application.
   <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
   <ul class="followers">
   {% for user_follower in users_followers|slice:":36" %}
-    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_full_name_or_username }}"></a></li>
+    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.name }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
