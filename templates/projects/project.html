@@ -20,8 +20,8 @@ Comment out until we're finished refactoring activity
 
     {% if user.get_profile == project.created_by %}
       <div id="project-actions">
-	<div class="button"><a href="#">{{ _('Edit Project') }}</a></div>
-	<div class="button"><a href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a></div>
+        <a class="button" href="#">{{ _('Edit Project') }}</a>
+        <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
       </div>
     {% endif %}
 
@@ -36,21 +36,21 @@ Comment out until we're finished refactoring activity
 
     <h1 id="project-name">{{ project.name }}</h1>
 
-    <div id="project-follow" class="button">
+    <div id="project-follow">
       {% if following %}
-	<form method="post" action="{% locale_url relationships_unfollow %}">
-	  {% csrf_token %}
-	  <input type="hidden" name="object_id" value="{{ project.id }}">
-	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
-          <a class="submit-button" href="#">{{ _('Unfollow') }}</a>
-        </form>
+      <form method="post" action="{% locale_url relationships_unfollow %}">
+        {% csrf_token %}
+        <input type="hidden" name="object_id" value="{{ project.id }}">
+        <input type="hidden" name="object_type_id" value="{{ type.id }}">
+        <button>{{ _('Unfollow') }}</button>
+      </form>
       {% else %}
-	<form method="post" action="{% locale_url relationships_follow %}">
-	  {% csrf_token %}
-	  <input type="hidden" name="object_id" value="{{ project.id }}">
-	  <input type="hidden" name="object_type_id" value="{{ type.id }}">
-	  <a class="submit-button" href="#">{{ _('Follow Project') }}</a>
-	</form>
+      <form method="post" action="{% locale_url relationships_follow %}">
+      {% csrf_token %}
+        <input type="hidden" name="object_id" value="{{ project.id }}">
+        <input type="hidden" name="object_type_id" value="{{ type.id }}">
+        <button>{{ _('Follow Project') }}</button>
+      </form>
       {% endif %}
     </div> <!-- /#project-follow -->
 
@@ -99,12 +99,8 @@ Comment out until we're finished refactoring activity
 	</h3>
 
 	<div class="member-actions">
-	  <div class="button">
-	    <a href="#">{{ _('Follow User') }}</a>
-	  </div>
-	  <div class="button">
-	    <a href="#">{{ _('Message') }}</a>
-	  </div>
+    <a class="button" href="#">{{ _('Follow User') }}</a>
+    <a class="button" href="#">{{ _('Message') }}</a>
 	</div>
 
 	<div class="member-bio">
@@ -131,9 +127,8 @@ Comment out until we're finished refactoring activity
 	    <li><span>{{ project.name }}</span></li>
 	  </ul>
 
-	  <div class="button update">
-	    <a id="post-project-update" href="#">Post Update</a>
-	  </div>
+    <button class="button update submit" id="post-project-update">Post Update</button>
+
 
 	</div> <!-- /.status-and-actions -->
 	</form>

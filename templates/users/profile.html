@@ -24,7 +24,7 @@ Temporarily comment out atom feed link while refactoring activity application.
 
     {% if user == profile.user %}
     <div id="project-actions">      
-    	<div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
+    	<a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
     </div>
     {% endif %}
 
@@ -41,29 +41,25 @@ Temporarily comment out atom feed link while refactoring activity application.
     </h1>
     <div class="member-actions">
       {% if user == profile.user %}
-      <div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
+      <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
       {% else %}
-      <div class="button">
         {% if profile.user in following %}
         <form action="{% locale_url relationships_unfollow %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="object_id" value="{{ profile_user.id }}">
           <input type="hidden" name="object_type_id" value="{{ type.id }}">
-          <a class="submit-button" id="unfollow-user" href="#">Unfollow User</a>
+          <button id="unfollow-user" >Unfollow User</button>
         </form>
         {% else %}
         <form action="{% locale_url relationships_follow %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="object_id" value="{{ profile_user.id }}">
           <input type="hidden" name="object_type_id" value="{{ type.id }}">
-          <a class="submit-button" id="follow-user" href="#">Follow User</a>
+          <button id="follow-user">Follow User</button>
         </form>
         {% endif %}
-                
-      </div>
-      <div class="button">
-        <a href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>
-      </div>
+        <a class="button" href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>    
+    
       {% endif %}
     </div>
   </div> 
