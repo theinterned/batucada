@@ -6,7 +6,7 @@ html {
 body {
   font-family: "Arial", "Helvetica", sans-serif;
   color: #474747;
-  background: #f3f4f6 url("/media/images/background.jpg") repeat-x right 50px;
+  background: #f3f4f6 url("/media/images/background.jpg") repeat-x center 50px;
   min-height: 101%;
 }
 
@@ -23,7 +23,7 @@ body {
 	clear: both;
 }
 h1, h2, h3, h4, h5, h6{
-  text-shadow:  1px 2px #fff;
+  text-shadow:  1px 1px #fff;
 }
 h1 {
   font-size: 24px;
@@ -178,7 +178,7 @@ textarea {
 	border-radius:4px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	box-shadow: inset 0 1px 2px #c1c1c1, inset 1px 3px 10px #f3f3f3;
+	box-shadow: inset 0 #project_gla #c1c1c1, inset 1px 3px 10px #f3f3f3;
 	-moz-box-shadow: inset 0 1px 2px #c1c1c1, inset 3px 1px 10px #f3f3f3;
 	-webkit-box-shadow: inset 0 1px 2px #c1c1c1, inset 3px 1px 10px #f3f3f3;
 	}
@@ -667,13 +667,13 @@ header {}
 	}
 	#project_gallery section h1{
 		text-align: center;
-		margin-top: -0.5em;
-		
+		margin-top: -0.65em;		
 		font-family: Georgia, "Times New Roman", Times, serif;
 		font-style: italic;		
 	}
 	#project_gallery section h1 span{
 		background: #F3F4F6;
+		-webkit-box-shadow: 0 0 5px #f7f7f7 ;
 		padding:  0 6px;
 	}
   	#project_gallery .project-list{
@@ -989,6 +989,7 @@ header {}
 
 	#profile_edit {}
 		.modal{
+			position: relative;
 			width: 780px;
 			margin: 0 auto;
 			padding: 6px;
@@ -1094,7 +1095,7 @@ header {}
 			position: absolute;
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
-		}
+		}	
 		
 		
 footer {}
