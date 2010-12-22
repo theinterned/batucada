@@ -50,6 +50,7 @@ img.project.picture {
 button,
 input[type=submit],
 input[type=button],
+a.button,
 .button {	
 	display: inline-block;
 	vertical-align: bottom;
@@ -57,7 +58,7 @@ input[type=button],
 	min-height: 18px;	
 	color: #777;	
 	font-size: 12px;
-	padding: 3px 7px;
+	padding: 2px 7px;
 	text-decoration: none;
 	text-shadow: #fff 1px 1px 0;
 	border: 1px solid #bfbfbf;
@@ -95,22 +96,25 @@ input[type=button]:hover,
 button:focus,
 input[type=button]:focus,
 .button:focus {
-	border-color: #719ab7;
 	color: #2084CA;
-	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA, 0 0 5px #00a6ff;
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 5px #00a6ff;
-    -webkit-box-shadow:inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1), 0 0 5px #00a6ff;
+	text-decoration: none;
+	outline: none;
+	border-color: #3ea1e6;
+	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 4px #3ea1e6;
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 4px #3ea1e6;
+    -webkit-box-shadow:inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
 	}
 button[type=submit]:hover,
 input[type=submit]:hover,
+.button.submit:hover,
 button[type=submit]:focus,
-input[type=submit]:focus{
+input[type=submit]:focus,
+.button.submit:focus{
 	color: #bfe9ff;
-	border-color: #4f6b80;
 	text-shadow: 0px -1px 0px rgba(0,0,0,0.6);
-	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 5px #00a6ff;
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 5px #00a6ff;
-    -webkit-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 5px #00a6ff;
+	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
+    -webkit-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
     behavior: url("/media/css/PIE.htc");
 	}
 button:active,
@@ -119,8 +123,8 @@ input[type=button]:active,
 input[type=submit]:active,
 .button:active {
 	/*color: #999;*/
-	padding-top: 4px;
-	padding-bottom: 2px;
+	padding-top: 3px;
+	padding-bottom: 1px;
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#e8e8e8),to(#f6f6f6));
 	background: -moz-linear-gradient(top,#e8e8e8,#f6f6f6);
 	-pie-background: linear-gradient(top,#e8e8e8,#f6f6f6);
@@ -178,7 +182,22 @@ textarea {
 	-moz-box-shadow: inset 0 1px 2px #c1c1c1, inset 3px 1px 10px #f3f3f3;
 	-webkit-box-shadow: inset 0 1px 2px #c1c1c1, inset 3px 1px 10px #f3f3f3;
 	}
-
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type*="date"]:focus,
+input[type*="time"]:focus,
+textarea:focus {
+	outline: none;
+	border: 1px solid #3ea1e6;
+	box-shadow: inset #3ea1e6 0px 1px 4px;
+	-webkit-box-shadow: inset #3ea1e6 0px 1px 4px;
+	-moz-box-shadow: inset #3ea1e6 0px 1px 4px;
+	
+	}
 /* 
  * LAYOUT 
  */
@@ -457,7 +476,6 @@ header {}
     }
       #project-follow {
         margin: 10px 0;        
-        text-align: center;
       }
       
       #project-stats {
@@ -544,6 +562,9 @@ header {}
         #dashboard #sidebar .vcard .member-details p{
 			margin-bottom: 0;
 		}
+		.member-actions form{
+			display: inline;
+			}
 		#member_relationships .count {
 			font-weight: bold;
 			color: #2084ca;
@@ -821,6 +842,8 @@ header {}
     
     #main .post-char-count {
       font-size: 20px;
+      line-height: 25px;
+      min-height: 25px;
       font-weight: bold;
       padding: 1px 8px;
     }
@@ -875,46 +898,11 @@ header {}
         text-align: right;
       }
         #create-post .update {
-          border: 1px solid #3a5568;
-          float: right;
-        }
-          #create-post .update, #create-post .update a {
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            behavior: url("/media/css/PIE.htc");
-          }
-          
-          #create-post .update a {
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-            text-shadow: #000 0px -1px 0px;
-            -moz-text-shadow: #000 0px -1px 0px;
-            -webkit-text-shadow: #000 0px -1px 0px;
-            border: 1px solid #2571a6;
-            border-left: 1px solid #a3d3f4;
-            border-top: 1px solid #a3d3f4;
-            background: -webkit-gradient(linear,0 top,0 bottom,from(#3ea1e6),to(#2374ad));
-            background: -moz-linear-gradient(top,#3ea1e6,#2374ad);
-            -pie-background: linear-gradient(top,#3ea1e6,#2374ad);
-            padding: 3px 8px;
-            behavior: url("/media/css/PIE.htc");
-          }
-          #create-post .update:hover {
-            border: 1px solid #719ab7;
-          }
-          
-          #create-post .update a:active {
-            text-shadow: #000 0px 1px 0px;
-            -moz-text-shadow: #000 0px 1px 0px;
-            -webkit-text-shadow: #000 0px 1px 0px;
-            background: -webkit-gradient(linear,0 top,0 bottom,from(#2374ad),to(#3ea1e6));
-            background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
-            -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
-            behavior: url("/media/css/PIE.htc");
-          }
-      
+		font-size: 14px;
+		line-height: 25px;
+		min-height: 25px;
+		float: right;
+        }             
       #create-post.expanded {
       }
         #create-post.expanded input {
