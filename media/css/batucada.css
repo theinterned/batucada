@@ -1044,6 +1044,16 @@ header {}
 			border-radius:5px 5px 0 0;
 			-moz-border-radius:5px 5px 0 0;
 		}
+		.modal .buttons{
+			position: absolute;
+			top:  18px; right: 18px;
+		}
+		.modal .buttons button {
+			font-size: 14px;
+			line-height: 24px;
+			min-height: 30px;
+			width: 68px;
+		}
         .modal #profile-edit-nav {
 			float: left;
 			width: 190px;
