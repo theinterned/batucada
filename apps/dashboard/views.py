@@ -26,7 +26,8 @@ def dashboard(request):
     users_followers = profile.followers()
     project_ids = [p.pk for p in projects_following]
     user_ids = [u.pk for u in users_following]
-    activities = Activity.objects.filter(
+    activities = Activity.objects.select_related(
+        'actor', 'target', 'actor__user').filter(
         Q(actor__user__exact=request.user) |
         Q(actor__user__in=user_ids) | Q(target_id__in=project_ids) |
         Q(object_id__in=project_ids),
