@@ -22,7 +22,7 @@
 
   {% else %}
 
-  <a href="{{ activity.actor.user.get_absolute_url }}">
+  <a href="{{ activity.actor.user.get_profile.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.user.get_profile.image_or_default }}">
   </a>
 
