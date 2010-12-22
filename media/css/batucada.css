@@ -50,70 +50,91 @@ img.project.picture {
 button,
 input[type=submit],
 input[type=button],
-div.button a {
-  background: #f6f6f6;
-  color: #777;
-  display: block;
-  font-size: 12px;
-  line-height: 20px;
-  padding: 0 7px;
-  border: 1px solid #fff;
-  border-right: 1px solid #dfdfdf;
-  border-bottom: 1px solid #dfdfdf;
-  text-shadow: #fff 1px 1px 1px;
-  -moz-text-shadow: #fff 1px 1px 1px;
-  -webkit-text-shadow: #fff 1px 1px 1px;
-  background: -webkit-gradient(linear,0 top,0 bottom,from(#f6f6f6),to(#e9e9e9));
-  background: -moz-linear-gradient(top,#f6f6f6,#e9e9e9);
-  text-decoration: none;
-}
-button,
+.button {	
+	display: inline-block;
+	vertical-align: bottom;
+	line-height: 18px;
+	min-height: 18px;	
+	color: #777;	
+	font-size: 12px;
+	padding: 3px 7px;
+	text-decoration: none;
+	text-shadow: #fff 1px 1px 0;
+	border: 1px solid #bfbfbf;
+	border-color: #bfbfbf #a0a0a0 #a0a0a0 #bfbfbf;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	background: #f6f6f6;
+	background: -moz-linear-gradient(top,#f6f6f6,#e8e8e8);
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#f6f6f6),to(#e8e8e8));
+	-pie-background: linear-gradient(top,#f6f6f6,#e8e8e8);
+	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.2);
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 1px rgba(0,0,0,0.2);
+    -webkit-box-shadow:inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1);
+    behavior: url("/media/css/PIE.htc");
+	}
 input[type=submit],
-input[type=button],
-div.button {
-  display: inline-block;
-  border: 1px solid #c0c0c0;
-}
-button,
-input[type=submit],
-input[type=button],
-div.button a, div.button {
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-div.button a:hover {
-  color: #555;
-}
-div.button a:active {
-  color: #999;
-  background: -webkit-gradient(linear,0 top,0 bottom,from(#e9e9e9),to(#f6f6f6));
-  background: -moz-linear-gradient(top,#e9e9e9,#f6f6f6);
-}
-/*TODO: refactor this to be 'more elegant' */ 
-input[type=submit],
-button.submit,
-.button.submit a,
-#signup-buttons .signup a {
+button[type=submit],
+.button.submit{
     color: white;
     font-weight: bold;
-    text-shadow: #000 0px -1px 0px;
-    -moz-text-shadow: #000 0px -1px 0px;
-    -webkit-text-shadow: #000 0px -1px 0px;
-    border: 1px solid #2571a6;
-    border-left: 1px solid #a3d3f4;
-    border-top: 1px solid #a3d3f4;
-    background: -webkit-gradient(linear,0 top,0 bottom,from(#3ea1e6),to(#2374ad));
-    background: -moz-linear-gradient(top,#3ea1e6,#2374ad);
-    -pie-background: linear-gradient(top,#3ea1e6,#2374ad);
+    text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
+    border: 1px solid #608dae;
+    border-color: #608dae #405f75 #405f75 #608dae;
+    background: -webkit-gradient(linear,0 top,0 bottom,from(#3fa3e9),to(#2171a9));
+    background: -moz-linear-gradient(top,#3fa3e9,#2171a9);
+    -pie-background: linear-gradient(top,#3fa3e9,#2171a9);
+    box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1);
+    -webkit-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1);
     behavior: url("/media/css/PIE.htc");
-}
+	}
+button:hover,
+input[type=button]:hover,
+.button:hover,
+button:focus,
+input[type=button]:focus,
+.button:focus {
+	border-color: #719ab7;
+	color: #2084CA;
+	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA, 0 0 5px #00a6ff;
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 5px #00a6ff;
+    -webkit-box-shadow:inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1), 0 0 5px #00a6ff;
+	}
+button[type=submit]:hover,
 input[type=submit]:hover,
-button.submit:hover,
-.button.submit a:hover,
-#signup-buttons .signup:hover {
-    border: 1px solid #719ab7;
-}
+button[type=submit]:focus,
+input[type=submit]:focus{
+	color: #bfe9ff;
+	border-color: #4f6b80;
+	text-shadow: 0px -1px 0px rgba(0,0,0,0.6);
+	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 5px #00a6ff;
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 5px #00a6ff;
+    -webkit-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 5px #00a6ff;
+    behavior: url("/media/css/PIE.htc");
+	}
+button:active,
+button[type=submit]:active,
+input[type=button]:active,
+input[type=submit]:active,
+.button:active {
+	/*color: #999;*/
+	padding-top: 4px;
+	padding-bottom: 2px;
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#e8e8e8),to(#f6f6f6));
+	background: -moz-linear-gradient(top,#e8e8e8,#f6f6f6);
+	-pie-background: linear-gradient(top,#e8e8e8,#f6f6f6);
+	}
+button[type=submit]:active,
+input[type=submit]:active{
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#2171a9),to(#3fa3e9));
+    background: -moz-linear-gradient(top,#2171a9,#3fa3e9);
+    -pie-background: linear-gradient(top,#2171a9,#3fa3e9);
+    box-shadow:inset -1px -1px 1px rgba(255,255,255,0.5), inset 1px 1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA;
+    -moz-box-shadow:inset -1px -1px 1px rgba(255,255,255,0.5), inset 1px 1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA;    
+    -webkit-box-shadow:inset -1px -1px 1px rgba(255,255,255,0.5), inset 1px 1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA;
+    behavior: url("/media/css/PIE.htc");
+	}
 input[type=submit]:active,
 button.submit:active,
 .button.submit a:active,        
@@ -1095,7 +1116,7 @@ TODO: refactor this to use general button styles ~line 50
 */
 
 
-#signup-buttons .signup {
+/*#signup-buttons .signup {
     width: 75px;
     margin-bottom: 10px;
 }
@@ -1136,4 +1157,4 @@ TODO: refactor this to use general button styles ~line 50
     background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
     -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
     behavior: url("/media/css/PIE.htc");
-}
+}*/
