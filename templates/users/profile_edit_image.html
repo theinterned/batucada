@@ -15,6 +15,9 @@
     {{ form.image }}
     {{ form.image.errors }}
   </p>
-  <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
+  <p class="buttons">
+    <button type="reset" value="reset">Cancel</button>
+    <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
+  </p>
 </form>
 {% endblock %}
