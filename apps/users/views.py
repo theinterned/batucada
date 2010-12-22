@@ -126,10 +126,8 @@ def user_list(request):
     users = UserProfile.objects.exclude(id__exact=request.user.id)
     following = []
     if request.user.is_authenticated():
-        print 'hoooo'
         profile = request.user.get_profile()
         following = profile.following()
-        print following
     return render_to_response('users/user_list.html', {
         'heading': _('Users'),
         'users': users,
