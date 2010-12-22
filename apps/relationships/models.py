@@ -58,7 +58,8 @@ def followers(obj):
     kwargs = {'target_user': obj}
     if isinstance(obj, Project):
         kwargs = {'target_project': obj}
-    relationships = Relationship.objects.filter(**kwargs)
+    relationships = Relationship.objects.select_related(
+        'source').filter(**kwargs)
     return [rel.source for rel in relationships]
 
 
@@ -68,12 +69,14 @@ def following(user, model=UserProfile):
     will be ```Project``` or ```UserProfile``` instances. Optionally filter by
     type by including a ```model``` parameter.
     """
-    relationships = Relationship.objects.filter(source=user)
     if isinstance(model, Project) or model == Project:
-        return [rel.target_project for
-                rel in relationships.exclude(target_project__isnull=True)]
-    return [rel.target_user for
-            rel in relationships.exclude(target_user__isnull=True)]
+        relationships = Relationship.objects.select_related(
+            'target_project').filter(source=user).exclude(
+            target_project__isnull=True)
+        return [rel.target_project for rel in relationships]
+    relationships = Relationship.objects.select_related('target_user').filter(
+        source=user).exclude(target_user__isnull=True)
+    return [rel.target_user for rel in relationships]
 
 
 def is_following(obj, model):
