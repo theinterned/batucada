@@ -3,6 +3,7 @@ import datetime
 
 from django.contrib import admin
 from django.db import models, IntegrityError
+from django.db.models import Count
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 
@@ -10,6 +11,18 @@ from BeautifulSoup import BeautifulSoup
 
 from drumbeat.models import ModelBase
 from users.models import UserProfile
+from statuses.models import Status
+
+import caching.base
+
+
+class ProjectManager(caching.base.CachingManager):
+    def get_popular(self, limit=0):
+        statuses = Status.objects.values('project_id').annotate(
+            Count('id')).exclude(project__isnull=True).filter(
+                project__featured=False).order_by('-id__count')[:limit]
+        project_ids = [s['project_id'] for s in statuses]
+        return Project.objects.filter(id__in=project_ids)
 
 
 class Project(ModelBase):
@@ -26,6 +39,8 @@ class Project(ModelBase):
     css = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
+
+    objects = ProjectManager()
 
     def __unicode__(self):
         return self.name

@@ -5,16 +5,14 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
 
-from users.models import UserProfile
-from projects.models import Project
 from drumbeat.models import ModelBase
 
 
 class Status(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
-    author = models.ForeignKey(UserProfile)
-    project = models.ForeignKey(Project, null=True)
+    author = models.ForeignKey('users.UserProfile')
+    project = models.ForeignKey('projects.Project', null=True)
     status = models.CharField(max_length=750)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
