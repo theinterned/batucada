@@ -1,7 +1,10 @@
+import logging
+
 from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
@@ -13,6 +16,8 @@ from activity.models import Activity
 from statuses.models import Status
 from drumbeat import messages
 
+log = logging.getLogger(__name__)
+
 
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -23,7 +28,7 @@ def show(request, slug):
     project_type = ContentType.objects.get_for_model(project)
     activities = Activity.objects.filter(
         target_id=project.id,
-        target_content_type=project_type)[0:10]
+        target_content_type=project_type).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
     context = {
@@ -60,8 +65,13 @@ def edit(request, slug):
 
 
 def list(request):
+    featured = Project.objects.filter(featured=True)
+    new = Project.objects.all().order_by('-created_on')[:4]
+    active = Project.objects.get_popular(limit=8)
     return render_to_response('projects/gallery.html', {
-        'projects': Project.objects.all(),
+        'featured': featured,
+        'new': new,
+        'active': active,
     }, context_instance=RequestContext(request))
 
 

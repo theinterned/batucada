@@ -14,15 +14,32 @@
     {% endif %}
   </div> <!-- /.container -->
 {% endblock %}
+
 {% block body %}
 
 <h1>{{ _('Browse <b>Projects</b>') }}</h1>
 <section>
   <h1><span>{{_('Featured')}}</span></h1>
   <ul class="project-list">
-  {% for project in projects %}
+  {% for project in featured %}
     <li>{% include "projects/_project_card.html" %}</li>
   {% endfor %}
   </ul>
-  {% endblock %}
 </section>
+<section>
+  <h1><span>{{ _('New Projects') }}</span></h1>
+  <ul class="project-list">
+    {% for project in new %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+<section>
+  <h1><span>{{ _('Active Projects') }}</span></h1>
+  <ul class="project-list">
+    {% for project in active %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}
