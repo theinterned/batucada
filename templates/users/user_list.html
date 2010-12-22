@@ -16,19 +16,19 @@
     {{ user.get_profile.name }}
   </a>
   {% if user.id in following %}
-    <form action="{% locale_url relationships_unfollow %}" method="post">
-        {% csrf_token %}
-	<input type="hidden" name="object_type_id" value="{{ type.id }}" />
-        <input type="hidden" name="object_id" value="{{ user.id }}" />
-	<input type="submit" value="Unfollow" />
+  <form action="{% locale_url relationships_unfollow %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="object_type_id" value="{{ type.id }}" />
+    <input type="hidden" name="object_id" value="{{ user.id }}" />
+    <button type="submit" value="{{ _('Unfollow') }}">{{ _('Unfollow') }}</button>
     </form>
-  {% else %}
+    {% else %}
     <form action="{% locale_url relationships_follow %}" method="post">
-        {% csrf_token %}
-	<input type="hidden" name="object_type_id" value="{{ type.id }}" />
-        <input type="hidden" name="object_id" value="{{ user.id }}" />
-	<input type="submit" value="Follow" />
-    </form>
+    {% csrf_token %}
+    <input type="hidden" name="object_type_id" value="{{ type.id }}" />
+    <input type="hidden" name="object_id" value="{{ user.id }}" />
+    <button type="submit" value="{{ _('Follow') }}">{{ _('Follow') }}</button>
+  </form>
   {% endif %}
 </li>
 {% endfor %}

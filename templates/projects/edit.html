@@ -6,6 +6,6 @@
 <form action="{% locale_url projects_edit slug=project.slug %}" method="post">
 {% csrf_token %}
 {{ form.as_p }}
-<input type="submit" value="Save">
+<button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
 </form>
 {% endblock %}

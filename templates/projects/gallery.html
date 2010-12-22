@@ -9,7 +9,7 @@
     </nav>
     {% if user.is_authenticated %}
     <div id="project-actions">
-      <div id="create-project" class="button"><a class="submit-button" href="{% locale_url projects_create %}">Create a project</a></div>
+      <a id="create-project" class="button" href="{% locale_url projects_create %}">Create a project</a>
     </div>
     {% endif %}
   </div> <!-- /.container -->
