@@ -6,58 +6,62 @@
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
 
-<div id="sidebar">
-</div>
-<div id="main">
-<form action="{% locale_url users_register %}" method="post">
-  {% csrf_token %}
-  <fieldset>
-    <legend>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.)</span></legend>
-    <p>
-      <label for="id_username">{{ _('Username') }}</label>
-      {{ form.username }} @drumbeat.org
-      {{ form.username.errors }}
-    </p>
-    <p>
-      <label for="id_display_name">{{ _('Display name') }}</label>
-      {{ form.display_name }}
-      {{ form.display_name.errors }}
-    </p>
-    <p>
-      <label for="id_email">{{ _('Email Address') }}</label>
-      {{ form.email }}
-      {{ form.email.errors }}
-    </p>
-    <p>
-      <label for="id_password">{{ _('Password') }}</label>
-      {{ form.password }}
-      {{ form.password.errors }}
-    </p>
-    <p>
-      <label for="id_password_confirm">{{ _('Confirm password') }}</label>
-      {{ form.password_confirm }}
-      {{ form.password_confirm.errors }}
-    </p>
-    {% if settings.RECAPTCHA_PRIVATE_KEY %}
-    <p>
-      {{ form.recaptcha }}
-      {{ form.recaptcha.errors }}
-      <script type="text/javascript">
-	var RecaptchaOptions = {
-	    theme: 'clean'
-        };
-      </script>
-      <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
-    </p>
-    {% else %}
-    <p>
-      Welcome Robots, ReCaptcha has been disabled for your convenience.
-      Spam at Wil.
-    </p>
-    {% endif %}
-    <p><button type="submit">{{ _('Sign Up') }}</button></p>
-  </fieldset>
-</form>
-<p class="openid"><a id="signup_openid" href="#">{{ _('Sign Up with an OpenID') }}</a>.</p>
-</div>
+<section class="modal">
+  <article>
+    <h1>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.)</span></h1>
+    <fieldset>
+      <form action="{% locale_url users_register %}" method="post">
+        {% csrf_token %}
+        <p>
+          <label for="id_username">{{ _('Username') }}</label>
+          {{ form.username }} @drumbeat.org
+          {{ form.username.errors }}
+        </p>
+        <p>
+          <label for="id_display_name">{{ _('Display name') }}</label>
+          {{ form.display_name }}
+          {{ form.display_name.errors }}
+        </p>
+        <p>
+          <label for="id_email">{{ _('Email Address') }}</label>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </p>
+        <p>
+          <label for="id_password">{{ _('Password') }}</label>
+          {{ form.password }}
+          {{ form.password.errors }}
+        </p>
+        <p>
+          <label for="id_password_confirm">{{ _('Confirm password') }}</label>
+          {{ form.password_confirm }}
+          {{ form.password_confirm.errors }}
+        </p>
+        {% if settings.RECAPTCHA_PRIVATE_KEY %}
+        <p>
+          {{ form.recaptcha }}
+          {{ form.recaptcha.errors }}
+          <script type="text/javascript">
+        var RecaptchaOptions = {
+          theme: 'clean'
+            };
+          </script>
+          <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
+        </p>
+        {% else %}
+        <p>
+          Welcome Robots, ReCaptcha has been disabled for your convenience.
+          Spam at Wil.
+        </p>
+        {% endif %}
+        <p>
+          <button type="submit">{{ _('Sign Up') }}</button>
+        </p>
+      </form>
+      <p class="openid"><a id="signup_openid" href="#">{{ _('Sign Up with an OpenID') }}</a>.</p>
+    </fieldset>
+  </article>
+</section>
+
+
 {% endblock %}
