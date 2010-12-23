@@ -22,7 +22,7 @@ urlpatterns = patterns('',
       {'template_name': 'users/forgot_password_done.html'},
       name='users_forgot_password_done'),
 
-  url(r'^forgot/(?P<uidb36>[-\w]+)/(?P<token>[-\w]+)$',
+  url(r'^forgot/(?P<uidb36>\w{1,13})/(?P<token>\w{1,13}-\w{1,20})/$',
       'django.contrib.auth.views.password_reset_confirm',
       {'template_name': 'users/forgot_password_confirm.html',
        'set_password_form': forms.SetPasswordForm},
