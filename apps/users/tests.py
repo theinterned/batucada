@@ -1,5 +1,6 @@
-from django.contrib.auth.models import User
 from django.test import Client, TestCase
+
+from users.models import UserProfile
 
 
 class TestLogins(TestCase):
@@ -11,16 +12,19 @@ class TestLogins(TestCase):
     def setUp(self):
         self.locale = 'en-US'
         self.client = Client()
-        self.user = User.objects.create_user(self.test_username,
-                                             self.test_email,
-                                             self.test_password)
+        self.user = UserProfile(username=self.test_username,
+                                email=self.test_email)
+        self.user.set_password(self.test_password)
+        self.user.save()
+        self.user.create_django_user()
 
     def test_authenticated_redirects(self):
         """Test that authenticated users are redirected in specific views."""
         self.client.login(username=self.test_username,
                           password=self.test_password)
-        paths = ('login/', 'openid/login/', 'register/',
-                 'openid/register/', 'forgot/')
+        paths = ('login/', 'register/',
+                 'confirm/123456/username/',
+                 'confirm/resend/username/')
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
@@ -28,41 +32,58 @@ class TestLogins(TestCase):
                                  target_status_code=301)
         self.client.logout()
 
-    def test_next_get_parameter(self):
-        """
-        Test that upon successful login, users are sent a Location header
-        with the value of the ``next`` GET parameter, if present.
-        """
-        path = '/%s/login/?next=/%s/profile/edit/' % (self.locale, self.locale)
-        response = self.client.get(path)
-        self.assertContains(response, '/%s/profile/edit/' % (self.locale,))
+    def test_unauthenticated_redirects(self):
+        """Test that anonymous users are redirected for specific views."""
+        paths = ('logout/', 'profile/edit/', 'profile/edit/image/')
+        for path in paths:
+            full = "/%s/%s" % (self.locale, path)
+            response = self.client.get(full)
+            expected = "/login/?next=%s" % (full,)
+            self.assertRedirects(response, expected, status_code=302,
+                                 target_status_code=301)
+
+    def test_login_post(self):
+        """Test logging in."""
+        path = "/%s/login/" % (self.locale,)
         response = self.client.post(path, {
             'username': self.test_username,
             'password': self.test_password,
-            'next': '/%s/profile/edit/' % (self.locale,),
         })
-        self.assertTrue(response.has_header('location'))
-        self.assertEqual(response['location'],
-                         'http://testserver/%s/profile/edit/' % (self.locale,))
+        self.assertRedirects(response, '/', status_code=302,
+                             target_status_code=301)
+        # TODO - Improve this so it doesn't take so many redirects to get a 200
+        response2 = self.client.get(response["location"])
+        response3 = self.client.get(response2["location"])
+        response4 = self.client.get(response3["location"])
+        self.assertContains(response4, 'id="dashboard"')
+        self.client.logout()
 
-    def test_header_injection_next_parameter(self):
-        """
-        Test that a user cannot inject content into the HTTP response headers
-        through selectively formatted values of the ``next`` GET parameter.
-        """
-        path = '/%s/login/' % (self.locale,)
-        qs = '?next=/%s/profile/edit/\n\nFoo' % (self.locale,)
-        response = self.client.get(path + qs)
-        self.assertContains(response, '/%s/profile/edit/' % (self.locale,))
-        self.assertFalse(response.has_header('location'))
+        response5 = self.client.post(path, {
+            'username': 'nonexistant',
+            'password': 'password',
+        })
+        self.assertContains(response5, 'id="id_username"')
 
-    def test_html_injection_next_parameter(self):
-        """
-        Test that a user cannot inject content into the HTML response
-        through selectively formatted values of the ``next`` GET parameter.
-        """
-        path = '/%s/login/' % (self.locale,)
-        qs = '?next=/%s/profile/edit/" /><blink>Damn!</blink>'
-        response = self.client.get(path + qs)
-        self.assertNotContains(response, '<blink>')
-        self.assertContains(response, '&lt;blink&gt;')
+    def test_login_next_param(self):
+        """Test that user is redirected properly after logging in."""
+        path = "/%s/login/?next=/%s/profile/edit/" % (self.locale, self.locale)
+        response = self.client.post(path, {
+            'username': self.test_username,
+            'password': self.test_password,
+        })
+        self.assertEqual(
+            "http://testserver/%s/profile/edit/" % (self.locale,),
+            response["location"],
+        )
+
+    def test_login_next_param_header_injection(self):
+        """Test that we can't inject headers into response with next param."""
+        path = "/%s/login/" % (self.locale,)
+        next_param = "foo\r\nLocation: http://example.com"
+        response = self.client.post(path + "?next=%s" % (next_param), {
+            'username': self.test_username,
+            'password': self.test_password,
+        })
+        # we expect the header to be urlencoded before being sent.
+        self.assertTrue('login/foo%0D%0ALocation' in response['location'])
+        self.assertNotEqual('http://example.com', response['location'])

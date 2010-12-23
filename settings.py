@@ -120,6 +120,8 @@ INSTALLED_APPS = (
     'feeds',
     'drumbeat',
     'taggit',
+    'preferences',
+    'drumbeatmail',
 )
 
 if DEBUG:
@@ -133,6 +135,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
+    'drumbeat.context_processors.django_conf',
     'messages.context_processors.inbox',
     'users.context_processors.messages',
 )
@@ -169,3 +172,9 @@ CACHE_COUNT_TIMEOUT = 60
 
 # Email goes to the console by default.  s/console/smtp/ for regular delivery
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Copy these to your settings_local.py
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
+                 RECAPTCHA_PUBLIC_KEY)

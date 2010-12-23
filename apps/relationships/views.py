@@ -1,46 +1,40 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import get_object_or_404
 
 from relationships.models import Relationship
+from projects.models import Project
+from users.models import UserProfile
 
 
 @login_required
 @require_http_methods(['POST'])
-def follow(request):
-    """
-    Create a relationship from the currently authenticated user and the
-    object referred to by ``object_id`` and ``object_type_id`` in the
-    POST parameters.
-    """
-    if 'object_id' not in request.POST or 'object_type_id' not in request.POST:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    obj_type = ContentType.objects.get(id=int(request.POST['object_type_id']))
-    target = obj_type.get_object_for_this_type(
-        id=int(request.POST['object_id']))
-    rel = Relationship(source=request.user, target=target)
-    rel.save()
+def follow(request, object_type, slug):
+    profile = request.user.get_profile()
+    if object_type == 'project':
+        project = get_object_or_404(Project, slug=slug)
+        Relationship(source=profile, target_project=project).save()
+    elif object_type == 'user':
+        user = get_object_or_404(UserProfile, username=slug)
+        Relationship(source=profile, target_user=user).save()
+    else:
+        raise Http404
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 @login_required
 @require_http_methods(['POST'])
-def unfollow(request):
-    """
-    Delete the relationship from the currently authenticated user and
-    the object referred to by the ``object_id`` and ``object_type_id``
-    POST parameters.
-    """
-    if 'object_id' not in request.POST or 'object_type_id' not in request.POST:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    user_type = ContentType.objects.get_for_model(request.user)
-    obj_type = ContentType.objects.get(id=int(request.POST['object_type_id']))
-    target = obj_type.get_object_for_this_type(
-        id=int(request.POST['object_id']))
-    Relationship.objects.filter(
-        source_object_id__exact=request.user.id,
-        source_content_type__exact=user_type,
-        target_object_id__exact=target.pk,
-        target_content_type__exact=obj_type).delete()
+def unfollow(request, object_type, slug):
+    profile = request.user.get_profile()
+    if object_type == 'project':
+        project = get_object_or_404(Project, slug=slug)
+        Relationship.objects.filter(
+            source=profile, target_project=project).delete()
+    elif object_type == 'user':
+        user = get_object_or_404(UserProfile, username=slug)
+        Relationship.objects.filter(
+            source=profile, target_user=user).delete()
+    else:
+        raise Http404
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

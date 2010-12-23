@@ -18,3 +18,4 @@ django-taggit
 -e git://github.com/paulosman/django-activity.git#egg=activity
 -e git://github.com/jsocol/commonware.git#egg=commonware
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar
+-e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha

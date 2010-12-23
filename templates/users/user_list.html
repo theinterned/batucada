@@ -4,34 +4,40 @@
 
 {% block title %}Users{% endblock %}
 {% block bodyid %}user_list{% endblock %}
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
+  </nav>
+</div>
+{% endblock %}
 
 {% block body %}
-
-<h2>{{ heading }}</h2>
-
-<ul>
-{% for user in users %}
-<li>
-  <a href="{{ user.get_profile.get_absolute_url }}">
-    {{ user.get_profile.name }}
-  </a>
-  {% if user.id in following %}
-  <form action="{% locale_url relationships_unfollow %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="object_type_id" value="{{ type.id }}" />
-    <input type="hidden" name="object_id" value="{{ user.id }}" />
-    <button type="submit" value="{{ _('Unfollow') }}">{{ _('Unfollow') }}</button>
-    </form>
-    {% else %}
-    <form action="{% locale_url relationships_follow %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="object_type_id" value="{{ type.id }}" />
-    <input type="hidden" name="object_id" value="{{ user.id }}" />
-    <button type="submit" value="{{ _('Follow') }}">{{ _('Follow') }}</button>
-  </form>
-  {% endif %}
-</li>
-{% endfor %}
-</ul>
-
+<h1>{{ _('Browse <b>People</b>') }}</h1>
+<section>
+  <h1><span>{{ _('Featured') }}</span></h1>
+  <ul class="user-list">
+    {% for person in featured %}
+      <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }}</li>
+    {% endfor %}
+  </ul>
+</section>
+<section>
+  <h1><span>{{ _('Popular') }}</span></h1>
+  <ul class="user-list">
+    {% if popular %}
+    {% for person in popular %}
+      <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+    {% endfor %}
+    {% endif %}
+  </ul>
+</section>
+<section>
+  <h1><span>{{ _('Newest Users') }}</span></h1>
+  <ul class="user-list">
+    {% for person in new %}
+      <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}
