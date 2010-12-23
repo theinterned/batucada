@@ -70,9 +70,15 @@ a.button,
 	background: -moz-linear-gradient(top,#f6f6f6,#e8e8e8);
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#f6f6f6),to(#e8e8e8));
 	-pie-background: linear-gradient(top,#f6f6f6,#e8e8e8);
-	box-shadow:inset 1px 1px 1px rgba(255,255,255,1), inset -1px -1px 1px rgba(0,0,0,0.1);
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,1), inset 1px 1px 0 rgba(255,255,255,0.1), inset -1px -1px 1px rgba(0,0,0,0.2);
-    -webkit-box-shadow:inset 1px 1px rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1);
+	box-shadow:
+		inset 1px 1px rgba(255,255,255,1), 
+		inset -1px -1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow:
+	    inset 1px 1px rgba(255,255,255,1), 
+	    inset -1px -1px 1px rgba(0,0,0,0.2);
+    -webkit-box-shadow:
+	    inset 1px 1px rgba(255,255,255,1), 
+	    inset -1px -1px 0 rgba(0,0,0,0.1);
     behavior: url("/media/css/PIE.htc");
 	}
 input[type=submit],
@@ -86,9 +92,15 @@ button[type=submit],
     background: -webkit-gradient(linear,0 top,0 bottom,from(#3fa3e9),to(#2171a9));
     background: -moz-linear-gradient(top,#3fa3e9,#2171a9);
     -pie-background: linear-gradient(top,#3fa3e9,#2171a9);
-    box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1);
-    -moz-box-shadow:inset 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1);
-    -webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1);
+    box-shadow: 
+	    inset 1px 1px 1px rgba(255,255,255,0.5), 
+	    inset -1px -1px rgba(0,0,0,0.1);
+    -moz-box-shadow:
+	    inset 1px 1px rgba(255,255,255,0.5), 
+	    inset -1px -1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 
+	    inset 1px 1px 1px rgba(255,255,255,0.5), 
+	    inset -1px -1px rgba(0,0,0,0.1);
     behavior: url("/media/css/PIE.htc");
 	}
 button:hover,
@@ -101,15 +113,34 @@ input[type=button]:hover,
 button:focus,
 input[type=button]:focus,
 .button:focus {
-	/*color: #2084CA;*/
 	text-decoration: none;
 	outline: none;
 	outline-style:none;
-	/*border-color: #3ea1e6;*/
-	box-shadow: inset 1px 1px 1px rgba(255,255,255,1), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
-    -moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,1), inset 1px 1px 0 rgba(255,255,255,0.2), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
-    -webkit-box-shadow: inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
+	box-shadow: 
+		inset 1px 1px 1px rgba(255,255,255,1), 
+		inset -1px -1px 1px rgba(0,0,0,0.1), 
+		0 0 1px 1px #e5f6ff, 
+		0 0 4px 2px #3ea1e6;
+    -moz-box-shadow: 
+	    inset 1px 1px rgba(255,255,255,1), 
+	    inset -1px -1px 1px rgba(0,0,0,0.2),
+	    0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
+    -webkit-box-shadow: 
+	    inset 1px 1px 0 rgba(255,255,255,1), 
+	    inset -1px -1px 0 rgba(0,0,0,0.1), 
+	    0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
 	}
+button:active,
+input[type=button]:active,
+.button:active {
+	padding-top: 3px;
+	padding-bottom: 1px;
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#e8e8e8),to(#f6f6f6));
+	background: -moz-linear-gradient(top,#e8e8e8,#f6f6f6);
+	-pie-background: linear-gradient(top,#e8e8e8,#f6f6f6);
+	}	
 button[type=submit]:hover,
 input[type=submit]:hover,
 .button.submit:hover{
@@ -120,40 +151,29 @@ input[type=submit]:hover,
 button[type=submit]:focus,
 input[type=submit]:focus,
 .button.submit:focus{
-	box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
-    -moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
-    -webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
+	box-shadow: 
+		inset 1px 1px 1px rgba(255,255,255,0.5), 
+		inset -1px -1px rgba(0,0,0,0.1), 
+		0 0 1px 1px #e5f6ff, 
+		0 0 4px 2px #3ea1e6;
+    -moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), 
+    	inset -1px -1px rgba(0,0,0,0.1), 
+    	0 0 1px 1px #e5f6ff, 
+    	0 0 4px 2px #3ea1e6;
+    -webkit-box-shadow: 
+    	inset 1px 1px 1px rgba(255,255,255,0.5), 
+    	inset -1px -1px rgba(0,0,0,0.1), 
+    	0 0 1px 1px #e5f6ff, 
+    	0 0 4px 2px #3ea1e6;
     behavior: url("/media/css/PIE.htc");
 	}
-button:active,
 button[type=submit]:active,
-input[type=button]:active,
 input[type=submit]:active,
-.button:active {
-	padding-top: 3px;
-	padding-bottom: 1px;
-	background: -webkit-gradient(linear,0 top,0 bottom,from(#e8e8e8),to(#f6f6f6));
-	background: -moz-linear-gradient(top,#e8e8e8,#f6f6f6);
-	-pie-background: linear-gradient(top,#e8e8e8,#f6f6f6);
-	}
-button[type=submit]:active,
-input[type=submit]:active{
+.button.submit:active {
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#2171a9),to(#3fa3e9));
     background: -moz-linear-gradient(top,#2171a9,#3fa3e9);
     -pie-background: linear-gradient(top,#2171a9,#3fa3e9);
 	}
-input[type=submit]:active,
-button.submit:active,
-.button.submit a:active,        
-#signup-buttons .signup a:active {
-    text-shadow: #000 0px 1px 0px;
-    -moz-text-shadow: #000 0px 1px 0px;
-    -webkit-text-shadow: #000 0px 1px 0px;
-    background: -webkit-gradient(linear,0 top,0 bottom,from(#2374ad),to(#3ea1e6));
-    background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
-    -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
-    behavior: url("/media/css/PIE.htc");
-}
 
 /* FORMS */
 
