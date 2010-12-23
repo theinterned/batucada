@@ -10,8 +10,8 @@ from django.template.defaultfilters import slugify
 from BeautifulSoup import BeautifulSoup
 
 from drumbeat.models import ModelBase
-from users.models import UserProfile
 from statuses.models import Status
+from relationships.models import Relationship
 
 import caching.base
 
@@ -33,7 +33,8 @@ class Project(ModelBase):
     slug = models.SlugField(unique=True)
     description = models.TextField()
     call_to_action = models.TextField()
-    created_by = models.ForeignKey(UserProfile, related_name='projects')
+    created_by = models.ForeignKey('users.UserProfile',
+                                   related_name='projects')
     featured = models.BooleanField()
     template = models.TextField()
     css = models.TextField()
@@ -41,6 +42,12 @@ class Project(ModelBase):
         auto_now_add=True, default=datetime.date.today())
 
     objects = ProjectManager()
+
+    def followers(self):
+        """Return a list of users following this project."""
+        relationships = Relationship.objects.select_related(
+            'source').filter(target_project=self)
+        return [rel.source for rel in relationships]
 
     def __unicode__(self):
         return self.name
@@ -141,6 +148,9 @@ def project_creation_handler(sender, **kwargs):
 
     if not created or not isinstance(project, Project):
         return
+
+    Relationship(source=project.created_by,
+                 target_project=project).save()
 
     try:
         import activity

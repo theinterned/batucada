@@ -122,16 +122,14 @@ def register(request):
 
 
 def user_list(request):
-    """Display a list of users on the site. TODO: Paginate."""
-    users = UserProfile.objects.exclude(id__exact=request.user.id)
-    following = []
-    if request.user.is_authenticated():
-        profile = request.user.get_profile()
-        following = profile.following()
+    """Display a list of users on the site. Featured, new and active."""
+    featured = UserProfile.objects.filter(featured=True)
+    new = UserProfile.objects.all().order_by('-created_on')[:4]
+    popular = UserProfile.objects.get_popular(limit=8)
     return render_to_response('users/user_list.html', {
-        'heading': _('Users'),
-        'users': users,
-        'following': following,
+        'featured': featured,
+        'new': new,
+        'popular': popular,
     }, context_instance=RequestContext(request))
 
 
