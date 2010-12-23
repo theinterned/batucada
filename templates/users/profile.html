@@ -54,7 +54,7 @@ Temporarily comment out atom feed link while refactoring activity application.
           <button id="follow-user">Follow User</button>
         </form>
         {% endif %}
-        <a class="button" href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>    
+        <a class="button" href="{% locale_url drumbeatmail.views.inbox_filtered filter=user.get_profile.username %}">{{ _('Private Message')}}</a>
       {% endif %}
     </div>
   </div> 
