@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
@@ -18,6 +19,7 @@ def show(request, status_id):
     }, context_instance=RequestContext(request))
 
 
+@login_required
 def create(request):
     if 'status' not in request.POST:
         return HttpResponseRedirect('/')
@@ -27,6 +29,7 @@ def create(request):
     return HttpResponseRedirect('/')
 
 
+@login_required
 def create_project_status(request, project_id):
     if 'status' not in request.POST:
         return HttpResponseRedirect('/')
@@ -42,6 +45,7 @@ def create_project_status(request, project_id):
         reverse('projects_show', kwargs=dict(slug=project.slug)))
 
 
+@login_required
 def create_user_status(request, user_id):
     if 'status' not in request.POST:
         return HttpResponseRedirect('/')
