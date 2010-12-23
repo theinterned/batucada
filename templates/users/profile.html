@@ -43,23 +43,18 @@ Temporarily comment out atom feed link while refactoring activity application.
       {% if user == profile.user %}
       <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
       {% else %}
-        {% if profile.user in following %}
-        <form action="{% locale_url relationships_unfollow %}" method="post">
+        {% if profile in user.get_profile.following %}
+        <form action="{% locale_url relationships_unfollow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <input type="hidden" name="object_id" value="{{ profile_user.id }}">
-          <input type="hidden" name="object_type_id" value="{{ type.id }}">
           <button id="unfollow-user" >Unfollow User</button>
         </form>
         {% else %}
-        <form action="{% locale_url relationships_follow %}" method="post">
+        <form action="{% locale_url relationships_follow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <input type="hidden" name="object_id" value="{{ profile_user.id }}">
-          <input type="hidden" name="object_type_id" value="{{ type.id }}">
           <button id="follow-user">Follow User</button>
         </form>
         {% endif %}
         <a class="button" href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>    
-    
       {% endif %}
     </div>
   </div> 
@@ -94,14 +89,14 @@ Temporarily comment out atom feed link while refactoring activity application.
 <div id="member_relationships" class="panel">
   <h3>{{ _('Followers') }} <span class="followers count">{{ followers|length }}</span></h3>
   <ul class="users followers">
-  {% for user_follower in followers %}
-    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.name }}"></a></li>
+  {% for user_follower in followers|slice:":36" %}
+    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.name }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Following') }} <span class="following count">{{ following|length }}</span></h3>
   <ul class="users following">
-  {% for user_following in following %}
-    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.name }}"></a></li>
+  {% for user_following in following|slice:":36" %}
+    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Projects') }} <span class="projects count">{{ projects|length}}</span></h3>

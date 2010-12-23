@@ -52,8 +52,8 @@
 	      <ul id="user-actions">
 		<li><a href="{% locale_url dashboard_index %}">{{ _('Your Dashboard') }}</a></li>
 		<li><a href="{{ user.get_profile.get_absolute_url }}">{{ _('Your Profile') }}</a></li>
-		<li><a href="#">{{ _('Account Settings') }}</a></li>
-		<li><a href="#">{{ _('Donate to Drumbeat') }}</a></li>
+		<li><a href="{% locale_url preferences_settings %}">{{ _('Account Settings') }}</a></li>
+		<li><a href="https://donate.mozilla.org/page/contribute/openwebfund">{{ _('Donate to Drumbeat') }}</a></li>
 	      </ul>
 	    </li> <!-- /#user -->
 
@@ -71,14 +71,14 @@
 		{% for message in preview_messages %}
 		  <li class="message">
 		    <a href="#">
-		      <span class="from">{{ message.sender.username }}:</span>
+		      <span class="from">{{ message.sender.get_profile.name }}:</span>
 		      <span class="snippet">{{ message.body|truncatewords_html:10 }}</span>
 		    </a>
 		  </li>
 		{% endfor %}
 		
 		<li id="view-all">
-		  <a href="{% locale_url messages_inbox %}">{{ _('View All Messages') }}</a>
+		  <a href="{% locale_url drumbeatmail_inbox %}">{{ _('View All Messages') }}</a>
 		</li>
 
 	      </ul> <!-- /#inbox-messages -->

@@ -2,3 +2,4 @@
 *.db
 locale/
 media/images/profiles/
+settings_local.py

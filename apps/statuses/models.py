@@ -5,22 +5,17 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
 
-from users.models import UserProfile
-from projects.models import Project
-
-import caching.base
+from drumbeat.models import ModelBase
 
 
-class Status(caching.base.CachingMixin, models.Model):
+class Status(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
-    author = models.ForeignKey(UserProfile)
-    project = models.ForeignKey(Project, null=True)
+    author = models.ForeignKey('users.UserProfile')
+    project = models.ForeignKey('projects.Project', null=True)
     status = models.CharField(max_length=750)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-
-    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return self.status
@@ -43,7 +38,8 @@ def status_creation_handler(sender, **kwargs):
         return
     try:
         import activity
-        activity.send(status.author.user, 'post', status, target=status.project)
+        activity.send(
+            status.author.user, 'post', status, target=status.project)
     except ImportError:
         return
 

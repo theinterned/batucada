@@ -3,18 +3,29 @@ import datetime
 
 from django.contrib import admin
 from django.db import models, IntegrityError
+from django.db.models import Count
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 
 from BeautifulSoup import BeautifulSoup
 
-from users.models import UserProfile
-from relationships.models import followers
+from drumbeat.models import ModelBase
+from statuses.models import Status
+from relationships.models import Relationship
 
 import caching.base
 
 
-class Project(caching.base.CachingMixin, models.Model):
+class ProjectManager(caching.base.CachingManager):
+    def get_popular(self, limit=0):
+        statuses = Status.objects.values('project_id').annotate(
+            Count('id')).exclude(project__isnull=True).filter(
+                project__featured=False).order_by('-id__count')[:limit]
+        project_ids = [s['project_id'] for s in statuses]
+        return Project.objects.filter(id__in=project_ids)
+
+
+class Project(ModelBase):
     """Placeholder model for projects."""
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
@@ -22,13 +33,21 @@ class Project(caching.base.CachingMixin, models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField()
     call_to_action = models.TextField()
-    created_by = models.ForeignKey(UserProfile, related_name='projects')
+    created_by = models.ForeignKey('users.UserProfile',
+                                   related_name='projects')
     featured = models.BooleanField()
     template = models.TextField()
     css = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-    objects = caching.base.CachingManager()
+
+    objects = ProjectManager()
+
+    def followers(self):
+        """Return a list of users following this project."""
+        relationships = Relationship.objects.select_related(
+            'source').filter(target_project=self)
+        return [rel.source for rel in relationships]
 
     def __unicode__(self):
         return self.name
@@ -53,11 +72,7 @@ class Project(caching.base.CachingMixin, models.Model):
         super(Project, self).save()
 
 
-# Monkey patch the Project model with methods from the relationships app.
-Project.followers = followers
-
-
-class Link(caching.base.CachingMixin, models.Model):
+class Link(ModelBase):
     """
     A link in this context refers to an external resource attached to a
     project. Project admins can add as many links as they like to their
@@ -72,7 +87,6 @@ class Link(caching.base.CachingMixin, models.Model):
     feed_url = models.URLField(editable=False, default='')
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-    objects = caching.base.CachingManager()
 
     class Meta:
         unique_together = ('project', 'url',)
@@ -134,6 +148,9 @@ def project_creation_handler(sender, **kwargs):
 
     if not created or not isinstance(project, Project):
         return
+
+    Relationship(source=project.created_by,
+                 target_project=project).save()
 
     try:
         import activity

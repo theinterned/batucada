@@ -1,3 +1,4 @@
+import logging
 import datetime
 import random
 import string
@@ -12,6 +13,14 @@ from django.utils.translation import ugettext as _
 
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
+
+from drumbeat.models import ModelBase
+from relationships.models import Relationship
+from projects.models import Project
+
+import caching.base
+
+log = logging.getLogger(__name__)
 
 
 def get_hexdigest(algorithm, salt, raw_password):
@@ -43,7 +52,16 @@ class TaggedProfile(GenericTaggedItemBase):
         verbose_name_plural = "Tagged User Profiles"
 
 
-class UserProfile(models.Model):
+class UserProfileManager(caching.base.CachingManager):
+    def get_popular(self, limit=0):
+        users = Relationship.objects.values('target_user_id').annotate(
+            models.Count('id')).filter(target_user__featured=False).order_by(
+            '-id__count')[:limit]
+        user_ids = [u['target_user_id'] for u in users]
+        return UserProfile.objects.filter(id__in=user_ids)
+
+
+class UserProfile(ModelBase):
     """Each user gets a profile."""
     username = models.CharField(max_length=255, default='', unique=True)
     display_name = models.CharField(
@@ -56,14 +74,43 @@ class UserProfile(models.Model):
     confirmation_code = models.CharField(
         max_length=255, default='', blank=True)
     location = models.CharField(max_length=255, blank=True, default='')
+    featured = models.BooleanField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
     tags = TaggableManager(through=TaggedProfile)
 
+    objects = UserProfileManager()
+
     def __unicode__(self):
-        return '%s: %s' % (self.id, self.display_name or self.username)
+        return self.display_name or self.username
+
+    def following(self, model=None):
+        """
+        Return a list of objects this user is following. All objects returned
+        will be ```Project``` or ```UserProfile``` instances. Optionally filter
+        by type by including a ```model``` parameter.
+        """
+        if isinstance(model, Project) or model == Project:
+            relationships = Relationship.objects.select_related(
+                'target_project').filter(source=self).exclude(
+                target_project__isnull=True)
+            return [rel.target_project for rel in relationships]
+        relationships = Relationship.objects.select_related(
+            'target_user').filter(source=self).exclude(
+            target_user__isnull=True)
+        return [rel.target_user for rel in relationships]
+
+    def followers(self):
+        """Return a list of this users followers."""
+        relationships = Relationship.objects.select_related(
+            'source').filter(target_user=self)
+        return [rel.source for rel in relationships]
+
+    def is_following(self, model):
+        """Determine whether this user is following ```model```."""
+        return model in self.following(model=model)
 
     @models.permalink
     def get_absolute_url(self):
@@ -103,7 +150,7 @@ class UserProfile(models.Model):
                                                            string.digits, 60))
         return self.confirmation_code
 
-    def set_password(self, raw_password, algorithm='sha512'):
+    def set_password(self, raw_password, algorithm='sha256'):
         self.password = create_password(algorithm, raw_password)
 
     def check_password(self, raw_password):

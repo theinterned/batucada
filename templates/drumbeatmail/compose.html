@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ _('Compose Message') }}{% endblock %}
+{% block pageid %}compose_message{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>{{ _('New Private Message') }}</h1>
+    <fieldset>
+      <form method="post">
+	{% csrf_token %}
+	<p>
+	  <label for="id_recipient">{{ _('To') }}</label>
+	  {{ form.recipient }}
+	  {{ form.recipient.errors }}
+	</p>
+	<p>
+	  <label for="id_subject">{{ _('Subject') }}</label>
+	  {{ form.subject }}
+	  {{ form.subject.errors }}
+	</p>
+	<p>
+	  <label for="id_body">{{ _('Message') }}</label>
+	  {{ form.body }}
+	  {{ form.body.errors }}
+	</p>
+	<input type="submit" value="{{ _('Send') }}" />
+      </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

@@ -38,7 +38,24 @@
       {{ form.password_confirm }}
       {{ form.password_confirm.errors }}
     </p>
-      <p><button type="submit">{{ _('Sign Up') }}</button></p>    
+    {% if settings.RECAPTCHA_PRIVATE_KEY %}
+    <p>
+      {{ form.recaptcha }}
+      {{ form.recaptcha.errors }}
+      <script type="text/javascript">
+	var RecaptchaOptions = {
+	    theme: 'clean'
+        };
+      </script>
+      <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
+    </p>
+    {% else %}
+    <p>
+      Welcome Robots, ReCaptcha has been disabled for your convenience.
+      Spam at Wil.
+    </p>
+    {% endif %}
+    <p><button type="submit">{{ _('Sign Up') }}</button></p>
   </fieldset>
 </form>
 <p class="openid"><a id="signup_openid" href="#">{{ _('Sign Up with an OpenID') }}</a>.</p>

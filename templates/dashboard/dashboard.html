@@ -24,14 +24,14 @@ Temporarily comment out atom feed link while refactoring activity application.
 <div id="member_relationships" class="panel">
   <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
   <ul class="followers">
-  {% for user_follower in users_followers %}
-    <li><a href="{{ user_follower.get_profile.get_absolute_url }}" title="{{ user_follower.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_follower.get_profile.get_full_name_or_username }}"></a></li>
+  {% for user_follower in users_followers|slice:":36" %}
+    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.name }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
   <ul class="following">
-  {% for user_following in users_following %}
-    <li><a href="{{ user_following.get_profile.get_absolute_url }}" title="{{ user_following.get_profile.get_full_name_or_username }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.get_profile.image_or_default }}" height="26" width="26" alt="{{ user_following.get_profile.get_full_name_or_username }}"></a></li>
+  {% for user_following in users_following|slice:":36" %}
+    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h3>
