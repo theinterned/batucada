@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'drumbeat',
     'taggit',
     'preferences',
+    'drumbeatmail',
 )
 
 if DEBUG:
