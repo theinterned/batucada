@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     (r'^statuses/',      include('statuses.urls')),
     (r'^project/',       include('projects.urls')),
     (r'^relationships/', include('relationships.urls')),
-    (r'^messages/',      include('messages.urls')),
+    (r'^messages/',      include('drumbeatmail.urls')),
     (r'^account/',       include('preferences.urls')),
     (r'^admin/',         include(admin.site.urls)),
 )
