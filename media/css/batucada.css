@@ -6,7 +6,7 @@ html {
 body {
   font-family: "Arial", "Helvetica", sans-serif;
   color: #474747;
-  background: #f3f4f6 url("/media/images/background.jpg") repeat-x right 50px;
+  background: #f3f4f6 url("/media/images/background.jpg") repeat-x center 50px;
   min-height: 101%;
 }
 
@@ -23,7 +23,7 @@ body {
 	clear: both;
 }
 h1, h2, h3, h4, h5, h6{
-  text-shadow:  1px 2px #fff;
+  text-shadow:  1px 1px #fff;
 }
 h1 {
   font-size: 24px;
@@ -50,82 +50,130 @@ img.project.picture {
 button,
 input[type=submit],
 input[type=button],
-div.button a {
-  background: #f6f6f6;
-  color: #777;
-  display: block;
-  font-size: 12px;
-  line-height: 20px;
-  padding: 0 7px;
-  border: 1px solid #fff;
-  border-right: 1px solid #dfdfdf;
-  border-bottom: 1px solid #dfdfdf;
-  text-shadow: #fff 1px 1px 1px;
-  -moz-text-shadow: #fff 1px 1px 1px;
-  -webkit-text-shadow: #fff 1px 1px 1px;
-  background: -webkit-gradient(linear,0 top,0 bottom,from(#f6f6f6),to(#e9e9e9));
-  background: -moz-linear-gradient(top,#f6f6f6,#e9e9e9);
-  text-decoration: none;
-}
-button,
+a.button,
+.button {	
+	display: inline-block;
+	vertical-align: bottom;
+	line-height: 18px;
+	min-height: 18px;	
+	color: #777;	
+	font-size: 12px;
+	padding: 2px 7px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: #fff 1px 1px 0;
+	border: 1px solid #bfbfbf;
+	border-color: #bfbfbf #a0a0a0 #a0a0a0 #bfbfbf;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	background: #f6f6f6;
+	background: -moz-linear-gradient(top,#f6f6f6,#e8e8e8);
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#f6f6f6),to(#e8e8e8));
+	-pie-background: linear-gradient(top,#f6f6f6,#e8e8e8);
+	box-shadow:
+		inset 1px 1px rgba(255,255,255,1), 
+		inset -1px -1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow:
+	    inset 1px 1px rgba(255,255,255,1), 
+	    inset -1px -1px 1px rgba(0,0,0,0.1);
+    -webkit-box-shadow:
+	    inset 1px 1px rgba(255,255,255,1), 
+	    inset -1px -1px 0 rgba(0,0,0,0.1);
+    behavior: url("/media/css/PIE.htc");
+	}
 input[type=submit],
-input[type=button],
-div.button {
-  display: inline-block;
-  border: 1px solid #c0c0c0;
-}
-button,
-input[type=submit],
-input[type=button],
-div.button a, div.button {
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-div.button a:hover {
-  color: #555;
-}
-div.button a:active {
-  color: #999;
-  background: -webkit-gradient(linear,0 top,0 bottom,from(#e9e9e9),to(#f6f6f6));
-  background: -moz-linear-gradient(top,#e9e9e9,#f6f6f6);
-}
-/*TODO: refactor this to be 'more elegant' */ 
-input[type=submit],
-button.submit,
-.button.submit a,
-#signup-buttons .signup a {
+button[type=submit],
+.button.submit{
     color: white;
     font-weight: bold;
-    text-shadow: #000 0px -1px 0px;
-    -moz-text-shadow: #000 0px -1px 0px;
-    -webkit-text-shadow: #000 0px -1px 0px;
-    border: 1px solid #2571a6;
-    border-left: 1px solid #a3d3f4;
-    border-top: 1px solid #a3d3f4;
-    background: -webkit-gradient(linear,0 top,0 bottom,from(#3ea1e6),to(#2374ad));
-    background: -moz-linear-gradient(top,#3ea1e6,#2374ad);
-    -pie-background: linear-gradient(top,#3ea1e6,#2374ad);
+    text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
+    border: 1px solid #608dae;
+    border-color: #608dae #405f75 #3a5568 #608dae;
+    background: -webkit-gradient(linear,0 top,0 bottom,from(#3fa3e9),to(#2171a9));
+    background: -moz-linear-gradient(top,#3fa3e9,#2171a9);
+    -pie-background: linear-gradient(top,#3fa3e9,#2171a9);
+    box-shadow: 
+	    inset 1px 1px 1px rgba(255,255,255,0.5), 
+	    inset -1px -1px rgba(0,0,0,0.1);
+    -moz-box-shadow:
+	    inset 1px 1px rgba(255,255,255,0.5), 
+	    inset -1px -1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 
+	    inset 1px 1px 1px rgba(255,255,255,0.5), 
+	    inset -1px -1px rgba(0,0,0,0.1);
     behavior: url("/media/css/PIE.htc");
-}
+	}
+button:hover,
+input[type=button]:hover,
+.button:hover{
+	background: -moz-linear-gradient(top,#fff,#f6f6f6);
+    -pie-background: linear-gradient(top,#fff,#f6f6f6);
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#fff),to(#f6f6f6));
+	}
+button:focus,
+input[type=button]:focus,
+.button:focus {
+	text-decoration: none;
+	outline: none;
+	outline-style:none;
+	box-shadow: 
+		inset 1px 1px 1px rgba(255,255,255,1), 
+		inset -1px -1px 1px rgba(0,0,0,0.1), 
+		0 0 1px 1px #e5f6ff, 
+		0 0 4px 2px #3ea1e6;
+    -moz-box-shadow: 
+	    inset 1px 1px rgba(255,255,255,1), 
+	    inset -1px -1px 1px rgba(0,0,0,0.1),
+	    0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
+    -webkit-box-shadow: 
+	    inset 1px 1px 0 rgba(255,255,255,1), 
+	    inset -1px -1px 0 rgba(0,0,0,0.1), 
+	    0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
+	}
+button:active,
+input[type=button]:active,
+.button:active {
+	padding-top: 3px;
+	padding-bottom: 1px;
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#e8e8e8),to(#f6f6f6));
+	background: -moz-linear-gradient(top,#e8e8e8,#f6f6f6);
+	-pie-background: linear-gradient(top,#e8e8e8,#f6f6f6);
+	}	
+button[type=submit]:hover,
 input[type=submit]:hover,
-button.submit:hover,
-.button.submit a:hover,
-#signup-buttons .signup:hover {
-    border: 1px solid #719ab7;
-}
-input[type=submit]:active,
-button.submit:active,
-.button.submit a:active,        
-#signup-buttons .signup a:active {
-    text-shadow: #000 0px 1px 0px;
-    -moz-text-shadow: #000 0px 1px 0px;
-    -webkit-text-shadow: #000 0px 1px 0px;
-    background: -webkit-gradient(linear,0 top,0 bottom,from(#2374ad),to(#3ea1e6));
-    background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
-    -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
+.button.submit:hover{
+	background: -moz-linear-gradient(top,#42aaf5,#3fa3e9);
+    -pie-background: linear-gradient(top,#42aaf5,#3fa3e9);
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#42aaf5),to(#3fa3e9));
+	}
+button[type=submit]:focus,
+input[type=submit]:focus,
+.button.submit:focus{
+	box-shadow: 
+		inset 1px 1px 1px rgba(255,255,255,0.5), 
+		inset -1px -1px rgba(0,0,0,0.1), 
+		0 0 1px 1px #e5f6ff, 
+		0 0 4px 2px #3ea1e6;
+    -moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), 
+    	inset -1px -1px rgba(0,0,0,0.1), 
+    	0 0 1px 1px #e5f6ff, 
+    	0 0 4px 2px #3ea1e6;
+    -webkit-box-shadow: 
+    	inset 1px 1px 1px rgba(255,255,255,0.5), 
+    	inset -1px -1px rgba(0,0,0,0.1), 
+    	0 0 1px 1px #e5f6ff, 
+    	0 0 4px 2px #3ea1e6;
     behavior: url("/media/css/PIE.htc");
-}
+	}
+button[type=submit]:active,
+input[type=submit]:active,
+.button.submit:active {
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#2171a9),to(#3fa3e9));
+    background: -moz-linear-gradient(top,#2171a9,#3fa3e9);
+    -pie-background: linear-gradient(top,#2171a9,#3fa3e9);
+	}
 
 /* FORMS */
 
@@ -151,13 +199,32 @@ textarea {
 	color: #262626;
 	border: 1px solid #c6c6c6;
 	border-radius:4px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	box-shadow: inset 0 1px 2px #c1c1c1, inset 1px 3px 10px #f3f3f3;
-	-moz-box-shadow: inset 0 1px 2px #c1c1c1, inset 3px 1px 10px #f3f3f3;
-	-webkit-box-shadow: inset 0 1px 2px #c1c1c1, inset 3px 1px 10px #f3f3f3;
+	-moz-border-radius: 4px;	
+	box-shadow: 
+		inset #ddd 0px 1px 4px;
+	-moz-box-shadow: 
+		inset #ddd 0px 1px 4px;
+	-webkit-box-shadow: 
+		inset #ddd 0px 1px 4px;
 	}
-
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type*="date"]:focus,
+input[type*="time"]:focus,
+textarea:focus {
+	outline: none;
+	border-color: #90c7ee;
+	box-shadow: 
+		inset #90c7ee 0 0 4px;
+	-webkit-box-shadow: 
+		inset #90c7ee 0 0 4px;
+	-moz-box-shadow: 
+		inset #90c7ee 0 0 4px;	
+	}
 /* 
  * LAYOUT 
  */
@@ -436,7 +503,6 @@ header {}
     }
       #project-follow {
         margin: 10px 0;        
-        text-align: center;
       }
       
       #project-stats {
@@ -523,6 +589,9 @@ header {}
         #dashboard #sidebar .vcard .member-details p{
 			margin-bottom: 0;
 		}
+		.member-actions form{
+			display: inline;
+			}
 		#member_relationships .count {
 			font-weight: bold;
 			color: #2084ca;
@@ -625,13 +694,13 @@ header {}
 	}
 	#project_gallery section h1{
 		text-align: center;
-		margin-top: -0.5em;
-		
+		margin-top: -0.65em;		
 		font-family: Georgia, "Times New Roman", Times, serif;
 		font-style: italic;		
 	}
 	#project_gallery section h1 span{
 		background: #F3F4F6;
+		-webkit-box-shadow: 0 0 5px #f7f7f7 ;
 		padding:  0 6px;
 	}
   	#project_gallery .project-list{
@@ -800,6 +869,8 @@ header {}
     
     #main .post-char-count {
       font-size: 20px;
+      line-height: 25px;
+      min-height: 25px;
       font-weight: bold;
       padding: 1px 8px;
     }
@@ -833,18 +904,11 @@ header {}
         width: 574px;
         display: block;
         font-size: 16px;
-        padding: 12px;
-        border: 1px solid #c6c6c6;
-        box-shadow: inset #ddd 0px 1px 4px;
-        -webkit-box-shadow: inset #ddd 0px 1px 4px;
-        -moz-box-shadow: inset #ddd 0px 1px 4px;
-        border-radius: 4px;
-        -moz-border-radius: 4px;
-        -o-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        color: #999;
-        behavior: url("/media/css/PIE.htc");
+        padding: 12px;                    
       }
+      #create-post input{
+	  	color: #999;
+	  }
       #create-post textarea, #create-post .status-and-actions {
         display: none;
       }
@@ -854,46 +918,11 @@ header {}
         text-align: right;
       }
         #create-post .update {
-          border: 1px solid #3a5568;
-          float: right;
-        }
-          #create-post .update, #create-post .update a {
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            behavior: url("/media/css/PIE.htc");
-          }
-          
-          #create-post .update a {
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-            text-shadow: #000 0px -1px 0px;
-            -moz-text-shadow: #000 0px -1px 0px;
-            -webkit-text-shadow: #000 0px -1px 0px;
-            border: 1px solid #2571a6;
-            border-left: 1px solid #a3d3f4;
-            border-top: 1px solid #a3d3f4;
-            background: -webkit-gradient(linear,0 top,0 bottom,from(#3ea1e6),to(#2374ad));
-            background: -moz-linear-gradient(top,#3ea1e6,#2374ad);
-            -pie-background: linear-gradient(top,#3ea1e6,#2374ad);
-            padding: 3px 8px;
-            behavior: url("/media/css/PIE.htc");
-          }
-          #create-post .update:hover {
-            border: 1px solid #719ab7;
-          }
-          
-          #create-post .update a:active {
-            text-shadow: #000 0px 1px 0px;
-            -moz-text-shadow: #000 0px 1px 0px;
-            -webkit-text-shadow: #000 0px 1px 0px;
-            background: -webkit-gradient(linear,0 top,0 bottom,from(#2374ad),to(#3ea1e6));
-            background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
-            -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
-            behavior: url("/media/css/PIE.htc");
-          }
-      
+		font-size: 14px;
+		line-height: 25px;
+		min-height: 31px;
+		float: right;
+        }             
       #create-post.expanded {
       }
         #create-post.expanded input {
@@ -906,13 +935,13 @@ header {}
           height: 160px;
         }
 
-        #create-post.expanded textarea:focus {
+        /*#create-post.expanded textarea:focus {
           outline: none;
           border: 1px solid #3ea1e6;
           box-shadow: inset #3ea1e6 0px 1px 4px;
           -webkit-box-shadow: inset #3ea1e6 0px 1px 4px;
           -moz-box-shadow: inset #3ea1e6 0px 1px 4px;
-        }
+        }*/
     
     #posts {
       list-style: none;
@@ -980,6 +1009,7 @@ header {}
 
 	#profile_edit {}
 		.modal{
+			position: relative;
 			width: 780px;
 			margin: 0 auto;
 			padding: 6px;
@@ -1034,6 +1064,22 @@ header {}
 			border-radius:5px 5px 0 0;
 			-moz-border-radius:5px 5px 0 0;
 		}
+		.modal .buttons{
+			position: absolute;
+			top:  18px; right: 18px;
+		}
+		.modal .buttons button,
+		.modal .buttons .button {
+			margin-left: 5px;
+			line-height: 24px;			
+			width: 84px;
+			min-height: 30px;
+			font-size: 14px;		
+		}
+		.modal .buttons .button {
+			width: 68px;
+			min-height: 24px;
+		}
         .modal #profile-edit-nav {
 			float: left;
 			width: 190px;
@@ -1085,7 +1131,7 @@ header {}
 			position: absolute;
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
-		}
+		}	
 		
 		
 footer {}
@@ -1095,7 +1141,7 @@ TODO: refactor this to use general button styles ~line 50
 */
 
 
-#signup-buttons .signup {
+/*#signup-buttons .signup {
     width: 75px;
     margin-bottom: 10px;
 }
@@ -1136,4 +1182,4 @@ TODO: refactor this to use general button styles ~line 50
     background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
     -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
     behavior: url("/media/css/PIE.htc");
-}
+}*/

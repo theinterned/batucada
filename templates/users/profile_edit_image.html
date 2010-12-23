@@ -15,6 +15,9 @@
     {{ form.image }}
     {{ form.image.errors }}
   </p>
-  <input type="submit" value="Upload" />
+  <p class="buttons">
+    <a class="button" href="{{ profile.get_absolute_url }}">Cancel</a>
+    <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
+  </p>
 </form>
 {% endblock %}

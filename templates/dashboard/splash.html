@@ -14,12 +14,8 @@
   <h1>{{ _('Mozilla Drumbeat') }}</h1>
 
   <div id="signup-buttons">
-    <div class="button signup">
-      <a href="{% locale_url users_login %}">Sign in</a>
-    </div>
-    <div class="button signup">
-      <a href="{% locale_url users_register %}">Sign up</a>
-    </div>
+      <a class="button submit" href="{% locale_url users_login %}">Sign in</a>
+      <a class="button signup" href="{% locale_url users_register %}">Sign up</a>
   </div>
 
   <h1>{{ _('Recent Activity') }}</h1>

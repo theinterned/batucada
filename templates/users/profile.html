@@ -24,7 +24,7 @@ Temporarily comment out atom feed link while refactoring activity application.
 
     {% if user == profile.user %}
     <div id="project-actions">      
-    	<div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
+    	<a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
     </div>
     {% endif %}
 
@@ -41,25 +41,22 @@ Temporarily comment out atom feed link while refactoring activity application.
     </h1>
     <div class="member-actions">
       {% if user == profile.user %}
-      <div class="button"><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></div>
+      <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
       {% else %}
-      <div class="button">
         {% if profile in user.get_profile.following %}
         <form action="{% locale_url relationships_unfollow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <a class="submit-button" id="unfollow-user" href="#">Unfollow User</a>
+          <button id="unfollow-user" >Unfollow User</button>
         </form>
         {% else %}
         <form action="{% locale_url relationships_follow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <a class="submit-button" id="follow-user" href="#">Follow User</a>
+          <button id="follow-user">Follow User</button>
         </form>
         {% endif %}
-                
       </div>
-      <div class="button">
-        <a href="{% locale_url drumbeatmail.views.inbox_filtered filter=user.get_profile.username %}">{{ _('Private Message')}}</a>
-      </div>
+      <a class="button" href="{% locale_url drumbeatmail.views.inbox_filtered filter=user.get_profile.username %}">{{ _('Private Message')}}</a>
+      </a>
       {% endif %}
     </div>
   </div> 
