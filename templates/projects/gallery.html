@@ -27,17 +27,17 @@
   </ul>
 </section>
 <section>
-  <h1><span>{{ _('New Projects') }}</span></h1>
+  <h1><span>{{ _('Popular Projects') }}</span></h1>
   <ul class="project-list">
-    {% for project in new %}
+    {% for project in active %}
       <li>{% include "projects/_project_card.html" %}</li>
     {% endfor %}
   </ul>
 </section>
 <section>
-  <h1><span>{{ _('Active Projects') }}</span></h1>
+  <h1><span>{{ _('New Projects') }}</span></h1>
   <ul class="project-list">
-    {% for project in active %}
+    {% for project in new %}
       <li>{% include "projects/_project_card.html" %}</li>
     {% endfor %}
   </ul>

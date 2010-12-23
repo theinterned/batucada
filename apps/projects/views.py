@@ -67,7 +67,7 @@ def edit(request, slug):
 def list(request):
     featured = Project.objects.filter(featured=True)
     new = Project.objects.all().order_by('-created_on')[:4]
-    active = Project.objects.get_popular(limit=8)
+    active = Project.objects.get_popular(limit=4)
     return render_to_response('projects/gallery.html', {
         'featured': featured,
         'new': new,
