@@ -5,6 +5,6 @@
 <form action="{% locale_url messages_compose %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="{{ _('Send') }} &raquo;" />
+  <button type="submit" value="{{ _('Send') }} &raquo;">{{ _('Send') }} &raquo;</button>
 </form>
 {% endblock %}

@@ -20,6 +20,9 @@
       {{ form.bio }}
       {{ form.bio.errors }}
     </p>
-    <input type="submit" value="Save" />
+    <p class="buttons">
+      <a class="button" href="{{ profile.get_absolute_url }}">Cancel</a>
+      <button type="submit" >Save</button>
+    </p>
 </form>
 {% endblock %}

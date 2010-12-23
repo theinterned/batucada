@@ -25,9 +25,11 @@
 <section>
   <h1><span>{{ _('Popular') }}</span></h1>
   <ul class="user-list">
+    {% if popular %}
     {% for person in popular %}
       <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
     {% endfor %}
+    {% endif %}
   </ul>
 </section>
 <section>
