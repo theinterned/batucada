@@ -20,7 +20,7 @@ Comment out until we're finished refactoring activity
 
     {% if user.get_profile == project.created_by %}
       <div id="project-actions">
-        <a class="button" href="#">{{ _('Edit Project') }}</a>
+        <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
         <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
       </div>
     {% endif %}
