@@ -1,11 +1,8 @@
 {% extends "base.html" %}
-
 {% load l10n_tags %}
-
 {% block title %}{{ _('Sign Up') }}{% endblock %}
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
-
 <section class="modal">
   <article>
     <h1>{{ _('Sign Up') }} <span class="pester">({{  _('Already have an account?') }} <a href="{% locale_url users_login %}">{{_('Sign in here')}}</a>.)</span></h1>
@@ -62,6 +59,4 @@
     </fieldset>
   </article>
 </section>
-
-
 {% endblock %}
