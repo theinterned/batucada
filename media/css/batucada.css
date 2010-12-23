@@ -1010,7 +1010,7 @@ header {}
 	#profile_edit {}
 		.modal{
 			position: relative;
-			width: 780px;
+			width: 590px;
 			margin: 0 auto;
 			padding: 6px;
 			box-shadow: rgba(255, 255, 255, 0.2) 1px 1px 0px inset, rgba(0,0,0,0.25) 3px 3px 5px;
@@ -1030,15 +1030,21 @@ header {}
 			border-radius:8px;
 			-moz-border-radius:8px;		
 		}
+		.modal.nav{
+			width: 780px;
+		}
 		.modal article{
-			background: #fff url(/media/images/panel-bg.png) 0 0 repeat-y;
+			background: #fff;
 			border: 1px solid #525252;
 			border-radius:5px;
 			-moz-border-radius:5px;
 			padding-bottom: 40px;
 		}
+		.modal.nav article {
+			background: #fff url(/media/images/panel-bg.png) 0 0 repeat-y;
+		}
 		.modal > article > h1{
-			width: 742px;
+			width: 552px;
 			padding: 18px;
 			margin-bottom: 1em;
 			color: #777;
@@ -1064,20 +1070,26 @@ header {}
 			border-radius:5px 5px 0 0;
 			-moz-border-radius:5px 5px 0 0;
 		}
+		.modal > article > h1 .pester{
+			font-size: 14px;
+		}
+		.modal.nav > article > h1{
+			width: 742px;
+		}
 		.modal .buttons{
 			position: absolute;
 			top:  18px; right: 18px;
 		}
-		.modal .buttons button,
-		.modal .buttons .button {
+		.modal button,
+		.modal .button {
 			margin-left: 5px;
 			line-height: 24px;			
 			width: 84px;
 			min-height: 30px;
 			font-size: 14px;		
 		}
-		.modal .buttons .button {
-			width: 68px;
+		.modal .button {
+			min-width: 68px;
 			min-height: 24px;
 		}
         .modal #profile-edit-nav {
@@ -1092,8 +1104,11 @@ header {}
 			line-height: 25px;
 			margin-bottom: 5px;
 		}
-		.modal fieldset {
-			margin-left: 228px;
+		.modal fieldset{
+			padding: 0 38px;
+		}
+		.modal.nav fieldset {
+			margin-left: 190px;
 		}
 		.modal #profile-edit-nav .selected a,
 		.modal #profile-edit-nav a:hover,
