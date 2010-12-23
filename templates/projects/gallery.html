@@ -18,6 +18,7 @@
 {% block body %}
 
 <h1>{{ _('Browse <b>Projects</b>') }}</h1>
+{% if featured %}
 <section>
   <h1><span>{{_('Featured')}}</span></h1>
   <ul class="project-list">
@@ -26,6 +27,9 @@
   {% endfor %}
   </ul>
 </section>
+{% endif %}
+
+{% if active %}
 <section>
   <h1><span>{{ _('Popular Projects') }}</span></h1>
   <ul class="project-list">
@@ -34,6 +38,9 @@
     {% endfor %}
   </ul>
 </section>
+{% endif %}
+
+{% if new %}
 <section>
   <h1><span>{{ _('New Projects') }}</span></h1>
   <ul class="project-list">
@@ -42,4 +49,5 @@
     {% endfor %}
   </ul>
 </section>
+{% endif %}
 {% endblock %}
