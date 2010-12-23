@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% block title %}{{ _('Create Project') }}{% endblock %}
+{% block bodyid %}project_create{% endblock %}
+{% block bodyclasses %}project create info{% endblock %}
 {% block body %}
-<h3>{{ _('Create a Project') }}</h3>
-<form action="{% locale_url projects_create %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
-</form>
+<section class="modal">
+  <article>
+    <h1>{{ _('Create a Project') }}</h1>
+    <fieldset>
+      <form action="{% locale_url projects_create %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p class="buttons">
+          <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
+          <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+        </p>
+      </form>
+    </fieldset>
+  </article>
+</section>
+
 {% endblock %}
