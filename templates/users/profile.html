@@ -58,7 +58,7 @@ Temporarily comment out atom feed link while refactoring activity application.
                 
       </div>
       <div class="button">
-        <a href="{% locale_url messages_compose_to recipient=profile.username %}">{{ _('Private Message')}}</a>
+        <a href="{% locale_url drumbeatmail.views.inbox_filtered filter=user.get_profile.username %}">{{ _('Private Message')}}</a>
       </div>
       {% endif %}
     </div>
