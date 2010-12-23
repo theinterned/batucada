@@ -59,6 +59,7 @@ a.button,
 	color: #777;	
 	font-size: 12px;
 	padding: 2px 7px;
+	text-align: center;
 	text-decoration: none;
 	text-shadow: #fff 1px 1px 0;
 	border: 1px solid #bfbfbf;
@@ -69,9 +70,9 @@ a.button,
 	background: -moz-linear-gradient(top,#f6f6f6,#e8e8e8);
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#f6f6f6),to(#e8e8e8));
 	-pie-background: linear-gradient(top,#f6f6f6,#e8e8e8);
-	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.2);
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 1px rgba(0,0,0,0.2);
-    -webkit-box-shadow:inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1);
+	box-shadow:inset 1px 1px 1px rgba(255,255,255,1), inset -1px -1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,1), inset 1px 1px 0 rgba(255,255,255,0.1), inset -1px -1px 1px rgba(0,0,0,0.2);
+    -webkit-box-shadow:inset 1px 1px rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1);
     behavior: url("/media/css/PIE.htc");
 	}
 input[type=submit],
@@ -81,40 +82,47 @@ button[type=submit],
     font-weight: bold;
     text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
     border: 1px solid #608dae;
-    border-color: #608dae #405f75 #405f75 #608dae;
+    border-color: #608dae #405f75 #3a5568 #608dae;
     background: -webkit-gradient(linear,0 top,0 bottom,from(#3fa3e9),to(#2171a9));
     background: -moz-linear-gradient(top,#3fa3e9,#2171a9);
     -pie-background: linear-gradient(top,#3fa3e9,#2171a9);
-    box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1);
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1);
-    -webkit-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1);
+    box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1);
+    -moz-box-shadow:inset 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1);
     behavior: url("/media/css/PIE.htc");
 	}
 button:hover,
 input[type=button]:hover,
-.button:hover,
+.button:hover{
+	background: -moz-linear-gradient(top,#fff,#f6f6f6);
+    -pie-background: linear-gradient(top,#fff,#f6f6f6);
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#fff),to(#f6f6f6));
+	}
 button:focus,
 input[type=button]:focus,
 .button:focus {
-	color: #2084CA;
+	/*color: #2084CA;*/
 	text-decoration: none;
 	outline: none;
-	border-color: #3ea1e6;
-	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 4px #3ea1e6;
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 4px #3ea1e6;
-    -webkit-box-shadow:inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
+	outline-style:none;
+	/*border-color: #3ea1e6;*/
+	box-shadow: inset 1px 1px 1px rgba(255,255,255,1), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
+    -moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,1), inset 1px 1px 0 rgba(255,255,255,0.2), inset -1px -1px 1px rgba(0,0,0,0.2), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
+    -webkit-box-shadow: inset 1px 1px 0 rgba(255,255,255,1), inset -1px -1px 0 rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
 	}
 button[type=submit]:hover,
 input[type=submit]:hover,
-.button.submit:hover,
+.button.submit:hover{
+	background: -moz-linear-gradient(top,#42aaf5,#3fa3e9);
+    -pie-background: linear-gradient(top,#42aaf5,#3fa3e9);
+	background: -webkit-gradient(linear,0 top,0 bottom,from(#42aaf5),to(#3fa3e9));
+	}
 button[type=submit]:focus,
 input[type=submit]:focus,
 .button.submit:focus{
-	color: #bfe9ff;
-	text-shadow: 0px -1px 0px rgba(0,0,0,0.6);
-	box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
-    -moz-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
-    -webkit-box-shadow:inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px 1px rgba(0,0,0,0.1), 0 0 4px #3ea1e6;
+	box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
+    -moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
+    -webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,0.5), inset -1px -1px rgba(0,0,0,0.1), 0 0 1px 1px #e5f6ff, 0 0 4px 2px #3ea1e6;
     behavior: url("/media/css/PIE.htc");
 	}
 button:active,
@@ -122,7 +130,6 @@ button[type=submit]:active,
 input[type=button]:active,
 input[type=submit]:active,
 .button:active {
-	/*color: #999;*/
 	padding-top: 3px;
 	padding-bottom: 1px;
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#e8e8e8),to(#f6f6f6));
@@ -134,10 +141,6 @@ input[type=submit]:active{
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#2171a9),to(#3fa3e9));
     background: -moz-linear-gradient(top,#2171a9,#3fa3e9);
     -pie-background: linear-gradient(top,#2171a9,#3fa3e9);
-    box-shadow:inset -1px -1px 1px rgba(255,255,255,0.5), inset 1px 1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA;
-    -moz-box-shadow:inset -1px -1px 1px rgba(255,255,255,0.5), inset 1px 1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA;    
-    -webkit-box-shadow:inset -1px -1px 1px rgba(255,255,255,0.5), inset 1px 1px 1px rgba(0,0,0,0.2), 0 0 5px #2084CA;
-    behavior: url("/media/css/PIE.htc");
 	}
 input[type=submit]:active,
 button.submit:active,
@@ -1048,11 +1051,17 @@ header {}
 			position: absolute;
 			top:  18px; right: 18px;
 		}
-		.modal .buttons button {
-			font-size: 14px;
-			line-height: 24px;
+		.modal .buttons button,
+		.modal .buttons .button {
+			margin-left: 5px;
+			line-height: 24px;			
+			width: 84px;
 			min-height: 30px;
+			font-size: 14px;		
+		}
+		.modal .buttons .button {
 			width: 68px;
+			min-height: 24px;
 		}
         .modal #profile-edit-nav {
 			float: left;
