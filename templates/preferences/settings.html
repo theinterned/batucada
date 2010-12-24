@@ -6,7 +6,7 @@
 {% block title %}{{ _('Account Settings') }}{% endblock %}
 
 {% block body %}
-<section class="modal">
+<section class="modal nav">
 <article>
   <h1>{{ _('Account Settings') }}</h1>
   <nav id="profile-edit-nav">
@@ -35,8 +35,9 @@
 	<input type="checkbox" id="id_no_email_new_project_follower" name="no_email_new_project_follower" {% if no_email_new_project_follower %}checked="checked"{% endif %} />
 	<label for="id_no_email_new_project_follower">{{ _('Someone starts following one of my projects.') }}</label>
       </p>
-      <p>
-	<input type="submit" value="Save" />
+      <p class="buttons">
+        <a class="button" href="{% locale_url dashboard_index %}">{{ _('Cancel') }}</a>
+        <button type="submit" value="{{ _('Save') }}" >{{ _('Save') }}</button>
       </p>
     </form>
   </fieldset>  

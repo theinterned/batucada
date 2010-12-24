@@ -18,7 +18,7 @@
   <h1><span>{{ _('Featured') }}</span></h1>
   <ul class="user-list">
     {% for person in featured %}
-      <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }}</li>
+      <li><a href="{{  person.get_absolute_url }}">{{ person.name }}</a> &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
     {% endfor %}
   </ul>
 </section>
@@ -27,7 +27,7 @@
   <ul class="user-list">
     {% if popular %}
     {% for person in popular %}
-      <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+      <li><a href="{{  person.get_absolute_url }}">{{ person.name }}</a> &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
     {% endfor %}
     {% endif %}
   </ul>
@@ -36,7 +36,7 @@
   <h1><span>{{ _('Newest Users') }}</span></h1>
   <ul class="user-list">
     {% for person in new %}
-      <li>{{ person.name }} &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+      <li><a href="{{  person.get_absolute_url }}">{{ person.name }}</a> &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
     {% endfor %}
   </ul>
 </section>

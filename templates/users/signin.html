@@ -5,38 +5,32 @@
 {% block title %}{{ _('Sign In') }}{% endblock %}
 {% block pageclasses %}signin{% endblock %}
 {% block body %}
-
-<div id="sidebar">
-
-</div>
-
-<div id="main">
-
-<form action="{% locale_url users_login %}" method="post">
-  <fieldset>
-    <legend>{{ _('Sign In') }} <span class="pester">(Not a member? <a href="{% locale_url users_register %}">Sign up</a>)</span></legend>  
-    {% csrf_token %}
-    <p>
-      <label for="id_username">{{ _('Username or Email') }}</label>
-      {{ form.username }}
-      {{ form.username.errors }}
-    </p>
-    <p>
-      <label for="id_password">{{ _('Password') }}</label>
-      {{ form.password }}
-      {{ form.password.errors }}
-    </p>
-    <p>
-      <label for="id_remember_me">{{ _('Remember Me') }}</label>
-      {{ form.remember_me }}
-      {{ form.remember_me.errors }}
-    </p>
-    <a id="forgot_password" href="{% locale_url users_forgot_password %}">{{ _('Forgot your password?') }}</a>
-    <p><button type="submit">{{ _('Sign In') }}</button></p>    
-  </fieldset>
-</form>
-<p class="openid"><a href="#">{{ _('Sign in with OpenID')}}</a></p>
-
-</div>
-
+<section class="modal">
+  <article>
+    <h1>{{ _('Sign In') }} <span class="pester">(Not a member? <a href="{% locale_url users_register %}">Sign up</a>)</span></h1>
+    <fieldset>
+        <form action="{% locale_url users_login %}" method="post">
+        {% csrf_token %}
+        <p>
+          <label for="id_username">{{ _('Username or Email') }}</label>
+          {{ form.username }}
+          {{ form.username.errors }}
+        </p>
+        <p>
+          <label for="id_password">{{ _('Password') }}</label>
+          {{ form.password }}
+          {{ form.password.errors }}
+        </p>
+        <p>
+          <label for="id_remember_me">{{ _('Remember Me') }}</label>
+          {{ form.remember_me }}
+          {{ form.remember_me.errors }}
+        </p>
+        <p id="forgot_password"><a href="{% locale_url users_forgot_password %}">{{ _('Forgot your password?') }}</a></p>
+        <p><button type="submit">{{ _('Sign In') }}</button></p>    
+      </form>
+      <p class="openid"><a href="#">{{ _('Sign in with OpenID')}}</a></p>
+    </fieldset>
+  </article>
+</section>
 {% endblock %}
