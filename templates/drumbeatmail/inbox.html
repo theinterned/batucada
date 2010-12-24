@@ -26,6 +26,14 @@
     <ul>
       <li><a href="{% locale_url drumbeatmail_inbox %}">{{ _('All Messages') }}{% if messages_inbox_count > 0 %} ({{ messages_inbox_count }}){% endif %}</a></li>
     </ul>
+
+    {% if senders %}
+      <ul>
+	{% for sender, count in senders %}
+	  <li><a href="{% locale_url drumbeatmail_inbox_filtered filter=sender.username %}">{{ sender.name }} ({{ count }})</a></li>
+	{% endfor %}
+      </ul>
+    {% endif %}
   </div>
 </div>
 
@@ -37,6 +45,7 @@
   <ul id="posts">
     {% for message in inbox_messages %}
     <li class="post-container">
+      <a name="message{{ message.id }}" />
       <a href="#" class="reply-to">{{ _('Reply') }}</a>
       
       <a href="{{ message.sender.get_profile.get_absolute_url }}">
@@ -46,6 +55,7 @@
       <div class="post-contents">
 	<div class="post-details">
 	  <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile.name }}</a>
+	  {{ message.sent_at }}
 	</div>
 
 	<div class="post-body">
