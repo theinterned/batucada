@@ -9,7 +9,7 @@
   <article>
     <h1>{{ _('New Private Message') }}</h1>
     <fieldset>
-      <form method="post">
+      <form method="post" action="{% locale_url drumbeatmail_compose %}">
 	{% csrf_token %}
 	<p>
 	  <label for="id_recipient">{{ _('To') }}</label>
@@ -26,7 +26,12 @@
 	  {{ form.body }}
 	  {{ form.body.errors }}
 	</p>
-	<input type="submit" value="{{ _('Send') }}" />
+	<p class="buttons">
+	  <a class="button" href="{% locale_url drumbeatmail_inbox %}">
+	    {{ _('Cancel') }}
+	  </a>
+	  <button type="submit" value="{{ _('Send') }}">{{ _('Send') }}</button>
+	</p>
       </form>
     </fieldset>
   </article>
