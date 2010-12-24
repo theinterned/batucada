@@ -2,7 +2,7 @@
 {% load l10n_tags %}
 
 {% block title %}{{ _('Inbox') }}{% endblock %}
-{% block pageid %}inbox{% endblock %}
+{% block bodyid %}inbox{% endblock %}
 {% block breadcrumbs %}
 <div class="container">
   <nav>
@@ -49,8 +49,6 @@
   <ul id="posts">
     {% for message in inbox %}
     <li class="post-container">
-      <a name="message{{ message.id }}" />
-
       {% if message.sender != user %}
       <a href="{% locale_url drumbeatmail_reply message=message.id %}" class="reply-to">{{ _('Reply') }}</a>
       {% endif %}
@@ -91,6 +89,29 @@
     {% endfor %}
   </ul>
 
+  {% endif %}
+
+  {% if npages > pagenum %}
+
+    <script id="message-template" type="text/j-query-tmpl" page="{{ pagenum }}" npages="{{ npages }}">
+      <li class="post-container">
+	<a href="${reply_url}" class="reply-to">{{ _('Reply') }}</a>
+	<a href="${sender_url}">
+	  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}${sender_img}">
+        </a>
+	<div class="post-contents">
+	  <div class="post-details">
+	    <a class="member-name" href="${sender_url}">${sender_name}</a>
+	    ${sent_at}
+	  </div>
+	  <div class="post-body">
+	    ${body}
+	  </div>
+	  <div class="clear ir"></div>
+      </li>
+    </script>
+
+    <a class="button" href="{% locale_url drumbeatmail_inbox_offset pagenum=pagenum %}" id="inbox_more">{{ _('More') }}</a>
   {% endif %}
 </div>
 
