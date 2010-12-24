@@ -6,7 +6,7 @@ from users.models import UserProfile
 
 
 class UserField(forms.Field):
-    widget = forms.widgets.Input
+    widget = forms.widgets.TextInput
 
     def clean(self, value):
         super(UserField, self).clean(value)
