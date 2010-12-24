@@ -56,9 +56,9 @@ def _serialize(inbox):
 def inbox(request, pagenum=1):
     page_size = 10
     inbox_count = Message.objects.inbox_for(request.user).count()
-    npages = inbox_count / page_size
+    npages = (inbox_count / page_size) + 1
     pagenum = int(pagenum)
-    if npages and pagenum > npages:
+    if pagenum > npages:
         return http.HttpResponseRedirect(reverse('drumbeatmail_inbox'))
     start = (pagenum - 1) * page_size
     end = pagenum * page_size
