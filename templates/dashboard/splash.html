@@ -1,29 +1,61 @@
 {% extends "base.html" %}
-
 {% load l10n_tags %}
 
 {% block title %}{{ _('Sign In') }}{% endblock %}
+{% block pageid %}splash{% endblock %}
+
 {% block body %}
 
 <div id="sidebar">
 
 </div>
-
-<div id="main">
-  
-  <h1>{{ _('Mozilla Drumbeat') }}</h1>
-
-  <div id="signup-buttons">
-      <a class="button submit" href="{% locale_url users_login %}">Sign in</a>
-      <a class="button signup" href="{% locale_url users_register %}">Sign up</a>
+<header id="intro">
+  <div class="container">
+    <h1>Open collaboration<br>
+        for an open Web
+    </h1>
+    <h2>Drumbeat provides tools to empower everybody to create, discover, and collaborate on projects that promote and grow the open web.</h2>
+    <img src="{{ MEDIA_URL }}/images/drumbeat-logo-splash.png" width="300" height="282" alt="Drumbeat Logo"/>
+    <ul class="buttons">
+      <li><a class="button submit" href="{% locale_url users_register %}">Sign Up</a></li>
+      <li><a class="button" href="#About">Learn More</a></li>
+      <li><a class="button" href="https://donate.mozilla.org/page/contribute/openwebfund">Donate</a></li>
+    </ul>
   </div>
-
-  <h1>{{ _('Recent Activity') }}</h1>
-  <ul id="posts">
-    {% for activity in activities %}
-      {% include "activity/_activity_resource.html" %}
-    {% endfor %}
-  </ul>
-</div>
-
+</header> <!-- /#intro -->
+<section id="main">
+  <div class="container">
+    <h1>{{ _('Recent Activity') }}</h1>
+    <ul id="posts">
+      {% for activity in activities %}
+        {% include "activity/_activity_resource.html" %}
+      {% endfor %}
+    </ul>
+    <asside>
+      <section id="featured_project">
+        <h1>Featured Project</h1>
+        <!-- TODO: Re-use /projects/_project_card.html here with featured project -->
+      </section>
+      <section id="planet_drumbeat">
+        <h1>Planet Drumbeat <a href="#rssfeed" title="Subscribe to the Planet Drumbeat rss feed">rss feed</a></h1>
+        <article>
+          <h1><a href="#">Title of post</a></h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+        <article>
+          <h1><a href="#">Title of post</a></h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+        <article>
+          <h1><a href="#">Title of post</a></h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+        <article>
+          <h1><a href="#">Title of post</a></h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+      </section>
+    </asside>
+  </div>  
+</section>
 {% endblock %}
