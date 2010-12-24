@@ -27,6 +27,10 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
 
+If you are doing an update, you might find it helps to delete pyc files: ::
+
+    find . -name "*.pyc" | xargs rm
+
 You may need to create a settings_local.py file to override some of the default settings.
 For example, you may need to `configure your email backend`_.
    
