@@ -64,6 +64,29 @@ var batucada = {
 		$('#post-user-status-update').submit();
 	    });
 	}
+    },
+    inbox: {
+	onload: function() {
+	    $('a#inbox_more').bind('click', function(e) {
+		e.preventDefault();
+		var template = $('#message-template');
+		var page = template.attr('page');
+		var npages = template.attr('npages');
+		$.getJSON('/en-US/messages/inbox/' + page + '/', function(data) {
+		    $(data).each(function(i, value) {
+			var msg = template.tmpl(value);
+			msg.hide();
+			$('#posts').append(msg);
+			$('li.post-container:last').fadeIn();
+		    });
+		});
+		next_page = parseInt(page) + 1;
+		template.attr('page', next_page);
+		if (next_page > parseInt(npages)) {
+		    $('a#inbox_more').hide();
+		}
+	    });
+	}
     }
 };
 
@@ -76,7 +99,7 @@ $(document).ready(function() {
     }
 
     // attach handlers for elements that appear on most pages
-    $('#user-nav').find('li.menu').bind('click', function() {
+    $('#user-nav').find('li.menu').bind('click', function(event) {
 	$(this).toggleClass('open');
     });
 

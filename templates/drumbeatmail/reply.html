@@ -2,7 +2,7 @@
 {% load l10n_tags %}
 
 {% block title %}{{ _('Reply') }}{% endblock %}
-{% block pageid %}reply{% endblock %}
+{% block bodyid %}reply{% endblock %}
 
 {% block body %}
 <section class="modal">
@@ -27,7 +27,7 @@
 	  {{ form.body.errors }}
 	</p>
 	<p class="buttons">
-	  <a class="button" href="{% locale_url drumbeatmail_inbox %}#message{{message.id}}">
+	  <a class="button" href="{% locale_url drumbeatmail_inbox %}">
 	    {{ _('Cancel') }}
 	  </a>
 	  <button type="submit" value="{{ _('Send') }}">{{ _('Send') }}</button>
