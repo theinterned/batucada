@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 from messages.models import Message
-from projects.models import Project, Link
+from projects.models import Project
 
 
 class ProtectedProjectForm(forms.ModelForm):
@@ -25,15 +25,6 @@ class ProjectForm(ProtectedProjectForm):
         model = Project
         exclude = ('created_by', 'slug', 'featured')
         protected = ('template', 'css')
-
-
-class ProjectLinkForm(forms.ModelForm):
-
-    class Meta:
-        model = Link
-        widgets = {
-            'project': forms.HiddenInput(),
-        }
 
 
 class ProjectContactUsersForm(forms.Form):
