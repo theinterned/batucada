@@ -72,19 +72,28 @@ var batucada = {
 		var template = $('#message-template');
 		var page = template.attr('page');
 		var npages = template.attr('npages');
-		$.getJSON('/en-US/messages/inbox/' + page + '/', function(data) {
+		var url = $(this).attr('href');
+		$.getJSON(url, function(data) {
 		    $(data).each(function(i, value) {
 			var msg = template.tmpl(value);
 			msg.hide();
 			$('#posts').append(msg);
-			$('li.post-container:last').fadeIn();
+			$('li.post-container:last').fadeIn(function() {
+			    $('html', 'body').animate({
+				'scrollTop': $('a#inbox_more').offset().top
+			    }, 200);
+			});
 		    });
+		    next_page = parseInt(page) + 1;
+		    template.attr('page', next_page);
+		    if (next_page > parseInt(npages)) {
+			$('a#inbox_more').hide();
+		    }
+		    // update more link. very hacky :( 
+		    var href = $('a#inbox_more').attr('href');
+		    var new_href = href.substr(0, href.length - 2) + next_page + '/';
+		    $('a#inbox_more').attr('href', new_href);
 		});
-		next_page = parseInt(page) + 1;
-		template.attr('page', next_page);
-		if (next_page > parseInt(npages)) {
-		    $('a#inbox_more').hide();
-		}
 	    });
 	}
     }

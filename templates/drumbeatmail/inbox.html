@@ -91,11 +91,13 @@
 
   {% endif %}
 
-  {% if npages >= pagenum %}
+  {% if n_pages >= page_number %}
 
-    <script id="message-template" type="text/j-query-tmpl" page="{{ pagenum }}" npages="{{ npages }}">
+    <script id="message-template" type="text/j-query-tmpl" page="{{ page_number }}" npages="{{ n_pages }}">
       <li class="post-container">
-	<a href="${reply_url}" class="reply-to">{{ _('Reply') }}</a>
+	{% if reply_url %}
+	  <a href="${reply_url}" class="reply-to">{{ _('Reply') }}</a>
+	{% endif %}
 	<a href="${sender_url}">
 	  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}${sender_img}">
         </a>
@@ -111,7 +113,7 @@
       </li>
     </script>
 
-    <a class="button" href="{% locale_url drumbeatmail_inbox_offset pagenum=pagenum %}" id="inbox_more">{{ _('More') }}</a>
+    <a class="button" href="{{ more_link }}" id="inbox_more">{{ _('More') }}</a>
   {% endif %}
 </div>
 
