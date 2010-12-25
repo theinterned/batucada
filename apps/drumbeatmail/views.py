@@ -9,17 +9,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
 from drumbeat import messages
 from drumbeatmail import forms
 from messages.models import Message
 from users.models import UserProfile
-
-try:
-    import json
-except ImportError:
-    import simplejson as json
 
 log = logging.getLogger(__name__)
 
@@ -73,7 +69,7 @@ def serialize(inbox, sent_view=False):
         if sent_view:
             del serialized['reply_url']
         data.append(serialized)
-    return json.dumps(data)
+    return simplejson.dumps(data)
 
 
 def generic_inbox(request, query_method, query_args, page_number,
