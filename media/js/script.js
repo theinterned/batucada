@@ -79,7 +79,7 @@ var batucada = {
 			msg.hide();
 			$('#posts').append(msg);
 			$('li.post-container:last').fadeIn(function() {
-			    $('html', 'body').animate({
+			    $('html').animate({
 				'scrollTop': $('a#inbox_more').offset().top
 			    }, 200);
 			});
