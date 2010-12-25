@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+	<title>Paul Osman</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="http://blog.eval.ca/wp-content/themes/straightforward/style.css" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.eval.ca/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.eval.ca/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Paul Osman' href='http://blog.eval.ca' />
+<meta name="generator" content="WordPress 2.9.2" />
+
+<link rel="stylesheet" href="http://blog.eval.ca/wp-content/plugins/wp-syntax/wp-syntax.css" type="text/css" media="screen" />
+	<link rel="alternate" type="application/rss+xml" href="http://blog.eval.ca/feed/" title="Paul Osman latest posts" />
+	<link rel="alternate" type="application/rss+xml" href="http://blog.eval.ca/comments/feed/" title="Paul Osman latest comments" />
+	<link rel="pingback" href="http://blog.eval.ca/xmlrpc.php" />
+</head>
+
+<body class="wordpress y2010 m12 d25 h17 home blog">
+
+<div id="wrapper" class="hfeed">
+
+	<div id="header">
+		
+
+
+<h1 id="blog-title"><span><a href="http://blog.eval.ca/" title="Paul Osman" rel="home">Paul Osman</a></span></h1>
+		<div id="blog-description">Thoughts on Software and Other Things</div>
+	</div><!--  #header -->
+
+	<div id="access">
+		<div class="skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+		<div id="menu"><ul><li class="page_item page-item-372"><a href="http://blog.eval.ca/about/" title="About">About</a></li><li class="page_item page-item-15"><a href="http://blog.eval.ca/resume/" title="Resume">Resume</a></li></ul></div>
+	</div><!-- #access -->
+
+	<div id="container">
+		<div id="content">
+
+			<div id="nav-above" class="navigation">
+				<div class="nav-previous"><a href="http://blog.eval.ca/page/2/" ><span class="meta-nav">&laquo;</span> Older posts</a></div>
+				<div class="nav-next"></div>
+			</div>
+
+
+			<div id="post-480" class="hentry p1 post publish author-paul category-dayjob category-drumbeat category-mozilla untagged y2010 m11 d15 h12">
+				<h2 class="entry-title"><a href="http://blog.eval.ca/2010/11/15/status-report-what-ive-been-up-to/" title="Permalink to Status Report &#8211; What I&#8217;ve Been Up To" rel="bookmark">Status Report &#8211; What I&#8217;ve Been Up To</a></h2>
+				<div class="entry-date"><abbr class="published" title="2010-11-15T12:08:02-0500">November 15, 2010 &#8211; 12:08 pm</abbr></div>
+				<div class="entry-content">
+<p>I&#8217;ve got a huge backlog of things I&#8217;ve been meaning to blog about, so to hopefully kick things off, here&#8217;s a short list of things I&#8217;ve been up to in the last few months:</p>
+<h4>P2PU Development Sprint</h4>
+<p>I spent a few days in Barcelona (before the Drumbeat festival) working with some <a title="John D Britton" href="http://www.johndbritton.com/">very</a> <a title="Jessy Cowan-Sharp" href="http://jessykate.com/">talented</a> <a title="Brian J Brennan" href="http://brianlovesthings.com/">developers </a>on a development sprint for the <a title="P2PU" href="http://p2pu.org">P2PU Website</a>. We split our time between fixing bugs in the existing Drupal code base and working on (as well as deciding) the redevelopment of the site on a new platform. After some refreshingly practical debate, we decided to build on <a title="Batucada" href="http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/">batucada</a>, the Drumbeat.org rewrite I&#8217;ve been leading. Being on the same code base and of course the same platform (Django) means the two teams will be able to share code fairly easily, which is really exciting.</p>
+<p>The sprint was a huge success. We had a great venue which we affectionately referred to as the &#8220;Hacker Dungeon&#8221; (there were no windows!). We fixed some major problems on the current website and left knowing that P2PU has a great core development team and it&#8217;s really exciting that the batucada and lernanta (codename for the new P2PU code base) teams are going to get to work so closely together (particularly great for me, as I&#8217;m on both teams!).</p>
+<h4>Drumbeat Festival</h4>
+<p>The Drumbeat Festival, also in Barcelona, was scheduled immediately after the P2PU development sprint. This was a massive event, and I&#8217;m incredibly proud to work with the people who helped pull it all together. It was a 3 day event with over 400 participants from over 40 countries in 3 different venues and somehow, it all worked. People self-organized into fairly focused groups, all working on different projects. It was very unconference style, but my sense was that most people stuck with the same group rather than cross-pollinating. The theme this year was Learning, Freedom and the Web. Attendants were from all over, but could roughly be categorized into hackers and educators. Despite this, I was pleasantly surprised to walk away with more new technical contacts than I get at most technical conferences. I also had a few people approach me about volunteering their web development skills for Drumbeat, which was fantastic.</p>
+<p>I spent nearly all of my time working in the Badge Lab. <a title="Dan Mills" href="http://blog.sandmill.org/">Dan Mills</a>, <a title="Joshua Gay" href="http://joshuagay.org/">Joshua Gay</a>, a wonderful group of volunteers and myself found a corner to hide in and worked on a functional demo of a federated badge system. More on that below!</p>
+<h4>Badge Backpack</h4>
+<p>Thanks to a great group of folks working with us, we were successful in creating a functional demo of a federated badge system. The system uses HTML5 postMessage to enable cross-origin site communication. Badges can be issued by any site, stored in a &#8220;backpack&#8221; (which simply stores the badge data in localStorage) and consumer sites can show badges stored in the backpack with just a few lines of Javascript. We&#8217;re continuing development on the idea, and have a couple of Github repositories (<a href="https://github.com/drumbeat-badge-sprint/hub">here</a>, and <a href="https://github.com/drumbeat-badge-sprint/backpack">here</a>) and of course a <a title="Badge Lab" href="http://groups.google.com/group/badge-lab">mailing list</a>. Thanks to <a href="http://twitter.com/#!/carl0s_">Carlo Frinolli</a>, <a href="http://twitter.com/#!/mrbichel">Johan Bichel</a>, <a href="http://manufacturaindependente.org/">Ana Carvalho</a> and others (so sorry if I didn&#8217;t catch your name) for joining the code sprint and helping us out!</p>
+<h4>Batucada / Drumbeat.org</h4>
+<p>Batucada development is coming along nicely. We&#8217;ve got some new folks contributing code and are laser focused on delivering an initial production release by the end of the year. We&#8217;re working with a designer to finalize the interface, and are really excited to get this thing going. The existing Drupal based site will be kept available for some time, albeit at a different URL, so people will be able to access it at least even after we launch the new version (signups will be disabled though).</p>
+
+								</div>
+				<div class="entry-meta">
+					<span class="author vcard">By <a class="url fn n" href="http://blog.eval.ca/author/paul/" title="View all posts by paul">paul</a></span>
+					<span class="meta-sep">|</span>
+					<span class="cat-links">Posted in <a href="http://blog.eval.ca/category/dayjob/" title="View all posts in Dayjob" rel="category tag">Dayjob</a>,  <a href="http://blog.eval.ca/category/drumbeat/" title="View all posts in Drumbeat" rel="category tag">Drumbeat</a>,  <a href="http://blog.eval.ca/category/mozilla/" title="View all posts in Mozilla" rel="category tag">Mozilla</a></span>
+					<span class="meta-sep">|</span>
+										<span class="comments-link"><a href="http://blog.eval.ca/2010/11/15/status-report-what-ive-been-up-to/#comments" title="Comment on Status Report &#8211; What I&#8217;ve Been Up To">Comments (1)</a></span>
+				</div>
+			</div><!-- .post -->
+
+
+
+			<div id="post-449" class="hentry p2 post publish author-paul category-batucada category-drumbeat category-mozilla category-open-web category-social-tech untagged y2010 m10 d04 h11 alt">
+				<h2 class="entry-title"><a href="http://blog.eval.ca/2010/10/04/making-signups-easier-with-webfinger/" title="Permalink to Making Signups Easier With WebFinger" rel="bookmark">Making Signups Easier With WebFinger</a></h2>
+				<div class="entry-date"><abbr class="published" title="2010-10-04T12:17:12-0400">October 4, 2010 &#8211; 12:17 pm</abbr></div>
+				<div class="entry-content">
+<p>I&#8217;ve been thinking about signup processes lately and what we can do with <a title="Batucada " href="http://www.drumbeat.org/project/batucada">batucada</a> (the next drumbeat.org) to make it easier, while encouraging users to use open, decentralized identity technologies like <a href="http://openid.net/">OpenID</a>.</p>
+<h3>The Problem</h3>
+<p>Whenever I come across a new service that I want to create an account on, I dread the idea of creating a new set of credentials and re-entering a bunch of information I have already entered elsewhere. OpenID solves part of this for me, and I&#8217;m always happy to see sites supporting it. The problem, however, is that OpenID only solves one piece of the puzzle (authentication) and there are usability problems abound. The latter problem is well known, and people have come up with a bunch of innovative ways of tackling it, including intelligent OpenID selectors.</p>
+<p>The core of the problem is that people don&#8217;t tend to think of themselves as a URL, which is what OpenID uses as a supplied identifier. It&#8217;s been really hard to get the average web user to think of a URL as part of their identity, and frankly, they&#8217;re usually pretty hard to remember. There are ways around this, including hosting your own OpenID provider, or using delegation, so that you can choose an easy-to-remember URL, but it&#8217;s unrealistic to expect non-technical web users to be able to do this.</p>
+<h3>The Solution</h3>
+<p>Enter <a href="http://code.google.com/p/webfinger/">WebFinger</a>. The idea behind WebFinger is that, given an email-like identifier, an application can discover information about that user (including their OpenID provider). I really like this idea. I think people have an easier time with email addresses than with URLs. A bunch of providers, including AOL, Gmail and Yahoo have implemented WebFinger support, which means that there are a ton of people out there who already have WebFinger identifiers, even if they don&#8217;t know it (and they shouldn&#8217;t have to know it).</p>
+<p>So what would a WebFinger based signup process look like? The first step would be to capture an email address and find out if it is a valid WebFinger identifier. If it is, the next step would be to find out of the user has an OpenID provider. If their email address is not a WebFinger identifier, the workflow would fall back to a more traditional password based signup form. Imagine clicking on a &#8220;Sign up&#8221; link and being presented with a form asking for your email address.</p>
+<p style="text-align: center;"><a href="http://blog.eval.ca/wp-content/uploads/2010/10/login_step_one.png"><img class="size-medium wp-image-450 aligncenter" title="login_step_one" src="http://blog.eval.ca/wp-content/uploads/2010/10/login_step_one.png" alt="Step One" width="473" height="400" /></a></p>
+<p style="text-align: left;">Once submitted, the web application would perform WebFinger based discovery on the identifier in the background. If an OpenID provider is found, the user could be presented with a friendly message asking them if they&#8217;d like to use it to sign in to the site.</p>
+<p style="text-align: center;"><a href="http://blog.eval.ca/wp-content/uploads/2010/10/mockup.png"><img class="size-medium wp-image-451  aligncenter" title="Step Two" src="http://blog.eval.ca/wp-content/uploads/2010/10/mockup.png" alt="Step Two" /></a></p>
+<p style="text-align: left;">If the email address is not a WebFinger identifier, or if the user opts not to use their OpenID, fall back to a more traditional sign up form.</p>
+<p style="text-align: left;">
+<p style="text-align: center;"><a href="http://blog.eval.ca/wp-content/uploads/2010/10/webfinger_step_two.png"><img class="size-medium wp-image-453 aligncenter" title="webfinger_step_two" src="http://blog.eval.ca/wp-content/uploads/2010/10/webfinger_step_two.png" alt="" /></a></p>
+<p style="text-align: left;">These are obviously very rough, but I&#8217;m interested to know what people think of this idea. Specifically how the process could be made easier for non-technical users. A few concerns I have (and note that UX / Usability is certainly NOT my specialty, so help is appreciated!):</p>
+<ol>
+<li>A service provider shouldn&#8217;t coerce a user into using an OpenID vs creating a new set of credentials, the user must always have a choice. Unfortunately, this means asking another question, and questions are confusing.</li>
+<li>Presuming a user has an OpenID, but does not have an active session with their provider, they are going to be sent to their provider to log in after Step Two. This could be confusing to users. We&#8217;re sending them into the OpenID &#8220;Chasm of Death&#8221;. Is there anything that can be done to ease this transition / manage user expectations?</li>
+<li>Once users have signed up using an OpenID, how do we let them know that they should use that OpenID from now on? I suppose we could just prompt for an email address on sign in and perform discovery again. This introduces another step for those who aren&#8217;t using an OpenID though (step one: input email address, step two on next screen: enter password).</li>
+<li>Users could be confused immediately when we ask for their email address and not a password. This is breaking a familiar pattern, which is always potentially jarring.</li>
+<li>What about users who know what OpenID is, and have an OpenID that they&#8217;d like to use, but don&#8217;t have a WebFinger identifier that refers to their OpenID? Again, more questions to ask, which adds more confusion.</li>
+</ol>
+<p>Again, I&#8217;m certainly not a UX person, so I&#8217;d be very curious to hear what people think of this idea and if people have ideas about how to improve the flow.</p>
+
+								</div>
+				<div class="entry-meta">
+					<span class="author vcard">By <a class="url fn n" href="http://blog.eval.ca/author/paul/" title="View all posts by paul">paul</a></span>
+					<span class="meta-sep">|</span>
+					<span class="cat-links">Posted in <a href="http://blog.eval.ca/category/batucada/" title="View all posts in Batucada" rel="category tag">Batucada</a>,  <a href="http://blog.eval.ca/category/drumbeat/" title="View all posts in Drumbeat" rel="category tag">Drumbeat</a>,  <a href="http://blog.eval.ca/category/mozilla/" title="View all posts in Mozilla" rel="category tag">Mozilla</a>,  <a href="http://blog.eval.ca/category/open-web/" title="View all posts in Open Web" rel="category tag">Open Web</a>,  <a href="http://blog.eval.ca/category/social-tech/" title="View all posts in Social Tech" rel="category tag">Social Tech</a></span>
+					<span class="meta-sep">|</span>
+										<span class="comments-link"><a href="http://blog.eval.ca/2010/10/04/making-signups-easier-with-webfinger/#comments" title="Comment on Making Signups Easier With WebFinger">Comments (10)</a></span>
+				</div>
+			</div><!-- .post -->
+
+
+
+			<div id="post-437" class="hentry p3 post publish author-paul category-batucada category-drumbeat category-mozilla category-open-web untagged y2010 m07 d07 h13">
+				<h2 class="entry-title"><a href="http://blog.eval.ca/2010/07/07/batucada-tools-vision/" title="Permalink to Batucada &#8211; Tools &amp; Vision" rel="bookmark">Batucada &#8211; Tools &#038; Vision</a></h2>
+				<div class="entry-date"><abbr class="published" title="2010-07-07T14:56:48-0400">July 7, 2010 &#8211; 2:56 pm</abbr></div>
+				<div class="entry-content">
+<p>I mentioned in the <a href="http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/">announcement of batucada</a>, that we are dropping <a title="Drupal" href="http://drupal.org">Drupal</a> for the next phase of development on the Drumbeat website project. We&#8217;ve decided to build Batucada with the Python web framework <a title="Django" href="http://www.djangoproject.com/">django</a>. There are a bunch of reasons why I think django is a good choice, but the primary one is that people are already using it for a number of Mozilla web projects, including AMO and SUMO. Having other people in the organization who are familiar with the framework is helpful, of course, and it means we can reuse work done elsewhere within the webdev team (particularly in fairly generic areas like localization, caching, etc). It also means that our IT department is already familiar with deployment issues.</p>
+<p>Django is also simply a great framework. The ability to package up reusable pieces of a project as applications means that we should be able to take advantage of a lot of great work done by folks working on similar web applications, and where we build applications ourselves, we&#8217;ll be able to release those as separate reusable components. If the work we do can help other people build Django based social web applications that use open web technologies, then we will be further working towards Mozilla&#8217;s mission of promoting openness, innovation and opportunity on the web.</p>
+<p>In order to stay on track, I&#8217;m working on a roadmap and a set of core principles that will guide our development of batucada. The roadmap is a work in progress, but I think we&#8217;ve got a good set of principles hashed out:</p>
+<ol>
+<li>Social &#8211; Batucada will be a social application. People and activities will be at the centre of the experience.</li>
+<li>Intelligent &#8211; Batucada should be able to suggest connections based on a users activity and profile information.</li>
+<li>Data Ownership &#8211; Users will control who has access to their personal data and will be able to export their data easily.</li>
+<li>Open Web &#8211; Batucada will be built using Open Web technologies and will use open standards to integrate with other applications whenever it makes sense to do so.</li>
+</ol>
+<p>It goes without saying that Batucada will be Open Source as well of course!</p>
+
+								</div>
+				<div class="entry-meta">
+					<span class="author vcard">By <a class="url fn n" href="http://blog.eval.ca/author/paul/" title="View all posts by paul">paul</a></span>
+					<span class="meta-sep">|</span>
+					<span class="cat-links">Posted in <a href="http://blog.eval.ca/category/batucada/" title="View all posts in Batucada" rel="category tag">Batucada</a>,  <a href="http://blog.eval.ca/category/drumbeat/" title="View all posts in Drumbeat" rel="category tag">Drumbeat</a>,  <a href="http://blog.eval.ca/category/mozilla/" title="View all posts in Mozilla" rel="category tag">Mozilla</a>,  <a href="http://blog.eval.ca/category/open-web/" title="View all posts in Open Web" rel="category tag">Open Web</a></span>
+					<span class="meta-sep">|</span>
+										<span class="comments-link"><a href="http://blog.eval.ca/2010/07/07/batucada-tools-vision/#comments" title="Comment on Batucada &#8211; Tools &amp; Vision">Comments (1)</a></span>
+				</div>
+			</div><!-- .post -->
+
+
+
+			<div id="post-382" class="hentry p4 post publish author-paul category-batucada category-drumbeat category-mozilla category-open-source category-open-web untagged y2010 m07 d02 h06 alt">
+				<h2 class="entry-title"><a href="http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/" title="Permalink to Batucada &#8211; Marching towards Drumbeat.org 1.0" rel="bookmark">Batucada &#8211; Marching towards Drumbeat.org 1.0</a></h2>
+				<div class="entry-date"><abbr class="published" title="2010-07-02T07:34:14-0400">July 2, 2010 &#8211; 7:34 am</abbr></div>
+				<div class="entry-content">
+<p>I&#8217;m excited to announce a new phase of development for the Drumbeat website project. We are about to begin development on a new project, code named <em>batucada</em>, that will eventually power drumbeat.org. With <em>batucada</em>, the future of drumbeat.org will be more social and will have the open web at its core.</p>
+<p>To understand how we got here, it&#8217;s important to give a brief history of the drumbeat website. The current alpha and beta phases of development were very experimental. We didn&#8217;t have a clear idea of what the end result would be. We wanted something that would allow us to experiment and iterate quickly and so building on a CMS was a natural decision. Drupal was a good choice for an open source CMS product. Building the site on Drupal allowed us to get something up and running quickly and gave us a good chance to see how people interacted with the site. We always knew that the technology choices we had made were probably not going to be permanent. Any CMS product is going to introduce tight coupling between code and content changes, which means that developers need access not just to code, but also to the configuration data stored in a database. Providing this in a way that does not compromise users privacy has been a challenge and a barrier for people wanting to contribute code to the project. Additionally, while Drupal&#8217;s module system is very handy for getting something up and running quickly, at times it makes adding custom functionality and integrations more difficult than if we were using a standard web framework. The lack of unit testing in Drupal also means that we can&#8217;t create a robust set of test cases for each feature we add to the site, and can&#8217;t take advantage of things like Continuous Integration, which we&#8217;re big fans of. I&#8217;m aware that many of these issues are going to be further addressed in Drupal 7, but given the amount we&#8217;re looking to change in the next major release, waiting and upgrading presents its own set of challenges.</p>
+<p>We now have dedicated technical staff and a much clearer idea of what drumbeat.org should be, so it&#8217;s a good time to take the user feedback we&#8217;ve collected from the alpha and beta versions of the site, and apply our experimental results to a production ready, 1.0 product. Batucada will represent a radical shift for drumbeat.org. The vision is a much simpler, user centric site that integrates well with other web applications.</p>
+<h3>Social and the Open Web</h3>
+<p>Thinking about where we want to take the site next, one thing is really clear to me, drumbeat.org is a great use case for a social web application: connecting people with projects and local events. Furthermore, if we are to promote the open web, we should be using open web technologies wherever they make sense. <em>Batucada </em>will use open web standards to integrate with other web applications whenever possible. Users should not have to do everything on drumbeat.org. Instead, drumbeat.org should be a &#8220;launch pad&#8221; for projects, and activities performed on other sites should make their way back to drumbeat.org.</p>
+<p>The road-map hasn&#8217;t been completed yet, but we&#8217;ll be examining everything from discovery (<a title="WebFinger" href="http://code.google.com/p/webfinger/">WebFinger</a>), real-time activity streaming (<a title="Activity Streams" href="http://activitystrea.ms/">Activity Streams</a>, <a title="PubSubHubbub" href="http://code.google.com/p/pubsubhubbub/">PubSubHubbub</a>), distributed updates (<a title="OStatus" href="http://ostatus.org/">OStatus</a> / <a title="Salmon Protocol" href="http://www.salmon-protocol.org/">Salmon</a>, <a title="Portable Contacts" href="http://portablecontacts.net/">Portable Contacts</a>) and decentralized identity (<a title="The OpenId Foundation" href="http://openid.net/">OpenID</a>).</p>
+<p>The next version of drumbeat.org will have social at its core and will be built on Open Web goodness. Where the current version is pretty document centric, the new version will be entirely people centric.</p>
+<h3>Global Community</h3>
+<p>The Drumbeat community is not centered in any one country or region. Drumbeat participants come from all corners of the globe. Events have been held in Brazil, Canada, Germany and community members are currently organizing events in France and the United States. Given the global nature of the movement, we will be building in support for localization and internationalization from day one and will be seeking help from localizers who want to contribute to the project. The code name for the project, <em>batucada</em>, is a nod to Drumbeat community members in Brazil who kicked off the first two Drumbeat events.</p>
+<h3>Open Source and Community Driven</h3>
+<p>Another thing that is clear is that drumbeat.org should be an open source project. We are Mozilla, we make open source software. For a variety of reasons, we failed to fully capitalize on this with the current version of the site. The next version will be launched as an open source project and we will be actively encouraging ideas and contributions. We want to build a community of people actively building the software behind the project. If this sounds exciting to you, join us! We&#8217;ll need software developers, front end designers, UX engineers, QA testers, localizers and a whole host of other skill-sets.</p>
+<p>I&#8217;ll be publishing an initial roadmap in the near future and will be looking for feedback.</p>
+<h3>Using Drumbeat to build the next Drumbeat</h3>
+<p>Drumbeat.org is all about projects. It makes perfect sense to us to make <em>batucada </em>itself a Drumbeat project. Using existing tools to build new one will allow us to step into the shoes of project maintainers on the site &#8211; a perfect way to experience first hand how a future version of the site could better serve the needs of our users. Plus, as a programmer, I like recursion! The batucada <a title="Batucada" href="http://www.drumbeat.org/project/batucada">project page</a> on Drumbeat is a work in progress, but will be used to facilitate work on the project. Join up on the project page to help build this, and share ideas and feedback.</p>
+<p>So there you have it! I&#8217;m really excited to kick off this next phase of development. This is the first of a series of posts, in the near future I&#8217;ll be outlining some of the technical choices we&#8217;ve made (language, framework, etc) as well as a set of values I&#8217;m going to pitch for us to follow while we work on this project. Much more to come.</p>
+
+								</div>
+				<div class="entry-meta">
+					<span class="author vcard">By <a class="url fn n" href="http://blog.eval.ca/author/paul/" title="View all posts by paul">paul</a></span>
+					<span class="meta-sep">|</span>
+					<span class="cat-links">Posted in <a href="http://blog.eval.ca/category/batucada/" title="View all posts in Batucada" rel="category tag">Batucada</a>,  <a href="http://blog.eval.ca/category/drumbeat/" title="View all posts in Drumbeat" rel="category tag">Drumbeat</a>,  <a href="http://blog.eval.ca/category/mozilla/" title="View all posts in Mozilla" rel="category tag">Mozilla</a>,  <a href="http://blog.eval.ca/category/open-source/" title="View all posts in Open Source" rel="category tag">Open Source</a>,  <a href="http://blog.eval.ca/category/open-web/" title="View all posts in Open Web" rel="category tag">Open Web</a></span>
+					<span class="meta-sep">|</span>
+										<span class="comments-link"><a href="http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/#comments" title="Comment on Batucada &#8211; Marching towards Drumbeat.org 1.0">Comments (6)</a></span>
+				</div>
+			</div><!-- .post -->
+
+
+
+			<div id="post-368" class="hentry p5 post publish author-paul category-drumbeat category-mozilla untagged y2010 m05 d10 h03">
+				<h2 class="entry-title"><a href="http://blog.eval.ca/2010/05/10/motivation/" title="Permalink to Motivation" rel="bookmark">Motivation</a></h2>
+				<div class="entry-date"><abbr class="published" title="2010-05-10T04:24:48-0400">May 10, 2010 &#8211; 4:24 am</abbr></div>
+				<div class="entry-content">
+<p>Reading posts like this make me feel pretty damn good about decisions I&#8217;ve made recently.</p>
+<p><a href="http://www.thewavingcat.com/2010/05/09/drumbeat-berlin/">&#8220;And in this mission, I guess, is the key to what makes Drumbeat special: rather than an initiative, it felt more like there’s a movement building up.&#8221;</a></p>
+
+								</div>
+				<div class="entry-meta">
+					<span class="author vcard">By <a class="url fn n" href="http://blog.eval.ca/author/paul/" title="View all posts by paul">paul</a></span>
+					<span class="meta-sep">|</span>
+					<span class="cat-links">Posted in <a href="http://blog.eval.ca/category/drumbeat/" title="View all posts in Drumbeat" rel="category tag">Drumbeat</a>,  <a href="http://blog.eval.ca/category/mozilla/" title="View all posts in Mozilla" rel="category tag">Mozilla</a></span>
+					<span class="meta-sep">|</span>
+										<span class="comments-link"><a href="http://blog.eval.ca/2010/05/10/motivation/#respond" title="Comment on Motivation">Comments (0)</a></span>
+				</div>
+			</div><!-- .post -->
+
+
+
+			<div id="nav-below" class="navigation">
+				<div class="nav-previous"><a href="http://blog.eval.ca/page/2/" ><span class="meta-nav">&laquo;</span> Older posts</a></div>
+				<div class="nav-next"></div>
+			</div>
+
+		</div><!-- #content -->
+	</div><!-- #container -->
+
+	<div id="primary" class="sidebar">
+		<ul class="xoxo">
+
+			<li id="pages-2" class="widget widget_pages">
+				<h3 class="widgettitle">Pages</h3>
+		<ul>
+			<li class="page_item page-item-372"><a href="http://blog.eval.ca/about/" title="About">About</a></li>
+<li class="page_item page-item-15"><a href="http://blog.eval.ca/resume/" title="Resume">Resume</a></li>
+		</ul>
+		
+			</li>
+
+			<li id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" action="http://blog.eval.ca/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form>
+			</li>
+
+			<li id="archives-2" class="widget widget_archive">
+				<h3 class="widgettitle">Archives</h3>
+		<ul>
+			<li><a href='http://blog.eval.ca/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://blog.eval.ca/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://blog.eval.ca/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://blog.eval.ca/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://blog.eval.ca/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://blog.eval.ca/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://blog.eval.ca/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://blog.eval.ca/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://blog.eval.ca/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://blog.eval.ca/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://blog.eval.ca/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://blog.eval.ca/2008/10/' title='October 2008'>October 2008</a></li>
+	<li><a href='http://blog.eval.ca/2008/09/' title='September 2008'>September 2008</a></li>
+	<li><a href='http://blog.eval.ca/2008/02/' title='February 2008'>February 2008</a></li>
+	<li><a href='http://blog.eval.ca/2008/01/' title='January 2008'>January 2008</a></li>
+	<li><a href='http://blog.eval.ca/2007/11/' title='November 2007'>November 2007</a></li>
+	<li><a href='http://blog.eval.ca/2007/06/' title='June 2007'>June 2007</a></li>
+	<li><a href='http://blog.eval.ca/2007/05/' title='May 2007'>May 2007</a></li>
+	<li><a href='http://blog.eval.ca/2007/03/' title='March 2007'>March 2007</a></li>
+	<li><a href='http://blog.eval.ca/2007/01/' title='January 2007'>January 2007</a></li>
+		</ul>
+
+			</li>
+
+			<li id="twitter" class="widget widget_Twidget"><div id="twitter_div">
+				<h3 class="widgettitle">Twitter</h3>
+<ul id="twitter_update_list"></ul></div>
+		      <script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script><script type="text/javascript" src="http://twitter.com/statuses/user_timeline/paulosman.json?callback=twitterCallback2&amp;count=5"></script>
+			</li>
+		</ul>
+	</div><!-- #primary .sidebar -->
+
+	<div id="secondary" class="sidebar">
+		<ul class="xoxo">
+			<li id="search">
+				<h3><label for="s">Search</label></h3>
+				<form id="searchform" class="blog-search" method="get" action="http://blog.eval.ca">
+					<div>
+						<input id="s" name="s" type="text" class="text" value="" size="10" tabindex="1" />
+						<input type="submit" class="button" value="Find" tabindex="2" />
+					</div>
+				</form>
+			</li>
+
+
+			<li id="rss-links">
+				<h3>RSS Feeds</h3>
+				<ul>
+					<li><a href="http://blog.eval.ca/feed/" title="Paul Osman latest posts" rel="alternate" type="application/rss+xml">All posts</a></li>
+					<li><a href="http://blog.eval.ca/comments/feed/" title="Paul Osman latest comments" rel="alternate" type="application/rss+xml">All comments</a></li>
+				</ul>
+			</li>
+
+			<li id="meta">
+				<h3>Meta</h3>
+				<ul>
+					
+					<li><a href="http://blog.eval.ca/wp-login.php">Log in</a></li>
+					
+				</ul>
+			</li>
+		</ul>
+	</div><!-- #secondary .sidebar -->
+	<div id="footer">
+		
+    <!--    Please think very carefully before removing the WordPress and theme link from this file
+            If you had spent time developing a theme, would you want people to remove your credit?     --!>
+
+                <span id="generator-link">Blogging <i>avec</i> <a href="http://wordpress.org/" title="WordPress" rel="generator">WordPress</a></span>
+		<span class="meta-sep">|</span>
+		<span id="theme-link"><a href="http://www.mskempster.com/straightforward">Straightforward</a> theme by <a href="http://www.mskempster.com">Matthew Kempster</a></span>
+	</div><!-- #footer -->
+
+</div><!-- #wrapper .hfeed -->
+
+
+</body>
+</html>
