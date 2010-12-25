@@ -55,4 +55,6 @@ urlpatterns = patterns('',
       name='users_profile_edit'),
   url('^profile/edit/image/$', 'users.views.profile_edit_image',
       name='users_profile_edit_image'),
+  url('^profile/edit/links/$', 'users.views.profile_edit_links',
+      name='users_profile_edit_links'),
 )

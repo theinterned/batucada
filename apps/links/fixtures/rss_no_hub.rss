@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Paul Osman</title>
+	<atom:link href="http://blog.eval.ca/feed/" rel="self" type="application/rss+xml" />
+	<link>http://blog.eval.ca</link>
+	<description>Thoughts on Software and Other Things</description>
+	<lastBuildDate>Mon, 15 Nov 2010 17:08:02 +0000</lastBuildDate>
+	<generator>http://wordpress.org/?v=2.9.2</generator>
+	<language>en</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+			<item>
+		<title>Status Report &#8211; What I&#8217;ve Been Up To</title>
+		<link>http://blog.eval.ca/2010/11/15/status-report-what-ive-been-up-to/</link>
+		<comments>http://blog.eval.ca/2010/11/15/status-report-what-ive-been-up-to/#comments</comments>
+		<pubDate>Mon, 15 Nov 2010 17:08:02 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Dayjob]]></category>
+		<category><![CDATA[Drumbeat]]></category>
+		<category><![CDATA[Mozilla]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=480</guid>
+		<description><![CDATA[I&#8217;ve got a huge backlog of things I&#8217;ve been meaning to blog about, so to hopefully kick things off, here&#8217;s a short list of things I&#8217;ve been up to in the last few months:
+P2PU Development Sprint
+I spent a few days in Barcelona (before the Drumbeat festival) working with some very talented developers on a development [...]]]></description>
+			<content:encoded><![CDATA[<p>I&#8217;ve got a huge backlog of things I&#8217;ve been meaning to blog about, so to hopefully kick things off, here&#8217;s a short list of things I&#8217;ve been up to in the last few months:</p>
+<h4>P2PU Development Sprint</h4>
+<p>I spent a few days in Barcelona (before the Drumbeat festival) working with some <a title="John D Britton" href="http://www.johndbritton.com/">very</a> <a title="Jessy Cowan-Sharp" href="http://jessykate.com/">talented</a> <a title="Brian J Brennan" href="http://brianlovesthings.com/">developers </a>on a development sprint for the <a title="P2PU" href="http://p2pu.org">P2PU Website</a>. We split our time between fixing bugs in the existing Drupal code base and working on (as well as deciding) the redevelopment of the site on a new platform. After some refreshingly practical debate, we decided to build on <a title="Batucada" href="http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/">batucada</a>, the Drumbeat.org rewrite I&#8217;ve been leading. Being on the same code base and of course the same platform (Django) means the two teams will be able to share code fairly easily, which is really exciting.</p>
+<p>The sprint was a huge success. We had a great venue which we affectionately referred to as the &#8220;Hacker Dungeon&#8221; (there were no windows!). We fixed some major problems on the current website and left knowing that P2PU has a great core development team and it&#8217;s really exciting that the batucada and lernanta (codename for the new P2PU code base) teams are going to get to work so closely together (particularly great for me, as I&#8217;m on both teams!).</p>
+<h4>Drumbeat Festival</h4>
+<p>The Drumbeat Festival, also in Barcelona, was scheduled immediately after the P2PU development sprint. This was a massive event, and I&#8217;m incredibly proud to work with the people who helped pull it all together. It was a 3 day event with over 400 participants from over 40 countries in 3 different venues and somehow, it all worked. People self-organized into fairly focused groups, all working on different projects. It was very unconference style, but my sense was that most people stuck with the same group rather than cross-pollinating. The theme this year was Learning, Freedom and the Web. Attendants were from all over, but could roughly be categorized into hackers and educators. Despite this, I was pleasantly surprised to walk away with more new technical contacts than I get at most technical conferences. I also had a few people approach me about volunteering their web development skills for Drumbeat, which was fantastic.</p>
+<p>I spent nearly all of my time working in the Badge Lab. <a title="Dan Mills" href="http://blog.sandmill.org/">Dan Mills</a>, <a title="Joshua Gay" href="http://joshuagay.org/">Joshua Gay</a>, a wonderful group of volunteers and myself found a corner to hide in and worked on a functional demo of a federated badge system. More on that below!</p>
+<h4>Badge Backpack</h4>
+<p>Thanks to a great group of folks working with us, we were successful in creating a functional demo of a federated badge system. The system uses HTML5 postMessage to enable cross-origin site communication. Badges can be issued by any site, stored in a &#8220;backpack&#8221; (which simply stores the badge data in localStorage) and consumer sites can show badges stored in the backpack with just a few lines of Javascript. We&#8217;re continuing development on the idea, and have a couple of Github repositories (<a href="https://github.com/drumbeat-badge-sprint/hub">here</a>, and <a href="https://github.com/drumbeat-badge-sprint/backpack">here</a>) and of course a <a title="Badge Lab" href="http://groups.google.com/group/badge-lab">mailing list</a>. Thanks to <a href="http://twitter.com/#!/carl0s_">Carlo Frinolli</a>, <a href="http://twitter.com/#!/mrbichel">Johan Bichel</a>, <a href="http://manufacturaindependente.org/">Ana Carvalho</a> and others (so sorry if I didn&#8217;t catch your name) for joining the code sprint and helping us out!</p>
+<h4>Batucada / Drumbeat.org</h4>
+<p>Batucada development is coming along nicely. We&#8217;ve got some new folks contributing code and are laser focused on delivering an initial production release by the end of the year. We&#8217;re working with a designer to finalize the interface, and are really excited to get this thing going. The existing Drupal based site will be kept available for some time, albeit at a different URL, so people will be able to access it at least even after we launch the new version (signups will be disabled though).</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/11/15/status-report-what-ive-been-up-to/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>Making Signups Easier With WebFinger</title>
+		<link>http://blog.eval.ca/2010/10/04/making-signups-easier-with-webfinger/</link>
+		<comments>http://blog.eval.ca/2010/10/04/making-signups-easier-with-webfinger/#comments</comments>
+		<pubDate>Mon, 04 Oct 2010 16:17:12 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Batucada]]></category>
+		<category><![CDATA[Drumbeat]]></category>
+		<category><![CDATA[Mozilla]]></category>
+		<category><![CDATA[Open Web]]></category>
+		<category><![CDATA[Social Tech]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=449</guid>
+		<description><![CDATA[I&#8217;ve been thinking about signup processes lately and what we can do with batucada (the next drumbeat.org) to make it easier, while encouraging users to use open, decentralized identity technologies like OpenID.
+The Problem
+Whenever I come across a new service that I want to create an account on, I dread the idea of creating a new [...]]]></description>
+			<content:encoded><![CDATA[<p>I&#8217;ve been thinking about signup processes lately and what we can do with <a title="Batucada " href="http://www.drumbeat.org/project/batucada">batucada</a> (the next drumbeat.org) to make it easier, while encouraging users to use open, decentralized identity technologies like <a href="http://openid.net/">OpenID</a>.</p>
+<h3>The Problem</h3>
+<p>Whenever I come across a new service that I want to create an account on, I dread the idea of creating a new set of credentials and re-entering a bunch of information I have already entered elsewhere. OpenID solves part of this for me, and I&#8217;m always happy to see sites supporting it. The problem, however, is that OpenID only solves one piece of the puzzle (authentication) and there are usability problems abound. The latter problem is well known, and people have come up with a bunch of innovative ways of tackling it, including intelligent OpenID selectors.</p>
+<p>The core of the problem is that people don&#8217;t tend to think of themselves as a URL, which is what OpenID uses as a supplied identifier. It&#8217;s been really hard to get the average web user to think of a URL as part of their identity, and frankly, they&#8217;re usually pretty hard to remember. There are ways around this, including hosting your own OpenID provider, or using delegation, so that you can choose an easy-to-remember URL, but it&#8217;s unrealistic to expect non-technical web users to be able to do this.</p>
+<h3>The Solution</h3>
+<p>Enter <a href="http://code.google.com/p/webfinger/">WebFinger</a>. The idea behind WebFinger is that, given an email-like identifier, an application can discover information about that user (including their OpenID provider). I really like this idea. I think people have an easier time with email addresses than with URLs. A bunch of providers, including AOL, Gmail and Yahoo have implemented WebFinger support, which means that there are a ton of people out there who already have WebFinger identifiers, even if they don&#8217;t know it (and they shouldn&#8217;t have to know it).</p>
+<p>So what would a WebFinger based signup process look like? The first step would be to capture an email address and find out if it is a valid WebFinger identifier. If it is, the next step would be to find out of the user has an OpenID provider. If their email address is not a WebFinger identifier, the workflow would fall back to a more traditional password based signup form. Imagine clicking on a &#8220;Sign up&#8221; link and being presented with a form asking for your email address.</p>
+<p style="text-align: center;"><a href="http://blog.eval.ca/wp-content/uploads/2010/10/login_step_one.png"><img class="size-medium wp-image-450 aligncenter" title="login_step_one" src="http://blog.eval.ca/wp-content/uploads/2010/10/login_step_one.png" alt="Step One" width="473" height="400" /></a></p>
+<p style="text-align: left;">Once submitted, the web application would perform WebFinger based discovery on the identifier in the background. If an OpenID provider is found, the user could be presented with a friendly message asking them if they&#8217;d like to use it to sign in to the site.</p>
+<p style="text-align: center;"><a href="http://blog.eval.ca/wp-content/uploads/2010/10/mockup.png"><img class="size-medium wp-image-451  aligncenter" title="Step Two" src="http://blog.eval.ca/wp-content/uploads/2010/10/mockup.png" alt="Step Two" /></a></p>
+<p style="text-align: left;">If the email address is not a WebFinger identifier, or if the user opts not to use their OpenID, fall back to a more traditional sign up form.</p>
+<p style="text-align: left;">
+<p style="text-align: center;"><a href="http://blog.eval.ca/wp-content/uploads/2010/10/webfinger_step_two.png"><img class="size-medium wp-image-453 aligncenter" title="webfinger_step_two" src="http://blog.eval.ca/wp-content/uploads/2010/10/webfinger_step_two.png" alt="" /></a></p>
+<p style="text-align: left;">These are obviously very rough, but I&#8217;m interested to know what people think of this idea. Specifically how the process could be made easier for non-technical users. A few concerns I have (and note that UX / Usability is certainly NOT my specialty, so help is appreciated!):</p>
+<ol>
+<li>A service provider shouldn&#8217;t coerce a user into using an OpenID vs creating a new set of credentials, the user must always have a choice. Unfortunately, this means asking another question, and questions are confusing.</li>
+<li>Presuming a user has an OpenID, but does not have an active session with their provider, they are going to be sent to their provider to log in after Step Two. This could be confusing to users. We&#8217;re sending them into the OpenID &#8220;Chasm of Death&#8221;. Is there anything that can be done to ease this transition / manage user expectations?</li>
+<li>Once users have signed up using an OpenID, how do we let them know that they should use that OpenID from now on? I suppose we could just prompt for an email address on sign in and perform discovery again. This introduces another step for those who aren&#8217;t using an OpenID though (step one: input email address, step two on next screen: enter password).</li>
+<li>Users could be confused immediately when we ask for their email address and not a password. This is breaking a familiar pattern, which is always potentially jarring.</li>
+<li>What about users who know what OpenID is, and have an OpenID that they&#8217;d like to use, but don&#8217;t have a WebFinger identifier that refers to their OpenID? Again, more questions to ask, which adds more confusion.</li>
+</ol>
+<p>Again, I&#8217;m certainly not a UX person, so I&#8217;d be very curious to hear what people think of this idea and if people have ideas about how to improve the flow.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/10/04/making-signups-easier-with-webfinger/feed/</wfw:commentRss>
+		<slash:comments>10</slash:comments>
+		</item>
+		<item>
+		<title>Batucada &#8211; Tools &amp; Vision</title>
+		<link>http://blog.eval.ca/2010/07/07/batucada-tools-vision/</link>
+		<comments>http://blog.eval.ca/2010/07/07/batucada-tools-vision/#comments</comments>
+		<pubDate>Wed, 07 Jul 2010 18:56:48 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Batucada]]></category>
+		<category><![CDATA[Drumbeat]]></category>
+		<category><![CDATA[Mozilla]]></category>
+		<category><![CDATA[Open Web]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=437</guid>
+		<description><![CDATA[I mentioned in the announcement of batucada, that we are dropping Drupal for the next phase of development on the Drumbeat website project. We&#8217;ve decided to build Batucada with the Python web framework django. There are a bunch of reasons why I think django is a good choice, but the primary one is that people [...]]]></description>
+			<content:encoded><![CDATA[<p>I mentioned in the <a href="http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/">announcement of batucada</a>, that we are dropping <a title="Drupal" href="http://drupal.org">Drupal</a> for the next phase of development on the Drumbeat website project. We&#8217;ve decided to build Batucada with the Python web framework <a title="Django" href="http://www.djangoproject.com/">django</a>. There are a bunch of reasons why I think django is a good choice, but the primary one is that people are already using it for a number of Mozilla web projects, including AMO and SUMO. Having other people in the organization who are familiar with the framework is helpful, of course, and it means we can reuse work done elsewhere within the webdev team (particularly in fairly generic areas like localization, caching, etc). It also means that our IT department is already familiar with deployment issues.</p>
+<p>Django is also simply a great framework. The ability to package up reusable pieces of a project as applications means that we should be able to take advantage of a lot of great work done by folks working on similar web applications, and where we build applications ourselves, we&#8217;ll be able to release those as separate reusable components. If the work we do can help other people build Django based social web applications that use open web technologies, then we will be further working towards Mozilla&#8217;s mission of promoting openness, innovation and opportunity on the web.</p>
+<p>In order to stay on track, I&#8217;m working on a roadmap and a set of core principles that will guide our development of batucada. The roadmap is a work in progress, but I think we&#8217;ve got a good set of principles hashed out:</p>
+<ol>
+<li>Social &#8211; Batucada will be a social application. People and activities will be at the centre of the experience.</li>
+<li>Intelligent &#8211; Batucada should be able to suggest connections based on a users activity and profile information.</li>
+<li>Data Ownership &#8211; Users will control who has access to their personal data and will be able to export their data easily.</li>
+<li>Open Web &#8211; Batucada will be built using Open Web technologies and will use open standards to integrate with other applications whenever it makes sense to do so.</li>
+</ol>
+<p>It goes without saying that Batucada will be Open Source as well of course!</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/07/07/batucada-tools-vision/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>Batucada &#8211; Marching towards Drumbeat.org 1.0</title>
+		<link>http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/</link>
+		<comments>http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/#comments</comments>
+		<pubDate>Fri, 02 Jul 2010 11:34:14 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Batucada]]></category>
+		<category><![CDATA[Drumbeat]]></category>
+		<category><![CDATA[Mozilla]]></category>
+		<category><![CDATA[Open Source]]></category>
+		<category><![CDATA[Open Web]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=382</guid>
+		<description><![CDATA[I&#8217;m excited to announce a new phase of development for the Drumbeat website project. We are about to begin development on a new project, code named batucada, that will eventually power drumbeat.org. With batucada, the future of drumbeat.org will be more social and will have the open web at its core.
+To understand how we got [...]]]></description>
+			<content:encoded><![CDATA[<p>I&#8217;m excited to announce a new phase of development for the Drumbeat website project. We are about to begin development on a new project, code named <em>batucada</em>, that will eventually power drumbeat.org. With <em>batucada</em>, the future of drumbeat.org will be more social and will have the open web at its core.</p>
+<p>To understand how we got here, it&#8217;s important to give a brief history of the drumbeat website. The current alpha and beta phases of development were very experimental. We didn&#8217;t have a clear idea of what the end result would be. We wanted something that would allow us to experiment and iterate quickly and so building on a CMS was a natural decision. Drupal was a good choice for an open source CMS product. Building the site on Drupal allowed us to get something up and running quickly and gave us a good chance to see how people interacted with the site. We always knew that the technology choices we had made were probably not going to be permanent. Any CMS product is going to introduce tight coupling between code and content changes, which means that developers need access not just to code, but also to the configuration data stored in a database. Providing this in a way that does not compromise users privacy has been a challenge and a barrier for people wanting to contribute code to the project. Additionally, while Drupal&#8217;s module system is very handy for getting something up and running quickly, at times it makes adding custom functionality and integrations more difficult than if we were using a standard web framework. The lack of unit testing in Drupal also means that we can&#8217;t create a robust set of test cases for each feature we add to the site, and can&#8217;t take advantage of things like Continuous Integration, which we&#8217;re big fans of. I&#8217;m aware that many of these issues are going to be further addressed in Drupal 7, but given the amount we&#8217;re looking to change in the next major release, waiting and upgrading presents its own set of challenges.</p>
+<p>We now have dedicated technical staff and a much clearer idea of what drumbeat.org should be, so it&#8217;s a good time to take the user feedback we&#8217;ve collected from the alpha and beta versions of the site, and apply our experimental results to a production ready, 1.0 product. Batucada will represent a radical shift for drumbeat.org. The vision is a much simpler, user centric site that integrates well with other web applications.</p>
+<h3>Social and the Open Web</h3>
+<p>Thinking about where we want to take the site next, one thing is really clear to me, drumbeat.org is a great use case for a social web application: connecting people with projects and local events. Furthermore, if we are to promote the open web, we should be using open web technologies wherever they make sense. <em>Batucada </em>will use open web standards to integrate with other web applications whenever possible. Users should not have to do everything on drumbeat.org. Instead, drumbeat.org should be a &#8220;launch pad&#8221; for projects, and activities performed on other sites should make their way back to drumbeat.org.</p>
+<p>The road-map hasn&#8217;t been completed yet, but we&#8217;ll be examining everything from discovery (<a title="WebFinger" href="http://code.google.com/p/webfinger/">WebFinger</a>), real-time activity streaming (<a title="Activity Streams" href="http://activitystrea.ms/">Activity Streams</a>, <a title="PubSubHubbub" href="http://code.google.com/p/pubsubhubbub/">PubSubHubbub</a>), distributed updates (<a title="OStatus" href="http://ostatus.org/">OStatus</a> / <a title="Salmon Protocol" href="http://www.salmon-protocol.org/">Salmon</a>, <a title="Portable Contacts" href="http://portablecontacts.net/">Portable Contacts</a>) and decentralized identity (<a title="The OpenId Foundation" href="http://openid.net/">OpenID</a>).</p>
+<p>The next version of drumbeat.org will have social at its core and will be built on Open Web goodness. Where the current version is pretty document centric, the new version will be entirely people centric.</p>
+<h3>Global Community</h3>
+<p>The Drumbeat community is not centered in any one country or region. Drumbeat participants come from all corners of the globe. Events have been held in Brazil, Canada, Germany and community members are currently organizing events in France and the United States. Given the global nature of the movement, we will be building in support for localization and internationalization from day one and will be seeking help from localizers who want to contribute to the project. The code name for the project, <em>batucada</em>, is a nod to Drumbeat community members in Brazil who kicked off the first two Drumbeat events.</p>
+<h3>Open Source and Community Driven</h3>
+<p>Another thing that is clear is that drumbeat.org should be an open source project. We are Mozilla, we make open source software. For a variety of reasons, we failed to fully capitalize on this with the current version of the site. The next version will be launched as an open source project and we will be actively encouraging ideas and contributions. We want to build a community of people actively building the software behind the project. If this sounds exciting to you, join us! We&#8217;ll need software developers, front end designers, UX engineers, QA testers, localizers and a whole host of other skill-sets.</p>
+<p>I&#8217;ll be publishing an initial roadmap in the near future and will be looking for feedback.</p>
+<h3>Using Drumbeat to build the next Drumbeat</h3>
+<p>Drumbeat.org is all about projects. It makes perfect sense to us to make <em>batucada </em>itself a Drumbeat project. Using existing tools to build new one will allow us to step into the shoes of project maintainers on the site &#8211; a perfect way to experience first hand how a future version of the site could better serve the needs of our users. Plus, as a programmer, I like recursion! The batucada <a title="Batucada" href="http://www.drumbeat.org/project/batucada">project page</a> on Drumbeat is a work in progress, but will be used to facilitate work on the project. Join up on the project page to help build this, and share ideas and feedback.</p>
+<p>So there you have it! I&#8217;m really excited to kick off this next phase of development. This is the first of a series of posts, in the near future I&#8217;ll be outlining some of the technical choices we&#8217;ve made (language, framework, etc) as well as a set of values I&#8217;m going to pitch for us to follow while we work on this project. Much more to come.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/07/02/batucada-marching-towards-drumbeat-org-1-0/feed/</wfw:commentRss>
+		<slash:comments>6</slash:comments>
+		</item>
+		<item>
+		<title>Motivation</title>
+		<link>http://blog.eval.ca/2010/05/10/motivation/</link>
+		<comments>http://blog.eval.ca/2010/05/10/motivation/#comments</comments>
+		<pubDate>Mon, 10 May 2010 08:24:48 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Drumbeat]]></category>
+		<category><![CDATA[Mozilla]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=368</guid>
+		<description><![CDATA[Reading posts like this make me feel pretty damn good about decisions I&#8217;ve made recently.
+&#8220;And in this mission, I guess, is the key to what makes Drumbeat special: rather than an initiative, it felt more like there’s a movement building up.&#8221;
+]]></description>
+			<content:encoded><![CDATA[<p>Reading posts like this make me feel pretty damn good about decisions I&#8217;ve made recently.</p>
+<p><a href="http://www.thewavingcat.com/2010/05/09/drumbeat-berlin/">&#8220;And in this mission, I guess, is the key to what makes Drumbeat special: rather than an initiative, it felt more like there’s a movement building up.&#8221;</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/05/10/motivation/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Joining Mozilla</title>
+		<link>http://blog.eval.ca/2010/05/02/joining-mozilla/</link>
+		<comments>http://blog.eval.ca/2010/05/02/joining-mozilla/#comments</comments>
+		<pubDate>Mon, 03 May 2010 03:35:44 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Dayjob]]></category>
+		<category><![CDATA[Drumbeat]]></category>
+		<category><![CDATA[Mozilla]]></category>
+		<category><![CDATA[Open Source]]></category>
+		<category><![CDATA[Open Web]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=334</guid>
+		<description><![CDATA[
+I&#8217;m very happy to announce that I&#8217;ve taken a position as a Senior Web Developer for the Mozilla Foundation. I&#8217;m sure I&#8217;ll be getting into all sorts of things, but job number one is going to be helping out with the Drumbeat community. If you&#8217;ve never heard of it, Mozilla Drumbeat is a launch-pad and [...]]]></description>
+			<content:encoded><![CDATA[<p><img src="http://blog.eval.ca/wp-content/uploads/2010/05/mozilla-foundation.png" alt="" title="mozilla-foundation" class="alignnone size-full wp-image-346" /></p>
+<p>I&#8217;m very happy to announce that I&#8217;ve taken a position as a Senior Web Developer for the Mozilla Foundation. I&#8217;m sure I&#8217;ll be getting into all sorts of things, but job number one is going to be helping out with the <a href="http://drumbeat.org">Drumbeat</a> community. If you&#8217;ve never heard of it, Mozilla Drumbeat is a launch-pad and playground for every day web users working on preserving the openness of the web. It&#8217;s kick-ass and extremely important and I&#8217;m proud to be a part of it.</p>
+<p>Deciding to leave FreshBooks was a tough call to make. I worked with some amazing people, and I&#8217;ve been able to build <a href="http://developers.freshbooks.com/blog/view/freshbooks_now_supports_oauth/">Some <a href="http://www.freshbooks.com/blog/2010/03/10/google-apps-marketplace-live-with-freshbooks/">Really</a> <a href="http://developers.freshbooks.com/blog/view/on_implementing_webhooks/">Cool</a> <a href="http://www.freshbooks.com/blog/2010/01/19/where-in-the-world-is-freshbooks/">Things</a>. FreshBooks is truly a cool place to work, and I continue to encourage people to check them out. In the end though, the idea of working for a <a href="http://blog.lizardwrangler.com/2010/04/23/lets-speak-up-about-mozillas-public-benefit-status/">public benefit organization</a> was just too good to pass up. Mozilla is an organization that I&#8217;ve always had a profound amount of respect for and I look forward to helping them <a href="http://www.mozilla.org/about/mission.html">promote openness, innovation and opportunity on the web</a>.</p>
+<p>I won&#8217;t be moving (a number of people have asked me this). I&#8217;m going to be working out of the Toronto office, which I&#8217;m very glad to say has gone through some serious beautification since <a href="http://valleywag.gawker.com/391711/techs-worst-workspace-mozilla">being written about by Valleywag</a>. (No seriously, it&#8217;s a lot nicer now. There&#8217;s even an espresso machine!)</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/05/02/joining-mozilla/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>On Implementing WebHooks</title>
+		<link>http://blog.eval.ca/2010/05/01/on-implementing-webhooks/</link>
+		<comments>http://blog.eval.ca/2010/05/01/on-implementing-webhooks/#comments</comments>
+		<pubDate>Sun, 02 May 2010 02:25:38 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=337</guid>
+		<description><![CDATA[I wrote about our experiences implementing WebHooks at FreshBooks yesterday. You can read all the gory details here. Quick summary is: use a Message Queue, send HTTP requests asynchronously, have a retry queue, verify ownership of URIs.
+]]></description>
+			<content:encoded><![CDATA[<p>I wrote about our experiences implementing WebHooks at FreshBooks yesterday. You can read all the gory details <a href="http://developers.freshbooks.com/blog/view/on_implementing_webhooks/">here</a>. Quick summary is: use a Message Queue, send HTTP requests asynchronously, have a retry queue, verify ownership of URIs.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/05/01/on-implementing-webhooks/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>#OpenWebTO: Discovery Edition</title>
+		<link>http://blog.eval.ca/2010/04/08/openwebto-discovery-edition/</link>
+		<comments>http://blog.eval.ca/2010/04/08/openwebto-discovery-edition/#comments</comments>
+		<pubDate>Thu, 08 Apr 2010 00:22:16 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Open Web]]></category>
+		<category><![CDATA[Social Tech]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=309</guid>
+		<description><![CDATA[The second #OpenWebTO meetup is happening on Tuesday, April 20th at 7pm. We&#8217;re at the Centre for Social Innovation again but this time on the 1st floor.
+For this meetup, James Walker (walkah) is going to be presenting WebFinger / The Hammer Stack. This will be a fairly in-depth look at the various pieces that make [...]]]></description>
+			<content:encoded><![CDATA[<p>The second #OpenWebTO meetup is happening on Tuesday, April 20th at 7pm. We&#8217;re at the <a href="http://socialinnovation.ca/">Centre for Social Innovation</a> again but this time on the 1st floor.</p>
+<p>For this meetup, James Walker (<a href="http://walkah.net">walkah</a>) is going to be presenting <a href="http://code.google.com/p/webfinger/">WebFinger</a> / <a href="http://hueniverse.com/2009/11/the-discovery-protocol-stack-redux/">The Hammer Stack</a>. This will be a fairly in-depth look at the various pieces that make up Hammer Discovery Protocol Stack (XRD, LRDD, /.well-known, etc) and how they fit together. I&#8217;ve spent some time looking at the big picture of this stuff, but have yet to dive into the minutiae, so I&#8217;m looking forward to this.</p>
+<p>James works for <a href="http://status.net">StatusNet</a> and is one of the authors of the <a href="http://ostatus.org/">OStatus 1.0 Draft</a>.</p>
+<p>There&#8217;s still plenty of space, so if you&#8217;re interested in discovery, or just want to chat about Open Web stuff, <a href="http://guestlistapp.com/events/18687">sign up on Guestlist</a>. See you there!</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/04/08/openwebto-discovery-edition/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Community and Platform Building</title>
+		<link>http://blog.eval.ca/2010/03/16/community-and-platform-building/</link>
+		<comments>http://blog.eval.ca/2010/03/16/community-and-platform-building/#comments</comments>
+		<pubDate>Tue, 16 Mar 2010 00:29:25 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Dayjob]]></category>
+		<category><![CDATA[Open Web]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=294</guid>
+		<description><![CDATA[In June 2009, I started working for FreshBooks &#8211; an online billing service based here in Toronto. My official job title is Team Lead, API &#038; Integrations, but in FreshBooks tradition I&#8217;ll probably come up with something more clever sounding eventually. When I started, I was mostly doing bug fixes and enhancements to the API, [...]]]></description>
+			<content:encoded><![CDATA[<p>In June 2009, I started working for <a href="http://www.freshbooks.com">FreshBooks</a> &#8211; an online billing service based here in Toronto. My official job title is Team Lead, API &#038; Integrations, but in <a href="http://www.freshbooks.com/our-team.php#corey">FreshBooks</a> <a href="http://www.freshbooks.com/our-team.php#sunir">tradition</a> I&#8217;ll probably come up with something more clever sounding eventually. When I started, I was mostly doing bug fixes and <a href="http://developers.freshbooks.com/blog/view/staff_api_access_no_more_restrictions/">enhancements</a> to the API, but my role has become a little higher level now and my focus has shifted to building the platform in general, as well as the community of developers who are using it to add value for our customers.</p>
+<p>So the way I see it, there are two facets to my job: platform development (coding) and community development (evangelism, support). On the technical side, this involves building things like our recently announced <a href="http://developers.freshbooks.com/blog/view/keep_in_sync_with_freshbooks_webhooks/">webhooks implementation</a>, and helping make decisions about the direction of our API. Because we don&#8217;t want to waste our time inventing <a href="http://twitter.com/kevinmarks/statuses/1068364292">Beautiful Fucking Snowflakes</a>, it also involves keeping an eye on developments in various open web communities, and deciding what standards, specifications and ideas can be usefully implemented at FreshBooks. On the community side, things are decidedly less clear to me. I have some thoughts (open source example projects, better library support, more forums for developers to talk, etc) but I&#8217;m mostly interested in hearing from others. What do you look for from service providers that have an API? What do you wish that companies would do to help and encourage developers working with their products? What companies do this particularly well, and why? I have some ideas of my own, but I&#8217;m really interested in what other people think. You can comment here or hit me up at paul at freshbooks dot com.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/03/16/community-and-platform-building/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>#OpenWebTO Meetup</title>
+		<link>http://blog.eval.ca/2010/02/23/openwebto-meetup/</link>
+		<comments>http://blog.eval.ca/2010/02/23/openwebto-meetup/#comments</comments>
+		<pubDate>Tue, 23 Feb 2010 02:37:38 +0000</pubDate>
+		<dc:creator>paul</dc:creator>
+				<category><![CDATA[Open Web]]></category>
+
+		<guid isPermaLink="false">http://blog.eval.ca/?p=282</guid>
+		<description><![CDATA[On Tuesday, March 2nd at 7pm, I&#8217;ll be hosting the first #OpenWebTO Meetup at the Centre for Social Innovation. My goal is to get a group of people interested in open web tech together to present, chat, and share ideas. The first meeting will be focused on figuring out what people want out of such [...]]]></description>
+			<content:encoded><![CDATA[<p>On Tuesday, March 2nd at 7pm, I&#8217;ll be hosting the first #OpenWebTO Meetup at the Centre for Social Innovation. My goal is to get a group of people interested in open web tech together to present, chat, and share ideas. The first meeting will be focused on figuring out what people want out of such a gathering, and what topics in particular are popular. I&#8217;m going to do a quick presentation on how I see the current landscape of open web tech and hopefully get some discussion going. Open web technology is a pretty broad topic, so it&#8217;s probably helpful to say that I&#8217;m thinking specifically of protocols like OpenID, OAuth, Portable Contacts, WebFinger, Webhooks / PubSubHubbub, Activity Streams, and similar. </p>
+<p>The more the merrier of course, so if you&#8217;re in the Toronto area and have an interest in open web technologies, come on out and join us! Details are on <a href="http://guestlistapp.com/events/14898">Guestlist</a>.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://blog.eval.ca/2010/02/23/openwebto-meetup/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

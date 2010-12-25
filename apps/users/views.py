@@ -227,3 +227,28 @@ def profile_edit_image(request):
         'profile': profile,
         'form': form,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_edit_links(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        form = forms.ProfileLinksForm(request.POST)
+        if form.is_valid():
+            messages.success(request, _('Profile link added.'))
+            link = form.save(commit=False)
+            log.debug("User instance: %s" % (profile.user,))
+            link.user = profile
+            link.save()
+            return HttpResponseRedirect(reverse('users_profile_view', kwargs={
+                'username': request.user.get_profile().username,
+            }))
+        else:
+            messages.error(request, _('There was an error saving '
+                                      'your link.'))
+    else:
+        form = forms.ProfileLinksForm(instance=profile)
+    return render_to_response('users/profile_edit_links.html', {
+        'profile': profile,
+        'form': form,
+    }, context_instance=RequestContext(request))
