@@ -31,7 +31,7 @@ def get_sorted_senders(user):
     Helper function. Return a list of distinct senders, sorted by
     the number of messages received from them.
     """
-    msgs = Message.objects.inbox_for(user)
+    msgs = Message.objects.inbox_for(user).select_related('sender')
     senders = {}
     for msg in msgs:
         sender = msg.sender.get_profile()
@@ -107,12 +107,13 @@ def generic_inbox(request, query_method, query_args, page_number,
     if page_number > n_pages:
         return http.HttpResponseRedirect(redirect)
 
-    inbox = msgs[start:end]
+    inbox = msgs.select_related('sender')[start:end]
     senders = get_sorted_senders(request.user)
 
     for msg in inbox:
-        msg.read_at = datetime.datetime.now()
-        msg.save()
+        if not msg.read_at:
+            msg.read_at = datetime.datetime.now()
+            msg.save()
 
     if request.is_ajax():
         data = serialize(inbox, sent_view)
