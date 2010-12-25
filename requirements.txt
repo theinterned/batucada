@@ -4,8 +4,6 @@ django-messages
 south
 jogging
 feedparser
-Celery==2.1.3
-django-celery
 BeautifulSoup
 IPython
 django-cache-machine
