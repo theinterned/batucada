@@ -17,3 +17,4 @@ django-taggit
 -e git://github.com/jsocol/commonware.git#egg=commonware
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar
 -e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
+-e git://github.com/brutasse/django-push.git#egg=django_push

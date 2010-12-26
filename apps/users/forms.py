@@ -88,4 +88,4 @@ class ProfileLinksForm(forms.ModelForm):
 
     class Meta:
         model = Link
-        exclude = ('project', 'user')
+        exclude = ('project', 'user', 'subscription')
