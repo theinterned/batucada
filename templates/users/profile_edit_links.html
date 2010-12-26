@@ -5,6 +5,34 @@
 {% block bodyclasses %}profile edit links{% endblock %}
 {% block form %}
 
+{% if profile.link_set.all %}
+<h2>{{ _('Links') }}</h2>
+<table>
+<thead>
+  <tr>
+    <th>{{ _('Name') }}</th>
+    <th>{{ _('URL') }}</th>
+    <th>{{ _('Subscribed') }}</th>
+    <th>{{ _('Actions') }}</th>
+  </tr>
+</thead>
+<tbody>
+  {% for link in profile.link_set.all %}
+    <tr>
+      <td>{{ link.name }}</td>
+      <td>{{ link.url }}</td>
+      <td>{{ link.subscription.verified }}</td>
+      <td>
+	<form action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
+	  {% csrf_token %}
+	  <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+	</form>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+
 <form action="{% locale_url users_profile_edit_links %}" method="post">
   {% csrf_token %}
   <p>
