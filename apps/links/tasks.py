@@ -23,13 +23,17 @@ class SubscribeToFeed(Task):
         except:
             self.retry([link, ], kwargs)
 
-        if hub_url:
-            subscription = Subscription.objects.subscribe(feed_url,
+        try:
+            if hub_url:
+                subscription = Subscription.objects.subscribe(feed_url,
                                                           hub=hub_url)
-        else:
-            subscription = Subscription.objects.subscribe(
-                feed_url,
-                hub=settings.SUPERFEEDR_HUB_URL)
+            else:
+                subscription = Subscription.objects.subscribe(
+                    feed_url,
+                    hub=settings.SUPERFEEDR_HUB_URL)
+        except:
+            self.retry([link, ], kwargs)
+
         link.subscription = subscription
         link.save()
 
