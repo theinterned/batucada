@@ -178,3 +178,8 @@ RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
 RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
                  RECAPTCHA_PUBLIC_KEY)
+
+# SuperFeedr Settings
+SUPERFEEDR_HUB_URL = 'http://superfeedr.com/hubbub'
+SUPERFEEDR_USERNAME = ''
+SUPERFEEDR_PASSWORD = ''
