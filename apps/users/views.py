@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -14,6 +14,7 @@ from django.template import RequestContext
 from users import forms
 from users.models import UserProfile
 from users.decorators import anonymous_only
+from links.models import Link
 from projects.models import Project
 
 from drumbeat import messages
@@ -247,7 +248,22 @@ def profile_edit_links(request):
             messages.error(request, _('There was an error saving '
                                       'your link.'))
     else:
-        form = forms.ProfileLinksForm(instance=profile)
+        form = forms.ProfileLinksForm()
+    return render_to_response('users/profile_edit_links.html', {
+        'profile': profile,
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_edit_links_delete(request, link):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    link = get_object_or_404(Link, pk=link)
+    if link.user != profile:
+        return HttpResponseForbidden()
+    link.delete()
+    messages.success(request, _('The link was deleted.'))
+    form = forms.ProfileLinksForm()
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
         'form': form,

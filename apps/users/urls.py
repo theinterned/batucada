@@ -57,4 +57,7 @@ urlpatterns = patterns('',
       name='users_profile_edit_image'),
   url('^profile/edit/links/$', 'users.views.profile_edit_links',
       name='users_profile_edit_links'),
+  url('^profile/edit/links/delete/(?P<link>[\d]+)/$',
+      'users.views.profile_edit_links_delete',
+      name='users_profile_edit_links_delete'),
 )
