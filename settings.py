@@ -3,6 +3,9 @@
 
 import os
 import logging
+import djcelery
+
+djcelery.setup_loader()
 
 # Make filepaths relative to settings.
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -122,6 +125,7 @@ INSTALLED_APPS = (
     'drumbeatmail',
     'links',
     'django_push.subscriber',
+    'djcelery',
 )
 
 if DEBUG:
@@ -183,3 +187,12 @@ RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
 SUPERFEEDR_HUB_URL = 'http://superfeedr.com/hubbub'
 SUPERFEEDR_USERNAME = ''
 SUPERFEEDR_PASSWORD = ''
+
+# RabbitMQ Config
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = ""
+BROKER_PASSWORD = ""
+BROKER_VHOST = ""
+
+CELERY_RESULT_BACKEND = "amqp"
