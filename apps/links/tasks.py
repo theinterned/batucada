@@ -11,34 +11,50 @@ import activity
 
 
 class SubscribeToFeed(Task):
+    """
+    Try to discover an Atom or RSS feed for the provided link and
+    subscribe to it. Try to discover a hub declaration for the feed.
+    If no hub is declared, fall back to using SuperFeedr.
+    """
+
+    max_retries = 3
 
     def run(self, link, **kwargs):
         log = self.get_logger(**kwargs)
-        log.debug("Subscribing to feed (%s)" % (link.url,))
 
         hub_url = None
+        feed_url = None
+
         try:
+            log.debug("Attempting feed discovery on %s" % (link.url,))
             html = urllib2.urlopen(link.url).read()
-            feed_url = utils.parse_feed_url(html)
+            feed_url = utils.parse_feed_url(html, link.url)
+            log.debug("Found feed URL %s for %s" % (feed_url, link.url))
+        except:
+            log.warning("Error discoverying feed URL for %s. Retrying." % (
+                link.url,))
+            self.retry([link, ], kwargs)
+
+        if not feed_url:
+            return
+
+        try:
+            log.debug("Attempting hub discovery on %s" % (feed_url,))
             feed = urllib2.urlopen(feed_url).read()
             hub_url = utils.parse_hub_url(feed)
+            log.debug("Found hub %s for %s" % (hub_url, feed_url))
         except:
-            log.debug("Retrying (%s)" % (link.url,))
+            log.warning("Error discoverying hub URL for %s. Retrying." % (
+                feed_url,))
             self.retry([link, ], kwargs)
 
         try:
-            if hub_url:
-                log.debug("Subscribing with hub_url (%s)" % (hub_url,))
-                subscription = Subscription.objects.subscribe(feed_url,
-                                                          hub=hub_url)
-            else:
-                log.debug("Subscribing with hub_url (%s)" % (
-                    settings.PUSH_DEFAULT_HUB_URL,))
-                subscription = Subscription.objects.subscribe(
-                    feed_url,
-                    hub=settings.PUSH_DEFAULT_HUB_URL)
+            hub = hub_url or settings.PUSH_DEFAULT_HUB_URL
+            log.debug("Attempting subscription of topic %s with hub %s" % (
+                feed_url, hub))
+            subscription = Subscription.objects.subscribe(feed_url, hub=hub)
         except:
-            log.debug("SubscriptionError. Retrying (%s)" % (link.url,))
+            log.warning("SubscriptionError. Retrying (%s)" % (link.url,))
             self.retry([link, ], kwargs)
 
         link.subscription = subscription
@@ -46,6 +62,7 @@ class SubscribeToFeed(Task):
 
 
 class UnsubscribeFromFeed(Task):
+    """Simply send an unsubscribe request to the provided links hub."""
 
     def run(self, link, **kwargs):
         Subscription.objects.unsubscribe(link.subscription.topic,
@@ -53,10 +70,17 @@ class UnsubscribeFromFeed(Task):
 
 
 class HandleNotification(Task):
+    """
+    When a notification of a new or updated entry is received, parse
+    the entry and create an activity representation of it.
+    """
 
     def run(self, notification, sender, **kwargs):
         log = self.get_logger(**kwargs)
+
         for entry in notification.entries:
+            log.debug("Received notification of entry: %s, %s" % (
+                entry.title, entry.link))
             if isinstance(entry.content, list):
                 content = entry.content[0]
                 if 'value' in content:
@@ -69,6 +93,3 @@ class HandleNotification(Task):
                 'title': entry.title,
                 'content': content,
             })
-        log.debug("Entry title: %s" % (entry.title,))
-        log.debug("Entry link: %s" % (entry.link,))
-        log.debug("Entry content: %s" % (content,))

@@ -12,6 +12,10 @@ log = logging.getLogger(__name__)
 
 
 class Link(models.Model):
+    """
+    A link that can be added to a project or user. Links that have an Atom or
+    RSS feed will be subscribed to using the declared hub or SuperFeedrs.
+    """
     name = models.CharField(max_length=100)
     url = models.URLField(max_length=1023)
     project = models.ForeignKey('projects.Project', null=True)
@@ -20,6 +24,7 @@ class Link(models.Model):
 
 
 def link_create_handler(sender, **kwargs):
+    """Check for a feed and subscribe to it if it exists."""
     link = kwargs.get('instance', None)
     created = kwargs.get('created', False)
 
@@ -27,9 +32,11 @@ def link_create_handler(sender, **kwargs):
         return
 
     tasks.SubscribeToFeed.apply_async(args=(link,))
+post_save.connect(link_create_handler, sender=Link)
 
 
 def link_delete_handler(sender, **kwargs):
+    """If the link had an associated feed subscription, unsubscribe."""
     link = kwargs.get('instance', None)
 
     if not isinstance(link, Link):
@@ -39,15 +46,16 @@ def link_delete_handler(sender, **kwargs):
         return
 
     tasks.UnsubscribeFromFeed.apply_async(args=(link,))
-
-post_save.connect(link_create_handler, sender=Link)
 post_delete.connect(link_delete_handler, sender=Link)
 
 
 def listener(notification, **kwargs):
+    """
+    Create activity entries when we receive notifications of
+    feed updates from a hub.
+    """
     sender = kwargs.get('sender', None)
     if not sender:
         return
     tasks.HandleNotification.apply_async(args=(notification, sender))
-
 updated.connect(listener)

@@ -1,3 +1,5 @@
+import urlparse
+
 from xml import sax
 try:
     from cStringIO import StringIO
@@ -8,29 +10,50 @@ except ImportError:
 from BeautifulSoup import BeautifulSoup
 
 
+def normalize_url(url, base_url):
+    """Try to detect relative URLs and convert them into absolute URLs."""
+    parts = urlparse.urlparse(url)
+    if parts.scheme and parts.netloc:
+        return url  # looks fine
+    base_parts = urlparse.urlparse(base_url)
+    return base_parts.scheme + '://' + base_parts.netloc + url
+
+
 class FeedHandler(sax.ContentHandler):
     """Parse RSS and Atom feeds and look for a PubSubHubbub hub."""
     href = None
 
     def startElementNS(self, name, qname, attrs):
         """Return href of link element with a rel attribute of 'hub'."""
+
+        # stop processing if we encounter entries or items.
+        if name == ('', 'item'):
+            raise sax.SAXException('encountered item element')
+        if name == ('http://www.w3.org/2005/Atom', 'entry'):
+            raise sax.SAXException('encountered entry element')
+
+        # only elements we're concerned with now are links
         if name != ('http://www.w3.org/2005/Atom', 'link'):
             return
+
         # drop namespace from attr names, build a dictionary of
         # local attribute name = value.
         fixed = {}
         for name, value in attrs.items():
             (namespace, local) = name
             fixed[local] = value
+
+        # only concerned with links with 'hub' rel and an href attr.
         if not ('rel' in fixed and fixed['rel'] == 'hub'):
             return
         if not 'href' in fixed:
             return
-        self.href = fixed['href']
+
+        self.href = normalize_url(fixed['href'])
         raise sax.SAXException('done')  # hacky way to signal that we're done.
 
 
-def parse_feed_url(content):
+def parse_feed_url(content, url=None):
     """
     Parse the provided html and return the first Atom or RSS feed we find.
     Note that a preference is given to Atom if the HTML contains links to
@@ -51,12 +74,12 @@ def parse_feed_url(content):
     if atom:
         hrefs = get_hrefs(atom)
         if hrefs:
-            return hrefs[0]
+            return normalize_url(hrefs[0], url)
     rss = get_by_type('application/rss+xml', alternates)
     if rss:
         hrefs = get_hrefs(rss)
         if hrefs:
-            return hrefs[0]
+            return normalize_url(hrefs[0], url)
     return None
 
 
