@@ -1,3 +1,4 @@
+import sys
 import urllib2
 
 from django.conf import settings
@@ -41,7 +42,7 @@ class SubscribeToFeed(Task):
         try:
             log.debug("Attempting hub discovery on %s" % (feed_url,))
             feed = urllib2.urlopen(feed_url).read()
-            hub_url = utils.parse_hub_url(feed)
+            hub_url = utils.parse_hub_url(feed, feed_url)
             log.debug("Found hub %s for %s" % (hub_url, feed_url))
         except:
             log.warning("Error discoverying hub URL for %s. Retrying." % (
@@ -49,7 +50,7 @@ class SubscribeToFeed(Task):
             self.retry([link, ], kwargs)
 
         try:
-            hub = hub_url or settings.PUSH_DEFAULT_HUB_URL
+            hub = hub_url or settings.SUPERFEEDR_URL
             log.debug("Attempting subscription of topic %s with hub %s" % (
                 feed_url, hub))
             subscription = Subscription.objects.subscribe(feed_url, hub=hub)
@@ -57,6 +58,8 @@ class SubscribeToFeed(Task):
             log.warning("SubscriptionError. Retrying (%s)" % (link.url,))
             self.retry([link, ], kwargs)
 
+        log.debug("Success. Subscribed to topic %s on hub %s" % (
+            feed_url, hub))
         link.subscription = subscription
         link.save()
 
