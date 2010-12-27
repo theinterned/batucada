@@ -9,6 +9,8 @@ except ImportError:
 
 from BeautifulSoup import BeautifulSoup
 
+from django.conf import settings
+
 
 def normalize_url(url, base_url):
     """Try to detect relative URLs and convert them into absolute URLs."""
@@ -16,7 +18,7 @@ def normalize_url(url, base_url):
     if parts.scheme and parts.netloc:
         return url  # looks fine
     base_parts = urlparse.urlparse(base_url)
-    return base_parts.scheme + '://' + base_parts.netloc + url
+    return base_parts.scheme + '://' + base_parts.netloc + '/' + url
 
 
 class FeedHandler(sax.ContentHandler):
@@ -49,7 +51,7 @@ class FeedHandler(sax.ContentHandler):
         if not 'href' in fixed:
             return
 
-        self.href = normalize_url(fixed['href'])
+        self.href = fixed['href']
         raise sax.SAXException('done')  # hacky way to signal that we're done.
 
 
@@ -83,7 +85,7 @@ def parse_feed_url(content, url=None):
     return None
 
 
-def parse_hub_url(content):
+def parse_hub_url(content, base_url):
     """Parse the provided xml and find a hub link."""
     handler = FeedHandler()
     parser = sax.make_parser()
@@ -95,4 +97,13 @@ def parse_hub_url(content):
         parser.parse(inpsrc)
     except sax.SAXException:
         pass
-    return handler.href or None
+    if handler.href is None:
+        return handler.href
+    return normalize_url(handler.href, base_url)
+
+
+def hub_credentials(hub_url):
+    """Credentials callback for django_push.subscribers"""
+    if hub_url == settings.SUPERFEEDR_URL:
+        return (settings.SUPERFEEDR_USERNAME, settings.SUPERFEEDR_PASSWORD)
+    return None

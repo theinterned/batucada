@@ -183,11 +183,6 @@ RECAPTCHA_PRIVATE_KEY = ''
 RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
                  RECAPTCHA_PUBLIC_KEY)
 
-# PubSubHubbub Settings
-PUSH_DEFAULT_HUB_URL = 'http://superfeedr.com/hubbub'
-PUSH_BASIC_AUTH_USERNAME = ''
-PUSH_BASIC_AUTH_PASSWORD = ''
-
 # RabbitMQ Config
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
@@ -196,3 +191,11 @@ BROKER_PASSWORD = ""
 BROKER_VHOST = ""
 
 CELERY_RESULT_BACKEND = "amqp"
+
+# SuperFeedr settings
+SUPERFEEDR_URL = 'http://superfeedr.com/hubbub'
+SUPERFEEDR_USERNAME = ''
+SUPERFEEDR_PASSWORD = ''
+
+# django-push settings
+PUSH_CREDENTIALS = 'links.utils.hub_credentials'
