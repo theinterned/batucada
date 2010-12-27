@@ -8,8 +8,6 @@ from django_push.subscriber.signals import updated
 
 from links import tasks
 
-import activity
-
 log = logging.getLogger(__name__)
 
 
@@ -50,21 +48,6 @@ def listener(notification, **kwargs):
     sender = kwargs.get('sender', None)
     if not sender:
         return
-    for entry in notification.entries:
-        if isinstance(entry.content, list):
-            content = entry.content[0]
-            if 'value' in content:
-                content = content['value']
-        else:
-            content = entry.content
-        for link in sender.link_set.all():
-            activity.send(link.user.user, 'post', {
-                'type': 'note',
-                'title': entry.title,
-                'content': content,
-            })
-        log.debug("Entry title: %s" % (entry.title,))
-        log.debug("Entry link: %s" % (entry.link,))
-        log.debug("Entry content: %s" % (content,))
+    tasks.HandleNotification.apply_async(args=(notification, sender))
 
 updated.connect(listener)
