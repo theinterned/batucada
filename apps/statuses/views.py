@@ -43,16 +43,3 @@ def create_project_status(request, project_id):
         profile.id, project.id, status))
     return HttpResponseRedirect(
         reverse('projects_show', kwargs=dict(slug=project.slug)))
-
-
-@login_required
-def create_user_status(request, user_id):
-    if 'status' not in request.POST:
-        return HttpResponseRedirect('/')
-    user = get_object_or_404(Project, id=user_id)
-    status = Status(author=request.user.get_profile(),
-                    status=request.POST['status'],
-                    user=user)
-    status.save()
-    return HttpResponseRedirect(
-        reverse('user_show', kwargs=dict(username=user.username)))
