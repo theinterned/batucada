@@ -16,7 +16,6 @@ from users.models import UserProfile
 from users.decorators import anonymous_only
 from links.models import Link
 from projects.models import Project
-
 from drumbeat import messages
 
 log = logging.getLogger(__name__)
@@ -173,6 +172,7 @@ def profile_view(request, username):
     following = profile.following()
     projects = profile.following(model=Project)
     followers = profile.followers()
+    links = Link.objects.select_related('subscription').filter(user=profile)
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -180,6 +180,7 @@ def profile_view(request, username):
         'projects': projects,
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
+        'links': links,
     }, context_instance=RequestContext(request))
 
 
@@ -249,9 +250,11 @@ def profile_edit_links(request):
                                       'your link.'))
     else:
         form = forms.ProfileLinksForm()
+    links = Link.objects.select_related('subscription').filter(user=profile)
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
         'form': form,
+        'links': links,
     }, context_instance=RequestContext(request))
 
 
