@@ -187,7 +187,10 @@ def reply(request, message):
 
 
 @login_required
-def compose(request):
+def compose(request, username=None):
+    kwargs = {}
+    if username:
+        kwargs['user'] = get_object_or_404(UserProfile, username=username)
     if request.method == 'POST':
         form = forms.ComposeForm(data=request.POST)
         if form.is_valid():
@@ -198,7 +201,7 @@ def compose(request):
             messages.error(request, _('There was an error sending your message'
                                       '. Please try again.'))
     else:
-        form = forms.ComposeForm()
-    return render_to_response('drumbeatmail/compose.html', {
-        'form': form,
-    }, context_instance=RequestContext(request))
+        form = forms.ComposeForm(initial={'recipient': username})
+    kwargs['form'] = form
+    return render_to_response('drumbeatmail/compose.html', kwargs,
+                              context_instance=RequestContext(request))
