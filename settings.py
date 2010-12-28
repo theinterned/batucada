@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'links',
     'django_push.subscriber',
     'djcelery',
+    'events',
 )
 
 if DEBUG:
