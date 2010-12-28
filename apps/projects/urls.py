@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-  url(r'^list/$', 'projects.views.list',
+  url(r'^$', 'projects.views.list',
       name='projects_gallery'),
   url(r'^create/$', 'projects.views.create',
       name='projects_create'),

@@ -35,7 +35,7 @@ urlpatterns = patterns('',
 
 
   # Public pages
-  url(r'^users/list/', 'users.views.user_list',
+  url(r'^people/', 'users.views.user_list',
       name='users_user_list'),
 
   # Registration urls
