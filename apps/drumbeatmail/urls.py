@@ -19,6 +19,8 @@ urlpatterns = patterns('',
         name='drumbeatmail_outbox_offset'),
     url(r'^compose/$', 'drumbeatmail.views.compose',
         name='drumbeatmail_compose'),
+    url(r'^compose_to/(?P<username>[\w-]+)/$', 'drumbeatmail.views.compose',
+        name='drumbeatmail_compose_to'),
     url(r'^reply/(?P<message>[\d]+)/$', 'drumbeatmail.views.reply',
         name='drumbeatmail_reply'),
 )
