@@ -5,7 +5,7 @@
 {% block bodyclasses %}profile edit links{% endblock %}
 {% block form %}
 
-{% if profile.link_set.all %}
+{% if links %}
 <h2>{{ _('Links') }}</h2>
 <table>
 <thead>
@@ -17,7 +17,7 @@
   </tr>
 </thead>
 <tbody>
-  {% for link in profile.link_set.all %}
+  {% for link in links %}
     <tr>
       <td>{{ link.name }}</td>
       <td>{{ link.url }}</td>
