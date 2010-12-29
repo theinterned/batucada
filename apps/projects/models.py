@@ -87,8 +87,11 @@ def project_creation_handler(sender, **kwargs):
                  target_project=project).save()
 
     try:
-        import activity
-        activity.send(project.created_by.user, 'post', project)
+        from activity.models import Activity
+        act = Activity(actor=project.created_by,
+                       verb='http://activitystrea.ms/schema/1.0/post',
+                       project=project)
+        act.save()
     except ImportError:
         return
 
