@@ -45,7 +45,7 @@ img.project.picture {
   behavior: url("/media/css/PIE.htc");
 }
 
-
+/* BUTTONS */
 
 button,
 input[type=submit],
@@ -1150,51 +1150,3 @@ header {}
 		
 		
 footer {}
-
-/* Rewrite everything below here :-) 
-TODO: refactor this to use general button styles ~line 50
-*/
-
-
-/*#signup-buttons .signup {
-    width: 75px;
-    margin-bottom: 10px;
-}
-
-#signup-buttons .signup a {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    behavior: url("/media/css/PIE.htc");
-}
-
-#signup-buttons .signup a {
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    text-shadow: #000 0px -1px 0px;
-    -moz-text-shadow: #000 0px -1px 0px;
-    -webkit-text-shadow: #000 0px -1px 0px;
-    border: 1px solid #2571a6;
-    border-left: 1px solid #a3d3f4;
-    border-top: 1px solid #a3d3f4;
-    background: -webkit-gradient(linear,0 top,0 bottom,from(#3ea1e6),to(#2374ad));
-    background: -moz-linear-gradient(top,#3ea1e6,#2374ad);
-    -pie-background: linear-gradient(top,#3ea1e6,#2374ad);
-    padding: 3px 8px;
-    behavior: url("/media/css/PIE.htc");
-}
-
-#signup-buttons .signup:hover {
-    border: 1px solid #719ab7;
-}
-          
-#signup-buttons .signup a:active {
-    text-shadow: #000 0px 1px 0px;
-    -moz-text-shadow: #000 0px 1px 0px;
-    -webkit-text-shadow: #000 0px 1px 0px;
-    background: -webkit-gradient(linear,0 top,0 bottom,from(#2374ad),to(#3ea1e6));
-    background: -moz-linear-gradient(top,#2374ad,#3ea1e6);
-    -pie-background: linear-gradient(top,#2374ad,#3ea1e6);
-    behavior: url("/media/css/PIE.htc");
-}*/
