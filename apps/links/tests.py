@@ -88,3 +88,31 @@ class TestLinkParsing(TestCase):
         self.assertEqual(
             'http://pubsubhubbub.appspot.com/',
             hub_url)
+
+    def test_normalize_url(self):
+        url = '/feed.rss'
+        base_url = 'http://example.com'
+        self.assertEqual('http://example.com/feed.rss',
+                        utils.normalize_url(url, base_url))
+
+    def test_normalize_url_two_slashes(self):
+        url = '/feed.rss'
+        base_url = 'http://example.com/'
+        self.assertEqual('http://example.com/feed.rss',
+                         utils.normalize_url(url, base_url))
+
+    def test_normalize_url_trailing_slash_base(self):
+        url = 'feed.rss'
+        base_url = 'http://example.com/'
+        self.assertEqual('http://example.com/feed.rss',
+                         utils.normalize_url(url, base_url))
+
+    def test_normalize_url_no_slashes(self):
+        url = 'feed.rss'
+        base_url = 'http://example.com'
+        self.assertEqual('http://example.com/feed.rss',
+                         utils.normalize_url(url, base_url))
+
+    def test_normalize_url_good_url(self):
+        url = 'http://example.com/atom'
+        self.assertEqual(url, utils.normalize_url(url, 'http://example.com'))
