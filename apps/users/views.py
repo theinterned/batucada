@@ -17,6 +17,7 @@ from users.decorators import anonymous_only
 from links.models import Link
 from projects.models import Project
 from drumbeat import messages
+from activity.models import Activity
 
 log = logging.getLogger(__name__)
 
@@ -173,6 +174,9 @@ def profile_view(request, username):
     projects = profile.following(model=Project)
     followers = profile.followers()
     links = Link.objects.select_related('subscription').filter(user=profile)
+    activities = Activity.objects.select_related(
+        'actor', 'status', 'project').filter(
+        actor=profile).order_by('-created_on')[0:25]
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -181,6 +185,7 @@ def profile_view(request, username):
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
         'links': links,
+        'activities': activities,
     }, context_instance=RequestContext(request))
 
 

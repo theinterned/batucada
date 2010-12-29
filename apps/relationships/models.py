@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
 from drumbeat.models import ModelBase
+from activity.models import Activity
 
 log = logging.getLogger(__name__)
 
@@ -43,7 +44,6 @@ class Relationship(ModelBase):
             'to': repr(self.target_user or self.target_project),
         }
 
-
 admin.site.register(Relationship)
 
 ###########
@@ -55,14 +55,11 @@ def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     if not isinstance(rel, Relationship):
         return
-    try:
-        import activity
-        if rel.target_user:
-            activity.send(rel.source.user, 'follow', rel.target_user.user)
-        else:
-            activity.send(rel.source.user, 'follow', rel.target_project)
-    except ImportError:
-        pass
-
-
+    activity = Activity(actor=rel.source,
+                        verb='http://activitystrea.ms/schema/1.0/follow')
+    if rel.target_user:
+        activity.target_user = rel.target_user
+    else:
+        activity.project = rel.target_project
+        activity.save()
 post_save.connect(follow_handler, sender=Relationship)

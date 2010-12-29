@@ -1,4 +1,3 @@
-import sys
 import urllib2
 
 from django.conf import settings
@@ -7,8 +6,7 @@ from celery.task import Task
 from django_push.subscriber.models import Subscription
 
 from links import utils
-
-import activity
+from activity.models import RemoteObject, Activity
 
 
 class SubscribeToFeed(Task):
@@ -77,22 +75,47 @@ class HandleNotification(Task):
     When a notification of a new or updated entry is received, parse
     the entry and create an activity representation of it.
     """
+    def get_activity_namespace_prefix(self, feed):
+        """Discover the prefix used for the activity namespace."""
+        namespaces = feed.namespaces
+        activity_prefix = [prefix for prefix, ns in namespaces.iteritems()
+                           if ns == 'http://activitystrea.ms/spec/1.0/']
+        if activity_prefix:
+            return activity_prefix[0]
+        return None
+
+    def get_namespaced_attr(self, entry, prefix, attr):
+        """Feedparser prepends namespace prefixes to attribute names."""
+        qname = '_'.join((prefix, attr))
+        return getattr(entry, qname, None)
+
+    def create_activity_entry(self, entry, sender, activity_prefix=None):
+        """Create activity feed entries for the provided feed entry."""
+        if activity_prefix:
+            verb = self.get_namespaced_attr(
+                entry, activity_prefix, 'verb')
+            object_type = self.get_namespaced_attr(
+                entry, activity_prefix, 'object-type')
+        else:
+            verb, object_type = ('http://activitystrea.ms/schema/1.0/post',
+                                 'http://activitystrea.ms/schema/1.0/note')
+        title = getattr(entry, 'title', None)
+        uri = getattr(entry, 'link', None)
+        if not (title and uri):
+            return
+        for link in sender.link_set.all():
+            remote_obj = RemoteObject(
+                link=link, title=title, uri=uri, object_type=object_type)
+            remote_obj.save()
+            activity = Activity(
+                actor=link.user, verb=verb, remote_object=remote_obj)
+            activity.save()
 
     def run(self, notification, sender, **kwargs):
+        """Parse feed and create activity entries."""
         log = self.get_logger(**kwargs)
-
+        prefix = self.get_activity_namespace_prefix(notification)
         for entry in notification.entries:
             log.debug("Received notification of entry: %s, %s" % (
                 entry.title, entry.link))
-            if isinstance(entry.content, list):
-                content = entry.content[0]
-                if 'value' in content:
-                    content = content['value']
-                else:
-                    content = entry.content
-        for link in sender.link_set.all():
-            activity.send(link.user.user, 'post', {
-                'type': 'note',
-                'title': entry.title,
-                'content': content,
-            })
+            self.create_activity_entry(entry, sender, activity_prefix=prefix)

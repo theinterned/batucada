@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
 
+from activity.models import Activity
 from drumbeat.models import ModelBase
 
 
@@ -36,11 +37,12 @@ def status_creation_handler(sender, **kwargs):
     status = kwargs.get('instance', None)
     if not isinstance(status, Status):
         return
-    try:
-        import activity
-        activity.send(
-            status.author.user, 'post', status, target=status.project)
-    except ImportError:
-        return
-
+    activity = Activity(
+        actor=status.author,
+        verb='http://activitystrea.ms/schema/1.0/post',
+        status=status,
+    )
+    if status.project:
+        activity.project = status.project
+    activity.save()
 post_save.connect(status_creation_handler, sender=Status)

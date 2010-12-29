@@ -2,7 +2,6 @@ import logging
 
 from django import http
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -24,10 +23,8 @@ def show(request, slug):
     if request.user.is_authenticated():
         profile = request.user.get_profile()
         is_following = profile.is_following(project)
-    project_type = ContentType.objects.get_for_model(project)
     activities = Activity.objects.filter(
-        target_id=project.id,
-        target_content_type=project_type).order_by('-created_on')[0:10]
+        project=project).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     context = {
         'project': project,
