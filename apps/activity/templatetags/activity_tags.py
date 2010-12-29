@@ -1,20 +1,37 @@
 from django import template
 
+from activity import schema
 
 register = template.Library()
 
 
 @register.filter
+def truncate(value, arg):
+    """
+    Truncates a string after a given number of chars
+    Argument: Number of chars to truncate after
+    """
+    try:
+        length = int(arg)
+    except ValueError:  # invalid literal for int()
+        return value  # Fail silently.
+    if not isinstance(value, basestring):
+        value = str(value)
+    if (len(value) > length):
+        return value[:length] + "..."
+    else:
+        return value
+
+
+@register.filter
 def should_hyperlink(activity):
-    article_type = 'http://activitystrea.ms/schema/1.0/article'
-    follow = 'http://activitystrea.ms/schema/1.0/follow'
-    if activity.verb == follow and activity.target_user:
+    if activity.verb == schema.verbs['follow'] and activity.target_user:
         return True
     if not activity.remote_object:
         return False
     if not activity.remote_object.uri:
         return False
-    if activity.remote_object.object_type != article_type:
+    if activity.remote_object.object_type != schema.object_types['article']:
         return False
     return True
 
@@ -47,19 +64,17 @@ def activity_representation(activity):
 
 @register.filter
 def should_show_verb(activity):
-    note = 'http://activitystrea.ms/schema/1.0/note'
     if activity.status:
         return False
     if activity.remote_object:
-        if activity.remote_object.object_type == note:
-            return False
+        return False
     return True
 
 
 @register.filter
 def friendly_verb(activity):
-    if activity.verb == 'http://activitystrea.ms/schema/1.0/post':
-        return 'Posted a link:'
-    if activity.verb == 'http://activitystrea.ms/schema/1.0/follow':
-        return 'Started following'
-    return 'Unknown Verb'
+    try:
+        verb = schema.verbs_by_uri[activity.verb]
+        return schema.past_tense[verb].capitalize()
+    except KeyError:
+        return activity.verb
