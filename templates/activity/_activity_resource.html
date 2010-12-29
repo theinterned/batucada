@@ -24,7 +24,11 @@
 	{{ activity|friendly_verb }}
       {% endif %}
       {% if activity|should_hyperlink %}
-	<a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
+	{% if activity.target_user %}
+	  <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
+	{% else %}
+	  {{ activity|get_link_name }} <a href="{{ activity|get_link }}">{{ activity|get_link|truncate:50 }}</a>
+	{% endif %}
       {% else %}
 	{{ activity|activity_representation }}
       {% endif %}
