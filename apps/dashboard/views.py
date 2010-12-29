@@ -27,7 +27,8 @@ def dashboard(request):
     project_ids = [p.pk for p in projects_following]
     user_ids = [u.pk for u in users_following]
     activities = Activity.objects.select_related(
-        'actor', 'status', 'project').filter(
+        'actor', 'status', 'project', 'remote_object',
+        'remote_object__link').filter(
         Q(actor__exact=profile) |
         Q(actor__in=user_ids) | Q(project__in=project_ids),
     ).order_by('-created_on')[0:25]
