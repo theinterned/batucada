@@ -4,48 +4,39 @@
 <li class="post-container">
 
   <a href="#" class="reply-to">Reply</a>
-  <form method="post" action="{% locale_url activity_delete %}">
-    {% csrf_token %}
-    <input type="hidden" name="id" value="{{ activity.id }}">
-    <a href="#" class="delete activity-delete">Delete</a>
-  </form>
 
-  {% if activity.actor.is_remote %}
-
-  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}images/member-missing.png">
-    
-  <div class="post-contents">
-    <div class="post-details">
-      {{ activity.actor.get_full_name }}
-      <a href="{{ activity.get_absolute_url }}">{{ activity.created_on|timesince }} {{ _('ago') }}</a>
-    </div>
-
-  {% else %}
-
-  <a href="{{ activity.actor.user.get_profile.get_absolute_url }}">
-    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.user.get_profile.image_or_default }}">
+  <a href="{{ activity.actor.get_absolute_url }}">
+    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.image_or_default }}">
   </a>
 
   <div class="post-contents">
 
     <div class="post-details">
-      <a class="member-name" href="{{ activity.actor.user.get_profile.get_absolute_url }}">{{ activity.actor.user.get_profile.name }}</a>
-      <a href="{{ activity.get_absolute_url }}">{{ activity.created_on|timesince }} {{ _(' ago') }}</a>
+      <a class="member-name" href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.name }}</a>
+      {{ activity.created_on|timesince }} {{ _(' ago') }}
+      {% if activity.remote_object %}
+	{{ _('via ') }}<a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
+      {% endif %}
     </div>
 
-  {% endif %}
-
     <div class="post-body">
-      {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' %}
-	{{ activity.object|urlize }}
+      {% if activity|should_show_verb %}
+	{{ activity|friendly_verb }}
+      {% endif %}
+      {% if activity|should_hyperlink %}
+	{% if activity.target_user %}
+	  <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
+	{% else %}
+	  {{ activity|get_link_name }} <a href="{{ activity|get_link }}">{{ activity|get_link|truncate:50 }}</a>
+	{% endif %}
       {% else %}
-	{{ activity.verb|friendly }} <a href="{{ activity.obj.get_absolute_url }}">{{ activity.object }}</a>
+	{{ activity|activity_representation }}
       {% endif %}
     </div> <!-- /.post-body -->
 
-    {% if activity.target %}
+    {% if activity.project %}
     <ul class="post-tags">
-      <li><a href="{{ activity.target.get_absolute_url }}">{{ activity.target }}</a></li>
+      <li><a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a></li>
     </ul>
     {% endif %}
 
