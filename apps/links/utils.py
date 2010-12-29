@@ -17,8 +17,15 @@ def normalize_url(url, base_url):
     parts = urlparse.urlparse(url)
     if parts.scheme and parts.netloc:
         return url  # looks fine
+    if not base_url:
+        return url
     base_parts = urlparse.urlparse(base_url)
-    return base_parts.scheme + '://' + base_parts.netloc + '/' + url
+    server = '://'.join((base_parts.scheme, base_parts.netloc))
+    if server[-1] != '/' and url[0] != '/':
+        server = server + '/'
+    if server[-1] == '/' and url[0] == '/':
+        server = server[:-1]
+    return server + url
 
 
 class FeedHandler(sax.ContentHandler):
@@ -85,7 +92,7 @@ def parse_feed_url(content, url=None):
     return None
 
 
-def parse_hub_url(content, base_url):
+def parse_hub_url(content, base_url=None):
     """Parse the provided xml and find a hub link."""
     handler = FeedHandler()
     parser = sax.make_parser()
