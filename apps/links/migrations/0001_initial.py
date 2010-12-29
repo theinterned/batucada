@@ -8,62 +8,21 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Removing unique constraint on 'Relationship', fields ['source_object_id', 'source_content_type', 'target_object_id', 'target_content_type']
-        db.delete_unique('relationships_relationship', ['source_object_id', 'source_content_type_id', 'target_object_id', 'target_content_type_id'])
-
-        # Deleting field 'Relationship.target_object_id'
-        db.delete_column('relationships_relationship', 'target_object_id')
-
-        # Deleting field 'Relationship.source_object_id'
-        db.delete_column('relationships_relationship', 'source_object_id')
-
-        # Deleting field 'Relationship.source_content_type'
-        db.delete_column('relationships_relationship', 'source_content_type_id')
-
-        # Deleting field 'Relationship.target_content_type'
-        db.delete_column('relationships_relationship', 'target_content_type_id')
-
-        # Adding field 'Relationship.source'
-        db.add_column('relationships_relationship', 'source', self.gf('django.db.models.fields.related.ForeignKey')(default='', related_name='source_relationships', to=orm['users.UserProfile']), keep_default=False)
-
-        # Adding field 'Relationship.target_user'
-        db.add_column('relationships_relationship', 'target_user', self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['users.UserProfile']), keep_default=False)
-
-        # Adding field 'Relationship.target_project'
-        db.add_column('relationships_relationship', 'target_project', self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['projects.Project']), keep_default=False)
-
-        # Adding unique constraint on 'Relationship', fields ['source', 'target_user']
-        db.create_unique('relationships_relationship', ['source_id', 'target_user_id'])
+        # Adding model 'Link'
+        db.create_table('links_link', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=1023)),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'], null=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.UserProfile'], null=True)),
+        ))
+        db.send_create_signal('links', ['Link'])
 
 
     def backwards(self, orm):
         
-        # Removing unique constraint on 'Relationship', fields ['source', 'target_user']
-        db.delete_unique('relationships_relationship', ['source_id', 'target_user_id'])
-
-        # Adding field 'Relationship.target_object_id'
-        db.add_column('relationships_relationship', 'target_object_id', self.gf('django.db.models.fields.PositiveIntegerField')(default=''), keep_default=False)
-
-        # Adding field 'Relationship.source_object_id'
-        db.add_column('relationships_relationship', 'source_object_id', self.gf('django.db.models.fields.PositiveIntegerField')(default=''), keep_default=False)
-
-        # Adding field 'Relationship.source_content_type'
-        db.add_column('relationships_relationship', 'source_content_type', self.gf('django.db.models.fields.related.ForeignKey')(default='', related_name='source_relationships', to=orm['contenttypes.ContentType']), keep_default=False)
-
-        # Adding field 'Relationship.target_content_type'
-        db.add_column('relationships_relationship', 'target_content_type', self.gf('django.db.models.fields.related.ForeignKey')(default='', related_name='target_relationships', to=orm['contenttypes.ContentType']), keep_default=False)
-
-        # Deleting field 'Relationship.source'
-        db.delete_column('relationships_relationship', 'source_id')
-
-        # Deleting field 'Relationship.target_user'
-        db.delete_column('relationships_relationship', 'target_user_id')
-
-        # Deleting field 'Relationship.target_project'
-        db.delete_column('relationships_relationship', 'target_project_id')
-
-        # Adding unique constraint on 'Relationship', fields ['source_object_id', 'source_content_type', 'target_object_id', 'target_content_type']
-        db.create_unique('relationships_relationship', ['source_object_id', 'source_content_type_id', 'target_object_id', 'target_content_type_id'])
+        # Deleting model 'Link'
+        db.delete_table('links_link')
 
 
     models = {
@@ -103,11 +62,19 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'links.link': {
+            'Meta': {'object_name': 'Link'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']", 'null': 'True'})
+        },
         'projects.project': {
             'Meta': {'object_name': 'Project'},
             'call_to_action': ('django.db.models.fields.TextField', [], {}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projects'", 'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 20)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 25)', 'auto_now_add': 'True', 'blank': 'True'}),
             'css': ('django.db.models.fields.TextField', [], {}),
             'description': ('django.db.models.fields.TextField', [], {}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -115,14 +82,6 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
             'template': ('django.db.models.fields.TextField', [], {})
-        },
-        'relationships.relationship': {
-            'Meta': {'unique_together': "(('source', 'target_user'),)", 'object_name': 'Relationship'},
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 20)', 'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'source': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'source_relationships'", 'to': "orm['users.UserProfile']"}),
-            'target_project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']"}),
-            'target_user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']"})
         },
         'taggit.tag': {
             'Meta': {'object_name': 'Tag'},
@@ -146,9 +105,10 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserProfile'},
             'bio': ('django.db.models.fields.TextField', [], {'default': "''", 'blank': 'True'}),
             'confirmation_code': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 20)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 25)', 'auto_now_add': 'True', 'blank': 'True'}),
             'display_name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'unique': 'True', 'null': 'True'}),
+            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'default': "''", 'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
@@ -158,4 +118,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['relationships']
+    complete_apps = ['links']

@@ -1,9 +1,8 @@
-from django.contrib.auth.models import User
-from django.db import IntegrityError
 from django.test import TestCase, Client
 
+from users.models import UserProfile
 from activity.models import Activity
-from projects.models import Project, Link
+from projects.models import Project
 
 
 class ProjectTests(TestCase):
@@ -16,9 +15,13 @@ class ProjectTests(TestCase):
         self.client = Client()
         self.locale = 'en-US'
         self.client = Client()
-        self.user = User.objects.create_user(self.test_username,
-                                             self.test_email,
-                                             self.test_password)
+        self.user = UserProfile(
+            username=self.test_username,
+            email=self.test_email,
+        )
+        self.user.set_password(self.test_password)
+        self.user.save()
+        self.user.create_django_user()
 
     def test_unique_slugs(self):
         """Test that each project will get a unique slug"""
@@ -31,7 +34,7 @@ class ProjectTests(TestCase):
         project.save()
         self.assertEqual('my-cool-project', project.slug)
         project2 = Project(
-            name='My Cool project',
+            name='My Cool  Project',
             description='This project is awesome',
             call_to_action='This is all very familiar',
             created_by=self.user,
@@ -49,33 +52,12 @@ class ProjectTests(TestCase):
             created_by=self.user,
         )
         project.save()
-        self.assertEqual(1, Activity.objects.count())
-        activity = Activity.objects.get(id=1)
-        self.assertEqual(self.user, activity.actor.user)
-        self.assertEqual(project, activity.object)
-        self.assertEqual(
-            'http://activitystrea.ms/schema/1.0/post',
-            activity.verb)
-
-    def test_uniqueness_constraint(self):
-        """Test that no two project links can have the same url."""
-        project = Project(
-            name='abc',
-            description='def',
-            call_to_action='123',
-            created_by=self.user,
-        )
-        project.save()
-        Link(
-            title='My Blog',
-            url='http://foo.com/',
-            project=project,
-            feed_url='http://foo.com/feed',
-        ).save()
-        link2 = Link(
-            title='Blah',
-            url='http://foo.com/',
-            project=project,
-            feed_url='http://foo.com/feed',
-        )
-        self.assertRaises(IntegrityError, link2.save)
+        # expect 2 activities, a create and a follow
+        self.assertEqual(2, Activity.objects.count())
+        for activity in Activity.objects.all():
+            self.assertEqual(self.user, activity.actor.user.get_profile())
+            self.assertEqual(project, activity.object)
+            self.assertTrue(activity.verb in (
+                'http://activitystrea.ms/schema/1.0/post',
+                'http://activitystrea.ms/schema/1.0/follow',
+           ))

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:georss="http://www.georss.org/georss" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:media="http://search.yahoo.com/mrss/"
+	>
+
+<channel>
+	<title>commonspace</title>
+	<atom:link href="http://commonspace.wordpress.com/feed/" rel="self" type="application/rss+xml" />
+	<link>http://commonspace.wordpress.com</link>
+	<description>things I'm learning along the way</description>
+	<lastBuildDate>Mon, 20 Dec 2010 19:07:53 +0000</lastBuildDate>
+	<language>en</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.com/</generator>
+<cloud domain='commonspace.wordpress.com' port='80' path='/?rsscloud=notify' registerProcedure='' protocol='http-post' />
+<image>
+		<url>http://s2.wp.com/i/buttonw-com.png</url>
+		<title>commonspace</title>
+		<link>http://commonspace.wordpress.com</link>
+	</image>
+	<atom:link rel="search" type="application/opensearchdescription+xml" href="http://commonspace.wordpress.com/osd.xml" title="commonspace" />
+	<atom:link rel='hub' href='http://commonspace.wordpress.com/?pushpress=hub'/>
+		<item>
+		<title>Drumbeat Festival 2010: quick report</title>
+		<link>http://commonspace.wordpress.com/2010/11/30/festivalreport/</link>
+		<comments>http://commonspace.wordpress.com/2010/11/30/festivalreport/#comments</comments>
+		<pubDate>Tue, 30 Nov 2010 18:04:00 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[education]]></category>
+		<category><![CDATA[festival]]></category>
+		<category><![CDATA[lfw]]></category>
+		<category><![CDATA[mozilla]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1975</guid>
+		<description><![CDATA[I did a quick report out on the Drumbeat &#8216;Learning, Freedom and the Web&#8216; Festival at last week&#8217;s Mozilla Community meeting. Here is a slidecast of the talk: It&#8217;s very much from a Mozilla perspective, so watch it in the light. And also look at some of the other awesome reports. My main points in [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1975&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>I did a<strong> quick report out </strong>on the <a href="http://www.drumbeat.org">Drumbeat</a> &#8216;<a href="http://learningfreedomandtheweb.org/">Learning, Freedom and the Web</a>&#8216; Festival at last week&#8217;s <a href="https://wiki.mozilla.org/WeeklyUpdates/2010-11-22">Mozilla Community meeting</a>. Here is a slidecast of the talk:</p>
+<div id="x-video-0" class="video-player">
+<video id="video0" width="380" height="210" poster="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_scruberthumbnail_1.jpg" controls="true" preload="none"><source src="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_fmt1.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;" /><div><img alt="Drumbeat Report Out - Screencast" src="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_scruberthumbnail_1.jpg" width="380" height="210" /></div><p class="robots-nocontent">You do not have sufficient <a rel="nofollow" href="http://www.gnu.org/philosophy/free-sw.html">freedom levels</a> to view this video.</p></video>
+</div>
+<p>It&#8217;s very much from a Mozilla perspective, so watch it in the light. And also look at some of the other awesome reports. My main points in the talk were:</p>
+<ol>
+<li>The Festival was<strong> awesome</strong> <strong>in terms of energy, diversity and format</strong>. People from different worlds (web + learning) became a real community, the connections are still rippling.</li>
+<li>It was a <strong>great chance to demo the &#8216;Drumbeat formula&#8217;</strong> -&gt; passionate people + creative hackers = cool shit for the web. Hackfests at Drumbeat created <a href="http://brettgaylor.tumblr.com/post/1611274961/drumbeat-a-forcing-function">new WebMadeMovies demos</a> and <a href="http://blog.eval.ca/2010/11/15/status-report-what-ive-been-up-to/">P2PU School of Webcraft</a> app prototypes.</li>
+<li>We <strong>added rocket fuel to the work of some amazing innovators </strong>in the world of learning and education. There are at least <a href="http://learningfreedomandtheweb.org/">five new web + learning projects</a> coming out of Drumbeat, looks like more.</li>
+</ol>
+<p>Of course, not everything went perfectly in Barcelona. The good news: <strong>we&#8217;re going to do it again next year</strong>, probably with a different theme. I&#8217;ll post soon with thoughts on next year including what we can do better.</p>
+<p><em>Ps. The slidecast above comes from awesome HTML5 <a href="http://paulrouget.com/dzslides/">slide</a> <a href="http://www.toolness.com/wp/?p=1107">tools</a> made by <a href="http://www.paulrouget.com/">Paul Rouget</a> and <a href="http://www.toolness.com/wp/">Autl Varma</a>. You can see original slides here.</em><em> </em></p>
+<p><em>PPS. I promise not to say &#8216;awesome&#8217; again for another 3 months. <img src='http://s2.wp.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> <div id="x-video-1" class="video-player">
+<video id="video1" width="380" height="210" poster="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_scruberthumbnail_1.jpg" controls="true" preload="none"><source src="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_fmt1.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;" /><div><img alt="Drumbeat Report Out - Screencast" src="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_scruberthumbnail_1.jpg" width="380" height="210" /></div><p class="robots-nocontent">You do not have sufficient <a rel="nofollow" href="http://www.gnu.org/philosophy/free-sw.html">freedom levels</a> to view this video.</p></video>
+</div><br />
+</em></p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/education/'>education</a>, <a href='http://commonspace.wordpress.com/category/festival/'>festival</a>, <a href='http://commonspace.wordpress.com/category/lfw/'>lfw</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1975/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1975/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1975/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1975/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1975/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1975/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1975/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1975/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1975&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" /><div><a href="http://commonspace.wordpress.com/2010/11/30/festivalreport/"><img alt="Drumbeat Report Out - Screencast" src="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_scruberthumbnail_1.jpg" width="160" height="120" /></a></div>]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/11/30/festivalreport/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+	<enclosure url="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_fmt1.ogv" length="56445952" type="video/ogg" />
+
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_fmt1.ogv" fileSize="56445952" type="video/ogg" medium="video" bitrate="796" isDefault="true" duration="554" width="400" height="222">
+			<media:rating scheme="urn:mpaa">g</media:rating>
+
+			<media:title type="plain">Drumbeat Report Out - Screencast</media:title>
+
+			<media:thumbnail url="http://videos.videopress.com/vMypHZ8V/drumbeat-report-out-2_scruberthumbnail_1.jpg" width="256" height="142" />
+		</media:content>
+	</item>
+		<item>
+		<title>#spark &#8211; what did you start @ #drumbeat?</title>
+		<link>http://commonspace.wordpress.com/2010/11/29/drumspark/</link>
+		<comments>http://commonspace.wordpress.com/2010/11/29/drumspark/#comments</comments>
+		<pubDate>Mon, 29 Nov 2010 15:03:51 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[education]]></category>
+		<category><![CDATA[festival]]></category>
+		<category><![CDATA[mozilla]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1954</guid>
+		<description><![CDATA[It&#8217;s been almost three weeks since Barcelona, and we&#8217;re still seeing ripples. I&#8217;ve got half a dozen email threads open with new friends and collaborators. People keep posting reports, reflections and project ideas. And the #drumbeat Twitter stream is still bubbling. Looking around, I feel awash in possibility. If there was one thing Drumbeat Festival [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1954&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>It&#8217;s been almost three weeks since Barcelona, and we&#8217;re still seeing ripples. I&#8217;ve got half a dozen email threads open with new friends and collaborators. People keep posting <a href="http://www.delicious.com/msurman/drumbeat+bcn">reports, reflections and project ideas</a>. And the <a href="http://twitter.com/#!/search?q=%23drumbeat">#drumbeat Twitter stream</a> is still bubbling. Looking around, I feel awash in possibility.</p>
+<p>If there was one thing Drumbeat Festival was successful at, it was<strong> sparking the kind of possibility that comes when you bring people from different worlds together. </strong></p>
+<p><strong><img class="alignnone" title="Drumbeat Festival Volunteers" src="http://farm2.static.flickr.com/1220/5157362160_85a9ac46ec_z.jpg" alt="Drumbeat Festival Volunteers" width="350" height="233" /><br />
+</strong></p>
+<p>As with any event, there is a risk that all these new friendships, ideas and good intentions dissipate and fade into thin air. My hope is that this won&#8217;t happen with <a href="http://learningfreedomandtheweb.org/">Learning, Freedom and the Web</a>, that we&#8217;ve sparked something important and lasting.</p>
+<p>For those who were there, I want to throw out <strong>a small challenge: do something concrete to follow up on at least one thing that excited you in Barcelona. </strong>For some, this may be as simple as emailing or Twitter-following someone you met. For others, it may be reading up on an idea you heard about and then blogging about it. And, for a few of us, it will be starting work on a project or a collaboration sparked at Drumbeat.</p>
+<p><a href="http://farm5.static.flickr.com/4019/5157366174_dcf512e2b3.jpg"><img class="alignnone" title="Drumbeat Hackfast" src="http://farm5.static.flickr.com/4019/5157366174_dcf512e2b3.jpg" alt="Drumbeat Hackfast" width="351" height="233" /></a></p>
+<p>The idea is to do something simple, fun and useful to you. And by doing so to contribute to keeping the momentum and figuring out further steps around learning, freedom and the web.</p>
+<p>With this in mind, one final encouragement: <strong>describe the action you  decided to take using a Status.net or Twitter update and tag with  #drumbeat and #spark</strong>. Some fictional tweets based on real things people are doing:</p>
+<blockquote><p>We&#8217;re working on a &#8216;movement markup language&#8217; based on GML #moveml #drumbeat #spark <a href="http://bit.ly/e8XWEO">http://bit.ly/e8XWEO</a> (@nois3lab)</p>
+<p>I&#8217;ve written a research proposal to help with XRayVisionPowerGoggles #drumbeat #spark <a href="http://bit.ly/i2V4EW">http://bit.ly/i2V4EW</a> (@Empathetics).</p></blockquote>
+<p>If enough of do this, we&#8217;ll be able to generate a solid list of things that have happened coming out of Barcelona.</p>
+<p><strong>We&#8217;ll find a way to recognize and reward the most interesting and impactful Drumbeat follow up actions</strong> a few months down the road (I&#8217;m open to suggestions on how best to do this). In the meantime, we&#8217;re going to set up a way to track these tags on the new <a href="http://learningfreedomandtheweb.org/">Learning, Freedom and the Web site</a> we&#8217;re launching over the next couple of days.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/education/'>education</a>, <a href='http://commonspace.wordpress.com/category/festival/'>festival</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1954/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1954/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1954/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1954/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1954/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1954/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1954/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1954/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1954&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/11/29/drumspark/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://farm2.static.flickr.com/1220/5157362160_85a9ac46ec_z.jpg" medium="image">
+			<media:title type="html">Drumbeat Festival Volunteers</media:title>
+		</media:content>
+
+		<media:content url="http://farm5.static.flickr.com/4019/5157366174_dcf512e2b3.jpg" medium="image">
+			<media:title type="html">Drumbeat Hackfast</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Drumbeat in 3 bullets</title>
+		<link>http://commonspace.wordpress.com/2010/10/31/drumbeat-in-3-bullets/</link>
+		<comments>http://commonspace.wordpress.com/2010/10/31/drumbeat-in-3-bullets/#comments</comments>
+		<pubDate>Sun, 31 Oct 2010 15:21:35 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[messaging]]></category>
+		<category><![CDATA[poetry]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1949</guid>
+		<description><![CDATA[Melissa Shapiro recently ran our team through a media training. She pushed us hard to come up with the three bullet Drumbeat elevator pitch. Here is what we came up with: Mozilla exists to make sure the internet stays open and awesome. With Drumbeat, we&#8217;re moving beyond Firefox to build more things that make the [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1949&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>Melissa Shapiro recently ran our team through a media training. She pushed us hard to come up with the<strong> three bullet <a href="http://www.drumbeat.org/">Drumbeat</a> elevator pitch</strong>. Here is what we came up with:</p>
+<ol>
+<li>Mozilla exists to <strong>make sure the internet stays open and awesome</strong>.</li>
+<li>With Drumbeat, we&#8217;re <strong>moving beyond Firefox </strong>to build more things that make the web better &#8212; <strong>not just software</strong>.</li>
+<li>We&#8217;re doing this by reaching out <strong>new kinds of people</strong> &#8212; teachers, filmmakers, lawyers, journalists. These people will play a key role in shaping the future of the web.</li>
+</ol>
+<p>This is similar to what I presented at the Mozilla Summit in the summer, but much simpler and easier to repeat. So, I figured I should share it.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/messaging/'>messaging</a>, <a href='http://commonspace.wordpress.com/category/poetry/'>poetry</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1949/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1949/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1949/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1949/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1949/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1949/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1949/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1949/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1949&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/10/31/drumbeat-in-3-bullets/feed/</wfw:commentRss>
+		<slash:comments>5</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>A users guide to Drumbeat Festival</title>
+		<link>http://commonspace.wordpress.com/2010/10/29/bcnusers-guide/</link>
+		<comments>http://commonspace.wordpress.com/2010/10/29/bcnusers-guide/#comments</comments>
+		<pubDate>Fri, 29 Oct 2010 01:32:13 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[education]]></category>
+		<category><![CDATA[festival]]></category>
+		<category><![CDATA[mozilla]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1938</guid>
+		<description><![CDATA[I just wrote up a users guide to Drumbeat Festival to be e-mailed to everyone attending. It&#8217;s full of tips on how to get the most out of Barcelona (and revolutionize education along the way). I&#8217;m posting here on my blog as well for anyone who is interested. 1. Top tip: pick something new to [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1938&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>I just wrote up a<strong><em> users guide to <a href="http://drumbeat.org/festival">Drumbeat Festival</a></em> </strong>to be e-mailed to everyone attending. It&#8217;s full of tips on how to get the most out of Barcelona (and revolutionize education along the way). I&#8217;m posting here on my blog as well for anyone who is interested.</p>
+<p><img class="alignnone" title="Drumbeat Users Guide" src="http://farm2.static.flickr.com/1258/5124240958_09a10b97e5_b.jpg" alt="" width="380" height="223" /></p>
+<p><strong>1. Top tip: pick something new to do, and do it!</strong></p>
+<p>The ethic of Drumbeat is: <strong>learn something by building something</strong>. As you look at the <a href="https://wiki.mozilla.org/Drumbeat/events/Festival/program/schedule">schedule</a>, watch for places where you could a) lend your skills, b) learn something new and b) have fun. If you&#8217;re a web developer, help develop a web dev course. If you&#8217;re a teacher, learn how to bind a text book. If you&#8217;re an open video nerd, learn how to translate your videos on the web.</p>
+<p>As we finalize the schedule, we&#8217;ll tag sessions as &#8216;learn&#8217;, &#8216;build&#8217; or &#8216;play&#8217; so it&#8217;ll be easy to find learning opportunities like these. &#8216;Build&#8217; and &#8216;play&#8217; sessions will be the best places to look. Also, we&#8217;re going to have a &#8216;skills needed&#8217; board in the main coffee area.</p>
+<p><strong>2. Getting oriented: roadmap sessions, schedule grids, tweets.</strong></p>
+<p>My bet is that this event is going to be awesome &#8212; but also overwhelming. To keep oriented:</p>
+<ul>
+<li>Come to the cocktail party Wednesday night and the plenary on Thursday morning. Both are designed to give you a fun but useful overview of the activities that will happen at the Festival. The idea: we give you a tasting menu of ideas, you keep a list of the people, projects and sessions you want to follow up with.</li>
+<li>Check the schedule grids,constantly. We will have a huge schedule grid on the wall in the main venue. This will include all pre-planned sessions, plus slots for BarCamp style sessions proposed by you. There will also be monitors with the schedule for pre-planned sessions. Things are likely to change quite a bit throughout, so keep checking the schedules.</li>
+<li>We&#8217;ll also hope to have a status.net + twitter powered system that provides a real time heat map of what&#8217;s going on. This will give you a place to watch for schedule changes, calls for help and spontaneous thingamajigs. More info as it comes together.</li>
+</ul>
+<p><strong>3. Getting around: tents, terraces and crypts</strong></p>
+<p>The Festival venue promises to be awesome &#8212; two art galleries and public square. You can see the general layout here:</p>
+<p><a href="http://farm5.static.flickr.com/4045/5123637835_bf6003eca0_b.jpg"><img class="alignnone" title="Sqaure at Drumbeat Festival" src="http://farm5.static.flickr.com/4045/5123637835_bf6003eca0_b.jpg" alt="" width="384" height="285" /></a></p>
+<p>&#8230;. and the <a href="http://mzl.la/anNRF4">street view</a> / <a href="http://mzl.la/9a3gkg">satellite view</a>.</p>
+<p>About half the Festival will be be in the <a href="http://barcelona.unlike.net/locations/300059-FAD">FAD</a> and <a href="http://barcelona.unlike.net/locations/300059-FAD">MACBA</a> galleries, including beautiful hall with arched ceilings and a subterranean crypt where you can organize barcamp-style sessions. The rest of the Festival takes place in tents and buses out in the Plaça dels Angels and on the FAD terrace. Fingers crossed for sunny days.</p>
+<p><strong>4. Work hard, stroll around, play hard.</strong></p>
+<p>On organizing you time: imagine a mix of working hard in a lab or classroom, strolling around a fair ground to see what people are doing and making, and then going to the playful after party.</p>
+<p>Talking to people who are coming, I know everyone will mash these elements up differently. Some people are planning to spend the whole two days hacking on an educational video software prototype (and roping others in to help). Others are planning to just bumble bee around, looking at what everyone is working on. And others are there to make some noise and show how fun learning tech can be.</p>
+<p>It&#8217;ll be up to you to decide how you mix these things up. If you don&#8217;t know what do do next, ask us for help (we&#8217;re wearing staff T-shirts). Or, better: take a break, walk in Barcelona, enjoy the cafes on the square.</p>
+<p><strong>5. Final tip: watch these key web pages</strong></p>
+<p>Info about the Drumbeat Festival will be updated right until the very last moment (and then throughout). Watch these web pages:</p>
+<p style="padding-left:30px;"><a href="http://www.drumbeat.org/festival">Festival page</a> &#8211; will include social media updates starting Tuesday<a href="https://wiki.mozilla.org/Drumbeat/events/Festival/program/activities"><br />
+</a><a href="https://wiki.mozilla.org/Drumbeat/events/Festival/program/schedule">Session schedule</a> and <a href="https://wiki.mozilla.org/Drumbeat/events/Festival/program/activities">list of sessions in detail</a></p>
+<p>Also, watch the <a href="http://twitter.com/#search?q=%23drumbeat">#drumbeat tag in twitter</a> and identi.ca. There is already a huge amount of stuff going on there.</p>
+<p>&#8211;</p>
+<p>For those of you coming to Barcelona: hope this helps. Lemme know below if you have questions. For others, hope this gives you a sense of the action &#8212; please follow along in the twittersphere.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/education/'>education</a>, <a href='http://commonspace.wordpress.com/category/festival/'>festival</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1938/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1938/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1938/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1938/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1938/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1938/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1938/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1938/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1938&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/10/29/bcnusers-guide/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://farm2.static.flickr.com/1258/5124240958_09a10b97e5_b.jpg" medium="image">
+			<media:title type="html">Drumbeat Users Guide</media:title>
+		</media:content>
+
+		<media:content url="http://farm5.static.flickr.com/4045/5123637835_bf6003eca0_b.jpg" medium="image">
+			<media:title type="html">Sqaure at Drumbeat Festival</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Web video, teaching and love</title>
+		<link>http://commonspace.wordpress.com/2010/09/27/web-video-tutorials/</link>
+		<comments>http://commonspace.wordpress.com/2010/09/27/web-video-tutorials/#comments</comments>
+		<pubDate>Mon, 27 Sep 2010 14:09:40 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[education]]></category>
+		<category><![CDATA[mozilla]]></category>
+		<category><![CDATA[video]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1874</guid>
+		<description><![CDATA[My mind is regularly blown by the way web video is changing how we learn, and increasingly how we teach. It&#8217;s something that raises wonderful questions about the future of education. I think about this a ton as I watch my 11 year old become a bit of a geek. He doesn&#8217;t use help files [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1874&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>My mind is regularly blown by the way <strong>web video is changing how we learn, and increasingly how we teach. </strong>It&#8217;s something that raises wonderful questions about the future of education.</p>
+<p>I think about this a ton as I watch <a href="http://www.flickr.com/photos/marksurman/4981280528/">my 11 year old</a> become a bit of a geek. He doesn&#8217;t use help files or FAQs to learn new software. He watches <a href="http://www.google.ca/search?hl=en&amp;q=software+tutorial+site%3Ayoutube.com&amp;tbs=vid%3A1&amp;tbo=p&amp;source=vgc&amp;num=10">YouTube tutorials</a>. And, as his skills grow, he shows off and shares by making his own:</p>
+<p><span style="text-align:center; display: block;"><a href="http://commonspace.wordpress.com/2010/09/27/web-video-tutorials/"><img src="http://img.youtube.com/vi/Oeb18QwBU9s/2.jpg" alt="" /></a></span></p>
+<p>Much has been said on the learning side of all this. Clearly, <strong>video packs way more info punch than print</strong>. And the ubiquity of online video means we all tap into rich (and fast) new learning opportunities constantly. <a href="http://en.wikipedia.org/wiki/Chris_Anderson_%28entrepreneur%29">TED&#8217;s Chris Anderson</a> released a <a href="http://www.youtube.com/watch?v=X6Zo53M0lcY">great talk on this side of video and learning</a> a few weeks ago.</p>
+<p>Chris points out that we live in a world of online video fueled by a desire to dance, sing, perform, play and think. Most people who post videos online are not driven by the desire to teach &#8212; they just want to show off or have fun. Yet, as we watch them, we learn.</p>
+<p>There is, however, <strong>a huge online phenomena very much about the desire to teach: web video tutorials</strong>. A great example is the <a href="http://www.khanacademy.org/">Khan Academy</a>:</p>
+<p><span style="text-align:center; display: block;"><a href="http://commonspace.wordpress.com/2010/09/27/web-video-tutorials/"><img src="http://img.youtube.com/vi/HycjWQcAymQ/2.jpg" alt="" /></a></span></p>
+<p>Driven by<em> a.</em> frustration with how schools teach math and science and <em>b.</em> easy access of YouTube, Sal Khan has produced a massive, high quality collection of 1800+ web tutorials for self learners. The idea has landed him a <a href="http://googleblog.blogspot.com/2010/09/10-million-for-project-10100-winners.html">$2 million Google 10^100 grant</a>. It&#8217;s also attracted millions of viewers eager to learn.</p>
+<p>What&#8217;s even more exciting to me is that this sort of teaching isn&#8217;t limited to over achievers like Khan. YouTube alone holds over 10 million tutorials (search: <a href="http://www.google.ca/search?hl=en&amp;q=tutorial+site%3Ayoutube.com&amp;tbs=vid%3A1&amp;tbo=p&amp;source=vgc&amp;num=10">tutorial</a> and <a href="http://www.google.ca/search?hl=en&amp;q=+%22how+to%22+site%3Ayoutube.com&amp;tbs=vid%3A1&amp;tbo=p&amp;source=vgc&amp;num=10">how-to</a>). Videos with people teaching everything from <a href="http://www.youtube.com/watch?v=MWYi4_COZMU">how to set up WordPress</a> (400,000 views), <a href="http://www.youtube.com/watch?v=WoZ2QGq0n4A">how to curl your hair with paper bag</a> (2 millions views) to <a href="http://www.youtube.com/watch?v=1EEynvjfljU">how to moonwalk</a> (8 million views). Here&#8217;s the moonwalk tutorial:</p>
+<p><span style="text-align:center; display: block;"><a href="http://commonspace.wordpress.com/2010/09/27/web-video-tutorials/"><img src="http://img.youtube.com/vi/1EEynvjfljU/2.jpg" alt="" /></a></span></p>
+<p>If you look to the young people making these tutorials (<a href="http://www.youtube.com/user/TheSlowsnow101#p/c/51BB226666943D8C">like my son</a>), web video isn&#8217;t just making learning easier. The web is creating<strong> a generation that takes it for granted that we can all be teachers</strong>.<strong> </strong>Teachers driven by <a href="http://en.wikipedia.org/wiki/Amatuer">the best aspects of the word &#8216;amateur&#8217; &#8212; a love of a subject and a desire to share that knowledge</a>.</p>
+<p>Clearly, this is HUGE &#8212; and is truly giving us all more control over how we learn. The question is: <strong>what does this mean for the future of education?</strong> What does it mean for who we turn to when we want learn something? And how we all start to <a href="http://p2pu.org/">teach each other</a>?</p>
+<p>These are questions I want to sink my teeth into at <a href="http://drumbeat.org/festival">Mozilla&#8217;s Learning, Freedom and the Web Festival in Barcelona</a>. I&#8217;m not sure what this conversation looks like yet. <strong>If you&#8217;re making or thinking about video tutorials, I&#8217;d love your help figuring this out</strong> (and running sessions in Barcelona). Please get in touch.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/education/'>education</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>, <a href='http://commonspace.wordpress.com/category/video/'>video</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1874/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1874/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1874/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1874/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1874/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1874/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1874/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1874/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1874&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/09/27/web-video-tutorials/feed/</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://img.youtube.com/vi/Oeb18QwBU9s/2.jpg" medium="image" />
+
+		<media:content url="http://img.youtube.com/vi/HycjWQcAymQ/2.jpg" medium="image" />
+
+		<media:content url="http://img.youtube.com/vi/1EEynvjfljU/2.jpg" medium="image" />
+	</item>
+		<item>
+		<title>Status update (and Drumbeat:Next)</title>
+		<link>http://commonspace.wordpress.com/2010/09/24/sept2010-status-update/</link>
+		<comments>http://commonspace.wordpress.com/2010/09/24/sept2010-status-update/#comments</comments>
+		<pubDate>Fri, 24 Sep 2010 19:23:42 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[mozilla]]></category>
+		<category><![CDATA[statusupdate]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1864</guid>
+		<description><![CDATA[This month&#8217;s status update is focused on the question: &#8216;where next for Drumbeat?&#8216; There has been good conversation on this topic over the last few weeks &#8212; first on my blog and in the Drumbeat newsgroup (thanks to everyone who commented!) and then in a recent MozFdn board meeting (slidecast below). The general consensus seems [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1864&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>This month&#8217;s <a href="http://commonspace.wordpress.com/category/statusupdate/">status update</a> is focused on the question: &#8216;<strong>where next for <a href="http://www.drumbeat.org">Drumbeat</a>?</strong>&#8216; There has been good conversation on this topic over the last few weeks &#8212; first on <a href="http://commonspace.wordpress.com/2010/09/02/drumbeatnext/">my blog</a> and in the<a href="http://groups.google.com/group/mozilla.community.drumbeat/browse_thread/thread/3b19a08fc22d6eeb#"> Drumbeat newsgroup</a> (thanks to everyone who commented!) and then in a recent MozFdn board meeting (slidecast below).</p>
+<p>The general consensus seems to be: <strong>Drumbeat is finding a solid footing</strong> as it does projects like Web Made Movies and School of Webcraft. Keep going on this track, use it to show what Mozilla can be beyond the browser. On the flip side, we <strong>haven&#8217;t yet found big new ways to build participation</strong>. Drumbeat (and all of Mozilla) need to focus on this in 2011.</p>
+<p>My status update slidecast focuses on these two themes of a) diverse and b) large scale participation:</p>
+<div id="x-video-2" class="video-player">
+<video id="video2" width="380" height="284" poster="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_scruberthumbnail_0.jpg" controls="true" preload="none"><source src="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_fmt1.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;" /><div><img alt="Sept 2010 Mozilla Foundation - Status Update" src="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_scruberthumbnail_0.jpg" width="380" height="284" /></div><p class="robots-nocontent">You do not have sufficient <a rel="nofollow" href="http://www.gnu.org/philosophy/free-sw.html">freedom levels</a> to view this video.</p></video>
+</div>
+<p>Concretely, what does this mean in terms of goals for 2011? We are looking at two main areas to focused based on the conversations so far:</p>
+<p style="padding-left:30px;"><em><strong>Goal 1: Diverse Mozilla community. Build on Drumbeat.</strong></em></p>
+<p style="padding-left:60px;"><em>Show what Mozilla can be and do beyond the browser.<br />
+6+ big projects, open innovation program, major events.</em></p>
+<p style="padding-left:30px;"><em><strong>Goal 2: Bigger community. Test &#8216;join Mozilla&#8217; program.</strong></em></p>
+<p style="padding-left:60px;"><em>Many people involved beyond just using Firefox.<br />
+Also: continue Drumbeat and <a href="http://www.mozilla.org/parks/">Parks</a> engagement.</em></p>
+<p>There are a more details in the slides &#8212; but it&#8217;s all pretty high level. It&#8217;s also still very much open to debate and feedback. So, please <strong>share your comments here or in the Drumbeat newsgroup</strong>. We&#8217;re going to dig deeper into planning around these goals over the next two months, so your ideas and involvement help a ton.</p>
+<p>PS. You can grab this <a href="http://commonspace.files.wordpress.com/2010/09/sept-2010-status-update.pdf">PDF</a> or <a href="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_fmt1.ogv">video</a> of the slides above if you want.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>, <a href='http://commonspace.wordpress.com/category/statusupdate/'>statusupdate</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1864/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1864/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1864/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1864/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1864/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1864/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1864/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1864/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1864&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" /><div><a href="http://commonspace.wordpress.com/2010/09/24/sept2010-status-update/"><img alt="Sept 2010 Mozilla Foundation - Status Update" src="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_scruberthumbnail_0.jpg" width="160" height="120" /></a></div>]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/09/24/sept2010-status-update/feed/</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+<enclosure url="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_fmt1.ogv" length="27048667" type="video/ogg" />
+<enclosure url="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_fmt1.ogv" length="27048667" type="video/ogg" />
+	<enclosure url="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_fmt1.ogv" length="135409152" type="video/ogg" />
+
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_fmt1.ogv" fileSize="135409152" type="video/ogg" medium="video" bitrate="796" isDefault="true" duration="1329" width="400" height="300">
+			<media:rating scheme="urn:mpaa">g</media:rating>
+
+			<media:title type="plain">Sept 2010 Mozilla Foundation - Status Update</media:title>
+
+			<media:thumbnail url="http://videos.videopress.com/h0FrN9xV/sept-2010-status-update_scruberthumbnail_0.jpg" width="256" height="192" />
+		</media:content>
+	</item>
+		<item>
+		<title>An update about updates</title>
+		<link>http://commonspace.wordpress.com/2010/09/24/an-update-about-updates/</link>
+		<comments>http://commonspace.wordpress.com/2010/09/24/an-update-about-updates/#comments</comments>
+		<pubDate>Fri, 24 Sep 2010 18:25:48 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[mozilla]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1860</guid>
+		<description><![CDATA[Earlier this year, I was writing two kinds of updates &#8212; monthly bullet list reports on Drumbeat and bi-monthly slidecasts based on our board meetings. I decided a few months back to drop the monthly Drumbeat updates as the board slidecasts covered pretty much the same material (and more). I figured I should say that [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1860&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>Earlier this year, I was writing two kinds of updates &#8212; monthly <a href="http://commonspace.wordpress.com/2010/05/12/mayupdate/">bullet list reports on Drumbeat</a> and <a href="http://commonspace.wordpress.com/category/statusupdate/">bi-monthly slidecasts</a> based on our board meetings. I decided a few months back to drop the monthly Drumbeat updates as the board slidecasts covered pretty much the same material (and more). I figured I should say that out loud just in case anyone was wondering.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1860/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1860/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1860/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1860/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1860/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1860/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1860/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1860/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1860&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/09/24/an-update-about-updates/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Do you teach webdev? Come to Barcelona!</title>
+		<link>http://commonspace.wordpress.com/2010/09/22/wewantwebdevteacher/</link>
+		<comments>http://commonspace.wordpress.com/2010/09/22/wewantwebdevteacher/#comments</comments>
+		<pubDate>Wed, 22 Sep 2010 13:47:49 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[education]]></category>
+		<category><![CDATA[festival]]></category>
+		<category><![CDATA[mozilla]]></category>
+		<category><![CDATA[openweb]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1852</guid>
+		<description><![CDATA[Do you teach web development? Support people who build web sites? Or just like to share what you know with other developers? If so, we want you at Mozilla&#8217;s Learning, Freedom and the Web Festival in Barcelona. One of our big aims with the Festival is to encourage people to teach and learn web development [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1852&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p><strong>Do you teach web development?</strong> Support people who build web sites? Or just like to share what you know with other developers? If so, <strong>we want you at Mozilla&#8217;s <a href="http://drumbeat.org/festival">Learning, Freedom and the Web Festival</a> in Barcelona</strong>.</p>
+<p>One of our big aims with the Festival is to encourage people to teach and learn web development in interesting new ways. Which is why we&#8217;ve invited people like <a href="http://www.johndbritton.com/">John Britton</a>:</p>
+<div id="x-video-3" class="video-player">
+<video id="video3" width="380" height="252" poster="http://videos.videopress.com/TR5atoJ4/britton_std.original.jpg" controls="true" preload="none"><source src="http://videos.videopress.com/TR5atoJ4/britton_fmt1.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;" /><div><img alt="John Britton - Barcelona Promo" src="http://videos.videopress.com/TR5atoJ4/britton_std.original.jpg" width="380" height="252" /></div><p class="robots-nocontent">You do not have sufficient <a rel="nofollow" href="http://www.gnu.org/philosophy/free-sw.html">freedom levels</a> to view this video.</p></video>
+</div>
+<p>As he says in the video, John will hold a session where people can deconstruct and reconstruct his <a href="http://p2pu.org/webcraft/web-200-anatomy-request">P2PU Web 200: Anatomy of a Web Request</a> course. The idea is: <strong>help John make his course better, and maybe learn to teach it yourself.</strong></p>
+<p>The Barcelona event will include a whole <a href="https://wiki.mozilla.org/Drumbeat/events/Festival/program/activities#Webcraft_toolshed">Webcraft Toolshed</a> track for sessions like this. Other activities will include: collaboratively developing next semester for the <a href="http://www.drumbeat.org/p2pu-webcraft">P2PU School of Webcraft</a>; meeting the people behind the <a href="http://interact.webstandards.org/curriculum">W3C&#8217;s WASP Interact curriculum</a>; provide feedback on the new <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network</a> tutorials. And you can <a href="https://wiki.mozilla.org/Drumbeat/events/Festival/program/propose">propose your own</a>.</p>
+<p>It&#8217;s worth saying, this is a part of a much large <a href="http://drumbeat.org">Mozilla Drumbeat</a> push to <strong>connect people who teach web development with people at the radical (and most webbish) edge of teaching online</strong>. That&#8217;s why we&#8217;re working with P2PU to start the School of Webcraft. It&#8217;s also why we&#8217;ve got a whole lot of &#8216;teaching webcraft&#8217; sessions in Barcelona right next door to &#8216;crazy radical innovations in how we learn&#8217; sessions.</p>
+<p>Practically: if you &#8216;teach&#8217; web development in one way or another, Barcelona is a chance to both learn and contribute a ton. If you&#8217;re interested, <strong>you can find our more and register at: <a href="http://drumbeat.org/festival">http://drumbeat.org/festival</a>.</strong></p>
+<p>PS. 50% discount to people who actively teach web development (coupon = WebCraft). Free registration for active Mozilla community members (coupon = DBF10Moz).</p>
+<p>PPS. If you know people who teach web dev &#8212; especially in Europe &#8212; please tweet, forward or otherwise circulate this post.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/education/'>education</a>, <a href='http://commonspace.wordpress.com/category/festival/'>festival</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>, <a href='http://commonspace.wordpress.com/category/openweb/'>openweb</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1852/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1852/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1852/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1852/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1852/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1852/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1852/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1852/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1852&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" /><div><a href="http://commonspace.wordpress.com/2010/09/22/wewantwebdevteacher/"><img alt="John Britton - Barcelona Promo" src="http://videos.videopress.com/TR5atoJ4/britton_std.original.jpg" width="160" height="120" /></a></div>]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/09/22/wewantwebdevteacher/feed/</wfw:commentRss>
+		<slash:comments>4</slash:comments>
+	<enclosure url="http://videos.videopress.com/TR5atoJ4/britton_fmt1.ogv" length="2750976" type="video/ogg" />
+
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://videos.videopress.com/TR5atoJ4/britton_fmt1.ogv" fileSize="2750976" type="video/ogg" medium="video" bitrate="796" isDefault="true" duration="27" width="400" height="266">
+			<media:rating scheme="urn:mpaa">g</media:rating>
+
+			<media:title type="plain">John Britton - Barcelona Promo</media:title>
+
+			<media:thumbnail url="http://videos.videopress.com/TR5atoJ4/britton_std.original.jpg" width="256" height="170" />
+		</media:content>
+	</item>
+		<item>
+		<title>Drumbeat: what&#8217;s next?</title>
+		<link>http://commonspace.wordpress.com/2010/09/02/drumbeatnext/</link>
+		<comments>http://commonspace.wordpress.com/2010/09/02/drumbeatnext/#comments</comments>
+		<pubDate>Thu, 02 Sep 2010 15:54:07 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[mozilla]]></category>
+		<category><![CDATA[open]]></category>
+		<category><![CDATA[poetry]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1838</guid>
+		<description><![CDATA[We&#8217;re eight months into Drumbeat. We&#8217;ve built a bit of a brand. People are interested. They want to get involved. More importantly: new people have shown up. Educators. Filmmakers. Artists. Not Mozilla natives. These new people are doing interesting things. And their peers are noticing. It&#8217;s is a good start. We have some momentum. There [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1838&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p><strong>We&#8217;re eight months into Drumbeat.</strong> We&#8217;ve <a href="http://drumbeat.org">built a bit of a brand</a>. <a href="http://www.drumbeat.org/people">People are interested</a>. They want to get involved. More importantly: new people have shown up. <a href="http://www.drumbeat.org/festival">Educators</a>. <a href="http://www.drumbeat.org/webmademovies">Filmmakers</a>. <a href="http://yoyodyne.cc/w00t-transmediale-mozilla-open-web-award-2011/">Artists</a>. Not Mozilla natives. These new people are <a href="http://p2pu.org/course/list/webcraft">doing</a> <a href="http://webmademovies.etherworks.ca/popcorndemo/">interesting</a> <a href="http://universalsubtitles.org/demo/">things</a>. And <a href="http://www.drumbeat.org/content/matt-thompson-reviews-are-mozilla-drumbeat%E2%80%99s-%E2%80%9Cpopcorn%E2%80%9D-tasty">their peers are noticing</a>.</p>
+<p><a href="http://commonspace.files.wordpress.com/2010/09/4951033139_3d2707f07e_b.jpg"><img class="alignnone size-full wp-image-1843" title="4951033139_3d2707f07e_b" src="http://commonspace.files.wordpress.com/2010/09/4951033139_3d2707f07e_b.jpg?w=380&#038;h=231" alt="" width="380" height="231" /></a></p>
+<p><strong>It&#8217;s is a good start.</strong> We have some momentum. There is potential. Which begs the question: <strong>now what?</strong></p>
+<p>One thing is clear: <strong>we need to turn interest into action and impact.</strong> With 2011 on the horizon, I&#8217;m asking: how do we best do this? What does Drumbeat do next?</p>
+<p><strong>I want to know what you think about this. </strong>As <a href="http://etherpad.mozilla.com:9000/drumbeatnext">comment fodder</a>, here are three + one things I think we should focus on as Drumbeat moves into 2011:</p>
+<p><strong>0. Narrow our focus. Pick grokkable, magnetic topics. </strong></p>
+<p>Drumbeat started with a very broad call to action: &#8216;<a href="http://www.drumbeat.org/about">help keep the open web open</a>&#8216;. This didn&#8217;t work as well as we&#8217;d hoped. Some people responded. Most just stared back blankly.</p>
+<p>Recently (and somewhat by accident), we&#8217;ve shifted focus to more specific mashups of Mozilla&#8217;s mission and other people&#8217;s big ideas. <strong>Re-invent cinema using the open web. Use the culture of the web to transform education and learning. And so on. </strong></p>
+<p>These mash ups have been much more magnetic. People already excited about the big ideas in question have looked up and said: ah, the web people are interested. Cool. How can I join in?</p>
+<p>No matter what else we decide to do, one of our next steps should be to consistently use these &#8216;somebody&#8217;s big idea + open web tech and culture&#8217; combos to focus what we&#8217;re doing. On the flip side, we should (dramatically) turn down the volume of the generic &#8216;help the open web&#8217; angle.</p>
+<p><strong>1. Follow through on what we&#8217;ve started. Amp up participation and impact. </strong></p>
+<p>During the last eight months, we&#8217;ve dug our teeth into some awesome and substantial projects &#8212; <a href="http://www.drumbeat.org/project/webmademovie">Web Made Movies</a>, <a href="http://www.drumbeat.org/project/p2p-university-open-web-career-track">Mozilla / P2PU School of Web Craft</a>,<a href="http://www.drumbeat.org/universalsubtitles/alphademo"> Universal Subtitles</a>. And it&#8217;s possible we&#8217;ll start work on a couple more by year end.</p>
+<p>Each of these projects has big dreams. They also have clear goals for the coming year. <a href="https://wiki.mozilla.org/Drumbeat/webmademovies/one-pager_with_roadmap">A web developer education program that is 10,000 learners strong</a>. A bustling <a href="https://wiki.mozilla.org/Drumbeat/webmademovies/one-pager_with_roadmap">open video studio pumping out productions with leading directors</a> from around the world. <a href="https://wiki.mozilla.org/Drumbeat/unisubs/one-pager_with_roadmap">Grassroots subtitling taking hold on well known, globally important video sites</a>. These are amongst the 2011 goals Drumbeat projects shared in Whistler.</p>
+<p>One answer to &#8216;what&#8217;s next for Drumbeat?&#8217; is &#8216;follow through and help these projects reach these goals&#8217;.</p>
+<p>There are three primary ways we can do this. <strong>Help with the technology</strong> side of these projects (e.g. P2PU leveraging Labs&#8217; open social tools). <strong>Build fundraising capacity</strong> by actually designing and running campaigns with the projects (we&#8217;re doing major campaigns this fall and into next year). And, <strong>bring more people and profile</strong> to the table (e.g. volunteer recruitment in mainstream Mozilla newsletters and more promotion on Mozilla sites).</p>
+<p>Helping in these ways will drive participation and impact in the projects we&#8217;ve already started. This, for me, is the baseline of what Drumbeat should do next. If that&#8217;s all we did in 2011, would it be enough? Personally, I don&#8217;t think so.</p>
+<p><strong>2. Get get good at open innovation. Find and grow more promising ideas.</strong></p>
+<p>We&#8217;ve always seen Drumbeat as a way to get many good ideas on the table, and then to back the best. A decent number of people have responded to this aspect of what we&#8217;re doing &#8212; <a href="http://www.drumbeat.org/projects">there are now over 220 projects on drumbeat.org</a>.</p>
+<p>We&#8217;ve highlighted and helped a handful of these projects in small ways. Promoting them in our newsletter. Setting up peer coaching on our community calls. But, overall, we haven&#8217;t yet figured out a good and sustainable way to help these projects evolve, expand and succeed.</p>
+<p>What we need is a simple, systematic way to find and grow promising ideas. One approach: <strong>combine the <a href="http://mozillalabs.com/conceptseries/2010/06/10/mozilla-labs-crowdsource-crowdsourcing-project/">Mozilla labs open innovation process</a> with the &#8216;magnetic topic mashups&#8217; described above.</strong> Pick a topic. Run an innovation challenge. Back the best ideas that come out of the challenge.</p>
+<p>For example, we might run a challenge around the question: how can the culture and technology drive innovation in the world of journalism? The challenge process would get many ideas on the table, spark collaborations. We&#8217;d offer fellowships or grants to the &#8216;winners&#8217; of the challenge.</p>
+<p>If <a href="http://design-challenge.mozillalabs.com/jetpack-for-learning/">Jetpack for Learning </a>was any indication, this approach is more likely to yield results than the general Drumbeat  &#8216;propose a project that helps the web&#8217; call to action we&#8217;ve been using so far. One of our priorities for 2011 should be to put this open innovation model centre stage, pick some awesome topics and see what we learn.</p>
+<p><strong>3. Spark people&#8217;s imagination. Make it easy for them to connect. Focus on (big) visibility. </strong></p>
+<p>While our existing projects are awesome and important, Drumbeat (and Mozilla as a whole) needs another side to it &#8212; a side that is lightweight, easy to engage and, well, sexy.</p>
+<p>Why? Because <strong>part of our goal with Drumbeat is to spark people&#8217;s imaginations</strong> &#8212; to get millions of people excited about how the open web can liberate, empower and delight them.</p>
+<p>If you look at this from a &#8216;what&#8217;s next?&#8217; perspective, this is partly a matter of linking what we&#8217;re doing already to things people care about. Making Web Made Movies with well loved producers and artists. Connecting Universal Subtitles to widely known content brands. Showcasing robots, lasers and other shiny open tech toys at Drumbeat events. The good news: we&#8217;re working on all these things.</p>
+<p>However, &#8216;sparking imaginations&#8217; need not &#8212; and probably cannot &#8212; be completely tied up in the idea of Drumbeat projects and events. We should embrace anything we can dream up that delights and engages, and the connects people to Mozilla outside of their day to day experience of using our products.</p>
+<p>Google showed how you can do this with it&#8217;s recent <a href="http://www.guardian.co.uk/technology/pda/2010/sep/01/arcade-fire-chrome-html5">HTML5 Arcade Fire video</a>. It was a lightweight, fun, internet-scale way to demo what HTML5 video can be. And people loved it.</p>
+<p>We hope to do something similar with our upcoming Firefox 4 <a href="http://www.mozilla.org/parks/">parks campaign</a> with the <a href="http://www.worldwildlife.org/">World Wildlife Fund</a> &#8212; using sexy demos to make the link between the forests of the amazon and the web ecosystem that Firefox helps sustain. We&#8217;ve got other ideas up our sleeves as well (including some involving cats!)</p>
+<p>But, the fact of the matter is, Mozilla isn&#8217;t naturally good at this. <strong>We&#8217;re more often than not too earnest about the web. We need to develop or lighter sexier side.</strong> Especially if we want millions of people across the web to join and support our cause. In terms of Drumbeat next steps, this is a major area we need to work on.</p>
+<p>&#8211;</p>
+<p>These are early thoughts that need much shaping and refinement. I&#8217;m interested to know: Which sound right? Which sound exciting? Which sound unachievable? <strong>You&#8217;ve been watching Drumbeat unfold. Where do you think it should go next?</strong></p>
+<p>I&#8217;ve posted an <a href="http://etherpad.mozilla.com:9000/drumbeatnext">etherpad version of this content for people to hack on</a>. And you can also make comments below. I&#8217;ll feed whatever people post into a Mozilla board discussion mid-September. And, if there is alot of interesting changes, I&#8217;ll repost the full etherpad version here.</p>
+<p><em>PS. I know this post is too long. Sorry about that. I really want to see how people react to the whole set of ideas here &#8212; so my attempts at chopping it into a bunch of smaller posts didn&#8217;t work.</em></p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>, <a href='http://commonspace.wordpress.com/category/open/'>open</a>, <a href='http://commonspace.wordpress.com/category/poetry/'>poetry</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1838/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1838/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1838/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1838/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1838/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1838/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1838/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1838/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1838&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/09/02/drumbeatnext/feed/</wfw:commentRss>
+		<slash:comments>17</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://commonspace.files.wordpress.com/2010/09/4951033139_3d2707f07e_b.jpg" medium="image">
+			<media:title type="html">4951033139_3d2707f07e_b</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>How the web was won: a talk</title>
+		<link>http://commonspace.wordpress.com/2010/09/01/howthewebwaswon/</link>
+		<comments>http://commonspace.wordpress.com/2010/09/01/howthewebwaswon/#comments</comments>
+		<pubDate>Wed, 01 Sep 2010 19:00:14 +0000</pubDate>
+		<dc:creator>msurman</dc:creator>
+				<category><![CDATA[drumbeat]]></category>
+		<category><![CDATA[mozilla]]></category>
+		<category><![CDATA[openweb]]></category>
+		<category><![CDATA[poetry]]></category>
+
+		<guid isPermaLink="false">http://commonspace.wordpress.com/?p=1830</guid>
+		<description><![CDATA[Over the past two years, I&#8217;ve given talks on many Mozilla topics. How a massive global community can (and did) make the web better. Threats and challenges ahead for the internet. The importance of &#8216;the people formerly known as users&#8216; in keeping the web open (aka Drumbeat). Earlier this summer, I had the chance to [...]<img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1830&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" />]]></description>
+			<content:encoded><![CDATA[<p>Over the past two years, <strong>I&#8217;ve given talks on many Mozilla topics</strong>. How a <a href="http://commonspace.wordpress.com/2008/11/27/city-thinks-like-the-web/">massive global community</a> can (and did) make the web better. <a href="http://www.youtube.com/watch?v=_x-OUvaiN28">Threats and challenges</a> ahead for the internet. The importance of &#8216;<a href="http://www.slideshare.net/msurman/mozilla-drumbeat-mozcamp-europe-2009">the people formerly known as users</a>&#8216; in keeping the web open (aka Drumbeat). Earlier this summer, I had the chance to pull all these threads together in a talk called <em><strong>How the Web Was Won</strong>.</em></p>
+<div id="x-video-4" class="video-player">
+<video id="video4" width="380" height="212" poster="http://videos.videopress.com/hEVvVbiK/872_sd_scruberthumbnail_0.jpg" controls="true" preload="none"><source src="http://videos.videopress.com/hEVvVbiK/872_sd_fmt1.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;" /><div><img alt="USI Talk" src="http://videos.videopress.com/hEVvVbiK/872_sd_scruberthumbnail_0.jpg" width="380" height="212" /></div><p class="robots-nocontent">You do not have sufficient <a rel="nofollow" href="http://www.gnu.org/philosophy/free-sw.html">freedom levels</a> to view this video.</p></video>
+</div>
+<p>This is the most comprehensive talk I&#8217;ve given on Mozilla themes. It owes a great deal to slides and ideas I&#8217;ve borrowed from <a href="http://www.slideshare.net/beltzner">Beltzner</a>, <a href="http://www.0xdeadbeef.com/weblog/">Blizzard</a>, <a href="http://blog.lizardwrangler.com/">Mitchell</a>, <a href="http://john.jubjubs.net/">Lilly</a>, <a href="http://www.open-mike.org/about">Hanson</a> and many others. In that regard, <strong>it&#8217;s a &#8216;best of&#8217; talk</strong>. Not my best presentation (very long), but hopefully many good bits for other people to borrow and re-purpose.</p>
+<p>With that in mind, you can download the <a href="http://videos.videopress.com/hEVvVbiK/872_sd_fmt1.ogv">42 min ogg video</a> here or see the original on the <a href="http://www.universite-du-si.com/fr/conferences/6-paris-usi-2010/sessions/872-comment-le-web-a-t-il-ete-conquis-et-dautres-histoires-utiles">USI conference web site</a>. Or grab the slides in <a href="http://commonspace.files.wordpress.com/2010/08/surman-how-the-web-was-won1.pdf">PDF</a> or from <a href="http://www.slideshare.net/msurman/surman-how-the-web-was-won">Slideshare</a>.</p>
+<p>Many thanks to the <a href="http://www.universite-du-si.com">USI conference in Paris</a> for inviting me to do this talk. It was a huge amount of fun.</p>
+<br />Filed under: <a href='http://commonspace.wordpress.com/category/drumbeat/'>drumbeat</a>, <a href='http://commonspace.wordpress.com/category/mozilla/'>mozilla</a>, <a href='http://commonspace.wordpress.com/category/openweb/'>openweb</a>, <a href='http://commonspace.wordpress.com/category/poetry/'>poetry</a>  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/commonspace.wordpress.com/1830/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/commonspace.wordpress.com/1830/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gofacebook/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/facebook/commonspace.wordpress.com/1830/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gotwitter/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/twitter/commonspace.wordpress.com/1830/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/commonspace.wordpress.com/1830/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/commonspace.wordpress.com/1830/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/commonspace.wordpress.com/1830/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/commonspace.wordpress.com/1830/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=commonspace.wordpress.com&amp;blog=336759&amp;post=1830&amp;subd=commonspace&amp;ref=&amp;feed=1" width="1" height="1" /><div><a href="http://commonspace.wordpress.com/2010/09/01/howthewebwaswon/"><img alt="USI Talk" src="http://videos.videopress.com/hEVvVbiK/872_sd_scruberthumbnail_0.jpg" width="160" height="120" /></a></div>]]></content:encoded>
+			<wfw:commentRss>http://commonspace.wordpress.com/2010/09/01/howthewebwaswon/feed/</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+<enclosure url="http://videos.videopress.com/hEVvVbiK/872_sd_fmt1.ogv" length="168517989" type="video/ogg" />
+	<enclosure url="http://videos.videopress.com/hEVvVbiK/872_sd_fmt1.ogv" length="258286080" type="video/ogg" />
+
+		<media:content url="http://1.gravatar.com/avatar/562b57528e5f2fedc80bf149b2dfff0f?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">msurman</media:title>
+		</media:content>
+
+		<media:content url="http://videos.videopress.com/hEVvVbiK/872_sd_fmt1.ogv" fileSize="258286080" type="video/ogg" medium="video" bitrate="796" isDefault="true" duration="2535" width="400" height="224">
+			<media:rating scheme="urn:mpaa">g</media:rating>
+
+			<media:title type="plain">USI Talk</media:title>
+
+			<media:thumbnail url="http://videos.videopress.com/hEVvVbiK/872_sd_scruberthumbnail_0.jpg" width="256" height="144" />
+		</media:content>
+	</item>
+	</channel>
+</rss>

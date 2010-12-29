@@ -54,7 +54,7 @@ Temporarily comment out atom feed link while refactoring activity application.
           <button id="follow-user">Follow User</button>
         </form>
         {% endif %}
-        <a class="button" href="{% locale_url drumbeatmail.views.inbox_filtered filter=user.get_profile.username %}">{{ _('Private Message')}}</a>
+        <a class="button" href="{% locale_url drumbeatmail_compose_to username=profile.username %}">{{ _('Private Message')}}</a>
       {% endif %}
     </div>
   </div> 
@@ -104,7 +104,7 @@ Temporarily comment out atom feed link while refactoring activity application.
   <!-- TODO: add support for project owner badge -->
   {% for project in projects %}
     <li>
-      <a href="" alt="{{project.name}}">
+      <a href="{{ project.get_absolute_url }}" alt="{{project.name}}">
         {% if project.image %}
         <img src="" width="26" height="26" alt="project image"/>
         {% else %}
@@ -116,13 +116,15 @@ Temporarily comment out atom feed link while refactoring activity application.
   {% endfor %}
   </ul>
 </div> <!-- /#member_relationships-->
-<!-- TODO: add support for user links -->
+{% if links %}
 <div id="member_links" class="panel">
   <ul>
-    <li><a href="#" title="Github">Github</a></li>
-    <li><a href="#" title="Twitter">Twitter</a></li>
+    {% for link in links %}
+    <li><a href="{{ link.url }}" title="{{ link.name }}">{{ link.name }}</a></li>
+    {% endfor %}
   </ul>
 </div> <!-- /#member_links -->
+{% endif %}
 </div> <!-- /#sidebar -->
 
 <div id="main">

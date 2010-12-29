@@ -1,7 +1,0 @@
-{% load l10n_tags %}
-<p>
-  {{ _('Project created by: ') }} 
-  <a href="{% locale_url profiles_show  username=project.created_by.username %}">
-    {{ project.created_by.get_profile.get_full_name_or_username }}
-  </a>
-</p>

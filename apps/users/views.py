@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -14,8 +14,8 @@ from django.template import RequestContext
 from users import forms
 from users.models import UserProfile
 from users.decorators import anonymous_only
+from links.models import Link
 from projects.models import Project
-
 from drumbeat import messages
 
 log = logging.getLogger(__name__)
@@ -172,6 +172,7 @@ def profile_view(request, username):
     following = profile.following()
     projects = profile.following(model=Project)
     followers = profile.followers()
+    links = Link.objects.select_related('subscription').filter(user=profile)
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -179,6 +180,7 @@ def profile_view(request, username):
         'projects': projects,
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
+        'links': links,
     }, context_instance=RequestContext(request))
 
 
@@ -224,6 +226,48 @@ def profile_edit_image(request):
     else:
         form = forms.ProfileImageForm(instance=profile)
     return render_to_response('users/profile_edit_image.html', {
+        'profile': profile,
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_edit_links(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        form = forms.ProfileLinksForm(request.POST)
+        if form.is_valid():
+            messages.success(request, _('Profile link added.'))
+            link = form.save(commit=False)
+            log.debug("User instance: %s" % (profile.user,))
+            link.user = profile
+            link.save()
+            return HttpResponseRedirect(reverse('users_profile_view', kwargs={
+                'username': request.user.get_profile().username,
+            }))
+        else:
+            messages.error(request, _('There was an error saving '
+                                      'your link.'))
+    else:
+        form = forms.ProfileLinksForm()
+    links = Link.objects.select_related('subscription').filter(user=profile)
+    return render_to_response('users/profile_edit_links.html', {
+        'profile': profile,
+        'form': form,
+        'links': links,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_edit_links_delete(request, link):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    link = get_object_or_404(Link, pk=link)
+    if link.user != profile:
+        return HttpResponseForbidden()
+    link.delete()
+    messages.success(request, _('The link was deleted.'))
+    form = forms.ProfileLinksForm()
+    return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
         'form': form,
     }, context_instance=RequestContext(request))
