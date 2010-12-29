@@ -35,7 +35,7 @@ urlpatterns = patterns('',
 
 
   # Public pages
-  url(r'^users/list/', 'users.views.user_list',
+  url(r'^people/', 'users.views.user_list',
       name='users_user_list'),
 
   # Registration urls
@@ -55,4 +55,9 @@ urlpatterns = patterns('',
       name='users_profile_edit'),
   url('^profile/edit/image/$', 'users.views.profile_edit_image',
       name='users_profile_edit_image'),
+  url('^profile/edit/links/$', 'users.views.profile_edit_links',
+      name='users_profile_edit_links'),
+  url('^profile/edit/links/delete/(?P<link>[\d]+)/$',
+      'users.views.profile_edit_links_delete',
+      name='users_profile_edit_links_delete'),
 )

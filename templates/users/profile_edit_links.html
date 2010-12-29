@@ -1,0 +1,54 @@
+{% extends "users/profile_edit.html" %}
+
+{% load l10n_tags %}
+
+{% block bodyclasses %}profile edit links{% endblock %}
+{% block form %}
+
+{% if links %}
+<h2>{{ _('Links') }}</h2>
+<table>
+<thead>
+  <tr>
+    <th>{{ _('Name') }}</th>
+    <th>{{ _('URL') }}</th>
+    <th>{{ _('Subscribed') }}</th>
+    <th>{{ _('Actions') }}</th>
+  </tr>
+</thead>
+<tbody>
+  {% for link in links %}
+    <tr>
+      <td>{{ link.name }}</td>
+      <td>{{ link.url }}</td>
+      <td>{{ link.subscription.verified }}</td>
+      <td>
+	<form action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
+	  {% csrf_token %}
+	  <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+	</form>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+<form action="{% locale_url users_profile_edit_links %}" method="post">
+  {% csrf_token %}
+  <p>
+    <label for="id_name">{{ _('Name') }}</label>
+    {{ form.name }}
+    {{ form.name.errors }}
+  </p>
+  <p>
+    <label for="id_url">{{ _('Url') }}</label>
+    {{ form.url }}
+    {{ form.url.errors }}
+  </p>
+  <p class="buttons">
+    <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
+    <button type="submit">{{ _('Save') }}</button>
+  </p>
+</form>
+
+{% endblock %}

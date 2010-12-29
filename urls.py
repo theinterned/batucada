@@ -5,16 +5,18 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^admin/',         include(admin.site.urls)),
     (r'',                include('dashboard.urls')),
-    (r'',                include('users.urls')),
     (r'',                include('wellknown.urls')),
     (r'^activity/',      include('activity.urls')),
     (r'^statuses/',      include('statuses.urls')),
-    (r'^project/',       include('projects.urls')),
+    (r'^projects/',      include('projects.urls')),
+    (r'^events/',        include('events.urls')),
     (r'^relationships/', include('relationships.urls')),
     (r'^messages/',      include('drumbeatmail.urls')),
     (r'^account/',       include('preferences.urls')),
-    (r'^admin/',         include(admin.site.urls)),
+    (r'^pubsub/',        include('django_push.subscriber.urls')),
+    (r'',                include('users.urls')),
 )
 
 if settings.DEBUG:

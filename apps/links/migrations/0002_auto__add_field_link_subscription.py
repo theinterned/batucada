@@ -8,20 +8,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Changing field 'Relationship.target_user'
-        db.alter_column('relationships_relationship', 'target_user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.UserProfile'], null=True))
-
-        # Changing field 'Relationship.target_project'
-        db.alter_column('relationships_relationship', 'target_project_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'], null=True))
+        # Adding field 'Link.subscription'
+        db.add_column('links_link', 'subscription', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['subscriber.Subscription'], null=True), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Changing field 'Relationship.target_user'
-        db.alter_column('relationships_relationship', 'target_user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.UserProfile']))
-
-        # Changing field 'Relationship.target_project'
-        db.alter_column('relationships_relationship', 'target_project_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project']))
+        # Deleting field 'Link.subscription'
+        db.delete_column('links_link', 'subscription_id')
 
 
     models = {
@@ -61,11 +55,20 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'links.link': {
+            'Meta': {'object_name': 'Link'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
+            'subscription': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['subscriber.Subscription']", 'null': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']", 'null': 'True'})
+        },
         'projects.project': {
             'Meta': {'object_name': 'Project'},
             'call_to_action': ('django.db.models.fields.TextField', [], {}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projects'", 'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 20)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 25)', 'auto_now_add': 'True', 'blank': 'True'}),
             'css': ('django.db.models.fields.TextField', [], {}),
             'description': ('django.db.models.fields.TextField', [], {}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -74,13 +77,15 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
             'template': ('django.db.models.fields.TextField', [], {})
         },
-        'relationships.relationship': {
-            'Meta': {'unique_together': "(('source', 'target_user'),)", 'object_name': 'Relationship'},
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 20)', 'auto_now_add': 'True', 'blank': 'True'}),
+        'subscriber.subscription': {
+            'Meta': {'object_name': 'Subscription'},
+            'hub': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'source': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'source_relationships'", 'to': "orm['users.UserProfile']"}),
-            'target_project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True', 'blank': 'True'}),
-            'target_user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']", 'null': 'True', 'blank': 'True'})
+            'lease_expiration': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'secret': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'topic': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
+            'verified': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'verify_token': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'taggit.tag': {
             'Meta': {'object_name': 'Tag'},
@@ -104,9 +109,10 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserProfile'},
             'bio': ('django.db.models.fields.TextField', [], {'default': "''", 'blank': 'True'}),
             'confirmation_code': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 20)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 25)', 'auto_now_add': 'True', 'blank': 'True'}),
             'display_name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'unique': 'True', 'null': 'True'}),
+            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'default': "''", 'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
@@ -116,4 +122,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['relationships']
+    complete_apps = ['links']

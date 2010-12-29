@@ -7,12 +7,22 @@ from django.utils.translation import ugettext as _
 from captcha import fields as captcha_fields
 
 from users.models import UserProfile
-
+from links.models import Link
 from drumbeat.utils import slug_validator
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
     remember_me = forms.BooleanField(required=False)
+
+
+class SetPasswordForm(auth_forms.SetPasswordForm):
+
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordForm, self).__init__(*args, **kwargs)
+
+        # make sure to set the password in the user profile
+        if isinstance(self.user, User):
+            self.user = self.user.get_profile()
 
 
 class RegisterForm(forms.ModelForm):
@@ -74,11 +84,8 @@ class ProfileImageForm(forms.ModelForm):
         return self.cleaned_data['image']
 
 
-class SetPasswordForm(auth_forms.SetPasswordForm):
+class ProfileLinksForm(forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(SetPasswordForm, self).__init__(*args, **kwargs)
-
-        # make sure to set the password in the user profile
-        if isinstance(self.user, User):
-            self.user = self.user.get_profile()
+    class Meta:
+        model = Link
+        exclude = ('project', 'user', 'subscription')

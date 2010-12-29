@@ -1,13 +1,10 @@
-import urllib
 import datetime
 
 from django.contrib import admin
-from django.db import models, IntegrityError
+from django.db import models
 from django.db.models import Count
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
-
-from BeautifulSoup import BeautifulSoup
 
 from drumbeat.models import ModelBase
 from statuses.models import Status
@@ -71,69 +68,6 @@ class Project(ModelBase):
             count += 1
         super(Project, self).save()
 
-
-class Link(ModelBase):
-    """
-    A link in this context refers to an external resource attached to a
-    project. Project admins can add as many links as they like to their
-    project. Links with URLs that have an Atom or RSS feed refered in the
-    link element with rel="alternate" will be polled regularly, and entries
-    will be added to the activity
-    stream for the project.
-    """
-    title = models.CharField(max_length=250)
-    url = models.URLField()
-    project = models.ForeignKey(Project)
-    feed_url = models.URLField(editable=False, default='')
-    created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
-
-    class Meta:
-        unique_together = ('project', 'url',)
-
-    def save(self, *args, **kwargs):
-        """
-        Before saving, try and find a link element with a rel attribute
-        value of alternate. The href will be stored as the syndication url.
-        """
-        existing = Link.objects.filter(
-            url=self.url, project=self.project).count()
-        if existing > 0:
-            raise IntegrityError('Duplicate Entry')
-        if not self.feed_url:
-            self.feed_url = self._get_syndication_url()
-        super(Link, self).save(*args, **kwargs)
-
-    def _get_syndication_url(self):
-        """
-        Parse the contents of this link and return the first Atom
-        or RSS feed URI we find.
-        @TODO - Account for cases where multiple rel="alternate"
-        link elements are found in the document.
-        """
-        contents = urllib.urlopen(self.url).read()
-        soup = BeautifulSoup(contents)
-        links = soup.head.findAll('link')
-
-        # BeautifulSoup instances are not actually dictionaries, so
-        # we can't use the more proper 'key in dict' syntax and
-        # must instead use the deprecated 'has_key()' method.
-        alternate = [link for link in links
-                     if link.has_key('rel') and link['rel'] == 'alternate']
-        atom = [link['href'] for link in alternate
-                if (link.has_key('href') and link.has_key('type')
-                    and link['type'] == 'application/atom+xml')]
-
-        # we prefer atom to rss
-        if atom:
-            return atom[0]
-        rss = [link['href'] for link in links
-               if (link.has_key('href') and link.has_key('type')
-                   and link['type'] == 'application/rss+xml')]
-        if rss:
-            return rss[0]
-
-        return None
 
 admin.site.register(Project)
 

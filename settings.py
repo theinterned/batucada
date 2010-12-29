@@ -40,6 +40,8 @@ TIME_ZONE = 'America/Toronto'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
+SITE_ID = 1
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -48,7 +50,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known')
+SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub')
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -99,6 +101,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -107,7 +110,6 @@ INSTALLED_APPS = (
     'django_nose',
     'south',
     'jogging',
-    'djcelery',
     'wellknown',
     'users',
     'l10n',
@@ -117,11 +119,14 @@ INSTALLED_APPS = (
     'projects',
     'statuses',
     'messages',
-    'feeds',
     'drumbeat',
     'taggit',
     'preferences',
     'drumbeatmail',
+    'links',
+    'django_push.subscriber',
+    'djcelery',
+    'events',
 )
 
 if DEBUG:
@@ -178,3 +183,20 @@ RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
 RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
                  RECAPTCHA_PUBLIC_KEY)
+
+# RabbitMQ Config
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = ""
+BROKER_PASSWORD = ""
+BROKER_VHOST = ""
+
+CELERY_RESULT_BACKEND = "amqp"
+
+# SuperFeedr settings
+SUPERFEEDR_URL = 'http://superfeedr.com/hubbub'
+SUPERFEEDR_USERNAME = ''
+SUPERFEEDR_PASSWORD = ''
+
+# django-push settings
+PUSH_CREDENTIALS = 'links.utils.hub_credentials'

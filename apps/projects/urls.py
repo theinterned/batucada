@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-  url(r'^list/$', 'projects.views.list',
+  url(r'^$', 'projects.views.list',
       name='projects_gallery'),
   url(r'^create/$', 'projects.views.create',
       name='projects_create'),
@@ -12,6 +12,4 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/contactfollowers/$',
       'projects.views.contact_followers',
       name='projects_contact_followers'),
-  url(r'^(?P<slug>[\w-]+)/link/create/$', 'projects.views.link_create',
-      name='projects_link_create'),
 )

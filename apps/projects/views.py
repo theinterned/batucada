@@ -29,13 +29,12 @@ def show(request, slug):
         target_id=project.id,
         target_content_type=project_type).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
-    links = project.link_set.all()
     context = {
         'project': project,
         'following': is_following,
         'activities': activities,
         'update_count': nstatuses,
-        'links': links,
+        'links': [],  # temporarily removing. TODO - add back
     }
     return render_to_response('projects/project.html', context,
                           context_instance=RequestContext(request))
@@ -112,28 +111,6 @@ def contact_followers(request, slug):
         form = project_forms.ProjectContactUsersForm()
         form.fields['project'].initial = project.pk
     return render_to_response('projects/contact_users.html', {
-        'form': form,
-        'project': project,
-    }, context_instance=RequestContext(request))
-
-
-@login_required
-def link_create(request, slug):
-    user = request.user.get_profile()
-    project = get_object_or_404(Project, slug=slug)
-    if project.created_by != user:
-        return http.HttpResponseForbidden()
-    form = project_forms.ProjectLinkForm(initial=dict(project=project.pk))
-    if request.method == 'POST':
-        form = project_forms.ProjectLinkForm(data=request.POST)
-        if form.is_valid():
-            messages.add_message(request, messages.INFO,
-                                 _("Your link has been created"))
-            form.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
-                'slug': project.slug,
-            }))
-    return render_to_response('projects/create_link.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))

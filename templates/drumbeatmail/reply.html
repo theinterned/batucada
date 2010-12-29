@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 
-{% block title %}{{ _('Compose Message') }}{% endblock %}
-{% block bodyid %}compose_message{% endblock %}
+{% block title %}{{ _('Reply') }}{% endblock %}
+{% block bodyid %}reply{% endblock %}
 
 {% block body %}
 <section class="modal">
   <article>
-    <h1>{{ _('New Private Message') }}</h1>
+    <h1>{{ _('Reply') }}</h1>
     <fieldset>
-      <form method="post" action="{% locale_url drumbeatmail_compose %}">
+      <form method="post" action="{% locale_url drumbeatmail_reply message=message.id %}">
 	{% csrf_token %}
 	<p>
 	  <label for="id_recipient">{{ _('To') }}</label>

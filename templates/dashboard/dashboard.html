@@ -39,7 +39,7 @@ Temporarily comment out atom feed link while refactoring activity application.
   <!-- TODO: add support for project owner; hide owned projects form this list as they appear below -->
   {% for project in projects_following %}
     <li>
-      <a href="" alt="{{project.name}}">
+      <a href="{{ project.get_absolute_url }}" alt="{{project.name}}">
         {% if project.image %}
         <img src="" width="26" height="26" alt="project image"/>
         {% else %}

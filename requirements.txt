@@ -4,12 +4,11 @@ django-messages
 south
 jogging
 feedparser
-Celery==2.1.3
-django-celery
 BeautifulSoup
 IPython
 django-cache-machine
 django-taggit
+djcelery
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/clouserw/tower.git#egg=tower
@@ -19,3 +18,4 @@ django-taggit
 -e git://github.com/jsocol/commonware.git#egg=commonware
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar
 -e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
+-e git://github.com/brutasse/django-push.git#egg=django_push
