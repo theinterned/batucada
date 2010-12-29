@@ -96,9 +96,10 @@ class HandleNotification(Task):
                 entry, activity_prefix, 'verb')
             object_type = self.get_namespaced_attr(
                 entry, activity_prefix, 'object-type')
-        else:
-            verb, object_type = ('http://activitystrea.ms/schema/1.0/post',
-                                 'http://activitystrea.ms/schema/1.0/note')
+        if not verb:
+            verb = 'http://activitystrea.ms/schema/1.0/post'
+        if not object_type:
+            object_type = 'http://activitystrea.ms/schema/1.0/note'
         title = getattr(entry, 'title', None)
         uri = getattr(entry, 'link', None)
         if not (title and uri):
