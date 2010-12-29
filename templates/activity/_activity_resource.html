@@ -1,4 +1,5 @@
 {% load l10n_tags %}
+{% load activity_tags %}
 
 <li class="post-container">
 
@@ -19,28 +20,13 @@
     </div>
 
     <div class="post-body">
-      {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.status %}
-          {{ activity.status }}
+      {% if activity|should_show_verb %}
+	{{ activity|friendly_verb }}
+      {% endif %}
+      {% if activity|should_hyperlink %}
+	<a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
       {% else %}
-	{% if activity.verb == 'http://activitystrea.ms/schema/1.0/follow' and activity.target_user %}
-	  {{ _('Started following ') }} 
-	  <a href="{{ activity.target_user.get_absolute_url }}">
-	    {{ activity.target_user.name }}
-	  </a>
-	{% else %}
-	  {% if activity.remote_object %}
-	    {% if activity.remote_object.object_type and activity.remote_object.object_type == 'http://activitystrea.ms/schema/1.0/article' %}
-	      {{ activity.verb }} 
-	      <a href="{{ activity.remote_object.uri }}">
-		{{ activity.remote_object.title }}
-	      </a>
-	    {% else %}
-	      {{ activity.remote_object.title }}
-	    {% endif %}
-	  {% else %}
-	    {{ activity.verb }} <a href="{{ activity.status.get_absolute_url }}">{{ activity.status }}</a>
-	  {% endif %}
-	{% endif %}
+	{{ activity|activity_representation }}
       {% endif %}
     </div> <!-- /.post-body -->
 
