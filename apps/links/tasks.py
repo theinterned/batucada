@@ -91,6 +91,7 @@ class HandleNotification(Task):
 
     def create_activity_entry(self, entry, sender, activity_prefix=None):
         """Create activity feed entries for the provided feed entry."""
+        verb, object_type = None, None
         if activity_prefix:
             verb = self.get_namespaced_attr(
                 entry, activity_prefix, 'verb')
@@ -99,7 +100,7 @@ class HandleNotification(Task):
         if not verb:
             verb = 'http://activitystrea.ms/schema/1.0/post'
         if not object_type:
-            object_type = 'http://activitystrea.ms/schema/1.0/note'
+            object_type = 'http://activitystrea.ms/schema/1.0/article'
         title = getattr(entry, 'title', None)
         uri = getattr(entry, 'link', None)
         if not (title and uri):
