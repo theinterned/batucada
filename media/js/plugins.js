@@ -2,15 +2,31 @@
 // remap jQuery to $
 (function($){
 
- 
 
-
-
-
-
- 
-
-
+// fix input[placeholder] for browsers that don't support it yet (and those that do!)
+// thanks Nico Hagenburg: http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
+$('[placeholder]').focus(function() {
+  var input = $(this);
+  if (input.val() == input.attr('placeholder')) {
+    input.val('');
+    input.removeClass('placeholder');
+  }
+}).blur(function() {
+  var input = $(this);
+  if (input.val() == '' || input.val() == input.attr('placeholder')) {
+    input.addClass('placeholder');
+    input.val(input.attr('placeholder'));
+  }
+}).blur();
+// let's make sure that forms don't submit with the placeholder value
+$('[placeholder]').parents('form').submit(function() {
+  $(this).find('[placeholder]').each(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+    }
+  })
+});
 
 })(window.jQuery);
 
