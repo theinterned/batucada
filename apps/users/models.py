@@ -17,6 +17,7 @@ from taggit.managers import TaggableManager
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
+from users import tasks
 
 import caching.base
 
@@ -137,7 +138,8 @@ class UserProfile(ModelBase):
         body = render_to_string('users/emails/registration_confirm.txt', {
             'confirmation_url': url,
         })
-        self.user.email_user(_('Complete Registration'), body)
+        subject = _('Complete Registration')
+        tasks.SendUserEmail.apply_async(args=(self, subject, body))
 
     def image_or_default(self):
         """Return user profile image or a default."""
