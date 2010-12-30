@@ -1092,12 +1092,12 @@ header {}
 			min-width: 68px;
 			min-height: 24px;
 		}
-        .modal #profile-edit-nav {
+		.modal #profile-edit-nav, .modal #project-edit-nav {
 			float: left;
 			width: 190px;
 			height: 100%;
 		}
-		.modal #profile-edit-nav a {
+		.modal #profile-edit-nav a, .modal #project-edit-nav a {
 			display: block;
 			padding-left: 18px;
 			font-size: 12px;
@@ -1112,10 +1112,16 @@ header {}
 		}
 		.modal #profile-edit-nav .selected a,
 		.modal #profile-edit-nav a:hover,
+		.modal #project-edit-nav .selected a,
+		.modal #project-edit-nav a:hover,
 		#profile_edit.info #profile-edit-nav .info a,
 		#profile_edit.image #profile-edit-nav .image a,
 		#profile_edit.skills #profile-edit-nav .skills a,
-		#profile_edit.interests #profile-edit-nav .interests a{
+		#profile_edit.interests #profile-edit-nav .interests a,
+		#project_edit.summary #project-edit-nav .summary a,
+		#project_edit.description #project-edit-nav .description a,
+		#project_edit.media #project-edit-nav .media a,
+		#project_edit.links #project-edit-nav .links a {
 			position: relative;
 			color: #fff;
 			text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
@@ -1134,11 +1140,19 @@ header {}
 			background: #2084CA;
 			text-decoration: none;
 		}
+		.modal #project-edit-nav a:hover{
+		    background: #2084CA;
+		    text-decoration: none;
+		}
 		.modal #profile-edit-nav .selected a:after,
 		#profile_edit.info #profile-edit-nav .info a:after,
 		#profile_edit.image #profile-edit-nav .image a:after,
 		#profile_edit.skills #profile-edit-nav .skills a:after,
-		#profile_edit.interests #profile-edit-nav .interests a:after{
+		#profile_edit.interests #profile-edit-nav .interests a:after,
+		#project_edit.summary #project-edit-nav .summary a:after,
+		#project_edit.description #project-edit-nav .description a:after,
+		#project_edit.media #project-edit-nav .media a:after,
+		#project_edit.links #project-edit-nav .links a:after {
 			content: "\0020";
 			display: block;
 			width: 12px;
@@ -1347,3 +1361,18 @@ header {}
 #splash #main asside #planet_drumbeat > h1 a:hover{
 	opacity: 0.8;
 	}
+
+/* TODO: I wrote this, so we'll want to replace it :) (Paul) */
+span.help-text {
+    font-size: 80%;
+    color: #999;
+    margin-bottom: 10px;
+    display: block;
+}
+#project_edit input[type=text] {
+    width: 300px;
+}
+#project_edit textarea {
+    height: 90px;
+    width: 400px;
+}

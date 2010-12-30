@@ -7,24 +7,18 @@ from messages.models import Message
 from projects.models import Project
 
 
-class ProtectedProjectForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(ProtectedProjectForm, self).__init__(*args, **kwargs)
-        protected = getattr(self.Meta, 'protected')
-        project = kwargs.get('instance', None)
-
-        if not project or not project.featured:
-            for field in protected:
-                self.fields.pop(field)
-
-
-class ProjectForm(ProtectedProjectForm):
+class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('created_by', 'slug', 'featured')
-        protected = ('template', 'css')
+        fields = ('name', 'short_description', 'long_description')
+
+
+class ProjectDescriptionForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('detailed_description',)
 
 
 class ProjectContactUsersForm(forms.Form):

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block title %}{% if project %}{{ _('Edit Project') }}{% else %}{{ _('Create Project') }}{% endif %}{% endblock %}
+{% block bodyid %}project_edit{% endblock %}
+
+{% block body %}
+<section class="modal{% if project %} nav{% endif %}">
+  <article>
+    <h1>{% if project %}{{ _('Edit Project') }}{% else %}{{ _('Create Project') }}{% endif %}</h1>
+    {% if project %}
+    <nav id="project-edit-nav">
+      <ul>
+	<li class="summary"><a href="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% endif %}">{{ _('Project Summary') }}</a></li>
+	<li class="description"><a href="">{{ _('Detailed Description') }}</a></li>
+	<li class="media"><a href="">{{ _('Images &amp; Video') }}</a></li>
+	<li class="links"><a href="">{{ _('Links &amp; Content') }}</a></li>
+      </ul>
+    </nav>
+    {% endif %}
+    <fieldset>
+      {% block form %}{% endblock %}
+    </fieldset>
+  </article>
+</section>
+{% endblock %}
