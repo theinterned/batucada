@@ -16,6 +16,9 @@ class UserActivityFeed(Feed):
     def author_name(self, user):
         return user.name
 
+    def author_link(self, user):
+        return self._request.build_absolute_uri(user.get_absolute_url())
+
     def title(self, user):
         return user.name
 
@@ -27,16 +30,14 @@ class UserActivityFeed(Feed):
                        kwargs={'username': user.username})
 
     def get_object(self, request, username):
+        self._request = request
         return get_object_or_404(UserProfile, username=username)
 
     def items(self, user):
-        return Activity.objects.filter(actor=user)[:25]
+        return Activity.objects.filter(actor=user).order_by('-created_on')[:25]
 
     def item_title(self, item):
-        return item.verb
-
-    def item_description(self, item):
-        return u"%s activity performed by %s" % (item.verb, item.actor.name)
+        return item
 
     def item_link(self, item):
-        return u'http://blah.com'
+        return self._request.build_absolute_uri(item.get_absolute_url())
