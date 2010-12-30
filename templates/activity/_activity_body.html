@@ -12,10 +12,14 @@
   {% if activity.target_user %}
     <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
   {% else %}
-    {{ activity|get_link_name }} 
-    <a href="{{ activity|get_link }}">
-      {{ activity|get_link|truncate:50 }}
-    </a>
+    {% if activity.project %}
+      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a>
+    {% else %}
+      {{ activity|get_link_name }} 
+      <a href="{{ activity|get_link }}">
+	{{ activity|get_link|truncate:50 }}
+      </a>
+    {% endif %}
   {% endif %}
 {% else %}
   {{ activity|activity_representation }}
