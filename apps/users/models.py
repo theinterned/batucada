@@ -63,6 +63,8 @@ class UserProfileManager(caching.base.CachingManager):
 
 class UserProfile(ModelBase):
     """Each user gets a profile."""
+    object_type = 'http://activitystrea.ms/schema/1.0/person'
+
     username = models.CharField(max_length=255, default='', unique=True)
     display_name = models.CharField(
         max_length=255, default='', null=True, blank=True)
