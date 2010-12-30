@@ -1092,12 +1092,12 @@ header {}
 			min-width: 68px;
 			min-height: 24px;
 		}
-		.modal #profile-edit-nav, .modal #project-edit-nav {
+		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #account-settings-nav {
 			float: left;
 			width: 190px;
 			height: 100%;
 		}
-		.modal #profile-edit-nav a, .modal #project-edit-nav a {
+		.modal #profile-edit-nav a, .modal #project-edit-nav a, .modal #account-settings-nav a {
 			display: block;
 			padding-left: 18px;
 			font-size: 12px;
@@ -1114,6 +1114,8 @@ header {}
 		.modal #profile-edit-nav a:hover,
 		.modal #project-edit-nav .selected a,
 		.modal #project-edit-nav a:hover,
+		.modal #account-settings-nav .selected a,
+		.modal #account-settings-nav a:hover,
 		#profile_edit.info #profile-edit-nav .info a,
 		#profile_edit.image #profile-edit-nav .image a,
 		#profile_edit.skills #profile-edit-nav .skills a,
@@ -1121,7 +1123,12 @@ header {}
 		#project_edit.summary #project-edit-nav .summary a,
 		#project_edit.description #project-edit-nav .description a,
 		#project_edit.media #project-edit-nav .media a,
-		#project_edit.links #project-edit-nav .links a {
+		#project_edit.links #project-edit-nav .links a,
+		#account_settings.notifications #account-settings-nav .notifications a,
+		#account_settings.connections #account-settings-nav .connections a,
+		#account_settings.identities #account-settings-nav .identities a,
+		#account_settings.export #account-settings-nav .export a,
+		#account_settings.delete #account-settings-nav .delete a {
 			position: relative;
 			color: #fff;
 			text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
@@ -1136,13 +1143,9 @@ header {}
 				startColorstr='#4AA4E3', 
 				endColorstr='#2084CA',GradientType=0 );
 		}
-		.modal #profile-edit-nav a:hover{
+		.modal #profile-edit-nav a:hover, .modal #project-edit-nav a:hover, .modal #account-settings-nav a:hover {
 			background: #2084CA;
 			text-decoration: none;
-		}
-		.modal #project-edit-nav a:hover{
-		    background: #2084CA;
-		    text-decoration: none;
 		}
 		.modal #profile-edit-nav .selected a:after,
 		#profile_edit.info #profile-edit-nav .info a:after,
@@ -1152,7 +1155,12 @@ header {}
 		#project_edit.summary #project-edit-nav .summary a:after,
 		#project_edit.description #project-edit-nav .description a:after,
 		#project_edit.media #project-edit-nav .media a:after,
-		#project_edit.links #project-edit-nav .links a:after {
+		#project_edit.links #project-edit-nav .links a:after,
+		#account_settings.notifications #account-settings-nav .notifications a:after,
+		#account_settings.connections #account-settings-nav .connections a:after,
+		#account_settings.identities #account-settings-nav .identities a:after,
+		#account_settings.export #account-settings-nav .export a:after,
+		#account_settings.delete #account-settings-nav .delete a:after {
 			content: "\0020";
 			display: block;
 			width: 12px;
