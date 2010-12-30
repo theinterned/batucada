@@ -37,7 +37,10 @@ class UserActivityFeed(Feed):
         return Activity.objects.filter(actor=user).order_by('-created_on')[:25]
 
     def item_title(self, item):
-        return item
+        return item.textual_representation()
+
+    def item_description(self, item):
+        return item.textual_representation()
 
     def item_link(self, item):
         return self._request.build_absolute_uri(item.get_absolute_url())

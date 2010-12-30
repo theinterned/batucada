@@ -32,7 +32,7 @@ class Activity(ModelBase):
             'activity_id': self.pk,
         })
 
-    def __unicode__(self):
+    def textual_representation(self):
         if self.target_user and self.verb == schema.verbs['follow']:
             return "%s %s %s" % (
                 self.actor.name, schema.past_tense['follow'],
@@ -42,3 +42,7 @@ class Activity(ModelBase):
         elif self.remote_object:
             return self.remote_object.title
         return _("%s activity performed by %s") % (self.verb, self.actor.name)
+
+    def __unicode__(self):
+        return _("Activity ID %d. Actor id %d, Verb %s") % (
+            self.pk, self.actor.pk, self.verb)
