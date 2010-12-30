@@ -26,15 +26,16 @@ class Project(ModelBase):
     """Placeholder model for projects."""
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
+
     name = models.CharField(max_length=100, unique=True)
+    short_description = models.CharField(max_length=100)
+    long_description = models.TextField()
+    detailed_description = models.TextField()
+
     slug = models.SlugField(unique=True)
-    description = models.TextField()
-    call_to_action = models.TextField()
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='projects')
     featured = models.BooleanField()
-    template = models.TextField()
-    css = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
