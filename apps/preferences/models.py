@@ -1,7 +1,6 @@
 from django.db import models
 
 from drumbeat.models import ModelBase
-from users.models import UserProfile
 
 
 class AccountPreferences(ModelBase):
@@ -13,4 +12,4 @@ class AccountPreferences(ModelBase):
     )
     key = models.CharField(max_length=50)
     value = models.CharField(max_length=100)
-    user = models.ForeignKey(UserProfile)
+    user = models.ForeignKey('users.UserProfile')

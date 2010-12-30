@@ -59,6 +59,8 @@ def activity_representation(activity):
     if activity.remote_object:
         if activity.remote_object.title:
             return activity.remote_object.title
+    if activity.project:
+        return activity.project
     return None
 
 
