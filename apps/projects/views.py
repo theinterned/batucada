@@ -8,6 +8,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from projects import forms as project_forms
+from projects.decorators import ownership_required
 from projects.models import Project
 
 from activity.models import Activity
@@ -38,12 +39,9 @@ def show(request, slug):
 
 
 @login_required
+@ownership_required
 def edit(request, slug):
-    user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
-    if user != project.created_by:
-        return http.HttpResponseForbidden()
-
     if request.method == 'POST':
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -54,6 +52,28 @@ def edit(request, slug):
         form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/project_edit_summary.html', {
+        'form': form,
+        'project': project,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@ownership_required
+def edit_description(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = project_forms.ProjectDescriptionForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was a problem saving your description.'))
+    else:
+        form = project_forms.ProjectDescriptionForm(instance=project)
+    return render_to_response('projects/project_edit_description.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
