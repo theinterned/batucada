@@ -1349,7 +1349,9 @@ header {}
 	}
 	
 /* FOOTER */
-footer{}
+footer{
+	padding-top: 27px;
+}
 footer .container {
 	border-top: 1px solid #d5d6d8;
 	padding: 9px 0 7px;
@@ -1446,7 +1448,6 @@ footer nav #social a {
 	height: 32px;
 	vertical-align: middle;
 	text-indent: -9999px;
-	background: pink;
 	}
 footer nav #social #twitter a {
 	background: url(/media/images/twitter.png) 0 0 no-repeat;
