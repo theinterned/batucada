@@ -1,5 +1,4 @@
 {% load l10n_tags %}
-{% load activity_tags %}
 
 <li class="post-container">
 
@@ -20,18 +19,7 @@
     </div>
 
     <div class="post-body">
-      {% if activity|should_show_verb %}
-	{{ activity|friendly_verb }}
-      {% endif %}
-      {% if activity|should_hyperlink %}
-	{% if activity.target_user %}
-	  <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
-	{% else %}
-	  {{ activity|get_link_name }} <a href="{{ activity|get_link }}">{{ activity|get_link|truncate:50 }}</a>
-	{% endif %}
-      {% else %}
-	{{ activity|activity_representation }}
-      {% endif %}
+      {% include "activity/_activity_body.html" %}
     </div> <!-- /.post-body -->
 
     {% if activity.project %}
