@@ -9,6 +9,8 @@ from django.utils.translation import ugettext as _
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
+from preferences.models import AccountPreferences
+from users.tasks import SendUserEmail
 
 log = logging.getLogger(__name__)
 
@@ -59,7 +61,19 @@ def follow_handler(sender, **kwargs):
                         verb='http://activitystrea.ms/schema/1.0/follow')
     if rel.target_user:
         activity.target_user = rel.target_user
+        user = rel.target_user
+        pref_key = 'no_email_new_follower'
     else:
         activity.project = rel.target_project
-        activity.save()
+        user = rel.target_project.created_by
+        pref_key = 'no_email_new_project_follower'
+    activity.save()
+
+    preferences = AccountPreferences.objects.filter(user=user)
+    for pref in preferences:
+        if pref.value and pref.key == pref_key:
+            return
+    subject = "New Follower"  # todo - write copy
+    body = ""
+    SendUserEmail.apply_async((user, subject, body))
 post_save.connect(follow_handler, sender=Relationship)
