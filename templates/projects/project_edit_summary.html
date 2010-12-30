@@ -1,23 +1,31 @@
-{% extends "base.html" %}
+{% extends "projects/project_edit.html" %}
 {% load l10n_tags %}
-{% block title %}{{ _('Edit Project') }}{% endblock %}
-{% block bodyid %}project_edit{% endblock %}
-{% block bodyclasses %}project edit info{% endblock %}
+{% block bodyclasses %}project edit summary{% endblock %}
 
-{% block body %}
-<section class="modal">
-  <article>
-    <h1>{{ _('Edit Project') }}</h1>
-    <fieldset>
-      <form action="{% locale_url projects_edit slug=project.slug %}" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <p class="buttons">
-        <a class="button" href="{%locale_url projects_show slug=project.slug  %}">{{ _('Cancel') }}</a>
-        <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
-      </p>
-      </form>
-    </fieldset>
-  </article>
-</section>    
+{% block form %}
+<form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% endif %}" method="post">
+  {% csrf_token %}
+  <p>
+    <label for="id_name">{{ _('Project name') }}</label>
+    <span class="help-text">{{ _('A good project name is short and descriptive. People should know what your project is about without reading the description.') }}</span>
+    {{ form.name }}
+    {{ form.name.errors }}
+  </p>
+  <p>
+    <label for="id_short_description">{{ _('One sentence description') }}</label>
+    <span class="help-text">{{ _('This description will be used on the search results and project listing pages.') }}</span>
+    {{ form.short_description }}
+    {{ form.short_description.errors }}
+  </p>
+  <p>
+    <label for="id_long_description">{{ _('Two paragraph description') }}</label>
+    <span class="help-text">{{ _('This description is shown on the project page. It can go into a bit more detail about the project, but it should be brief and to the point.') }}</span>
+    {{ form.long_description }}
+    {{ form.long_description.errors }}
+  </p>
+  <p class="buttons">
+    <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+  </p>
+</form>
 {% endblock %}

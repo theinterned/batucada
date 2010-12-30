@@ -53,7 +53,7 @@ def edit(request, slug):
     else:
         form = project_forms.ProjectForm(instance=project)
 
-    return render_to_response('projects/edit.html', {
+    return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
@@ -82,9 +82,12 @@ def create(request):
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
+        else:
+            messages.error(request,
+                _("There was a problem creating your project."))
     else:
         form = project_forms.ProjectForm()
-    return render_to_response('projects/create.html', {
+    return render_to_response('projects/project_edit_summary.html', {
         'form': form,
     }, context_instance=RequestContext(request))
 
@@ -99,8 +102,8 @@ def contact_followers(request, slug):
         form = project_forms.ProjectContactUsersForm(request.POST)
         if form.is_valid():
             form.save(sender=request.user)
-            messages.add_message(request, messages.INFO,
-                                 _("Message successfully sent."))
+            messages.info(request,
+                          _("Message successfully sent."))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
