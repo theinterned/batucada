@@ -1,0 +1,25 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit links{% endblock %}
+
+{% block form %}
+<form action="{% locale_url projects_edit_links slug=project.slug %}" method="post">
+  {% csrf_token %}
+  <p>
+    <p>
+      <label for="id_name">{{ _('Name') }}</label>
+      {{ form.name }}
+      {{ form.name.errors }}
+    </p>
+    <p>
+      <label for="id_url">{{ _('Url') }}</label>
+      {{ form.url }}
+      {{ form.url.errors }}
+    </p>
+  </p>
+  <p class="buttons">
+    <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+  </p>
+</form>
+{% endblock %}
