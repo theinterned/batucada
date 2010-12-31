@@ -78,7 +78,7 @@ admin.site.register(Project)
 class ProjectMedia(ModelBase):
     project_file = models.FileField(upload_to=determine_upload_path)
     project = models.ForeignKey(Project)
-
+    mime_type = models.CharField(max_length=80, null=True)
 
 ###########
 # Signals #

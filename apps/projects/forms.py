@@ -1,10 +1,15 @@
 import datetime
+import logging
 
 from django import forms
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from messages.models import Message
 from projects.models import Project, ProjectMedia
+
+log = logging.getLogger(__name__)
 
 
 class ProjectForm(forms.ModelForm):
@@ -23,9 +28,34 @@ class ProjectDescriptionForm(forms.ModelForm):
 
 class ProjectMediaForm(forms.ModelForm):
 
+    allowed_content_types = (
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'video/ogg',
+        'video/webm',
+        'video/mp4',
+        'application/ogg',
+    )
+
     class Meta:
         model = ProjectMedia
         fields = ('project_file',)
+
+    def clean_project_file(self):
+        content_type = self.cleaned_data['project_file'].content_type
+        if not content_type in self.allowed_content_types:
+            log.warn("Attempt to upload unsupported file type: %s" % (
+                content_type,))
+            raise ValidationError(_('Unsupported file type.'))
+        if self.cleaned_data['project_file'].size > settings.MAX_UPLOAD_SIZE:
+            max_size = settings.MAX_UPLOAD_SIZE / 1024 / 1024
+            raise ValidationError(
+                _("File exceeds max file size: %(max)dMB" % {
+                    'max': max_size,
+                 }),
+            )
+        return self.cleaned_data['project_file']
 
 
 class ProjectContactUsersForm(forms.Form):
