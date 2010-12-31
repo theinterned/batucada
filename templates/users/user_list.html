@@ -2,7 +2,7 @@
 
 {% load l10n_tags %}
 
-{% block title %}{{ _('Users') }}{% endblock %}
+{% block title %}{{ _('People') }}{% endblock %}
 {% block bodyid %}user_list{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
 {% block breadcrumbs %}
@@ -27,7 +27,7 @@
 {% endif %}
 {% if popular %}
   <section>
-  <h1><span>{{ _('Popular') }}</span></h1>
+  <h1><span>{{ _('Popular this Week') }}</span></h1>
   <ul class="user-list">
     {% for person in popular %}
       <li>{% include "users/_user_card.html" %}</li>
@@ -37,7 +37,7 @@
 {% endif %}
 
 <section>
-  <h1><span>{{ _('Newest Users') }}</span></h1>
+  <h1><span>{{ _('New People') }}</span></h1>
   <ul class="user-list">
     {% for person in new %}
       <li>{% include "users/_user_card.html" %}</li>
