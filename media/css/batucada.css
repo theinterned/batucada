@@ -685,29 +685,34 @@ header {}
           }
 
   #project_gallery{}
-	#project_gallery h1{
+  #user_list{}
+  /* generalized layout of card lists, by using a '.card-list' class on the body of project_gallery and user_list */
+	.card-list h1{
 		font-weight: normal;
 		margin-bottom: 32px;
 	}
-	#project_gallery section{
-		border-top:  1px solid #bebebe;	
+	.card-list section{
+		border-top:  1px solid #bebebe;
+		padding-bottom: 72px;
 	}
-	#project_gallery section > h1{
+	.card-list section > h1{
 		text-align: center;
 		margin-top: -0.65em;		
 		font-family: Georgia, "Times New Roman", Times, serif;
 		font-style: italic;		
 	}
-	#project_gallery section h1 span{
+	.card-list section h1 span{
 		background: #F3F4F6;
 		-webkit-box-shadow: 0 0 5px #f7f7f7 ;
 		padding:  0 6px;
 	}
-  	#project_gallery .project-list{
+  	.card-list .project-list,
+  	.card-list .user-list{
 		list-style: none;
 		margin: 0; padding: 0;
 	}
-  	#project_gallery .project-list li{
+  	.card-list .project-list li,
+  	.card-list .user-list li{
 		display: inline-block;
 		width: 215px;
 		vertical-align: top;
@@ -726,10 +731,11 @@ header {}
 	    -webkit-box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2);	    
 	    behavior: url("/media/css/PIE.htc");
 	}
-	#project_gallery .project-list li:nth-child(4n){
+	.card-list .project-list li:nth-child(4n),
+	.card-list .user-list li:nth-child(4n){
 		margin-right: 0;
 	}
-	#project_gallery .project-list li .project.card{
+	.card-list .card{
 		padding: 8px;
 		border: 1px solid #525252;
 		border-radius: 3px;
@@ -738,7 +744,7 @@ header {}
 		-webkit-border-radius:3px;
 		background: #fff;
 	}
-	#project_gallery .project-list li .project.card img{
+	.card-list .card img{
 		margin-bottom: 0.5em;		
 		box-shadow: white 1px 1px 1px;
 		-moz-box-shadow: white 1px 1px 1px;
@@ -750,22 +756,35 @@ header {}
 		-webkit-border-radius: 5px;
 		behavior: url("/media/css/PIE.htc");
 	}
-	#project_gallery .project-list li .project.card h1{
+	.card-list .project.card h1{
 		margin: 0 0 0.5em;
 		font-size: 14px;
 		line-height: 18px;
 		font-weight: bold;
 	}
+	.card-list .user.card img{
+		float: left;
+		vertical-align: middle;
+	}
+	.card-list .user.card h1{
+		margin: 18px 0 9px 65px;
+		font-size: 18px;
+		font-weight: bold;
+		min-height: 38px;
+	}
 	/* TODO: set a charachter maximum for project.description that works
 	 * with this layout at /project/list/ */
-	#project_gallery .project-list li .project.card .description{
+	.card-list .card .description{
 		font-size: 12px;
 		line-height: 1.5;
 		height: 7.5em;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-	#project_gallery .project-list li .project.card .meta{
+	.card-list .user.card .description {
+		height: 6em;
+	}
+	.card-list .card .meta{
 		background: #f4f4f4;
 		padding: 8px;
 		margin: 1em -8px -8px;
@@ -778,22 +797,22 @@ header {}
 	    -moz-box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2);
 	    -webkit-box-shadow: inset 1px 1px 0 rgba(255,255,255,1);
 	}
-	#project_gallery .project-list li .project.card dl{
+	.card-list .card dl{
 		display: inline-block;
 		width: 32%;
 	}
-	#project_gallery .project-list li .project.card dd,
-	#project_gallery .project-list li .project.card dt{
+	.card-list .card dd,
+	.card-list .card dt{
 		font-size: 11px;
 		line-height: 14px;
 		text-shadow: 1px 1px #fff;
 		-moz-text-shadow: 1px 1px #fff;
 		-webkit-text-shadow: 1px 1px #fff;
 	}
-	#project_gallery .project-list li .project.card dd{
+	.card-list .card dd{
 		font-weight:bold;
 	}
-	#project_gallery .project-list li .project.card dt{
+	.card-list .card dt{
 		color: #919191;
 	}
 

@@ -2,8 +2,9 @@
 
 {% load l10n_tags %}
 
-{% block title %}Users{% endblock %}
+{% block title %}{{ _('Users') }}{% endblock %}
 {% block bodyid %}user_list{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
 {% block breadcrumbs %}
 <div class="container">
   <nav>
@@ -14,29 +15,32 @@
 
 {% block body %}
 <h1>{{ _('Browse <b>People</b>') }}</h1>
+{% if featured %}
 <section>
   <h1><span>{{ _('Featured') }}</span></h1>
   <ul class="user-list">
     {% for person in featured %}
-      <li><a href="{{  person.get_absolute_url }}">{{ person.name }}</a> &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+      <li>{% include "users/_user_card.html" %}</li>
     {% endfor %}
   </ul>
 </section>
-<section>
+{% endif %}
+{% if popular %}
+  <section>
   <h1><span>{{ _('Popular') }}</span></h1>
   <ul class="user-list">
-    {% if popular %}
     {% for person in popular %}
-      <li><a href="{{  person.get_absolute_url }}">{{ person.name }}</a> &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+      <li>{% include "users/_user_card.html" %}</li>
     {% endfor %}
-    {% endif %}
   </ul>
 </section>
+{% endif %}
+
 <section>
   <h1><span>{{ _('Newest Users') }}</span></h1>
   <ul class="user-list">
     {% for person in new %}
-      <li><a href="{{  person.get_absolute_url }}">{{ person.name }}</a> &ndash; {{ person.followers|length }} &ndash; {{ person.status_set.count }} </li>
+      <li>{% include "users/_user_card.html" %}</li>
     {% endfor %}
   </ul>
 </section>
