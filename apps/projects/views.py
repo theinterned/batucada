@@ -1,15 +1,18 @@
+import os
 import logging
 
 from django import http
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_http_methods
 
 from projects import forms as project_forms
 from projects.decorators import ownership_required
-from projects.models import Project
+from projects.models import Project, ProjectMedia
 
 from activity.models import Activity
 from statuses.models import Status
@@ -84,26 +87,52 @@ def edit_description(request, slug):
 @ownership_required
 def edit_media(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    files = project.projectmedia_set.all()
     if request.method == 'POST':
+        if files.count() > settings.MAX_PROJECT_FILES:
+            messages.error(request, _('You have already used up your allotted '
+                                      'number of file uploads. Please delete '
+                                      'some files and try again.'))
+            return http.HttpResponseRedirect(
+                reverse('projects_edit_media', kwargs=dict(slug=project.slug)))
         form = project_forms.ProjectMediaForm(request.POST, request.FILES)
         if form.is_valid():
             messages.success(request, _('File uploaded'))
             media = form.save(commit=False)
             media.project = project
+            media.mime_type = form.cleaned_data['project_file'].content_type
             media.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
-                'slug': project.slug,
-            }))
-
+            return http.HttpResponseRedirect(
+                reverse('projects_edit_media', kwargs=dict(slug=project.slug)))
         else:
             messages.error(request, _('There was an error uploading '
                                       'your file.'))
     else:
         form = project_forms.ProjectMediaForm()
+    files_dict = {}
+    for f in files:
+        files_dict[f.id] = os.path.basename(f.project_file.path)
     return render_to_response('projects/project_edit_media.html', {
+        'files': files_dict,
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@ownership_required
+@require_http_methods(['POST'])
+def delete_media(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    file_id = int(request.POST['file_id'])
+    file_obj = ProjectMedia.objects.get(
+        project=project, pk=file_id)
+    os.unlink(file_obj.project_file.path)
+    file_obj.delete()
+    messages.success(request, _("The file has been deleted."))
+    return http.HttpResponseRedirect(reverse('projects_edit_media', kwargs={
+        'slug': project.slug,
+    }))
 
 
 def list(request):

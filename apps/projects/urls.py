@@ -20,4 +20,7 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/edit_media/$',
       'projects.views.edit_media',
       name='projects_edit_media'),
+  url(r'^(?P<slug>[\w-]+)/delete_media/$',
+      'projects.views.delete_media',
+      name='projects_delete_media'),
 )
