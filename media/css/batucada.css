@@ -692,7 +692,7 @@ header {}
 	#project_gallery section{
 		border-top:  1px solid #bebebe;	
 	}
-	#project_gallery section h1{
+	#project_gallery section > h1{
 		text-align: center;
 		margin-top: -0.65em;		
 		font-family: Georgia, "Times New Roman", Times, serif;
@@ -750,10 +750,11 @@ header {}
 		-webkit-border-radius: 5px;
 		behavior: url("/media/css/PIE.htc");
 	}
-	#project_gallery .project-list li .project.card h3{
+	#project_gallery .project-list li .project.card h1{
 		margin: 0 0 0.5em;
 		font-size: 14px;
 		line-height: 18px;
+		font-weight: bold;
 	}
 	/* TODO: set a charachter maximum for project.description that works
 	 * with this layout at /project/list/ */
