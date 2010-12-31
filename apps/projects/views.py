@@ -62,7 +62,8 @@ def edit(request, slug):
 def edit_description(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.method == 'POST':
-        form = project_forms.ProjectDescriptionForm(request.POST, instance=project)
+        form = project_forms.ProjectDescriptionForm(
+            request.POST, instance=project)
         if form.is_valid():
             form.save()
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
@@ -74,6 +75,32 @@ def edit_description(request, slug):
     else:
         form = project_forms.ProjectDescriptionForm(instance=project)
     return render_to_response('projects/project_edit_description.html', {
+        'form': form,
+        'project': project,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@ownership_required
+def edit_media(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = project_forms.ProjectMediaForm(request.POST, request.FILES)
+        if form.is_valid():
+            messages.success(request, _('File uploaded'))
+            media = form.save(commit=False)
+            media.project = project
+            media.save()
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+
+        else:
+            messages.error(request, _('There was an error uploading '
+                                      'your file.'))
+    else:
+        form = project_forms.ProjectMediaForm()
+    return render_to_response('projects/project_edit_media.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))

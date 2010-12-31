@@ -13,6 +13,10 @@ from relationships.models import Relationship
 import caching.base
 
 
+def determine_upload_path(instance, filename):
+    return "images/%s/%s" % (instance.project.slug, filename)
+
+
 class ProjectManager(caching.base.CachingManager):
     def get_popular(self, limit=0):
         statuses = Status.objects.values('project_id').annotate(
@@ -68,9 +72,13 @@ class Project(ModelBase):
             self.slug = slug + str(count)
             count += 1
         super(Project, self).save()
-
-
 admin.site.register(Project)
+
+
+class ProjectMedia(ModelBase):
+    project_file = models.FileField(upload_to=determine_upload_path)
+    project = models.ForeignKey(Project)
+
 
 ###########
 # Signals #
