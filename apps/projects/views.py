@@ -30,12 +30,13 @@ def show(request, slug):
     activities = Activity.objects.filter(
         project=project).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
+    links = project.link_set.all()
     context = {
         'project': project,
         'following': is_following,
         'activities': activities,
         'update_count': nstatuses,
-        'links': [],  # temporarily removing. TODO - add back
+        'links': links,
     }
     return render_to_response('projects/project.html', context,
                           context_instance=RequestContext(request))
@@ -133,6 +134,34 @@ def delete_media(request, slug):
     return http.HttpResponseRedirect(reverse('projects_edit_media', kwargs={
         'slug': project.slug,
     }))
+
+
+@login_required
+@ownership_required
+def edit_links(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = project_forms.ProjectLinksForm(request.POST)
+        if form.is_valid():
+            link = form.save(commit=False)
+            link.project = project
+            link.user = project.created_by
+            link.save()
+            messages.success(request, _('Project link added.'))
+            return http.HttpResponseRedirect(
+                reverse('projects_edit_links', kwargs=dict(slug=project.slug)))
+        else:
+            messages.error(request, _('There was an error adding your link.'))
+    else:
+        form = project_forms.ProjectLinksForm()
+    return render_to_response('projects/project_edit_links.html', {
+        'project': project,
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+def edit_links_delete(request, slug):
+    pass
 
 
 def list(request):

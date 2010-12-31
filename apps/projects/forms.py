@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
+from links.models import Link
 from messages.models import Message
 from projects.models import Project, ProjectMedia
 
@@ -24,6 +25,13 @@ class ProjectDescriptionForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('detailed_description',)
+
+
+class ProjectLinksForm(forms.ModelForm):
+
+    class Meta:
+        model = Link
+        fields = ('name', 'url',)
 
 
 class ProjectMediaForm(forms.ModelForm):
