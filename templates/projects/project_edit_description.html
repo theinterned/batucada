@@ -8,6 +8,7 @@
   <p>
     {{ form.detailed_description }}
     {{ form.detailed_description.errors }}
+  </p>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
