@@ -17,4 +17,7 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/edit_description/$',
       'projects.views.edit_description',
       name='projects_edit_description'),
+  url(r'^(?P<slug>[\w-]+)/edit_media/$',
+      'projects.views.edit_media',
+      name='projects_edit_media'),
 )

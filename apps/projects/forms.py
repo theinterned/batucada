@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 from messages.models import Message
-from projects.models import Project
+from projects.models import Project, ProjectMedia
 
 
 class ProjectForm(forms.ModelForm):
@@ -19,6 +19,13 @@ class ProjectDescriptionForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('detailed_description',)
+
+
+class ProjectMediaForm(forms.ModelForm):
+
+    class Meta:
+        model = ProjectMedia
+        fields = ('project_file',)
 
 
 class ProjectContactUsersForm(forms.Form):
