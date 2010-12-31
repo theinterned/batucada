@@ -1169,7 +1169,7 @@ header {}
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
 		}	
-/* SPALSH PAGE FOR ANON USERS */		
+/* SPLASH PAGE FOR ANON USERS */		
 #splash{}
 #splash #masthead{
 	border: none;
@@ -1367,8 +1367,139 @@ header {}
 	line-height: 18px;
 	}
 #splash #main asside #planet_drumbeat > h1 a:hover{
+	opacity: 0.7;
+	}
+	
+/* FOOTER */
+footer{
+	padding-top: 27px;
+}
+footer .container {
+	border-top: 1px solid #d5d6d8;
+	padding: 9px 0 7px;
+	}
+footer form#newsletter {
+	float: left;
+	}
+footer form#newsletter input{
+	margin: 0;
+	}	
+footer form#newsletter button {
+	padding: 0 9px;
+	margin: 0;
+	height: 27px;
+	vertical-align: middle;
+	line-height: 27px;
+	color: #3b3b3b;
+	font-weight: normal;
+	text-shadow: none;
+	border: 1px solid #dadada;
+	border-radius:3px;
+	background: #FFFFFF; /* old browsers */
+	background: -moz-linear-gradient(top, 
+		#FFFFFF 49%, 
+		#F6F6F6 50%);
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(49%,#FFFFFF), 
+		color-stop(50%,#F6F6F6));
+	filter: progid:DXImageTransform.Microsoft.gradient( 
+		startColorstr='#FFFFFF', 
+		endColorstr='#F6F6F6',GradientType=0 );
+	box-shadow: 
+		inset 0px -1px 2px #fff,
+		1px 1px rgba(255,255,255,0.7);
+	-moz-box-shadow: 
+		inset 0px -1px 2px #fff,
+		1px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow: 
+		inset 0px -1px 2px #fff,
+		1px 1px rgba(255,255,255,0.7);	
+	}
+footer form#newsletter button:hover {
+	opacity: 0.7;
+	}
+footer form#newsletter button:focus {
+	box-shadow: 
+		inset 0px -1px 2px #fff,
+		1px 1px rgba(255,255,255,0.7),
+		0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
+	-moz-box-shadow: 
+		inset 0px -1px 2px #fff,
+		1px 1px rgba(255,255,255,0.7),
+		0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
+	-webkit-box-shadow: 
+		inset 0px -1px 2px #fff,
+		1px 1px rgba(255,255,255,0.7),
+		0 0 1px 1px #e5f6ff, 
+	    0 0 4px 2px #3ea1e6;
+	}	
+footer form#newsletter button:active {
+	background: #F6F6F6; /* old browsers */
+	background: -moz-linear-gradient(top, 
+		#F6F6F6 49%, 
+		#FFFFFF 50%);
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(49%,#F6F6F6), 
+		color-stop(50%,#FFFFFF));
+	filter: progid:DXImageTransform.Microsoft.gradient( 
+		startColorstr='#F6F6F6', 
+		endColorstr='#FFFFFF',GradientType=0 );
+	}
+footer nav {
+	float: right;
+	}
+footer nav ul,
+footer nav li {
+	display: inline-block;
+	}
+footer nav li a {
+	display: block;
+	line-height: 27px;	
+	}	
+footer nav #supporting_links a {
+	padding: 0 24px 0 0;
+	color: #919191;
+	}
+footer nav #supporting_links a:hover{
+	color: #036;
+	}
+footer nav #social a {
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+	text-indent: -9999px;
+	}
+footer nav #social #twitter a {
+	background: url(/media/images/twitter.png) 0 0 no-repeat;
+	}
+footer nav #social #facebook a {
+	background: url(/media/images/facebook.png) 0 0 no-repeat;
+	}
+footer nav #social #flickr a {
+	background: url(/media/images/flickr.png) 0 0 no-repeat;
+	}
+footer nav #social a:hover {
 	opacity: 0.8;
 	}
+
+footer #legal {
+	padding-top: 18px;
+	color: #b9b9b9;
+	font-size: 11px;
+	text-align: center;
+	}
+footer #legal a {
+	color: #b9b9b9;
+	text-decoration: underline;
+	}
+footer #legal a:hover {
+	color: #036;
+	}	
+
+
+
 
 /* TODO: I wrote this, so we'll want to replace it :) (Paul) */
 span.help-text {
