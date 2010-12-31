@@ -51,7 +51,7 @@ class ProjectContactUsersForm(forms.Form):
         for r in recipients:
             msg = Message(
                 sender=sender,
-                recipient=r,
+                recipient=r.user,
                 subject=subject,
                 body=body,
             )
