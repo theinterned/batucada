@@ -1,13 +1,15 @@
 {% load l10n_tags %}
 <article class="project card">
   <figure>
-    <!-- TODO: add support for project images. -->
-    <!-- TODO: add a default image for projects -->
-    {% if project.image %}
-    <img src="" width="195" height="120" alt="project image"/>
-    {% else %}
-    <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
-    {% endif %}
+    <a href="{% locale_url projects_show slug=project.slug %}">
+      <!-- TODO: add support for project images. -->
+      <!-- TODO: add a default image for projects -->
+      {% if project.image %}
+      <img src="" width="195" height="120" alt="project image"/>
+      {% else %}
+      <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
+      {% endif %}
+    </a>
   </figure>
   <h1><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></h1>
   <!-- 
