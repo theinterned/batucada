@@ -1,15 +1,17 @@
 {% load l10n_tags %}
-<div class="project card">
+<article class="project card">
   <figure>
-    <!-- TODO: add support for project images. -->
-    <!-- TODO: add a default image for projects -->
-    {% if project.image %}
-    <img src="" width="195" height="120" alt="project image"/>
-    {% else %}
-    <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
-    {% endif %}
+    <a href="{% locale_url projects_show slug=project.slug %}">
+      <!-- TODO: add support for project images. -->
+      <!-- TODO: add a default image for projects -->
+      {% if project.image %}
+      <img src="" width="195" height="120" alt="project image"/>
+      {% else %}
+      <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
+      {% endif %}
+    </a>
   </figure>
-  <h3><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></h3>
+  <h1><a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a></h1>
   <!-- 
    ! TODO: set a character maximum for project.description that works
    ! with this layout. See also /media/css/batucada.css line ~485
@@ -29,4 +31,4 @@
       <dt>{{ _('Created') }}</dt>
     </dl>
   </div>
-</div>
+</article>
