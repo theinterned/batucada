@@ -112,7 +112,7 @@ class HandleNotification(Task):
             activity = Activity(
                 actor=link.user, verb=verb, remote_object=remote_obj)
             if link.project:
-                activity.project = link.project
+                activity.target_project = link.project
             activity.save()
 
     def run(self, notification, sender, **kwargs):
