@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404
 
@@ -29,6 +29,8 @@ def unfollow(request, object_type, slug):
     profile = request.user.get_profile()
     if object_type == 'project':
         project = get_object_or_404(Project, slug=slug)
+        if project.created_by == profile:
+            return HttpResponseForbidden()
         Relationship.objects.filter(
             source=profile, target_project=project).delete()
     elif object_type == 'user':
