@@ -5,6 +5,7 @@ from django import http
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
@@ -28,7 +29,8 @@ def show(request, slug):
         profile = request.user.get_profile()
         is_following = profile.is_following(project)
     activities = Activity.objects.filter(
-        project=project).order_by('-created_on')[0:10]
+        Q(project=project) | Q(target_project=project),
+    ).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
     context = {
