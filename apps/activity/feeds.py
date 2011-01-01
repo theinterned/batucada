@@ -1,10 +1,12 @@
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.utils.feedgenerator import Atom1Feed
 
 from activity.models import Activity
+from projects.models import Project
 from users.models import UserProfile
 
 
@@ -102,3 +104,43 @@ class UserActivityFeed(Feed):
                 },
             },
         }
+
+
+class ProjectActivityFeed(UserActivityFeed):
+    """Atom feed of project activities."""
+
+    def title(self, project):
+        return project.name
+
+    def get_object(self, request, project):
+        self._request = request
+        return get_object_or_404(Project, slug=project)
+
+    def items(self, project):
+        return Activity.objects.filter(
+            Q(target_project=project) | Q(project=project),
+        ).order_by('-created_on')[:25]
+
+    def link(self, project):
+        return reverse('projects_show', kwargs={'slug': project.slug})
+
+
+class DashboardFeed(UserActivityFeed):
+    """Atom feed of activities from a users dashboard."""
+
+    def get_object(self, request):
+        self._request = request
+        return request.user.get_profile()
+
+    def items(self, user):
+        user_ids = [u.pk for u in user.following()]
+        project_ids = [p.pk for p in user.following(model=Project)]
+        return Activity.objects.select_related(
+            'actor', 'status', 'project', 'remote_object',
+            'remote_object_link', 'target_project').filter(
+            Q(actor__exact=user) | Q(actor__in=user_ids) |
+            Q(project__in=project_ids),
+       ).order_by('-created_on')[0:25]
+
+    def link(self, user):
+        return reverse('dashboard_index')

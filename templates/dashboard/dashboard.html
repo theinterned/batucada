@@ -2,10 +2,7 @@
 {% load l10n_tags %}
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
 {% block links %}
-{% comment %}
-Temporarily comment out atom feed link while refactoring activity application.
-<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_feed_user_news username=user.username %}">
-{% endcomment %}
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_dashboard_feed %}" />
 {% endblock %}
 {% block bodyid %}dashboard{%endblock%}
 {% block body %}
