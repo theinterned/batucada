@@ -43,6 +43,6 @@ def status_creation_handler(sender, **kwargs):
         status=status,
     )
     if status.project:
-        activity.project = status.project
+        activity.target_project = status.project
     activity.save()
 post_save.connect(status_creation_handler, sender=Status)

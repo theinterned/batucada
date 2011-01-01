@@ -22,9 +22,9 @@
       {% include "activity/_activity_body.html" %}
     </div> <!-- /.post-body -->
 
-    {% if activity.project %}
+    {% if activity.target_project %}
     <ul class="post-tags">
-      <li><a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a></li>
+      <li><a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project }}</a></li>
     </ul>
     {% endif %}
 

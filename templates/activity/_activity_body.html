@@ -5,7 +5,11 @@
 {% endif %}
 {% endspaceless %} {% spaceless %}
 {% if activity|should_show_verb %}
-  {{ activity|friendly_verb }}
+  {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
+    {{ _('Created a new project') }}
+  {% else %}
+    {{ activity|friendly_verb }}
+  {% endif %}
 {% endif %}
 {% endspaceless %} {% spaceless %}
 {% if activity|should_hyperlink %}
