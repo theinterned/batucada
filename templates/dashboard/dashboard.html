@@ -36,8 +36,8 @@ Temporarily comment out atom feed link while refactoring activity application.
   </ul>
   <h3>{{ _('Projects') }} <span class="projects count">{{ projects_following|length}}</span></h3>
   <ul class="projects following">
-  <!-- TODO: add support for project owner; hide owned projects form this list as they appear below -->
   {% for project in projects_following %}
+    {% if project.created_by != user.get_profile %}
     <li>
       <a href="{{ project.get_absolute_url }}" alt="{{project.name}}">
         {% if project.image %}
@@ -47,28 +47,34 @@ Temporarily comment out atom feed link while refactoring activity application.
         {% endif %}
         {{ project.name }}
       </a>
+      {% endif %}
     </li>
   {% endfor %}
   </ul>
 </div> <!-- /#member_relationships-->
 <!-- TODO: add support for owned project summary card -->
 <div id="member_projects" class="panel">
-  <article id="memeber_project_web-made-movies" class="project summary">
-    <h1><a href="/projects/webmademovies" title="WebMadeMovies">WebMadeMovies</a></h1>
-    <dl class="followers">
-      <dt>{{ _('Followers') }}</dt>
-      <dd><a href="#" title="{{ _('See all followers') }}">312</a> <span class="update week">(<a href="#" title="{{ _('See new folowers this week') }}">2 {{ _('this week') }}</a>)</span></dd>
-    </dl>
-    <dl class="updates">
-      <dt>{{ _('Updates') }}</dt>
-      <dd><a href="#" title="{{ _('See all updates') }}">1232</a> <span class="update week">(<a href="#" title="{{ _('See this weeks updates') }}">23 {{ _('this week') }}</a>)</span></dd>      
-    </dl>
-    <article class="update project">
-      <h1>Project Status Update</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-      <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+{% for project in projects_following %}
+  {% if project.created_by == user.get_profile %}
+    <article id="member_project_{{ project.slug }}" class="project summary">
+      <h1><a href="{{ project.get_absolute_url }}" title="{{ project.name }}">{{ project.name }}</a></h1>
+      <dl class="followers">
+	<dt>{{ _('Followers') }}</dt>
+	<dd><a href="#" title="{{ _('See all followers') }}">{{ project.followers|length }}</a></dd>
+      </dl>
+      <dl class="updates">
+	<dt>{{ _('Updates') }}</dt>
+	<dd><a href="#" title="{{ _('See all updates') }}">{{ project.status_set.count }}</a></dd>
+      </dl>
+      <article class="update project">
+	<!-- TODO: replace with actual data -->
+	<h1>{{ _('Project Status Update') }}</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+	<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </article>
     </article>
-  </article>
+  {% endif %}
+{% endfor %}
 </div> <!-- /#member_projects -->
 </div> <!-- /#sidebar -->
 
