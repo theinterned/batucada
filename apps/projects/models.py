@@ -48,7 +48,7 @@ class Project(ModelBase):
     def followers(self):
         """Return a list of users following this project."""
         relationships = Relationship.objects.select_related(
-            'source').filter(target_project=self)
+            'source', 'created_by').filter(target_project=self)
         return [rel.source for rel in relationships]
 
     def __unicode__(self):
