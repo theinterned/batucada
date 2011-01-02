@@ -145,7 +145,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'users.context_processors.messages',
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'drumbeat.runner.DrumbeatTestRunner'
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 
@@ -202,3 +202,4 @@ SUPERFEEDR_PASSWORD = ''
 
 # django-push settings
 PUSH_CREDENTIALS = 'links.utils.hub_credentials'
+SOUTH_TESTS_MIGRATE = False
