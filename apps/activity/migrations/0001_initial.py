@@ -8,11 +8,6 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        # Delete old activity tables
-        db.delete_table('activity_activity')
-        db.delete_table('activity_remoteobject')
-        db.delete_table('activity_actor')
-
         # Adding model 'RemoteObject'
         db.create_table('activity_remoteobject', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
