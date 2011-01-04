@@ -32,6 +32,9 @@ p {
 	line-height: 1.4;
 	margin-bottom: 1.4em;
 }
+a.openid {
+	background: url(/media/images/openid-22x25.png) 0 0 no-repeat;	padding-left: 27px;
+	}
 
 img.member-picture,
 img.project.picture {
@@ -176,7 +179,6 @@ input[type=submit]:active,
 	}
 
 /* FORMS */
-
 label {
 	display: block;
 	font-size: 12px;
@@ -225,6 +227,16 @@ textarea:focus {
 	-moz-box-shadow: 
 		inset #90c7ee 0 0 4px;	
 	}
+input[type=checkbox],
+input[type=radio] {
+	vertical-align: text-top;
+	height: 18px;
+	width: 18px;
+	}
+form .hint {
+	font-size: 11px;
+	color: #919191;
+	}		
 /* 
  * LAYOUT 
  */
@@ -1064,8 +1076,8 @@ header {}
 			background: #fff url(/media/images/panel-bg.png) 0 0 repeat-y;
 		}
 		.modal > article > h1{
-			width: 552px;
-			padding: 18px;
+			width: 516px;
+			padding: 18px 36px;
 			margin-bottom: 1em;
 			color: #777;
 			font-size: 18px;
@@ -1095,14 +1107,15 @@ header {}
 		}
 		.modal.nav > article > h1{
 			width: 742px;
+			padding: 18px;
 		}
 		.modal .buttons{
 			position: absolute;
 			top:  18px; right: 18px;
+			margin-left: 5px;
 		}
 		.modal button,
-		.modal .button {
-			margin-left: 5px;
+		.modal .button {			
 			line-height: 24px;			
 			width: 84px;
 			min-height: 30px;
@@ -1125,7 +1138,7 @@ header {}
 			margin-bottom: 5px;
 		}
 		.modal fieldset{
-			padding: 0 38px;
+			padding: 0 36px;
 		}
 		.modal.nav fieldset {
 			margin-left: 190px;
@@ -1211,7 +1224,7 @@ header {}
 #splash #content header h1,
 #splash #content header h2{
 	width: 530px;	
-	font: 52px/54px "Museo Sans", sans-serif;
+	font: normal 52px/54px MuseoSans-500, sans-serif;
 	color: #fff;
 	text-shadow: none;
 	}
@@ -1389,7 +1402,74 @@ header {}
 #splash #main asside #planet_drumbeat > h1 a:hover{
 	opacity: 0.7;
 	}
-	
+/* SIGNIN / SIGNUP */
+.signin{}
+.signin #breadcrumbs {
+	display: none;
+	}
+.signin #content{
+	padding-top: 108px;
+	}
+.signin .modal{
+	padding: 10px;
+	width: 420px;
+	font-size: 14px;
+	line-height: 18px;
+	border: none;
+	background: #c9d3d5;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;			
+	}
+.signin .modal article{
+	padding-bottom: 18px;
+	border: none;
+	}
+.signin .modal article >h1 {
+	width: auto;
+	padding:  36px;
+	margin: 0;
+	background: none;
+	border: none;
+	font-size: 24px;
+	font-weight: normal;
+	color: #474747;
+	}
+.signin .modal article label {
+	font-size: 14px;
+	line-height: 18px;
+	margin-bottom: 5px;
+	}
+.signin .modal article input[type=text],
+.signin .modal article input[type=email],
+.signin .modal article input[type=password] {
+	font-size: 14px;
+	line-height: 18px;
+	width: 328px;
+	}
+.signin .modal .submit {
+	line-height: 30px;
+	height: 30px;
+	}
+.signin .modal .submit a{
+	display: inline-block;
+	}	
+.signin .modal .submit button {
+	margin-right: 5px;
+	}
+.signin .modal .password {
+	display: inline-block;
+	width: 167px;
+	}
+.signin .modal .password.confirm{
+	margin-left: 10px;
+	}
+.signin .modal article .password input[type=password] {
+	width: 149px;
+	}
+body#signup .modal button[type=submit] {
+	width: auto;
+	} 
 /* FOOTER */
 footer{
 	padding-top: 27px;
