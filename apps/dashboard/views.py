@@ -1,3 +1,6 @@
+import random
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -6,14 +9,21 @@ from django.db.models import Q
 from activity.models import Activity
 from users.decorators import anonymous_only
 from projects.models import Project
+from dashboard.models import FeedEntry
 
 
 @anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
     activities = Activity.objects.all().order_by('-created_on')[0:10]
+    project = random.choice(Project.objects.filter(featured=True))
+    feed_entries = FeedEntry.objects.all().order_by('-created_on')[0:4]
+    feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
     return render_to_response('dashboard/splash.html', {
         'activities': activities,
+        'featured_project': project,
+        'feed_entries': feed_entries,
+        'feed_url': feed_url,
     }, context_instance=RequestContext(request))
 
 
