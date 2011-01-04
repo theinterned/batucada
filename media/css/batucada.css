@@ -179,7 +179,6 @@ input[type=submit]:active,
 	}
 
 /* FORMS */
-
 label {
 	display: block;
 	font-size: 12px;
@@ -234,6 +233,10 @@ input[type=radio] {
 	height: 18px;
 	width: 18px;
 	}
+form .hint {
+	font-size: 11px;
+	color: #919191;
+	}		
 /* 
  * LAYOUT 
  */
@@ -1432,6 +1435,19 @@ header {}
 .signin .modal .submit button {
 	margin-right: 5px;
 	}
+.signin .modal .password {
+	display: inline-block;
+	width: 167px;
+	}
+.signin .modal .password.confirm{
+	margin-left: 10px;
+	}
+.signin .modal article .password input[type=password] {
+	width: 149px;
+	}
+body#signup .modal button[type=submit] {
+	width: auto;
+	} 
 /* FOOTER */
 footer{
 	padding-top: 27px;
