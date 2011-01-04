@@ -36,6 +36,18 @@
           {{ form.email }}
           {{ form.email.errors }}
         </p>
+        <p>
+          <label for="newsletter">
+            <input type="checkbox" name="newsletter" value="">
+            {{ _('Please send me the Drumbeat newsletter.') }}
+          </label>
+        </p>
+        <p>
+          <label for="copyleft">
+            <input type="checkbox" name="copyleft" value="">
+            {{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}
+          </label>
+        </p>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
         <p>
           {{ form.recaptcha }}
