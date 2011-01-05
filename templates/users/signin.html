@@ -31,8 +31,7 @@
         <p class="submit">
           <button type="submit" tabindex="4">{{ _('Sign In') }}</button>
           {{ _('or use') }}
-          <!-- TODO link up to openid signin page -->
-          <a class="openid" href="#" tabindex="5">{{ _('OpenID')}}</a>
+          <a class="openid" href="{% locale_url users_login_openid %}" tabindex="5">{{ _('OpenID')}}</a>
         </p>
       </form>      
     </fieldset>

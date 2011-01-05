@@ -1128,12 +1128,12 @@ header {}
 			min-width: 68px;
 			min-height: 24px;
 		}
-        .modal #profile-edit-nav {
+		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #account-settings-nav {
 			float: left;
 			width: 190px;
 			height: 100%;
 		}
-		.modal #profile-edit-nav a {
+		.modal #profile-edit-nav a, .modal #project-edit-nav a, .modal #account-settings-nav a {
 			display: block;
 			padding-left: 18px;
 			font-size: 12px;
@@ -1148,10 +1148,23 @@ header {}
 		}
 		.modal #profile-edit-nav .selected a,
 		.modal #profile-edit-nav a:hover,
+		.modal #project-edit-nav .selected a,
+		.modal #project-edit-nav a:hover,
+		.modal #account-settings-nav .selected a,
+		.modal #account-settings-nav a:hover,
 		#profile_edit.info #profile-edit-nav .info a,
 		#profile_edit.image #profile-edit-nav .image a,
 		#profile_edit.skills #profile-edit-nav .skills a,
-		#profile_edit.interests #profile-edit-nav .interests a{
+		#profile_edit.interests #profile-edit-nav .interests a,
+		#project_edit.summary #project-edit-nav .summary a,
+		#project_edit.description #project-edit-nav .description a,
+		#project_edit.media #project-edit-nav .media a,
+		#project_edit.links #project-edit-nav .links a,
+		#account_settings.notifications #account-settings-nav .notifications a,
+		#account_settings.connections #account-settings-nav .connections a,
+		#account_settings.identities #account-settings-nav .identities a,
+		#account_settings.export #account-settings-nav .export a,
+		#account_settings.delete #account-settings-nav .delete a {
 			position: relative;
 			color: #fff;
 			text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
@@ -1166,7 +1179,7 @@ header {}
 				startColorstr='#4AA4E3', 
 				endColorstr='#2084CA',GradientType=0 );
 		}
-		.modal #profile-edit-nav a:hover{
+		.modal #profile-edit-nav a:hover, .modal #project-edit-nav a:hover, .modal #account-settings-nav a:hover {
 			background: #2084CA;
 			text-decoration: none;
 		}
@@ -1174,7 +1187,16 @@ header {}
 		#profile_edit.info #profile-edit-nav .info a:after,
 		#profile_edit.image #profile-edit-nav .image a:after,
 		#profile_edit.skills #profile-edit-nav .skills a:after,
-		#profile_edit.interests #profile-edit-nav .interests a:after{
+		#profile_edit.interests #profile-edit-nav .interests a:after,
+		#project_edit.summary #project-edit-nav .summary a:after,
+		#project_edit.description #project-edit-nav .description a:after,
+		#project_edit.media #project-edit-nav .media a:after,
+		#project_edit.links #project-edit-nav .links a:after,
+		#account_settings.notifications #account-settings-nav .notifications a:after,
+		#account_settings.connections #account-settings-nav .connections a:after,
+		#account_settings.identities #account-settings-nav .identities a:after,
+		#account_settings.export #account-settings-nav .export a:after,
+		#account_settings.delete #account-settings-nav .delete a:after {
 			content: "\0020";
 			display: block;
 			width: 12px;
@@ -1514,6 +1536,7 @@ footer nav #social #flickr a {
 footer nav #social a:hover {
 	opacity: 0.8;
 	}
+
 footer #legal {
 	padding-top: 18px;
 	color: #b9b9b9;
@@ -1527,3 +1550,21 @@ footer #legal a {
 footer #legal a:hover {
 	color: #036;
 	}	
+
+
+
+
+/* TODO: I wrote this, so we'll want to replace it :) (Paul) */
+span.help-text {
+    font-size: 80%;
+    color: #999;
+    margin-bottom: 10px;
+    display: block;
+}
+#project_edit input[type=text] {
+    width: 300px;
+}
+#project_edit textarea {
+    height: 90px;
+    width: 400px;
+}

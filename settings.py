@@ -107,7 +107,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django_nose',
     'south',
     'jogging',
     'wellknown',
@@ -132,6 +131,7 @@ INSTALLED_APPS = (
 if DEBUG:
     INSTALLED_APPS += (
         'debug_toolbar',
+        'django_nose',
     )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -145,7 +145,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'users.context_processors.messages',
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'drumbeat.runner.DrumbeatTestRunner'
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 
@@ -163,6 +163,8 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 MAX_IMAGE_SIZE = 1024 * 700
+MAX_UPLOAD_SIZE = 1024 * 1024 * 50
+MAX_PROJECT_FILES = 5
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
@@ -200,3 +202,7 @@ SUPERFEEDR_PASSWORD = ''
 
 # django-push settings
 PUSH_CREDENTIALS = 'links.utils.hub_credentials'
+SOUTH_TESTS_MIGRATE = False
+
+# Feed to show contents of on the splash page
+SPLASH_PAGE_FEED = 'http://planet.drumbeat.org/atom.xml'

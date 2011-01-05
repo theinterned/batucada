@@ -7,40 +7,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-        # Adding model 'RemoteObject'
-        db.create_table('activity_remoteobject', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('object_type', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('link', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['links.Link'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('uri', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('activity', ['RemoteObject'])
-
-        # Adding model 'Activity'
-        db.create_table('activity_activity', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('actor', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.UserProfile'])),
-            ('verb', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['statuses.Status'], null=True)),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'], null=True)),
-            ('target_user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='target_user', null=True, to=orm['users.UserProfile'])),
-            ('remote_object', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['activity.RemoteObject'], null=True)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['activity.Activity'], null=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('activity', ['Activity'])
+        
+        # Adding field 'Activity.target_project'
+        db.add_column('activity_activity', 'target_project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='target_project', null=True, to=orm['projects.Project']), keep_default=True)
 
 
     def backwards(self, orm):
-
-        # Deleting model 'RemoteObject'
-        db.delete_table('activity_remoteobject')
-
-        # Deleting model 'Activity'
-        db.delete_table('activity_activity')
+        
+        # Deleting field 'Activity.target_project'
+        db.delete_column('activity_activity', 'target_project_id')
 
 
     models = {
@@ -53,6 +28,7 @@ class Migration(SchemaMigration):
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
             'remote_object': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['activity.RemoteObject']", 'null': 'True'}),
             'status': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['statuses.Status']", 'null': 'True'}),
+            'target_project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'target_project'", 'null': 'True', 'to': "orm['projects.Project']"}),
             'target_user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'target_user'", 'null': 'True', 'to': "orm['users.UserProfile']"}),
             'verb': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
@@ -112,21 +88,20 @@ class Migration(SchemaMigration):
         },
         'projects.project': {
             'Meta': {'object_name': 'Project'},
-            'call_to_action': ('django.db.models.fields.TextField', [], {}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projects'", 'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
-            'css': ('django.db.models.fields.TextField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 31)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'detailed_description': ('django.db.models.fields.TextField', [], {}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'long_description': ('django.db.models.fields.TextField', [], {}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'template': ('django.db.models.fields.TextField', [], {})
+            'short_description': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'})
         },
         'statuses.status': {
             'Meta': {'object_name': 'Status'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 31)', 'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'max_length': '750'})
@@ -163,7 +138,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserProfile'},
             'bio': ('django.db.models.fields.TextField', [], {'default': "''", 'blank': 'True'}),
             'confirmation_code': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 31)', 'auto_now_add': 'True', 'blank': 'True'}),
             'display_name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'unique': 'True', 'null': 'True'}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

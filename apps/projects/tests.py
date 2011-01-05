@@ -27,16 +27,16 @@ class ProjectTests(TestCase):
         """Test that each project will get a unique slug"""
         project = Project(
             name='My Cool Project',
-            description='This project is awesome',
-            call_to_action='Do Something',
+            short_description='This project is awesome',
+            long_description='No really, its good',
             created_by=self.user,
         )
         project.save()
         self.assertEqual('my-cool-project', project.slug)
         project2 = Project(
             name='My Cool  Project',
-            description='This project is awesome',
-            call_to_action='This is all very familiar',
+            short_description='This project is awesome',
+            long_description='This is all very familiar',
             created_by=self.user,
         )
         project2.save()
@@ -44,19 +44,21 @@ class ProjectTests(TestCase):
 
     def test_activity_firing(self):
         """Test that when a project is created, an activity is created."""
-        self.assertEqual(0, Activity.objects.count())
+        activities = Activity.objects.all()
+        self.assertEqual(0, len(activities))
         project = Project(
             name='My Cool Project',
-            description='This project is awesome',
-            call_to_action='Yawn',
+            short_description='This project is awesome',
+            long_description='Yawn',
             created_by=self.user,
         )
         project.save()
         # expect 2 activities, a create and a follow
-        self.assertEqual(2, Activity.objects.count())
-        for activity in Activity.objects.all():
+        activities = Activity.objects.all()
+        self.assertEqual(2, len(activities))
+        for activity in activities:
             self.assertEqual(self.user, activity.actor.user.get_profile())
-            self.assertEqual(project, activity.object)
+            self.assertEqual(project, activity.project)
             self.assertTrue(activity.verb in (
                 'http://activitystrea.ms/schema/1.0/post',
                 'http://activitystrea.ms/schema/1.0/follow',

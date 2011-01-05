@@ -25,7 +25,9 @@ def truncate(value, arg):
 
 @register.filter
 def should_hyperlink(activity):
-    if activity.verb == schema.verbs['follow'] and activity.target_user:
+    if activity.verb == schema.verbs['follow']:
+        return True
+    if activity.project:
         return True
     if not activity.remote_object:
         return False
