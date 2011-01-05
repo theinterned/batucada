@@ -70,6 +70,8 @@ def login(request):
             return HttpResponseRedirect(next_param)
 
     elif 'username' in request.POST:
+        messages.error(request,
+                       _('Incorrect username or password.'))
         # Hitting POST directly because cleaned_data doesn't exist
         user = UserProfile.objects.filter(email=request.POST['username'])
 
