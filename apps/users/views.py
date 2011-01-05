@@ -78,6 +78,12 @@ def login(request):
     return r
 
 
+@anonymous_only
+def login_openid(request):
+    return render_to_response('users/login_openid.html', {},
+                              context_instance=RequestContext(request))
+
+
 @login_required
 def logout(request):
     """Destroy user session."""
@@ -122,6 +128,13 @@ def register(request):
     return render_to_response('users/register.html', {
         'form': form,
     }, context_instance=RequestContext(request))
+
+
+@anonymous_only
+def register_openid(request):
+    # stub
+    return render_to_response('users/register_openid.html', {},
+                              context_instance=RequestContext(request))
 
 
 def user_list(request):
