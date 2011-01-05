@@ -37,16 +37,18 @@
           {{ form.email.errors }}
         </p>
         <p>
-          <label for="newsletter">
-            <input type="checkbox" name="newsletter" value="">
+          <label for="id_newsletter">
+	    {{ form.newsletter }}
             {{ _('Please send me the Drumbeat newsletter.') }}
           </label>
+	  {{ form.newsletter.errors }}
         </p>
         <p>
-          <label for="copyleft">
-            <input type="checkbox" name="copyleft" value="">
+          <label for="id_policy_optin">
+	    {{ form.policy_optin }}
             {{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}
           </label>
+	  {{ form.policy_optin.errors }}
         </p>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
         <p>
