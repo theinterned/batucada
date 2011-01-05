@@ -36,18 +36,20 @@
           {{ form.email }}
           {{ form.email.errors }}
         </p>
-        <p>
-          <label for="newsletter">
-            <input type="checkbox" name="newsletter" value="">
-            <small>{{ _('Please send me the Drumbeat newsletter.') }}</small>
-          </label>
-        </p>
-        <p>
-          <label for="copyleft">
-            <input type="checkbox" name="copyleft" value="">
-            <small>{{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
-          </label>
-        </p>
+        <div class="consents">
+          <p>
+            <label for="newsletter">
+              <input type="checkbox" name="newsletter" value="">
+              <small>{{ _('Please send me the Drumbeat newsletter.') }}</small>
+            </label>
+          </p>
+          <p>
+            <label for="copyleft">
+              <input type="checkbox" name="copyleft" value="">
+              <small>{{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
+            </label>
+          </p>
+        </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
         <p>
           {{ form.recaptcha }}
