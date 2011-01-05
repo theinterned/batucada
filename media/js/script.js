@@ -33,69 +33,78 @@ var createPostTextArea = function() {
 };
 
 var batucada = {
-    splash: {
-	onload: function() {
-	}
-    },
-    dashboard: {
-	onload: function() {
-	    createPostTextArea();
-	    $('#post-update').bind('click', function() {
-		$('#post-status-update').submit();
-	    });
-	    $('a.activity-delete').bind('click', function(e) {
-		$(e.target).parent().submit();
-		return false;
-	    });
-	}
-    },
-    project_landing: {
-	onload: function() {
-	    createPostTextArea();
-	    $('#post-project-update').bind('click', function() {
-		$('#post-project-status-update').submit();
-	    });
-	}
-    },
-    user_profile: {
-	onload: function() {
-		createPostTextArea();
-	    $('#post-user-update').bind('click', function() {
-		$('#post-user-status-update').submit();
-	    });
-	}
-    },
-    inbox: {
-	onload: function() {
-	    $('a#inbox_more').bind('click', function(e) {
-		e.preventDefault();
-		var template = $('#message-template');
-		var page = template.attr('page');
-		var npages = template.attr('npages');
-		var url = $(this).attr('href');
-		$.getJSON(url, function(data) {
-		    $(data).each(function(i, value) {
-			var msg = template.tmpl(value);
-			msg.hide();
-			$('#posts').append(msg);
-			$('li.post-container:last').fadeIn(function() {
-			    $('html').animate({
-				'scrollTop': $('a#inbox_more').offset().top
-			    }, 200);
-			});
-		    });
-		    next_page = parseInt(page) + 1;
-		    template.attr('page', next_page);
-		    if (next_page > parseInt(npages)) {
-			$('a#inbox_more').hide();
-		    }
-		    // update more link. very hacky :( 
-		    var href = $('a#inbox_more').attr('href');
-		    var new_href = href.substr(0, href.length - 2) + next_page + '/';
-		    $('a#inbox_more').attr('href', new_href);
-		});
-	    });
-	}
+  splash: {
+    onload: function() {
+    }
+  },
+  signup: {
+    onload: function(){
+      var userurl = $('#username .hint b').html();
+      $('#id_username').keyup(function(){
+        var val = (this.value) ? this.value : userurl;
+        $(this).parent('p').find('.hint b').html(val);
+      }).keyup()
+    }
+  },
+  dashboard: {
+    onload: function() {
+      createPostTextArea();
+      $('#post-update').bind('click', function() {
+        $('#post-status-update').submit();
+      });
+      $('a.activity-delete').bind('click', function(e) {
+        $(e.target).parent().submit();
+        return false;
+      });
+    }
+  },
+  project_landing: {
+    onload: function() {
+      createPostTextArea();
+      $('#post-project-update').bind('click', function() {
+        $('#post-project-status-update').submit();
+      });
+    }
+  },
+  user_profile: {
+    onload: function() {
+      createPostTextArea();
+      $('#post-user-update').bind('click', function() {
+        $('#post-user-status-update').submit();
+      });
+    }
+  },
+  inbox: {
+    onload: function() {
+      $('a#inbox_more').bind('click', function(e) {
+        e.preventDefault();
+        var template = $('#message-template');
+        var page = template.attr('page');
+        var npages = template.attr('npages');
+        var url = $(this).attr('href');
+        $.getJSON(url, function(data) {
+          $(data).each(function(i, value) {
+            var msg = template.tmpl(value);
+            msg.hide();
+            $('#posts').append(msg);
+            $('li.post-container:last').fadeIn(function() {
+              $('html').animate({
+                'scrollTop': $('a#inbox_more').offset().top
+                }, 200);
+              });
+            });
+            next_page = parseInt(page) + 1;
+            template.attr('page', next_page);
+            if (next_page > parseInt(npages)) {
+              $('a#inbox_more').hide();
+            }
+            // update more link. very hacky :( 
+              var href = $('a#inbox_more').attr('href');
+              var new_href = href.substr(0, href.length - 2) + next_page + '/';
+              $('a#inbox_more').attr('href', new_href);
+            });
+          });
+      }
     }
 };
 
