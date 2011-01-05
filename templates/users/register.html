@@ -18,7 +18,7 @@
         <p>
           <label for="id_username">{{ _('Username') }}</label>
           {{ form.username }}
-          <span class="hint">Your public profile: http://drumbeat.org/<b>username</b></span>
+          <small class="hint">Your public profile: http://drumbeat.org/<b>username</b></small>
           {{ form.username.errors }}
         </p>
         <p class="password">
@@ -39,13 +39,13 @@
         <p>
           <label for="newsletter">
             <input type="checkbox" name="newsletter" value="">
-            {{ _('Please send me the Drumbeat newsletter.') }}
+            <small>{{ _('Please send me the Drumbeat newsletter.') }}</small>
           </label>
         </p>
         <p>
           <label for="copyleft">
             <input type="checkbox" name="copyleft" value="">
-            {{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}
+            <small>{{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
           </label>
         </p>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}

@@ -233,10 +233,12 @@ input[type=radio] {
 	height: 18px;
 	width: 18px;
 	}
-form .hint {
+form small {
 	font-size: 11px;
-	color: #919191;
 	}		
+form .hint {
+	color: #919191;
+	}
 /* 
  * LAYOUT 
  */
