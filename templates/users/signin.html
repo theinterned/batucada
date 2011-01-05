@@ -17,7 +17,7 @@
           {{ form.username.errors }}
         </p>
         <p>
-          <label for="id_password">{{ _('Password') }} <span class="hint">(<a href="{% locale_url users_forgot_password %}" tabindex="6">{{ _('Forgot your password?') }}</a>)</span></label>
+          <label for="id_password">{{ _('Password') }} <small class="hint">(<a href="{% locale_url users_forgot_password %}" tabindex="6">{{ _('Forgot your password?') }}</a>)</small></label>
           {{ form.password }}
           {{ form.password.errors }}          
         </p>
