@@ -1,0 +1,7 @@
+-r prod.txt
+
+ipython==0.10.1
+nose==0.11.1
+
+-e git://github.com/jbalogh/django-nose#egg=django-nose
+-e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar

@@ -107,7 +107,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django_nose',
     'south',
     'jogging',
     'wellknown',
@@ -132,6 +131,7 @@ INSTALLED_APPS = (
 if DEBUG:
     INSTALLED_APPS += (
         'debug_toolbar',
+        'django_nose',
     )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -203,3 +203,6 @@ SUPERFEEDR_PASSWORD = ''
 # django-push settings
 PUSH_CREDENTIALS = 'links.utils.hub_credentials'
 SOUTH_TESTS_MIGRATE = False
+
+# Feed to show contents of on the splash page
+SPLASH_PAGE_FEED = 'http://planet.drumbeat.org/atom.xml'
