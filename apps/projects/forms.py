@@ -1,30 +1,69 @@
 import datetime
+import logging
 
 from django import forms
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
+from links.models import Link
 from messages.models import Message
-from projects.models import Project
+from projects.models import Project, ProjectMedia
+
+log = logging.getLogger(__name__)
 
 
-class ProtectedProjectForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(ProtectedProjectForm, self).__init__(*args, **kwargs)
-        protected = getattr(self.Meta, 'protected')
-        project = kwargs.get('instance', None)
-
-        if not project or not project.featured:
-            for field in protected:
-                self.fields.pop(field)
-
-
-class ProjectForm(ProtectedProjectForm):
+class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('created_by', 'slug', 'featured')
-        protected = ('template', 'css')
+        fields = ('name', 'short_description', 'long_description')
+
+
+class ProjectDescriptionForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('detailed_description',)
+
+
+class ProjectLinksForm(forms.ModelForm):
+
+    class Meta:
+        model = Link
+        fields = ('name', 'url',)
+
+
+class ProjectMediaForm(forms.ModelForm):
+
+    allowed_content_types = (
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'video/ogg',
+        'video/webm',
+        'video/mp4',
+        'application/ogg',
+    )
+
+    class Meta:
+        model = ProjectMedia
+        fields = ('project_file',)
+
+    def clean_project_file(self):
+        content_type = self.cleaned_data['project_file'].content_type
+        if not content_type in self.allowed_content_types:
+            log.warn("Attempt to upload unsupported file type: %s" % (
+                content_type,))
+            raise ValidationError(_('Unsupported file type.'))
+        if self.cleaned_data['project_file'].size > settings.MAX_UPLOAD_SIZE:
+            max_size = settings.MAX_UPLOAD_SIZE / 1024 / 1024
+            raise ValidationError(
+                _("File exceeds max file size: %(max)dMB" % {
+                    'max': max_size,
+                 }),
+            )
+        return self.cleaned_data['project_file']
 
 
 class ProjectContactUsersForm(forms.Form):
@@ -57,7 +96,7 @@ class ProjectContactUsersForm(forms.Form):
         for r in recipients:
             msg = Message(
                 sender=sender,
-                recipient=r,
+                recipient=r.user,
                 subject=subject,
                 body=body,
             )

@@ -7,64 +7,23 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
-        # Adding model 'RemoteObject'
-        db.create_table('activity_remoteobject', (
+        
+        # Adding model 'ProjectMedia'
+        db.create_table('projects_projectmedia', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('object_type', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('link', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['links.Link'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('uri', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('project_file', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'])),
         ))
-        db.send_create_signal('activity', ['RemoteObject'])
-
-        # Adding model 'Activity'
-        db.create_table('activity_activity', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('actor', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.UserProfile'])),
-            ('verb', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['statuses.Status'], null=True)),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'], null=True)),
-            ('target_user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='target_user', null=True, to=orm['users.UserProfile'])),
-            ('remote_object', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['activity.RemoteObject'], null=True)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['activity.Activity'], null=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('activity', ['Activity'])
+        db.send_create_signal('projects', ['ProjectMedia'])
 
 
     def backwards(self, orm):
-
-        # Deleting model 'RemoteObject'
-        db.delete_table('activity_remoteobject')
-
-        # Deleting model 'Activity'
-        db.delete_table('activity_activity')
+        
+        # Deleting model 'ProjectMedia'
+        db.delete_table('projects_projectmedia')
 
 
     models = {
-        'activity.activity': {
-            'Meta': {'object_name': 'Activity'},
-            'actor': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['activity.Activity']", 'null': 'True'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
-            'remote_object': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['activity.RemoteObject']", 'null': 'True'}),
-            'status': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['statuses.Status']", 'null': 'True'}),
-            'target_user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'target_user'", 'null': 'True', 'to': "orm['users.UserProfile']"}),
-            'verb': ('django.db.models.fields.URLField', [], {'max_length': '200'})
-        },
-        'activity.remoteobject': {
-            'Meta': {'object_name': 'RemoteObject'},
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'link': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['links.Link']"}),
-            'object_type': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'uri': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True'})
-        },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -101,45 +60,23 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'links.link': {
-            'Meta': {'object_name': 'Link'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
-            'subscription': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['subscriber.Subscription']", 'null': 'True'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']", 'null': 'True'})
-        },
         'projects.project': {
             'Meta': {'object_name': 'Project'},
-            'call_to_action': ('django.db.models.fields.TextField', [], {}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projects'", 'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
-            'css': ('django.db.models.fields.TextField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 30)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'detailed_description': ('django.db.models.fields.TextField', [], {}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'long_description': ('django.db.models.fields.TextField', [], {}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'template': ('django.db.models.fields.TextField', [], {})
+            'short_description': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'})
         },
-        'statuses.status': {
-            'Meta': {'object_name': 'Status'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.UserProfile']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
+        'projects.projectmedia': {
+            'Meta': {'object_name': 'ProjectMedia'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
-            'status': ('django.db.models.fields.CharField', [], {'max_length': '750'})
-        },
-        'subscriber.subscription': {
-            'Meta': {'object_name': 'Subscription'},
-            'hub': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'lease_expiration': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'secret': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'topic': ('django.db.models.fields.URLField', [], {'max_length': '1023'}),
-            'verified': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'verify_token': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']"}),
+            'project_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100'})
         },
         'taggit.tag': {
             'Meta': {'object_name': 'Tag'},
@@ -163,7 +100,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'UserProfile'},
             'bio': ('django.db.models.fields.TextField', [], {'default': "''", 'blank': 'True'}),
             'confirmation_code': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 29)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.date(2010, 12, 30)', 'auto_now_add': 'True', 'blank': 'True'}),
             'display_name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'unique': 'True', 'null': 'True'}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -176,4 +113,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['activity']
+    complete_apps = ['projects']

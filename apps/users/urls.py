@@ -5,8 +5,10 @@ from users import forms
 urlpatterns = patterns('',
 
   # Login / auth urls
-  url(r'^login/', 'users.views.login',
+  url(r'^login/$', 'users.views.login',
       name='users_login'),
+  url(r'^login/openid/$', 'users.views.login_openid',
+      name='users_login_openid'),
   url(r'^logout/', 'users.views.logout',
       name='users_logout'),
 
@@ -39,8 +41,10 @@ urlpatterns = patterns('',
       name='users_user_list'),
 
   # Registration urls
-  url(r'^register/', 'users.views.register',
+  url(r'^register/$', 'users.views.register',
       name='users_register'),
+  url(r'^register/openid/$', 'users.views.register_openid',
+      name='users_register_openid'),
   url(r'^confirm/resend/(?P<username>[\w ]+)/$',
       'users.views.confirm_resend',
       name='users_confirm_resend'),

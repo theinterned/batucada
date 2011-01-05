@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from activity.feeds import UserActivityFeed
+from activity import feeds
 
 
 urlpatterns = patterns('',
@@ -8,6 +8,10 @@ urlpatterns = patterns('',
         name='activity_index'),
     url(r'^activity/delete/$', 'activity.views.delete',
         name='activity_delete'),
-    url(r'^(?P<username>[\w-]+)/feed', UserActivityFeed(),
+    url(r'^(?P<username>[\w-]+)/feed$', feeds.UserActivityFeed(),
         name='activity_user_feed'),
+    url(r'^projects/(?P<project>[\w-]+)/feed$', feeds.ProjectActivityFeed(),
+        name='activity_project_feed'),
+    url(r'^feed$', feeds.DashboardFeed(),
+        name='activity_dashboard_feed'),
 )

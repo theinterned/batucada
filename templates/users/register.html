@@ -39,15 +39,17 @@
         <div class="consents">
           <p>
             <label for="newsletter">
-              <input type="checkbox" name="newsletter" value="">
+              {{ form.newsletter }}
               <small>{{ _('Please send me the Drumbeat newsletter.') }}</small>
             </label>
+            {{ form.newsletter.errors }}
           </p>
           <p>
             <label for="copyleft">
-              <input type="checkbox" name="copyleft" value="">
+              {{ form.policy_optin }}
               <small>{{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
             </label>
+            {{ form.policy_optin.errors }}
           </p>
         </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
@@ -69,7 +71,7 @@
         <p class="submit">
           <button type="submit">{{ _('Create Account') }}</button>
           {{ _('or sign up using') }}
-          <a class="openid" href="#">{{ _('OpenID')}}</a>
+          <a class="openid" href="{% locale_url users_register_openid %}">{{ _('OpenID')}}</a>
         </p>
       </form>
     </fieldset>

@@ -13,6 +13,10 @@ from relationships.models import Relationship
 import caching.base
 
 
+def determine_upload_path(instance, filename):
+    return "images/%s/%s" % (instance.project.slug, filename)
+
+
 class ProjectManager(caching.base.CachingManager):
     def get_popular(self, limit=0):
         statuses = Status.objects.values('project_id').annotate(
@@ -26,15 +30,16 @@ class Project(ModelBase):
     """Placeholder model for projects."""
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
+
     name = models.CharField(max_length=100, unique=True)
+    short_description = models.CharField(max_length=100)
+    long_description = models.TextField()
+    detailed_description = models.TextField()
+
     slug = models.SlugField(unique=True)
-    description = models.TextField()
-    call_to_action = models.TextField()
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='projects')
     featured = models.BooleanField()
-    template = models.TextField()
-    css = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
@@ -43,7 +48,7 @@ class Project(ModelBase):
     def followers(self):
         """Return a list of users following this project."""
         relationships = Relationship.objects.select_related(
-            'source').filter(target_project=self)
+            'source', 'created_by').filter(target_project=self)
         return [rel.source for rel in relationships]
 
     def __unicode__(self):
@@ -67,9 +72,13 @@ class Project(ModelBase):
             self.slug = slug + str(count)
             count += 1
         super(Project, self).save()
-
-
 admin.site.register(Project)
+
+
+class ProjectMedia(ModelBase):
+    project_file = models.FileField(upload_to=determine_upload_path)
+    project = models.ForeignKey(Project)
+    mime_type = models.CharField(max_length=80, null=True)
 
 ###########
 # Signals #

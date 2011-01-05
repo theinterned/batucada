@@ -26,6 +26,8 @@ class Activity(ModelBase):
     project = models.ForeignKey('projects.Project', null=True)
     target_user = models.ForeignKey('users.UserProfile', null=True,
                                     related_name='target_user')
+    target_project = models.ForeignKey('projects.Project', null=True,
+                                       related_name='target_project')
     remote_object = models.ForeignKey(RemoteObject, null=True)
     parent = models.ForeignKey('self', null=True)
     created_on = models.DateTimeField(auto_now_add=True)

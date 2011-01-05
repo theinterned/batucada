@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block title %}{{ _('Sign Up') }}{% endblock %}
+{% block bodyid %}signup_openid{% endblock %}
+{% block bodyclasses %}signin{% endblock %}
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>{{ _('Create a New Account') }} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}">{{_('sign in')}}</a></span></h1>
+    <fieldset>
+      <form action="{% locale_url users_register_openid %}" method="post">
+        {% csrf_token %}
+      </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}
