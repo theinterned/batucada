@@ -1448,6 +1448,12 @@ header {}
 .signin .modal article .password input[type=password] {
 	width: 149px;
 	}
+.signin .modal .consents {
+	margin-bottom: 1.4em;
+	}
+.signin .modal .consents p {
+	margin-bottom: 0;
+	}	
 body#signup .modal button[type=submit] {
 	width: auto;
 	} 
