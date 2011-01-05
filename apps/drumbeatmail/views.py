@@ -100,7 +100,7 @@ def generic_inbox(request, query_method, query_args, page_number,
     count = msgs.count()
     (n_pages, start, end) = get_pagination_options(count, page_number)
 
-    if page_number > n_pages:
+    if n_pages > 0 and page_number > n_pages:
         return http.HttpResponseRedirect(redirect)
 
     inbox = msgs.select_related('sender')[start:end]
