@@ -126,7 +126,6 @@ class UserProfile(ModelBase):
         """Make a django.contrib.auth.models.User for this UserProfile."""
         self.user = User(id=self.pk)
         self.user.username = self.email
-        self.user.password = self.password
         self.user.email = self.email
         self.user.date_joined = self.created_on
         self.user.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -155,7 +154,7 @@ class UserProfile(ModelBase):
                                                            string.digits, 60))
         return self.confirmation_code
 
-    def set_password(self, raw_password, algorithm='sha256'):
+    def set_password(self, raw_password, algorithm='sha512'):
         self.password = create_password(algorithm, raw_password)
 
     def check_password(self, raw_password):
