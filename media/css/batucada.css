@@ -1390,6 +1390,7 @@ header {}
 	}
 .signin .modal{
 	padding: 10px;
+	margin-bottom: 72px;
 	width: 420px;
 	font-size: 14px;
 	line-height: 18px;
