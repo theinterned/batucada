@@ -31,8 +31,7 @@
         <p class="submit">
           <button type="submit">{{ _('Sign In') }}</button>
           {{ _('or use') }}
-          <!-- TODO link up to openid signin page -->
-          <a class="openid" href="#">{{ _('OpenID')}}</a>
+          <a class="openid" href="{% locale_url users_login_openid %}">{{ _('OpenID')}}</a>
         </p>
       </form>      
       <p id="forgot_password"><a href="{% locale_url users_forgot_password %}">{{ _('Forgot your password?') }}</a></p>
