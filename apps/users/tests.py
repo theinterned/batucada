@@ -87,3 +87,19 @@ class TestLogins(TestCase):
         # we expect the header to be urlencoded before being sent.
         self.assertTrue('login/foo%0D%0ALocation' in response['location'])
         self.assertNotEqual('http://example.com', response['location'])
+
+    def test_registration_opt_in(self):
+        """Test account registration."""
+        path = "/%s/register/" % (self.locale,)
+        params = {
+            'display_name': 'Joe User',
+            'username': 'joeuser',
+            'password': 'abcdefghijklmno',
+            'password_confirm': 'abcdefghijklmno',
+            'email': 'joe@mozilla.com',
+        }
+        response = self.client.post(path, params)
+        self.assertContains(response, 'You must agree to the licensing terms')
+        params['policy_optin'] = 'on'
+        response = self.client.post(path, params)
+        self.assertEqual(response.status_code, 302)
