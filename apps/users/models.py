@@ -78,6 +78,7 @@ class UserProfile(ModelBase):
         max_length=255, default='', blank=True)
     location = models.CharField(max_length=255, blank=True, default='')
     featured = models.BooleanField()
+    newsletter = models.BooleanField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
