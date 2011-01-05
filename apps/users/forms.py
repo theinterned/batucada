@@ -12,7 +12,12 @@ from drumbeat.utils import slug_validator
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
-    remember_me = forms.BooleanField(required=False)
+    username    =   forms.CharField(widget=forms.TextInput(attrs={'tabindex':'1'}))
+    password    =   forms.CharField(
+                        max_length=255,
+                        widget=forms.PasswordInput(attrs={'tabindex':'2'}, render_value=False))                        
+    remember_me =   forms.BooleanField(required=False,
+                        widget=forms.CheckboxInput(attrs={'tabindex':'3'}))
 
 
 class SetPasswordForm(auth_forms.SetPasswordForm):

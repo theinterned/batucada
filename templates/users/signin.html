@@ -7,7 +7,7 @@
 {% block body %}
 <section class="modal">
   <article>
-    <h1>{{ _('Sign In') }} <span class="pester">or <a href="{% locale_url users_register %}">create an account</a></span></h1>
+    <h1>{{ _('Sign In') }} <span class="pester">or <a href="{% locale_url users_register %}" tabindex="7">create an account</a></span></h1>
     <fieldset>
         <form action="{% locale_url users_login %}" method="post">
         {% csrf_token %}
@@ -17,9 +17,9 @@
           {{ form.username.errors }}
         </p>
         <p>
-          <label for="id_password">{{ _('Password') }}</label>
+          <label for="id_password">{{ _('Password') }} <span class="hint">(<a href="{% locale_url users_forgot_password %}" tabindex="6">{{ _('Forgot your password?') }}</a>)</span></label>
           {{ form.password }}
-          {{ form.password.errors }}
+          {{ form.password.errors }}          
         </p>
         <p>
           <label for="id_remember_me">
@@ -29,13 +29,12 @@
           </label>
         </p>        
         <p class="submit">
-          <button type="submit">{{ _('Sign In') }}</button>
+          <button type="submit" tabindex="4">{{ _('Sign In') }}</button>
           {{ _('or use') }}
           <!-- TODO link up to openid signin page -->
-          <a class="openid" href="#">{{ _('OpenID')}}</a>
+          <a class="openid" href="#" tabindex="5">{{ _('OpenID')}}</a>
         </p>
       </form>      
-      <p id="forgot_password"><a href="{% locale_url users_forgot_password %}">{{ _('Forgot your password?') }}</a></p>
     </fieldset>
   </article>
 </section>
