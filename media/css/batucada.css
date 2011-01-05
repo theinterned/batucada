@@ -1465,74 +1465,17 @@ footer .container {
 	border-top: 1px solid #d5d6d8;
 	padding: 9px 0 7px;
 	}
-footer form#newsletter {
+footer #newsletter {
 	float: left;
 	}
-footer form#newsletter input{
+footer #newsletter p{
 	margin: 0;
-	}	
-footer form#newsletter button {
-	padding: 0 9px;
-	margin: 0;
-	height: 27px;
-	vertical-align: middle;
 	line-height: 27px;
-	color: #3b3b3b;
-	font-weight: normal;
-	text-shadow: none;
-	border: 1px solid #dadada;
-	border-radius:3px;
-	background: #FFFFFF; /* old browsers */
-	background: -moz-linear-gradient(top, 
-		#FFFFFF 49%, 
-		#F6F6F6 50%);
-	background: -webkit-gradient(linear, left top, left bottom, 
-		color-stop(49%,#FFFFFF), 
-		color-stop(50%,#F6F6F6));
-	filter: progid:DXImageTransform.Microsoft.gradient( 
-		startColorstr='#FFFFFF', 
-		endColorstr='#F6F6F6',GradientType=0 );
-	box-shadow: 
-		inset 0px -1px 2px #fff,
-		1px 1px rgba(255,255,255,0.7);
-	-moz-box-shadow: 
-		inset 0px -1px 2px #fff,
-		1px 1px rgba(255,255,255,0.7);
-	-webkit-box-shadow: 
-		inset 0px -1px 2px #fff,
-		1px 1px rgba(255,255,255,0.7);	
+	font-size: 14px;
 	}
-footer form#newsletter button:hover {
-	opacity: 0.7;
-	}
-footer form#newsletter button:focus {
-	box-shadow: 
-		inset 0px -1px 2px #fff,
-		1px 1px rgba(255,255,255,0.7),
-		0 0 1px 1px #e5f6ff, 
-	    0 0 4px 2px #3ea1e6;
-	-moz-box-shadow: 
-		inset 0px -1px 2px #fff,
-		1px 1px rgba(255,255,255,0.7),
-		0 0 1px 1px #e5f6ff, 
-	    0 0 4px 2px #3ea1e6;
-	-webkit-box-shadow: 
-		inset 0px -1px 2px #fff,
-		1px 1px rgba(255,255,255,0.7),
-		0 0 1px 1px #e5f6ff, 
-	    0 0 4px 2px #3ea1e6;
-	}	
-footer form#newsletter button:active {
-	background: #F6F6F6; /* old browsers */
-	background: -moz-linear-gradient(top, 
-		#F6F6F6 49%, 
-		#FFFFFF 50%);
-	background: -webkit-gradient(linear, left top, left bottom, 
-		color-stop(49%,#F6F6F6), 
-		color-stop(50%,#FFFFFF));
-	filter: progid:DXImageTransform.Microsoft.gradient( 
-		startColorstr='#F6F6F6', 
-		endColorstr='#FFFFFF',GradientType=0 );
+footer #newsletter a{
+	background: url(/media/images/reply.icon.png) 0 2px no-repeat;
+	padding-left: 25px;
 	}
 footer nav {
 	float: right;
