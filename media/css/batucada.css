@@ -942,6 +942,7 @@ header {}
       }
       #create-post input{
 	  	color: #999;
+	  	margin-bottom: 0;
 	  }
       #create-post textarea, #create-post .status-and-actions {
         display: none;
