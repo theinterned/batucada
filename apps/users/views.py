@@ -25,6 +25,28 @@ from activity.models import Activity
 log = logging.getLogger(__name__)
 
 
+def render_openid_failure(request, message, status, template_name):
+    if request.method == 'POST':
+        form = forms.OpenIDForm(request.POST)
+    else:
+        form = forms.OpenIDForm()
+    response = render_to_string(template_name, {
+        'message': message,
+        'form': form,
+    }, context_instance=RequestContext(request))
+    return http.HttpResponse(response, status=status)
+
+
+def render_openid_registration_failure(request, message, status=403):
+    return render_openid_failure(
+        request, message, status, 'users/register_openid.html')
+
+
+def render_openid_login_failure(request, message, status=403):
+    return render_openid_failure(
+        request, message, status, 'users/login_openid.html')
+
+
 @anonymous_only
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
@@ -83,8 +105,24 @@ def login(request):
 
 @anonymous_only
 def login_openid(request):
-    return render_to_response('users/login_openid.html', {},
-                              context_instance=RequestContext(request))
+    if request.method == 'POST':
+        return openid_views.login_begin(
+            request,
+            template_name='users/login_openid.html',
+            form_class=forms.OpenIDForm,
+            login_complete_view='users_login_openid_complete')
+    else:
+        form = forms.OpenIDForm()
+    return render_to_response('users/login_openid.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+@anonymous_only
+def login_openid_complete(request):
+    setattr(settings, 'OPENID_CREATE_USERS', False)
+    return openid_views.login_complete(
+        request, render_failure=render_openid_failure)
 
 
 @login_required
@@ -149,27 +187,11 @@ def register_openid(request):
     }, context_instance=RequestContext(request))
 
 
-def render_openid_failure(request, message, status=403,
-                          template_name='users/register_openid.html'):
-    if request.method == 'POST':
-        form = forms.OpenIDForm(request.POST)
-    else:
-        form = forms.OpenIDForm()
-    response = render_to_string(template_name, {
-        'message': message,
-        'form': form,
-    }, context_instance=RequestContext(request))
-    return http.HttpResponse(response, status=status)
-
-
+@anonymous_only
 def register_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', True)
-    r = openid_views.login_complete(
-        request, render_failure=render_openid_failure)
-    if isinstance(r, http.HttpResponseRedirect):
-        # success - create a UserProfile from the user
-        pass
-    return r
+    return openid_views.login_complete(
+        request, render_failure=render_openid_registration_failure)
 
 
 def user_list(request):
