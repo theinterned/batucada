@@ -9,6 +9,8 @@ urlpatterns = patterns('',
       name='users_login'),
   url(r'^login/openid/$', 'users.views.login_openid',
       name='users_login_openid'),
+  url(r'^login/openid/complete/$', 'users.views.login_openid_complete',
+      name='users_login_openid_complete'),
   url(r'^logout/', 'users.views.logout',
       name='users_logout'),
 
