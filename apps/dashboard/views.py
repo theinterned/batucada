@@ -15,8 +15,11 @@ from dashboard.models import FeedEntry
 @anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
+    project = None
+    projects = Project.objects.filter(featured=True)
+    if projects:
+        project = random.choice(projects)
     activities = Activity.objects.all().order_by('-created_on')[0:10]
-    project = random.choice(Project.objects.filter(featured=True))
     feed_entries = FeedEntry.objects.all().order_by('-created_on')[0:4]
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
     return render_to_response('dashboard/splash.html', {
