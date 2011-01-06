@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'django_push.subscriber',
     'djcelery',
     'events',
+    'django_openid_auth',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -153,6 +154,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 AUTHENTICATION_BACKENDS = (
     'users.backends.CustomUserBackend',
+    'django_openid_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
