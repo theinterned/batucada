@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -6,18 +8,34 @@ from django.utils.translation import ugettext as _
 
 from captcha import fields as captcha_fields
 
+from users.blacklist import passwords as blacklisted_passwords
 from users.models import UserProfile
 from links.models import Link
 from drumbeat.utils import slug_validator
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
-    username    =   forms.CharField(widget=forms.TextInput(attrs={'tabindex':'1'}))
-    password    =   forms.CharField(
-                        max_length=255,
-                        widget=forms.PasswordInput(attrs={'tabindex':'2'}, render_value=False))                        
-    remember_me =   forms.BooleanField(required=False,
-                        widget=forms.CheckboxInput(attrs={'tabindex':'3'}))
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'tabindex': '1'}))
+    password = forms.CharField(
+        max_length=255,
+        widget=forms.PasswordInput(attrs={'tabindex': '2'},
+                                   render_value=False))
+    remember_me = forms.BooleanField(required=False,
+                                     widget=forms.CheckboxInput(
+                                         attrs={'tabindex': '3'}))
+
+
+def check_password_complexity(password):
+    message = _('Password must be at least 8 ' +
+                'characters long and contain ' +
+                'both numbers and letters')
+    if len(password) < 8 or not (
+        re.search('[A-Za-z]', password) and re.search('[0-9]', password)):
+        return message
+    if password in blacklisted_passwords:
+        return _('That password is too common. Please choose another.')
+    return None
 
 
 class SetPasswordForm(auth_forms.SetPasswordForm):
@@ -28,6 +46,13 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
         # make sure to set the password in the user profile
         if isinstance(self.user, User):
             self.user = self.user.get_profile()
+
+    def clean_new_password1(self):
+        password = self.cleaned_data['new_password1']
+        message = check_password_complexity(password)
+        if message:
+            self._errors['new_password1'] = forms.util.ErrorList([message])
+        return password
 
 
 class RegisterForm(forms.ModelForm):
@@ -55,6 +80,13 @@ class RegisterForm(forms.ModelForm):
         username = self.cleaned_data['username']
         slug_validator(username, lower=False)
         return username
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        message = check_password_complexity(password)
+        if message:
+            self._errors['password'] = forms.util.ErrorList([message])
+        return password
 
     def clean(self):
         """Ensure password and password_confirm match."""
