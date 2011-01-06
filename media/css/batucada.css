@@ -1504,6 +1504,9 @@ body#signup .modal button[type=submit] {
 	}
 .openid_providers a:hover {	
 	background-color: #DBFDFF;
+	box-shadow:inset #DBFDFF 0 0 0 1px, inset rgba(255,255,255,0.9) 0 0 4px 3px;
+	-moz-box-shadow:inset #DBFDFF 0 0 0 1px, inset rgba(255,255,255,0.9) 0 0 4px 3px;
+	-webkit-box-shadow:inset #DBFDFF 0 0 0 1px, inset rgba(255,255,255,0.9) 0 0 4px 3px;
 	}		
 .openid_providers.featured a{
 	width: 104px; height: 58px;
