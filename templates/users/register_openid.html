@@ -7,9 +7,20 @@
 <section class="modal">
   <article>
     <h1>{{ _('Create a New Account') }} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}">{{_('sign in')}}</a></span></h1>
+    {% if message %}<p>{{ message }}</p>{% endif %}
     <fieldset>
       <form action="{% locale_url users_register_openid %}" method="post">
         {% csrf_token %}
+	<p>
+	  <label for="id_openid_identifier">{{ _('OpenID:') }}</label>
+	</p>
+	<p>
+	  {{ form.openid_identifier }}
+	  {{ form.openid_identifier.errors }}
+	</p>
+	<p class="submit">
+	  <button type="submit">{{ _('Sign Up') }}</button>
+	</p>
       </form>
     </fieldset>
   </article>

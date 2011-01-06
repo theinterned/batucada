@@ -55,6 +55,10 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
         return password
 
 
+class OpenIDForm(forms.Form):
+    openid_identifier = forms.URLField()
+
+
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(
         max_length=255,

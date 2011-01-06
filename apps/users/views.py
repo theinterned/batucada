@@ -1,15 +1,18 @@
 import logging
 
+from django import http
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.template.loader import render_to_string
+
+from django_openid_auth import views as openid_views
 
 from users import forms
 from users.models import UserProfile
@@ -34,7 +37,7 @@ def login(request):
     r = auth_views.login(request, template_name='users/signin.html',
                          authentication_form=forms.AuthenticationForm)
 
-    if isinstance(r, HttpResponseRedirect):
+    if isinstance(r, http.HttpResponseRedirect):
         # Succsesful log in according to django.  Now we do our checks.  I do
         # the checks here instead of the form's clean() because I want to use
         # the messages framework and it's not available in the request there
@@ -67,7 +70,7 @@ def login(request):
         next_param = request.session.get('next', None)
         if next_param:
             del request.session['next']
-            return HttpResponseRedirect(next_param)
+            return http.HttpResponseRedirect(next_param)
 
     elif 'username' in request.POST:
         messages.error(request,
@@ -88,7 +91,7 @@ def login_openid(request):
 def logout(request):
     """Destroy user session."""
     auth.logout(request)
-    return HttpResponseRedirect(reverse('dashboard_index'))
+    return http.HttpResponseRedirect(reverse('dashboard_index'))
 
 
 @anonymous_only
@@ -119,7 +122,7 @@ def register(request):
                     'registration.').format(user.email)
             messages.info(request, msg)
 
-            return HttpResponseRedirect(reverse('dashboard_index'))
+            return http.HttpResponseRedirect(reverse('dashboard_index'))
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -132,9 +135,41 @@ def register(request):
 
 @anonymous_only
 def register_openid(request):
-    # stub
-    return render_to_response('users/register_openid.html', {},
-                              context_instance=RequestContext(request))
+    if request.method == 'POST':
+        r = openid_views.login_begin(
+            request,
+            template_name='users/register_openid.html',
+            form_class=forms.OpenIDForm,
+            login_complete_view='users_register_openid_complete')
+        return r
+    else:
+        form = forms.OpenIDForm()
+    return render_to_response('users/register_openid.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+def render_openid_failure(request, message, status=403,
+                          template_name='users/register_openid.html'):
+    if request.method == 'POST':
+        form = forms.OpenIDForm(request.POST)
+    else:
+        form = forms.OpenIDForm()
+    response = render_to_string(template_name, {
+        'message': message,
+        'form': form,
+    }, context_instance=RequestContext(request))
+    return http.HttpResponse(response, status=status)
+
+
+def register_openid_complete(request):
+    setattr(settings, 'OPENID_CREATE_USERS', True)
+    r = openid_views.login_complete(
+        request, render_failure=render_openid_failure)
+    if isinstance(r, http.HttpResponseRedirect):
+        # success - create a UserProfile from the user
+        pass
+    return r
 
 
 def user_list(request):
@@ -158,12 +193,12 @@ def confirm_registration(request, token, username):
             request,
            _('Hmm, that doesn\'t look like the correct confirmation code'))
         log.info('Account confirmation failed for %s' % (profile,))
-        return HttpResponseRedirect(reverse('users_login'))
+        return http.HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
     messages.success(request, 'Success! You have verified your account. '
                      'You may now sign in.')
-    return HttpResponseRedirect(reverse('users_login'))
+    return http.HttpResponseRedirect(reverse('users_login'))
 
 
 @anonymous_only
@@ -180,7 +215,7 @@ def confirm_resend(request, username):
         msg = _('A confirmation code has been sent to the email address '
                 'associated with your account.')
         messages.info(request, msg)
-    return HttpResponseRedirect(reverse('users_login'))
+    return http.HttpResponseRedirect(reverse('users_login'))
 
 
 def profile_view(request, username):
@@ -213,7 +248,7 @@ def profile_edit(request):
         if form.is_valid():
             messages.success(request, _('Profile updated'))
             form.save()
-            return HttpResponseRedirect(
+            return http.HttpResponseRedirect(
                 reverse('users_profile_view', kwargs={
                     'username': profile.username,
             }))
@@ -239,7 +274,8 @@ def profile_edit_image(request):
         if form.is_valid():
             messages.success(request, _('Profile image updated'))
             form.save()
-            return HttpResponseRedirect(reverse('users_profile_edit_image'))
+            return http.HttpResponseRedirect(
+                reverse('users_profile_edit_image'))
         else:
             messages.error(request, _('There was an error uploading '
                                       'your image.'))
@@ -262,9 +298,11 @@ def profile_edit_links(request):
             log.debug("User instance: %s" % (profile.user,))
             link.user = profile
             link.save()
-            return HttpResponseRedirect(reverse('users_profile_view', kwargs={
-                'username': request.user.get_profile().username,
-            }))
+            return http.HttpResponseRedirect(
+                reverse('users_profile_view', kwargs={
+                    'username': request.user.get_profile().username,
+                }),
+            )
         else:
             messages.error(request, _('There was an error saving '
                                       'your link.'))
@@ -283,7 +321,7 @@ def profile_edit_links_delete(request, link):
     profile = get_object_or_404(UserProfile, user=request.user)
     link = get_object_or_404(Link, pk=link)
     if link.user != profile:
-        return HttpResponseForbidden()
+        return http.HttpResponseForbidden()
     link.delete()
     messages.success(request, _('The link was deleted.'))
     form = forms.ProfileLinksForm()
