@@ -75,6 +75,13 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+# Set HttpOnly flag on session cookies
+SESSION_COOKIE_HTTPONLY = True
+
+# Hack to get HttpOnly flag set on session cookies. This can be removed when
+# http://code.djangoproject.com/changeset/14707 makes it into a release.
+SESSION_COOKIE_PATH = '/; HttpOnly'
+
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 MIDDLEWARE_CLASSES = (
@@ -85,14 +92,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'commonware.middleware.HidePasswordOnException',
+    'commonware.middleware.FrameOptionsHeader',
     'jogging.middleware.LoggingMiddleware',
 )
-
-if DEBUG:
-    MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
-    INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'batucada.urls'
 
@@ -128,12 +130,6 @@ INSTALLED_APPS = (
     'events',
 )
 
-if DEBUG:
-    INSTALLED_APPS += (
-        'debug_toolbar',
-        'django_nose',
-    )
-
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -165,10 +161,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 MAX_IMAGE_SIZE = 1024 * 700
 MAX_UPLOAD_SIZE = 1024 * 1024 * 50
 MAX_PROJECT_FILES = 5
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
 
 GLOBAL_LOG_LEVEL = logging.DEBUG
 GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
