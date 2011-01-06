@@ -7,6 +7,7 @@
 <section class="modal">
   <article>
     <h1>{{ _('Create a New Account') }} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}">{{_('sign in')}}</a></span></h1>
+    {% if message %}<p>{{ message }}</p>{% endif %}
     <fieldset>
       <form action="{% locale_url users_register_openid %}" method="post">
         {% csrf_token %}
