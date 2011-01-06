@@ -15,5 +15,6 @@
   <li id="verisign"><a href="#verisign" title="{{ _('Sign In with your VeriSign account') }}">VeriSign</a></li>
 </ul>
 <p class="or"><span>or</span></p>
-<input type="text" name="other_provider" id="other_provider" placeholder="{{ _('enter your openID provider') }}" />
+{{ form.openid_identifier }}
+{{ form.openid_identifier.errors }}
 <button type="submit" value="submit" id="other_submit">{{ _('Go') }}</button>

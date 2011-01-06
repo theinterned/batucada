@@ -240,6 +240,21 @@ def profile_view(request, username):
 
 
 @login_required
+def profile_create(request):
+    if request.method != 'POST':
+        return http.HttpResponseRedirect(reverse('dashboard_index'))
+    form = forms.CreateProfileForm(request.POST)
+    if form.is_valid():
+        profile = form.save(commit=False)
+        profile.user = request.user
+        profile.save()
+        return http.HttpResponseRedirect(reverse('dashboard_index'))
+    return render_to_response('dashboard/setup_profile.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
 def profile_edit(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':

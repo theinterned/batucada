@@ -32,18 +32,27 @@ var createPostTextArea = function() {
 
 };
 
+var username_hint = function() {
+    var userurl = $('#username .hint b').html();
+    $('#id_username').keyup(function() {
+	var val = (this.value) ? this.value : userurl;
+	$(this).parent('p').find('.hint b').html(val);
+    }).keyup();
+};
+
 var batucada = {
   splash: {
     onload: function() {
     }
   },
+  create_profile: {
+    onload: function() {
+	username_hint();
+    }
+  },
   signup: {
     onload: function(){
-      var userurl = $('#username .hint b').html();
-      $('#id_username').keyup(function(){
-        var val = (this.value) ? this.value : userurl;
-        $(this).parent('p').find('.hint b').html(val);
-      }).keyup()
+	username_hint();
     }
   },
   dashboard: {

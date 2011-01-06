@@ -66,4 +66,6 @@ urlpatterns = patterns('',
   url('^profile/edit/links/delete/(?P<link>[\d]+)/$',
       'users.views.profile_edit_links_delete',
       name='users_profile_edit_links_delete'),
+  url('^profile/create/$', 'users.views.profile_create',
+      name='users_profile_create'),
 )
