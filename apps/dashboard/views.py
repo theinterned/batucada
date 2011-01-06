@@ -8,6 +8,8 @@ from django.db.models import Q
 
 from activity.models import Activity
 from users.decorators import anonymous_only
+from users.models import UserProfile
+from users.forms import CreateProfileForm
 from projects.models import Project
 from dashboard.models import FeedEntry
 
@@ -33,7 +35,12 @@ def splash(request):
 @login_required
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
-    profile = request.user.get_profile()
+    try:
+        profile = request.user.get_profile()
+    except UserProfile.DoesNotExist:
+        return render_to_response('dashboard/setup_profile.html', {
+            'form': CreateProfileForm(),
+        }, context_instance=RequestContext(request))
     projects_following = profile.following(model=Project)
     users_following = profile.following()
     users_followers = profile.followers()

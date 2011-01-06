@@ -1554,7 +1554,7 @@ body#signup .modal button[type=submit] {
 	background: #fff;
 	padding: 0 9px;
 	}
-.signin.openid #other_provider {
+.signin.openid #id_openid_identifier {
 	width: 290px;
 	}
 .signin.openid #other_submit {

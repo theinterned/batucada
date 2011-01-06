@@ -56,7 +56,23 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
 
 
 class OpenIDForm(forms.Form):
-    openid_identifier = forms.URLField()
+    openid_identifier = forms.URLField(
+        widget=forms.TextInput(attrs={
+            'placeholder': _('enter your own OpenID URL')}))
+
+
+class CreateProfileForm(forms.ModelForm):
+    recaptcha = captcha_fields.ReCaptchaField()
+    policy_optin = forms.BooleanField(required=True, error_messages={
+        'required': _('You must agree to the licensing terms.')})
+
+    class Meta:
+        model = UserProfile
+        fields = ('username', 'display_name',
+                  'bio', 'image', 'newsletter', 'email')
+        widgets = {
+            'username': forms.TextInput(attrs={'autocomplete': 'off'}),
+        }
 
 
 class RegisterForm(forms.ModelForm):
@@ -72,6 +88,9 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
+        widgets = {
+            'username': forms.TextInput(attrs={'autocomplete': 'off'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
