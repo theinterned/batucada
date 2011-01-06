@@ -53,16 +53,22 @@
           </p>
         </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
-        <p>
-          {{ form.recaptcha }}
-          {{ form.recaptcha.errors }}
-          <script type="text/javascript">
-        var RecaptchaOptions = {
-          theme: 'clean'
-            };
-          </script>
-          <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
-        </p>
+	<p>
+	  <label for="recaptcha_response_field">
+	    {{ _('Are you human?') }}
+	  </label>
+	</p>
+	<p>
+	  If this is hard to read, you can
+	  <a href="#" id="recaptcha_different">try different words</a> or
+	  <a href="#" id="recaptcha_audio">listen to something</a> instead.
+	</p>
+	<p>
+	  <div id="recaptcha_image"></div>
+	  <input type="text" name="recaptcha_response_field"
+		 id="recaptcha_response_field" size="30" />
+	  {{ form.recaptcha.errors }}
+	</p>
         {% else %}
         <p class="hint">
           {{ _('Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at Wil.') }}
@@ -78,4 +84,11 @@
   </article>
 </section>
 {% include "_footer.html" %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+var RecaptchaOptions = {'theme': 'custom'};
+</script>
+<script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
 {% endblock %}
