@@ -2,7 +2,7 @@
 {% load l10n_tags %}
 {% block title %}{{ _('Sign Up') }}{% endblock %}
 {% block bodyid %}signup_openid{% endblock %}
-{% block bodyclasses %}signin{% endblock %}
+{% block bodyclasses %}signin openid{% endblock %}
 {% block body %}
 <section class="modal">
   <article>
@@ -10,6 +10,7 @@
     <fieldset>
       <form action="{% locale_url users_register_openid %}" method="post">
         {% csrf_token %}
+        {% include "users/_openid_providers.html" %}
       </form>
     </fieldset>
   </article>
