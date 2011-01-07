@@ -38,8 +38,17 @@ def dashboard(request):
     try:
         profile = request.user.get_profile()
     except UserProfile.DoesNotExist:
+        user = request.user
+        username = ''
+        if user.username[:10] != 'openiduser':
+            username = user.username
+        form = CreateProfileForm(initial={
+            'display_name': ' '.join((user.first_name, user.last_name)),
+            'email': user.email,
+            'username': username,
+        })
         return render_to_response('dashboard/setup_profile.html', {
-            'form': CreateProfileForm(),
+            'form': form,
         }, context_instance=RequestContext(request))
     projects_following = profile.following(model=Project)
     users_following = profile.following()
