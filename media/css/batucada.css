@@ -239,6 +239,10 @@ form small {
 form .hint {
 	color: #919191;
 	}
+form .hint.block {
+    margin-bottom: 1em;
+    display: block;
+	}	
 /* 
  * LAYOUT 
  */
@@ -1148,6 +1152,7 @@ header {}
 		}
 		.modal fieldset{
 			padding: 0 36px;
+			width: 516px;
 		}
 		.modal.nav fieldset {
 			margin-left: 190px;
@@ -1211,6 +1216,16 @@ header {}
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
 		}
+		#project_edit input[type=text] {
+		    width: 300px;
+			}
+		#project_edit textarea {
+		    height: 90px;
+		    width: 400px;
+			}
+		#project_edit.description textarea {
+			height: 35.5em;
+			}
 /* INBOX / MESSAGING */
 #inbox{}
 #inbox #mailboxes,
@@ -1444,6 +1459,9 @@ header {}
 	padding-bottom: 18px;
 	border: none;
 	}
+.signin .modal fieldset {
+	width: 348px;
+	}	
 .signin .modal article >h1 {
 	width: auto;
 	padding:  36px;
@@ -1648,21 +1666,3 @@ footer #legal a {
 footer #legal a:hover {
 	color: #036;
 	}	
-
-
-
-
-/* TODO: I wrote this, so we'll want to replace it :) (Paul) */
-span.help-text {
-    font-size: 80%;
-    color: #999;
-    margin-bottom: 10px;
-    display: block;
-}
-#project_edit input[type=text] {
-    width: 300px;
-}
-#project_edit textarea {
-    height: 90px;
-    width: 400px;
-}
