@@ -4,4 +4,5 @@ locale/
 media/images/profiles/
 settings_local.py
 sample_data.py
+sql/
 
