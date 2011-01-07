@@ -1,13 +1,12 @@
 import random
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import Q
 
 from activity.models import Activity
-from users.decorators import anonymous_only
+from users.decorators import anonymous_only, login_required
 from users.models import UserProfile
 from users.forms import CreateProfileForm
 from projects.models import Project
@@ -32,7 +31,7 @@ def splash(request):
     }, context_instance=RequestContext(request))
 
 
-@login_required
+@login_required(profile_required=False)
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
     try:

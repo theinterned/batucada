@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
@@ -16,7 +15,7 @@ from django_openid_auth import views as openid_views
 
 from users import forms
 from users.models import UserProfile
-from users.decorators import anonymous_only
+from users.decorators import anonymous_only, login_required
 from links.models import Link
 from projects.models import Project
 from drumbeat import messages
@@ -122,7 +121,7 @@ def login_openid(request):
 def login_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', False)
     return openid_views.login_complete(
-        request, render_failure=render_openid_failure)
+        request, render_failure=render_openid_login_failure)
 
 
 @login_required
@@ -265,6 +264,11 @@ def profile_view(request, username):
 def profile_create(request):
     if request.method != 'POST':
         return http.HttpResponseRedirect(reverse('dashboard_index'))
+    try:
+        request.user.get_profile()
+        return http.HttpResponseRedirect(reverse('dashboard_index'))
+    except UserProfile.DoesNotExist:
+        pass
     form = forms.CreateProfileForm(request.POST)
     if form.is_valid():
         profile = form.save(commit=False)

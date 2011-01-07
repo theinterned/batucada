@@ -1,13 +1,13 @@
 import logging
 
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from drumbeat import messages
+from users.decorators import login_required
 from preferences.models import AccountPreferences
 
 log = logging.getLogger(__name__)
@@ -39,4 +39,5 @@ def settings(request):
 
 
 def delete(request):
-    return HttpResponse('yo')
+    """TODO: Implement."""
+    return HttpResponseRedirect(reverse('dashboard_index'))
