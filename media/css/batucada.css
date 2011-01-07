@@ -1205,7 +1205,16 @@ header {}
 			position: absolute;
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
-		}	
+		}
+/* INBOX / MESSAGING */
+#inbox{}
+#inbox #mailboxes,
+#inbox #conversations{
+	list-style: none;
+	margin: 0 0 1em; padding: 0;
+	font-size: 14px;
+	line-height: 1.6;
+	}
 /* SPLASH PAGE FOR ANON USERS */		
 #splash{}
 #splash #masthead{
