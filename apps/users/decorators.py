@@ -1,8 +1,10 @@
+from functools import wraps
+
 from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth import decorators as auth_decorators
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
+from django.utils.decorators import available_attrs
 
 from drumbeat import messages
 from users.models import UserProfile
@@ -25,8 +27,24 @@ def anonymous_only(func):
     return decorator
 
 
-def login_required(func=None, redirect_field_name=REDIRECT_FIELD_NAME,
-                   profile_required=True):
+def user_passes_test(test_func):
+    """
+    Custom user_passes_test that punts login url redirecting to the
+    dashboard_index view.
+    """
+
+    def decorator(view_func):
+
+        def _wrapped_view(request, *args, **kwargs):
+            if test_func(request.user):
+                return view_func(request, *args, **kwargs)
+            return HttpResponseRedirect(reverse('dashboard_index'))
+        return wraps(view_func,
+                     assigned=available_attrs(view_func))(_wrapped_view)
+    return decorator
+
+
+def login_required(func=None, profile_required=True):
     """
     Custom implementation of ``django.contrib.auth.decorators.login_required``.
     This version has an optional parameter, ``profile_required`` which, if
@@ -39,9 +57,7 @@ def login_required(func=None, redirect_field_name=REDIRECT_FIELD_NAME,
                           len(UserProfile.objects.filter(user=u)) > 0)
     else:
         test = lambda u: u.is_authenticated()
-    actual_decorator = auth_decorators.user_passes_test(
-        test, redirect_field_name=redirect_field_name,
-    )
+    actual_decorator = user_passes_test(test)
     if func:
         return actual_decorator(func)
     return actual_decorator
