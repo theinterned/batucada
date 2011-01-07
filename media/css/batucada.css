@@ -184,7 +184,7 @@ label {
 	font-size: 12px;
 	line-height: 1.5;
 	color: #262626;
-	}
+	}	
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -1112,6 +1112,11 @@ header {}
 		.modal.nav > article > h1{
 			width: 742px;
 			padding: 18px;
+		}
+		.modal h2{
+			font-size: 16px;
+			line-height: 1.4;
+			margin-bottom: 1.4em;
 		}
 		.modal .buttons{
 			position: absolute;

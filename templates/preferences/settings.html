@@ -20,20 +20,26 @@
   </nav>
   
   <fieldset>
-    <legend>{{ _('Send me an email when...') }}</legend>
+    <h2>{{ _('Send me an email when...') }}</h2>
     <form action="{% locale_url preferences_settings %}" method="post">
       {% csrf_token %}
       <p>
-	<input type="checkbox" id="id_no_email_message_received" name="no_email_message_received" {% if no_email_message_received %}checked="checked"{% endif %} />
-	<label for="id_no_email_message_received">{{ _('A user messages me on drumbeat.org.') }}</label>
+        <label for="id_no_email_message_received">
+          <input type="checkbox" id="id_no_email_message_received" name="no_email_message_received" {% if no_email_message_received %}checked="checked"{% endif %} />
+          {{ _('A user messages me on drumbeat.org.') }}
+        </label>
       </p>
       <p>
-	<input type="checkbox" id="id_no_email_new_follower" name="no_email_new_follower" {% if no_email_new_follower %}checked="checked"{% endif %} />
-	<label for="id_no_email_new_follower">{{ _('Someone starts following me.') }}</label>
+        <label for="id_no_email_new_follower">
+          <input type="checkbox" id="id_no_email_new_follower" name="no_email_new_follower" {% if no_email_new_follower %}checked="checked"{% endif %} />
+          {{ _('Someone starts following me.') }}
+        </label>
       </p>
       <p>
-	<input type="checkbox" id="id_no_email_new_project_follower" name="no_email_new_project_follower" {% if no_email_new_project_follower %}checked="checked"{% endif %} />
-	<label for="id_no_email_new_project_follower">{{ _('Someone starts following one of my projects.') }}</label>
+        <label for="id_no_email_new_project_follower">
+          <input type="checkbox" id="id_no_email_new_project_follower" name="no_email_new_project_follower" {% if no_email_new_project_follower %}checked="checked"{% endif %} />
+          {{ _('Someone starts following one of my projects.') }}
+        </label>
       </p>
       <p class="buttons">
         <a class="button" href="{% locale_url dashboard_index %}">{{ _('Cancel') }}</a>
