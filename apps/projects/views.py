@@ -3,7 +3,6 @@ import logging
 
 from django import http
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404
@@ -18,6 +17,7 @@ from projects.models import Project, ProjectMedia
 from activity.models import Activity
 from statuses.models import Status
 from drumbeat import messages
+from users.decorators import login_required
 
 log = logging.getLogger(__name__)
 
