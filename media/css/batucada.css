@@ -1646,3 +1646,9 @@ span.help-text {
     height: 90px;
     width: 400px;
 }
+#availability.warning {
+    color: red;
+}
+#availability.okay {
+    color: green;
+}

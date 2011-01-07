@@ -35,9 +35,31 @@ var createPostTextArea = function() {
 var username_hint = function() {
     var userurl = $('#username .hint b').html();
     $('#id_username').keyup(function() {
+	$('#availability').removeClass('okay warning').html('');
 	var val = (this.value) ? this.value : userurl;
 	$(this).parent('p').find('.hint b').html(val);
     }).keyup();
+};
+
+var username_availability = function() {
+    $('#id_username').bind('focusout', function() {
+	$.ajax({
+	    url: '/check_username/',
+	    data: {
+		username: this.value
+	    },
+	    success: function() {
+		$('#availability').removeClass('okay')
+		    .addClass('warning')
+		    .html('not available');
+	    },
+	    error: function() {
+		$('#availability').removeClass('warning')
+		    .addClass('okay')
+		    .html('available');
+	    }
+	});
+    });
 };
 
 var batucada = {
@@ -48,11 +70,13 @@ var batucada = {
   create_profile: {
     onload: function() {
 	username_hint();
+	username_availability();
     }
   },
   signup: {
     onload: function(){
 	username_hint();
+	username_availability();
     }
   },
   dashboard: {

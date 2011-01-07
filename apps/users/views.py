@@ -370,3 +370,14 @@ def profile_edit_links_delete(request, link):
         'profile': profile,
         'form': form,
     }, context_instance=RequestContext(request))
+
+
+def check_username(request):
+    username = request.GET.get('username', None)
+    if not username:
+        return http.HttpResponse(status=404)
+    try:
+        UserProfile.objects.get(username=username)
+        return http.HttpResponse()
+    except UserProfile.DoesNotExist:
+        return http.HttpResponse(status=404)
