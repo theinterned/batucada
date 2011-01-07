@@ -1517,9 +1517,6 @@ body#signup .modal button[type=submit] {
 .openid_providers #yahoo a{
 	background-image: url(/media/images/openid/yahoo.png);
 	}
-.openid_providers #facebook a{
-	background-image: url(/media/images/openid/facebook.png);
-	}
 .openid_providers #aol a{
 	background-image: url(/media/images/openid/aol.png);
 	}
