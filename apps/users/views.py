@@ -273,7 +273,19 @@ def profile_create(request):
     if form.is_valid():
         profile = form.save(commit=False)
         profile.user = request.user
+        profile.confirmation_code = profile.generate_confirmation_code()
         profile.save()
+        path = reverse('users_confirm_registration', kwargs={
+            'username': profile.username,
+            'token': profile.confirmation_code,
+        })
+        url = request.build_absolute_uri(path)
+        profile.email_confirmation_code(url)
+        auth.logout(request)
+        msg = _('Thanks! We have sent an email to {0} with '
+                'instructions for completing your '
+                'registration.').format(profile.email)
+        messages.info(request, msg)
         return http.HttpResponseRedirect(reverse('dashboard_index'))
     return render_to_response('dashboard/setup_profile.html', {
         'form': form,
