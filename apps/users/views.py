@@ -260,7 +260,7 @@ def profile_view(request, username):
     }, context_instance=RequestContext(request))
 
 
-@login_required
+@login_required(profile_required=False)
 def profile_create(request):
     if request.method != 'POST':
         return http.HttpResponseRedirect(reverse('dashboard_index'))
