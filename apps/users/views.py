@@ -124,7 +124,7 @@ def login_openid_complete(request):
         request, render_failure=render_openid_login_failure)
 
 
-@login_required
+@login_required(profile_required=False)
 def logout(request):
     """Destroy user session."""
     auth.logout(request)

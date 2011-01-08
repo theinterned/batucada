@@ -58,7 +58,7 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
 class OpenIDForm(forms.Form):
     openid_identifier = forms.URLField(
         widget=forms.TextInput(attrs={
-            'placeholder': _('enter your own OpenID URL')}))
+            'placeholder': _('enter any OpenID URL')}))
 
 
 class CreateProfileForm(forms.ModelForm):
