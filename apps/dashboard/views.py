@@ -1,13 +1,14 @@
 import random
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import Q
 
 from activity.models import Activity
-from users.decorators import anonymous_only
+from users.decorators import anonymous_only, login_required
+from users.models import UserProfile
+from users.forms import CreateProfileForm
 from projects.models import Project
 from dashboard.models import FeedEntry
 
@@ -30,10 +31,24 @@ def splash(request):
     }, context_instance=RequestContext(request))
 
 
-@login_required
+@login_required(profile_required=False)
 def dashboard(request):
     """Personalized dashboard for authenticated users."""
-    profile = request.user.get_profile()
+    try:
+        profile = request.user.get_profile()
+    except UserProfile.DoesNotExist:
+        user = request.user
+        username = ''
+        if user.username[:10] != 'openiduser':
+            username = user.username
+        form = CreateProfileForm(initial={
+            'display_name': ' '.join((user.first_name, user.last_name)),
+            'email': user.email,
+            'username': username,
+        })
+        return render_to_response('dashboard/setup_profile.html', {
+            'form': form,
+        }, context_instance=RequestContext(request))
     projects_following = profile.following(model=Project)
     users_following = profile.following()
     users_followers = profile.followers()

@@ -23,7 +23,8 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
    cd batucada
    mkvirtualenv batucada 
    workon batucada
-   pip install -r requirements.txt 
+   pip install -r requirements/compiled.txt
+   pip install -r requirements/prod.txt
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
 

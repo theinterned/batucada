@@ -5,7 +5,6 @@ import operator
 
 from django import http
 from django.db.models.fields.files import ImageFieldFile
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -16,6 +15,7 @@ from drumbeat import messages
 from drumbeatmail import forms
 from messages.models import Message
 from users.models import UserProfile
+from users.decorators import login_required
 
 log = logging.getLogger(__name__)
 

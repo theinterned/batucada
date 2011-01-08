@@ -19,6 +19,7 @@
           <label for="id_username">{{ _('Username') }}</label>
           {{ form.username }}
           <small class="hint">{{ _('Your public profile: http://drumbeat.org/') }}<b>{{ _('username') }}</b></small>
+	  <small class="hint" id="availability" />
           {{ form.username.errors }}
         </p>
         <p class="password">
@@ -31,6 +32,9 @@
           {{ form.password_confirm }}
           {{ form.password_confirm.errors }}
         </p>
+	<p>
+	  <small class="hint">{{ _('Passwords must be at least 8 characters and contain numbers and letters.') }}</small>
+	</p>
         <p>
           <label for="id_email">{{ _('Email Address') }}</label>
           {{ form.email }}
@@ -47,7 +51,7 @@
           <p>
             <label for="id_policy_optin">
               {{ form.policy_optin }}
-              <small>{{ _('I understand that all public content I submit to this site will be available under <a href="link=http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
+              <small>{{ _('I understand that all public content I submit to this site will be available under <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
             </label>
             {{ form.policy_optin.errors }}
           </p>
