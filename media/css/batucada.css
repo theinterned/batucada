@@ -184,7 +184,7 @@ label {
 	font-size: 12px;
 	line-height: 1.5;
 	color: #262626;
-	}
+	}	
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -239,6 +239,10 @@ form small {
 form .hint {
 	color: #919191;
 	}
+form .hint.block {
+    margin-bottom: 1.5em;
+    display: block;
+	}	
 /* 
  * LAYOUT 
  */
@@ -1113,6 +1117,11 @@ header {}
 			width: 742px;
 			padding: 18px;
 		}
+		.modal h2{
+			font-size: 16px;
+			line-height: 1.4;
+			margin-bottom: 1.4em;
+		}
 		.modal .buttons{
 			position: absolute;
 			top:  18px; right: 18px;
@@ -1143,6 +1152,7 @@ header {}
 		}
 		.modal fieldset{
 			padding: 0 36px;
+			width: 516px;
 		}
 		.modal.nav fieldset {
 			margin-left: 190px;
@@ -1205,7 +1215,26 @@ header {}
 			position: absolute;
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
-		}	
+		}
+		#project_edit input[type=text] {
+		    width: 300px;
+			}
+		#project_edit textarea {
+		    height: 90px;
+		    width: 400px;
+			}
+		#project_edit.description textarea {
+			height: 35.5em;
+			}
+/* INBOX / MESSAGING */
+#inbox{}
+#inbox #mailboxes,
+#inbox #conversations{
+	list-style: none;
+	margin: 0 0 1em; padding: 0;
+	font-size: 14px;
+	line-height: 1.6;
+	}
 /* SPLASH PAGE FOR ANON USERS */		
 #splash{}
 #splash #masthead{
@@ -1430,6 +1459,9 @@ header {}
 	padding-bottom: 18px;
 	border: none;
 	}
+.signin .modal fieldset {
+	width: 348px;
+	}	
 .signin .modal article >h1 {
 	width: auto;
 	padding:  36px;
@@ -1504,6 +1536,9 @@ body#signup .modal button[type=submit] {
 	}
 .openid_providers a:hover {	
 	background-color: #DBFDFF;
+	box-shadow:inset #DBFDFF 0 0 0 1px, inset rgba(255,255,255,0.9) 0 0 4px 3px;
+	-moz-box-shadow:inset #DBFDFF 0 0 0 1px, inset rgba(255,255,255,0.9) 0 0 4px 3px;
+	-webkit-box-shadow:inset #DBFDFF 0 0 0 1px, inset rgba(255,255,255,0.9) 0 0 4px 3px;
 	}		
 .openid_providers.featured a{
 	width: 104px; height: 58px;
@@ -1629,26 +1664,11 @@ footer #legal a:hover {
 	color: #036;
 	}	
 
-
-
-
-/* TODO: I wrote this, so we'll want to replace it :) (Paul) */
-span.help-text {
-    font-size: 80%;
-    color: #999;
-    margin-bottom: 10px;
-    display: block;
-}
-#project_edit input[type=text] {
-    width: 300px;
-}
-#project_edit textarea {
-    height: 90px;
-    width: 400px;
-}
+/* paul wrote this. so we'll probably want to change it. */
 #availability.warning {
     color: red;
 }
 #availability.okay {
     color: green;
 }
+
