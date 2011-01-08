@@ -42,7 +42,7 @@ var username_hint = function() {
 };
 
 var username_availability = function() {
-    $('#id_username').bind('focusout', function() {
+    $('#id_username').bind('blur', function() {
 	$.ajax({
 	    url: '/check_username/',
 	    data: {
