@@ -1107,6 +1107,7 @@ header {}
 		}
 		.modal > article > h1 .pester{
 			font-size: 14px;
+			white-space: nowrap;
 		}
 		.modal.nav > article > h1{
 			width: 742px;
@@ -1479,7 +1480,84 @@ header {}
 	}	
 body#signup .modal button[type=submit] {
 	width: auto;
-	} 
+	}
+#signin_openid {}
+.openid_providers {
+	list-style: none;
+	margin: 0; padding: 0;	
+	}
+.openid_providers li {
+	display: inline-block;
+	margin: 0 10px 12px 0;
+	}
+.openid_providers li:nth-child(6n){
+	margin-right: 0;
+	}
+.openid_providers a{
+	display: block;
+	width: 44px; height: 44px;	
+	text-indent: -9999px;
+	background: url(/media/images/openid-30x30.png) 50% 50% no-repeat;
+	border: 1px solid #d1d1d1;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	}
+.openid_providers a:hover {	
+	background-color: #DBFDFF;
+	}		
+.openid_providers.featured a{
+	width: 104px; height: 58px;
+	}
+.openid_providers.featured li:nth-child(3n) {
+	margin-right: 0;
+	}
+.openid_providers #google a{
+	background-image: url(/media/images/openid/google.png);
+	}
+.openid_providers #yahoo a{
+	background-image: url(/media/images/openid/yahoo.png);
+	}
+.openid_providers #aol a{
+	background-image: url(/media/images/openid/aol.png);
+	}
+.openid_providers #myopenid a{
+	background-image: url(/media/images/openid/myopenid.png);
+	}
+.openid_providers #wordpress a{
+	background-image: url(/media/images/openid/wordpress.png);
+	}
+.openid_providers #blogger a{
+	background-image: url(/media/images/openid/blogger.png);
+	}
+.openid_providers #buzz a{
+	background-image: url(/media/images/openid/buzz.png);
+	}
+.openid_providers #clickpass a{
+	background-image: url(/media/images/openid/clickpass.png);
+	}
+.openid_providers #verisign a{
+	background-image: url(/media/images/openid/verisign.png);
+	}
+.signin.openid .or {
+	text-align: center;
+	color: #979fa1;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+	border-bottom: 1px solid #C9D3D5;
+	}		
+.signin.openid .or span {
+	position: relative;
+	bottom: -0.7em;
+	background: #fff;
+	padding: 0 9px;
+	}
+.signin.openid #id_openid_identifier {
+	width: 290px;
+	}
+.signin.openid #other_submit {
+	width: 36px;
+	vertical-align: top;
+	}	
 /* FOOTER */
 footer{
 	padding-top: 27px;
@@ -1567,4 +1645,10 @@ span.help-text {
 #project_edit textarea {
     height: 90px;
     width: 400px;
+}
+#availability.warning {
+    color: red;
+}
+#availability.okay {
+    color: green;
 }
