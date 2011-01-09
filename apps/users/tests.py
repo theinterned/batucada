@@ -28,6 +28,7 @@ class TestLogins(TestCase):
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
+            print response
             self.assertRedirects(response, '/', status_code=302,
                                  target_status_code=301)
         self.client.logout()
@@ -38,9 +39,9 @@ class TestLogins(TestCase):
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
-            expected = "/login/?next=%s" % (full,)
+            expected = "/%s/" % (self.locale,)
             self.assertRedirects(response, expected, status_code=302,
-                                 target_status_code=301)
+                                 target_status_code=200)
 
     def test_login_post(self):
         """Test logging in."""
@@ -94,8 +95,8 @@ class TestLogins(TestCase):
         params = {
             'display_name': 'Joe User',
             'username': 'joeuser',
-            'password': 'abcdefghijklmno',
-            'password_confirm': 'abcdefghijklmno',
+            'password': 'abcdefghijklmno1',
+            'password_confirm': 'abcdefghijklmno1',
             'email': 'joe@mozilla.com',
         }
         response = self.client.post(path, params)

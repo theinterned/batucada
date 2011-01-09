@@ -142,7 +142,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'users.context_processors.messages',
 )
 
-TEST_RUNNER = 'drumbeat.runner.DrumbeatTestRunner'
+TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
 WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 
