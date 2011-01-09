@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from django.test import Client, TestCase
+from django.test import Client
+from test_utils import TestCase
 
 from users.models import UserProfile
 

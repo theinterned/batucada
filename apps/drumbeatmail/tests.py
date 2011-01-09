@@ -1,12 +1,12 @@
-from django.test import TestCase
-
 from users.models import UserProfile
 from drumbeatmail.forms import ComposeForm
 from relationships.models import Relationship
 from projects.models import Project
 
+import test_utils
 
-class TestDrumbeatMail(TestCase):
+
+class TestDrumbeatMail(test_utils.TestCase):
 
     test_username = 'testuser'
     test_password = 'testpassword'
@@ -35,6 +35,8 @@ class TestDrumbeatMail(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_messaging_user_following(self):
+        print "From test: %s" % (self.user.user,)
+        print "From test: %s" % (self.user_two.user,)
         Relationship(source=self.user_two, target_user=self.user).save()
         form = ComposeForm(data={
             'recipient': self.user_two,
