@@ -1,5 +1,5 @@
 var createPostTextArea = function() {
-    $('#create-post').find('textarea').bind('keydown', function() {
+    $('#create-post').find('textarea').bind('keyup', function() {
 	var max = 750;
 	var counter = $('#create-post').find('div.post-char-count');
 	var count = max - $(this).val().length;
