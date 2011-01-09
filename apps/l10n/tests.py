@@ -4,12 +4,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 
+from users.models import UserProfile
 from l10n.locales import LOCALES
+
 
 class TestLocaleURLs(TestCase):
     def setUp(self):
         self.client = Client()
-        
+
     def test_default_rewrites(self):
         """Test that the client gets what they ask for if it's supported."""
         for supported in LOCALES.keys():
@@ -21,7 +23,6 @@ class TestLocaleURLs(TestCase):
         """We support a more specific code than the general one sent."""
         response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='en')
         self.assertRedirects(response, '/en-US/', status_code=301)
-
 
     def test_close_match(self):
         """Client sends xx-YY, we support xx-ZZ. We give them xx-ZZ."""
@@ -53,17 +54,20 @@ class TestLocaleURLs(TestCase):
         response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='en-us')
         self.assertRedirects(response, '/en-US/', status_code=301)
 
-    
     def test_login_post_redirect(self):
         """Test that post requests are treated properly."""
-        user = User.objects.create_user(
-            'testuser', 'test@mozilla.com', 'testpass'
+        user = UserProfile.objects.create(
+            username='testuser',
+            email='test@mozilla.com',
         )
+        user.set_password('testpass')
+        user.save()
+        user.create_django_user()
         response = self.client.get('/de/login/')
         self.assertContains(response, 'csrfmiddlewaretoken')
         response = self.client.post('/de/login/', {
             'username': user.username,
             'password': 'testpass',
         })
-        self.assertRedirects(response, '/de/', status_code=302)
-
+        self.assertRedirects(response, '/', status_code=302,
+                             target_status_code=301)
