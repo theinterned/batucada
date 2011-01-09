@@ -1,6 +1,10 @@
+import logging
+
 from django.contrib.auth.models import User
 
 from users.models import UserProfile
+
+log = logging.getLogger(__name__)
 
 
 class CustomUserBackend(object):
@@ -8,6 +12,7 @@ class CustomUserBackend(object):
     supports_object_permissions = False
 
     def authenticate(self, username=None, password=None):
+        log.debug("Attempting to authenticate user %s" % (username,))
         try:
             if '@' in username:
                 profile = UserProfile.objects.get(email=username)
@@ -18,6 +23,7 @@ class CustomUserBackend(object):
                     profile.create_django_user()
                 return profile.user
         except UserProfile.DoesNotExist:
+            log.debug("User does not exist: %s" % (username,))
             return None
 
     def get_user(self, user_id):
