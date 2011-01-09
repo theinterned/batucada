@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from django.test import TestCase
+from test_utils import TestCase
 
 from activity.models import Activity
 from activity.schema import verbs

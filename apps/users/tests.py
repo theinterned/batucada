@@ -1,6 +1,8 @@
-from django.test import Client, TestCase
+from django.test import Client
 
 from users.models import UserProfile
+
+from test_utils import TestCase
 
 
 class TestLogins(TestCase):

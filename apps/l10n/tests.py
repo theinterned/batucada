@@ -1,14 +1,15 @@
 import re
 
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.test import Client, TestCase
+from django.test import Client
 
 from users.models import UserProfile
 from l10n.locales import LOCALES
 
+import test_utils
 
-class TestLocaleURLs(TestCase):
+
+class TestLocaleURLs(test_utils.TestCase):
     def setUp(self):
         self.client = Client()
 

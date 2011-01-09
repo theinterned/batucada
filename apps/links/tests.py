@@ -1,7 +1,8 @@
 import os
-from django.test import TestCase
 
 from links import utils
+
+from test_utils import TestCase
 
 
 class TestLinkParsing(TestCase):

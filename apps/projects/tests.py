@@ -1,8 +1,10 @@
-from django.test import TestCase, Client
+from django.test import Client
 
 from users.models import UserProfile
 from activity.models import Activity
 from projects.models import Project
+
+from test_utils import TestCase
 
 
 class ProjectTests(TestCase):
