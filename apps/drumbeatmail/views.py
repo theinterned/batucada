@@ -192,7 +192,8 @@ def compose(request, username=None):
     if username:
         kwargs['user'] = get_object_or_404(UserProfile, username=username)
     if request.method == 'POST':
-        form = forms.ComposeForm(data=request.POST)
+        form = forms.ComposeForm(data=request.POST,
+                                 sender=request.user.get_profile())
         if form.is_valid():
             form.save(sender=request.user)
             messages.success(request, _('Message successfully sent.'))
