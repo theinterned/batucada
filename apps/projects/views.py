@@ -44,6 +44,13 @@ def show(request, slug):
                           context_instance=RequestContext(request))
 
 
+def show_detailed(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    return render_to_response('projects/project_full_description.html', {
+        'project': project,
+    }, context_instance=RequestContext(request))
+
+
 @login_required
 @ownership_required
 def edit(request, slug):
@@ -83,6 +90,30 @@ def edit_description(request, slug):
     return render_to_response('projects/project_edit_description.html', {
         'form': form,
         'project': project,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@ownership_required
+def edit_image(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = project_forms.ProjectImageForm(request.POST, request.FILES,
+                                              instance=project)
+        if form.is_valid():
+            messages.success(request, _('Project image updated'))
+            form.save()
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was an error uploading your image'))
+    else:
+        form = project_forms.ProjectImageForm(instance=project)
+    return render_to_response('projects/project_edit_image.html', {
+        'project': project,
+        'form': form,
     }, context_instance=RequestContext(request))
 
 

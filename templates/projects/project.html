@@ -64,7 +64,7 @@
     </dl> <!-- /#project-stats -->
 
     <div id="project-summary">
-      {{ project.description }}
+      {{ project.long_description }}
     </div>
 
     <!-- TODO: support project media 
@@ -73,7 +73,9 @@
       <img src="..." height="86" width="96">
     </div>-->
 
-    <a id="project-description-link" href="#">View Full Project Description</a>
+    {% if project.detailed_description %}
+    <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
+    {% endif %}
 
     <nav id="project-links">
       {% if links %}
