@@ -14,7 +14,8 @@
       <ul>
 	<li class="summary"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Project Summary') }}</a></li>
 	<li class="description"><a href="{% locale_url projects_edit_description slug=project.slug %}">{{ _('Detailed Description') }}</a></li>
-	<li class="media"><a href="{% locale_url projects_edit_media slug=project.slug %}">{{ _('Images &amp; Video') }}</a></li>
+	<li class="project-image"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Project Image') }}</a></li>
+	<li class="media"><a href="{% locale_url projects_edit_media slug=project.slug %}">{{ _('Media') }}</a></li>
 	<li class="links"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
       </ul>
     </nav>

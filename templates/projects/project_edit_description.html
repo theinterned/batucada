@@ -5,13 +5,17 @@
 {% block form %}
 <form action="{% locale_url projects_edit_description slug=project.slug %}" method="post">
   {% csrf_token %}
-  <p>
+  <div id="wmd-editor" class="wmd-panel">
+    <div id="wmd-button-bar"></div>
     {{ form.detailed_description }}
     {{ form.detailed_description.errors }}
-  </p>
+  </div>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
   </p>
 </form>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/wmd.js"></script>
 {% endblock %}

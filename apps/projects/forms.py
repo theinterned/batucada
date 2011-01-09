@@ -25,6 +25,9 @@ class ProjectDescriptionForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('detailed_description',)
+        widgets = {
+            'detailed_description': forms.Textarea(attrs={'id': 'wmd-input'}),
+        }
 
 
 class ProjectLinksForm(forms.ModelForm):
@@ -34,12 +37,24 @@ class ProjectLinksForm(forms.ModelForm):
         fields = ('name', 'url',)
 
 
+class ProjectImageForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('image',)
+
+    def clean_image(self):
+        if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
+            max_size = settings.MAX_IMAGE_SIZE / 1024
+            raise forms.ValidationError(
+                _("Image exceeds max image size: %(max)dk",
+                  dict(max=max_size)))
+        return self.cleaned_data['image']
+
+
 class ProjectMediaForm(forms.ModelForm):
 
     allowed_content_types = (
-        'image/png',
-        'image/jpeg',
-        'image/gif',
         'video/ogg',
         'video/webm',
         'video/mp4',
