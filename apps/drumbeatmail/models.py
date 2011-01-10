@@ -1,4 +1,7 @@
+from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
+from django.utils.translation import ugettext as _
+from django.template.loader import render_to_string
 
 from messages.models import Message
 from users.tasks import SendUserEmail
@@ -19,7 +22,16 @@ def message_sent_handler(sender, **kwargs):
     for preference in preferences:
         if preference.value and preference.key == 'no_email_message_received':
             return
-    subject = 'Private Message from %s' % (message.sender.get_profile().name,)
-    body = ""  # todo - write some copy for this
+    sender = message.sender.get_profile().name
+    subject = _('New Message from %(name)s' % {
+        'name': sender,
+    })
+    body = render_to_string('drumbeatmail/emails/direct_message.txt', {
+        'sender': sender,
+        'message': message.body,
+        'reply_url': reverse('drumbeatmail_reply', kwargs={
+            'message': message.pk,
+        }),
+    })
     SendUserEmail.apply_async((user.get_profile(), subject, body))
 post_save.connect(message_sent_handler, sender=Message)
