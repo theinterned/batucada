@@ -3,7 +3,7 @@ import urllib2
 from django.conf import settings
 
 from celery.task import Task
-from django_push.subscriber.models import Subscription
+from django_push.subscriber.models import Subscription, SubscriptionError
 
 from links import utils
 from activity.models import RemoteObject, Activity
@@ -52,8 +52,9 @@ class SubscribeToFeed(Task):
             log.debug("Attempting subscription of topic %s with hub %s" % (
                 feed_url, hub))
             subscription = Subscription.objects.subscribe(feed_url, hub=hub)
-        except:
+        except SubscriptionError, e:
             log.warning("SubscriptionError. Retrying (%s)" % (link.url,))
+            log.warning("Error: %s" % (str(e),))
             self.retry([link, ], kwargs)
 
         log.debug("Success. Subscribed to topic %s on hub %s" % (
