@@ -45,7 +45,8 @@
     {% for message in inbox %}
     <li class="post-container">
       {% if message.sender != user %}
-      <a href="{% locale_url drumbeatmail_reply message=message.id %}" class="reply-to">{{ _('Reply') }}</a>
+      <a href="{% locale_url drumbeatmail_reply message=message.id %}" class="reply-to action">{{ _('Reply') }}</a>
+      <a class="report abuse action" href="#ReportAbuse">Report Abuse</a>
       {% endif %}
       
       {% if message.sender == user %}
@@ -92,6 +93,7 @@
       <li class="post-container">
 	{% if reply_url %}
 	  <a href="${reply_url}" class="reply-to">{{ _('Reply') }}</a>
+	  <a class="report abuse action" href="#ReportAbuse">Report Abuse</a>
 	{% endif %}
 	<a href="${sender_url}">
 	  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}${sender_img}">
