@@ -992,33 +992,30 @@ header {}
       height: 1px;
       line-height: 1px;
     }
-    
-    #posts .reply-to,
-    #posts .delete,
-    #posts .report {
-      display: none;
+    #posts .action {
+	  display: none;
       float: right;
       color: #ababab;
       text-decoration: none;
       padding-left: 20px;
-      left 1px;
+      margin-left: 18px;
+      left: 1px;
       height: 16px;
       line-height: 16px;
-    }
-    #posts .reply-to{
-	background: url("/media/images/reply.icon.png") no-repeat 
 	}
-    #posts .delete {
-	padding-right: 7px;
+    #posts .action:hover {
+      color: #777;
     }
-    #posts .post-container:hover .reply-to,
-    #posts .post-container:hover .delete,
-    #posts .post-container:hover .report {
-      display: block;
-    }
-    #posts .reply-to:hover,
-    #posts .delete:hover,
-    #posts .report:hover {
+	#posts .post-container:hover .action{
+		display: block;
+	}
+    #posts .reply-to{
+		background: url("/media/images/reply.icon.png") 0 0 no-repeat;
+	}
+	#posts .report {
+		background: url("/media/images/report.icon.png") 5px 1px no-repeat 
+	}
+    #posts .action:hover {
       color: #777;
     }
     
