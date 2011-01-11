@@ -993,35 +993,32 @@ header {}
       line-height: 1px;
     }
     
-    #posts .reply-to {
+    #posts .reply-to,
+    #posts .delete,
+    #posts .report {
       display: none;
       float: right;
       color: #ababab;
       text-decoration: none;
       padding-left: 20px;
-      background: url("/media/images/reply.icon.png") no-repeat left 1px;
+      left 1px;
       height: 16px;
       line-height: 16px;
     }
+    #posts .reply-to{
+	background: url("/media/images/reply.icon.png") no-repeat 
+	}
     #posts .delete {
-	display: none;
-	float: right;
-	color: #ababab;
-	text-decoration: none;
 	padding-right: 7px;
-	height: 16px;
-	line-height: 16px;
     }
-    #posts .post-container:hover .reply-to {
+    #posts .post-container:hover .reply-to,
+    #posts .post-container:hover .delete,
+    #posts .post-container:hover .report {
       display: block;
     }
-    #posts .post-container:hover .delete {
-	display: block;
-    }
-    #posts .reply-to:hover {
-      color: #777;
-    }
-    #posts .delete:hover {
+    #posts .reply-to:hover,
+    #posts .delete:hover,
+    #posts .report:hover {
       color: #777;
     }
     

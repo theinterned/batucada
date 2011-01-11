@@ -1,7 +1,9 @@
 {% load l10n_tags %}
 
 <li class="post-container">
-
+  {% if user.is_authenticated %}
+  <a class="report abuse action" href="#ReportAbuse">Report Abuse</a>
+ {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.image_or_default }}">
   </a>
