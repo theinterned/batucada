@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ _('About') }}{% endblock %}
+{% block bodyid %}about{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url drumbeat_about %}">{{ _('About') }}</a>
+  </nav>
+</div>
+{% endblock %}
+
+{% block body %}
+<h1>{{ _('About') }}</h1>
+<p>{{ _('Just a placeholder right now.') }}</p>
+{% endblock %}
