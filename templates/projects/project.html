@@ -109,12 +109,12 @@
           {% if project.created_by in user.get_profile.following %}
           <form action="{% locale_url relationships_unfollow object_type='user' slug=project.created_by.username %}" method="post">
             {% csrf_token %}
-            <button id="unfollow-user" >Unfollow User</button>
+            <button id="unfollow-user" >Unfollow</button>
           </form>
           {% else %}
           <form action="{% locale_url relationships_follow object_type='user' slug=project.created_by.username %}" method="post">
             {% csrf_token %}
-            <button id="follow-user">Follow User</button>
+            <button id="follow-user">Follow</button>
           </form>
           {% endif %}
           <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Private Message')}}</a>
