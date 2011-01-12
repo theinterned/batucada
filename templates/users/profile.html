@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load i18n %}
+{% load truncate_chars %}
 {% block title %}{{ profile.name }}{% endblock %}
 
 {% block links %}
@@ -112,7 +113,7 @@
         {% else %}
         <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name }}
+        {{ project.name|truncatechars:35 }}
       </a>
     </li>
   {% endfor %}
