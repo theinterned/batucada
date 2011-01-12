@@ -29,92 +29,91 @@
 
 {% block body %}
 <div id="sidebar">
-  <!-- <div > -->
-    <section id="project"class="panel">
-      <h1 id="project-name">{{ project.name }}</h1>
+  <section id="project"class="panel">
+    <h1 id="project-name">{{ project.name }}</h1>
 
-      <div id="project-follow">
-        {% if user.get_profile == project.created_by %}
-  	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
-        {% else %}
-  	{% if following %}
-  	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
-  	    {% csrf_token %}
-  	    <button>{{ _('Unfollow') }}</button>
-  	  </form>
-  	{% else %}
-  	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
-  	    {% csrf_token %}
-  	    <button>{{ _('Follow Project') }}</button>
-  	  </form>
-  	{% endif %}
-        {% endif %}
-      </div> <!-- /#project-follow -->
-
-      <dl id="project-stats">
-        <dt>Followers</dt>
-        <dd>
-  	<a href="#">{{ project.followers|length }}</a>
-        </dd>
-        <dt>Updates</dt>
-        <dd>{{ update_count }}</dd>
-
-        <dt>Created</dt>
-        <dd>August 2009</dd>
-      </dl> <!-- /#project-stats -->
-
-      <div id="project-summary">
-        {{ project.long_description }}
-      </div>
-
-      <!-- TODO: support project media 
-      <div id="project-icons">
-        <img src="..." height="86" width="96">
-        <img src="..." height="86" width="96">
-      </div>-->
-
-      {% if project.detailed_description %}
-      <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
+    <div id="project-follow">
+      {% if user.get_profile == project.created_by %}
+	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
+      {% else %}
+	{% if following %}
+	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
+	    {% csrf_token %}
+	    <button>{{ _('Unfollow') }}</button>
+	  </form>
+	{% else %}
+	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
+	    {% csrf_token %}
+	    <button>{{ _('Follow Project') }}</button>
+	  </form>
+	{% endif %}
       {% endif %}
-      {% if user.get_profile != project.created_by %}
-      <p class="supplemental_actions">
-        <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
-      </p>  
-      {% endif %}      
-    </section>
+    </div> <!-- /#project-follow -->
+
+    <dl id="project-stats">
+      <dt>Followers</dt>
+      <dd>
+	<a href="#">{{ project.followers|length }}</a>
+      </dd>
+      <dt>Updates</dt>
+      <dd>{{ update_count }}</dd>
+
+      <dt>Created</dt>
+      <dd>August 2009</dd>
+    </dl> <!-- /#project-stats -->
+
+    <div id="project-summary">
+      {{ project.long_description }}
+    </div>
+
+    <!-- TODO: support project media 
+    <div id="project-icons">
+      <img src="..." height="86" width="96">
+      <img src="..." height="86" width="96">
+    </div>-->
+
+    {% if project.detailed_description %}
+    <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
+    {% endif %}
+    {% if user.get_profile != project.created_by %}
+    <p class="supplemental_actions">
+      <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+    </p>  
+    {% endif %}      
+  </section>
     
-    {% if links %}
-    <nav id="project-links" class="panel">      
-      <ul>
-        {% for link in links %}
-          <li><a href="{{ link.url }}">{{ link.name }}</a></li>
-        {% endfor %}
-      </ul>       
-    </nav>
-    {% endif %} 
+  {% if links %}
+  <nav id="project-links" class="panel">      
+    <ul>
+      {% for link in links %}
+        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+      {% endfor %}
+    </ul>       
+  </nav>
+  {% endif %} 
 
-    <section id="project-lead" class="panel">
-      <a href="{{ project.created_by.get_absolute_url }}">
-        <img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
-      </a>
+  <section id="project-lead" class="panel">
+    <a href="{{ project.created_by.get_absolute_url }}">
+      <img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
+    </a>
 
-      <div class="member-details">
-        <h3 class="member-name">
-          <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
-        </h3>
+    <div class="member-details">
+      <h3 class="member-name">
+        <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
+      </h3>
 
-        <div class="member-actions">
-          <a class="button" href="#">{{ _('Follow User') }}</a>
-          <a class="button" href="#">{{ _('Message') }}</a>
-        </div>
+      <div class="member-actions">
+        <a class="button" href="#">{{ _('Follow User') }}</a>
+        <a class="button" href="#">{{ _('Message') }}</a>
+      </div>      
 
-        <div class="member-bio">
-          {{ project.created_by.bio }}
-        </div>
-
-      </div> <!-- /.member-details -->
-    </section> <!-- /#project-lead -->
-  <!-- </div> /#project -->
+    </div> <!-- /.member-details -->
+    
+    <div class="member-bio">
+      {{ project.created_by.bio }}
+    </div>
+    
+  </section> <!-- /#project-lead -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
