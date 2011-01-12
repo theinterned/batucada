@@ -15,5 +15,6 @@ urlpatterns = patterns('',
     url(r'^feed$', feeds.DashboardFeed(),
         name='activity_dashboard_feed'),	
 	url(r'^activity/report/$',
-		'django.views.generic.simple.direct_to_template', {'template': 'activity/report_received.html'})
+		'django.views.generic.simple.direct_to_template', {'template': 'activity/report_received.html'},
+		name='activity_report')
 )
