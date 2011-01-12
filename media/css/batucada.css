@@ -522,7 +522,6 @@ header {}
 		margin-top: 10px;
 	}
     #project {
-      border-bottom: 1px solid #f7f9fa;
       margin-bottom: 50px;
     }
       #project-follow {
@@ -574,8 +573,6 @@ header {}
       
       #project-links {
         margin: 20px 0;
-        border-top: 1px solid #cfd1d2;
-        border-bottom: 1px solid #f7f9fa;
       }
         #project-links ul,
         #member_links ul {
