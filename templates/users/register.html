@@ -51,7 +51,7 @@
           <p>
             <label for="id_policy_optin">
               {{ form.policy_optin }}
-              <small>{{ _('I understand that all public content I submit to this site will be available under <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
+              <small>I have read and agree to the <a href="{% locale_url drumbeat_tos %}">Terms of Service</a>.</small>
             </label>
             {{ form.policy_optin.errors }}
           </p>
