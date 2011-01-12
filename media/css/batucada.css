@@ -621,6 +621,9 @@ header {}
 			margin-left: 0;
 			list-style: none;			
 		}
+		#member_relationships ul:last-child {
+			margin-bottom: 0;
+			}
 		#member_relationships ul li {
 			display: inline-block;
 		}
