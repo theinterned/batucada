@@ -26,6 +26,10 @@
     {% endif %}
   {% endif %}
 {% else %}
+  {% if activity.status %}
+    {{ activity.status|safe }}
+  {% else %}
   {{ activity|activity_representation }}
+  {% endif %}
 {% endif %}
 {% endspaceless %}
