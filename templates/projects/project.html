@@ -30,64 +30,64 @@
 {% block body %}
 <div id="sidebar">
   <div id="project">
+    <section class="panel">
+      <h1 id="project-name">{{ project.name }}</h1>
 
-    <h1 id="project-name">{{ project.name }}</h1>
+      <div id="project-follow">
+        {% if user.get_profile == project.created_by %}
+  	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
+        {% else %}
+  	{% if following %}
+  	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
+  	    {% csrf_token %}
+  	    <button>{{ _('Unfollow') }}</button>
+  	  </form>
+  	{% else %}
+  	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
+  	    {% csrf_token %}
+  	    <button>{{ _('Follow Project') }}</button>
+  	  </form>
+  	{% endif %}
+        {% endif %}
+      </div> <!-- /#project-follow -->
 
-    <div id="project-follow">
-      {% if user.get_profile == project.created_by %}
-	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
-      {% else %}
-	{% if following %}
-	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Unfollow') }}</button>
-	  </form>
-	{% else %}
-	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Follow Project') }}</button>
-	  </form>
-	{% endif %}
+      <dl id="project-stats">
+        <dt>Followers</dt>
+        <dd>
+  	<a href="#">{{ project.followers|length }}</a>
+        </dd>
+        <dt>Updates</dt>
+        <dd>{{ update_count }}</dd>
+
+        <dt>Created</dt>
+        <dd>August 2009</dd>
+      </dl> <!-- /#project-stats -->
+
+      <div id="project-summary">
+        {{ project.long_description }}
+      </div>
+
+      <!-- TODO: support project media 
+      <div id="project-icons">
+        <img src="..." height="86" width="96">
+        <img src="..." height="86" width="96">
+      </div>-->
+
+      {% if project.detailed_description %}
+      <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
       {% endif %}
-    </div> <!-- /#project-follow -->
-
-    <dl id="project-stats">
-      <dt>Followers</dt>
-      <dd>
-	<a href="#">{{ project.followers|length }}</a>
-      </dd>
-      <dt>Updates</dt>
-      <dd>{{ update_count }}</dd>
-
-      <dt>Created</dt>
-      <dd>August 2009</dd>
-    </dl> <!-- /#project-stats -->
-
-    <div id="project-summary">
-      {{ project.long_description }}
-    </div>
-
-    <!-- TODO: support project media 
-    <div id="project-icons">
-      <img src="..." height="86" width="96">
-      <img src="..." height="86" width="96">
-    </div>-->
-
-    {% if project.detailed_description %}
-    <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
-    {% endif %}
-
-    <nav id="project-links">
+    </section>
+    <nav id="project-links" class="panel">
       {% if links %}
-	<ul>
-	  {% for link in links %}
-	    <li><a href="{{ link.url }}">{{ link.name }}</a></li>
-	  {% endfor %}
-	</ul>
+      <ul>
+        {% for link in links %}
+          <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+        {% endfor %}
+      </ul>
       {% endif %}  
     </nav>
 
-    <div id="project-lead">
+    <div id="project-lead" class="panel">
       <a href="{{ project.created_by.get_absolute_url }}">
 	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
       </a>
