@@ -81,6 +81,11 @@
     {% endfor %}
   </ul>
   {% endif %}
+  {% if user != profile.user %}
+  <p class="supplemental_actions">
+    <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+  </p>  
+  {% endif %}
 </div> <!-- /.vcard -->
 
 <div id="member_relationships" class="panel">
