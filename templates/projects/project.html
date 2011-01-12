@@ -29,8 +29,8 @@
 
 {% block body %}
 <div id="sidebar">
-  <div id="project">
-    <section class="panel">
+  <!-- <div > -->
+    <section id="project"class="panel">
       <h1 id="project-name">{{ project.name }}</h1>
 
       <div id="project-follow">
@@ -76,39 +76,45 @@
       {% if project.detailed_description %}
       <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
       {% endif %}
+      {% if user.get_profile != project.created_by %}
+      <p class="supplemental_actions">
+        <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+      </p>  
+      {% endif %}      
     </section>
-    <nav id="project-links" class="panel">
-      {% if links %}
+    
+    {% if links %}
+    <nav id="project-links" class="panel">      
       <ul>
         {% for link in links %}
           <li><a href="{{ link.url }}">{{ link.name }}</a></li>
         {% endfor %}
-      </ul>
-      {% endif %}  
+      </ul>       
     </nav>
+    {% endif %} 
 
-    <div id="project-lead" class="panel">
+    <section id="project-lead" class="panel">
       <a href="{{ project.created_by.get_absolute_url }}">
-	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
+        <img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
       </a>
 
       <div class="member-details">
-	<h3 class="member-name">
-	  <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
-	</h3>
+        <h3 class="member-name">
+          <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
+        </h3>
 
-	<div class="member-actions">
-    <a class="button" href="#">{{ _('Follow User') }}</a>
-    <a class="button" href="#">{{ _('Message') }}</a>
-	</div>
+        <div class="member-actions">
+          <a class="button" href="#">{{ _('Follow User') }}</a>
+          <a class="button" href="#">{{ _('Message') }}</a>
+        </div>
 
-	<div class="member-bio">
-	  {{ project.created_by.bio }}
-	</div>
-	
+        <div class="member-bio">
+          {{ project.created_by.bio }}
+        </div>
+
       </div> <!-- /.member-details -->
-    </div> <!-- /#project-lead -->
-  </div> <!-- /#project -->
+    </section> <!-- /#project-lead -->
+  <!-- </div> /#project -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
