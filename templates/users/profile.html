@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load i18n %}
+{% load truncate_chars %}
 {% block title %}{{ profile.name }}{% endblock %}
 
 {% block links %}
@@ -43,12 +44,12 @@
         {% if profile in user.get_profile.following %}
         <form action="{% locale_url relationships_unfollow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <button id="unfollow-user" >Unfollow User</button>
+          <button id="unfollow-user" >Unfollow</button>
         </form>
         {% else %}
         <form action="{% locale_url relationships_follow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <button id="follow-user">Follow User</button>
+          <button id="follow-user">Follow</button>
         </form>
         {% endif %}
         <a class="button" href="{% locale_url drumbeatmail_compose_to username=profile.username %}">{{ _('Private Message')}}</a>
@@ -81,6 +82,11 @@
     {% endfor %}
   </ul>
   {% endif %}
+  {% if user != profile.user %}
+  <p class="supplemental_actions">
+    <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+  </p>  
+  {% endif %}
 </div> <!-- /.vcard -->
 
 <div id="member_relationships" class="panel">
@@ -107,7 +113,7 @@
         {% else %}
         <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name }}
+        {{ project.name|truncatechars:35 }}
       </a>
     </li>
   {% endfor %}

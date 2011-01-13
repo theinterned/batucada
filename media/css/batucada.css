@@ -505,6 +505,9 @@ header {}
 		font-weight: normal;
 	}
 	#sidebar .panel{
+		clear: both;
+		float: left;
+		width: 100%;
 		padding-bottom: 18px;
 		margin-top:18px ;
 		border-bottom: 1px solid #ccc;
@@ -512,13 +515,14 @@ header {}
 	    -moz-box-shadow:  0 1px 0 rgba(255,255,255,0.8);
 	    -webkit-box-shadow:  0 1px 0 rgba(255,255,255,0.8);	    
 	}
+	#sidebar .panel.vcard,
+	#sidebar #project.panel{
+		padding-bottom: 5px;
+	}
 	#sidebar .panel:first-child{
 		margin-top: 10px;
 	}
-    #project {
-      border-bottom: 1px solid #f7f9fa;
-      margin-bottom: 50px;
-    }
+    #project {}
       #project-follow {
         margin: 10px 0;        
       }
@@ -530,28 +534,27 @@ header {}
       }
         #project-stats dt {
           float: left;
-          width: 120px;
+          width: 90px;
         }
       
-      #project-summary { }
-        #project-summary p {
-          font-size: 12px;
+      #project-summary { 
+	      font-size: 12px;
           line-height: 18px;
-          margin-bottom: 12px;
-        }
+		  }
+		#project-summary p {
+			margin-bottom: 18px;
+	        }
       #project-icons img {
         margin-right: 5px;
         border: 1px solid #d0d0d0;
       }
       #project-description-link {
-        margin-top: 18px;
+        margin: 18px 0 13px;
         display: block;
         line-height: 28px;
         text-align: center;
         background: #dfeffb;
         text-shadow: #fff 1px 1px 0px;
-        -moz-text-shadow: #fff 1px 1px 0px;
-        -webkit-text-shadow: #fff 1px 1px 0px;
         color: #2084ca;
         font-weight: bold;
       }
@@ -566,11 +569,7 @@ header {}
         -webkit-text-shadow: #fff -1px -1px 0px;
       }
       
-      #project-links {
-        margin: 20px 0;
-        border-top: 1px solid #cfd1d2;
-        border-bottom: 1px solid #f7f9fa;
-      }
+      #project-links {}
         #project-links ul,
         #member_links ul {
           list-style:none;
@@ -622,6 +621,9 @@ header {}
 			margin-left: 0;
 			list-style: none;			
 		}
+		#member_relationships ul:last-child {
+			margin-bottom: 0;
+			}
 		#member_relationships ul li {
 			display: inline-block;
 		}
@@ -678,6 +680,7 @@ header {}
 		}
         #project-lead .member-name a {
           font-size: 16px;
+          font-weight: bold;
           text-shadow: #fff 1px 1px 0px;
           -moz-text-shadow: #fff 1px 1px 0px;
           -webkit-text-shadow: #fff 1px 1px 0px;
@@ -992,7 +995,8 @@ header {}
       height: 1px;
       line-height: 1px;
     }
-    #posts .action {
+    #posts .action,
+    .supplemental_actions .action {
 	  display: none;
       float: right;
       color: #ababab;
@@ -1003,7 +1007,18 @@ header {}
       height: 16px;
       line-height: 16px;
 	}
-    #posts .action:hover {
+	.supplemental_actions {
+		margin: 5px 0;
+		font-size: 11px;
+		line-height: 1.5;
+	}
+	.supplemental_actions .action {
+		display: inline;
+		margin: 0 5px 0 0px;
+		float: none;
+	}
+    #posts .action:hover,
+    .supplemental_actions .action:hover {
       color: #777;
     }
 	#posts .post-container:hover .action{
@@ -1012,8 +1027,13 @@ header {}
     #posts .reply-to{
 		background: url("/media/images/reply.icon.png") 0 0 no-repeat;
 	}
-	#posts .report {
-		background: url("/media/images/report.icon.png") 5px 1px no-repeat 
+	#posts .report,
+	.supplemental_actions .report {
+		background: url("/media/images/report.icon.png") 0 1px no-repeat;
+		padding-left: 15px;		
+	}
+	.supplemental_actions .report {
+		background-position: 0 0;
 	}
     #posts .action:hover {
       color: #777;
