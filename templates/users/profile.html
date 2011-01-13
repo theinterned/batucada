@@ -19,13 +19,6 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
     </nav>
-
-    {% if user == profile.user %}
-    <div id="project-actions">      
-    	<a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-    </div>
-    {% endif %}
-
   </div> <!-- /.container -->
 {% endblock %}
 
