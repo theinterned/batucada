@@ -29,8 +29,7 @@
 
 {% block body %}
 <div id="sidebar">
-  <div id="project">
-
+  <section id="project"class="panel">
     <h1 id="project-name">{{ project.name }}</h1>
 
     <div id="project-follow">
@@ -76,39 +75,59 @@
     {% if project.detailed_description %}
     <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
     {% endif %}
+    {% if user.get_profile != project.created_by %}
+    <p class="supplemental_actions">
+      <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+    </p>  
+    {% endif %}      
+  </section>
+    
+  {% if links %}
+  <nav id="project-links" class="panel">      
+    <ul>
+      {% for link in links %}
+        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+      {% endfor %}
+    </ul>       
+  </nav>
+  {% endif %} 
 
-    <nav id="project-links">
-      {% if links %}
-	<ul>
-	  {% for link in links %}
-	    <li><a href="{{ link.url }}">{{ link.name }}</a></li>
-	  {% endfor %}
-	</ul>
-      {% endif %}  
-    </nav>
+  <section id="project-lead" class="panel">
+    <a href="{{ project.created_by.get_absolute_url }}">
+      <img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
+    </a>
 
-    <div id="project-lead">
-      <a href="{{ project.created_by.get_absolute_url }}">
-	<img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
-      </a>
+    <div class="member-details">
+      <h3 class="member-name">
+        <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
+      </h3>
 
-      <div class="member-details">
-	<h3 class="member-name">
-	  <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
-	</h3>
+      <div class="member-actions">
+        {% if project.created_by == user.get_profile %}
+        <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
+        {% else %}
+          {% if project.created_by in user.get_profile.following %}
+          <form action="{% locale_url relationships_unfollow object_type='user' slug=project.created_by.username %}" method="post">
+            {% csrf_token %}
+            <button id="unfollow-user" >Unfollow</button>
+          </form>
+          {% else %}
+          <form action="{% locale_url relationships_follow object_type='user' slug=project.created_by.username %}" method="post">
+            {% csrf_token %}
+            <button id="follow-user">Follow</button>
+          </form>
+          {% endif %}
+          <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Private Message')}}</a>
+        {% endif %}
+      </div>     
 
-	<div class="member-actions">
-    <a class="button" href="#">{{ _('Follow User') }}</a>
-    <a class="button" href="#">{{ _('Message') }}</a>
-	</div>
-
-	<div class="member-bio">
-	  {{ project.created_by.bio }}
-	</div>
-	
-      </div> <!-- /.member-details -->
-    </div> <!-- /#project-lead -->
-  </div> <!-- /#project -->
+    </div> <!-- /.member-details -->
+    
+    <div class="member-bio">
+      {{ project.created_by.bio }}
+    </div>
+    
+  </section> <!-- /#project-lead -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
