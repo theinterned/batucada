@@ -32,14 +32,14 @@ If you are doing an update, you might find it helps to delete pyc files: ::
 
     find . -name "*.pyc" | xargs rm
 
+You should create a settings_local.py. Most people will be able to get away with the template provided. ::
+
+   cp settings_local.dist.py settings_local.py
+
 Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
    python manage.py migrate
-
-You should create a settings_local.py. Most people will be able to get away with the template provided. ::
-
-   cp settings_local.dist.py settings_local.py
 
 Finally, start the development server to take it for a spin. ::
 
