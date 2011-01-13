@@ -11,7 +11,7 @@ Installation
 
 To install Batucada, you must clone the repository: ::
 
-   git clone git://github.com/mozilla/batucada.git
+   git clone git://github.com/paulosman/batucada.git
 
 To get started, you'll need to make sure that ``virtualenv`` and ``pip`` are installed. ::
 
@@ -32,23 +32,22 @@ If you are doing an update, you might find it helps to delete pyc files: ::
 
     find . -name "*.pyc" | xargs rm
 
-You may need to create a settings_local.py file to override some of the default settings.
-For example, you may need to `configure your email backend`_.
-   
 Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
    python manage.py migrate
 
+You should create a settings_local.py. Most people will be able to get away with the template provided. ::
+
+   cp settings_local.dist.py settings_local.py
+
 Finally, start the development server to take it for a spin. ::
 
    python manage.py runserver 
-
-.. _configure your email backend: http://docs.djangoproject.com/en/dev/topics/email/
 
 Get Involved
 ------------
 
 To help out with batucada, join the `Drumbeat mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
 
-.. _Drumbeat mailing list: https://lists.mozilla.org/listinfo/community-drumbeat
+.. _Drumbeat mailing list: http://www.mozilla.org/about/forums/#drumbeat-website
