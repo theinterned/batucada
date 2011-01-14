@@ -11,41 +11,13 @@
   <h1>{{ _('Account Settings') }}</h1>
   <nav id="account-settings-nav">
     <ul>
-      <li class="notifications"><a href="#">{{ _('Notifications') }}</a></li>
-      <li class="connections"><a href="#">{{ _('Connections') }}</a></li>
-      <li class="identities"><a href="#">{{ _('Manage Identities') }}</a></li>
-      <li class="export"><a href="#">{{ _('Export Your Data') }}</a></li>
-      <li class="delete"><a href="#">{{ _('Delete Account') }}</a></li>
+      <li class="notifications"><a href="{% locale_url preferences_settings %}">{{ _('Notifications') }}</a></li>
+      <li class="delete"><a href="{% locale_url preferences_delete %}">{{ _('Delete Account') }}</a></li>
     </ul>
   </nav>
   
   <fieldset>
-    <h2>{{ _('Send me an email when...') }}</h2>
-    <form action="{% locale_url preferences_settings %}" method="post">
-      {% csrf_token %}
-      <p>
-        <label for="id_no_email_message_received">
-          <input type="checkbox" id="id_no_email_message_received" name="no_email_message_received" {% if no_email_message_received %}checked="checked"{% endif %} />
-          {{ _('A user messages me on drumbeat.org.') }}
-        </label>
-      </p>
-      <p>
-        <label for="id_no_email_new_follower">
-          <input type="checkbox" id="id_no_email_new_follower" name="no_email_new_follower" {% if no_email_new_follower %}checked="checked"{% endif %} />
-          {{ _('Someone starts following me.') }}
-        </label>
-      </p>
-      <p>
-        <label for="id_no_email_new_project_follower">
-          <input type="checkbox" id="id_no_email_new_project_follower" name="no_email_new_project_follower" {% if no_email_new_project_follower %}checked="checked"{% endif %} />
-          {{ _('Someone starts following one of my projects.') }}
-        </label>
-      </p>
-      <p class="buttons">
-        <a class="button" href="{% locale_url dashboard_index %}">{{ _('Cancel') }}</a>
-        <button type="submit" value="{{ _('Save') }}" >{{ _('Save') }}</button>
-      </p>
-    </form>
+    {% block form %}{% endblock %}
   </fieldset>  
 
 </article>
