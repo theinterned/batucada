@@ -34,10 +34,16 @@ def settings(request):
     for preference in preferences:
         log.debug("%s => %s" % (preference.key, preference.value))
         prefs[preference.key] = preference.value
-    return render_to_response('preferences/settings.html', prefs,
+    return render_to_response('preferences/settings_notifications.html', prefs,
                               context_instance=RequestContext(request))
 
 
+@login_required
 def delete(request):
-    """TODO: Implement."""
-    return HttpResponseRedirect(reverse('dashboard_index'))
+    if request.method == 'POST':
+        profile = request.user.get_profile()
+        profile.user.delete()
+        profile.delete()
+        return HttpResponseRedirect(reverse('users_logout'))
+    return render_to_response('preferences/settings_delete.html', {
+    }, context_instance=RequestContext(request))
