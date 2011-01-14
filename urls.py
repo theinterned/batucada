@@ -5,6 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^test/$',
+    	'django.views.generic.simple.direct_to_template', {'template': 'test.html'}),
     (r'^admin/',         include(admin.site.urls)),
     (r'',                include('dashboard.urls')),
     (r'',                include('wellknown.urls')),
@@ -16,7 +18,7 @@ urlpatterns = patterns('',
     (r'^messages/',      include('drumbeatmail.urls')),
     (r'^account/',       include('preferences.urls')),
     (r'^pubsub/',        include('django_push.subscriber.urls')),
-    (r'',                include('users.urls')),
+    (r'',                include('users.urls')),    
 )
 
 #if settings.DEBUG:
