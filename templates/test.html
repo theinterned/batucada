@@ -1,0 +1,114 @@
+{% load l10n_tags %}
+<!doctype html>
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Mozilla Drumbeat | {% block title %}{% endblock %}</title>
+  <meta name="description" content="Drumbeat gathers smart, creative people like you around big ideas, practical projects and local events that improve the open web.">
+  <meta name="author" content="mozilla">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico">
+  <link rel="apple-touch-icon" href="{{ MEDIA_URL }}images/apple-touch-icon.png">
+
+  <!--
+  /*
+   * MyFonts Webfont Build ID 235749, 2011-01-03T09:54:22-0500
+   * 
+   * The fonts listed in this notice are subject to the End User License
+   * Agreement(s) entered into by the website owner. All other parties are 
+   * explicitly restricted from using the Licensed Webfonts(s).
+   * 
+   * You may obtain a valid license at the urls below.
+   * 
+   * Webfont: Museo Sans 500
+   * Url: http://new.myfonts.com/fonts/exljbris/museo-sans/500/
+   * Foundry: exljbris
+   * Copyright: Copyright (c) 2008 by Jos Buivenga. All rights reserved.
+   * License: http://www.myfonts.com/viewlicense?1056
+   * Licensed pageviews: unspecified
+   * CSS font-family: MuseoSans-500
+   * CSS font-weight: normal
+   * 
+   * Webfont: Museo Sans 500 Italic
+   * Url: http://new.myfonts.com/fonts/exljbris/museo-sans/500-italic/
+   * Foundry: exljbris
+   * Copyright: Copyright (c) 2008 by Jos Buivenga. All rights reserved.
+   * License: http://www.myfonts.com/viewlicense?1056
+   * Licensed pageviews: unlimited/month
+   * CSS font-family: MuseoSans-500Italic
+   * CSS font-weight: normal
+   * 
+   * (c) 2011 Bitstream, Inc
+  */
+  -->
+  <script type="text/javascript" src="{{ MEDIA_URL }}fonts/MuseoSans500/MuseoSans500.js"></script>
+  <noscript><!-- load the fonts for those without js -->
+    <link rel="stylesheet" href="{{ MEDIA_URL }}fonts/MuseoSans500/MuseoSans500.css">
+  </noscript>
+  
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=1">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/batucada.css?v=1">
+  <script src="{{ MEDIA_URL }}js/libs/modernizr-1.6.min.js"></script>  
+  {% block links %}{% endblock %}
+</head>
+<body>
+  <section class="modal nav">
+    <article>
+
+      <h1>{{ _('Edit Profile') }}</h1>
+      <nav id="profile-edit-nav">
+        <ul>
+  	<li class="info"><a href="{% locale_url users_profile_edit %}">{{ _('General Info') }}</a></li>
+  	<li class="image"><a href="{% locale_url users_profile_edit_image %}">{{ _('Profile Image') }}</a></li>
+  	<li class="skills"><a href="#">{{ _('Skills & Interests') }}</a></li>
+  	<li class="links"><a href="{% locale_url users_profile_edit_links %}">{{ _('Links') }}</a></li>
+        </ul>
+      </nav>
+
+      <fieldset>
+        <form action="{% locale_url users_profile_edit %}" method="post">
+          {% csrf_token %}
+          <p>
+            <label for="id_display_name">{{ _('Full Name') }}</label>
+            {{ form.display_name }}
+            {{ form.display_name.errors }}
+          </p>
+            <p>
+              <label form="id_location">{{ _('Location') }}</label>
+              {{ form.location }}
+              {{ form.location.errors }}
+            </p>
+            <p>
+              <label for="id_bio">{{ _('Bio') }}</label>
+              {{ form.bio }}
+              {{ form.bio.errors }}
+            </p>
+            <p class="buttons">
+              <a class="button" href="{{ profile.get_absolute_url }}">Cancel</a>
+              <button type="submit" >Save</button>
+            </p>
+        </form>
+      </fieldset>
+
+    </article>
+  </section>
+
+    <script src="{{ MEDIA_URL }}js/libs/jquery-1.4.2.min.js"></script>
+    <script src="{{ MEDIA_URL }}js/libs/jquery-ui-1.8.7.custom.min.js"></script>  
+    <script src="{{ MEDIA_URL }}js/libs/jquery.tmpl.min.js"></script>
+
+    {% block js %}{% endblock %}
+
+    <!-- scripts concatenated and minified via ant build script-->
+    <script src="{{ MEDIA_URL }}js/plugins.js"></script>
+    <script src="{{ MEDIA_URL }}js/script.js"></script>
+    <!-- end concatenated and minified scripts-->
+
+  </body>
+  </html>
