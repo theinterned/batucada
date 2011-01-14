@@ -93,11 +93,13 @@ def login(request):
             del request.session['next']
             return http.HttpResponseRedirect(next_param)
 
-    elif 'username' in request.POST:
-        messages.error(request,
-                       _('Incorrect username or password.'))
-        # Hitting POST directly because cleaned_data doesn't exist
-        user = UserProfile.objects.filter(email=request.POST['username'])
+    elif request.method == 'POST':
+        messages.error(request, _('Incorrect email or password.'))
+        data = request.POST.copy()
+        del data['password']
+        return render_to_response('users/signin.html', {
+            'form': auth_forms.AuthenticationForm(initial=data),
+        }, context_instance=RequestContext(request))
 
     return r
 
