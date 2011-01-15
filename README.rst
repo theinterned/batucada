@@ -39,7 +39,19 @@ You should create a settings_local.py. Most people will be able to get away with
 Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
-   python manage.py migrate
+
+There's a problem with real databases (read: not sqlite) where south migrations are run in an order that violates foreign key constraints. See `Bug # 623612`_ for details. Until that is fixed, you're best off running migrations in this order. ::
+
+   python manage.py migrate projects
+   python manage.py migrate users
+   python manage.py migrate activity
+   python manage.py migrate statuses
+   python manage.py migrate links
+   python manage.py migrate dashboard
+
+What a pain! 
+
+.. _Bug # 623612: https://bugzilla.mozilla.org/show_bug.cgi?id=623612
 
 Finally, start the development server to take it for a spin. ::
 
