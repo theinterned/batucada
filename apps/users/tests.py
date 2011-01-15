@@ -1,6 +1,6 @@
 from django.test import Client
 
-from users.models import UserProfile
+from users.models import UserProfile, get_partition_id
 
 from test_utils import TestCase
 
@@ -106,3 +106,16 @@ class TestLogins(TestCase):
         params['policy_optin'] = 'on'
         response = self.client.post(path, params)
         self.assertEqual(response.status_code, 302)
+
+    def test_profile_image_directories(self):
+        """Test that we partition image directories properly."""
+        for i in range(1, 1001):
+            p_id = get_partition_id(i)
+            self.assertEqual(1, p_id)
+        for i in range(1001, 2001):
+            p_id = get_partition_id(i)
+            self.assertEqual(2, p_id)
+        for i in range(10001, 11001):
+            p_id = get_partition_id(i)
+            self.assertEqual(11, p_id)
+        self.assertEqual(12, get_partition_id(11002))
