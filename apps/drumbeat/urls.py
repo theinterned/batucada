@@ -9,3 +9,9 @@ urlpatterns = patterns('django.views.generic.simple',
        'template': 'drumbeat/about.html',
    }, name='drumbeat_about'),
 )
+
+urlpatterns += patterns('',
+   url(r'^abuse/(?P<type>[\w ]+)/(?P<obj>\w+)/$',
+       'drumbeat.views.report_abuse',
+       name='drumbeat_abuse'),
+)
