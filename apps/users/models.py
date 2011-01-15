@@ -4,6 +4,7 @@ import random
 import string
 import hashlib
 import os
+import math
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -22,6 +23,18 @@ from users import tasks
 import caching.base
 
 log = logging.getLogger(__name__)
+
+
+def get_partition_id(pk, chunk_size=1000):
+    return int(math.ceil(pk / float(chunk_size)))
+
+
+def determine_upload_path(instance, filename):
+    chunk_size = 1000  # max files per directory
+    return "images/profiles/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.pk, chunk_size),
+        'filename': filename,
+    }
 
 
 def get_hexdigest(algorithm, salt, raw_password):
@@ -73,7 +86,7 @@ class UserProfile(ModelBase):
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(blank=True, default='')
     image = models.ImageField(
-        upload_to='images/profiles/public', default='', blank=True, null=True)
+        upload_to=determine_upload_path, default='', blank=True, null=True)
     confirmation_code = models.CharField(
         max_length=255, default='', blank=True)
     location = models.CharField(max_length=255, blank=True, default='')
