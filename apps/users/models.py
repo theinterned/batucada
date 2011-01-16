@@ -4,7 +4,6 @@ import random
 import string
 import hashlib
 import os
-import math
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -15,6 +14,7 @@ from django.utils.translation import ugettext as _
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
 
+from drumbeat.utils import get_partition_id
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
@@ -23,10 +23,6 @@ from users import tasks
 import caching.base
 
 log = logging.getLogger(__name__)
-
-
-def get_partition_id(pk, chunk_size=1000):
-    return int(math.ceil(pk / float(chunk_size)))
 
 
 def determine_upload_path(instance, filename):

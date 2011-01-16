@@ -8,9 +8,12 @@ from django.db.models import Count
 from django.db.models.signals import pre_save, post_save
 from django.template.defaultfilters import slugify
 
+from drumbeat.utils import get_partition_id
 from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
+
+from projects.tasks import ThumbnailGenerator
 
 import caching.base
 
@@ -18,11 +21,17 @@ log = logging.getLogger(__name__)
 
 
 def determine_image_upload_path(instance, filename):
-    return "images/%s/%s" % (instance.slug, filename)
+    return "images/projects/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.pk),
+        'filename': filename,
+    }
 
 
 def determine_video_upload_path(instance, filename):
-    return "videos/%s/%s" % (instance.project.slug, filename)
+    return "videos/projects/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.project.pk),
+        'filename': filename,
+    }
 
 
 class ProjectManager(caching.base.CachingManager):
@@ -92,6 +101,8 @@ class ProjectMedia(ModelBase):
     project_file = models.FileField(upload_to=determine_video_upload_path)
     project = models.ForeignKey(Project)
     mime_type = models.CharField(max_length=80, null=True)
+    thumbnail = models.ImageField(upload_to=determine_video_upload_path,
+                                  null=True, blank=True)
 
 ###########
 # Signals #
@@ -130,3 +141,14 @@ def project_creation_handler(sender, **kwargs):
     except ImportError:
         return
 post_save.connect(project_creation_handler, sender=Project)
+
+
+def projectmedia_thumbnail_generator(sender, **kwargs):
+    media = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+
+    if not created or not isinstance(media, ProjectMedia):
+        return
+
+    ThumbnailGenerator.apply_async(args=(media,))
+post_save.connect(projectmedia_thumbnail_generator, sender=ProjectMedia)

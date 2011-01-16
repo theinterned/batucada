@@ -1,4 +1,5 @@
 import re
+import math
 import unicodedata
 
 from django.core.validators import ValidationError, validate_slug
@@ -34,3 +35,12 @@ def slug_validator(s, ok=SLUG_OK, lower=True):
     if not (s and slugify(s, ok, lower) == s):
         raise ValidationError(validate_slug.message,
                               code=validate_slug.code)
+
+
+def get_partition_id(pk, chunk_size=1000):
+    """
+    Given a primary key and optionally the number of models that will get
+    shared access to a directory, return an integer representing a directory
+    name.
+    """
+    return int(math.ceil(pk / float(chunk_size)))
