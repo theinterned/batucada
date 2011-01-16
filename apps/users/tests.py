@@ -1,6 +1,7 @@
 from django.test import Client
 
-from users.models import UserProfile, get_partition_id
+from drumbeat.utils import get_partition_id
+from users.models import UserProfile
 
 from test_utils import TestCase
 
