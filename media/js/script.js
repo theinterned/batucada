@@ -181,7 +181,7 @@ $(document).ready(function() {
     });
 
     // modals using jQueryUI dialog
-    $('.button.openmodal').live('click', function(){
+    $('button.openmodal').live('click', function(){
         var url = this.href;
         //var url = "/en-US/test/"; //testing purposes
         var selector = '.modal';
@@ -200,7 +200,17 @@ $(document).ready(function() {
         );
         //prevent the browser to follow the link
         return false;
-    })
+    });
+    // modal tabs
+    $( ".modal nav.tabs" ).tabs({
+        ajaxOptions: {
+            error: function( xhr, status, index, anchor ) {
+                $( anchor.hash ).html(
+                    "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+                    "If this wouldn't be a demo." );
+            }
+        }
+    });
     
     // find submit buttons and bind them to an event that submits their form
     $('.submit-button').bind('click', function(e) {
