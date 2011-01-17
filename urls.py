@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/',         include(admin.site.urls)),
+    (r'',                include('drumbeat.urls')),
     (r'',                include('dashboard.urls')),
     (r'',                include('wellknown.urls')),
     (r'',                include('activity.urls')),

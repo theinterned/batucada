@@ -11,10 +11,13 @@
 <ul>
 {% for file_id, file in files.items %}
   <li>
+    {% if file.thumbnail %}
+      <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" />
+    {% endif %}
     <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
     {% csrf_token %}
       <input type="hidden" name="file_id" value="{{ file_id }}" />
-      {{ file }} 
+      {{ file.path }} 
       <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
     </form>
   </li>

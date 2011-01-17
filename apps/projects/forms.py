@@ -59,6 +59,7 @@ class ProjectMediaForm(forms.ModelForm):
         'video/webm',
         'video/mp4',
         'application/ogg',
+        'audio/ogg',
     )
 
     class Meta:

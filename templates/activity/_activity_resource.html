@@ -2,7 +2,7 @@
 
 <li class="post-container">
   {% if user.is_authenticated %}
-  <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+  <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=activity.id type="activity" %}">{{_('Report Abuse')}}</a>
  {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.image_or_default }}">

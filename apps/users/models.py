@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
 
+from drumbeat.utils import get_partition_id
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
@@ -22,6 +23,14 @@ from users import tasks
 import caching.base
 
 log = logging.getLogger(__name__)
+
+
+def determine_upload_path(instance, filename):
+    chunk_size = 1000  # max files per directory
+    return "images/profiles/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.pk, chunk_size),
+        'filename': filename,
+    }
 
 
 def get_hexdigest(algorithm, salt, raw_password):
@@ -73,7 +82,7 @@ class UserProfile(ModelBase):
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(blank=True, default='')
     image = models.ImageField(
-        upload_to='images/profiles/public', default='', blank=True, null=True)
+        upload_to=determine_upload_path, default='', blank=True, null=True)
     confirmation_code = models.CharField(
         max_length=255, default='', blank=True)
     location = models.CharField(max_length=255, blank=True, default='')

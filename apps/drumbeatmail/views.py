@@ -167,7 +167,8 @@ def reply(request, message):
     if message.recipient != request.user:
         return http.HttpResponseForbidden()
     if request.method == 'POST':
-        form = forms.ComposeForm(data=request.POST)
+        form = forms.ComposeForm(data=request.POST,
+                                 sender=request.user.get_profile())
         if form.is_valid():
             form.save(sender=request.user)
             messages.success(request, _('Message successfully sent.'))
