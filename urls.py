@@ -5,8 +5,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^test/$',
-    	'django.views.generic.simple.direct_to_template', {'template': 'test.html'}),
     (r'^admin/',         include(admin.site.urls)),
     (r'',                include('drumbeat.urls')),
     (r'',                include('dashboard.urls')),
