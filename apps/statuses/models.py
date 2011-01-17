@@ -1,19 +1,24 @@
 import datetime
+from markdown import markdown
+from bleach import Bleach
 
 from django.contrib import admin
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
+from django.utils.html import urlize
 
 from activity.models import Activity
 from drumbeat.models import ModelBase
+
+TAGS = ('a', 'b', 'em', 'i', 'strong', 'p')
 
 
 class Status(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
     author = models.ForeignKey('users.UserProfile')
-    project = models.ForeignKey('projects.Project', null=True)
+    project = models.ForeignKey('projects.Project', null=True, blank=True)
     status = models.CharField(max_length=750)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
@@ -35,8 +40,18 @@ admin.site.register(Status)
 
 def status_creation_handler(sender, **kwargs):
     status = kwargs.get('instance', None)
-    if not isinstance(status, Status):
+    created = kwargs.get('created', False)
+
+    if not created or not isinstance(status, Status):
         return
+
+    # convert status body to markdown and bleachify
+    bl = Bleach()
+    status.status = urlize(status.status)
+    status.status = bl.clean(markdown(status.status), tags=TAGS)
+    status.save()
+
+    # fire activity
     activity = Activity(
         actor=status.author,
         verb='http://activitystrea.ms/schema/1.0/post',

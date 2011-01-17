@@ -145,7 +145,10 @@ def edit_media(request, slug):
         form = project_forms.ProjectMediaForm()
     files_dict = {}
     for f in files:
-        files_dict[f.id] = os.path.basename(f.project_file.path)
+        files_dict[f.id] = {
+            'path': os.path.basename(f.project_file.path),
+            'thumbnail': f.thumbnail,
+        }
     return render_to_response('projects/project_edit_media.html', {
         'files': files_dict,
         'form': form,
@@ -161,7 +164,6 @@ def delete_media(request, slug):
     file_id = int(request.POST['file_id'])
     file_obj = ProjectMedia.objects.get(
         project=project, pk=file_id)
-    os.unlink(file_obj.project_file.path)
     file_obj.delete()
     messages.success(request, _("The file has been deleted."))
     return http.HttpResponseRedirect(reverse('projects_edit_media', kwargs={
