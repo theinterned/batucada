@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load truncate_chars %}
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
 {% block links %}
 <link rel="alternate" type="application/atom+xml" href="{% locale_url activity_dashboard_feed %}" />
@@ -42,7 +43,7 @@
         {% else %}
         <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name }}
+        {{ project.name|truncatechars:35 }}
       </a>
       {% endif %}
     </li>
