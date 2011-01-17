@@ -40,3 +40,6 @@ CACHE_COUNT_TIMEOUT = 60
 
 # Execute celery tasks locally, so you don't have to be running an MQ
 CELERY_ALWAYS_EAGER = True
+
+# Path to ffmpeg. This will have to be installed to create video thumbnails
+FFMPEG_PATH = '/usr/bin/ffmpeg'
