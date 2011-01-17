@@ -182,14 +182,12 @@ $(document).ready(function() {
     // modals using jQueryUI dialog
     $('.button.openmodal').live('click', function(){
         var url = this.href;
-        //var url = "/en-US/test/"; //testing purposes
         var selector = '.modal';
         var url_fragment =  url + ' ' + selector;
         var dialog = $('<div style=""></div>').appendTo('body');
         // load remote content
         dialog.load(
-            url_fragment, 
-            {},
+            url_fragment,
             function (responseText, textStatus, XMLHttpRequest) {
                 log(responseText);
                 dialog.dialog({
