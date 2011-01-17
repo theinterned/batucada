@@ -1,11 +1,13 @@
+import os
 import logging
 import datetime
 from markdown import markdown
 
+from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.db.models import Count
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.template.defaultfilters import slugify
 
 from drumbeat.utils import get_partition_id
@@ -152,3 +154,22 @@ def projectmedia_thumbnail_generator(sender, **kwargs):
 
     ThumbnailGenerator.apply_async(args=(media,))
 post_save.connect(projectmedia_thumbnail_generator, sender=ProjectMedia)
+
+
+def projectmedia_scrubber(sender, **kwargs):
+    media = kwargs.get('instance', None)
+    if not isinstance(media, ProjectMedia):
+        return
+    media_root = getattr(settings, 'MEDIA_ROOT', None)
+    if not media_root:
+        return
+    path = lambda f: os.path.join(media_root, f)
+    files = []
+    if media.project_file:
+        files.append(path(media.project_file.name))
+    if media.thumbnail:
+        files.append(path(media.thumbnail.name))
+    for f in files:
+        if os.path.exists(f):
+            os.unlink(f)
+post_delete.connect(projectmedia_scrubber, sender=ProjectMedia)

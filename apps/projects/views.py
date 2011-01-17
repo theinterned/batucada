@@ -164,7 +164,6 @@ def delete_media(request, slug):
     file_id = int(request.POST['file_id'])
     file_obj = ProjectMedia.objects.get(
         project=project, pk=file_id)
-    os.unlink(file_obj.project_file.path)
     file_obj.delete()
     messages.success(request, _("The file has been deleted."))
     return http.HttpResponseRedirect(reverse('projects_edit_media', kwargs={
