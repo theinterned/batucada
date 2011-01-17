@@ -37,7 +37,7 @@
   {% for project in projects_following %}
     {% if project.created_by != user.get_profile %}
     <li>
-      <a href="{{ project.get_absolute_url }}" alt="{{project.name}}">
+      <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
         {% if project.image %}
         <img src="" width="26" height="26" alt="project image"/>
         {% else %}
