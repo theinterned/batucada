@@ -145,7 +145,10 @@ def edit_media(request, slug):
         form = project_forms.ProjectMediaForm()
     files_dict = {}
     for f in files:
-        files_dict[f.id] = os.path.basename(f.project_file.path)
+        files_dict[f.id] = {
+            'path': os.path.basename(f.project_file.path),
+            'thumbnail': f.thumbnail,
+        }
     return render_to_response('projects/project_edit_media.html', {
         'files': files_dict,
         'form': form,
