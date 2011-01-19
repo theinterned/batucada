@@ -67,7 +67,7 @@ var openid_handlers = function() {
     var one_click = {
 	'google': 'https://www.google.com/accounts/o8/id',
 	'yahoo': 'http://yahoo.com',
-	'myopenid': 'http://myopenid.com',
+	'myopenid': 'http://myopenid.com'
     };
     $.each(one_click, function(key, value) {
 	$('.openid_providers #' + key).bind('click', function(e) {
@@ -191,8 +191,7 @@ $(document).ready(function() {
             function (responseText, textStatus, XMLHttpRequest) {
                 log(responseText);
                 dialog.dialog({
-                    draggable: true,
-                    
+                    draggable: true
                 });
             }
         );
