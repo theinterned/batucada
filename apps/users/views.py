@@ -314,8 +314,8 @@ def profile_edit(request):
     else:
         form = forms.ProfileEditForm(instance=profile)
 
-    if request.is_ajax():
-        return http.HttpResponse('profile_edit')
+#    if request.is_ajax():
+#        return http.HttpResponse('profile_edit')
     return render_to_response('users/profile_edit_main.html', {
         'profile': profile,
         'form': form,
@@ -339,8 +339,8 @@ def profile_edit_image(request):
     else:
         form = forms.ProfileImageForm(instance=profile)
 
-    if request.is_ajax():
-        return http.HttpResponse('profile_edit_image')
+#    if request.is_ajax():
+#        return http.HttpResponse('profile_edit_image')
 
     return render_to_response('users/profile_edit_image.html', {
         'profile': profile,
@@ -371,8 +371,8 @@ def profile_edit_links(request):
         form = forms.ProfileLinksForm()
     links = Link.objects.select_related('subscription').filter(user=profile)
 
-    if request.is_ajax():
-        return http.HttpResponse('profile_edit_links')
+#    if request.is_ajax():
+#        return http.HttpResponse('profile_edit_links')
 
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,

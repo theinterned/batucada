@@ -167,6 +167,33 @@ var batucada = {
     }
 };
 
+jQuery.fn.tabLinks = function(element){
+  var links = $(this);
+
+  
+  var update_element = function(e){
+    var link = $(this), href = link.attr('href');
+    
+    $('<div/>').load(href + ' ' + element, function(){
+      $(element).html($(this).children()[0].innerHTML);
+    });
+    
+    /*  when you fix it so ajax requests return just the contents of
+        fieldset, replace above with:
+    jQuery.get(href, function(data){ $(element).html(data); });
+    */
+    e.preventDefault();
+    return false;
+  };
+  
+  links.each(function(){
+    var me = $(this),
+        href = me.attr('href');
+    if (!href || href == '#') return;
+    me.bind('click.tablinks', update_element);
+  });
+};
+
 $(document).ready(function() {
     // dispatch per-page onload handlers 
     var ns = window.batucada;
@@ -197,7 +224,7 @@ $(document).ready(function() {
         );
         //prevent the browser to follow the link
         return false;
-    })
+    });
 
     // modals using jQueryUI dialog
     $('button.openmodal').live('click', function(){
@@ -212,39 +239,19 @@ $(document).ready(function() {
             function (responseText, textStatus, XMLHttpRequest) {
                 log(responseText);
                 dialog.dialog({
-                    draggable: true,
-                    
+                    draggable: true                    
                 });
             }
         );
         //prevent the browser to follow the link
         return false;
     });
-    // modal tabs
-    $( ".modal nav.tabs" ).tabs({
-        ajaxOptions: {
-            error: function( xhr, status, index, anchor ) {
-                $( anchor.hash ).html(
-                    "Couldn't load this tab. We'll try to fix this as soon as possible. " +
-                    "If this wouldn't be a demo." );
-            }
-        }
-    });
-
+  
+    $('.modal nav.tabs a').tabLinks('section fieldset');
+    
     // find submit buttons and bind them to an event that submits their form
     //     $('.submit-button').bind('click', function(e) {
     // $(e.target).parent('form[method="post"]').first().submit();
     //     });
 });
-
-
-
-
-
-
-
-
-
-
-
 
