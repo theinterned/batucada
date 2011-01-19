@@ -1,5 +1,6 @@
 import time
 import urllib2
+import logging
 import hashlib
 import feedparser
 
@@ -12,24 +13,27 @@ from celery.decorators import periodic_task
 
 from dashboard.models import FeedEntry
 
+log = logging.getLogger(__name__)
+
 
 def strip_html(data):
     return ''.join(BeautifulSoup(data).findAll(text=True))
 
 
 def parse_entry(entry):
+    log.debug("parsing %s" % (entry,))
     title = getattr(entry, 'title', None)
     content = getattr(entry, 'content', None)
     link = getattr(entry, 'link', None)
     updated = getattr(entry, 'updated_parsed', None)
     if not (title and content and link and updated):
+        log.debug("No title or no content or no link or no updated")
         return None
-    body = getattr(content, 'value', None)
-    if not body:
-        return None
+    if type(content) == type([]):
+        content = content[0]
     return {
         'title': title,
-        'content': body,
+        'content': content,
         'link': link,
         'updated': updated,
     }
@@ -38,6 +42,7 @@ def parse_entry(entry):
 @periodic_task(run_every=crontab(minute=0, hour=0))
 def update_feeds():
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
+    log.debug("update_feeds called with feed url %s" % (feed_url,))
 
     if not feed_url:
         return
@@ -48,8 +53,10 @@ def update_feeds():
 
     counter = 0
     for entry in entries:
+        log.debug("parsing feed")
         parsed = parse_entry(entry)
         if not parsed:
+            log.warn("Parsing feed failed. continuing")
             continue
         body = getattr(parsed['content'], 'value', None)
         if not body:
@@ -68,4 +75,6 @@ def update_feeds():
         except:
             continue
 
-    FeedEntry.objects.all()[counter:].delete()
+    stale = FeedEntry.objects.all().order_by('-created_on')[:counter]
+    for entry in stale:
+        entry.delete()
