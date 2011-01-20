@@ -45,39 +45,39 @@
     {% for message in inbox %}
     <li class="post-container">
       {% if message.sender != user %}
-      <a href="{% locale_url drumbeatmail_reply message=message.id %}" class="reply-to action">{{ _('Reply') }}</a>
-      <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
+        <a href="{% locale_url drumbeatmail_reply message=message.id %}" class="reply-to action">{{ _('Reply') }}</a>
+        <a href="{% locale_url drumbeat_abuse obj=message.id type="message" %}" class="report abuse action">{{_('Report Abuse')}}</a>
       {% endif %}
       
       {% if message.sender == user %}
-	<a href="{{ message.recipient.get_profile.get_absolute_url }}">
-	  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ message.recipient.get_profile.image_or_default }}">
-	</a>
+        <a href="{{ message.recipient.get_profile.get_absolute_url }}">
+          <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ message.recipient.get_profile.image_or_default }}">
+        </a>
       {% else %}
-	<a href="{{ message.sender.get_profile.get_absolute_url }}">
-	  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ message.sender.get_profile.image_or_default }}">
-	</a>
+        <a href="{{ message.sender.get_profile.get_absolute_url }}">
+          <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ message.sender.get_profile.image_or_default }}">
+        </a>
       {% endif %}
 
       <div class="post-contents">
-	<div class="post-details">
-	  {% if message.sender == user %}
-	    <a class="member-name" href="{{ message.recipient.get_profile.get_absolute_url }}">{{ message.recipient.get_profile.name }}</a>
-	  {% else %}
-	    <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile.name }}</a>
-	  {% endif %}
-	  {{ message.sent_at }}
-	</div>
+        <div class="post-details">
+          {% if message.sender == user %}
+            <a class="member-name" href="{{ message.recipient.get_profile.get_absolute_url }}">{{ message.recipient.get_profile.name }}</a>
+          {% else %}
+            <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile.name }}</a>
+          {% endif %}
+          {{ message.sent_at }}
+        </div>
 
-	<div class="post-body">
-	  {% if message.subject %}
-	  <h2>{{ message.subject }}</h2>
-	  <br />
-	  {% endif %}
-	  {{ message.body }}
-	</div>
+        <div class="post-body">
+          {% if message.subject %}
+            <h2>{{ message.subject }}</h2>
+            <br />
+          {% endif %}
+          {{ message.body }}
+        </div>
 
-	<div class="clear ir"></div>
+        <div class="clear ir"></div>
 
       </div>
 
@@ -91,22 +91,25 @@
 
     <script id="message-template" type="text/j-query-tmpl" page="{{ page_number }}" npages="{{ n_pages }}">
       <li class="post-container">
-	{% if reply_url %}
-	  <a href="${reply_url}" class="reply-to">{{ _('Reply') }}</a>
-	  <a class="report abuse action" href="{% locale_url activity_report %}">{{_('Report Abuse')}}</a>
-	{% endif %}
-	<a href="${sender_url}">
-	  <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}${sender_img}">
+        {% if not sent_view %}
+          <a href="${reply_url}" class="reply-to action">{{ _('Reply') }}</a>
+          <a href="${abuse_url}" class="report abuse action">{{_('Report Abuse')}}</a>
+        {% endif %}
+        <a href="${sender_url}">
+          <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}${sender_img}">
         </a>
-	<div class="post-contents">
-	  <div class="post-details">
-	    <a class="member-name" href="${sender_url}">${sender_name}</a>
-	    ${sent_at}
-	  </div>
-	  <div class="post-body">
-	    ${body}
-	  </div>
-	  <div class="clear ir"></div>
+        <div class="post-contents">
+          <div class="post-details">
+            <a class="member-name" href="${sender_url}">${sender_name}</a>
+            ${sent_at}
+          </div>
+          <div class="post-body">
+            <h2>${ subject }</h2>
+            <br />
+            ${body}
+          </div>
+          <div class="clear ir"></div>
+        </div>
       </li>
     </script>
 
