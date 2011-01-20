@@ -162,12 +162,20 @@ var batucada = {
 };
 
 jQuery.fn.tabLinks = function(element){
+    $(this).first().parent('li').addClass('active');
+
     var updateElement = function(e) {
+        e.preventDefault();
+
         var href = $(this).attr('href');
         $('<div/>').load(href + ' ' + element, function() {
             $(element).html($(this).children()[0].innerHTML);
+            $('textarea.wmd').wmd({'preview': false});
         });
-        e.preventDefault();
+        $(this).parent('li').siblings('li').each(function(i, e) {
+            $(e).removeClass('active');
+        });
+        $(this).parent('li').addClass('active');
     };
 
     $(this).each(function() {
@@ -191,17 +199,17 @@ $(document).ready(function() {
     $('#user-nav').find('li.menu').bind('click', function(event) {
         $(this).toggleClass('open');
     });
+
     // modals using jQueryUI dialog
     $('.button.openmodal').live('click', function(){
         var url = this.href;
         var selector = '.modal';
         var urlFragment =  url + ' ' + selector;
-        var dialog = $('<div style=""></div>').appendTo('body');
+        var dialog = $('<div></div>').appendTo('body');
         // load remote content
         dialog.load(
             urlFragment,
             function (responseText, textStatus, XMLHttpRequest) {
-                log(responseText);
                 dialog.dialog({
                     draggable: true
                 });
