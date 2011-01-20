@@ -3,6 +3,8 @@ import math
 import datetime
 import operator
 
+from datetime import datetime
+
 from django import http
 from django.db.models.fields.files import ImageFieldFile
 from django.core.urlresolvers import reverse
@@ -67,7 +69,8 @@ def serialize(inbox, sent_view=False):
             'sender_name': sender.get_profile().name,
             'subject': msg.subject,
             'body': msg.body,
-            'sent_at': str(msg.sent_at),
+            'sent_at': msg.sent_at.strftime('%b. %d, %Y, %I:%M %p').replace(
+                'PM', 'p.m.').replace('AM', 'a.m.'),
         }
         if sent_view:
             del serialized['abuse_url']
