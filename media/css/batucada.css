@@ -236,7 +236,8 @@ input[type=radio] {
 input[type="file"] {
 	margin-bottom: 0.5em;
 	}
-form small {
+form small,
+form .small {
 	font-size: 11px;
 	}		
 form .hint {
@@ -1235,7 +1236,8 @@ header {}
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
 		}
-		#profile_edit .picture-preview {
+		#profile_edit .picture-preview,
+		#project_edit .picture-preview {
 			float: left;			
 			margin-left: 18px;
 			width: 211px;
@@ -1249,15 +1251,18 @@ header {}
 		    -moz-box-shadow: #ddd 0 1px 4px inset;
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
-		#profile_edit .member-picture {
+		#profile_edit .member-picture,
+		#project_edit .project.picture {
 			display: block;
 			margin: 0 auto;
 			max-width: 209px;
 			max-height: 250px;
+			background: #fff;
 			border-color: #C6C6C6;
 			margin-bottom: 0;
 		}
-		#profile_edit.image form {
+		#profile_edit.image form,
+		#project_edit form {
 			width: 249px;
 			display: inline-block;
 			float: left;
