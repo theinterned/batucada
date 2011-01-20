@@ -233,6 +233,9 @@ input[type=radio] {
 	height: 18px;
 	width: 18px;
 	}
+input[type="file"] {
+	margin-bottom: 0.5em;
+	}
 form small {
 	font-size: 11px;
 	}		
@@ -1231,6 +1234,33 @@ header {}
 			position: absolute;
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
+		}
+		#profile_edit .picture-preview {
+			float: left;			
+			margin-left: 18px;
+			width: 211px;
+			/*min-height: 120px;*/
+			padding: 18px;
+			background-color: #F9F9F9;
+		    border: #C6C6C6 1px solid;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+		    box-shadow: #ddd 0 1px 4px inset;
+		    -moz-box-shadow: #ddd 0 1px 4px inset;
+		    -webkit-box-shadow: #ddd 0 1px 4px inset;
+		}
+		#profile_edit .member-picture {
+			display: block;
+			margin: 0 auto;
+			max-width: 209px;
+			max-height: 250px;
+			border-color: #C6C6C6;
+			margin-bottom: 0;
+		}
+		#profile_edit.image form {
+			width: 249px;
+			display: inline-block;
+			float: left;
 		}
 		#project_edit input[type=text] {
 		    width: 300px;
