@@ -58,15 +58,19 @@ def serialize(inbox, sent_view=False):
         if isinstance(img, ImageFieldFile):
             img = img.name
         serialized = {
+            'abuse_url': reverse('drumbeat_abuse', kwargs=dict(
+                obj=msg.id, type='message')),
             'reply_url': reverse('drumbeatmail_reply', kwargs=dict(
                 message=msg.id)),
             'sender_url': sender.get_profile().get_absolute_url(),
             'sender_img': img,
             'sender_name': sender.get_profile().name,
+            'subject': msg.subject,
             'body': msg.body,
             'sent_at': str(msg.sent_at),
         }
         if sent_view:
+            del serialized['abuse_url']
             del serialized['reply_url']
         data.append(serialized)
     return simplejson.dumps(data)
@@ -124,6 +128,7 @@ def generic_inbox(request, query_method, query_args, page_number,
         'page_number': page_number,
         'n_pages': n_pages,
         'more_link': more_link,
+        'sent_view': sent_view,
     }, context_instance=RequestContext(request))
 
 
