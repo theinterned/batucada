@@ -1171,59 +1171,26 @@ header {}
 		.modal.nav fieldset {
 			margin-left: 190px;
 		}
-		.modal #profile-edit-nav .selected a,
-		.modal #profile-edit-nav a:hover,
-		.modal #project-edit-nav .selected a,
-		.modal #project-edit-nav a:hover,
-		.modal #account-settings-nav .selected a,
-		.modal #account-settings-nav a:hover,
-		#profile_edit.info #profile-edit-nav .info a,
-		#profile_edit.image #profile-edit-nav .image a,
-		#profile_edit.skills #profile-edit-nav .skills a,
-		#profile_edit.interests #profile-edit-nav .interests a,
-		#project_edit.summary #project-edit-nav .summary a,
-		#project_edit.description #project-edit-nav .description a,
-		#project_edit.project-image #project-edit-nav .project-image a,
-		#project_edit.media #project-edit-nav .media a,
-		#project_edit.links #project-edit-nav .links a,
-		#account_settings.notifications #account-settings-nav .notifications a,
-		#account_settings.connections #account-settings-nav .connections a,
-		#account_settings.identities #account-settings-nav .identities a,
-		#account_settings.export #account-settings-nav .export a,
-		#account_settings.delete #account-settings-nav .delete a {
-			position: relative;
-			color: #fff;
-			text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
-			background: #4AA4E3;
-			background: -moz-linear-gradient(top, 
-				#4AA4E3 0%, 
-				#2084CA 100%);
-			background: -webkit-gradient(linear, left top, left bottom, 
-				color-stop(0%,#4AA4E3), 
-				color-stop(100%,#2084CA));
-			filter: progid:DXImageTransform.Microsoft.gradient( 
-				startColorstr='#4AA4E3', 
-				endColorstr='#2084CA',GradientType=0 );
-		}
+                .modal nav.tabs li.active a {
+                    position: relative; 
+                    color: #fff;
+                    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+                    background: #4AA4E3;
+		    background: -moz-linear-gradient(top, 
+				                     #4AA4E3 0%, 
+				                     #2084CA 100%);
+		    background: -webkit-gradient(linear, left top, left bottom, 
+				                 color-stop(0%,#4AA4E3), 
+				                 color-stop(100%,#2084CA));
+		    filter: progid:DXImageTransform.Microsoft.gradient( 
+			startColorstr='#4AA4E3', 
+			endColorstr='#2084CA',GradientType=0);   
+                }
 		.modal #profile-edit-nav a:hover, .modal #project-edit-nav a:hover, .modal #account-settings-nav a:hover {
-			background: #2084CA;
+		        background: #2084CA;
 			text-decoration: none;
 		}
-		.modal #profile-edit-nav .selected a:after,
-		#profile_edit.info #profile-edit-nav .info a:after,
-		#profile_edit.image #profile-edit-nav .image a:after,
-		#profile_edit.skills #profile-edit-nav .skills a:after,
-		#profile_edit.interests #profile-edit-nav .interests a:after,
-		#project_edit.summary #project-edit-nav .summary a:after,
-		#project_edit.description #project-edit-nav .description a:after,
-		#project_edit.project-image #project-edit-nav .project-image a:after,
-		#project_edit.media #project-edit-nav .media a:after,
-		#project_edit.links #project-edit-nav .links a:after,
-		#account_settings.notifications #account-settings-nav .notifications a:after,
-		#account_settings.connections #account-settings-nav .connections a:after,
-		#account_settings.identities #account-settings-nav .identities a:after,
-		#account_settings.export #account-settings-nav .export a:after,
-		#account_settings.delete #account-settings-nav .delete a:after {
+                .modal nav.tabs li.active a:after {
 			content: "\0020";
 			display: block;
 			width: 12px;
@@ -1231,7 +1198,7 @@ header {}
 			position: absolute;
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
-		}
+                }
 		#project_edit input[type=text] {
 		    width: 300px;
 			}
@@ -1698,15 +1665,34 @@ div.warning h2 {
 }
 
 /* wmd -- more paul stuff. basically copied from wmd example code. */
-#wmd-input 
-{ 
-    height: 400px;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
+.wmd-panel
+{
+    width: 50%;
+    min-width: 400px;
 }
 
-#wmd-button-row 
+#wmd-editor
+{
+    background-color: #fff;
+}
+
+.wmd-button-bar 
+{
+    width: 100%;
+}
+
+.wmd-input 
+{ 
+    height: 500px;
+    width: 100%;
+}
+
+.wmd-preview 
+{ 
+    background-color: #ccc;
+}
+
+.wmd-button-row 
 {
     position: relative; 
     margin-left: 5px;
@@ -1724,7 +1710,7 @@ div.warning h2 {
     margin-left: 14px;
     
     position: absolute;
-    background-color: #ccc;
+    background-color: Silver;
     display: inline-block; 
     list-style: none;
 }
@@ -1735,8 +1721,9 @@ div.warning h2 {
     height: 20px; 
     margin-left: 5px;
     margin-right: 5px;
+    
     position: absolute;
-    background-image: url(/media/images/wmd-buttons.png);
+    background-image: url(../images/wmd-buttons.png);
     background-repeat: no-repeat;
     background-position: 0px 0px;
     display: inline-block; 
@@ -1749,33 +1736,34 @@ div.warning h2 {
     height: 20px; 
     margin-left: 5px;
     margin-right: 5px;
+    
     position: absolute;
     display: inline-block; 
 }
 
 
 /* sprite button slicing style information */
-#wmd-button-bar #wmd-bold-button    {left: 0px;   background-position: 0px 0;}
-#wmd-button-bar #wmd-italic-button  {left: 25px;  background-position: -20px 0;}
-#wmd-button-bar #wmd-spacer1        {left: 50px;}
-#wmd-button-bar #wmd-link-button    {left: 75px;  background-position: -40px 0;}
-#wmd-button-bar #wmd-quote-button   {left: 100px;  background-position: -60px 0;}
-#wmd-button-bar #wmd-code-button    {left: 125px;  background-position: -80px 0;}
-#wmd-button-bar #wmd-image-button   {left: 150px;  background-position: -100px 0;}
-#wmd-button-bar #wmd-spacer2        {left: 175px;}
-#wmd-button-bar #wmd-olist-button   {left: 200px;  background-position: -120px 0;}
-#wmd-button-bar #wmd-ulist-button   {left: 225px; background-position: -140px 0;}
-#wmd-button-bar #wmd-heading-button {left: 250px; background-position: -160px 0;}
-#wmd-button-bar #wmd-hr-button      {left: 275px; background-position: -180px 0;}
-#wmd-button-bar #wmd-spacer3        {left: 300px;}
-#wmd-button-bar #wmd-undo-button    {left: 325px; background-position: -200px 0;}
-#wmd-button-bar #wmd-redo-button    {left: 350px; background-position: -220px 0;}
-#wmd-button-bar #wmd-help-button    {right: 0px; background-position: -240px 0;}
+.wmd-bold-button    {left: 0px;   background-position: 0px 0;}
+.wmd-italic-button  {left: 25px;  background-position: -20px 0;}
+.wmd-spacer1        {left: 50px;}
+.wmd-link-button    {left: 75px;  background-position: -40px 0;}
+.wmd-quote-button   {left: 100px;  background-position: -60px 0;}
+.wmd-code-button    {left: 125px;  background-position: -80px 0;}
+.wmd-image-button   {left: 150px;  background-position: -100px 0;}
+.wmd-spacer2        {left: 175px;}
+.wmd-olist-button   {left: 200px;  background-position: -120px 0;}
+.wmd-ulist-button   {left: 225px; background-position: -140px 0;}
+.wmd-heading-button {left: 250px; background-position: -160px 0;}
+.wmd-hr-button      {left: 275px; background-position: -180px 0;}
+.wmd-spacer3        {left: 300px;}
+.wmd-undo-button    {left: 325px; background-position: -200px 0;}
+.wmd-redo-button    {left: 350px; background-position: -220px 0;}
+.wmd-help-button    {right: 0px; background-position: -240px 0;}
 
 
 .wmd-prompt-background
 {
-    background-color: Black;
+	background-color: Black;
 }
 
 .wmd-prompt-dialog
@@ -1797,6 +1785,7 @@ div.warning h2 {
 
 .wmd-prompt-dialog > form > input[type="button"]{
     border: 1px solid #888888;
+    font-family: trebuchet MS, helvetica, sans-serif;
     font-size: 0.8em;
     font-weight: bold;
 }

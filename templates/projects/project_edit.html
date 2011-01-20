@@ -10,7 +10,7 @@
   <article>
     <h1>{% if project %}{{ _('Edit Project') }}{% else %}{{ _('Create Project') }}{% endif %}</h1>
     {% if project %}
-    <nav id="project-edit-nav">
+    <nav id="project-edit-nav" class="tabs">
       <ul>
 	<li class="summary"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Project Summary') }}</a></li>
 	<li class="description"><a href="{% locale_url projects_edit_description slug=project.slug %}">{{ _('Detailed Description') }}</a></li>

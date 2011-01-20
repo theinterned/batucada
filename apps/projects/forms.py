@@ -26,7 +26,7 @@ class ProjectDescriptionForm(forms.ModelForm):
         model = Project
         fields = ('detailed_description',)
         widgets = {
-            'detailed_description': forms.Textarea(attrs={'id': 'wmd-input'}),
+            'detailed_description': forms.Textarea(attrs={'class': 'wmd'}),
         }
 
 
