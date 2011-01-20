@@ -76,11 +76,38 @@ var openidHandlers = function() {
     });
 };
 
+var loadMoreMessages = function() {
+    $('a#inbox_more').bind('click', function(e) {
+        e.preventDefault();
+        var template = $('#message-template');
+        var page = template.attr('page');
+        var npages = template.attr('npages');
+        var url = $(this).attr('href');
+        $.getJSON(url, function(data) {
+            $(data).each(function(i, value) {
+                var msg = template.tmpl(value);
+                msg.hide();
+                $('#posts').append(msg);
+                $('li.post-container:last').fadeIn(function() {
+                    $('html').animate({
+                        'scrollTop': $('a#inbox_more').offset().top
+                    }, 200);
+                });
+            });
+            nextPage = parseInt(page) + 1;
+            template.attr('page', nextPage);
+            if (nextPage > parseInt(npages)) {
+                $('a#inbox_more').hide();
+            }
+            // update more link. very hacky :( 
+            var href = $('a#inbox_more').attr('href');
+            var newHref = href.substr(0, href.length - 2) + nextPage + '/';
+            $('a#inbox_more').attr('href', newHref);
+        });
+    });
+};
+
 var batucada = {
-    splash: {
-        onload: function() {
-        }
-    },
     create_profile: {
         onload: function() {
             usernameHint();
@@ -109,10 +136,6 @@ var batucada = {
             $('#post-update').bind('click', function() {
                 $('#post-status-update').submit();
             });
-            $('a.activity-delete').bind('click', function(e) {
-                $(e.target).parent().submit();
-                return false;
-            });
         }
     },
     project_landing: {
@@ -133,61 +156,25 @@ var batucada = {
     },
     inbox: {
         onload: function() {
-            $('a#inbox_more').bind('click', function(e) {
-                e.preventDefault();
-                var template = $('#message-template');
-                var page = template.attr('page');
-                var npages = template.attr('npages');
-                var url = $(this).attr('href');
-                $.getJSON(url, function(data) {
-                    $(data).each(function(i, value) {
-                        var msg = template.tmpl(value);
-                        msg.hide();
-                        $('#posts').append(msg);
-                        $('li.post-container:last').fadeIn(function() {
-                            $('html').animate({
-                                'scrollTop': $('a#inbox_more').offset().top
-                            }, 200);
-                        });
-                    });
-                    nextPage = parseInt(page) + 1;
-                    template.attr('page', nextPage);
-                    if (nextPage > parseInt(npages)) {
-                        $('a#inbox_more').hide();
-                    }
-                    // update more link. very hacky :( 
-                    var href = $('a#inbox_more').attr('href');
-                    var newHref = href.substr(0, href.length - 2) + nextPage + '/';
-                    $('a#inbox_more').attr('href', newHref);
-                });
-            });
+            loadMoreMessages();
         }
     }
 };
 
 jQuery.fn.tabLinks = function(element){
-    var links = $(this);
-    
-    
-    var updateElement = function(e){
-        var link = $(this), href = link.attr('href');
-
-        $('<div/>').load(href + ' ' + element, function(){
+    var updateElement = function(e) {
+        var href = $(this).attr('href');
+        $('<div/>').load(href + ' ' + element, function() {
             $(element).html($(this).children()[0].innerHTML);
         });
-
-        /*  when you fix it so ajax requests return just the contents of
-        fieldset, replace above with:
-    jQuery.get(href, function(data){ $(element).html(data); });
-    */
         e.preventDefault();
-        return false;
     };
 
-    links.each(function(){
+    $(this).each(function() {
         var me = $(this),
         href = me.attr('href');
-        if (!href || href == '#') return;
+        if (!href || href == '#') 
+            return;
         me.bind('click.tablinks', updateElement);
     });
 };
