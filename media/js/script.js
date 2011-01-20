@@ -1,33 +1,33 @@
 var createPostTextArea = function() {
     $('#create-post').find('textarea').bind('keyup', function() {
-	var max = 750;
-	var counter = $('#create-post').find('div.post-char-count');
-	var count = max - $(this).val().length;
-	counter.html(count);
-	
-	if (count < 0) {
-	    counter.addClass('danger');
-	    counter.removeClass('warning');
-	}
-	else if (count < 50) {
-	    counter.removeClass('danger');
-	    counter.addClass('warning');
-	} 
-	else {
-	    counter.removeClass('danger');
-	    counter.removeClass('warning');
-	}
+     var max = 750;
+     var counter = $('#create-post').find('div.post-char-count');
+     var count = max - $(this).val().length;
+     counter.html(count);
+
+     if (count < 0) {
+         counter.addClass('danger');
+         counter.removeClass('warning');
+     }
+     else if (count < 50) {
+         counter.removeClass('danger');
+         counter.addClass('warning');
+     } 
+     else {
+         counter.removeClass('danger');
+         counter.removeClass('warning');
+     }
     });
     
     $('#create-post').find('textarea').bind('blur', function() {
-	if (jQuery.trim($(this).val()).length === 0) {
-	    $('#create-post').removeClass('expanded');
-	}
+     if (jQuery.trim($(this).val()).length === 0) {
+         $('#create-post').removeClass('expanded');
+     }
     });
 
     $('#create-post').find('input').bind('focus', function() {
-	$('#create-post').addClass('expanded');
-	$('#create-post').find('textarea').trigger('focus');
+     $('#create-post').addClass('expanded');
+     $('#create-post').find('textarea').trigger('focus');
     });
 
 };
@@ -35,46 +35,46 @@ var createPostTextArea = function() {
 var username_hint = function() {
     var userurl = $('#username .hint b').html();
     $('#id_username').keyup(function() {
-	$('#availability').removeClass('okay warning').html('');
-	var val = (this.value) ? this.value : userurl;
-	$(this).parent('p').find('.hint b').html(val);
+     $('#availability').removeClass('okay warning').html('');
+     var val = (this.value) ? this.value : userurl;
+     $(this).parent('p').find('.hint b').html(val);
     }).keyup();
 };
 
 var username_availability = function() {
     $('#id_username').bind('blur', function() {
-	$.ajax({
-	    url: '/check_username/',
-	    data: {
-		username: this.value
-	    },
-	    success: function() {
-		$('#availability').removeClass('okay')
-		    .addClass('warning')
-		    .html('not available');
-	    },
-	    error: function() {
-		$('#availability').removeClass('warning')
-		    .addClass('okay')
-		    .html('available');
-	    }
-	});
+     $.ajax({
+         url: '/check_username/',
+         data: {
+          username: this.value
+         },
+         success: function() {
+          $('#availability').removeClass('okay')
+              .addClass('warning')
+              .html('not available');
+         },
+         error: function() {
+          $('#availability').removeClass('warning')
+              .addClass('okay')
+              .html('available');
+         }
+     });
     });
 };
 
 
 var openid_handlers = function() {
     var one_click = {
-	'google': 'https://www.google.com/accounts/o8/id',
-	'yahoo': 'http://yahoo.com',
-	'myopenid': 'http://myopenid.com'
+     'google': 'https://www.google.com/accounts/o8/id',
+     'yahoo': 'http://yahoo.com',
+     'myopenid': 'http://myopenid.com'
     };
     $.each(one_click, function(key, value) {
-	$('.openid_providers #' + key).bind('click', function(e) {
-	    e.preventDefault();
-	    $('#id_openid_identifier').val(value);
-	    $('#id_openid_identifier').parent().submit();
-	});
+     $('.openid_providers #' + key).bind('click', function(e) {
+         e.preventDefault();
+         $('#id_openid_identifier').val(value);
+         $('#id_openid_identifier').parent().submit();
+     });
     });
 };
 
@@ -85,14 +85,14 @@ var batucada = {
   },
   create_profile: {
     onload: function() {
-	username_hint();
-	username_availability();
+     username_hint();
+     username_availability();
     }
   },
   signup: {
     onload: function(){
-	username_hint();
-	username_availability();
+     username_hint();
+     username_availability();
     }
   },
   signup_openid: {
@@ -199,12 +199,12 @@ $(document).ready(function() {
     var ns = window.batucada;
     var body_id = document.body.id;
     if (ns && ns[body_id] && (typeof ns[body_id].onload == 'function')) {
-	ns[body_id].onload();
+     ns[body_id].onload();
     }
 
     // attach handlers for elements that appear on most pages
     $('#user-nav').find('li.menu').bind('click', function(event) {
-	$(this).toggleClass('open');
+     $(this).toggleClass('open');
     });
     // modals using jQueryUI dialog
     $('.button.openmodal').live('click', function(){
