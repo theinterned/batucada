@@ -19,11 +19,11 @@ def settings(request):
     if request.method == 'POST':
         for key in AccountPreferences.preferences:
             if key in request.POST and request.POST[key] == 'on':
-                AccountPreferences(
-                    user=profile, key=key, value=1).save()
-            else:
                 AccountPreferences.objects.filter(
                     user=profile, key=key).delete()
+            else:
+                AccountPreferences(
+                    user=profile, key=key, value=1).save()
         messages.success(
             request,
             _("Thank you, your settings have been saved."))
