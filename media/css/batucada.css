@@ -37,7 +37,8 @@ a.openid {
 	}
 
 img.member-picture,
-img.project.picture {
+img.project.picture,
+img.project.media {
   border: 1px solid #999;
   box-shadow: #fff 1px 1px 1px;
   -moz-box-shadow: #fff 1px 1px 1px;
@@ -1252,7 +1253,8 @@ header {}
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
 		#profile_edit .member-picture,
-		#project_edit .project.picture {
+		#project_edit .project.picture,
+		#project_edit .project.media {
 			display: block;
 			margin: 0 auto;
 			max-width: 209px;
@@ -1278,6 +1280,75 @@ header {}
 			height: 35.5em;
 			width: 40em;
 			}
+		#project_edit.media #file_upload {			
+			margin: 0 auto -5px;
+			padding: 9px 18px 5px;
+			width: 384px;
+			background-color: #f1faff;
+			border: #e0edf5 1px solid;
+			border-radius:5px;
+			-moz-border-radius:5px
+		}
+		#project_edit.media .project-media {		
+			margin: 0 auto;
+			float: none;
+			width: 384px;
+			/*min-height: 120px;*/
+			padding: 18px;
+			padding-bottom: 9px;
+			background-color: #F9F9F9;
+		    border: #C6C6C6 1px solid;
+			border-radius: 5px;	
+			-moz-border-radius: 5px;
+		    box-shadow: #ddd 0 1px 4px inset;
+		    -moz-box-shadow: #ddd 0 1px 4px inset;
+		    -webkit-box-shadow: #ddd 0 1px 4px inset;
+	    	list-style: none;
+		}
+		#project_edit.media .project-media li {
+			position: relative;
+			float: left;
+			margin: 0 9px 9px 0;
+		}
+		#project_edit.media .project-media li:nth-child(3n) {
+			margin-right: 0;
+		}
+		#project_edit.media .project-media:after{
+			display: block;
+			content: '';
+			width: 0; height: 0;
+			clear: both;
+		}
+		#project_edit.media .project-media img {
+			width: 120px;
+		}
+		#project_edit.media .project-media button.delete.media {
+			/*display: none;*/
+			position: absolute;
+			top: 0; right: 0;
+			text-indent: -9999px;
+			background: #eee url(/media/images/delete-x.png) 0 0 no-repeat;
+			border-color: #c6c6c6;
+			border-radius: 0 5px 0 0;
+			-moz-border-radius: 0 5px 0 0;
+			width: 16px;
+			height: 15px;
+			min-height: 10px;			
+		}
+		#project_edit.media .project-media li:hover button.delete.media {
+			display: block;
+		}
+		#project_edit.media .project-media button.delete.media:hover {
+			background-color: #fff;
+		}
+		#project_edit.media .project-media .no-files {
+			text-align: center;
+			margin-bottom: 0;
+			font-size: 16px;
+			font-weight: bold;
+			text-shadow: #fff 1px 1px 0;
+			color: #ccc;
+		} 	
 /* INBOX / MESSAGING */
 #inbox{}
 #inbox #mailboxes,
