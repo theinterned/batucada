@@ -33,12 +33,20 @@ def show(request, slug):
     ).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
+    files = project.projectmedia_set.all()
+    files_dict = {}
+    for f in files:
+        files_dict[f.id] = {
+            'path': os.path.basename(f.project_file.path),
+            'thumbnail': f.thumbnail_or_default(),
+        }
     context = {
         'project': project,
         'following': is_following,
         'activities': activities,
         'update_count': nstatuses,
         'links': links,
+        'files': files_dict
     }
     return render_to_response('projects/project.html', context,
                           context_instance=RequestContext(request))
