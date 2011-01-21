@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
 
+from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
@@ -82,7 +83,8 @@ class UserProfile(ModelBase):
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(blank=True, default='')
     image = models.ImageField(
-        upload_to=determine_upload_path, default='', blank=True, null=True)
+        upload_to=determine_upload_path, default='', blank=True, null=True,
+        storage=storage.ImageStorage())
     confirmation_code = models.CharField(
         max_length=255, default='', blank=True)
     location = models.CharField(max_length=255, blank=True, default='')

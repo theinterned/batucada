@@ -10,6 +10,7 @@ from django.db.models import Count
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.template.defaultfilters import slugify
 
+from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from statuses.models import Status
@@ -57,7 +58,8 @@ class Project(ModelBase):
     detailed_description = models.TextField()
     detailed_description_html = models.TextField(null=True, blank=True)
 
-    image = models.ImageField(upload_to=determine_image_upload_path, null=True)
+    image = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage())
 
     slug = models.SlugField(unique=True)
     created_by = models.ForeignKey('users.UserProfile',
@@ -104,7 +106,8 @@ class ProjectMedia(ModelBase):
     project = models.ForeignKey(Project)
     mime_type = models.CharField(max_length=80, null=True)
     thumbnail = models.ImageField(upload_to=determine_video_upload_path,
-                                  null=True, blank=True)
+                                  null=True, blank=True,
+                                  storage=storage.ImageStorage())
 
 ###########
 # Signals #
