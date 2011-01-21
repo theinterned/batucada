@@ -553,6 +553,35 @@ header {}
         margin-right: 5px;
         border: 1px solid #d0d0d0;
       }
+      #sidebar .project.files{
+		list-style: none;
+		margin: 9px 0; padding: 0;
+		float: left;
+	  }
+	  #sidebar .project.files li{
+		position: relative;
+		float: left;
+		margin: 0 5px 5px 0;
+		background: #fff;
+	  }
+	  #sidebar .project.files a:hover:after {
+		content:  '';
+		width: 33px; height: 33px;
+		display: block;
+		position: absolute;
+		top:  30px; left: 30px;
+		background: transparent url(/media/images/play-btn.png) 0 0 no-repeat;
+	  }
+	  #sidebar .project.files img{
+		display: block;
+		width: 92px;		
+        border: 1px solid #d0d0d0;
+        border-radius: 0;
+        -moz=border-radius: 0;
+	  }
+	  /*#sidebar .project.files a:hover img {
+		opacity: 0.7;
+	  }*/
       #project-description-link {
         margin: 18px 0 13px;
         display: block;
