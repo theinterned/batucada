@@ -1187,7 +1187,7 @@ header {}
 		#profile_edit.interests #profile-edit-nav .interests a,
 		#project_edit.summary #project-edit-nav .summary a,
 		#project_edit.description #project-edit-nav .description a,
-		#project_edit.project-image #project-edit-nav .project-image a,
+		#project_edit.image #project-edit-nav .image a,
 		#project_edit.media #project-edit-nav .media a,
 		#project_edit.links #project-edit-nav .links a,
 		#account_settings.notifications #account-settings-nav .notifications a,
@@ -1220,7 +1220,7 @@ header {}
 		#profile_edit.interests #profile-edit-nav .interests a:after,
 		#project_edit.summary #project-edit-nav .summary a:after,
 		#project_edit.description #project-edit-nav .description a:after,
-		#project_edit.project-image #project-edit-nav .project-image a:after,
+		#project_edit.image #project-edit-nav .image a:after,
 		#project_edit.media #project-edit-nav .media a:after,
 		#project_edit.links #project-edit-nav .links a:after,
 		#account_settings.notifications #account-settings-nav .notifications a:after,
@@ -1262,7 +1262,7 @@ header {}
 			margin-bottom: 0;
 		}
 		#profile_edit.image form,
-		#project_edit form {
+		#project_edit.image form {
 			width: 249px;
 			display: inline-block;
 			float: left;
