@@ -5,7 +5,7 @@
 {% block form %}
 <h2>{{ _('Upload Images &amp; Video') }}</h2>
 <p>
-  {{ _('You can use this form to upload images and videos that are relevant to your project. You may upload a max of <strong>five</strong> files.') }}
+  {{ _('You can use this form to upload images and videos that are relevant to your project. You may upload a max of <strong>six</strong> files.') }}
 </p>
 <form action="{% locale_url projects_edit_media slug=project.slug %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
