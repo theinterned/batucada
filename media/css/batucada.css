@@ -1282,7 +1282,7 @@ header {}
 			}
 		#project_edit.media #file_upload {			
 			margin: 0 auto -5px;
-			padding: 9px 18px 5px;
+			padding: 18px 18px 14px;
 			width: 384px;
 			background-color: #f1faff;
 			border: #e0edf5 1px solid;
@@ -1321,6 +1321,7 @@ header {}
 		}
 		#project_edit.media .project-media img {
 			width: 120px;
+			height: 120px;
 		}
 		#project_edit.media .project-media button.delete.media {
 			/*display: none;*/
@@ -1343,9 +1344,10 @@ header {}
 		}
 		#project_edit.media .project-media .no-files {
 			text-align: center;
-			margin-bottom: 0;
+			margin-bottom: 9px;
 			font-size: 16px;
 			font-weight: bold;
+			line-height: 60px;
 			text-shadow: #fff 1px 1px 0;
 			color: #ccc;
 		} 	
