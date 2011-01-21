@@ -10,7 +10,7 @@ from django.db.models import Count
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.template.defaultfilters import slugify
 
-from drumbeat.utils import get_partition_id
+from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
@@ -25,14 +25,14 @@ log = logging.getLogger(__name__)
 def determine_image_upload_path(instance, filename):
     return "images/projects/%(partition)d/%(filename)s" % {
         'partition': get_partition_id(instance.pk),
-        'filename': filename,
+        'filename': safe_filename(filename),
     }
 
 
 def determine_video_upload_path(instance, filename):
     return "videos/projects/%(partition)d/%(filename)s" % {
         'partition': get_partition_id(instance.project.pk),
-        'filename': filename,
+        'filename': safe_filename(filename),
     }
 
 

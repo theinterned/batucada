@@ -14,7 +14,7 @@ from django.utils.translation import ugettext as _
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
 
-from drumbeat.utils import get_partition_id
+from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
@@ -29,7 +29,7 @@ def determine_upload_path(instance, filename):
     chunk_size = 1000  # max files per directory
     return "images/profiles/%(partition)d/%(filename)s" % {
         'partition': get_partition_id(instance.pk, chunk_size),
-        'filename': filename,
+        'filename': safe_filename(filename),
     }
 
 
