@@ -106,6 +106,13 @@ class ProjectMedia(ModelBase):
     thumbnail = models.ImageField(upload_to=determine_video_upload_path,
                                   null=True, blank=True)
 
+    def thumbnail_or_default(self):
+      """Return project media's thumbnail or a default."""
+      if self.thumbnail:
+          return self.thumbnail
+      else:
+          return 'images/file-default.png'                                                                    
+
 ###########
 # Signals #
 ###########

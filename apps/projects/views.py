@@ -147,7 +147,7 @@ def edit_media(request, slug):
     for f in files:
         files_dict[f.id] = {
             'path': os.path.basename(f.project_file.path),
-            'thumbnail': f.thumbnail,
+            'thumbnail': f.thumbnail_or_default(),
         }
     return render_to_response('projects/project_edit_media.html', {
         'files': files_dict,
