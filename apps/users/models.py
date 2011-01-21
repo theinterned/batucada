@@ -64,6 +64,7 @@ class TaggedProfile(GenericTaggedItemBase):
 
 
 class UserProfileManager(caching.base.CachingManager):
+
     def get_popular(self, limit=0):
         users = Relationship.objects.values('target_user_id').annotate(
             models.Count('id')).filter(target_user__featured=False).order_by(
