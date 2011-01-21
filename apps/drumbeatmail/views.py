@@ -3,8 +3,6 @@ import math
 import datetime
 import operator
 
-from datetime import datetime
-
 from django import http
 from django.db.models.fields.files import ImageFieldFile
 from django.core.urlresolvers import reverse
