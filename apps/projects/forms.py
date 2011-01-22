@@ -60,6 +60,10 @@ class ProjectMediaForm(forms.ModelForm):
         'video/mp4',
         'application/ogg',
         'audio/ogg',
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+        'image/gif'
     )
 
     class Meta:

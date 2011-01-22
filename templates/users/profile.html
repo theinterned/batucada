@@ -19,13 +19,6 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
     </nav>
-
-    {% if user == profile.user %}
-    <div id="project-actions">      
-    	<a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-    </div>
-    {% endif %}
-
   </div> <!-- /.container -->
 {% endblock %}
 
@@ -39,7 +32,7 @@
     </h1>
     <div class="member-actions">
       {% if user == profile.user %}
-      <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
+      <a class="button openmodal" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
       {% else %}
         {% if profile in user.get_profile.following %}
         <form action="{% locale_url relationships_unfollow object_type='user' slug=profile.username %}" method="post">
@@ -107,7 +100,7 @@
   <!-- TODO: add support for project owner badge -->
   {% for project in projects %}
     <li>
-      <a href="{{ project.get_absolute_url }}" alt="{{project.name}}">
+      <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
         {% if project.image %}
         <img src="" width="26" height="26" alt="project image"/>
         {% else %}
