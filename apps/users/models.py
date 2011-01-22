@@ -155,10 +155,7 @@ class UserProfile(ModelBase):
 
     def image_or_default(self):
         """Return user profile image or a default."""
-        if self.image:
-            return self.image
-        else:
-            return 'images/member-missing.png'
+        return self.image or 'images/member-missing.png'
 
     def generate_confirmation_code(self):
         if not self.confirmation_code:
