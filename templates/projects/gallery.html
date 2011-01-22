@@ -7,17 +7,18 @@
   <div class="container">
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
-    </nav>    
+    </nav>
+    {% if user.is_authenticated %}
+    <div id="project-actions">
+      <a id="create-project" class="button" href="{% locale_url projects_create %}">Create a project</a>
+    </div>
+    {% endif %}
   </div> <!-- /.container -->
 {% endblock %}
+
 {% block body %}
 
 <h1>{{ _('Browse <b>Projects</b>') }}</h1>
-{% if user.is_authenticated %}
-<div id="project-actions">
-  <a id="create-project" class="button create" href="{% locale_url projects_create %}"> {{ _('Create a project') }}</a>
-</div>
-{% endif %}
 {% if featured %}
 <section>
   <h1><span>{{_('Featured')}}</span></h1>
