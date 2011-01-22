@@ -1,6 +1,7 @@
 import os
 import logging
 import datetime
+from bleach import Bleach
 from markdown import markdown
 
 from django.conf import settings
@@ -19,6 +20,15 @@ from relationships.models import Relationship
 from projects.tasks import ThumbnailGenerator
 
 import caching.base
+
+TAGS = ('h1', 'h2', 'a', 'b', 'em', 'i', 'strong',
+        'ol', 'ul', 'li', 'hr', 'blockquote', 'p',
+        'span', 'pre', 'code', 'img')
+
+ALLOWED_ATTRIBUTES = {
+    'a': ['href', 'title'],
+    'img': ['src', 'alt'],
+}
 
 log = logging.getLogger(__name__)
 
@@ -120,8 +130,10 @@ def project_markdown_handler(sender, **kwargs):
         return
     log.debug("Creating html project description")
     if project.detailed_description:
-        project.detailed_description_html = markdown(
-            project.detailed_description)
+        bl = Bleach()
+        project.detailed_description_html = bl.clean(
+            markdown(project.detailed_description),
+            tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
 pre_save.connect(project_markdown_handler, sender=Project)
 
 
