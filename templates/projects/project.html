@@ -64,21 +64,16 @@
       {{ project.long_description }}
     </div>
 
-    <!-- TODO: support project media 
-    <div id="project-icons">
-      <img src="..." height="86" width="96">
-      <img src="..." height="86" width="96">
-    </div>-->
     {% if files %}
-    <ul class="project files">
-    {% for file_id, file in files.items %}
-      <li id="file_{{ file_id}}">
-        <a href="{{ MEDIA_URL }}{{ file.path }} ">
-          <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
-        </a>
-      </li>
-    {% endfor %}
-    </ul>
+      <ul class="project files">
+        {% for file in files %}
+          <li id="file_{{ file.id}}">
+            <a href="{{ MEDIA_URL }}{{ file.project_file }}">
+              <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
     {% endif %}
 
     {% if project.detailed_description %}

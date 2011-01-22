@@ -13,28 +13,28 @@
     {{ form.project_file }}
     {{ form.project_file.errors }}
   </p>
-<ul class="project-media">
-{% if files %}
-{% for file_id, file in files.items %}
-  <li id="file_{{ file_id}}">
-    <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
-    {% csrf_token %}
-      <input type="hidden" name="file_id" value="{{ file_id }}" />
-      <!-- TODO: this url is broken - needs media type -->
-      <a href="{{ MEDIA_URL }}{{ file.path }} ">
-        <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
-      </a>
-      <button class="delete media" type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
-    </form>
-  </li>
-{% endfor %}
-{% else %}
-  <p class="hint no-files">{{ _("You haven't uploaded any media yet") }}</p>
-{% endif %}
-</ul>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
   </p>
 </form>
+{% if files %}
+<ul class="project-media">
+{% for file in files %}
+  <li id="file_{{ file.id}}">
+    <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
+    {% csrf_token %}
+      <input type="hidden" name="file_id" value="{{ file.id }}" />
+      <!-- TODO: this url is broken - needs media type -->
+      <a href="{{ MEDIA_URL }}{{ file.project_file }} ">
+        <img src="{{ MEDIA_URL }}{{ file.thumbnail_or_default }}" class="project media" />
+      </a>
+      <button class="delete media" type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+    </form>
+  </li>
+{% endfor %}
+</ul>
+{% else %}
+  <p class="hint no-files">{{ _("You haven't uploaded any media yet") }}</p>
+{% endif %}
 {% endblock %}
