@@ -9,6 +9,10 @@ Lernanta is a ground up rewrite of drumbeat.org in `Django`_.
 Installation
 ------------
 
+You need a few prerequisites ::
+
+   sudo apt-get install python-setuptools python-dev build-essential
+
 To install Lernanta, you must clone the repository: ::
 
    git clone git://github.com/p2pu/lernanta.git
