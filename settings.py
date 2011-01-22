@@ -96,7 +96,7 @@ MIDDLEWARE_CLASSES = (
     'jogging.middleware.LoggingMiddleware',
 )
 
-ROOT_URLCONF = 'batucada.urls'
+ROOT_URLCONF = 'lernanta.urls'
 
 TEMPLATE_DIRS = (
     path('templates'),
@@ -168,7 +168,7 @@ GLOBAL_LOG_LEVEL = logging.DEBUG
 GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
 
 CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
-CACHE_PREFIX = 'batucada'
+CACHE_PREFIX = 'lernanta'
 CACHE_COUNT_TIMEOUT = 60
 
 # Email goes to the console by default.  s/console/smtp/ for regular delivery
