@@ -766,6 +766,19 @@ header {}
           }
 
   #project_gallery{}
+  #project_gallery #content {
+	position: relative;
+	}
+  #project_gallery #content #project-actions {
+		position: absolute;
+		top:  2em; right: 0;
+		/*margin-top: -2.5em;*/
+	}
+	#project_gallery #content #project-actions .create {
+		font-size: 18px;
+		line-height: 1.5;
+		padding: 2px 18px;
+	}
   #user_list{}
   /* generalized layout of card lists, by using a '.card-list' class on the body of project_gallery and user_list */
 	.card-list h1{
