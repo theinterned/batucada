@@ -67,7 +67,11 @@ class TestDrumbeatMail(test_utils.TestCase):
     def test_view_message(self):
         """Test user can view message in inbox."""
         Relationship(source=self.user, target_user=self.user_two).save()
-        message = Message(sender=self.user_two.user, recipient=self.user.user, subject='test message subject', body='test message body')
+        message = Message(
+            sender=self.user_two.user,
+            recipient=self.user.user,
+            subject='test message subject',
+            body='test message body')
         message.save()
         self.client.login(username=self.test_username,
                           password=self.test_password)
