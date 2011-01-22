@@ -1,17 +1,17 @@
-========
-Batucada
-========
+=========
+Learnanta
+=========
 
-Batucada is a ground up rewrite of drumbeat.org in `Django`_. 
+Lernanta is a ground up rewrite of drumbeat.org in `Django`_. 
 
 .. _Django: http://www.djangoproject.com/
 
 Installation
 ------------
 
-To install Batucada, you must clone the repository: ::
+To install Lernanta, you must clone the repository: ::
 
-   git clone git://github.com/paulosman/batucada.git
+   git clone git://github.com/p2pu/lernanta.git
 
 To get started, you'll need to make sure that ``virtualenv`` and ``pip`` are installed. ::
 
@@ -20,11 +20,11 @@ To get started, you'll need to make sure that ``virtualenv`` and ``pip`` are ins
 
 You'll also need to have mysql installed (mysql-client, mysql-server, libmysqlclient-dev).  
 
-I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``batucada`` and install the dependencies ::
+I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``lernanta`` and install the dependencies ::
 
-   cd batucada
-   mkvirtualenv batucada 
-   workon batucada
+   cd lernanta
+   mkvirtualenv lernanta 
+   workon lernanta
    pip install -r requirements/compiled.txt
    pip install -r requirements/prod.txt
    pip install -r requirements/dev.txt
@@ -67,6 +67,6 @@ Finally, start the development server to take it for a spin. ::
 Get Involved
 ------------
 
-To help out with batucada, join the `Drumbeat mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
+To help out with lernanta, join the `Drumbeat mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
 
 .. _Drumbeat mailing list: http://www.mozilla.org/about/forums/#drumbeat-website
