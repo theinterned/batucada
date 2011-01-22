@@ -14,7 +14,8 @@ from django.utils.translation import ugettext as _
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
 
-from drumbeat.utils import get_partition_id
+from drumbeat import storage
+from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
@@ -29,7 +30,7 @@ def determine_upload_path(instance, filename):
     chunk_size = 1000  # max files per directory
     return "images/profiles/%(partition)d/%(filename)s" % {
         'partition': get_partition_id(instance.pk, chunk_size),
-        'filename': filename,
+        'filename': safe_filename(filename),
     }
 
 
@@ -63,6 +64,7 @@ class TaggedProfile(GenericTaggedItemBase):
 
 
 class UserProfileManager(caching.base.CachingManager):
+
     def get_popular(self, limit=0):
         users = Relationship.objects.values('target_user_id').annotate(
             models.Count('id')).filter(target_user__featured=False).order_by(
@@ -82,7 +84,8 @@ class UserProfile(ModelBase):
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(blank=True, default='')
     image = models.ImageField(
-        upload_to=determine_upload_path, default='', blank=True, null=True)
+        upload_to=determine_upload_path, default='', blank=True, null=True,
+        storage=storage.ImageStorage())
     confirmation_code = models.CharField(
         max_length=255, default='', blank=True)
     location = models.CharField(max_length=255, blank=True, default='')

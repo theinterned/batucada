@@ -1,5 +1,7 @@
+import os
 import re
 import math
+import hashlib
 import unicodedata
 
 from django.core.validators import ValidationError, validate_slug
@@ -44,3 +46,9 @@ def get_partition_id(pk, chunk_size=1000):
     name.
     """
     return int(math.ceil(pk / float(chunk_size)))
+
+
+def safe_filename(filename):
+    """Generate a safe filename for storage."""
+    name, ext = os.path.splitext(filename)
+    return "%s%s" % (hashlib.md5(name).hexdigest(), ext)
