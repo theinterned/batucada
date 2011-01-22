@@ -18,6 +18,8 @@ To get started, you'll need to make sure that ``virtualenv`` and ``pip`` are ins
    sudo easy_install virtualenv
    sudo easy_install pip
 
+You'll also need to have mysql installed (mysql-client, mysql-server, libmysqlclient-dev).  
+
 I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``batucada`` and install the dependencies ::
 
    cd batucada
@@ -25,6 +27,7 @@ I recommend using ``virtualenvwrapper`` to manage your virtual environments. Fol
    workon batucada
    pip install -r requirements/compiled.txt
    pip install -r requirements/prod.txt
+   pip install -r requirements/dev.txt
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
 
@@ -36,6 +39,10 @@ You should create a settings_local.py. Most people will be able to get away with
 
    cp settings_local.dist.py settings_local.py
 
+If the mysql database doesn't exist yet, create it:
+
+   mysqladmin -u <user> -p create <database name>
+ 
 Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
