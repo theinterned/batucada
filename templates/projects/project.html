@@ -14,14 +14,6 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
     </nav>
-
-    {% if user.get_profile == project.created_by %}
-      <div id="project-actions">
-        <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
-        <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
-      </div>
-    {% endif %}
-
   </div> <!-- /.container -->
 {% endblock %}
 
@@ -34,7 +26,8 @@
 
     <div id="project-follow">
       {% if user.get_profile == project.created_by %}
-	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
+      <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
+      <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
       {% else %}
 	{% if following %}
 	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
