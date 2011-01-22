@@ -19,6 +19,11 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
     </nav>
+    {% if user == profile.user %}
+      <div id="project-actions">
+        <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
+      </div>
+    {% endif %}
   </div> <!-- /.container -->
 {% endblock %}
 
@@ -31,9 +36,7 @@
       <span class="fn">{{ profile.name }}</span>
     </h1>
     <div class="member-actions">
-      {% if user == profile.user %}
-      <a class="button openmodal" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-      {% else %}
+      {% if user != profile.user %}
         {% if profile in user.get_profile.following %}
         <form action="{% locale_url relationships_unfollow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}

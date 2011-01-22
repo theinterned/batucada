@@ -33,9 +33,7 @@
     <h1 id="project-name">{{ project.name }}</h1>
 
     <div id="project-follow">
-      {% if user.get_profile == project.created_by %}
-	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
-      {% else %}
+      {% if user.get_profile != project.created_by %}
 	{% if following %}
 	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
 	    {% csrf_token %}
@@ -114,9 +112,7 @@
       </h3>
 
       <div class="member-actions">
-        {% if project.created_by == user.get_profile %}
-        <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-        {% else %}
+        {% if project.created_by != user.get_profile %}
           {% if project.created_by in user.get_profile.following %}
           <form action="{% locale_url relationships_unfollow object_type='user' slug=project.created_by.username %}" method="post">
             {% csrf_token %}
