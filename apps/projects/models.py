@@ -10,7 +10,8 @@ from django.db.models import Count
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.template.defaultfilters import slugify
 
-from drumbeat.utils import get_partition_id
+from drumbeat import storage
+from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
@@ -25,14 +26,14 @@ log = logging.getLogger(__name__)
 def determine_image_upload_path(instance, filename):
     return "images/projects/%(partition)d/%(filename)s" % {
         'partition': get_partition_id(instance.pk),
-        'filename': filename,
+        'filename': safe_filename(filename),
     }
 
 
 def determine_video_upload_path(instance, filename):
     return "videos/projects/%(partition)d/%(filename)s" % {
         'partition': get_partition_id(instance.project.pk),
-        'filename': filename,
+        'filename': safe_filename(filename),
     }
 
 
@@ -57,7 +58,8 @@ class Project(ModelBase):
     detailed_description = models.TextField()
     detailed_description_html = models.TextField(null=True, blank=True)
 
-    image = models.ImageField(upload_to=determine_image_upload_path, null=True)
+    image = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage())
 
     slug = models.SlugField(unique=True)
     created_by = models.ForeignKey('users.UserProfile',
@@ -104,7 +106,8 @@ class ProjectMedia(ModelBase):
     project = models.ForeignKey(Project)
     mime_type = models.CharField(max_length=80, null=True)
     thumbnail = models.ImageField(upload_to=determine_video_upload_path,
-                                  null=True, blank=True)
+                                  null=True, blank=True,
+                                  storage=storage.ImageStorage())
 
     def thumbnail_or_default(self):
       """Return project media's thumbnail or a default."""
