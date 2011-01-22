@@ -843,7 +843,7 @@ header {}
 	.card-list .card .description{
 		font-size: 12px;
 		line-height: 1.5;
-		height: 7.5em;
+		height: 6em;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
@@ -1583,7 +1583,7 @@ header {}
 	}
 #splash #featured_project ul {
 	background: url(/media/images/splash-featured-project-bg.png) 50% -5px no-repeat;
-	height: 344px;
+	height: 331px;
 	}
 #splash #featured_project li {
 	display: block;
