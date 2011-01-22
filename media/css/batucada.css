@@ -1581,6 +1581,14 @@ header {}
 	font-weight: normal;
 	border-bottom: 1px solid #dbdbdb;
 	}
+#splash #featured_project ul {
+	background: url(/media/images/splash-featured-project-bg.png) 50% -5px no-repeat;
+	height: 344px;
+	}
+#splash #featured_project li {
+	display: block;
+	margin: 0 auto 18px;
+	}	
 #splash #main asside #planet_drumbeat{
 	color: #777;
 	font-size: 12px;

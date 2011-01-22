@@ -36,14 +36,16 @@
       {% endfor %}
     </ul>
     <asside>
-      <section id="featured_project">
+    	{% if featured_project %}
+      <section id="featured_project" class="card-list">
         <h1>Featured Project</h1>
-	{% if featured_project %}
+	      <ul class="project-list">
           {% with featured_project as project %}
-            {% include "projects/_project_card.html" %}
+            <li>{% include "projects/_project_card.html" %}</li>
           {% endwith %}
-	{% endif %}
+        </ul>
       </section>
+    	{% endif %}
       <section id="planet_drumbeat">
         <h1>Planet Drumbeat <a href="{{ feed_url }}" title="Subscribe to the Planet Drumbeat feed"> feed</a></h1>
 	{% for entry in feed_entries %}
