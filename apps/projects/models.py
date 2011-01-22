@@ -110,11 +110,11 @@ class ProjectMedia(ModelBase):
                                   storage=storage.ImageStorage())
 
     def thumbnail_or_default(self):
-      """Return project media's thumbnail or a default."""
-      if self.thumbnail:
-          return self.thumbnail
-      else:
-          return 'images/file-default.png'                                                                    
+        """Return project media's thumbnail or a default."""
+        if self.thumbnail:
+            return self.thumbnail
+        else:
+            return 'images/file-default.png'                                                                    
 
 ###########
 # Signals #
