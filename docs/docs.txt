@@ -1,0 +1,29 @@
+activities
+statuses are activity streams
+content types that are also an activity:
+saving
+associating with projects
+
+projects
+media (photos/videos)
+description
+
+messaging
+uses celery as a distributed message queue (for what?)
+
+logging
+
+== migrations ==
+
+* to initialize migrations for a new app
+./manage.py schemamigration <appname> --initial
+
+* to convert an existing app:
+./manage.py migrate <appname>                                               
+
+* if you add a field to a model (or something else simple):
+ ./manage.py schemamigration <appname> --auto
+* and then to apply it:
+./manage.py migrate <appname>
+
+
