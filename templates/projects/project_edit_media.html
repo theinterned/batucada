@@ -18,8 +18,9 @@
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
   </p>
 </form>
-{% if files %}
+
 <ul class="project-media">
+{% if files %}
 {% for file in files %}
   <li id="file_{{ file.id}}">
     <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
@@ -33,8 +34,8 @@
     </form>
   </li>
 {% endfor %}
-</ul>
 {% else %}
-  <p class="hint no-files">{{ _("You haven't uploaded any media yet") }}</p>
+  <li class="hint no-files">{{ _("You haven't uploaded any media yet") }}</li>
 {% endif %}
+</ul>
 {% endblock %}
