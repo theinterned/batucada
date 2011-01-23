@@ -59,6 +59,7 @@ There's a problem with real databases (read: not sqlite) where south migrations 
    python manage.py migrate statuses
    python manage.py migrate links
    python manage.py migrate dashboard
+   python manage.py migrate relationships
 
 What a pain! 
 
