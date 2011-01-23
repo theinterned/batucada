@@ -2,7 +2,8 @@
 Learnanta
 =========
 
-Lernanta is a ground up rewrite of drumbeat.org in `Django`_. 
+Lernanta is the new platform for P2PU. We are building on the codebase from
+Batucada, a rewrite of drumbeat.org by Mozilla. 
 
 .. _Django: http://www.djangoproject.com/
 
@@ -24,7 +25,8 @@ To get started, you'll need to make sure that ``virtualenv`` and ``pip`` are ins
 
 You'll also need to have mysql installed (mysql-client, mysql-server, libmysqlclient-dev).  
 
-I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``lernanta`` and install the dependencies ::
+I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. 
+Once installed, create your virtual environment for ``lernanta`` and install the dependencies ::
 
    cd lernanta
    mkvirtualenv lernanta 
@@ -51,7 +53,9 @@ Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
 
-There's a problem with real databases (read: not sqlite) where south migrations are run in an order that violates foreign key constraints. See `Bug # 623612`_ for details. Until that is fixed, you're best off running migrations in this order. ::
+There's a problem with real databases (read: not sqlite) where south migrations are run in an order that violates 
+foreign key constraints. See `Bug # 623612`_ for details. Until that is fixed, you're best off running migrations 
+in this order. ::
 
    python manage.py migrate projects
    python manage.py migrate users
@@ -72,6 +76,7 @@ Finally, start the development server to take it for a spin. ::
 Get Involved
 ------------
 
-To help out with lernanta, join the `Drumbeat mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
+To help out with lernanta, join the `Drumbeat mailing list`_ and introduce yourself. We're currently looking for help 
+from Django / Python and front-end (HTML, CSS, Javascript) developers. 
 
 .. _Drumbeat mailing list: http://www.mozilla.org/about/forums/#drumbeat-website
