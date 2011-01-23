@@ -2,6 +2,7 @@ from users.models import UserProfile
 from drumbeatmail.forms import ComposeForm
 from relationships.models import Relationship
 from projects.models import Project
+from messages.models import Message
 
 import test_utils
 
@@ -13,6 +14,7 @@ class TestDrumbeatMail(test_utils.TestCase):
     test_email = 'test@mozillafoundation.org'
 
     def setUp(self):
+        self.locale = 'en-US'
         self.user = UserProfile(username=self.test_username,
                                 email=self.test_email)
         self.user.set_password(self.test_password)
@@ -61,3 +63,18 @@ class TestDrumbeatMail(test_utils.TestCase):
         }, sender=self.user)
         self.assertTrue(form.is_bound)
         self.assertTrue(form.is_valid())
+
+    def test_view_message(self):
+        """Test user can view message in inbox."""
+        Relationship(source=self.user, target_user=self.user_two).save()
+        message = Message(
+            sender=self.user_two.user,
+            recipient=self.user.user,
+            subject='test message subject',
+            body='test message body')
+        message.save()
+        self.client.login(username=self.test_username,
+                          password=self.test_password)
+        response = self.client.get("/%s/messages/inbox/" % (self.locale,))
+        self.assertContains(response, 'test message body')
+
