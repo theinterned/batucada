@@ -37,7 +37,8 @@ a.openid {
 	}
 
 img.member-picture,
-img.project.picture {
+img.project.picture,
+img.project.media {
   border: 1px solid #999;
   box-shadow: #fff 1px 1px 1px;
   -moz-box-shadow: #fff 1px 1px 1px;
@@ -233,7 +234,11 @@ input[type=radio] {
 	height: 18px;
 	width: 18px;
 	}
-form small {
+input[type="file"] {
+	margin-bottom: 0.5em;
+	}
+form small,
+form .small {
 	font-size: 11px;
 	}		
 form .hint {
@@ -548,9 +553,49 @@ header {}
         margin-right: 5px;
         border: 1px solid #d0d0d0;
       }
+      #sidebar .project.files{
+		list-style: none;
+		margin: 9px 0; padding: 0;
+		float: left;
+		width: 300px;
+		clear: both;
+	  }
+	  #sidebar .project.files:after {
+		content: "\0020"; 
+		display: block; 
+		height: 0;
+		clear:  both;
+		visibility: hidden;
+	  }
+
+	  #sidebar .project.files li{
+		position: relative;
+		float: left;
+		margin: 0 5px 5px 0;
+		background: #fff;
+	  }
+	  #sidebar .project.files a:hover:after {
+		content:  '';
+		width: 33px; height: 33px;
+		display: block;
+		position: absolute;
+		top:  30px; left: 30px;
+		background: transparent url(/media/images/play-btn.png) 0 0 no-repeat;
+	  }
+	  #sidebar .project.files img{
+		display: block;
+		width: 92px;		
+        border: 1px solid #d0d0d0;
+        border-radius: 0;
+        -moz=border-radius: 0;
+	  }
+	  /*#sidebar .project.files a:hover img {
+		opacity: 0.7;
+	  }*/
       #project-description-link {
         margin: 18px 0 13px;
         display: block;
+        clear: both;
         line-height: 28px;
         text-align: center;
         background: #dfeffb;
@@ -1183,7 +1228,7 @@ header {}
 		#profile_edit.interests #profile-edit-nav .interests a,
 		#project_edit.summary #project-edit-nav .summary a,
 		#project_edit.description #project-edit-nav .description a,
-		#project_edit.project-image #project-edit-nav .project-image a,
+		#project_edit.image #project-edit-nav .image a,
 		#project_edit.media #project-edit-nav .media a,
 		#project_edit.links #project-edit-nav .links a,
 		#account_settings.notifications #account-settings-nav .notifications a,
@@ -1216,7 +1261,7 @@ header {}
 		#profile_edit.interests #profile-edit-nav .interests a:after,
 		#project_edit.summary #project-edit-nav .summary a:after,
 		#project_edit.description #project-edit-nav .description a:after,
-		#project_edit.project-image #project-edit-nav .project-image a:after,
+		#project_edit.image #project-edit-nav .image a:after,
 		#project_edit.media #project-edit-nav .media a:after,
 		#project_edit.links #project-edit-nav .links a:after,
 		#account_settings.notifications #account-settings-nav .notifications a:after,
@@ -1232,6 +1277,38 @@ header {}
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
 		}
+		#profile_edit .picture-preview,
+		#project_edit .picture-preview {
+			float: left;			
+			margin-left: 18px;
+			width: 211px;
+			/*min-height: 120px;*/
+			padding: 18px;
+			background-color: #F9F9F9;
+		    border: #C6C6C6 1px solid;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+		    box-shadow: #ddd 0 1px 4px inset;
+		    -moz-box-shadow: #ddd 0 1px 4px inset;
+		    -webkit-box-shadow: #ddd 0 1px 4px inset;
+		}
+		#profile_edit .member-picture,
+		#project_edit .project.picture,
+		#project_edit .project.media {
+			display: block;
+			margin: 0 auto;
+			max-width: 209px;
+			max-height: 250px;
+			background: #fff;
+			border-color: #C6C6C6;
+			margin-bottom: 0;
+		}
+		#profile_edit.image form,
+		#project_edit.image form {
+			width: 249px;
+			display: inline-block;
+			float: left;
+		}
 		#project_edit input[type=text] {
 		    width: 300px;
 			}
@@ -1243,6 +1320,78 @@ header {}
 			height: 35.5em;
 			width: 40em;
 			}
+		#project_edit.media #file_upload {			
+			margin: 0 auto -5px;
+			padding: 18px 18px 14px;
+			width: 384px;
+			background-color: #f1faff;
+			border: #e0edf5 1px solid;
+			border-radius:5px;
+			-moz-border-radius:5px
+		}
+		#project_edit.media .project-media {		
+			margin: 0 auto;
+			float: none;
+			width: 384px;
+			/*min-height: 120px;*/
+			padding: 18px;
+			padding-bottom: 9px;
+			background-color: #F9F9F9;
+		    border: #C6C6C6 1px solid;
+			border-radius: 5px;	
+			-moz-border-radius: 5px;
+		    box-shadow: #ddd 0 1px 4px inset;
+		    -moz-box-shadow: #ddd 0 1px 4px inset;
+		    -webkit-box-shadow: #ddd 0 1px 4px inset;
+	    	list-style: none;
+		}
+		#project_edit.media .project-media li {
+			position: relative;
+			float: left;
+			margin: 0 9px 9px 0;
+		}
+		#project_edit.media .project-media li:nth-child(3n) {
+			margin-right: 0;
+		}
+		#project_edit.media .project-media:after{
+			content: "\0020"; 
+			display: block; 
+			height: 0;
+			clear:  both;
+			visibility: hidden;
+		}
+		#project_edit.media .project-media img {
+			width: 120px;
+			height: 120px;
+		}
+		#project_edit.media .project-media button.delete.media {
+			/*display: none;*/
+			position: absolute;
+			top: 0; right: 0;
+			text-indent: -9999px;
+			background: #eee url(/media/images/delete-x.png) 0 0 no-repeat;
+			border-color: #c6c6c6;
+			border-radius: 0 5px 0 0;
+			-moz-border-radius: 0 5px 0 0;
+			width: 16px;
+			height: 15px;
+			min-height: 10px;			
+		}
+		#project_edit.media .project-media li:hover button.delete.media {
+			display: block;
+		}
+		#project_edit.media .project-media button.delete.media:hover {
+			background-color: #fff;
+		}
+		#project_edit.media .project-media .no-files {
+			text-align: center;
+			margin-bottom: 9px;
+			font-size: 16px;
+			font-weight: bold;
+			line-height: 60px;
+			text-shadow: #fff 1px 1px 0;
+			color: #ccc;
+		} 	
 /* INBOX / MESSAGING */
 #inbox{}
 #inbox #mailboxes,
