@@ -1,9 +1,11 @@
 *.py[co]
 *.db
+*.swp
+*~
 locale/
 media/images/profiles/
 media/images/projects/
-media/videos/projects/
+media/videos
 settings_local.py
 sample_data.py
 sql/
