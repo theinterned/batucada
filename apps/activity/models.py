@@ -23,6 +23,7 @@ class Activity(ModelBase):
     actor = models.ForeignKey('users.UserProfile')
     verb = models.URLField(verify_exists=False)
     status = models.ForeignKey('statuses.Status', null=True)
+    target_todo = models.ForeignKey('todos.Todo', null=True)
     project = models.ForeignKey('projects.Project', null=True)
     target_user = models.ForeignKey('users.UserProfile', null=True,
                                     related_name='target_user')
@@ -40,12 +41,14 @@ class Activity(ModelBase):
 
     @property
     def object_type(self):
-        obj = self.status or self.target_user or self.remote_object or None
+        obj = (self.status or self.target_user or self.remote_object 
+        or self.target_todo or None)
         return obj and obj.object_type or None
 
     @property
     def object_url(self):
-        obj = self.status or self.target_user or self.remote_object or None
+        obj = (self.status or self.target_user or self.remote_object 
+        or self.target_todo or None)
         return obj and obj.get_absolute_url() or None
 
     def textual_representation(self):
@@ -57,6 +60,8 @@ class Activity(ModelBase):
             return self.status.status
         elif self.remote_object:
             return self.remote_object.title
+        elif self.target_todo:
+            return self.target_todo.title
         return _("%s activity performed by %s") % (self.verb, self.actor.name)
 
     def html_representation(self):
