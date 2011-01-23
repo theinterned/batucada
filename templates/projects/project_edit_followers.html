@@ -13,7 +13,7 @@
     <form method="post" action="{% locale_url projects_delete_follower slug=project.slug %}">
     {% csrf_token %}
       <input type="hidden" name="follower_id" value="{{ follower.id }}" />
-      <a href="">
+      <a href="{{ follower.get_absolute_url }}">
         {{follower.display_name}}
       </a>
       <input type="submit" value="{{ _('Remove') }}" name="{{ _('Remove') }}">

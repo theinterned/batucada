@@ -222,15 +222,16 @@ def delete_follower(request, slug):
         rel = Relationship.objects.filter(
             source=follower, target_project=project
         )[0]
-        if rel:
+        if project.created_by == follower:
+            messages.error(request, _(
+                "You cannot unfollow your own course" ))
+        elif rel :
             rel.delete()
             messages.success(request, _(
-                "The follower %s has been removed." % follower.display_name)
-            )
+                "The follower %s has been removed." % follower.display_name))
         else:
             messages.error(request, _(
-                "The user is not following this course"
-            ))
+                "The user is not following this course"))
     else:
         messages.error(request, _(
             "There was an error removing the user."))
