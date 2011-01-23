@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404
+from django.http import HttpResponseRedirect 
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
@@ -207,11 +208,28 @@ def edit_followers(request, slug):
         'followers': followers
     }, context_instance=RequestContext(request))
 
+@login_required
+@ownership_required
+def add_follower(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST' and 'username' in request.POST:
+        username = request.POST['username']
+        user = UserProfile.objects.filter(username=username)[0]
+        if not user:
+            messages.error(
+                request, _('Username %s does not exist' % username))
+        else:
+            new_rel = Relationship(source=user, target_project=project)
+            try:
+                new_rel.save()
+            except IntegrityError: 
+                messages.error(
+                    request, _('You are already following this project'))
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 @login_required
 @ownership_required
 def delete_follower(request, slug):
-    print 'in delete_follower'
     project = get_object_or_404(Project, slug=slug)
     # TODO should use a proper django form for this?
     if request.method == 'POST' and 'follower_id' in request.POST:

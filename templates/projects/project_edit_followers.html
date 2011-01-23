@@ -7,6 +7,13 @@
 <p>
   {{ _('View, add and remove members of your course.') }}
 </p>
+
+<form method="post" action="{% locale_url projects_add_follower slug=project.slug %}">
+    {% csrf_token %}
+    <input type="text" name="username">
+    <input type="submit" value="Add">
+</form>
+
 {% if followers %}
 {% for follower in followers %}
   <li id="follower_{{ follower.id}}">
