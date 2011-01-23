@@ -16,6 +16,10 @@ from projects.models import Project, ProjectMedia
 
 from activity.models import Activity
 from statuses.models import Status
+
+from todos.models import Todo
+from todos.forms import TodoForm
+
 from drumbeat import messages
 from users.decorators import login_required
 
@@ -37,6 +41,7 @@ def show(request, slug):
         'project': project,
         'following': is_following,
         'activities': activities,
+        'todo_form': TodoForm(),
         'update_count': nstatuses,
         'links': links,
     }
