@@ -155,7 +155,21 @@
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
 
-    <ul id="posts">
+    <!-- todos -->
+    <div id="create-todo">
+        <div class="todo-container">
+            <form action="{% locale_url todos_create_project project_id=project.id %}" method="post" id="post-project-todo-update">
+            {% csrf_token %}
+
+            {{ todo_form.as_p }}
+                       
+            <input type="submit" value="Submit" />
+            
+            </form>
+        </div> <!-- /.todo-container -->
+    </div> <!-- /.#create-todo -->
+
+ <ul id="posts">
       {% for activity in activities %}
 	  {% include "activity/_activity_resource.html" %}
       {% endfor %}
