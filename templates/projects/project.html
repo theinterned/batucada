@@ -32,6 +32,17 @@
   <section id="project"class="panel">
     <h1 id="project-name">{{ project.name }}</h1>
 
+    <figure>
+      <a href="{% locale_url projects_show slug=project.slug %}">
+        {% if project.image %}
+  	<img src="{{ MEDIA_URL }}{{ project.image }}" width="197" height="120" alt="project image"/>
+        {% else %}
+        <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
+        {% endif %}
+      </a>
+    </figure>
+
+
     <div id="project-follow">
       {% if user.get_profile != project.created_by %}
 	{% if following %}
