@@ -133,6 +133,8 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
+  
+  {% if user.authenticated %}
   <div id="create-post">
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
@@ -154,7 +156,7 @@
 	</form>
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
-
+    {% endif %}
     <!-- todos -->
     <div id="create-todo">
         <div class="todo-container">
