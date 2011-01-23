@@ -40,8 +40,12 @@ def determine_image_upload_path(instance, filename):
     }
 
 
-def determine_video_upload_path(instance, filename):
-    return "videos/projects/%(partition)d/%(filename)s" % {
+def determine_media_upload_path(instance, filename):
+    if instance.is_video():
+        fmt = "videos/projects/%(partition)d/%(filename)s"
+    else:
+        fmt = "images/projects/%(partition)d/%(filename)s"
+    return fmt % {
         'partition': get_partition_id(instance.project.pk),
         'filename': safe_filename(filename),
     }
@@ -112,16 +116,33 @@ admin.site.register(Project)
 
 
 class ProjectMedia(ModelBase):
-    project_file = models.FileField(upload_to=determine_video_upload_path)
+    video_mimetypes = (
+        'video/ogg',
+        'video/webm',
+        'video/mp4',
+        'application/ogg',
+        'audio/ogg',
+    )
+    image_mimetypes = (
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+        'image/gif',
+    )
+    accepted_mimetypes = video_mimetypes + image_mimetypes
+    project_file = models.FileField(upload_to=determine_media_upload_path)
     project = models.ForeignKey(Project)
     mime_type = models.CharField(max_length=80, null=True)
-    thumbnail = models.ImageField(upload_to=determine_video_upload_path,
+    thumbnail = models.ImageField(upload_to=determine_image_upload_path,
                                   null=True, blank=True,
                                   storage=storage.ImageStorage())
 
     def thumbnail_or_default(self):
         """Return project media's thumbnail or a default."""
         return self.thumbnail or 'images/file-default.png'
+
+    def is_video(self):
+        return self.mime_type in self.video_mimetypes
 
 
 ###########

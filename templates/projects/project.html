@@ -69,7 +69,7 @@
         {% for file in files %}
           <li id="file_{{ file.id}}">
             <a href="{{ MEDIA_URL }}{{ file.project_file }}">
-              <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
+              <img src="{{ MEDIA_URL }}{{ file.thumbnail_or_default }}" class="project media" />
             </a>
           </li>
         {% endfor %}
