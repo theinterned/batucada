@@ -1,7 +1,10 @@
 import os
 import Image
+import logging
 
 from django.core.files.storage import FileSystemStorage
+
+log = logging.getLogger(__name__)
 
 
 class ImageStorage(FileSystemStorage):
@@ -16,7 +19,12 @@ class ImageStorage(FileSystemStorage):
     def _save(self, name, content):
         name, ext = os.path.splitext(name)
         image = Image.open(content)
-        image.save(content, image.format)
         if image.format in self.format_extensions:
             name = "%s.%s" % (name, self.format_extensions[image.format])
-        return super(ImageStorage, self)._save(name, content)
+        else:
+            log.warn("Attempt to upload image of unknown format: %s" % (
+                image.format,))
+            raise Exception("Unknown image format: %s" % (image.format,))
+        name = super(ImageStorage, self)._save(name, content)
+        image.save(self.path(name), image.format)
+        return name
