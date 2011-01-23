@@ -16,6 +16,8 @@ from projects.models import Project, ProjectMedia
 
 from activity.models import Activity
 from statuses.models import Status
+from relationships.models import Relationship
+from users.models import UserProfile
 
 from todos.models import Todo
 from todos.forms import TodoForm
@@ -195,6 +197,46 @@ def edit_links(request, slug):
         'form': form,
     }, context_instance=RequestContext(request))
 
+@login_required
+@ownership_required
+def edit_followers(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    followers = project.followers()
+    return render_to_response('projects/project_edit_followers.html', {
+        'project': project,
+        'followers': followers
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@ownership_required
+def delete_follower(request, slug):
+    print 'in delete_follower'
+    project = get_object_or_404(Project, slug=slug)
+    # TODO should use a proper django form for this?
+    if request.method == 'POST' and 'follower_id' in request.POST:
+        follower_id = int(request.POST['follower_id'])
+        follower = UserProfile.objects.get(id=follower_id)
+        # use filter() instead of get() to return None instead of raise an
+        # error for objects that do not exist. 
+        rel = Relationship.objects.filter(
+            source=follower, target_project=project
+        )[0]
+        if rel:
+            rel.delete()
+            messages.success(request, _(
+                "The follower %s has been removed." % follower.display_name)
+            )
+        else:
+            messages.error(request, _(
+                "The user is not following this course"
+            ))
+    else:
+        messages.error(request, _(
+            "There was an error removing the user."))
+    return http.HttpResponseRedirect(reverse('projects_edit_followers', kwargs={
+        'slug': project.slug,
+    }))        
 
 def edit_links_delete(request, slug):
     pass
