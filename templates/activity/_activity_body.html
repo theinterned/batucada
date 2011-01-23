@@ -1,17 +1,28 @@
 {% load activity_tags %}
 {% spaceless %}
+
 {% if activity|should_show_verb and show_actor %}
   <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.name }}</a>
 {% endif %}
+
 {% endspaceless %} {% spaceless %}
+
 {% if activity|should_show_verb %}
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
     {{ _('Created a new project') }}
   {% else %}
-    {{ activity|friendly_verb }}
+    {% if activity.target_todo %}
+      {{ _('Posted a task') }} 
+      {{ activity.target_todo.title|safe }}
+    {% else %}
+      {{ activity|friendly_verb }}
+    {% endif %}
   {% endif %}
 {% endif %}
+
 {% endspaceless %} {% spaceless %}
+
+
 {% if activity|should_hyperlink %}
   {% if activity.target_user %}
     <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
@@ -29,7 +40,14 @@
   {% if activity.status %}
     {{ activity.status|safe }}
   {% else %}
-  {{ activity|activity_representation }}
+    {% if activity.target_todo %}
+      {{ activity.target_todo.description|safe }}
+      {% if activity.target_todo.due_on %}
+        Due on {{ activity.target_todo.due_on }}
+      {% endif %}
+    {% else %}
+      {{ activity|activity_representation }}
+    {% endif %}
   {% endif %}
 {% endif %}
 {% endspaceless %}

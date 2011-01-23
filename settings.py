@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'activity',
     'projects',
     'statuses',
+    'todos',
     'messages',
     'drumbeat',
     'taggit',
