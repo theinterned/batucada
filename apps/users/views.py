@@ -46,11 +46,23 @@ def render_openid_login_failure(request, message, status=403):
         request, message, status, 'users/login_openid.html')
 
 
+def _clean_next_url(request):
+    """Taken from zamboni. Prevent us from redirecting outside of drumbeat."""
+    gets = request.GET.copy()
+    url = gets['next']
+    if url and '://' in url:
+        url = None
+    gets['next'] = url
+    request.GET = gets
+    return request
+
+
 @anonymous_only
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
 
     if 'next' in request.GET:
+        request = _clean_next_url(request)
         request.session['next'] = request.GET['next']
 
     logout(request)
