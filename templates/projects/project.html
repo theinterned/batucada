@@ -33,9 +33,7 @@
     <h1 id="project-name">{{ project.name }}</h1>
 
     <div id="project-follow">
-      {% if user.get_profile == project.created_by %}
-	<a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
-      {% else %}
+      {% if user.get_profile != project.created_by %}
 	{% if following %}
 	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
 	    {% csrf_token %}
@@ -66,11 +64,17 @@
       {{ project.long_description }}
     </div>
 
-    <!-- TODO: support project media 
-    <div id="project-icons">
-      <img src="..." height="86" width="96">
-      <img src="..." height="86" width="96">
-    </div>-->
+    {% if files %}
+      <ul class="project files">
+        {% for file in files %}
+          <li id="file_{{ file.id}}">
+            <a href="{{ MEDIA_URL }}{{ file.project_file }}">
+              <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
 
     {% if project.detailed_description %}
     <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
@@ -103,9 +107,7 @@
       </h3>
 
       <div class="member-actions">
-        {% if project.created_by == user.get_profile %}
-        <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-        {% else %}
+        {% if project.created_by != user.get_profile %}
           {% if project.created_by in user.get_profile.following %}
           <form action="{% locale_url relationships_unfollow object_type='user' slug=project.created_by.username %}" method="post">
             {% csrf_token %}

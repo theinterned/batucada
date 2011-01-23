@@ -180,6 +180,28 @@ $(document).ready(function() {
 	$(this).toggleClass('open');
     });
 
+    // modals using jQueryUI dialog
+    // $('.button.openmodal').live('click', function(){
+    //     var url = this.href;
+    //     //var url = "/en-US/test/"; //testing purposes
+    //     var selector = '.modal';
+    //     var url_fragment =  url + ' ' + selector;
+    //     var dialog = $('<div style=""></div>').appendTo('body');
+    //     // load remote content
+    //     dialog.load(
+    //         url_fragment,             
+    //         function (responseText, textStatus, XMLHttpRequest) {
+    //             log(responseText);
+    //             dialog.dialog({
+    //                 draggable: true,
+    //                 
+    //             });
+    //         }
+    //     );
+    //     //prevent the browser to follow the link
+    //     return false;
+    // });
+    
     // find submit buttons and bind them to an event that submits their form
     $('.submit-button').bind('click', function(e) {
 	$(e.target).parent('form[method="post"]').first().submit();

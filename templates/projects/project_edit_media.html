@@ -5,28 +5,11 @@
 {% block form %}
 <h2>{{ _('Upload Images &amp; Video') }}</h2>
 <p>
-  {{ _('You can use this form to upload images and videos that are relevant to your project. You may upload a max of <strong>five</strong> files.') }}
+  {{ _('You can use this form to upload images and videos that are relevant to your project. You may upload a max of <strong>six</strong> files.') }}
 </p>
-{% if files %}
-<ul>
-{% for file_id, file in files.items %}
-  <li>
-    {% if file.thumbnail %}
-      <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" />
-    {% endif %}
-    <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
-    {% csrf_token %}
-      <input type="hidden" name="file_id" value="{{ file_id }}" />
-      {{ file.path }} 
-      <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
-    </form>
-  </li>
-{% endfor %}
-</ul>
-{% endif %}
 <form action="{% locale_url projects_edit_media slug=project.slug %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <p>
+  <p id="file_upload">
     {{ form.project_file }}
     {{ form.project_file.errors }}
   </p>
@@ -35,4 +18,23 @@
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
   </p>
 </form>
+{% if files %}
+<ul class="project-media">
+{% for file in files %}
+  <li id="file_{{ file.id}}">
+    <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
+    {% csrf_token %}
+      <input type="hidden" name="file_id" value="{{ file.id }}" />
+      <!-- TODO: this url is broken - needs media type -->
+      <a href="{{ MEDIA_URL }}{{ file.project_file }} ">
+        <img src="{{ MEDIA_URL }}{{ file.thumbnail_or_default }}" class="project media" />
+      </a>
+      <button class="delete media" type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+    </form>
+  </li>
+{% endfor %}
+</ul>
+{% else %}
+  <p class="hint no-files">{{ _("You haven't uploaded any media yet") }}</p>
+{% endif %}
 {% endblock %}
