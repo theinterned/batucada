@@ -1,0 +1,27 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit followers{% endblock %}
+
+{% block form %}
+<h2>{{ _('Manage Followers') }}</h2>
+<p>
+  {{ _('View, add and remove members of your course.') }}
+</p>
+{% if followers %}
+{% for follower in followers %}
+  <li id="follower_{{ follower.id}}">
+    <form method="post" action="{% locale_url projects_delete_follower slug=project.slug %}">
+    {% csrf_token %}
+      <input type="hidden" name="follower_id" value="{{ follower.id }}" />
+      <a href="">
+        {{follower.display_name}}
+      </a>
+      <input type="submit" value="{{ _('Remove') }}" name="{{ _('Remove') }}">
+    </form>
+  </li>
+{% endfor %}
+</ul>
+{% else %}
+  <p class="hint no-followers">{{ _("Your course has no followers yet.") }}</p>
+{% endif %}
+{% endblock %}
