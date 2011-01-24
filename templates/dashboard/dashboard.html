@@ -77,6 +77,16 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
+	{% if not user.get_profile.image %}
+		<article class="welcome">
+		<header><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"> </header>
+		<h1>Welcome to Drumbeat!</h1>
+		<p>Your profile is a little bit bare right now. It could really use a photo and description so people know who you are. Please <a href="{% locale_url users_profile_edit %}">{{ _('update your profile') }}</a>. 
+		</p>
+		<p>You may also want to take a look at all the <a href="{% locale_url projects_gallery %}">{{ _('projects on Drumbeat') }}</a> to find some that interests you.
+		</p>
+	  </article>
+	{% endif %}
   <div id="create-post">
     <div class="post-container">
       <form id="post-status-update" method="post" action="{% locale_url statuses_create %}">

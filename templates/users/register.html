@@ -24,8 +24,14 @@
         </p>
         <p class="password">
           <label for="id_password">{{ _('Password') }}</label>
+          {% if form.password.errors %}
+          <span class="error">
+          {% endif %}
           {{ form.password }}
           {{ form.password.errors }}
+          {% if form.password.errors %}
+          </span>
+          {% endif %}
         </p>
         <p class="password confirm">
           <label for="id_password_confirm">{{ _('Confirm password') }}</label>
@@ -50,7 +56,13 @@
           </p>
           <p>
             <label for="id_policy_optin">
+              {% if form.password.errors %}
+					<span class="error">
+			  {% endif %}
               {{ form.policy_optin }}
+              {% if form.password.errors %}
+					</span>
+			  {% endif %}
               <small>I have read and agree to the <a href="{% locale_url drumbeat_tos %}">Terms of Service</a>.</small>
             </label>
             {{ form.policy_optin.errors }}
