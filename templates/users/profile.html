@@ -35,6 +35,7 @@
     <h1 class="member-name">
       <span class="fn">{{ profile.name }}</span>
     </h1>
+    {% if user.is_authenticated %}
     <div class="member-actions">
       {% if user != profile.user %}
         {% if profile in user.get_profile.following %}
@@ -51,6 +52,7 @@
         <a class="button" href="{% locale_url drumbeatmail_compose_to username=profile.username %}">{{ _('Private Message')}}</a>
       {% endif %}
     </div>
+    {% endif %}
   </div> 
   
   <div class="member-bio">
@@ -78,7 +80,7 @@
     {% endfor %}
   </ul>
   {% endif %}
-  {% if user != profile.user %}
+  {% if user.is_authenticated and user != profile.user %}
   <p class="supplemental_actions">
     <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=profile.id type="user" %}">{{_('Report Abuse')}}</a>
   </p>  
@@ -133,7 +135,5 @@
       {% endfor %}
     </ul>
 </div> <!-- /#main -->
-
-
 
 {% endblock %}

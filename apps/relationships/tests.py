@@ -6,6 +6,7 @@ from activity.models import Activity
 from activity.schema import verbs
 from relationships.models import Relationship
 from users.models import UserProfile
+from projects.models import Project
 
 
 class RelationshipsTests(TestCase):
@@ -47,6 +48,27 @@ class RelationshipsTests(TestCase):
         relationship = Relationship(
             source=self.user_one,
             target_user=self.user_two,
+        )
+        self.assertRaises(IntegrityError, relationship.save)
+
+    def test_unique_project_constraint(self):
+        """Test that a user can't follow the same project twice."""
+        project = Project(
+            name='test project',
+            short_description='for testing',
+            long_description='for testing relationships',
+            created_by=self.user_one,
+        )
+        project.save()
+
+        # creator will automatically be following the project
+        relationships = Relationship.objects.all()
+        self.assertEqual(relationships[0].source, self.user_one)
+        self.assertEqual(relationships[0].target_project, project)
+
+        relationship = Relationship(
+            source=self.user_one,
+            target_project=project,
         )
         self.assertRaises(IntegrityError, relationship.save)
 
