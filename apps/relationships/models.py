@@ -39,7 +39,10 @@ class Relationship(ModelBase):
         super(Relationship, self).save(*args, **kwargs)
 
     class Meta:
-        unique_together = ('source', 'target_user')
+        unique_together = (
+            ('source', 'target_user'),
+            ('source', 'target_project'),
+        )
 
     def __unicode__(self):
         return "%(from)r => %(to)r" % {

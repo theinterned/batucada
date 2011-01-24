@@ -88,9 +88,17 @@ class TestLogins(TestCase):
             'username': self.test_username,
             'password': self.test_password,
         })
-        # we expect the header to be urlencoded before being sent.
-        self.assertTrue('login/foo%0D%0ALocation' in response['location'])
         self.assertNotEqual('http://example.com', response['location'])
+
+    def test_next_param_outside_site(self):
+        """Test that next parameter cannot be used as an open redirector."""
+        path = "/%s/login/" % (self.locale,)
+        next_param = "http://www.mozilla.org/"
+        response = self.client.post(path + "?next=%s" % (next_param), {
+            'username': self.test_username,
+            'password': self.test_password,
+        })
+        self.assertNotEqual('http://www.mozilla.org/', response['location'])
 
     def test_registration_opt_in(self):
         """Test account registration."""
