@@ -31,22 +31,21 @@
 <div id="sidebar">
   <section id="project"class="panel">
     <h1 id="project-name">{{ project.name }}</h1>
-
+    {% if user.get_profile != project.created_by %}
     <div id="project-follow">
-      {% if user.get_profile != project.created_by %}
-	{% if following %}
-	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Unfollow') }}</button>
-	  </form>
-	{% else %}
-	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Follow Project') }}</button>
-	  </form>
-	{% endif %}
+      {% if following %}
+      <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
+        {% csrf_token %}
+        <button>{{ _('Unfollow') }}</button>
+      </form>
+      {% else %}
+      <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
+        {% csrf_token %}
+        <button>{{ _('Follow Project') }}</button>
+      </form>
       {% endif %}
-    </div> <!-- /#project-follow -->
+    </div> <!-- /#project-follow -->      	
+    {% endif %}
 
     <dl id="project-stats">
       <dt>Followers</dt>
@@ -69,7 +68,7 @@
         {% for file in files %}
           <li id="file_{{ file.id}}">
             <a href="{{ MEDIA_URL }}{{ file.project_file }}">
-              <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
+              <img src="{{ MEDIA_URL }}{{ file.thumbnail_or_default }}" class="project media" />
             </a>
           </li>
         {% endfor %}
