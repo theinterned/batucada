@@ -32,6 +32,7 @@
   <section id="project"class="panel">
     <h1 id="project-name">{{ project.name }}</h1>
 
+    {% if user.is_authenticated %}
     <div id="project-follow">
       {% if user.get_profile != project.created_by %}
 	{% if following %}
@@ -47,15 +48,13 @@
 	{% endif %}
       {% endif %}
     </div> <!-- /#project-follow -->
+    {% endif %}
 
     <dl id="project-stats">
       <dt>Followers</dt>
-      <dd>
-	<a href="#">{{ project.followers|length }}</a>
-      </dd>
+      <dd>{{ project.followers|length }}</dd>
       <dt>Updates</dt>
       <dd>{{ update_count }}</dd>
-
       <dt>Created</dt>
       <dd>August 2009</dd>
     </dl> <!-- /#project-stats -->
@@ -79,7 +78,7 @@
     {% if project.detailed_description %}
     <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
     {% endif %}
-    {% if user.get_profile != project.created_by %}
+    {% if user.is_authenticated and user.get_profile != project.created_by %}
     <p class="supplemental_actions">
       <a class="report abuse action" href="{% locale_url drumbeat_abuse  obj=project.id type="project" %}">{{_('Report Abuse')}}</a>
     </p>  
@@ -106,6 +105,7 @@
         <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
       </h3>
 
+      {% if user.is_authenticated %}
       <div class="member-actions">
         {% if project.created_by != user.get_profile %}
           {% if project.created_by in user.get_profile.following %}
@@ -122,6 +122,7 @@
           <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Private Message')}}</a>
         {% endif %}
       </div>     
+      {% endif %}
 
     </div> <!-- /.member-details -->
     
@@ -133,6 +134,7 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
+  {% if user.is_authenticated %}
   <div id="create-post">
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
@@ -147,13 +149,13 @@
 	    <li><span>{{ project.name }}</span></li>
 	  </ul>
 
-    <button class="button update submit" id="post-project-update">Post Update</button>
-
+          <button class="button update submit" id="post-project-update">Post Update</button>
 
 	</div> <!-- /.status-and-actions -->
 	</form>
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
+    {% endif %}
 
     <ul id="posts">
       {% for activity in activities %}
