@@ -1,7 +1,8 @@
 import os
 import logging
 import datetime
-from bleach import Bleach
+import bleach
+
 from markdown import markdown
 
 from django.conf import settings
@@ -17,6 +18,7 @@ from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
 
+from projects.utils import strip_remote_images
 from projects.tasks import ThumbnailGenerator
 
 import caching.base
@@ -156,10 +158,12 @@ def project_markdown_handler(sender, **kwargs):
         return
     log.debug("Creating html project description")
     if project.detailed_description:
-        bl = Bleach()
-        project.detailed_description_html = bl.clean(
+        project.detailed_description_html = bleach.clean(
             markdown(project.detailed_description),
             tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
+        project.detailed_description_html = strip_remote_images(
+            project.detailed_description_html, project.pk)
+
 pre_save.connect(project_markdown_handler, sender=Project)
 
 
