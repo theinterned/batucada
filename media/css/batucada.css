@@ -1605,10 +1605,10 @@ header {}
 	display: block;
 	margin: 0 auto 18px;
 	}	
-#splash #main asside #planet_drumbeat{
+#splash #main asside #planet_drumbeat p{
 	color: #777;
 	font-size: 12px;
-	line-height: 18px;
+	line-height: 1.5;
 	}
 #splash #main asside #planet_drumbeat > h1 a {
 	display: block;
@@ -1620,7 +1620,7 @@ header {}
 	}		
 #splash #main asside #planet_drumbeat article h1{
 	font-size: 12px;
-	line-height: 18px;
+	line-height: 1.5;
 	}
 #splash #main asside #planet_drumbeat > h1 a:hover{
 	opacity: 0.7;
