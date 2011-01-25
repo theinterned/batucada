@@ -1997,15 +1997,15 @@ div.warning h2 {
 	background-color: #a00;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	box-shadow: 
+	box-shadow: 		
 		#fff 0 0 1px,
-		rgba(0,0,0,0.3) 2px 3px 4px;
+		rgba(0,0,0,0.3) 2px 2px 2px;
 	-moz-box-shadow: 
 		#fff 0 0 1px,
-		rgba(0,0,0,0.3) 2px 3px 4px;
+		rgba(0,0,0,0.3) 2px 2px 2px;
 	-webkit-box-shadow: 
 		#fff 0 0 1px,
-		rgba(0,0,0,0.3) 2px 3px 4px;
+		rgba(0,0,0,0.3) 2px 2px 2px;
 	list-style: none;
 	}
 .errorlist:before {
