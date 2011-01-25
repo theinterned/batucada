@@ -8,6 +8,9 @@ wsgi_loaded = datetime.now()
 # Tell celery that we're using Django.
 os.environ['CELERY_LOADER'] = 'django'
 
+# Tell WSGI where to look for settings
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings_local'
+
 # Add the zamboni dir to the python path so we can import manage.
 wsgidir = os.path.dirname(__file__)
 site.addsitedir(os.path.abspath(os.path.join(wsgidir, '../')))
