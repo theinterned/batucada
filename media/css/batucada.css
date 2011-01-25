@@ -1987,7 +1987,7 @@ div.warning h2 {
 /* Stye for errors in forms */
 .errorlist{
     position: absolute;
-    top: 24px; right: -108px;
+    bottom: 24px; right: -108px;
 	padding: 6px 9px;
 	margin: 0;
     width: 120px;
@@ -2048,6 +2048,13 @@ p:empty {
 	background-position: 0 0;
 	top:-9px; left: 6px;
 	width: 18px; height: 9px;
+	}
+.project.edit.summary .errorlist {
+	top: auto; 
+	bottom: 6px;
+	}	
+.project.edit.summary .long-description .errorlist {
+	bottom: 78px;
 	}
 .project.edit.media .errorlist {
 	top: 12px;
