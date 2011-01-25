@@ -110,3 +110,8 @@
   </ul>
 
 {% endblock %}
+{% block js %}
+	<script>
+		$('.close_button').click(function(){ $('.welcome').toggle("slow"); });
+	</script>
+{% endblock %}
