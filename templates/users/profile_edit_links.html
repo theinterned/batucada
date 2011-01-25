@@ -35,16 +35,16 @@
 
 <form action="{% locale_url users_profile_edit_links %}" method="post">
   {% csrf_token %}
-  <p>
+  <div class="field{% if form.name.errors %} error{% endif %}">
     <label for="id_name">{{ _('Name') }}</label>
     {{ form.name }}
     {{ form.name.errors }}
-  </p>
-  <p>
+  </div>
+  <div class="field{% if form.url.errors %} error{% endif %}">
     <label for="id_url">{{ _('Url') }}</label>
     {{ form.url }}
     {{ form.url.errors }}
-  </p>
+  </div>
   <p class="buttons">
     <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
     <button type="submit">{{ _('Save') }}</button>
