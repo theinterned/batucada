@@ -2056,21 +2056,26 @@ p:empty {
 
 /* Messages */
 
-ul.messages {
+.messages {
 	list-style: none;
-	margin: 5px auto;
-	width: 420px;
-	padding: 0;
+	margin: -16px auto 9px;
+	width: 776px;
+	padding: 9px;
 	font-size: 14px;
-}
-ul.messages li {
-	padding: 3px 5px;
+	text-align: center;
 	color: #fff;
 	text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
 	background: url("/media/images/masthead.bg.png") repeat-x scroll 0 0 transparent;
 	border-radius: 4px;
+	-moz-border-radius: 4px;	
 }
-ul.messages li p {
+.signin .messages {
+	margin-top: -56px;
+	margin-bottom: 18px;
+	width: 412px;
+	}
+
+.messages li p:last-child {
 	margin: 0;
 }
 /* End of messages */
