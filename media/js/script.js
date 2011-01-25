@@ -115,6 +115,9 @@ var batucada = {
         $(e.target).parent().submit();
         return false;
       });
+      $('.close_button').bind('click', function(){
+        $('.welcome').toggle("slow"); 
+      });
     }
   },
   project_landing: {
