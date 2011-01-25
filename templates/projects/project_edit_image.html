@@ -16,11 +16,11 @@
   <p class="hint">{{ _('The project image is shown in search results and on the project listing page.') }}</p>
   <p class="hint">{{ _('Personalize your project by uploading an image file from your computer:') }}</p>  
   {% endif %}
-  <p>
+  <div class="field{% if form.image.errors %} error{% endif %}">
     {{ form.image }}
     <small class="hint block">{{ _('JPG, GIF or PNG only. Max size of 700k.') }}</small>
     {{ form.image.errors }}
-  </p>
+  </div>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
