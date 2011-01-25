@@ -1986,7 +1986,7 @@ div.warning h2 {
 /* Stye for errors in forms */
 .errorlist{
     position: absolute;
-    top: 24px; right: -154px;
+    top: 24px; right: -108px;
 	padding: 6px 9px;
 	margin: 0;
     width: 120px;
@@ -2008,6 +2008,9 @@ div.warning h2 {
 		rgba(0,0,0,0.3) 2px 2px 2px;
 	list-style: none;
 	}
+.signin .errorlist {
+	right: -154px;
+	}	
 .errorlist:before {
 	content: "\0020";
 	display: block;
