@@ -2024,7 +2024,8 @@ div.warning h2 {
 .inline_label .errorlist {	
 	top: -5px;
 	}
-.error input:not([type=file]) {
+.error input:not([type=file]),
+.error textarea {
 	border-color: #a00;
 	box-shadow: 0 0 3px #a00;
 	-moz-box-shadow: 0 0 3px #a00;
