@@ -182,6 +182,10 @@ input[type=submit]:active,
 	}
 
 /* FORMS */
+form .field {
+	position: relative;
+	margin-bottom: 1.4em;
+	}
 label {
 	display: block;
 	font-size: 12px;
@@ -201,6 +205,7 @@ textarea {
 	margin-bottom: 0.5em;
 	font-size: 12px;
 	line-height: 1.5;
+	min-height: 1.5em;
 	color: #262626;
 	border: 1px solid #c6c6c6;
 	border-radius:4px;
@@ -1231,6 +1236,9 @@ header {}
 		.modal.nav fieldset {
 			margin-left: 190px;
 		}
+		.modal fieldset form p {
+			position:relative;
+		}
 		.modal #profile-edit-nav .selected a,
 		.modal #profile-edit-nav a:hover,
 		.modal #project-edit-nav .selected a,
@@ -1672,6 +1680,7 @@ header {}
 .signin .modal article input[type=password] {
 	font-size: 14px;
 	line-height: 18px;
+	min-height: 18px;
 	width: 328px;
 	}
 .signin .modal .submit {
@@ -1687,6 +1696,7 @@ header {}
 .signin .modal .password {
 	display: inline-block;
 	width: 167px;
+	margin-bottom: 0;
 	}
 .signin .modal .password.confirm{
 	margin-left: 10px;
@@ -1974,38 +1984,42 @@ div.warning h2 {
     font-weight: bold;
 }
 /* Stye for errors in forms */
-
-ul.errorlist {
+ul.errorlist{
+    position: absolute;
+    top: 24px; right: -154px;
+	padding: 6px 9px;
+    width: 120px;
     color: #FFFFFF;
     font-size: 12px;
-    left: 400px;
-    margin-top: -2em;
-    position: absolute;
-    width: 55%;
-}
-span.error>input {
-	border-color: #a00;
-	box-shadow: 0 0 4px #a00;
-}
-ul.errorlist li {
-	background: -moz-linear-gradient(center bottom, #540000, #AA0000) repeat scroll 0 0 transparent;
+    line-height: 1.5;
+	text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+	background-color: #a00;
 	border-radius: 4px;
-	border-color: #aaf0f0;
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+	-moz-border-radius: 4px;
 	list-style: none;
-	padding: 3px 3px 3px 10px;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
-}
-ul.errorlist li:before {
+	}
+ul.errorlist:before {
 	content: "\0020";
 	display: block;
-	width: 10px;
-	height: 25px;
+	width: 9px;
+	height: 17px;
 	position: absolute;
-	left: -8px; 
-	top: 0;
-	background: transparent url(/media/images/modal-nav-arrow-error.png) left top no-repeat;
-}
+	left: -9px; 
+	top: 6px;
+	background: transparent url(/media/images/modal-error-arrow.png) left 50% no-repeat;
+}	
+.inline_label ul.errorlist {	
+	top: -5px;
+	}
+.error input {
+	border-color: #a00;
+	box-shadow: 0 0 3px #a00;
+	-moz-box-shadow: 0 0 3px #a00;
+	-webkit-box-shadow: 0 0 3px #a00;
+	}
+.error label {	
+	color: #a00;
+	}
 p:empty {
 	display: none;
 }
