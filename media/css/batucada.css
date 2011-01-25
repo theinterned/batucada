@@ -1988,6 +1988,7 @@ div.warning h2 {
     position: absolute;
     top: 24px; right: -154px;
 	padding: 6px 9px;
+	margin: 0;
     width: 120px;
     color: #FFFFFF;
     font-size: 12px;
@@ -1996,6 +1997,15 @@ div.warning h2 {
 	background-color: #a00;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
+	box-shadow: 
+		#fff 0 0 1px,
+		rgba(0,0,0,0.3) 2px 3px 4px;
+	-moz-box-shadow: 
+		#fff 0 0 1px,
+		rgba(0,0,0,0.3) 2px 3px 4px;
+	-webkit-box-shadow: 
+		#fff 0 0 1px,
+		rgba(0,0,0,0.3) 2px 3px 4px;
 	list-style: none;
 	}
 .errorlist:before {
@@ -2008,10 +2018,10 @@ div.warning h2 {
 	top: 6px;
 	background: transparent url(/media/images/modal-error-arrow.png) left 50% no-repeat;
 }	
-.inline_label ul.errorlist {	
+.inline_label .errorlist {	
 	top: -5px;
 	}
-.error input {
+.error input:not([type=file]) {
 	border-color: #a00;
 	box-shadow: 0 0 3px #a00;
 	-moz-box-shadow: 0 0 3px #a00;
@@ -2023,7 +2033,17 @@ div.warning h2 {
 p:empty {
 	display: none;
 }
-
+/* special case errors */
+.edit.image .errorlist {
+	top:  4.5em; left: 0;
+	width: 140px;
+	}
+.edit.image .errorlist:before {
+	background-image: url(/media/images/modal-error-arrow-up.png);
+	background-position: 0 0;
+	top:-9px; left: 6px;
+	width: 18px; height: 9px;
+	}
 /* End error's style */
 
 /* Messages */

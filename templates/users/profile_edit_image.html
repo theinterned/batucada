@@ -16,11 +16,11 @@
   <p class="hint">{{ _('Personalize your profile image by uploading an image file from your computer:') }}</p>  
   {% endif %}
 
-  <p>
+  <div class="field upload{% if form.image.errors %} error{% endif %}">
     {{ form.image }}
     <small class="hint block">{{ _('JPG, GIF or PNG only. Max size of 700k.') }}</small>
     {{ form.image.errors }}
-  </p>  
+  </div>
   <p class="buttons">
     <a class="button" href="{{ profile.get_absolute_url }}">Cancel</a>
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
