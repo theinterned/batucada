@@ -2089,7 +2089,7 @@ ul.messages li p {
 		endColorstr='#FFF4BE',GradientType=0 );
 	border: 2px solid #e9d86c;
 	border-radius: 10px;
-	/* padding: 10px; */
+	-moz-border-radius: 10px;
 	margin-bottom: 18px;
 	box-shadow: #999 1px 1px 5px;
 	-moz-box-shadow: #999 1px 1px 5px;
@@ -2103,9 +2103,9 @@ img.close_button {
 }
 .welcome h1 {
 	clear:both;
-	/*padding: 0 10px;*/
+	/*padding: 24px 24px;*/
 	margin-bottom: 0.5em;
 }
 .welcome p {
-	/*padding: 0 10px;*/
+	/*padding: 0 24px;*/
 }

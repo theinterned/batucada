@@ -116,7 +116,16 @@ var batucada = {
         return false;
       });
       $('.close_button').bind('click', function(){
-        $('.welcome').toggle("slow"); 
+        $('.welcome').animate(
+          {
+            opacity: 'hide',
+            height: 'hide',
+            paddingTop: 0,
+            paddingBottom: 0,
+            marginTop: 0,
+            marginBottom: 0
+          }, 
+          600, 'jswing');        
       });
     }
   },
