@@ -16,7 +16,7 @@
   <p class="hint">{{ _('Personalize your profile image by uploading an image file from your computer:') }}</p>  
   {% endif %}
 
-  <div class="field upload{% if form.image.errors %} error{% endif %}">
+  <div class="field{% if form.image.errors %} error{% endif %}">
     {{ form.image }}
     <small class="hint block">{{ _('JPG, GIF or PNG only. Max size of 700k.') }}</small>
     {{ form.image.errors }}
