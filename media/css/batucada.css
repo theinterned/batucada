@@ -1984,7 +1984,7 @@ div.warning h2 {
     font-weight: bold;
 }
 /* Stye for errors in forms */
-ul.errorlist{
+.errorlist{
     position: absolute;
     top: 24px; right: -154px;
 	padding: 6px 9px;
@@ -1998,7 +1998,7 @@ ul.errorlist{
 	-moz-border-radius: 4px;
 	list-style: none;
 	}
-ul.errorlist:before {
+.errorlist:before {
 	content: "\0020";
 	display: block;
 	width: 9px;
