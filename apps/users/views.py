@@ -103,6 +103,8 @@ def login(request):
         next_param = request.session.get('next', None)
         if next_param:
             del request.session['next']
+            if not next_param.startswith('/'):
+                next_param = '/%s' % (next_param,)
             return http.HttpResponseRedirect(next_param)
 
     elif request.method == 'POST':
