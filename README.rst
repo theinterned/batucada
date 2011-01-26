@@ -11,11 +11,11 @@ Batucada, a rewrite of drumbeat.org by Mozilla.
 Get Involved
 ------------
 
-Interested in getting involved in Lernanta code development? Check out the `development wiki`_ for more info! For a broader view on the development and tech team at P2PU, check out the `P2PU Development and Tech team`_ page on the `P2PU wiki`_ . 
+Interested in getting involved in Lernanta code development? Check out the development wiki [0] for more info! For a broader view on the development and tech team at P2PU, check out the P2PU Development and Tech team [1] page on the P2PU wiki [2] . 
 
-.. _ https://github.com/p2pu/lernanta/wiki
-.. _http://wiki.p2pu.org/w/page/31978748/Development-and-tech-team
-.. _http://wiki.p2pu.org
+[0] https://github.com/p2pu/lernanta/wiki
+[1] http://wiki.p2pu.org/w/page/31978748/Development-and-tech-team
+[2] http://wiki.p2pu.org
 
 Installation
 ------------
