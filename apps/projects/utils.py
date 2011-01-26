@@ -86,6 +86,7 @@ def copy_image(image_url):
         if downloaded > max_image_size:
             tmpfile_fp.close()
             image_fp.close()
+            os.unlink(tmpfile_fp)
             return None
         tmpfile_fp.write(chunk)
 
@@ -116,18 +117,23 @@ def strip_remote_images(content, pk):
         if tmpfile is None:
             new_urls.append("")
             continue
-        image_basename = img_url.split('/')[-1]
-        image_path = determine_image_upload_path(Mock(pk), image_basename)
-        destination = os.path.join(media_root, image_path)
+        try:
+            image_basename = img_url.split('/')[-1]
+            image_path = determine_image_upload_path(Mock(pk), image_basename)
+            destination = os.path.join(media_root, image_path)
 
-        image = Image.open(tmpfile)
-        basename, ext = os.path.splitext(destination)
-        if (ext[1:] not in mime_types_extensions.values()):
-            destination = "%s.%s" % (basename, format_extensions[image.format])
-        image.save(destination, image.format)
-        os.unlink(tmpfile)
-
-        new_urls.append(os.path.join(media_url, image_path))
+            image = Image.open(tmpfile)
+            basename, ext = os.path.splitext(destination)
+            if (ext[1:] not in mime_types_extensions.values()):
+                destination = "%s.%s" % (
+                    basename, format_extensions[image.format])
+            image.save(destination, image.format)
+            new_urls.append(os.path.join(media_url, image_path))
+        except Exception, e:
+            log.warn("Error stripping out remote image: %s" % (e,))
+            new_urls.append("")
+        finally:
+            os.unlink(tmpfile)
 
     for i in range(len(img_urls)):
         # markdown replaces & with &amp; even if it's part of a querystring
