@@ -1201,6 +1201,13 @@ header {}
 			line-height: 1.4;
 			margin-bottom: 1.4em;
 		}
+		.modal input[type=text] {
+		    width: 300px;
+			}
+		.modal textarea {
+		    height: 90px;
+		    width: 400px;
+			}		
 		.modal .buttons{
 			position: absolute;
 			top:  18px; right: 18px;
@@ -1403,13 +1410,6 @@ header {}
 			display: inline-block;
 			float: left;
 		}
-		#project_edit input[type=text] {
-		    width: 300px;
-			}
-		#project_edit textarea {
-		    height: 90px;
-		    width: 400px;
-			}
 		#project_edit.description textarea {
 			height: 35.5em;
 			width: 40em;

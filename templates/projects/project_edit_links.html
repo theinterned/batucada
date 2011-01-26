@@ -6,12 +6,12 @@
 <form action="{% locale_url projects_edit_links slug=project.slug %}" method="post">
   {% csrf_token %}
   <p>
-    <div class="field{% if form.name.errors %} error{% endif %}">
+    <div class="field link name{% if form.name.errors %} error{% endif %}">
       <label for="id_name">{{ _('Name') }}</label>
       {{ form.name }}
       {{ form.name.errors }}
     </div>
-    <div class="field{% if form.url.errors %} error{% endif %}">
+    <div class="field link url{% if form.url.errors %} error{% endif %}">
       <label for="id_url">{{ _('Url') }}</label>
       {{ form.url }}
       {{ form.url.errors }}
