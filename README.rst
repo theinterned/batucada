@@ -7,6 +7,16 @@ Batucada, a rewrite of drumbeat.org by Mozilla.
 
 .. _Django: http://www.djangoproject.com/
 
+
+Get Involved
+------------
+
+Interested in getting involved in Lernanta code development? Check out the `development wiki`_ for more info! For a broader view on the development and tech team at P2PU, check out the `P2PU Development and Tech team`_ page on the `P2PU wiki`_ . 
+
+.. _ https://github.com/p2pu/lernanta/wiki
+.. _http://wiki.p2pu.org/w/page/31978748/Development-and-tech-team
+.. _http://wiki.p2pu.org
+
 Installation
 ------------
 
@@ -72,11 +82,3 @@ What a pain!
 Finally, start the development server to take it for a spin. ::
 
    python manage.py runserver 
-
-Get Involved
-------------
-
-To help out with lernanta, join the `Drumbeat mailing list`_ and introduce yourself. We're currently looking for help 
-from Django / Python and front-end (HTML, CSS, Javascript) developers. 
-
-.. _Drumbeat mailing list: http://www.mozilla.org/about/forums/#drumbeat-website
