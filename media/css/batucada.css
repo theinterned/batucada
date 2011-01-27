@@ -248,10 +248,10 @@ form small,
 form .small {
 	font-size: 11px;
 	}		
-form .hint {
+.hint {
 	color: #919191;
 	}
-form .hint.block {
+.hint.block {
     margin-bottom: 1.5em;
     display: block;
 	}	
@@ -1201,6 +1201,13 @@ header {}
 			line-height: 1.4;
 			margin-bottom: 1.4em;
 		}
+		.modal input[type=text] {
+		    width: 300px;
+			}
+		.modal textarea {
+		    height: 90px;
+		    width: 400px;
+			}		
 		.modal .buttons{
 			position: absolute;
 			top:  18px; right: 18px;
@@ -1247,6 +1254,7 @@ header {}
 		.modal #account-settings-nav a:hover,
 		#profile_edit.info #profile-edit-nav .info a,
 		#profile_edit.image #profile-edit-nav .image a,
+		#profile_edit.links #profile-edit-nav .links a,
 		#profile_edit.skills #profile-edit-nav .skills a,
 		#profile_edit.interests #profile-edit-nav .interests a,
 		#project_edit.summary #project-edit-nav .summary a,
@@ -1277,10 +1285,80 @@ header {}
 			background: #2084CA;
 			text-decoration: none;
 		}
+		.modal .link {
+			display: inline-block;
+			width: 178px;
+			margin-bottom: 12px;
+			}
+		.modal .link.url{
+			width: 334px;
+			padding: 0;
+			}
+		.links .modal article input[type=text] {
+			width: 154px;
+			}
+		.links .modal article .url input[type=text] {
+			width: 316px;
+		}
+		.links .modal table {
+			width: 516px;
+			position: relative;
+			background-color: #F9F9F9;
+		    border-collapse: separate;
+		    border: #C6C6C6 1px solid;
+			border-radius: 5px;	
+			-moz-border-radius: 5px;
+		    box-shadow: #ddd 0 1px 4px inset;
+		    -moz-box-shadow: #ddd 0 1px 4px inset;
+		    -webkit-box-shadow: #ddd 0 1px 4px inset;
+		}
+		.links .modal th,
+		.links .modal td {
+			padding: 9px;	
+			text-align: left;
+		    vertical-align: middle;
+			border-bottom: 1px solid #e0e0e0;
+			box-shadow: #fff 0 1px;
+			-moz-box-shadow: #fff 0 1px;
+			-webkit-box-shadow: #fff 0 1px;
+			text-size: 14px;
+			line-height: 1.3;
+			/*width: 25%;*/
+		}
+		.links .modal table .name,
+		.links .modal table .url {
+			width: 154px;
+		}
+		.links .modal tbody tr:last-child td{
+			/*border-bottom: none;*/
+			-webkit-box-shadow: none;
+		}
+		.links .modal thead {
+			background: #f1faff;			
+		}
+		.links .modal th {
+			border: #e0edf5 1px solid;
+			border-width: 1px 0;
+		}
+		.links .modal th:first-child {
+			border-radius: 5px 0 0;
+			border-left-width: 1px;
+		}
+		.links .modal th:last-child {
+			border-radius:0 5px 0 0;
+			border-right-width: 1px;
+		}
+		.links .modal table button {
+			font-size: 11px;
+			line-height: 1.6;
+			min-height: 18px;
+			width: auto;
+		}
 		.modal #profile-edit-nav .selected a:after,
 		#profile_edit.info #profile-edit-nav .info a:after,
 		#profile_edit.image #profile-edit-nav .image a:after,
-		#profile_edit.skills #profile-edit-nav .skills a:after,
+		#profile_edit.links #profile-edit-nav .links a:after,
+		#profile_edit.skills #profile-edit-nav .skills a:after,		
 		#profile_edit.interests #profile-edit-nav .interests a:after,
 		#project_edit.summary #project-edit-nav .summary a:after,
 		#project_edit.description #project-edit-nav .description a:after,
@@ -1332,13 +1410,6 @@ header {}
 			display: inline-block;
 			float: left;
 		}
-		#project_edit input[type=text] {
-		    width: 300px;
-			}
-		#project_edit textarea {
-		    height: 90px;
-		    width: 400px;
-			}
 		#project_edit.description textarea {
 			height: 35.5em;
 			width: 40em;
@@ -2039,11 +2110,17 @@ p:empty {
 	display: none;
 }
 /* special case errors */
-.edit.image .errorlist {
+.edit.image .errorlist,
+.edit.links .errorlist {
 	top:  4.5em; left: 0;
 	width: 140px;
+	z-index: 1;
 	}
-.edit.image .errorlist:before {
+.edit.links .errorlist {
+	top:  5em;
+	}	
+.edit.image .errorlist:before,
+.edit.links .errorlist:before  {
 	background-image: url(/media/images/modal-error-arrow-up.png);
 	background-position: 0 0;
 	top:-9px; left: 6px;

@@ -368,9 +368,7 @@ def profile_edit_links(request):
             link.user = profile
             link.save()
             return http.HttpResponseRedirect(
-                reverse('users_profile_view', kwargs={
-                    'username': request.user.get_profile().username,
-                }),
+                reverse('users_profile_edit_links'),
             )
         else:
             messages.error(request, _('There was an error saving '
@@ -394,9 +392,11 @@ def profile_edit_links_delete(request, link):
     link.delete()
     messages.success(request, _('The link was deleted.'))
     form = forms.ProfileLinksForm()
+    links = Link.objects.select_related('subscription').filter(user=profile)
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
         'form': form,
+        'links':links,
     }, context_instance=RequestContext(request))
 
 

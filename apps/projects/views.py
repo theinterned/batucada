@@ -14,6 +14,7 @@ from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia
 
 from activity.models import Activity
+from links.models import Link
 from statuses.models import Status
 from drumbeat import messages
 from users.decorators import login_required
@@ -184,9 +185,11 @@ def edit_links(request, slug):
             messages.error(request, _('There was an error adding your link.'))
     else:
         form = project_forms.ProjectLinksForm()
+    links = Link.objects.select_related('subscription').filter(project=project)
     return render_to_response('projects/project_edit_links.html', {
         'project': project,
         'form': form,
+        'links': links,
     }, context_instance=RequestContext(request))
 
 
