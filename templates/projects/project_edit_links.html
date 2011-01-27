@@ -3,6 +3,8 @@
 {% block bodyclasses %}project edit links{% endblock %}
 
 {% block form %}
+<h2>Links &amp; Content</h2>
+<p class="hint">{{ _('Add links to websites associated with this project such as a blog, homepage, twitter profile, github repository etc. These links will appear on the project page.') }}</p>
 <form action="{% locale_url projects_edit_links slug=project.slug %}" method="post">
   {% csrf_token %}
   <p>
@@ -22,4 +24,32 @@
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
   </p>
 </form>
+{% if links %}
+<table>
+<thead>
+  <tr>
+    <th>{{ _('Name') }}</th>
+    <th>{{ _('URL') }}</th>
+    <th>{{ _('Subscribed') }}</th>
+    <th>{{ _('Actions') }}</th>
+  </tr>
+</thead>
+<tbody>
+  {% for link in links %}
+    <tr>
+      <td class="name">{{ link.name }}</td>
+      <td class="url">{{ link.url }}</td>
+      <td class="subscription">{{ link.subscription.verified }}</td>
+      <td class="actions">
+        <form action="{% locale_url projects_edit_links_delete slug=project.slug %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+
 {% endblock %}
