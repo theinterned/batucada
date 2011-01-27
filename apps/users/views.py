@@ -109,11 +109,9 @@ def login(request):
 
     elif request.method == 'POST':
         messages.error(request, _('Incorrect email or password.'))
-        data = request.POST.copy()
-        del data['password']
-        return render_to_response('users/signin.html', {
-            'form': auth_forms.AuthenticationForm(initial=data),
-        }, context_instance=RequestContext(request))
+        # run through auth_views.login again to render template with messages.
+        r = auth_views.login(request, template_name='users/signin.html',
+                         authentication_form=forms.AuthenticationForm)
 
     return r
 
