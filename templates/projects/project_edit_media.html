@@ -3,6 +3,7 @@
 {% block bodyclasses %}project edit media{% endblock %}
 
 {% block form %}
+<fieldset id="project _edit_media" class="project edit media">
 <h2>{{ _('Upload Images &amp; Video') }}</h2>
 <p>
   {{ _('You can use this form to upload images and videos that are relevant to your project. You may upload a max of <strong>six</strong> files.') }}
@@ -38,4 +39,5 @@
   <li class="hint no-files">{{ _("You haven't uploaded any media yet") }}</li>
 {% endif %}
 </ul>
+</fieldset>
 {% endblock %}
