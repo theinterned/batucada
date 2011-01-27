@@ -385,19 +385,14 @@ def profile_edit_links(request):
 
 @login_required
 def profile_edit_links_delete(request, link):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    link = get_object_or_404(Link, pk=link)
-    if link.user != profile:
-        return http.HttpResponseForbidden()
-    link.delete()
-    messages.success(request, _('The link was deleted.'))
-    form = forms.ProfileLinksForm()
-    links = Link.objects.select_related('subscription').filter(user=profile)
-    return render_to_response('users/profile_edit_links.html', {
-        'profile': profile,
-        'form': form,
-        'links':links,
-    }, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        profile = get_object_or_404(UserProfile, user=request.user)
+        link = get_object_or_404(Link, pk=link)
+        if link.user != profile:
+            return http.HttpResponseForbidden()
+        link.delete()
+        messages.success(request, _('The link was deleted.'))
+    return http.HttpResponseRedirect(reverse('users_profile_edit_links'))
 
 
 def check_username(request):
