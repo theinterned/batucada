@@ -1,7 +1,7 @@
 {% load l10n_tags %}
 
 <li class="post-container">
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and user.id != activity.actor.id %}
   <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=activity.id type="activity" %}">{{_('Report Abuse')}}</a>
  {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">

@@ -51,6 +51,7 @@
   </ul>
 </div> <!-- /#member_relationships-->
 <!-- TODO: add support for owned project summary card -->
+{% if projects_following %}
 <div id="member_projects" class="panel">
 {% for project in projects_following %}
   {% if project.created_by == user.get_profile %}
@@ -74,6 +75,7 @@
   {% endif %}
 {% endfor %}
 </div> <!-- /#member_projects -->
+{% endif %}
 </div> <!-- /#sidebar -->
 
 <div id="main">

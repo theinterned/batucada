@@ -137,7 +137,7 @@ class UserProfile(ModelBase):
     def create_django_user(self):
         """Make a django.contrib.auth.models.User for this UserProfile."""
         self.user = User(id=self.pk)
-        self.user.username = self.email
+        self.user.username = self.username
         self.user.email = self.email
         self.user.date_joined = self.created_on
         self.user.backend = 'django.contrib.auth.backends.ModelBackend'

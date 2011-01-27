@@ -32,11 +32,11 @@ var createPostTextArea = function() {
 };
 
 var usernameHint = function() {
-    var userurl = $('#username .hint b').html();
+    var userurl = $('#username .hint b').html();    
     $('#id_username').keyup(function() {
         $('#availability').removeClass('okay warning').html('');
         var val = (this.value) ? this.value : userurl;
-        $(this).parent('p').find('.hint b').html(val);
+        $(this).parent('.field').find('.hint b').html(val);
     }).keyup();
 };
 
@@ -108,6 +108,10 @@ var loadMoreMessages = function() {
 };
 
 var batucada = {
+    splash: {
+        onload: function() {
+        }
+    },
     create_profile: {
         onload: function() {
             usernameHint();
@@ -135,6 +139,22 @@ var batucada = {
             createPostTextArea();
             $('#post-update').bind('click', function() {
                 $('#post-status-update').submit();
+            });
+            $('a.activity-delete').bind('click', function(e) {
+                $(e.target).parent().submit();
+                return false;
+            });
+            $('.close_button').bind('click', function(){
+                $('.welcome').animate(
+                    {
+                        opacity: 'hide',
+                        height: 'hide',
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        marginTop: 0,
+                        marginBottom: 0
+                    }, 
+                    600, 'jswing');        
             });
         }
     },
@@ -194,11 +214,12 @@ $(document).ready(function() {
     if (ns && ns[bodyId] && (typeof ns[bodyId].onload == 'function')) {
         ns[bodyId].onload();
     }
-
+    
     // attach handlers for elements that appear on most pages
     $('#user-nav').find('li.menu').bind('click', function(event) {
         $(this).toggleClass('open');
     });
+
     // wire up any RTEs with wmd
     $('textarea.wmd').wmd({'preview': false});
 
@@ -224,3 +245,20 @@ $(document).ready(function() {
     $('.modal nav.tabs a').tabLinks('section fieldset');
 });
 
+// Recaptcha
+var RecaptchaOptions = { theme : 'custom' };
+
+$('#recaptcha_different').click(function(e) {
+    e.preventDefault();
+    Recaptcha.reload();
+});
+
+$('#recaptcha_audio').click(function(e) {
+    e.preventDefault();
+    Recaptcha.switch_type('audio');
+});
+
+$('#recaptcha_help').click(function(e) {
+    e.preventDefault();
+    Recaptcha.showhelp();
+});
