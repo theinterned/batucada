@@ -51,4 +51,4 @@ def get_partition_id(pk, chunk_size=1000):
 def safe_filename(filename):
     """Generate a safe filename for storage."""
     name, ext = os.path.splitext(filename)
-    return "%s%s" % (hashlib.md5(name).hexdigest(), ext)
+    return "%s%s" % (hashlib.md5(name.encode('utf8')).hexdigest(), ext)
