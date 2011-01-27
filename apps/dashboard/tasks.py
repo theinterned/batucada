@@ -3,10 +3,10 @@ import urllib2
 import logging
 import hashlib
 import feedparser
-
-from BeautifulSoup import BeautifulSoup
+import bleach
 
 from django.conf import settings
+from django.utils.encoding import smart_str
 
 from celery.schedules import crontab
 from celery.decorators import periodic_task
@@ -16,12 +16,7 @@ from dashboard.models import FeedEntry
 log = logging.getLogger(__name__)
 
 
-def strip_html(data):
-    return ''.join(BeautifulSoup(data).findAll(text=True))
-
-
 def parse_entry(entry):
-    log.debug("parsing %s" % (entry,))
     title = getattr(entry, 'title', None)
     content = getattr(entry, 'content', None)
     link = getattr(entry, 'link', None)
@@ -45,36 +40,39 @@ def update_feeds():
     log.debug("update_feeds called with feed url %s" % (feed_url,))
 
     if not feed_url:
+        log.warn("No feed url defined. Cannot update splash page feed.")
         return
 
     data = urllib2.urlopen(feed_url).read()
     feed = feedparser.parse(data)
     entries = feed.entries[0:4]
 
-    counter = 0
+    ids = []
     for entry in entries:
-        log.debug("parsing feed")
         parsed = parse_entry(entry)
         if not parsed:
             log.warn("Parsing feed failed. continuing")
             continue
         body = getattr(parsed['content'], 'value', None)
         if not body:
+            log.warn("Parsing feed failed - no body found")
             continue
-        cleaned_body = strip_html(body).encode('utf-8')
+        cleaned_body = smart_str(bleach.clean(body, tags=(), strip=True))
         try:
             checksum = hashlib.md5(cleaned_body).hexdigest()
-            FeedEntry(
-                title=parsed['title'].encode('utf-8'),
-                link=parsed['link'].encode('utf-8'),
-                body=cleaned_body,
-                checksum=checksum,
-                created_on=time.strftime(
-                    "%Y-%m-%d %H:%M:%S", parsed['updated'])).save()
-            counter += 1
+            exists = FeedEntry.objects.filter(checksum=checksum)
+            if not exists:
+                entry = FeedEntry(
+                    title=parsed['title'].encode('utf-8'),
+                    link=parsed['link'].encode('utf-8'),
+                    body=cleaned_body,
+                    checksum=checksum,
+                    created_on=time.strftime(
+                        "%Y-%m-%d %H:%M:%S", parsed['updated']))
+                entry.save()
+                ids.append(entry.id)
         except:
+            log.warn("Encountered an error creating FeedEntry. Skipping.")
             continue
 
-    stale = FeedEntry.objects.all().order_by('-created_on')[:counter]
-    for entry in stale:
-        entry.delete()
+    FeedEntry.objects.exclude(id__in=ids).delete()

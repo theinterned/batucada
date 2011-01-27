@@ -199,6 +199,8 @@ $(document).ready(function() {
     $('#user-nav').find('li.menu').bind('click', function(event) {
         $(this).toggleClass('open');
     });
+    // wire up any RTEs with wmd
+    $('textarea.wmd').wmd({'preview': false});
 
     // modals using jQueryUI dialog
     $('.button.openmodal').live('click', function(){

@@ -5,8 +5,26 @@
 {% block bodyclasses %}profile edit links{% endblock %}
 {% block form %}
 
-{% if links %}
 <h2>{{ _('Links') }}</h2>
+<p class="hint">{{ _('Add links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile.') }}</p>
+<form action="{% locale_url users_profile_edit_links %}" method="post">
+  {% csrf_token %}
+  <div class="field link name{% if form.name.errors %} error{% endif %}">
+    <label for="id_name">{{ _('Name') }}</label>
+    {{ form.name }}
+    {{ form.name.errors }}
+  </div>
+  <div class="field link url{% if form.url.errors %} error{% endif %}">
+    <label for="id_url">{{ _('Url') }}</label>
+    {{ form.url }}
+    {{ form.url.errors }}
+  </div>
+  <p class="buttons">
+    <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
+    <button type="submit">{{ _('Save') }}</button>
+  </p>
+</form>
+{% if links %}
 <table>
 <thead>
   <tr>
@@ -19,36 +37,21 @@
 <tbody>
   {% for link in links %}
     <tr>
-      <td>{{ link.name }}</td>
-      <td>{{ link.url }}</td>
-      <td>{{ link.subscription.verified }}</td>
-      <td>
-	<form action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
-	  {% csrf_token %}
-	  <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
-	</form>
+      <td class="name">{{ link.name }}</td>
+      <td class="url">{{ link.url }}</td>
+      <td class="subscription">{{ link.subscription.verified }}</td>
+      <td class="actions">
+        <form action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        </form>
+      </td>
     </tr>
   {% endfor %}
 </tbody>
 </table>
 {% endif %}
 
-<form action="{% locale_url users_profile_edit_links %}" method="post">
-  {% csrf_token %}
-  <p>
-    <label for="id_name">{{ _('Name') }}</label>
-    {{ form.name }}
-    {{ form.name.errors }}
-  </p>
-  <p>
-    <label for="id_url">{{ _('Url') }}</label>
-    {{ form.url }}
-    {{ form.url.errors }}
-  </p>
-  <p class="buttons">
-    <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
-    <button type="submit">{{ _('Save') }}</button>
-  </p>
-</form>
+
 
 {% endblock %}

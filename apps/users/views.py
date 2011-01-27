@@ -46,11 +46,23 @@ def render_openid_login_failure(request, message, status=403):
         request, message, status, 'users/login_openid.html')
 
 
+def _clean_next_url(request):
+    """Taken from zamboni. Prevent us from redirecting outside of drumbeat."""
+    gets = request.GET.copy()
+    url = gets['next']
+    if url and '://' in url:
+        url = None
+    gets['next'] = url
+    request.GET = gets
+    return request
+
+
 @anonymous_only
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
 
     if 'next' in request.GET:
+        request = _clean_next_url(request)
         request.session['next'] = request.GET['next']
 
     logout(request)
@@ -91,6 +103,8 @@ def login(request):
         next_param = request.session.get('next', None)
         if next_param:
             del request.session['next']
+            if not next_param.startswith('/'):
+                next_param = '/%s' % (next_param,)
             return http.HttpResponseRedirect(next_param)
 
     elif request.method == 'POST':
@@ -357,9 +371,7 @@ def profile_edit_links(request):
             link.user = profile
             link.save()
             return http.HttpResponseRedirect(
-                reverse('users_profile_view', kwargs={
-                    'username': request.user.get_profile().username,
-                }),
+                reverse('users_profile_edit_links'),
             )
         else:
             messages.error(request, _('There was an error saving '
@@ -384,9 +396,11 @@ def profile_edit_links_delete(request, link):
     link.delete()
     messages.success(request, _('The link was deleted.'))
     form = forms.ProfileLinksForm()
+    links = Link.objects.select_related('subscription').filter(user=profile)
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
         'form': form,
+        'links':links,
     }, context_instance=RequestContext(request))
 
 
