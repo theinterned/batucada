@@ -89,8 +89,10 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript">
-var RecaptchaOptions = {'theme': 'custom'};
-</script>
-<script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
+  {% if settings.RECAPTCHA_PRIVATE_KEY %}
+    <script type="text/javascript">
+    var RecaptchaOptions = {'theme': 'custom'};
+    </script>
+    <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
+  {% endif %}
 {% endblock %}

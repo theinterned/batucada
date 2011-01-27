@@ -25,7 +25,7 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/edit/links/$',
       'projects.views.edit_links',
       name='projects_edit_links'),
-  url(r'^(?P<slug>[\w-]+)/edit/links/delete/$',
+  url(r'^(?P<slug>[\w-]+)/edit/links/(?P<link>\d+)/delete/$',
       'projects.views.edit_links_delete',
       name='projects_edit_links_delete'),
 )

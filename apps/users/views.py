@@ -109,11 +109,9 @@ def login(request):
 
     elif request.method == 'POST':
         messages.error(request, _('Incorrect email or password.'))
-        data = request.POST.copy()
-        del data['password']
-        return render_to_response('users/signin.html', {
-            'form': auth_forms.AuthenticationForm(initial=data),
-        }, context_instance=RequestContext(request))
+        # run through auth_views.login again to render template with messages.
+        r = auth_views.login(request, template_name='users/signin.html',
+                         authentication_form=forms.AuthenticationForm)
 
     return r
 
@@ -175,7 +173,7 @@ def register(request):
                     'registration.').format(user.email)
             messages.info(request, msg)
 
-            return http.HttpResponseRedirect(reverse('dashboard_index'))
+            return http.HttpResponseRedirect(reverse('users_login'))
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -389,19 +387,14 @@ def profile_edit_links(request):
 
 @login_required
 def profile_edit_links_delete(request, link):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    link = get_object_or_404(Link, pk=link)
-    if link.user != profile:
-        return http.HttpResponseForbidden()
-    link.delete()
-    messages.success(request, _('The link was deleted.'))
-    form = forms.ProfileLinksForm()
-    links = Link.objects.select_related('subscription').filter(user=profile)
-    return render_to_response('users/profile_edit_links.html', {
-        'profile': profile,
-        'form': form,
-        'links':links,
-    }, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        profile = get_object_or_404(UserProfile, user=request.user)
+        link = get_object_or_404(Link, pk=link)
+        if link.user != profile:
+            return http.HttpResponseForbidden()
+        link.delete()
+        messages.success(request, _('The link was deleted.'))
+    return http.HttpResponseRedirect(reverse('users_profile_edit_links'))
 
 
 def check_username(request):

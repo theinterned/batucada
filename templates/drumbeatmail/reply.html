@@ -1,39 +1,7 @@
-{% extends "base.html" %}
+{% extends "drumbeatmail/base.html" %}
 {% load l10n_tags %}
 
 {% block title %}{{ _('Reply') }}{% endblock %}
 {% block bodyid %}reply{% endblock %}
-
-{% block body %}
-<section class="modal">
-  <article>
-    <h1>{{ _('Reply') }}</h1>
-    <fieldset>
-      <form method="post" action="{% locale_url drumbeatmail_reply message=message.id %}">
-	{% csrf_token %}
-	<p>
-	  <label for="id_recipient">{{ _('To') }}</label>
-	  {{ form.recipient }}
-	  {{ form.recipient.errors }}
-	</p>
-	<p>
-	  <label for="id_subject">{{ _('Subject') }}</label>
-	  {{ form.subject }}
-	  {{ form.subject.errors }}
-	</p>
-	<p>
-	  <label for="id_body">{{ _('Message') }}</label>
-	  {{ form.body }}
-	  {{ form.body.errors }}
-	</p>
-	<p class="buttons">
-	  <a class="button" href="{% locale_url drumbeatmail_inbox %}">
-	    {{ _('Cancel') }}
-	  </a>
-	  <button type="submit" value="{{ _('Send') }}">{{ _('Send') }}</button>
-	</p>
-      </form>
-    </fieldset>
-  </article>
-</section>
-{% endblock %}
+{% block heading %}{{ _('Reply') }}{% endblock %}
+{% block action %}{% locale_url drumbeatmail_reply message=message.id %}{% endblock %}

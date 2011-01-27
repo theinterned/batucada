@@ -42,7 +42,7 @@
       <td class="url">{{ link.url }}</td>
       <td class="subscription">{{ link.subscription.verified }}</td>
       <td class="actions">
-        <form action="{% locale_url projects_edit_links_delete slug=project.slug %}" method="post">
+        <form action="{% locale_url projects_edit_links_delete slug=project.slug link=link.id %}" method="post">
           {% csrf_token %}
           <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
         </form>
