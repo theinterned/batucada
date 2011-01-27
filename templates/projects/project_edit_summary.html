@@ -3,6 +3,7 @@
 {% block bodyclasses %}project edit summary{% endblock %}
 
 {% block form %}
+<fieldset id="project_edit_summary" class="project edit summary">
 <form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% endif %}" method="post">
   {% csrf_token %}
   <div class="field{% if form.name.errors %} error{% endif %}">
@@ -28,4 +29,5 @@
     <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
   </p>
 </form>
+</fieldset>
 {% endblock %}

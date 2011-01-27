@@ -168,8 +168,8 @@ jQuery.fn.tabLinks = function(element){
         e.preventDefault();
 
         var href = $(this).attr('href');
-        $('<div/>').load(href + ' ' + element, function() {
-            $(element).html($(this).children()[0].innerHTML);
+        $('<div/>').load(href + ' ' + element, function() {            
+            $(element).replaceWith($(this).children()[0]);
             $('textarea.wmd').wmd({'preview': false});
         });
         $(this).parent('li').siblings('li').each(function(i, e) {

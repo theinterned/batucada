@@ -3,6 +3,7 @@
 {% block bodyclasses %}project edit links{% endblock %}
 
 {% block form %}
+<fieldset id="project_edit_links" class="project edit links">
 <h2>Links &amp; Content</h2>
 <p class="hint">{{ _('Add links to websites associated with this project such as a blog, homepage, twitter profile, github repository etc. These links will appear on the project page.') }}</p>
 <form action="{% locale_url projects_edit_links slug=project.slug %}" method="post">
@@ -51,5 +52,5 @@
 </tbody>
 </table>
 {% endif %}
-
+</fieldset>
 {% endblock %}
