@@ -115,6 +115,18 @@ var batucada = {
         $(e.target).parent().submit();
         return false;
       });
+      $('.close_button').bind('click', function(){
+        $('.welcome').animate(
+          {
+            opacity: 'hide',
+            height: 'hide',
+            paddingTop: 0,
+            paddingBottom: 0,
+            marginTop: 0,
+            marginBottom: 0
+          }, 
+          600, 'jswing');        
+      });
     }
   },
   project_landing: {

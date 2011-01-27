@@ -182,6 +182,10 @@ input[type=submit]:active,
 	}
 
 /* FORMS */
+form .field {
+	position: relative;
+	margin-bottom: 1.4em;
+	}
 label {
 	display: block;
 	font-size: 12px;
@@ -201,6 +205,7 @@ textarea {
 	margin-bottom: 0.5em;
 	font-size: 12px;
 	line-height: 1.5;
+	min-height: 1.5em;
 	color: #262626;
 	border: 1px solid #c6c6c6;
 	border-radius:4px;
@@ -1231,6 +1236,9 @@ header {}
 		.modal.nav fieldset {
 			margin-left: 190px;
 		}
+		.modal fieldset form p {
+			position:relative;
+		}
 		.modal #profile-edit-nav .selected a,
 		.modal #profile-edit-nav a:hover,
 		.modal #project-edit-nav .selected a,
@@ -1344,7 +1352,8 @@ header {}
 			border-radius:5px;
 			-moz-border-radius:5px
 		}
-		#project_edit.media .project-media {		
+		#project_edit.media .project-media {
+			position: relative;		
 			margin: 0 auto;
 			float: none;
 			width: 384px;
@@ -1605,10 +1614,10 @@ header {}
 	display: block;
 	margin: 0 auto 18px;
 	}	
-#splash #main asside #planet_drumbeat{
+#splash #main asside #planet_drumbeat p{
 	color: #777;
 	font-size: 12px;
-	line-height: 18px;
+	line-height: 1.5;
 	}
 #splash #main asside #planet_drumbeat > h1 a {
 	display: block;
@@ -1620,7 +1629,7 @@ header {}
 	}		
 #splash #main asside #planet_drumbeat article h1{
 	font-size: 12px;
-	line-height: 18px;
+	line-height: 1.5;
 	}
 #splash #main asside #planet_drumbeat > h1 a:hover{
 	opacity: 0.7;
@@ -1672,6 +1681,7 @@ header {}
 .signin .modal article input[type=password] {
 	font-size: 14px;
 	line-height: 18px;
+	min-height: 18px;
 	width: 328px;
 	}
 .signin .modal .submit {
@@ -1687,6 +1697,7 @@ header {}
 .signin .modal .password {
 	display: inline-block;
 	width: 167px;
+	margin-bottom: 0;
 	}
 .signin .modal .password.confirm{
 	margin-left: 10px;
@@ -1972,4 +1983,142 @@ div.warning h2 {
     border: 1px solid #888888;
     font-size: 0.8em;
     font-weight: bold;
+}
+/* Stye for errors in forms */
+.errorlist{
+    position: absolute;
+    top: 18px; right: -108px;
+	padding: 6px 9px;
+	margin: 0;
+    width: 120px;
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 1.5;
+	text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+	background-color: #a00;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	box-shadow: 		
+		rgba(255,255,255,0.5) 0 0 1px,
+		rgba(0,0,0,0.3) 2px 2px 2px;
+	-moz-box-shadow: 
+		rgba(255,255,255,0.5) 0 0 1px,
+		rgba(0,0,0,0.3) 2px 2px 2px;
+	-webkit-box-shadow: 
+		rgba(255,255,255,0.5) 0 0 1px,
+		rgba(0,0,0,0.3) 2px 2px 2px;
+	list-style: none;
+	}
+.signin .errorlist {
+	right: -154px;
+	}	
+.errorlist:before {
+	content: "\0020";
+	display: block;
+	width: 9px;
+	height: 17px;
+	position: absolute;
+	left: -9px; 
+	top: 6px;
+	background: transparent url(/media/images/modal-error-arrow.png) left 50% no-repeat;
+}	
+.inline_label .errorlist {	
+	top: -5px;
+	}
+.error input:not([type=file]),
+.error textarea {
+	border-color: #a00;
+	box-shadow: 0 0 3px #a00;
+	-moz-box-shadow: 0 0 3px #a00;
+	-webkit-box-shadow: 0 0 3px #a00;
+	}
+.error label {	
+	color: #a00;
+	}
+p:empty {
+	display: none;
+}
+/* special case errors */
+.edit.image .errorlist {
+	top:  4.5em; left: 0;
+	width: 140px;
+	}
+.edit.image .errorlist:before {
+	background-image: url(/media/images/modal-error-arrow-up.png);
+	background-position: 0 0;
+	top:-9px; left: 6px;
+	width: 18px; height: 9px;
+	}
+.project.edit.summary .errorlist {
+	top: auto; 
+	bottom: 6px;
+	}	
+.project.edit.summary .long-description .errorlist {
+	bottom: 78px;
+	}
+.project.edit.media .errorlist {
+	top: 12px;
+	}
+/* End error's style */
+
+/* Messages */
+
+.messages {
+	list-style: none;
+	margin: -16px auto 9px;
+	width: 776px;
+	width:942px;
+	padding: 9px;
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+	text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+	background: url("/media/images/masthead.bg.png") repeat-x scroll 0 0 transparent;
+	border-radius: 4px;
+	-moz-border-radius: 4px;	
+}
+.signin .messages {
+	margin-top: -56px;
+	margin-bottom: 18px;
+	width: 412px;
+	}
+
+.messages li p:last-child {
+	margin: 0;
+}
+/* End of messages */
+
+/* Welcome to profile page */
+.welcome {
+	padding: 24px 24px 6px;
+	background: -moz-linear-gradient(top, 
+		#FFFAE4 0%, 
+		#FFF4BE 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(0%,#FFFAE4), 
+		color-stop(100%,#FFF4BE)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( 
+		startColorstr='#FFFAE4',
+		endColorstr='#FFF4BE',GradientType=0 );
+	border: 2px solid #e9d86c;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	margin-bottom: 18px;
+	box-shadow: #999 1px 1px 5px;
+	-moz-box-shadow: #999 1px 1px 5px;
+	-webkit-box-shadow: #999 1px 1px 5px;
+	position: relative;
+}
+img.close_button {
+	position: absolute;
+	top: 5px; right: 5px;
+	cursor: pointer;
+}
+.welcome h1 {
+	clear:both;
+	/*padding: 24px 24px;*/
+	margin-bottom: 0.5em;
+}
+.welcome p {
+	/*padding: 0 24px;*/
 }
