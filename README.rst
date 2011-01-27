@@ -82,3 +82,6 @@ What a pain!
 Finally, start the development server to take it for a spin. ::
 
    python manage.py runserver 
+
+To run the test framework ::
+   python manage.py test
