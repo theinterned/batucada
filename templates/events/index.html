@@ -1,9 +1,20 @@
 {% extends "base.html" %}
+{% load l10n_tags %}
 
 {% block title %}{{ _('Events') }}{% endblock %}
 {% block pageid %}events{% endblock %}
 
-{% block body %}
-<h1>{{ _('Events') }}</h1>
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url events_index %}">{{ _('Events') }}</a>
+  </nav>
+</div>
+{% endblock %}
 
+{% block body %}
+<h1>{{ _('Drumbeat Events: Local engagement for global impact') }}</h1>
+<p>
+  {{ _('Drumbeat events bring together people with diverse talents and passions to protect and grow the open web. From teachers, artists and designers to bloggers, lawyers, and inspired geeks and tech people, we’re building community from the local level up. Through face-to-face interactions, open collaboration, and fun.') }}
+</p>
 {% endblock %}
