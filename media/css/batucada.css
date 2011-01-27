@@ -1922,15 +1922,16 @@ div.warning h2 {
 /* wmd -- more paul stuff. basically copied from wmd example code. */
 .wmd-panel
 {
-    width: 50%;
-    min-width: 400px;
+    width: 498px;
 }
 
 #wmd-editor
 {
     background-color: #fff;
 }
-
+.wmd {
+	width: 480px;
+}
 .wmd-button-bar 
 {
     width: 100%;
