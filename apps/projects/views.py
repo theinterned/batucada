@@ -15,6 +15,7 @@ from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia
 
 from activity.models import Activity
+from links.models import Link
 from statuses.models import Status
 from drumbeat import messages
 from users.decorators import login_required
@@ -33,12 +34,14 @@ def show(request, slug):
     ).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
+    files = project.projectmedia_set.all()
     context = {
         'project': project,
         'following': is_following,
         'activities': activities,
         'update_count': nstatuses,
         'links': links,
+        'files': files,
     }
     return render_to_response('projects/project.html', context,
                           context_instance=RequestContext(request))
@@ -143,14 +146,8 @@ def edit_media(request, slug):
                                       'your file.'))
     else:
         form = project_forms.ProjectMediaForm()
-    files_dict = {}
-    for f in files:
-        files_dict[f.id] = {
-            'path': os.path.basename(f.project_file.path),
-            'thumbnail': f.thumbnail,
-        }
     return render_to_response('projects/project_edit_media.html', {
-        'files': files_dict,
+        'files': files,
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
@@ -189,9 +186,11 @@ def edit_links(request, slug):
             messages.error(request, _('There was an error adding your link.'))
     else:
         form = project_forms.ProjectLinksForm()
+    links = Link.objects.select_related('subscription').filter(project=project)
     return render_to_response('projects/project_edit_links.html', {
         'project': project,
         'form': form,
+        'links': links,
     }, context_instance=RequestContext(request))
 
 

@@ -60,6 +60,10 @@ class ProjectMediaForm(forms.ModelForm):
         'video/mp4',
         'application/ogg',
         'audio/ogg',
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+        'image/gif',
     )
 
     class Meta:
@@ -68,7 +72,7 @@ class ProjectMediaForm(forms.ModelForm):
 
     def clean_project_file(self):
         content_type = self.cleaned_data['project_file'].content_type
-        if not content_type in self.allowed_content_types:
+        if not content_type in ProjectMedia.accepted_mimetypes:
             log.warn("Attempt to upload unsupported file type: %s" % (
                 content_type,))
             raise ValidationError(_('Unsupported file type.'))
