@@ -9,10 +9,10 @@
 </p>
 <form action="{% locale_url projects_edit_media slug=project.slug %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <p id="file_upload">
+  <div id="file_upload" class="field{% if form.project_file.errors %} error{% endif %}">
     {{ form.project_file }}
     {{ form.project_file.errors }}
-  </p>
+  </div>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
