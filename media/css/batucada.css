@@ -2110,11 +2110,17 @@ p:empty {
 	display: none;
 }
 /* special case errors */
-.edit.image .errorlist {
+.edit.image .errorlist,
+.edit.links .errorlist {
 	top:  4.5em; left: 0;
 	width: 140px;
+	z-index: 1;
 	}
-.edit.image .errorlist:before {
+.edit.links .errorlist {
+	top:  5em;
+	}	
+.edit.image .errorlist:before,
+.edit.links .errorlist:before  {
 	background-image: url(/media/images/modal-error-arrow-up.png);
 	background-position: 0 0;
 	top:-9px; left: 6px;
