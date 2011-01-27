@@ -368,9 +368,7 @@ def profile_edit_links(request):
             link.user = profile
             link.save()
             return http.HttpResponseRedirect(
-                reverse('users_profile_view', kwargs={
-                    'username': request.user.get_profile().username,
-                }),
+                reverse('users_profile_edit_links'),
             )
         else:
             messages.error(request, _('There was an error saving '
