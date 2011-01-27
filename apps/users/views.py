@@ -175,7 +175,7 @@ def register(request):
                     'registration.').format(user.email)
             messages.info(request, msg)
 
-            return http.HttpResponseRedirect(reverse('dashboard_index'))
+            return http.HttpResponseRedirect(reverse('users_login'))
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
