@@ -193,8 +193,18 @@ def edit_links(request, slug):
     }, context_instance=RequestContext(request))
 
 
-def edit_links_delete(request, slug):
-    pass
+@login_required
+@ownership_required
+def edit_links_delete(request, slug, link):
+    if request.method == 'POST':
+        project = get_object_or_404(Project, slug=slug)
+        link = get_object_or_404(Link, pk=link)
+        if link.project != project:
+            return http.HttpResponseForbidden()
+        link.delete()
+        messages.success(request, _('The link was deleted'))
+    return http.HttpResponseRedirect(
+        reverse('projects_edit_links', kwargs=dict(slug=slug)))
 
 
 def list(request):
