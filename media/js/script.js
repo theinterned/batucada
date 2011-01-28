@@ -4,7 +4,7 @@ var createPostTextArea = function() {
         var counter = $('#create-post').find('div.post-char-count');
         var count = max - $(this).val().length;
         counter.html(count);
-        
+
         if (count < 0) {
             counter.addClass('danger');
             counter.removeClass('warning');
@@ -12,13 +12,13 @@ var createPostTextArea = function() {
         else if (count < 50) {
             counter.removeClass('danger');
             counter.addClass('warning');
-        } 
+        }
         else {
             counter.removeClass('danger');
             counter.removeClass('warning');
         }
     });
-    
+
     $('#create-post').find('textarea').bind('blur', function() {
         if (jQuery.trim($(this).val()).length === 0) {
             $('#create-post').removeClass('expanded');
@@ -29,19 +29,18 @@ var createPostTextArea = function() {
         $('#create-post').addClass('expanded');
         $('#create-post').find('textarea').trigger('focus');
     });
-
 };
 
-var username_hint = function() {
-    var userurl = $('#username .hint b').html();
+var usernameHint = function() {
+    var userurl = $('#username .hint b').html();    
     $('#id_username').keyup(function() {
         $('#availability').removeClass('okay warning').html('');
         var val = (this.value) ? this.value : userurl;
-        $(this).parent('p').find('.hint b').html(val);
+        $(this).parent('.field').find('.hint b').html(val);
     }).keyup();
 };
 
-var username_availability = function() {
+var usernameAvailability = function() {
     $('#id_username').bind('blur', function() {
         $.ajax({
             url: '/check_username/',
@@ -62,18 +61,48 @@ var username_availability = function() {
     });
 };
 
-
-var openid_handlers = function() {
-    var one_click = {
+var openidHandlers = function() {
+    var oneClick = {
         'google': 'https://www.google.com/accounts/o8/id',
-        'yahoo': 'https://www.yahoo.com',
-        'myopenid': 'https://www.myopenid.com',
+        'yahoo': 'http://yahoo.com',
+        'myopenid': 'http://myopenid.com'
     };
-    $.each(one_click, function(key, value) {
+    $.each(oneClick, function(key, value) {
         $('.openid_providers #' + key).bind('click', function(e) {
             e.preventDefault();
             $('#id_openid_identifier').val(value);
             $('#id_openid_identifier').parent().submit();
+        });
+    });
+};
+
+var loadMoreMessages = function() {
+    $('a#inbox_more').bind('click', function(e) {
+        e.preventDefault();
+        var template = $('#message-template');
+        var page = template.attr('page');
+        var npages = template.attr('npages');
+        var url = $(this).attr('href');
+        $.getJSON(url, function(data) {
+            $(data).each(function(i, value) {
+                var msg = template.tmpl(value);
+                msg.hide();
+                $('#posts').append(msg);
+                $('li.post-container:last').fadeIn(function() {
+                    $('html').animate({
+                        'scrollTop': $('a#inbox_more').offset().top
+                    }, 200);
+                });
+            });
+            nextPage = parseInt(page) + 1;
+            template.attr('page', nextPage);
+            if (nextPage > parseInt(npages)) {
+                $('a#inbox_more').hide();
+            }
+            // update more link. very hacky :( 
+            var href = $('a#inbox_more').attr('href');
+            var newHref = href.substr(0, href.length - 2) + nextPage + '/';
+            $('a#inbox_more').attr('href', newHref);
         });
     });
 };
@@ -85,24 +114,24 @@ var batucada = {
     },
     create_profile: {
         onload: function() {
-            username_hint();
-            username_availability();
+            usernameHint();
+            usernameAvailability();
         }
     },
     signup: {
         onload: function(){
-            username_hint();
-            username_availability();
+            usernameHint();
+            usernameAvailability();
         }
     },
     signup_openid: {
         onload: function() {
-            openid_handlers();
+            openidHandlers();
         }
     },
     signin_openid: {
         onload: function() {
-            openid_handlers();
+            openidHandlers();
         }
     },
     dashboard: {
@@ -145,55 +174,85 @@ var batucada = {
     },
     inbox: {
         onload: function() {
-            $('a#inbox_more').bind('click', function(e) {
-                e.preventDefault();
-                var template = $('#message-template');
-                var page = template.attr('page');
-                var npages = template.attr('npages');
-                var url = $(this).attr('href');
-                $.getJSON(url, function(data) {
-                    $(data).each(function(i, value) {
-                        var msg = template.tmpl(value);
-                        msg.hide();
-                        $('#posts').append(msg);
-                        $('li.post-container:last').fadeIn(function() {
-                            $('html').animate({
-                                'scrollTop': $('a#inbox_more').offset().top
-                            }, 200);
-                        });
-                    });
-                    next_page = parseInt(page) + 1;
-                    template.attr('page', next_page);
-                    if (next_page > parseInt(npages)) {
-                        $('a#inbox_more').hide();
-                    }
-                    // update more link. very hacky :( 
-                    var href = $('a#inbox_more').attr('href');
-                    var new_href = href.substr(0, href.length - 2) + next_page + '/';
-                    $('a#inbox_more').attr('href', new_href);
-                });
-            });
+            loadMoreMessages();
         }
     }
 };
 
+jQuery.fn.tabLinks = function(element){
+    $(this).first().parent('li').addClass('active');
+    var updateElement = function(e) {
+        e.preventDefault();
+
+        var href = $(this).attr('href');
+        $('<div/>').load(href + ' ' + element, function() {            
+            $(element).replaceWith($(this).children()[0]);
+            $('textarea.wmd').wmd({'preview': false});
+        });
+        $(this).parent('li').setActive();
+    };
+    // onload activate the tab that corresponds to this tab group's sibling fieldset.
+    $.fn.activateOnLoad = function(){
+        activeSelector =  'li.' + $(this).parents('.modal').find('fieldset').attr('class').split(" ").join(", li.");
+        $(activeSelector).setActive();
+        return this;
+    };
+    // deactivate all siblings, then activate the passed element
+    $.fn.setActive = function() {        
+        this.siblings('li').each(function(i, e) {
+            $(e).removeClass('active');
+        });
+        this.addClass('active');
+        return this;
+    };
+    
+    // hook it up!
+    $(this).each(function() {
+        var me = $(this),
+        href = me.attr('href');
+        if (!href || href == '#') 
+            return;
+        me.bind('click.tablinks', updateElement);        
+    }).activateOnLoad();
+};
+
+
 $(document).ready(function() {
     // dispatch per-page onload handlers 
     var ns = window.batucada;
-    var body_id = document.body.id;
-    if (ns && ns[body_id] && (typeof ns[body_id].onload == 'function')) {
-        ns[body_id].onload();
+    var bodyId = document.body.id;
+    if (ns && ns[bodyId] && (typeof ns[bodyId].onload == 'function')) {
+        ns[bodyId].onload();
     }
     
     // attach handlers for elements that appear on most pages
     $('#user-nav').find('li.menu').bind('click', function(event) {
         $(this).toggleClass('open');
     });
-    
-    // find submit buttons and bind them to an event that submits their form
-    $('.submit-button').bind('click', function(e) {
-        $(e.target).parent('form[method="post"]').first().submit();
+
+    // wire up any RTEs with wmd
+    $('textarea.wmd').wmd({'preview': false});
+
+    // modals using jQueryUI dialog
+    $('.button.openmodal').live('click', function(){
+        var url = this.href;
+        var selector = '.modal';
+        var urlFragment =  url + ' ' + selector;
+        var dialog = $('<div></div>').appendTo('body');
+        // load remote content
+        dialog.load(
+            urlFragment,
+            function (responseText, textStatus, XMLHttpRequest) {
+                dialog.dialog({
+                    draggable: true
+                });
+            }
+        );
+        //prevent the browser to follow the link
+        return false;
     });
+
+    $('.modal nav.tabs a').tabLinks('section fieldset');
 });
 
 // Recaptcha

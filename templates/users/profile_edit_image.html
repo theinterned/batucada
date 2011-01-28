@@ -5,7 +5,7 @@
 {% block bodyclasses %}profile edit image{% endblock %}
 {% block form %}
 
-
+<fieldset id="profile_edit_image" class="profile edit image">
 <form action="{% locale_url users_profile_edit_image %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% if profile.image %}
@@ -27,4 +27,5 @@
   </p>
 </form>
 <p class="picture-preview"><img class="member-picture" src="{{ MEDIA_URL }}{{ profile.image_or_default }}" /></p>
+</fieldset>
 {% endblock %}
