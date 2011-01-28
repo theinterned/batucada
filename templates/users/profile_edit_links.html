@@ -4,7 +4,7 @@
 
 {% block bodyclasses %}profile edit links{% endblock %}
 {% block form %}
-
+<fieldset id="profile_edit_links" class="profile edit links">
 <h2>{{ _('Links') }}</h2>
 <p class="hint">{{ _('Add links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile.') }}</p>
 <form action="{% locale_url users_profile_edit_links %}" method="post">
@@ -53,5 +53,5 @@
 {% endif %}
 
 
-
+</fieldset>
 {% endblock %}
