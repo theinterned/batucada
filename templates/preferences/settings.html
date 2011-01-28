@@ -9,16 +9,14 @@
 <section class="modal nav">
 <article>
   <h1>{{ _('Account Settings') }}</h1>
-  <nav id="account-settings-nav">
+  <nav id="account-settings-nav" class="tabs">
     <ul>
       <li class="notifications"><a href="{% locale_url preferences_settings %}">{{ _('Notifications') }}</a></li>
       <li class="delete"><a href="{% locale_url preferences_delete %}">{{ _('Delete Account') }}</a></li>
     </ul>
   </nav>
   
-  <fieldset>
     {% block form %}{% endblock %}
-  </fieldset>  
 
 </article>
 </section>

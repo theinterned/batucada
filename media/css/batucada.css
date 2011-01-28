@@ -1246,27 +1246,8 @@ header {}
 		.modal fieldset form p {
 			position:relative;
 		}
-		.modal #profile-edit-nav .selected a,
-		.modal #profile-edit-nav a:hover,
-		.modal #project-edit-nav .selected a,
-		.modal #project-edit-nav a:hover,
-		.modal #account-settings-nav .selected a,
-		.modal #account-settings-nav a:hover,
-		#profile_edit.info #profile-edit-nav .info a,
-		#profile_edit.image #profile-edit-nav .image a,
-		#profile_edit.links #profile-edit-nav .links a,
-		#profile_edit.skills #profile-edit-nav .skills a,
-		#profile_edit.interests #profile-edit-nav .interests a,
-		#project_edit.summary #project-edit-nav .summary a,
-		#project_edit.description #project-edit-nav .description a,
-		#project_edit.image #project-edit-nav .image a,
-		#project_edit.media #project-edit-nav .media a,
-		#project_edit.links #project-edit-nav .links a,
-		#account_settings.notifications #account-settings-nav .notifications a,
-		#account_settings.connections #account-settings-nav .connections a,
-		#account_settings.identities #account-settings-nav .identities a,
-		#account_settings.export #account-settings-nav .export a,
-		#account_settings.delete #account-settings-nav .delete a {
+		.modal nav.tabs li.active a,
+		.modal nav.tabs a:hover {
 			position: relative;
 			color: #fff;
 			text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
@@ -1281,10 +1262,20 @@ header {}
 				startColorstr='#4AA4E3', 
 				endColorstr='#2084CA',GradientType=0 );
 		}
-		.modal #profile-edit-nav a:hover, .modal #project-edit-nav a:hover, .modal #account-settings-nav a:hover {
-			background: #2084CA;
+		.modal nav.tabs a:hover {
+		    background: #2084CA;
 			text-decoration: none;
 		}
+        .modal nav.tabs li.active a:after {
+			content: "\0020";
+			display: block;
+			width: 12px;
+			height: 25px;
+			position: absolute;
+			right: -12px; top: 0;
+			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
+		}
+
 		.modal .link {
 			display: inline-block;
 			width: 178px;
@@ -1294,13 +1285,13 @@ header {}
 			width: 334px;
 			padding: 0;
 			}
-		.links .modal article input[type=text] {
+		.modal .links input[type=text] {
 			width: 154px;
 			}
-		.links .modal article .url input[type=text] {
+		.modal .links .url input[type=text] {
 			width: 316px;
 		}
-		.links .modal table {
+		.modal .links table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1312,8 +1303,8 @@ header {}
 		    -moz-box-shadow: #ddd 0 1px 4px inset;
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
-		.links .modal th,
-		.links .modal td {
+		.modal .links th,
+		.modal .links td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1323,63 +1314,52 @@ header {}
 			-webkit-box-shadow: #fff 0 1px;
 			text-size: 14px;
 			line-height: 1.3;
+			
 			/*width: 25%;*/
 		}
-		.links .modal table .name,
-		.links .modal table .url {
+		.modal .links table .name,
+		.modal .links table .url {
 			width: 154px;
 		}
-		.links .modal tbody tr:last-child td{
+		.modal .links table .url a {
+			width: 154px;
+			display: block;
+			overflow: hidden;
+			word-wrap: break-word;
+		}
+		.modal .links .subscription .yes{
+			display: block;
+			text-indent: -9999px;
+			background: url(/media/images/check.png) 50% 50% no-repeat;
+		}
+		.modal .links tbody tr:last-child td{
 			/*border-bottom: none;*/
 			-webkit-box-shadow: none;
 		}
-		.links .modal thead {
+		.modal .links thead {
 			background: #f1faff;			
 		}
-		.links .modal th {
+		.modal .links th {
 			border: #e0edf5 1px solid;
 			border-width: 1px 0;
 		}
-		.links .modal th:first-child {
+		.modal .links th:first-child {
 			border-radius: 5px 0 0;
 			border-left-width: 1px;
 		}
-		.links .modal th:last-child {
+		.modal .links th:last-child {
 			border-radius:0 5px 0 0;
 			border-right-width: 1px;
 		}
-		.links .modal table button {
+		.modal .links table button {
 			font-size: 11px;
 			line-height: 1.6;
 			min-height: 18px;
 			width: auto;
 		}
-		.modal #profile-edit-nav .selected a:after,
-		#profile_edit.info #profile-edit-nav .info a:after,
-		#profile_edit.image #profile-edit-nav .image a:after,
-		#profile_edit.links #profile-edit-nav .links a:after,
-		#profile_edit.skills #profile-edit-nav .skills a:after,		
-		#profile_edit.interests #profile-edit-nav .interests a:after,
-		#project_edit.summary #project-edit-nav .summary a:after,
-		#project_edit.description #project-edit-nav .description a:after,
-		#project_edit.image #project-edit-nav .image a:after,
-		#project_edit.media #project-edit-nav .media a:after,
-		#project_edit.links #project-edit-nav .links a:after,
-		#account_settings.notifications #account-settings-nav .notifications a:after,
-		#account_settings.connections #account-settings-nav .connections a:after,
-		#account_settings.identities #account-settings-nav .identities a:after,
-		#account_settings.export #account-settings-nav .export a:after,
-		#account_settings.delete #account-settings-nav .delete a:after {
-			content: "\0020";
-			display: block;
-			width: 12px;
-			height: 25px;
-			position: absolute;
-			right: -12px; top: 0;
-			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
-		}
-		#profile_edit .picture-preview,
-		#project_edit .picture-preview {
+
+
+		.modal .picture-preview {
 			float: left;			
 			margin-left: 18px;
 			width: 211px;
@@ -1393,9 +1373,9 @@ header {}
 		    -moz-box-shadow: #ddd 0 1px 4px inset;
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
-		#profile_edit .member-picture,
-		#project_edit .project.picture,
-		#project_edit .project.media {
+		.modal .member-picture,
+		.modal .project.picture,
+		.modal .project.media {
 			display: block;
 			margin: 0 auto;
 			max-width: 209px;
@@ -1404,17 +1384,16 @@ header {}
 			border-color: #C6C6C6;
 			margin-bottom: 0;
 		}
-		#profile_edit.image form,
-		#project_edit.image form {
+		.modal .image form {
 			width: 249px;
 			display: inline-block;
 			float: left;
 		}
-		#project_edit.description textarea {
+		.modal .description textarea {
 			height: 35.5em;
 			width: 40em;
 			}
-		#project_edit.media #file_upload {			
+		.modal .media #file_upload {			
 			margin: 0 auto -5px;
 			padding: 18px 18px 14px;
 			width: 384px;
@@ -1423,7 +1402,7 @@ header {}
 			border-radius:5px;
 			-moz-border-radius:5px
 		}
-		#project_edit.media .project-media {
+		.modal .media .project-media {
 			position: relative;		
 			margin: 0 auto;
 			float: none;
@@ -1440,26 +1419,26 @@ header {}
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 	    	list-style: none;
 		}
-		#project_edit.media .project-media li {
+		.modal .media .project-media li {
 			position: relative;
 			float: left;
 			margin: 0 9px 9px 0;
 		}
-		#project_edit.media .project-media li:nth-child(3n) {
+		.modal .media .project-media li:nth-child(3n) {
 			margin-right: 0;
 		}
-		#project_edit.media .project-media:after{
+		.modal .media .project-media:after{
 			content: "\0020"; 
 			display: block; 
 			height: 0;
 			clear:  both;
 			visibility: hidden;
 		}
-		#project_edit.media .project-media img {
+		.modal .media .project-media img {
 			width: 120px;
 			height: 120px;
 		}
-		#project_edit.media .project-media button.delete.media {
+		.modal .media .project-media button.delete.media {
 			/*display: none;*/
 			position: absolute;
 			top: 0; right: 0;
@@ -1472,13 +1451,13 @@ header {}
 			height: 15px;
 			min-height: 10px;			
 		}
-		#project_edit.media .project-media li:hover button.delete.media {
+		.modal .media .project-media li:hover button.delete.media {
 			display: block;
 		}
-		#project_edit.media .project-media button.delete.media:hover {
+		.modal .media .project-media button.delete.media:hover {
 			background-color: #fff;
 		}
-		#project_edit.media .project-media .no-files {
+		.modal .media .project-media .no-files {
 			float: none;
 			text-align: center;
 			margin: 0 0 9px;
@@ -1953,15 +1932,35 @@ div.warning h2 {
 }
 
 /* wmd -- more paul stuff. basically copied from wmd example code. */
-#wmd-input 
-{ 
-    height: 400px;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
+.wmd-panel
+{
+    width: 498px;
 }
 
-#wmd-button-row 
+#wmd-editor
+{
+    background-color: #fff;
+}
+.wmd {
+	width: 480px;
+}
+.wmd-button-bar 
+{
+    width: 100%;
+}
+
+.wmd-input 
+{ 
+    height: 500px;
+    width: 100%;
+}
+
+.wmd-preview 
+{ 
+    background-color: #ccc;
+}
+
+.wmd-button-row 
 {
     position: relative; 
     margin-left: 5px;
@@ -1979,7 +1978,7 @@ div.warning h2 {
     margin-left: 14px;
     
     position: absolute;
-    background-color: #ccc;
+    background-color: Silver;
     display: inline-block; 
     list-style: none;
 }
@@ -1990,8 +1989,9 @@ div.warning h2 {
     height: 20px; 
     margin-left: 5px;
     margin-right: 5px;
+    
     position: absolute;
-    background-image: url(/media/images/wmd-buttons.png);
+    background-image: url(../images/wmd-buttons.png);
     background-repeat: no-repeat;
     background-position: 0px 0px;
     display: inline-block; 
@@ -2004,33 +2004,34 @@ div.warning h2 {
     height: 20px; 
     margin-left: 5px;
     margin-right: 5px;
+    
     position: absolute;
     display: inline-block; 
 }
 
 
 /* sprite button slicing style information */
-#wmd-button-bar #wmd-bold-button    {left: 0px;   background-position: 0px 0;}
-#wmd-button-bar #wmd-italic-button  {left: 25px;  background-position: -20px 0;}
-#wmd-button-bar #wmd-spacer1        {left: 50px;}
-#wmd-button-bar #wmd-link-button    {left: 75px;  background-position: -40px 0;}
-#wmd-button-bar #wmd-quote-button   {left: 100px;  background-position: -60px 0;}
-#wmd-button-bar #wmd-code-button    {left: 125px;  background-position: -80px 0;}
-#wmd-button-bar #wmd-image-button   {left: 150px;  background-position: -100px 0;}
-#wmd-button-bar #wmd-spacer2        {left: 175px;}
-#wmd-button-bar #wmd-olist-button   {left: 200px;  background-position: -120px 0;}
-#wmd-button-bar #wmd-ulist-button   {left: 225px; background-position: -140px 0;}
-#wmd-button-bar #wmd-heading-button {left: 250px; background-position: -160px 0;}
-#wmd-button-bar #wmd-hr-button      {left: 275px; background-position: -180px 0;}
-#wmd-button-bar #wmd-spacer3        {left: 300px;}
-#wmd-button-bar #wmd-undo-button    {left: 325px; background-position: -200px 0;}
-#wmd-button-bar #wmd-redo-button    {left: 350px; background-position: -220px 0;}
-#wmd-button-bar #wmd-help-button    {right: 0px; background-position: -240px 0;}
+.wmd-bold-button    {left: 0px;   background-position: 0px 0;}
+.wmd-italic-button  {left: 25px;  background-position: -20px 0;}
+.wmd-spacer1        {left: 50px;}
+.wmd-link-button    {left: 75px;  background-position: -40px 0;}
+.wmd-quote-button   {left: 100px;  background-position: -60px 0;}
+.wmd-code-button    {left: 125px;  background-position: -80px 0;}
+.wmd-image-button   {left: 150px;  background-position: -100px 0;}
+.wmd-spacer2        {left: 175px;}
+.wmd-olist-button   {left: 200px;  background-position: -120px 0;}
+.wmd-ulist-button   {left: 225px; background-position: -140px 0;}
+.wmd-heading-button {left: 250px; background-position: -160px 0;}
+.wmd-hr-button      {left: 275px; background-position: -180px 0;}
+.wmd-spacer3        {left: 300px;}
+.wmd-undo-button    {left: 325px; background-position: -200px 0;}
+.wmd-redo-button    {left: 350px; background-position: -220px 0;}
+.wmd-help-button    {right: 0px; background-position: -240px 0;}
 
 
 .wmd-prompt-background
 {
-    background-color: Black;
+	background-color: Black;
 }
 
 .wmd-prompt-dialog
@@ -2052,6 +2053,7 @@ div.warning h2 {
 
 .wmd-prompt-dialog > form > input[type="button"]{
     border: 1px solid #888888;
+    font-family: trebuchet MS, helvetica, sans-serif;
     font-size: 0.8em;
     font-weight: bold;
 }

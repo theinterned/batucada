@@ -3,8 +3,7 @@
 {% block bodyclasses %}project edit image{% endblock %}
 
 {% block form %}
-{# <p>{{ _('Use this form to upload a project image. The image will appear in search results and in the project listing page.') }}</p> #}
-
+<fieldset id="project_edit_image" class="project edit image">
 <form action="{% locale_url projects_edit_image slug=project.slug %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% if project.image %}
@@ -33,4 +32,5 @@
   <img src="/media/images/project-missing.png" alt="project image" class="project picture"/>
 {% endif %}
 </p>
+</fieldset>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block bodyclasses %}profile edit links{% endblock %}
 {% block form %}
-
+<fieldset id="profile_edit_links" class="profile edit links">
 <h2>{{ _('Links') }}</h2>
 <p class="hint">{{ _('Add links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile.') }}</p>
 <form action="{% locale_url users_profile_edit_links %}" method="post">
@@ -38,8 +38,8 @@
   {% for link in links %}
     <tr>
       <td class="name">{{ link.name }}</td>
-      <td class="url">{{ link.url }}</td>
-      <td class="subscription">{{ link.subscription.verified }}</td>
+      <td class="url"><a href="{{ link.url }}" title="{{ link.url }}">{{ link.url }}</a></td>
+      <td class="subscription">{% if link.subscription.verified %}<span class="yes">{{ _('yes') }}</span>{% endif %}</td>
       <td class="actions">
         <form action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
           {% csrf_token %}
@@ -53,5 +53,5 @@
 {% endif %}
 
 
-
+</fieldset>
 {% endblock %}
