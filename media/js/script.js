@@ -188,31 +188,47 @@ jQuery.fn.tabLinks = function(element){
     
     var updateElement = function(e) {
         e.preventDefault();
-        log('updateElement', $(this).getOwnTab());
         if ( $(this).getOwnTab() ){
             $newTab = $(this).getOwnTab();
-            log("$newTab retrieved from data", $newTab);
-            replaceTab($(element), $newTab);
+            $(element).replaceTab($newTab);
         }        
         else {
-            log('data not found');
             var href = $(this).attr('href');
             $('<div/>').load(href + ' ' + element, function() {            
                 $newTab = $(this).children()[0];                
                 $(e.target).storeOwnTab($newTab);
-                // $(element).replaceWith($tab);
-                replaceTab($(element), $newTab);
+                $(element).replaceTab($newTab);
                 $('textarea.wmd').wmd({'preview': false});            
             });
             
         }
         $(this).parent('li').setActive();
     };
-    var replaceTab = function($oldTab, $newTab){
-        log($oldTab, $newTab);
-        $oldTab.parent().append($newTab).end().detach();
+    var saveModal = function(e){
+        e.preventDefault();
+        log('saveModal');
         
-    }
+        $modal.find('.tabs a').each(function(){
+            log(this);
+            if ( $(this).getOwnTab() ) {                
+                $form = $(this).getOwnTab().find('form');                
+                $.ajax({
+                    type    : $form.attr('method'),
+                    url     : $form.attr('action'),
+                    success : function(data){
+                        log(data);
+                    }                 
+                });
+            }
+        });
+    };
+    var closeModal = function(e){
+        e.preventDefault();
+        log('closeModal');
+    };
+    $.fn.replaceTab = function($newTab){
+        this.parent().append($newTab).end().detach();        
+    };    
     // onload activate the tab that corresponds to this tab group's sibling fieldset.
     $.fn.activateOnLoad = function(){
         if ( !this.is('a') ) return this;
@@ -232,7 +248,6 @@ jQuery.fn.tabLinks = function(element){
         return this;
     };
     $.fn.storeOwnTab = function($tab){
-        console.log(this);
         if ( !this.is('a') ) return this; 
         $(this).data('drumbeat.modal.tab', $tab);    
         return this;
@@ -247,8 +262,8 @@ jQuery.fn.tabLinks = function(element){
               '<a class="button close" href="#">Close</a>'+
               '<a class="button submit" href="#">Save</a>'+
             '</p>'
-        );
-    }
+        ).find('a.close').bind('click', closeModal).parent().find('a.submit').bind('click', saveModal);
+    };
     // hook it up!
     $(this).each(function() {
         var me = $(this),

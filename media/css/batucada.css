@@ -1473,6 +1473,9 @@ header {}
 .modal.tab-links fieldset .buttons {
 	display: none;
 	}
+.modal .ajax-buttons {
+
+	}	
 
 
 /* INBOX / MESSAGING */
