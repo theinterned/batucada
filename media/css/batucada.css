@@ -1466,7 +1466,13 @@ header {}
 			line-height: 60px;
 			text-shadow: #fff 1px 1px 0;
 			color: #ccc;
-		} 	
+		}
+/* AJAX MODAL */
+.modal.tab-links fieldset .buttons {
+	display: none;
+	}
+
+
 /* INBOX / MESSAGING */
 #inbox{}
 #inbox #mailboxes,
