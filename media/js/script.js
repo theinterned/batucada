@@ -183,7 +183,6 @@ var batucada = {
 
 jQuery.fn.tabLinks = function(element){
     $(this).first().parent('li').addClass('active');
-
     var updateElement = function(e) {
         e.preventDefault();
 
@@ -192,20 +191,33 @@ jQuery.fn.tabLinks = function(element){
             $(element).replaceWith($(this).children()[0]);
             $('textarea.wmd').wmd({'preview': false});
         });
-        $(this).parent('li').siblings('li').each(function(i, e) {
+        $(this).parent('li').setActive();
+    };
+    // onload activate the tab that corresponds to this tab group's sibling fieldset.
+    $.fn.activateOnLoad = function(){
+        activeSelector =  'li.' + $(this).parents('.modal').find('fieldset').attr('class').split(" ").join(", li.");
+        $(activeSelector).setActive();
+        return this;
+    };
+    // deactivate all siblings, then activate the passed element
+    $.fn.setActive = function() {        
+        this.siblings('li').each(function(i, e) {
             $(e).removeClass('active');
         });
-        $(this).parent('li').addClass('active');
+        this.addClass('active');
+        return this;
     };
-
+    
+    // hook it up!
     $(this).each(function() {
         var me = $(this),
         href = me.attr('href');
         if (!href || href == '#') 
             return;
-        me.bind('click.tablinks', updateElement);
-    });
+        me.bind('click.tablinks', updateElement);        
+    }).activateOnLoad();
 };
+
 
 $(document).ready(function() {
     // dispatch per-page onload handlers 
