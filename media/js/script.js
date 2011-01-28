@@ -180,21 +180,61 @@ var batucada = {
 };
 
 jQuery.fn.tabLinks = function(element){
+    var $modal = $(this).parents('.modal');
+    $modal.addClass('tab-links');
     $(this).first().parent('li').addClass('active');
+    
     var updateElement = function(e) {
         e.preventDefault();
-
-        var href = $(this).attr('href');
-        $('<div/>').load(href + ' ' + element, function() {            
-            $(element).replaceWith($(this).children()[0]);
-            $('textarea.wmd').wmd({'preview': false});
-        });
+        if ( $(this).getOwnTab() ){
+            $newTab = $(this).getOwnTab();
+            $(element).replaceTab($newTab);
+        }        
+        else {
+            var href = $(this).attr('href');
+            $('<div/>').load(href + ' ' + element, function() {            
+                $newTab = $(this).children()[0];                
+                $(e.target).storeOwnTab($newTab);
+                $(element).replaceTab($newTab);
+                $('textarea.wmd').wmd({'preview': false});            
+            });
+            
+        }
         $(this).parent('li').setActive();
     };
+    var saveModal = function(e){
+        e.preventDefault();
+        log('saveModal');
+        
+        $modal.find('.tabs a').each(function(){
+            log(this);
+            if ( $(this).getOwnTab() ) {                
+                $form = $(this).getOwnTab().find('form');                
+                $.ajax({
+                    type    : $form.attr('method'),
+                    url     : $form.attr('action'),
+                    success : function(data){
+                        log(data);
+                    }                 
+                });
+            }
+        });
+    };
+    var closeModal = function(e){
+        e.preventDefault();
+        log('closeModal');
+    };
+    $.fn.replaceTab = function($newTab){
+        this.parent().append($newTab).end().detach();        
+    };    
     // onload activate the tab that corresponds to this tab group's sibling fieldset.
     $.fn.activateOnLoad = function(){
-        activeSelector =  'li.' + $(this).parents('.modal').find('fieldset').attr('class').split(" ").join(", li.");
-        $(activeSelector).setActive();
+        if ( !this.is('a') ) return this;
+        $tab = $modal.find('fieldset');
+        activeSelector =  'li.' + $tab.attr('class').split(" ").join(", li.");
+        $(activeSelector).setActive()
+            .find('a').storeOwnTab($tab);
+        $modal.addButtons();
         return this;
     };
     // deactivate all siblings, then activate the passed element
@@ -205,7 +245,23 @@ jQuery.fn.tabLinks = function(element){
         this.addClass('active');
         return this;
     };
-    
+    $.fn.storeOwnTab = function($tab){
+        if ( !this.is('a') ) return this; 
+        $(this).data('drumbeat.modal.tab', $tab);    
+        return this;
+    };
+    $.fn.getOwnTab = function() {
+        if ( !this.is('a') ) return this; 
+        return $(this).data('drumbeat.modal.tab');
+    };
+    $.fn.addButtons = function(){
+        this.append(
+            '<p class="ajax-buttons">'+
+              '<a class="button close" href="#">Close</a>'+
+              '<a class="button submit" href="#">Save</a>'+
+            '</p>'
+        ).find('a.close').bind('click', closeModal).parent().find('a.submit').bind('click', saveModal);
+    };
     // hook it up!
     $(this).each(function() {
         var me = $(this),
