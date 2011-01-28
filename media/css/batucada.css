@@ -1208,7 +1208,8 @@ header {}
 		    height: 90px;
 		    width: 400px;
 			}		
-		.modal .buttons{
+		.modal .buttons,
+		.modal .ajax-buttons{
 			position: absolute;
 			top:  18px; right: 18px;
 			margin-left: 5px;
@@ -1218,7 +1219,8 @@ header {}
 			line-height: 24px;			
 			width: 84px;
 			min-height: 30px;
-			font-size: 14px;		
+			font-size: 14px;
+			margin-left: 5px;	
 		}
 		.modal .button {
 			min-width: 68px;
@@ -1466,7 +1468,16 @@ header {}
 			line-height: 60px;
 			text-shadow: #fff 1px 1px 0;
 			color: #ccc;
-		} 	
+		}
+/* AJAX MODAL */
+.modal.tab-links fieldset .buttons {
+	display: none;
+	}
+.modal .ajax-buttons {
+
+	}	
+
+
 /* INBOX / MESSAGING */
 #inbox{}
 #inbox #mailboxes,
@@ -1915,20 +1926,20 @@ footer #legal a:hover {
 	color: #036;
 	}	
 
-/* paul wrote this. so we'll probably want to change it. */
 #availability.warning {
-    color: red;
+    color: #a00;
 }
 #availability.okay {
-    color: green;
+    color: #090;
 }
 div.warning {
-    border: 1px solid #dcb5b5;
-    border-radius: 5px 5px 5px 5px;
-    padding: 10px;
+    border: 1px solid #dbb;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 9px;
 }
 div.warning h2 {
-    color: #990000;
+    color: #a00;
 }
 
 /* wmd -- more paul stuff. basically copied from wmd example code. */
