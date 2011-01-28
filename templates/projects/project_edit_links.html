@@ -40,7 +40,7 @@
     <tr>
       <td class="name">{{ link.name }}</td>
       <td class="url"><a href="{{ link.url }}" title="{{ link.url }}">{{ link.url }}</a></td>
-      <td class="subscription">{% if link.subscription.verified %}<span class="is-subscribed">yes</span>{% endif %}</td>
+      <td class="subscription">{% if link.subscription.verified %}<span class="yes">{{ _('yes') }}</span>{% endif %}</td>
       <td class="actions">
         <form action="{% locale_url projects_edit_links_delete slug=project.slug link=link.id %}" method="post">
           {% csrf_token %}
