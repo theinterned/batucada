@@ -1327,7 +1327,7 @@ header {}
 			overflow: hidden;
 			word-wrap: break-word;
 		}
-		.modal .links .is-subscribed {
+		.modal .links .subscription .yes{
 			display: block;
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
