@@ -1,6 +1,9 @@
 {% extends "preferences/settings.html" %}
 {% load l10n_tags %}
+{% block bodyclasses %}edit account notifications{% endblock %}
+{% block title %}{{ _('Notification Settings') }}{% endblock %}
 {% block form %}
+<fieldset id="edit_account_notifications" class="edit account notifications">
     <h2>{{ _('Send me an email when...') }}</h2>
     <form action="{% locale_url preferences_settings %}" method="post">
       {% csrf_token %}
@@ -27,4 +30,5 @@
         <button type="submit" value="{{ _('Save') }}" >{{ _('Save') }}</button>
       </p>
     </form>
+</fieldset>
 {% endblock %}
