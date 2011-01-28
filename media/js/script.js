@@ -182,21 +182,44 @@ var batucada = {
 };
 
 jQuery.fn.tabLinks = function(element){
+    var $modal = $(this).parents('.modal');
+    $modal.addClass('tab-links');
     $(this).first().parent('li').addClass('active');
+    
     var updateElement = function(e) {
         e.preventDefault();
-
-        var href = $(this).attr('href');
-        $('<div/>').load(href + ' ' + element, function() {            
-            $(element).replaceWith($(this).children()[0]);
-            $('textarea.wmd').wmd({'preview': false});
-        });
+        log('updateElement', $(this).getOwnTab());
+        if ( $(this).getOwnTab() ){
+            $newTab = $(this).getOwnTab();
+            log("$newTab retrieved from data", $newTab);
+            replaceTab($(element), $newTab);
+        }        
+        else {
+            log('data not found');
+            var href = $(this).attr('href');
+            $('<div/>').load(href + ' ' + element, function() {            
+                $newTab = $(this).children()[0];                
+                $(e.target).storeOwnTab($newTab);
+                // $(element).replaceWith($tab);
+                replaceTab($(element), $newTab);
+                $('textarea.wmd').wmd({'preview': false});            
+            });
+            
+        }
         $(this).parent('li').setActive();
     };
+    var replaceTab = function($oldTab, $newTab){
+        log($oldTab, $newTab);
+        $oldTab.parent().append($newTab).end().detach();
+        
+    }
     // onload activate the tab that corresponds to this tab group's sibling fieldset.
     $.fn.activateOnLoad = function(){
-        activeSelector =  'li.' + $(this).parents('.modal').find('fieldset').attr('class').split(" ").join(", li.");
-        $(activeSelector).setActive();
+        if ( !this.is('a') ) return this;
+        $tab = $modal.find('fieldset');
+        activeSelector =  'li.' + $tab.attr('class').split(" ").join(", li.");
+        $(activeSelector).setActive()
+            .find('a').storeOwnTab($tab);
         return this;
     };
     // deactivate all siblings, then activate the passed element
@@ -207,7 +230,16 @@ jQuery.fn.tabLinks = function(element){
         this.addClass('active');
         return this;
     };
-    
+    $.fn.storeOwnTab = function($tab){
+        console.log(this);
+        if ( !this.is('a') ) return this; 
+        $(this).data('drumbeat.modal.tab', $tab);    
+        return this;
+    };
+    $.fn.getOwnTab = function() {
+        if ( !this.is('a') ) return this; 
+        return $(this).data('drumbeat.modal.tab');
+    };
     // hook it up!
     $(this).each(function() {
         var me = $(this),
