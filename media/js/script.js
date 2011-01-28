@@ -220,6 +220,7 @@ jQuery.fn.tabLinks = function(element){
         activeSelector =  'li.' + $tab.attr('class').split(" ").join(", li.");
         $(activeSelector).setActive()
             .find('a').storeOwnTab($tab);
+        $modal.addButtons();
         return this;
     };
     // deactivate all siblings, then activate the passed element
@@ -240,6 +241,14 @@ jQuery.fn.tabLinks = function(element){
         if ( !this.is('a') ) return this; 
         return $(this).data('drumbeat.modal.tab');
     };
+    $.fn.addButtons = function(){
+        this.append(
+            '<p class="ajax-buttons">'+
+              '<a class="button close" href="#">Close</a>'+
+              '<a class="button submit" href="#">Save</a>'+
+            '</p>'
+        );
+    }
     // hook it up!
     $(this).each(function() {
         var me = $(this),

@@ -1208,7 +1208,8 @@ header {}
 		    height: 90px;
 		    width: 400px;
 			}		
-		.modal .buttons{
+		.modal .buttons,
+		.modal .ajax-buttons{
 			position: absolute;
 			top:  18px; right: 18px;
 			margin-left: 5px;
@@ -1218,7 +1219,8 @@ header {}
 			line-height: 24px;			
 			width: 84px;
 			min-height: 30px;
-			font-size: 14px;		
+			font-size: 14px;
+			margin-left: 5px;	
 		}
 		.modal .button {
 			min-width: 68px;
