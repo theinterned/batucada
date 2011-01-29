@@ -32,7 +32,7 @@ var createPostTextArea = function() {
 };
 
 var usernameHint = function() {
-    var userurl = $('#username .hint b').html();    
+    var userurl = $('#username .hint b').html();
     $('#id_username').keyup(function() {
         $('#availability').removeClass('okay warning').html('');
         var val = (this.value) ? this.value : userurl;
@@ -144,7 +144,7 @@ var batucada = {
                 $(e.target).parent().submit();
                 return false;
             });
-            $('.close_button').bind('click', function(){
+            $('.close_button').bind('click', function() {
                 $('.welcome').animate({
                     opacity: 'hide',
                     height: 'hide',
@@ -179,56 +179,54 @@ var batucada = {
     }
 };
 
-jQuery.fn.tabLinks = function(element){
+jQuery.fn.tabLinks = function(element) {
     var $modal = $(this).parents('.modal');
     $modal.addClass('tab-links');
     $(this).first().parent('li').addClass('active');
     
     var updateElement = function(e) {
         e.preventDefault();
-        if ( $(this).getOwnTab() ){
+        if ($(this).getOwnTab()) {
             $newTab = $(this).getOwnTab();
             $(element).replaceTab($newTab);
-        }        
-        else {
+        } else {
             var href = $(this).attr('href');
-            $('<div/>').load(href + ' ' + element, function() {            
-                $newTab = $(this).children()[0];                
+            $('<div/>').load(href + ' ' + element, function() {
+                $newTab = $(this).children()[0];
                 $(e.target).storeOwnTab($newTab);
                 $(element).replaceTab($newTab);
-                $('textarea.wmd').wmd({'preview': false});            
+                $('textarea.wmd').wmd({'preview': false});
             });
-            
         }
         $(this).parent('li').setActive();
     };
-    var saveModal = function(e){
+    var saveModal = function(e) {
         e.preventDefault();
         log('saveModal');
         
-        $modal.find('.tabs a').each(function(){
+        $modal.find('.tabs a').each(function() {
             log(this);
-            if ( $(this).getOwnTab() ) {                
-                $form = $(this).getOwnTab().find('form');                
+            if ($(this).getOwnTab()) {
+                $form = $(this).getOwnTab().find('form');
                 $.ajax({
-                    type    : $form.attr('method'),
-                    url     : $form.attr('action'),
-                    success : function(data){
+                    type: $form.attr('method'),
+                    url: $form.attr('action'),
+                    success: function(data) {
                         log(data);
-                    }                 
+                    }
                 });
             }
         });
     };
-    var closeModal = function(e){
+    var closeModal = function(e) {
         e.preventDefault();
         log('closeModal');
     };
-    $.fn.replaceTab = function($newTab){
+    $.fn.replaceTab = function($newTab) {
         this.parent().append($newTab).end().detach();        
-    };    
+    };
     // onload activate the tab that corresponds to this tab group's sibling fieldset.
-    $.fn.activateOnLoad = function(){
+    $.fn.activateOnLoad = function() {
         if ( !this.is('a') ) return this;
         $tab = $modal.find('fieldset');
         activeSelector =  'li.' + $tab.attr('class').split(" ").join(", li.");
@@ -238,23 +236,23 @@ jQuery.fn.tabLinks = function(element){
         return this;
     };
     // deactivate all siblings, then activate the passed element
-    $.fn.setActive = function() {        
+    $.fn.setActive = function() {
         this.siblings('li').each(function(i, e) {
             $(e).removeClass('active');
         });
         this.addClass('active');
         return this;
     };
-    $.fn.storeOwnTab = function($tab){
-        if ( !this.is('a') ) return this; 
-        $(this).data('drumbeat.modal.tab', $tab);    
+    $.fn.storeOwnTab = function($tab) {
+        if (!this.is('a')) return this;
+        $(this).data('drumbeat.modal.tab', $tab);
         return this;
     };
     $.fn.getOwnTab = function() {
-        if ( !this.is('a') ) return this; 
+        if (!this.is('a')) return this; 
         return $(this).data('drumbeat.modal.tab');
     };
-    $.fn.addButtons = function(){
+    $.fn.addButtons = function() {
         this.append(
             '<p class="ajax-buttons">'+
               '<a class="button close" href="#">Close</a>'+
@@ -266,9 +264,9 @@ jQuery.fn.tabLinks = function(element){
     $(this).each(function() {
         var me = $(this),
         href = me.attr('href');
-        if (!href || href == '#') 
+        if (!href || href == '#')
             return;
-        me.bind('click.tablinks', updateElement);        
+        me.bind('click.tablinks', updateElement);
     }).activateOnLoad();
 };
 
