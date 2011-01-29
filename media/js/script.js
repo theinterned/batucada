@@ -206,8 +206,9 @@ jQuery.fn.tabLinks = function(element) {
         
         $modal.find('.tabs a').each(function() {
             log(this);
-            if ($(this).getOwnTab()) {
-                $form = $(this).getOwnTab().find('form');
+	    var tab = $(this).getOwnTab();
+            if (tab) {
+                var $form = $(tab).find('form');
                 $.ajax({
                     type: $form.attr('method'),
                     url: $form.attr('action'),
