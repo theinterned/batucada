@@ -10,6 +10,8 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils import simplejson
+from django.views.decorators.http import require_http_methods
 
 from django_openid_auth import views as openid_views
 from commonware.decorators import xframe_sameorigin
@@ -337,6 +339,23 @@ def profile_edit(request):
 
 @login_required
 @xframe_sameorigin
+@require_http_methods(['POST'])
+def profile_edit_image_async(request):
+    log.debug("profile_edit_image_async")
+    profile = get_object_or_404(UserProfile, user=request.user)
+    form = forms.ProfileImageForm(request.POST, request.FILES,
+                                  instance=profile)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.image.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
+
+
+@login_required
 def profile_edit_image(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
