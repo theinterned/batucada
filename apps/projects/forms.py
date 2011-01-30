@@ -127,3 +127,12 @@ class ProjectContactUsersForm(forms.Form):
             msg.save()
             message_list.append(msg)
         return message_list
+
+
+class ProjectPreparationStatusForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('preparation_status',)
+
+
