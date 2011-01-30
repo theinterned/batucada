@@ -10,6 +10,7 @@ from django.db import models
 from django.db.models import Count
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.template.defaultfilters import slugify
+from django.utils.translation import ugettext_lazy as _
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -77,6 +78,13 @@ class Project(ModelBase):
     featured = models.BooleanField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
+
+    PRIVATE_DRAFT, PUBLIC_DRAFT, READY = (1, 2, 3)
+    preparation_status_choices = ((PRIVATE_DRAFT, _('Private Draft')),
+        (PUBLIC_DRAFT, _('Public Draft')),
+        (READY, _('Ready')))
+    preparation_status = models.PositiveSmallIntegerField(_('Preparation Status'),
+        choices=preparation_status_choices, default=PRIVATE_DRAFT)
 
     objects = ProjectManager()
 
