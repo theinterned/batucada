@@ -55,7 +55,7 @@ You should create a settings_local.py. Most people will be able to get away with
 
    cp settings_local.dist.py settings_local.py
 
-If the mysql database doesn't exist yet, create it:
+If the mysql database doesn't exist yet, create it. ::
 
    mysqladmin -u <user> -p create <database name>
  
@@ -75,7 +75,7 @@ To recreate the test database before running the tests. ::
 
    FORCE_DB=True python manage.py test
 
-After updating a database model you will have to make a migration for the change, then apply it.
+After updating a database model you will have to make a migration for the change, then apply it. ::
 
    python manage.py schemamigration <appname> --auto
    python manage.py migrate <appname>
