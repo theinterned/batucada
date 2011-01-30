@@ -107,6 +107,35 @@ var loadMoreMessages = function() {
     });
 };
 
+var attachFileUploadHandler = function($inputs) {
+    var updatePicturePreview = function(path) {
+        var $img = $('<img class="member-picture"></img>');
+        $img.attr('src', path);
+        $('p.picture-preview img').remove();
+        $img.appendTo('p.picture-preview');
+    }
+    $(this).closest('form').removeAttr('enctype');
+    $inputs.each(function() {
+        $(this).ajaxSubmitInput({
+            url: $(this).closest('form').attr('data-url'),
+            beforeSubmit: function($input) {
+                updatePicturePreview("/media/images/ajax-loader.gif");
+                $options = {};
+                $options.filename = $input.val().split(/[\/\\]/).pop();
+                return $options;
+            },
+            onComplete: function($input, iframeContent, passJSON) {
+                $input.closest('form')[0].reset();
+                if (!iframeContent) {
+                    return;
+                }
+                content = jQuery.parseJSON(iframeContent);
+                updatePicturePreview("/media/" + content.filename);
+            }
+        });
+    });
+};
+
 var batucada = {
     splash: {
         onload: function() {
@@ -174,32 +203,10 @@ var batucada = {
     },
     profile_edit: {
         onload: function() {
-            function updatePicturePreview(path) {
-                var $img = $('<img class="member-picture"></img>');
-                $img.attr('src', path);
-                $('p.picture-preview img').remove();
-                $img.appendTo('p.picture-preview');
+            var $inputs = $('input[type=file]');
+            if ($inputs) {
+                attachFileUploadHandler($inputs);
             }
-            $(this).closest('form').removeAttr('enctype');
-            $('input[type=file]').each(function() {
-                $(this).ajaxSubmitInput({
-                    url: $(this).closest('form').attr('data-url'),
-                    beforeSubmit: function($input) {
-                        updatePicturePreview("/media/images/ajax-loader.gif");
-                        $options = {};
-                        $options.filename = $input.val().split(/[\/\\]/).pop();
-                        return $options;
-                    },
-                    onComplete: function($input, iframeContent, passJSON) {
-                        $input.closest('form')[0].reset();
-                        if (!iframeContent) {
-                            return;
-                        }
-                        content = jQuery.parseJSON(iframeContent);
-                        updatePicturePreview("/media/" + content.filename);
-                    }
-                });
-            });
         }
     },
     inbox: {
@@ -225,6 +232,7 @@ jQuery.fn.tabLinks = function(element) {
                 $newTab = $(this).children()[0];
                 $(e.target).storeOwnTab($newTab);
                 $(element).replaceTab($newTab);
+                attachFileUploadHandler($(element).find('input[type=file]'));
                 $('textarea.wmd').wmd({'preview': false});
             });
         }
