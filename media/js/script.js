@@ -174,23 +174,29 @@ var batucada = {
     },
     profile_edit: {
         onload: function() {
+            function updatePicturePreview(path) {
+                var $img = $('<img class="member-picture"></img>');
+                $img.attr('src', path);
+                $('p.picture-preview img').remove();
+                $img.appendTo('p.picture-preview');
+            }
             $(this).closest('form').removeAttr('enctype');
             $('input[type=file]').each(function() {
                 $(this).ajaxSubmitInput({
-                    url: $(this).closest('form').attr('action'),
+                    url: $(this).closest('form').attr('data-url'),
                     beforeSubmit: function($input) {
-                        $('p.picture-preview img').remove();
-                        $('<img src="/media/images/ajax-loader.gif"></img>').appendTo('p.picture-preview');
+                        updatePicturePreview("/media/images/ajax-loader.gif");
                         $options = {};
                         $options.filename = $input.val().split(/[\/\\]/).pop();
                         return $options;
                     },
                     onComplete: function($input, iframeContent, passJSON) {
                         $input.closest('form')[0].reset();
-                        $('p.picture-preview img').remove();
                         if (!iframeContent) {
                             return;
                         }
+                        content = jQuery.parseJSON(iframeContent);
+                        updatePicturePreview("/media/" + content.filename);
                     }
                 });
             });
