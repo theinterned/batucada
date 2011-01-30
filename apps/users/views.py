@@ -12,6 +12,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 
 from django_openid_auth import views as openid_views
+from commonware.decorators import xframe_sameorigin
 
 from users import forms
 from users.models import UserProfile
@@ -335,8 +336,10 @@ def profile_edit(request):
 
 
 @login_required
+@xframe_sameorigin
 def profile_edit_image(request):
     profile = get_object_or_404(UserProfile, user=request.user)
+
     if request.method == 'POST':
         form = forms.ProfileImageForm(request.POST, request.FILES,
                                       instance=profile)
