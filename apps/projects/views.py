@@ -6,8 +6,11 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
+
+from commonware.decorators import xframe_sameorigin
 
 from projects import forms as project_forms
 from projects.decorators import ownership_required
@@ -93,6 +96,24 @@ def edit_description(request, slug):
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@xframe_sameorigin
+@ownership_required
+@require_http_methods(['POST'])
+def edit_image_async(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    form = project_forms.ProjectImageForm(request.POST, request.FILES,
+                                          instance=project)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.image.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
 
 
 @login_required
