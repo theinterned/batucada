@@ -43,4 +43,7 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/edit/followers/add/$',
       'projects.views.add_follower',
       name='projects_add_follower'),
+  url(r'^(?P<slug>[\w-]+)/edit/preparationstatus/$',
+      'projects.views.edit_preparation_status',
+      name='projects_edit_preparation_status'),
 )

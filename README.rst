@@ -83,5 +83,10 @@ Finally, start the development server to take it for a spin. ::
 
    python manage.py runserver 
 
-To run the test framework ::
+To run the test framework. ::
+
    python manage.py test
+
+To recreate the test database before running the tests. ::
+
+   FORCE_DB=True python manage.py test
