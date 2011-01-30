@@ -329,8 +329,6 @@ def profile_edit(request):
     else:
         form = forms.ProfileEditForm(instance=profile)
 
-#    if request.is_ajax():
-#        return http.HttpResponse('profile_edit')
     return render_to_response('users/profile_edit_main.html', {
         'profile': profile,
         'form': form,
@@ -341,7 +339,6 @@ def profile_edit(request):
 @xframe_sameorigin
 @require_http_methods(['POST'])
 def profile_edit_image_async(request):
-    log.debug("profile_edit_image_async")
     profile = get_object_or_404(UserProfile, user=request.user)
     form = forms.ProfileImageForm(request.POST, request.FILES,
                                   instance=profile)
