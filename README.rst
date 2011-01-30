@@ -61,23 +61,7 @@ If the mysql database doesn't exist yet, create it:
  
 Next, sync the database and run migrations. ::
 
-   python manage.py syncdb --noinput 
-
-There's a problem with real databases (read: not sqlite) where south migrations are run in an order that violates 
-foreign key constraints. See `Bug # 623612`_ for details. Until that is fixed, you're best off running migrations 
-in this order. ::
-
-   python manage.py migrate projects
-   python manage.py migrate users
-   python manage.py migrate activity
-   python manage.py migrate statuses
-   python manage.py migrate links
-   python manage.py migrate dashboard
-   python manage.py migrate relationships
-
-What a pain! 
-
-.. _Bug # 623612: https://bugzilla.mozilla.org/show_bug.cgi?id=623612
+   python manage.py syncdb --noinput --all
 
 Finally, start the development server to take it for a spin. ::
 
@@ -90,4 +74,9 @@ To run the test framework. ::
 To recreate the test database before running the tests. ::
 
    FORCE_DB=True python manage.py test
+
+After updating a database model you will have to make a migration for the change, then apply it.
+
+   python manage.py schemamigration <appname> --auto
+   python manage.py migrate <appname>
 
