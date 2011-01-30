@@ -1,4 +1,5 @@
 from django.test import Client
+from django.core.urlresolvers import reverse
 
 from users.models import UserProfile
 from activity.models import Activity
@@ -16,7 +17,6 @@ class ProjectTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.locale = 'en-US'
-        self.client = Client()
         self.user = UserProfile(
             username=self.test_username,
             email=self.test_email,
@@ -65,3 +65,24 @@ class ProjectTests(TestCase):
                 'http://activitystrea.ms/schema/1.0/post',
                 'http://activitystrea.ms/schema/1.0/follow',
            ))
+
+    def test_edit_preparation_status(self):
+        """Test that the preparation status is updated appropriately."""
+        project = Project(
+            name='My Cool Project',
+            short_description='This project is awesome',
+            long_description='No really, its good',
+            created_by=self.user,
+        )
+        project.save()
+        self.assertEqual(Project.PRIVATE_DRAFT, project.preparation_status)
+        # expect that the preparation status will change from PRIVATE_DRAFT to PUBLIC_DRAFT
+        self.client.login(username=self.test_username,
+                          password=self.test_password)
+        url = reverse('projects_edit_preparation_status',
+                      kwargs={'slug': project.slug})
+        response = self.client.post(url, {'preparation_status': Project.PUBLIC_DRAFT})
+        updated_project = Project.objects.get(pk=project.pk)
+        self.assertEqual(Project.PUBLIC_DRAFT, updated_project.preparation_status)
+
+
