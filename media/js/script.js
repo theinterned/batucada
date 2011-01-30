@@ -172,6 +172,30 @@ var batucada = {
             });
         }
     },
+    profile_edit: {
+        onload: function() {
+            $(this).closest('form').removeAttr('enctype');
+            $('input[type=file]').each(function() {
+                $(this).ajaxSubmitInput({
+                    url: $(this).closest('form').attr('action'),
+                    beforeSubmit: function($input) {
+                        $('p.picture-preview img').remove();
+                        $('<img src="/media/images/ajax-loader.gif"></img>').appendTo('p.picture-preview');
+                        $options = {};
+                        $options.filename = $input.val().split(/[\/\\]/).pop();
+                        return $options;
+                    },
+                    onComplete: function($input, iframeContent, passJSON) {
+                        $input.closest('form')[0].reset();
+                        $('p.picture-preview img').remove();
+                        if (!iframeContent) {
+                            return;
+                        }
+                    }
+                });
+            });
+        }
+    },
     inbox: {
         onload: function() {
             loadMoreMessages();
