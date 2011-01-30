@@ -316,3 +316,27 @@ def contact_followers(request, slug):
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@ownership_required
+def edit_preparation_status(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = project_forms.ProjectPreparationStatusForm(
+            request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was a problem saving the preparation status of your project.'))
+    else:
+        form = project_forms.ProjectPreparationStatusForm(instance=project)
+    return render_to_response('projects/project_edit_preparation_status.html', {
+        'form': form,
+        'project': project,
+    }, context_instance=RequestContext(request))
+
