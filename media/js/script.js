@@ -126,6 +126,7 @@ var attachFileUploadHandler = function($inputs) {
             },
             onComplete: function($input, iframeContent, passJSON) {
                 $input.closest('form')[0].reset();
+                $input.trigger('clean');
                 if (!iframeContent) {
                     return;
                 }
@@ -247,18 +248,19 @@ jQuery.fn.tabLinks = function(element) {
         e.preventDefault();
         log('saveModal');
         
-        $modal.find('.tabs a').each(function() {
-            log(this);
+        $modal.find('.tabs .dirty a').each(function() {
             var tab = $(this).getOwnTab();
             if (tab) {
-                var $form = $(tab).find('form');
-                $.ajax({
-                    type: $form.attr('method'),
-                    url: $form.attr('action'),
-                    data: $form.serialize(),
-                    success: function(data) {
-                        log(data);
-                    }
+                var $forms = $(tab).find('form.dirty');
+                $forms.each(function(){
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            log(data);
+                        }
+                    });                    
                 });
             }
         });
@@ -271,14 +273,39 @@ jQuery.fn.tabLinks = function(element) {
     // - the field that changed.
     // - the form that contains the field.
     // - the tabLink that coresponds to the form.
-    var dirtyOnChange = function(e) {
-        $(e.target).addClass('dirty')
-            .parents('form').addClass('dirty');        
-        $tabLink =  $('li.' + $modal.find('fieldset').attr('class').split(" ").join(", li."));
-        $tabLink.addClass('dirty');        
+    var dirtyOnChange = function(e) {        
+        $(e.target).addClass('dirty').trigger('dirty');
+    };
+    var onInputDirty = function(e){
+        log('onInputDirty', this, e.target);
+        if($(this).has(e.target))
+            $(this).addClass('dirty');
+        if(e.data.tabLink){            
+            e.data.tabLink.addClass('dirty');
+        }
+    };
+    var cleanInput = function(e){
+        log('cleanInput', this, e.target);
+        $(e.target).removeClass('dirty');
+    };
+    var onInputClean = function(e){
+        log('onInputClean', this, e.target);
+        log(!!$(this).has(':input.dirty'));
+        if($(this).has(e.target) && !!$(this).has(':input.dirty')){
+            $(this).removeClass('dirty');
+            if(e.data.tabLink){
+                e.data.tabLink.removeClass('dirty');
+            }
+        }
     };
     $.fn.attachDirtyOnChangeHandler = function() {
-        $(this).find(':input').bind('change', dirtyOnChange);
+        $tabLink =  $('li.' + $(this).attr('class').split(" ").join(", li."));
+        $(this).find(':input')
+            .bind('change', dirtyOnChange)
+            .bind('clean', cleanInput)
+            .end().find('form')
+                .bind('dirty', {tabLink : $tabLink}, onInputDirty)
+                .bind('clean', {tabLink : $tabLink}, onInputClean);
         return this;
     };
     $.fn.replaceTab = function($newTab) {
