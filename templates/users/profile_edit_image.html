@@ -6,7 +6,8 @@
 {% block form %}
 
 <fieldset id="profile_edit_image" class="profile edit image">
-<form action="{% locale_url users_profile_edit_image %}" method="post" enctype="multipart/form-data">
+<form action="{% locale_url users_profile_edit_image %}" method="post" enctype="multipart/form-data"
+      data-url="{% locale_url users_profile_edit_image_async %}">
   {% csrf_token %}
   {% if profile.image %}
   <h2>Replace Profile Image</h2>
