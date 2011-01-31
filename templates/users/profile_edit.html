@@ -5,12 +5,27 @@
 {% block title %}{{ _('Edit Profile') }}{% endblock %}
 {% block bodyid %}profile_edit{% endblock %}
 {% block bodyclasses %}profile edit info{% endblock %}
-
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <span>All</span>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
+      <span class="arrow">&rsaquo;</span>      
+      <a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
 {% block body %}
 <section class="modal nav">
   <article>
 
-    <h1>{{ _('Edit Profile') }}</h1>
+    <h1>
+      {{ _('Edit Profile') }}
+      <a class="pester back_link" href="{{ profile.get_absolute_url }}">({{ _('View Profile') }})</a>
+    </h1>
     <nav id="profile-edit-nav" class="tabs">
       <ul>
 	<li class="info"><a href="{% locale_url users_profile_edit %}">{{ _('General Info') }}</a></li>

@@ -320,7 +320,6 @@ jQuery.fn.tabLinks = function(element) {
         $tabLink
             .setActive()
             .find('a').storeOwnTab($tab);
-        $modal.addButtons();
         return this;
     };
     // deactivate all siblings, then activate the passed element
@@ -394,6 +393,8 @@ $(document).ready(function() {
         //prevent the browser to follow the link
         return false;
     });
+    
+    $('.modal nav.tabs a').tabLinks('section fieldset');
 });
 
 // Recaptcha
