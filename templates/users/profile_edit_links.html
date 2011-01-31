@@ -19,9 +19,8 @@
     {{ form.url }}
     {{ form.url.errors }}
   </div>
-  <p class="buttons">
-    <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
-    <button type="submit">{{ _('Save') }}</button>
+  <p class="buttons add-link">
+    <button type="submit">{{ _('Add') }}</button>
   </p>
 </form>
 {% if links %}

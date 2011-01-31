@@ -1291,16 +1291,26 @@ header {}
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 12px;
+			vertical-align: middle;
 			}
 		.modal .link.url{
-			width: 334px;
+			width: 246px;
 			padding: 0;
 			}
 		.modal .links input[type=text] {
 			width: 154px;
 			}
 		.modal .links .url input[type=text] {
-			width: 316px;
+			width: 221px;
+		}
+		.modal .links .add-link {
+			display: inline-block;
+			margin-bottom: 13px;
+			vertical-align: middle;
+		}
+		.modal .links .add-link button {
+			margin-top: 17px;
+			margin-bottom: 5px;
 		}
 		.modal .links table {
 			width: 516px;
