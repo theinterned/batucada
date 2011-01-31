@@ -1229,6 +1229,9 @@ header {}
 			min-width: 68px;
 			min-height: 24px;
 		}
+		.modal .ajax-upload .buttons {
+			display: none;
+		}
 		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #account-settings-nav {
 			float: left;
 			width: 190px;

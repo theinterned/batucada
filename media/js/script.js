@@ -115,6 +115,7 @@ var attachFileUploadHandler = function($inputs) {
         $img.appendTo('p.picture-preview');
     };
     $(this).closest('form').removeAttr('enctype');
+    $inputs.closest('fieldset').addClass('ajax-upload');
     $inputs.each(function() {
         $(this).ajaxSubmitInput({
             url: $(this).closest('form').attr('data-url'),
