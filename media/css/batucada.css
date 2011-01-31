@@ -1488,6 +1488,9 @@ header {}
 			text-shadow: #fff 1px 1px 0;
 			color: #ccc;
 		}
+		.modal .account.delete .warning{
+			margin-bottom: 1.4em;
+		}
 
 /* INBOX / MESSAGING */
 #inbox{}

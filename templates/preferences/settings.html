@@ -4,11 +4,22 @@
 {% block bodyid %}account_settings{% endblock %}
 {% block bodyclasses %}edit notifications{% endblock %}
 {% block title %}{{ _('Account Settings') }}{% endblock %}
-
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url dashboard_index %}">{{ _('Dasboard') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url preferences_settings %}">{{ _('Account Settings') }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
 {% block body %}
 <section class="modal nav">
 <article>
-  <h1>{{ _('Account Settings') }}</h1>
+  <h1>
+    {{ _('Account Settings') }}
+    <a class="pester back_link" href="{% locale_url dashboard_index %}">({{ _('Return to Dasboard') }})</a>
+  </h1>
   <nav id="account-settings-nav" class="tabs">
     <ul>
       <li class="notifications"><a href="{% locale_url preferences_settings %}">{{ _('Notifications') }}</a></li>
