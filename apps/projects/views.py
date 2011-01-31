@@ -64,8 +64,9 @@ def edit(request, slug):
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
+            messages.success(request, _('Project updated!'))
             return http.HttpResponseRedirect(
-                reverse('projects_show', kwargs=dict(slug=project.slug)))
+                reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
         form = project_forms.ProjectForm(instance=project)
 
@@ -84,7 +85,8 @@ def edit_description(request, slug):
             request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            messages.success(request, _('Project description updated!'))
+            return http.HttpResponseRedirect(reverse('projects_edit_description', kwargs={
                 'slug': project.slug,
             }))
         else:
