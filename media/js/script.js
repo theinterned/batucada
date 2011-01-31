@@ -394,8 +394,6 @@ $(document).ready(function() {
         //prevent the browser to follow the link
         return false;
     });
-
-    $('.modal nav.tabs a').tabLinks('section fieldset');
 });
 
 // Recaptcha
