@@ -1208,7 +1208,6 @@ header {}
 		    height: 90px;
 		    width: 400px;
 			}		
-		.modal .buttons,
 		.modal .ajax-buttons{
 			position: absolute;
 			top:  18px; right: 18px;
@@ -1221,6 +1220,10 @@ header {}
 			min-height: 30px;
 			font-size: 14px;
 			margin-left: 5px;	
+		}
+		.modal button:first-child,
+		.modal .button:first-child{
+			margin-left: 0;
 		}
 		.modal .button {
 			min-width: 68px;
@@ -1472,14 +1475,6 @@ header {}
 			text-shadow: #fff 1px 1px 0;
 			color: #ccc;
 		}
-/* AJAX MODAL */
-.modal.tab-links fieldset .buttons {
-	display: none;
-	}
-.modal .ajax-buttons {
-
-	}	
-
 
 /* INBOX / MESSAGING */
 #inbox{}
