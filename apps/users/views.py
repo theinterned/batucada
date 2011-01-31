@@ -318,10 +318,9 @@ def profile_edit(request):
         if form.is_valid():
             messages.success(request, _('Profile updated'))
             form.save()
-            return render_to_response('users/profile_edit_main.html', {
-                'profile': profile,
-                'form': form,
-            }, context_instance=RequestContext(request))
+            return http.HttpResponseRedirect(
+                reverse('users_profile_edit'),
+            )
         else:
             messages.error(request, _('There were problems updating your '
                                       'profile. Please correct the problems '
