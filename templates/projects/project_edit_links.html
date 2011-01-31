@@ -20,9 +20,8 @@
       {{ form.url.errors }}
     </div>
   </p>
-  <p class="buttons">
-    <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
-    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+  <p class="buttons add-link">
+    <button type="submit">{{ _('Add') }}</button>
   </p>
 </form>
 {% if links %}
