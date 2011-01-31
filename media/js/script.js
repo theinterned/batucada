@@ -232,9 +232,9 @@ jQuery.fn.tabLinks = function(element) {
             var href = $(this).attr('href');
             $('<div/>').load(href + ' ' + element, function() {
                 $newTab = $(this).children().first();
-                $(e.target).storeOwnTab($newTab);
-                $newTab.initForm();
-                $(element).replaceTab($newTab);                
+                $(e.target).storeOwnTab($newTab);             
+                $(element).replaceTab($newTab);
+                $newTab.initForm();              
             });
         }
         $(this).parent('li').setActive();
@@ -242,7 +242,7 @@ jQuery.fn.tabLinks = function(element) {
     $.fn.initForm = function() {
         attachFileUploadHandler($(this).find('input[type=file]'));
         $(this).attachDirtyOnChangeHandler();
-        $('textarea.wmd').wmd({'preview': false});
+        initWMD();
         return this;
     };
     var saveModal = function(e) {
@@ -359,6 +359,12 @@ jQuery.fn.tabLinks = function(element) {
     }).activateOnLoad();
 };
 
+var initWMD = function(){    
+    $('textarea.wmd').not(function(){
+        // we need to make sure this textarea hasn't been initialized already
+        return ($(this).siblings('.wmd-button-bar').length != 0);
+    }).wmd({'preview': false});
+};
 
 $(document).ready(function() {
     // dispatch per-page onload handlers 
@@ -374,7 +380,7 @@ $(document).ready(function() {
     });
 
     // wire up any RTEs with wmd
-    $('textarea.wmd').wmd({'preview': false});
+    initWMD();
 
     // modals using jQueryUI dialog
     $('.button.openmodal').live('click', function(){
