@@ -32,7 +32,7 @@ var createPostTextArea = function() {
 };
 
 var usernameHint = function() {
-    var userurl = $('#username .hint b').html();    
+    var userurl = $('#username .hint b').html();
     $('#id_username').keyup(function() {
         $('#availability').removeClass('okay warning').html('');
         var val = (this.value) ? this.value : userurl;
@@ -107,6 +107,36 @@ var loadMoreMessages = function() {
     });
 };
 
+var attachFileUploadHandler = function($inputs) {
+    var updatePicturePreview = function(path) {
+        var $img = $('<img class="member-picture"></img>');
+        $img.attr('src', path);
+        $('p.picture-preview img').remove();
+        $img.appendTo('p.picture-preview');
+    };
+    $(this).closest('form').removeAttr('enctype');
+    $inputs.each(function() {
+        $(this).ajaxSubmitInput({
+            url: $(this).closest('form').attr('data-url'),
+            beforeSubmit: function($input) {
+                updatePicturePreview("/media/images/ajax-loader.gif");
+                $options = {};
+                $options.filename = $input.val().split(/[\/\\]/).pop();
+                return $options;
+            },
+            onComplete: function($input, iframeContent, passJSON) {
+                $input.closest('form')[0].reset();
+                $input.trigger('clean');
+                if (!iframeContent) {
+                    return;
+                }
+                content = jQuery.parseJSON(iframeContent);
+                updatePicturePreview("/media/" + content.filename);
+            }
+        });
+    });
+};
+
 var batucada = {
     splash: {
         onload: function() {
@@ -144,7 +174,7 @@ var batucada = {
                 $(e.target).parent().submit();
                 return false;
             });
-            $('.close_button').bind('click', function(){
+            $('.close_button').bind('click', function() {
                 $('.welcome').animate({
                     opacity: 'hide',
                     height: 'hide',
@@ -172,6 +202,14 @@ var batucada = {
             });
         }
     },
+    profile_edit: {
+        onload: function() {
+            var $inputs = $('input[type=file]');
+            if ($inputs) {
+                attachFileUploadHandler($inputs);
+            }
+        }
+    },
     inbox: {
         onload: function() {
             loadMoreMessages();
@@ -179,96 +217,145 @@ var batucada = {
     }
 };
 
-jQuery.fn.tabLinks = function(element){
+jQuery.fn.tabLinks = function(element) {
     var $modal = $(this).parents('.modal');
     $modal.addClass('tab-links');
     $(this).first().parent('li').addClass('active');
     
     var updateElement = function(e) {
         e.preventDefault();
-        if ( $(this).getOwnTab() ){
+        if ($(this).getOwnTab()) {
             $newTab = $(this).getOwnTab();
             $(element).replaceTab($newTab);
-        }        
-        else {
+        } else {
             var href = $(this).attr('href');
-            $('<div/>').load(href + ' ' + element, function() {            
-                $newTab = $(this).children()[0];                
+            $('<div/>').load(href + ' ' + element, function() {
+                $newTab = $(this).children().first();
                 $(e.target).storeOwnTab($newTab);
-                $(element).replaceTab($newTab);
-                $('textarea.wmd').wmd({'preview': false});            
+                $newTab.initForm();
+                $(element).replaceTab($newTab);                
             });
-            
         }
         $(this).parent('li').setActive();
     };
-    var saveModal = function(e){
+    $.fn.initForm = function() {
+        attachFileUploadHandler($(this).find('input[type=file]'));
+        $(this).attachDirtyOnChangeHandler();
+        $('textarea.wmd').wmd({'preview': false});
+        return this;
+    };
+    var saveModal = function(e) {
         e.preventDefault();
         log('saveModal');
         
-        $modal.find('.tabs a').each(function(){
-            log(this);
-            if ( $(this).getOwnTab() ) {                
-                $form = $(this).getOwnTab().find('form');                
-                $.ajax({
-                    type    : $form.attr('method'),
-                    url     : $form.attr('action'),
-                    success : function(data){
-                        log(data);
-                    }                 
+        $modal.find('.tabs .dirty a').each(function() {
+            var tab = $(this).getOwnTab();
+            if (tab) {
+                var $forms = $(tab).find('form.dirty');
+                $forms.each(function(){
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            log(data);
+                        }
+                    });                    
                 });
             }
         });
     };
-    var closeModal = function(e){
+    var closeModal = function(e) {
         e.preventDefault();
         log('closeModal');
     };
-    $.fn.replaceTab = function($newTab){
-        this.parent().append($newTab).end().detach();        
-    };    
+    // event handler fired when any modal input changes to mark that input as dirty
+    // and fire a custom 'dirty' event to bubble up.
+    var dirtyOnChange = function(e) {        
+        $(e.target).addClass('dirty').trigger('dirty');
+    };
+    // event handler for cutome 'dirty' event
+    var onInputDirty = function(e){
+        if($(this).has(e.target).length > 0){
+            $(this).addClass('dirty');
+            if(e.data.tabLink){            
+                e.data.tabLink.addClass('dirty');
+            }                        
+        }        
+    };
+    // input event handler for custom 'clean' event.
+    var cleanInput = function(e){
+        $(e.target).removeClass('dirty');
+    };
+    // event handler for custom 'clean' event
+    var onInputClean = function(e){
+        if(($(this).has(e.target).length > 0) && ($(this).has(':input.dirty').length == 0)){
+            $(this).removeClass('dirty');
+            if(e.data.tabLink){
+                e.data.tabLink.removeClass('dirty');
+            }
+        }
+    };
+    // wire up the clean / dirty form element events and behaviours.
+    $.fn.attachDirtyOnChangeHandler = function() {
+        $tabLink =  $('li.' + $(this).attr('class').split(" ").join(", li."));
+        $(this).find(':input')
+            .bind('change', dirtyOnChange)
+            .bind('clean', cleanInput)
+            .end().find('form')
+                .bind('dirty', {tabLink : $tabLink}, onInputDirty)
+                .bind('clean', {tabLink : $tabLink}, onInputClean);
+        return this;
+    };
+    $.fn.replaceTab = function($newTab) {
+        this.parent().append($newTab).end().detach();
+        return this;       
+    };
     // onload activate the tab that corresponds to this tab group's sibling fieldset.
-    $.fn.activateOnLoad = function(){
+    $.fn.activateOnLoad = function() {
         if ( !this.is('a') ) return this;
         $tab = $modal.find('fieldset');
-        activeSelector =  'li.' + $tab.attr('class').split(" ").join(", li.");
-        $(activeSelector).setActive()
+        $tabLink =  $('li.' + $tab.attr('class').split(" ").join(", li."));
+        $tab.initForm();
+        $tabLink
+            .setActive()
             .find('a').storeOwnTab($tab);
         $modal.addButtons();
         return this;
     };
     // deactivate all siblings, then activate the passed element
-    $.fn.setActive = function() {        
+    $.fn.setActive = function() {
         this.siblings('li').each(function(i, e) {
             $(e).removeClass('active');
         });
         this.addClass('active');
         return this;
     };
-    $.fn.storeOwnTab = function($tab){
-        if ( !this.is('a') ) return this; 
-        $(this).data('drumbeat.modal.tab', $tab);    
+    $.fn.storeOwnTab = function($tab) {
+        if (!this.is('a')) return this;
+        $(this).data('drumbeat.modal.tab', $tab);
         return this;
     };
     $.fn.getOwnTab = function() {
-        if ( !this.is('a') ) return this; 
+        if (!this.is('a')) return this; 
         return $(this).data('drumbeat.modal.tab');
     };
-    $.fn.addButtons = function(){
+    $.fn.addButtons = function() {
         this.append(
             '<p class="ajax-buttons">'+
               '<a class="button close" href="#">Close</a>'+
               '<a class="button submit" href="#">Save</a>'+
             '</p>'
         ).find('a.close').bind('click', closeModal).parent().find('a.submit').bind('click', saveModal);
+        return this;
     };
     // hook it up!
     $(this).each(function() {
         var me = $(this),
         href = me.attr('href');
-        if (!href || href == '#') 
+        if (!href || href == '#')
             return;
-        me.bind('click.tablinks', updateElement);        
+        me.bind('click.tablinks', updateElement);
     }).activateOnLoad();
 };
 
