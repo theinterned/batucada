@@ -113,7 +113,7 @@ var attachFileUploadHandler = function($inputs) {
         $img.attr('src', path);
         $('p.picture-preview img').remove();
         $img.appendTo('p.picture-preview');
-    }
+    };
     $(this).closest('form').removeAttr('enctype');
     $inputs.each(function() {
         $(this).ajaxSubmitInput({
@@ -229,14 +229,19 @@ jQuery.fn.tabLinks = function(element) {
         } else {
             var href = $(this).attr('href');
             $('<div/>').load(href + ' ' + element, function() {
-                $newTab = $(this).children()[0];
+                $newTab = $(this).children().first();
                 $(e.target).storeOwnTab($newTab);
-                $(element).replaceTab($newTab);
-                attachFileUploadHandler($(element).find('input[type=file]'));
-                $('textarea.wmd').wmd({'preview': false});
+                $newTab.initForm();
+                $(element).replaceTab($newTab);                
             });
         }
         $(this).parent('li').setActive();
+    };
+    $.fn.initForm = function() {
+        attachFileUploadHandler($(this).find('input[type=file]'));
+        $(this).attachDirtyOnChangeHandler();
+        $('textarea.wmd').wmd({'preview': false});
+        return this;
     };
     var saveModal = function(e) {
         e.preventDefault();
@@ -262,15 +267,32 @@ jQuery.fn.tabLinks = function(element) {
         e.preventDefault();
         log('closeModal');
     };
+    // note that a form has changed by applying a class of dirty to: 
+    // - the field that changed.
+    // - the form that contains the field.
+    // - the tabLink that coresponds to the form.
+    var dirtyOnChange = function(e) {
+        $(e.target).addClass('dirty')
+            .parents('form').addClass('dirty');        
+        $tabLink =  $('li.' + $modal.find('fieldset').attr('class').split(" ").join(", li."));
+        $tabLink.addClass('dirty');        
+    };
+    $.fn.attachDirtyOnChangeHandler = function() {
+        $(this).find(':input').bind('change', dirtyOnChange);
+        return this;
+    };
     $.fn.replaceTab = function($newTab) {
-        this.parent().append($newTab).end().detach();        
+        this.parent().append($newTab).end().detach();
+        return this;       
     };
     // onload activate the tab that corresponds to this tab group's sibling fieldset.
     $.fn.activateOnLoad = function() {
         if ( !this.is('a') ) return this;
         $tab = $modal.find('fieldset');
-        activeSelector =  'li.' + $tab.attr('class').split(" ").join(", li.");
-        $(activeSelector).setActive()
+        $tabLink =  $('li.' + $tab.attr('class').split(" ").join(", li."));
+        $tab.initForm();
+        $tabLink
+            .setActive()
             .find('a').storeOwnTab($tab);
         $modal.addButtons();
         return this;
@@ -299,6 +321,7 @@ jQuery.fn.tabLinks = function(element) {
               '<a class="button submit" href="#">Save</a>'+
             '</p>'
         ).find('a.close').bind('click', closeModal).parent().find('a.submit').bind('click', saveModal);
+        return this;
     };
     // hook it up!
     $(this).each(function() {

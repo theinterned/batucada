@@ -1277,6 +1277,9 @@ header {}
 			right: -12px; top: 0;
 			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
 		}
+		.modal nav.tabs li.dirty {
+			font-style: italic;
+		}
 
 		.modal .link {
 			display: inline-block;
