@@ -269,35 +269,34 @@ jQuery.fn.tabLinks = function(element) {
         e.preventDefault();
         log('closeModal');
     };
-    // note that a form has changed by applying a class of dirty to: 
-    // - the field that changed.
-    // - the form that contains the field.
-    // - the tabLink that coresponds to the form.
+    // event handler fired when any modal input changes to mark that input as dirty
+    // and fire a custom 'dirty' event to bubble up.
     var dirtyOnChange = function(e) {        
         $(e.target).addClass('dirty').trigger('dirty');
     };
+    // event handler for cutome 'dirty' event
     var onInputDirty = function(e){
-        log('onInputDirty', this, e.target);
-        if($(this).has(e.target))
+        if($(this).has(e.target).length > 0){
             $(this).addClass('dirty');
-        if(e.data.tabLink){            
-            e.data.tabLink.addClass('dirty');
-        }
+            if(e.data.tabLink){            
+                e.data.tabLink.addClass('dirty');
+            }                        
+        }        
     };
+    // input event handler for custom 'clean' event.
     var cleanInput = function(e){
-        log('cleanInput', this, e.target);
         $(e.target).removeClass('dirty');
     };
+    // event handler for custom 'clean' event
     var onInputClean = function(e){
-        log('onInputClean', this, e.target);
-        log(!!$(this).has(':input.dirty'));
-        if($(this).has(e.target) && !!$(this).has(':input.dirty')){
+        if(($(this).has(e.target).length > 0) && ($(this).has(':input.dirty').length == 0)){
             $(this).removeClass('dirty');
             if(e.data.tabLink){
                 e.data.tabLink.removeClass('dirty');
             }
         }
     };
+    // wire up the clean / dirty form element events and behaviours.
     $.fn.attachDirtyOnChangeHandler = function() {
         $tabLink =  $('li.' + $(this).attr('class').split(" ").join(", li."));
         $(this).find(':input')
