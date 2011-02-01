@@ -250,6 +250,7 @@ def create(request):
             project = form.save(commit=False)
             project.created_by = user
             project.save()
+            messages.success(request, _('Your new project has been created.'))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
