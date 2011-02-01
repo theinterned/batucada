@@ -225,6 +225,8 @@ jQuery.fn.tabLinks = function(element) {
     
     var updateElement = function(e) {
         e.preventDefault();
+        if($(e.target).closest('li').is('.active')) return;
+        
         if ($(this).getOwnTab()) {
             $newTab = $(this).getOwnTab();
             $(element).replaceTab($newTab);
