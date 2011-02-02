@@ -49,15 +49,18 @@ class Activity(ModelBase):
         return obj and obj.get_absolute_url() or None
 
     def textual_representation(self):
-        if self.target_user and self.verb == schema.verbs['follow']:
+        target = self.target_user or self.target_project or self.project
+        if target and self.verb == schema.verbs['follow']:
             return "%s %s %s" % (
                 self.actor.name, schema.past_tense['follow'],
-                self.target_user.name)
+                target.name)
         if self.status:
             return self.status.status
         elif self.remote_object:
             return self.remote_object.title
-        return _("%s activity performed by %s") % (self.verb, self.actor.name)
+        friendly_verb = schema.verbs_by_uri[self.verb]
+        return _("%s activity performed by %s") % (friendly_verb,
+                                                   self.actor.name)
 
     def html_representation(self):
         return render_to_string('activity/_activity_body.html', {
