@@ -63,8 +63,6 @@ class OpenIDForm(forms.Form):
 
 class CreateProfileForm(forms.ModelForm):
     recaptcha = captcha_fields.ReCaptchaField()
-    policy_optin = forms.BooleanField(required=True, error_messages={
-        'required': _('You must agree to the licensing terms.')})
 
     class Meta:
         model = UserProfile
@@ -83,8 +81,6 @@ class RegisterForm(forms.ModelForm):
         max_length=255,
         widget=forms.PasswordInput(render_value=False))
     recaptcha = captcha_fields.ReCaptchaField()
-    policy_optin = forms.BooleanField(required=True, error_messages={
-        'required': _('You must agree to the licensing terms.')})
 
     class Meta:
         model = UserProfile
