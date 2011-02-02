@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ challenge.title }}{% endblock %}
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block bodyid %}challenge_landing{% endblock %}
+
+{% block body %}
+<div id="sidebar">
+  <section id="challenge" class="panel">
+    <h1 id="challenge-title">{{ challenge.title }}</h1>
+    <h2 id="project-name">
+      <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
+    </h2>
+  </section>
+</div><!-- /#sidebar -->
+
+<div id="main">
+  <ul id="submissions">
+    <li>submissions go here</li><!-- TODO -->
+  </ul>
+</div>
+{% endblock %}
+
