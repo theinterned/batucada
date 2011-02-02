@@ -100,9 +100,9 @@
     <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
   {% endfor %}
   </ul>
+  {% if projects|length > 0 %}
   <h3>{{ _('Projects') }} <span class="projects count">{{ projects|length}}</span></h3>
   <ul class="projects following">
-  <!-- TODO: add support for project owner badge -->
   {% for project in projects %}
     <li>
       <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
@@ -116,6 +116,7 @@
     </li>
   {% endfor %}
   </ul>
+  {% endif %}
 </div> <!-- /#member_relationships-->
 {% if links %}
 <div id="member_links" class="panel">
