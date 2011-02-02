@@ -4,6 +4,8 @@ from activity import feeds
 
 
 urlpatterns = patterns('',
+    url(r'^activity/(?P<activity_id>[\d]+)/$', 'activity.views.index',
+        name='activity_index'),
     url(r'^(?P<username>[\w-]+)/feed$', feeds.UserActivityFeed(),
         name='activity_user_feed'),
     url(r'^projects/(?P<project>[\w-]+)/feed$', feeds.ProjectActivityFeed(),

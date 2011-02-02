@@ -42,16 +42,9 @@
           <div class="field inline_label{% if form.newsletter.errors %} error{% endif %}">
             <label for="id_newsletter">
               {{ form.newsletter }}
-              <small>{{ _('Please send me the Drumbeat newsletter.') }}</small>
+              {{ _('Please sign me up for the Drumbeat newsletter.') }}
             </label>
             {{ form.newsletter.errors }}
-          </div>
-          <div class="field inline_label{% if form.policy_optin.errors %} error{% endif %}">
-            <label for="id_policy_optin">
-              {{ form.policy_optin }}
-              <small>I have read and agree to the <a href="{% locale_url drumbeat_tos %}">Terms of Service</a>.</small>
-            </label>
-            {{ form.policy_optin.errors }}
           </div>
         </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
@@ -80,6 +73,12 @@
           <button type="submit">{{ _('Create Account') }}</button>
           {{ _('or sign up using') }}
           <a class="openid" href="{% locale_url users_register_openid %}">{{ _('OpenID')}}</a>
+        </p>
+        <p>
+          If you would like, you may read the 
+          <a href="http://www.mozilla.com/en-US/about/legal.html">{{ _('Legal Notices') }}</a> and 
+          <a href="http://www.mozilla.org/about/policies/privacy-policy.html">{{ _('Privacy Policy') }}</a>
+          that govern use of this site.
         </p>
       </form>
     </fieldset>

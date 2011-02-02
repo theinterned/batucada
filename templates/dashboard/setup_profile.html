@@ -34,17 +34,11 @@
 	  <p>
 	    <label for="id_newsletter">
 	      {{ form.newsletter }}
-	      <small>{{ _('Please send me the Drumbeat newsletter.') }}</small>
+	      {{ _('Please sign me up for the Drumbeat newsletter.') }}
 	    </label>
 	    {{ form.newsletter.errors }}
 	  </p>
-	  <p>
-	    <label for="id_policy_optin">
-	      {{ form.policy_optin }}
-	      <small>{{ _('I understand that all public content I submit to this site will be available under <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>.') }}</small>
-	    </label>
-	    {{ form.policy_optin.errors }}
-	  </p>
+        </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
 	<p>
 	  <label for="recaptcha_response_field">
@@ -69,6 +63,12 @@
         {% endif %}
         <p class="submit">
           <button type="submit">{{ _('Save') }}</button>
+        </p>
+        <p>
+          If you would like, you may read the 
+          <a href="http://www.mozilla.com/en-US/about/legal.html">{{ _('Legal Notices') }}</a> and 
+          <a href="http://www.mozilla.org/about/policies/privacy-policy.html">{{ _('Privacy Policy') }}</a>
+          that govern use of this site.
         </p>
       </form>
     </fieldset>
