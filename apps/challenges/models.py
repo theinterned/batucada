@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import logging
 
 from django.contrib import admin
@@ -20,7 +20,7 @@ class Challenge(ModelBase):
 
     slug = models.SlugField(unique=True)
     
-    start_date = models.DateTimeField()
+    start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()
 
     project = models.ForeignKey(Project)
