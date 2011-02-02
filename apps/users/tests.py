@@ -100,22 +100,6 @@ class TestLogins(TestCase):
         })
         self.assertNotEqual('http://www.mozilla.org/', response['location'])
 
-    def test_registration_opt_in(self):
-        """Test account registration."""
-        path = "/%s/register/" % (self.locale,)
-        params = {
-            'display_name': 'Joe User',
-            'username': 'joeuser',
-            'password': 'abcdefghijklmno1',
-            'password_confirm': 'abcdefghijklmno1',
-            'email': 'joe@mozilla.com',
-        }
-        response = self.client.post(path, params)
-        self.assertContains(response, 'You must agree to the licensing terms')
-        params['policy_optin'] = 'on'
-        response = self.client.post(path, params)
-        self.assertEqual(response.status_code, 302)
-
     def test_profile_image_directories(self):
         """Test that we partition image directories properly."""
         for i in range(1, 1001):
