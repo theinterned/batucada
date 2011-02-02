@@ -12,7 +12,7 @@
 
     <div class="post-details">
       <a class="member-name" href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.name }}</a>
-      {{ activity.created_on|timesince }} {{ _(' ago') }}
+      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity.created_on|timesince }} {{ _(' ago') }}</a>
       {% if activity.remote_object %}
 	{{ _('via ') }}<a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
       {% endif %}
