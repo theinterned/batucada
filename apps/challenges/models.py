@@ -3,7 +3,7 @@ import logging
 
 from django.contrib import admin
 from django.db import models
-
+from django.template.defaultfilters import slugify
 
 from drumbeat.models import ModelBase
 from projects.models import Project 
@@ -28,6 +28,21 @@ class Challenge(ModelBase):
                                    related_name='challenges')
 
     is_open = models.BooleanField()
+
+    def save(self):
+        """Make sure each challenge has a unique slug."""
+        count = 1
+        if not self.slug:
+            slug = slugify(self.title)
+            self.slug = slug
+            while True:
+                existing = Challenge.objects.filter(slug=self.slug)
+                if len(existing) == 0:
+                    break
+                self.slug = slug + str(count)
+                count += 1
+        super(Challenge, self).save()
+admin.site.register(Challenge)    
 
 class Submission(ModelBase):
     """ A submitted entry for a Challenge """ 
