@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'preferences',
     'drumbeatmail',
     'links',
+    'challenges', 
     'django_push.subscriber',
     'djcelery',
     'events',
