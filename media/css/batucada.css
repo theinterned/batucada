@@ -2168,27 +2168,32 @@ p:empty {
 /* Messages */
 
 .messages {
-	list-style: none;
-	margin: -16px auto 9px;
-	width: 776px;
-	width:942px;
-	padding: 9px;
-	font-size: 14px;
-	text-align: center;
-	color: #fff;
-	text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
-	background: url("/media/images/masthead.bg.png") repeat scroll 0 0 transparent;
-	border-radius: 4px;
-	-moz-border-radius: 4px;	
+    list-style: none;
+}
+.messages li {
+    margin: -16px auto 9px;
+    width: 942px;
+    padding: 9px;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+.messages li.success, .messages li.info {
+    background-color: green;
+}
+.messages li.error {
+    background-color: #a00;
 }
 .signin .messages {
-	margin-top: -56px;
-	margin-bottom: 18px;
-	width: 412px;
-	}
-
+    margin-top: -56px;
+    margin-bottom: 18px;
+    width: 412px;
+}
 .messages li p:last-child {
-	margin: 0;
+    margin: 0;
 }
 /* End of messages */
 
