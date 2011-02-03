@@ -11,9 +11,10 @@
       <form action="{% locale_url users_register %}" method="post">
         {% csrf_token %}
         <div class="field{% if form.display_name.errors %} error{% endif %}">
-          <label for="id_display_name">{{ _('Full Name') }}</label>
+          <label for="id_display_name">{{ _('Display Name') }}</label>
           {{ form.display_name }}
           {{ form.display_name.errors }}
+          <small class="hint">{{ _('A name that will identify you to other users. This is optional.') }}</small>
         </div>
         <div id="username" class="field{% if form.username.errors %} error{% endif %}">
           <label for="id_username">{{ _('Username') }}</label>
