@@ -14,9 +14,10 @@
       <form action="{% locale_url users_profile_create %}" method="post">
 	{% csrf_token %}
 	<p>
-	  <label for="id_display_name">{{ _('Full Name') }}</label>
+	  <label for="id_display_name">{{ _('Display Name') }}</label>
 	  {{ form.display_name }}
 	  {{ form.display_name.errors }}
+          <small class="hint">{{ _('A name that will identify you to other users. This is optional.') }}</small>          
 	</p>
 	<p id="username">
 	  <label for="id_username">{{ _('Username') }}</label>
