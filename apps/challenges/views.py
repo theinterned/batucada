@@ -44,9 +44,11 @@ def create_challenge(request, project_id):
 
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
-
+    submissions = challenge.submission_set.all()[0:10] # TODO: order by created_on
+    
     context = {
-        'challenge' : challenge
+        'challenge' : challenge,
+        'submissions' : submissions
     }
 
     return render_to_response('challenges/challenge.html', context,

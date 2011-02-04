@@ -31,7 +31,7 @@
 
 <div id="main">
   <ul id="posts">
-    {% for submission in challenge.submission_set.all %}
+    {% for submission in submissions %}
       {% include "challenges/_submission_resource.html" %}
     {% endfor %}
   </ul>
