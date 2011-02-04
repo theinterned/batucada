@@ -30,8 +30,10 @@
 </div><!-- /#sidebar -->
 
 <div id="main">
-  <ul id="submissions">
-    <li>submissions go here</li><!-- TODO -->
+  <ul id="posts">
+    {% for submission in challenge.submission_set.all %}
+      {% include "challenges/_submission_resource.html" %}
+    {% endfor %}
   </ul>
 </div>
 {% endblock %}
