@@ -12,5 +12,5 @@ urlpatterns = patterns('',
   # Submissions
   url(r'^(?P<slug>[\w-]+)/submission/create', 
       'challenges.views.create_submission',
-      name='submission_create')
+      name='submissions_create')
 )
