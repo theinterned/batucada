@@ -34,10 +34,13 @@ def create_challenge(request, project_id):
             messages.error(request, _('Unable to create your challenge.'))
     else:
         form = ChallengeForm()
-    return render_to_response('challenges/challenge_edit.html', {
+
+    context = {
         'form': form,
         'project': project,
-    }, context_instance=RequestContext(request))
+    }
+    return render_to_response('challenges/challenge_edit.html', context,
+                              context_instance=RequestContext(request))
 
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
@@ -49,5 +52,33 @@ def show_challenge(request, slug):
     return render_to_response('challenges/challenge.html', context,
                               context_instance=RequestContext(request))
     
-def create_submission(request):
-    pass
+def create_submission(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    user = request.user.get_profile()
+
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST)
+        if form.is_valid():
+            submission = form.save(commit=False)
+            submission.created_by = user
+            submission.save()
+
+            submission.challenge.add(challenge)
+            
+            messages.success(request, _('Your submission has been created'))
+
+            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+                'slug': challenge.slug,
+                }))
+        else:
+            messages.error(request, _('Unable to create your submission'))
+    else:
+        form = SubmissionForm()
+
+    context = {
+        'form' : form,
+        'challenge' : challenge
+    }
+
+    return render_to_response('challenges/submission_create.html', context,
+                              context_instance=RequestContext(request))

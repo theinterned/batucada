@@ -4,7 +4,17 @@
 {% block title %}{{ challenge.title }}{% endblock %}
 
 {% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
+  </nav>
 
+  <div id="project-actions">
+    <a class="button" href="{% locale_url submissions_create slug=challenge.slug %}">{{ _('Enter Submission') }}</a>
+  </div>
+</div>
 {% endblock %}
 
 {% block bodyid %}challenge_landing{% endblock %}
