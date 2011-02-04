@@ -50,8 +50,6 @@ class Submission(ModelBase):
     description = models.TextField()
     description_html = models.TextField(null=True, blank=True)
 
-    slug = models.SlugField(unique=True)    
-
     challenge = models.ManyToManyField(Challenge)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='submissions')
