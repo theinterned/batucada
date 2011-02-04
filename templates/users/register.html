@@ -38,6 +38,7 @@
           <label for="id_email">{{ _('Email Address') }}</label>
           {{ form.email }}
           {{ form.email.errors }}
+          <small class="hint">{{ _('Required to send you notifications about your Drumbeat account.') }}</small>
         </div>
         <div class="consents">
           <div class="field inline_label{% if form.newsletter.errors %} error{% endif %}">
