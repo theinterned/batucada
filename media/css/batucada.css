@@ -2231,3 +2231,56 @@ img.close_button {
 .welcome p {
 	/*padding: 0 24px;*/
 }
+
+#about { }
+  #about #content {
+    margin-bottom: 45px;
+  }
+  #about #content h2 {
+    font-size: 24px;
+  }
+  #about #content h2 {
+    padding: 50px 0 10px;
+  }
+  #about #content h1 {
+    padding: 0 0 10px;
+  }
+  
+  #about #content em {
+    font-weight: bold;
+    font-style: normal;
+    font-size: 14px;
+  }
+
+  #about #content section {
+    clear: both;
+  }
+  #about #content section img {
+    float: left;
+    padding: 0 15px 0 0;
+    width: 500px;
+  }
+  
+  #about #content p {
+    margin: 0 0 15px;
+  }
+  #about #content p.clear {
+    padding: 15px 0 0 0;
+    clear: both;
+  }
+  
+  #about #content ul {
+    margin: 15px 0 0 530px;
+  }
+  #about #content ul.clear {
+    margin: 15px 0 0 25px;
+  }
+  
+  #about #content ul li {
+    margin: 5px 0 0;
+  }
+  #about #content ol {
+    margin-left: 535px;
+  }
+   
+  
