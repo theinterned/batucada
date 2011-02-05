@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ challenge.title }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url challenges_show slug=challenge.slug %}">{{ challenge.title }}</a>
+  </nav>
+
+  <div id="project-actions">
+    <a class="button" href="{% locale_url submissions_create slug=challenge.slug %}">{{ _('Enter Submission') }}</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block bodyid %}challenge_landing{% endblock %}
+
+{% block body %}
+<div id="sidebar">
+  <section id="challenge" class="panel">
+    <h1 id="challenge-title">{{ challenge.title }}</h1>
+    <h2 id="project-name">
+      <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
+    </h2>
+
+    <dl id="project-stats">
+      <dt>{{ _('Submissions') }}:</dt>
+      <dd>{{ nsubmissions }}</dd>
+
+      <dt>{{ _('Start date') }}:</dt>
+      <dd>{{ challenge.start_date  }}</dd>
+
+      <dt>{{ _('End date') }}:</dt>
+      <dd>{{ challenge.end_date  }}</dd>      
+    </dl>
+  </section>
+
+  <div id="challenge-description">
+    {{ challenge.description }}
+  </div>
+</div><!-- /#sidebar -->
+
+<div id="main">
+  <ul id="posts">
+    {% for submission in submissions %}
+      {% include "challenges/_submission_resource.html" %}
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+

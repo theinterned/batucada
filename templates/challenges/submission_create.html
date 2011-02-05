@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block body %}
+<section class="modal{% if challenge %} nav{% endif %}">
+  <article>
+    <h1>
+      {{ _('Create Submission') }}
+    </h1>
+
+    <fieldset id="submission_edit" class="submission edit">
+      <form method="post" action="{% locale_url submissions_create slug=challenge.slug%}">
+        {% csrf_token %}
+        <div class="field{% if form.title.errors %} error{% endif %}">
+          <label for="id_name">{{ _('Submission Title') }}</label>
+          <span class="hint block"></span>
+          {{ form.title }}
+          {{ form.title.errors }}
+        </div>
+
+        <div class="field{% if form.description.errors %} error{% endif %}">
+          <label for="id_name">{{ _('Description') }}</label>
+          <span class="hint block"></span>
+          {{ form.description }}
+          {{ form.description.errors }}
+        </div>
+
+        <p class="buttons">    
+          <a class="button" href="{% locale_url challenges_show slug=challenge.slug %}">{{ _('Cancel') }}</a>
+          <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+        </p>
+
+      </form>
+    </fieldset>
+
+  </article>
+</section>
+{% endblock %}
