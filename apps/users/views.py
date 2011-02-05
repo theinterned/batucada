@@ -304,6 +304,9 @@ def profile_create(request):
                 'registration.').format(profile.email)
         messages.info(request, msg)
         return http.HttpResponseRedirect(reverse('dashboard_index'))
+    else:
+        messages.error(request, _('There are errors in this form. Please '
+                                      'correct them and resubmit.'))
     return render_to_response('dashboard/setup_profile.html', {
         'form': form,
     }, context_instance=RequestContext(request))
