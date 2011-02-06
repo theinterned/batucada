@@ -16,6 +16,7 @@ from projects import forms as project_forms
 from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia
 
+from relationships.models import Relationship
 from activity.models import Activity
 from links.models import Link
 from statuses.models import Status
@@ -37,9 +38,12 @@ def show(request, slug):
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
     files = project.projectmedia_set.all()
+    followers_count = Relationship.objects.filter(
+        target_project=project).count()
     context = {
         'project': project,
         'following': is_following,
+        'followers_count': followers_count,
         'activities': activities,
         'update_count': nstatuses,
         'links': links,
