@@ -238,6 +238,16 @@ def list(request):
     featured = Project.objects.filter(featured=True)
     new = Project.objects.all().order_by('-created_on')[:4]
     active = Project.objects.get_popular(limit=4)
+
+    def assign_counts(projects):
+        for project in projects:
+            project.followers_count = Relationship.objects.filter(
+                target_project=project).count()
+
+    assign_counts(featured)
+    assign_counts(new)
+    assign_counts(active)
+
     return render_to_response('projects/gallery.html', {
         'featured': featured,
         'new': new,

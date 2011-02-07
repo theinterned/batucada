@@ -11,6 +11,7 @@ from users.models import UserProfile
 from users.forms import CreateProfileForm
 from projects.models import Project
 from dashboard.models import FeedEntry
+from relationships.models import Relationship
 
 
 @anonymous_only
@@ -20,9 +21,12 @@ def splash(request):
     projects = Project.objects.filter(featured=True)
     if projects:
         project = random.choice(projects)
+        project.followers_count = Relationship.objects.filter(
+            target_project=project).count()
     activities = Activity.objects.all().order_by('-created_on')[0:10]
     feed_entries = FeedEntry.objects.all().order_by('-created_on')[0:4]
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
+
     return render_to_response('dashboard/splash.html', {
         'activities': activities,
         'featured_project': project,
