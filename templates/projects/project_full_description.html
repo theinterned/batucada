@@ -2,6 +2,7 @@
 {% load l10n_tags %}
 
 {% block title %}{{ project.name }}{% endblock %}
+{% block bodyid %}project_description{% endblock %}
 
 {% block breadcrumbs %}
   <div class="container">
@@ -21,10 +22,6 @@
   </div> <!-- /.container -->
 {% endblock %}
 {% block body %}
-<h2>{{ project.name }}</h2>
-<p>
-  {{ project.detailed_description_html|safe }}
-</p>
-
+{{ project.detailed_description_html|safe }}
 {% include "_footer.html" %}
 {% endblock %}

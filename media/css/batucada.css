@@ -2233,7 +2233,7 @@ img.close_button {
 }
 
 #about { }
-  #events #content, #about #content {
+  #project_description #content, #events #content, #about #content {
     margin-bottom: 45px;
   }
   #events #content h2,
@@ -2319,3 +2319,15 @@ img.close_button {
     width: 450px;
     float: right;
   }
+
+#project_description #content h1 {
+    font-size: 24px;
+    padding: 10px 0px;
+}
+#project_description #content h2 {
+    font-size: 20px;
+    padding: 10px 0px;
+}
+#project_description #content img {
+    padding: 10px 0px;
+}
