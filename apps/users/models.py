@@ -92,6 +92,7 @@ class UserProfile(ModelBase):
     location = models.CharField(max_length=255, blank=True, default='')
     featured = models.BooleanField()
     newsletter = models.BooleanField()
+    discard_welcome = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
