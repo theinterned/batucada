@@ -6,6 +6,7 @@ import hashlib
 import os
 
 from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
@@ -181,3 +182,4 @@ class UserProfile(ModelBase):
     @property
     def name(self):
         return self.display_name or self.username
+admin.site.register(UserProfile)
