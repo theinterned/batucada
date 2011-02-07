@@ -39,8 +39,9 @@ def splash(request):
 @login_required
 def hide_welcome(request):
     profile = request.user.get_profile()
-    profile.discard_welcome = True
-    profile.save()
+    if not profile.discard_welcome:
+        profile.discard_welcome = True
+        profile.save()
     if request.is_ajax():
         return HttpResponse()
     return HttpResponseRedirect(reverse('dashboard_index'))
