@@ -178,7 +178,8 @@ var batucada = {
                 $(e.target).parent().submit();
                 return false;
             });
-            $('.close_button').bind('click', function() {
+            $('.close_button').bind('click', function(e) {
+                e.preventDefault();
                 $('.welcome').animate({
                     opacity: 'hide',
                     height: 'hide',
@@ -186,7 +187,9 @@ var batucada = {
                     paddingBottom: 0,
                     marginTop: 0,
                     marginBottom: 0
-                }, 600, 'jswing');
+                }, 600, 'jswing', function() {
+                    $.post('/broadcasts/hide_welcome/');
+                });
             });
         }
     },

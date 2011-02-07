@@ -4,6 +4,8 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 from activity.models import Activity
 from users.decorators import anonymous_only, login_required
@@ -26,13 +28,22 @@ def splash(request):
     activities = Activity.objects.all().order_by('-created_on')[0:10]
     feed_entries = FeedEntry.objects.all().order_by('-created_on')[0:4]
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
-
     return render_to_response('dashboard/splash.html', {
         'activities': activities,
         'featured_project': project,
         'feed_entries': feed_entries,
         'feed_url': feed_url,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def hide_welcome(request):
+    profile = request.user.get_profile()
+    profile.discard_welcome = True
+    profile.save()
+    if request.is_ajax():
+        return HttpResponse()
+    return HttpResponseRedirect(reverse('dashboard_index'))
 
 
 @login_required(profile_required=False)
@@ -65,12 +76,14 @@ def dashboard(request):
         Q(actor__in=user_ids) | Q(project__in=project_ids),
     ).order_by('-created_on')[0:25]
     user_projects = Project.objects.filter(created_by=profile)
+    show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
         'users_following': users_following,
         'users_followers': users_followers,
         'projects_following': projects_following,
         'activities': activities,
         'projects': user_projects,
+        'show_welcome': show_welcome,
     }, context_instance=RequestContext(request))
 
 
