@@ -98,6 +98,9 @@ class RegisterForm(forms.ModelForm):
         """Make sure that username has no invalid characters."""
         username = self.cleaned_data['username']
         slug_validator(username, lower=False)
+        if username == 'admin':
+            self._errors['username'] = forms.util.ErrorList([
+                _('Please choose another username.')])
         return username
 
     def clean_password(self):
