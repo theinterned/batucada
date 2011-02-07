@@ -51,16 +51,14 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
-	{% if show_welcome %}
-		<article class="welcome">
-                <header><a href="{% locale_url dashboard_hide_welcome %}"><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"></a></header>
-		<h1>Welcome to Drumbeat!</h1>
-		<p>Your profile is a little bit bare right now. It could really use a photo and description so people know who you are. Please <a href="{% locale_url users_profile_edit %}">{{ _('update your profile') }}</a>. 
-		</p>
-		<p>You may also want to take a look at all the <a href="{% locale_url projects_gallery %}">{{ _('projects on Drumbeat') }}</a> to find some that interests you.
-		</p>
-	  </article>
-	{% endif %}
+  {% if show_welcome %}
+    <article class="welcome">
+      <header><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"></a></header>
+      <h1>Welcome to Drumbeat!</h1>
+      <p>We've changed things up a bit! Drumbeat is all about connecting you with people and projects building a more awesome web and world.</p>
+      <p>To get started, you should <a href="{% locale_url users_profile_edit %}" title="update your profile">update your profile</a>. This is a great way to tell people a bit more about yourself. Then find <a href="{% locale_url users_user_list %}" title="People">people</a> and <a href="{% locale_url projects_gallery %}" title="Projects">projects</a> that interest you and start following them! You can also <a href="{% locale_url projects_create %}" title="Create a Project">create your own project</a>.</p>
+    </article>
+  {% endif %}
   <div id="create-post">
     <div class="post-container">
       <form id="post-status-update" method="post" action="{% locale_url statuses_create %}">
