@@ -1695,7 +1695,7 @@ header {}
 	font-size: 12px;
 	line-height: 1.5;
 	}
-#splash #main aside #planet_drumbeat > h1 a {
+#splash #main aside #planet_drumbeat > h1 a.feed-link {
 	display: block;
 	width: 16px; height: 16px;
 	position: absolute;

@@ -45,7 +45,7 @@
       </section>
     	{% endif %}
       <section id="planet_drumbeat">
-        <h1>{{ _('Planet Drumbeat') }} <a href="{{ feed_url }}" title="{{ _('Subscribe to the Planet Drumbeat feed') }}"> {{ _('feed') }}</a></h1>
+        <h1><a href="http://planet.drumbeat.org/" title="{{ _('Planet Drumbeat') }}">{{ _('Planet Drumbeat') }}</a> <a class="feed-link" href="{{ feed_url }}" title="{{ _('Subscribe to the Planet Drumbeat feed') }}"> {{ _('feed') }}</a></h1>
 	{% for entry in feed_entries %}
         <article>
           <h1><a href="{{ entry.link }}">{{ entry.title }}</a></h1>
