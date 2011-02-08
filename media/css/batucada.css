@@ -1668,11 +1668,11 @@ header {}
 #splash #main > .container > h1 {	
 	display: none;
 	}
-#splash #main asside {
+#splash #main aside {
 	display: block;
 	margin-left: 660px;
 	}	
-#splash #main asside > section > h1{
+#splash #main aside > section > h1{
 	position: relative;
 	padding-bottom: 5px;
 	margin-bottom: 18px;
@@ -1690,12 +1690,12 @@ header {}
 	display: block;
 	margin: 0 auto 18px;
 	}	
-#splash #main asside #planet_drumbeat p{
+#splash #main aside #planet_drumbeat p{
 	color: #777;
 	font-size: 12px;
 	line-height: 1.5;
 	}
-#splash #main asside #planet_drumbeat > h1 a {
+#splash #main aside #planet_drumbeat > h1 a {
 	display: block;
 	width: 16px; height: 16px;
 	position: absolute;
@@ -1703,11 +1703,11 @@ header {}
 	text-indent: -9999px;
 	background: url(/media/images/feed-icon-16x16.png) 0 0 no-repeat;
 	}		
-#splash #main asside #planet_drumbeat article h1{
+#splash #main aside #planet_drumbeat article h1{
 	font-size: 12px;
 	line-height: 1.5;
 	}
-#splash #main asside #planet_drumbeat > h1 a:hover{
+#splash #main aside #planet_drumbeat > h1 a:hover{
 	opacity: 0.7;
 	}
 /* SIGNIN / SIGNUP */
