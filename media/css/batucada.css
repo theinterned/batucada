@@ -1763,6 +1763,7 @@ header {}
 .signin .modal .submit {
 	line-height: 30px;
 	height: 30px;
+        display: block;
 	}
 .signin .modal .submit a{
 	display: inline-block;
