@@ -58,4 +58,4 @@ def listener(notification, **kwargs):
     if not sender:
         return
     tasks.HandleNotification.apply_async(args=(notification, sender))
-updated.connect(listener)
+updated.connect(listener, sender=Subscription)
