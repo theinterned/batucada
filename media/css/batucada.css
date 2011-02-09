@@ -1,5 +1,6 @@
 /* @override 
 	http://127.0.0.1:8000/media/css/batucada.css?v=1
+	https://drumbeat.org/media/css/batucada.css?v=1
 */
 
 html {
@@ -2134,9 +2135,6 @@ div.warning h2 {
 .error label {	
 	color: #a00;
 	}
-p:empty {
-	display: none;
-}
 /* special case errors */
 .edit.image .errorlist,
 .edit.links .errorlist {
