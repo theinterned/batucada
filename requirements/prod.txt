@@ -17,5 +17,5 @@ bleach==0.5.0
 -e git://github.com/paulosman/python-xrd#egg=xrd
 -e git://github.com/paulosman/django-wellknown.git#egg=wellknown
 -e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
--e git://github.com/brutasse/django-push.git#egg=django_push
+-e git://github.com/paulosman/django-push.git#egg=django_push
 -e git://github.com/paulosman/django-openid-auth.git#egg=django_openid_auth
