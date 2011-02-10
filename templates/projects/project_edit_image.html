@@ -3,7 +3,7 @@
 {% block bodyclasses %}project edit image{% endblock %}
 
 {% block form %}
-<fieldset id="project_edit_image" class="project edit image">
+<fieldset id="project_edit_image" class="project edit image tabpane">
 <form action="{% locale_url projects_edit_image slug=project.slug %}" method="post" enctype="multipart/form-data" data-url="{% locale_url projects_edit_image_async slug=project.slug %}">
   {% csrf_token %}
   {% if project.image %}

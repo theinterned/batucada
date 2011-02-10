@@ -409,7 +409,7 @@ $(document).ready(function() {
         return false;
     });
     
-    $('.modal nav.tabs a').tabLinks('section fieldset');
+    $('.modal nav.tabs a').tabLinks('.tabpane');
 });
 
 // Recaptcha
