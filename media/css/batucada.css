@@ -91,6 +91,7 @@ a.button,
 input[type=submit],
 button[type=submit],
 .button.submit{
+    position: relative;
     color: white;
     font-weight: bold;
     text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
