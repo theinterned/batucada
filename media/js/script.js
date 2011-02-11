@@ -42,22 +42,25 @@ var usernameHint = function() {
 
 var usernameAvailability = function() {
     $('#id_username').bind('blur', function() {
-        $.ajax({
-            url: '/check_username/',
-            data: {
-                username: this.value
-            },
-            success: function() {
-                $('#availability').removeClass('okay')
-                    .addClass('warning')
-                    .html('not available');
-            },
-            error: function() {
-                $('#availability').removeClass('warning')
-                    .addClass('okay')
-                    .html('available');
-            }
-        });
+        var $elem = $(this);
+        if ($elem.val().length != 0) {
+            $.ajax({
+                url: '/check_username/',
+                data: {
+                    username: this.value
+                },
+                success: function() {
+                    $('#availability').removeClass('okay')
+                        .addClass('warning')
+                        .html('not available');
+                },
+                error: function() {
+                    $('#availability').removeClass('warning')
+                        .addClass('okay')
+                        .html('available');
+                }
+            });
+        }
     });
 };
 
@@ -175,7 +178,8 @@ var batucada = {
                 $(e.target).parent().submit();
                 return false;
             });
-            $('.close_button').bind('click', function() {
+            $('.close_button').bind('click', function(e) {
+                e.preventDefault();
                 $('.welcome').animate({
                     opacity: 'hide',
                     height: 'hide',
@@ -183,7 +187,9 @@ var batucada = {
                     paddingBottom: 0,
                     marginTop: 0,
                     marginBottom: 0
-                }, 600, 'jswing');
+                }, 600, 'jswing', function() {
+                    $.post('/broadcasts/hide_welcome/');
+                });
             });
         }
     },

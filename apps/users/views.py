@@ -419,6 +419,8 @@ def check_username(request):
     username = request.GET.get('username', None)
     if not username:
         return http.HttpResponse(status=404)
+    if username == 'admin':  # blacklisted
+        return http.HttpResponse()
     try:
         UserProfile.objects.get(username=username)
         return http.HttpResponse()
