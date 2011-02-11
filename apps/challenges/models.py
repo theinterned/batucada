@@ -19,6 +19,7 @@ class ChallengeManager(caching.base.CachingManager):
             q = q.filter(id=project_id)
         return q
 
+
 class Challenge(ModelBase):
     """ Inovation (design) Challenges """
     title = models.CharField(max_length=100, unique=True)
@@ -37,6 +38,9 @@ class Challenge(ModelBase):
     is_open = models.BooleanField()
 
     objects = ChallengeManager()
+
+    def is_active(self):
+        return self.start_date < datetime.now() and self.end_date > datetime.now()
 
     def save(self):
         """Make sure each challenge has a unique slug."""

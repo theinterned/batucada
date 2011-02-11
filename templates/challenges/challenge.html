@@ -14,7 +14,9 @@
   </nav>
 
   <div id="project-actions">
+    {% if challenge.is_active %}
     <a class="button" href="{% locale_url submissions_create slug=challenge.slug %}">{{ _('Enter Submission') }}</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
