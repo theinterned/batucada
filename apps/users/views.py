@@ -12,12 +12,14 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
+from django.forms import ValidationError
 
 from django_openid_auth import views as openid_views
 from commonware.decorators import xframe_sameorigin
 
 from users import forms
 from users.models import UserProfile
+from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from links.models import Link
 from projects.models import Project
@@ -417,12 +419,9 @@ def profile_edit_links_delete(request, link):
 
 def check_username(request):
     username = request.GET.get('username', None)
-    if not username:
-        return http.HttpResponse(status=404)
-    if username == 'admin':  # blacklisted
-        return http.HttpResponse()
+    f = UsernameField()
     try:
-        UserProfile.objects.get(username=username)
+        f.clean(username)
+    except ValidationError:
         return http.HttpResponse()
-    except UserProfile.DoesNotExist:
-        return http.HttpResponse(status=404)
+    return http.HttpResponse(status=404)
