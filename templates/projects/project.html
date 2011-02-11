@@ -19,6 +19,7 @@
       <div id="project-actions">
         <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
         <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
+        <a class="button" href="{% locale_url challenges_create project_id=project.pk %}">{{ _('Create Challenge') }}</a>
       </div>
     {% endif %}
 
@@ -125,6 +126,13 @@
       {{ project.created_by.bio }}
     </div>
     
+    <div class="challenges">
+      <h3>{{ _('Active Challenges') }}</h3>
+      {% for challenge in challenges %}
+      <a href="{% locale_url challenges_show slug=challenge.slug %}">{{challenge.title}}</a>
+      {% endfor %}
+    </div> <!-- /.challenges -->
+
   </section> <!-- /#project-lead -->
 </div> <!-- /#sidebar -->
 
