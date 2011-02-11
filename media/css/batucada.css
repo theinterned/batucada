@@ -1,5 +1,6 @@
 /* @override 
 	http://127.0.0.1:8000/media/css/batucada.css?v=1
+	https://drumbeat.org/media/css/batucada.css?v=1
 */
 
 html {
@@ -90,6 +91,7 @@ a.button,
 input[type=submit],
 button[type=submit],
 .button.submit{
+    position: relative;
     color: white;
     font-weight: bold;
     text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
@@ -1762,6 +1764,7 @@ header {}
 .signin .modal .submit {
 	line-height: 30px;
 	height: 30px;
+        display: block;
 	}
 .signin .modal .submit a{
 	display: inline-block;
@@ -2133,9 +2136,6 @@ div.warning h2 {
 .error label {	
 	color: #a00;
 	}
-p:empty {
-	display: none;
-}
 /* special case errors */
 .edit.image .errorlist,
 .edit.links .errorlist {
@@ -2233,37 +2233,46 @@ img.close_button {
 }
 
 #about { }
-  #about #content {
+  #project_description #content, #events #content, #about #content {
     margin-bottom: 45px;
   }
+  #events #content h2,
   #about #content h2 {
     font-size: 24px;
-  }
-  #about #content h2 {
     padding: 50px 0 10px;
+    clear: both;
   }
+  
+  #events #content h1,
   #about #content h1 {
     padding: 0 0 10px;
   }
   
+  #events #content em,
   #about #content em {
     font-weight: bold;
     font-style: normal;
     font-size: 14px;
   }
 
+  #events #content section,
   #about #content section {
     clear: both;
   }
+  
+  #events #content section img,
   #about #content section img {
     float: left;
     padding: 0 15px 0 0;
     width: 500px;
   }
   
+  #events #content p,
   #about #content p {
     margin: 0 0 15px;
   }
+  
+  #events #content p.clear,
   #about #content p.clear {
     padding: 15px 0 0 0;
     clear: both;
@@ -2276,6 +2285,7 @@ img.close_button {
     margin: 15px 0 0 25px;
   }
   
+  #events #content ul li,
   #about #content ul li {
     margin: 5px 0 0;
   }
@@ -2283,4 +2293,41 @@ img.close_button {
     margin-left: 535px;
   }
    
-  
+#events { }
+  #events #content #take-action {
+    margin: 40px auto 20px auto;
+    clear: both;
+    text-align: center;
+    padding: 0;
+    min-height: 150px;
+    list-style: none;
+  }
+    #events #content #take-action li {
+      float: left;
+      width: 180px;
+      margin-right: 40px;
+      font-size: 15px;
+    }
+    #events #content #take-action li:last-child {
+      margin-right: 0;
+    }
+    #events #content #take-action img {
+      display: block;
+      float: none;
+    }
+  #events #content .side {
+    width: 450px;
+    float: right;
+  }
+
+#project_description #content h1 {
+    font-size: 24px;
+    padding: 10px 0px;
+}
+#project_description #content h2 {
+    font-size: 20px;
+    padding: 10px 0px;
+}
+#project_description #content img {
+    padding: 10px 0px;
+}
