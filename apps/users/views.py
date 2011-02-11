@@ -418,10 +418,16 @@ def profile_edit_links_delete(request, link):
 
 
 def check_username(request):
+    """Validate a username and check for uniqueness."""
     username = request.GET.get('username', None)
     f = UsernameField()
     try:
         f.clean(username)
     except ValidationError:
         return http.HttpResponse()
+    try:
+        UserProfile.objects.get(username=username)
+        return http.HttpResponse()
+    except UserProfile.DoesNotExist:
+        pass
     return http.HttpResponse(status=404)
