@@ -1,7 +1,7 @@
 import logging
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
@@ -12,6 +12,8 @@ from projects.models import Project
 
 from drumbeat import messages
 from users.decorators import login_required
+
+log = logging.getLogger(__name__)
 
 @login_required
 def create_challenge(request, project_id):
@@ -55,9 +57,13 @@ def show_challenge(request, slug):
 
     return render_to_response('challenges/challenge.html', context,
                               context_instance=RequestContext(request))
-    
+
+@login_required
 def create_submission(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
+    if not challenge.is_active():
+        return HttpResponseForbidden()
+    
     user = request.user.get_profile()
 
     if request.method == 'POST':
