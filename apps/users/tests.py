@@ -136,3 +136,14 @@ class TestLogins(TestCase):
             'email': 'foobar123@example.com',
         })
         self.assertEqual(302, ok.status_code)
+
+    def test_check_username_uniqueness(self):
+        path = "/en-US/check_username/"
+        existing = self.client.get(path, {
+            'username': self.test_username,
+        })
+        self.assertEqual(200, existing.status_code)
+        notfound = self.client.get(path, {
+            'username': 'butterfly',
+        })
+        self.assertEqual(404, notfound.status_code)
