@@ -436,8 +436,9 @@ def check_username(request):
 @login_required
 def following(request):
     user = request.user.get_profile()
-    term = request.GET.get('term', '')
+    term = request.GET.get('term', '').lower()
     usernames = [u.username for u in user.following()
-                 if term in u.username or term in u.display_name]
+                 if term in u.username.lower() or
+                 term in u.display_name.lower()]
     return http.HttpResponse(simplejson.dumps(usernames),
                              mimetype='application/json')
