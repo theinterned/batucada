@@ -1,5 +1,4 @@
 import random
-import itertools
 
 from django.conf import settings
 from django.shortcuts import render_to_response
@@ -103,6 +102,10 @@ def dashboard(request):
         'remote_object__link', 'target_project').filter(
         Q(actor__exact=profile) |
         Q(actor__in=user_ids) | Q(project__in=project_ids),
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(target_user__isnull=True),
+        Q(project__in=project_ids),
     ).order_by('-created_on')[0:25]
     user_projects = Project.objects.filter(created_by=profile)
     show_welcome = not profile.discard_welcome
