@@ -431,3 +431,13 @@ def check_username(request):
     except UserProfile.DoesNotExist:
         pass
     return http.HttpResponse(status=404)
+
+
+@login_required
+def following(request):
+    user = request.user.get_profile()
+    term = request.GET.get('term', '')
+    usernames = [u.username for u in user.following()
+                 if term in u.username or term in u.display_name]
+    return http.HttpResponse(simplejson.dumps(usernames),
+                             mimetype='application/json')
