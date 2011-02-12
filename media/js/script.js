@@ -146,6 +146,13 @@ var batucada = {
         onload: function() {
         }
     },
+    compose_message: {
+        onload: function() {
+            $('#id_recipient').autocomplete({
+                source: ['userone', 'usertwo'],
+            });
+        }
+    },
     create_profile: {
         onload: function() {
             usernameHint();
