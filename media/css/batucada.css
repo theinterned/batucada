@@ -2331,3 +2331,20 @@ img.close_button {
 #project_description #content img {
     padding: 10px 0px;
 }
+
+ul.ui-autocomplete {
+    display: block;
+    width: 128px;
+    list-style: none;
+    z-index: 1;
+    background: #636363;
+}
+
+ul.ui-autocomplete li a {
+    display: block;
+    line-height: 1.5em;
+    padding: 0.2em 0.4em;
+    text-decoration: none;
+    color: #fff;
+    font-weight: normal;
+}
