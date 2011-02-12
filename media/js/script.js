@@ -45,7 +45,7 @@ var usernameAvailability = function() {
         var $elem = $(this);
         if ($elem.val().length != 0) {
             $.ajax({
-                url: '/check_username/',
+                url: '/ajax/check_username/',
                 data: {
                     username: this.value
                 },
@@ -149,7 +149,8 @@ var batucada = {
     compose_message: {
         onload: function() {
             $('#id_recipient').autocomplete({
-                source: ['userone', 'usertwo'],
+                source: '/ajax/following/',
+                minLength: 2
             });
         }
     },

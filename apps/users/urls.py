@@ -56,9 +56,13 @@ urlpatterns = patterns('',
   url(r'^register/openid/complete/$', 'users.views.register_openid_complete',
       name='users_register_openid_complete'),
 
-  # Profile urls
-  url(r'^check_username/$', 'users.views.check_username',
+  # Ajax handlers
+  url(r'^ajax/check_username/$', 'users.views.check_username',
       name='users_check_username'),
+  url(r'^ajax/following/$', 'users.views.following',
+      name='users_followers'),
+
+  # Profile urls
   url(r'^(?P<username>[\w\-\. ]+)/$', 'users.views.profile_view',
       name='users_profile_view'),
   url(r'^profile/edit/$', 'users.views.profile_edit',
