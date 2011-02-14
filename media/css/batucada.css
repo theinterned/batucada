@@ -862,10 +862,14 @@ header {}
 		font-weight: bold;
 	}
 	.card-list .user.card h1{
-		margin: 18px 0 9px 65px;
+		margin: 0.5em 0 1em 65px;
 		font-size: 18px;
+		line-height: 1;
 		font-weight: bold;
-		min-height: 38px;
+		height: 2em;
+		width: 132px;
+		overflow: hidden;
+
 	}
 	/* TODO: set a charachter maximum for project.description that works
 	 * with this layout at /project/list/ */
