@@ -12,7 +12,9 @@ body {
   background: #f3f4f6 url("/media/images/background.jpg") repeat-x center 50px;
   min-height: 101%;
 }
-
+a, a:active, a:visited {
+    text-shadow: none;
+}
 .container {
   width: 960px;
   height: 100%;
@@ -91,6 +93,7 @@ a.button,
 input[type=submit],
 button[type=submit],
 .button.submit{
+    position: relative;
     color: white;
     font-weight: bold;
     text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
@@ -2329,4 +2332,27 @@ img.close_button {
 }
 #project_description #content img {
     padding: 10px 0px;
+}
+
+ul.ui-autocomplete {
+    display: block;
+    width: 128px;
+    list-style: none;
+    z-index: 1;
+    background: #fff;
+    border: 1px solid #000;
+}
+
+ul.ui-autocomplete li a {
+    display: block;
+    line-height: 1.5em;
+    padding: 0.2em 0.4em;
+    text-decoration: none;
+    color: #000;
+    font-weight: normal;
+}
+
+ul.ui-autocomplete #ui-active-menuitem {
+    background-color: #0a246a;
+    color: #fff;
 }

@@ -6,18 +6,21 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
+from django.forms import ValidationError
 
 from django_openid_auth import views as openid_views
 from commonware.decorators import xframe_sameorigin
 
 from users import forms
 from users.models import UserProfile
+from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from links.models import Link
 from projects.models import Project
@@ -264,7 +267,11 @@ def profile_view(request, username):
     links = Link.objects.select_related('subscription').filter(user=profile)
     activities = Activity.objects.select_related(
         'actor', 'status', 'project').filter(
-        actor=profile).order_by('-created_on')[0:25]
+        actor=profile,
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(target_user__isnull=False),
+    ).order_by('-created_on')[0:25]
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -416,13 +423,27 @@ def profile_edit_links_delete(request, link):
 
 
 def check_username(request):
+    """Validate a username and check for uniqueness."""
     username = request.GET.get('username', None)
-    if not username:
-        return http.HttpResponse(status=404)
-    if username == 'admin':  # blacklisted
+    f = UsernameField()
+    try:
+        f.clean(username)
+    except ValidationError:
         return http.HttpResponse()
     try:
         UserProfile.objects.get(username=username)
         return http.HttpResponse()
     except UserProfile.DoesNotExist:
-        return http.HttpResponse(status=404)
+        pass
+    return http.HttpResponse(status=404)
+
+
+@login_required
+def following(request):
+    user = request.user.get_profile()
+    term = request.GET.get('term', '').lower()
+    usernames = [u.username for u in user.following()
+                 if term in u.username.lower() or
+                 term in u.display_name.lower()]
+    return http.HttpResponse(simplejson.dumps(usernames),
+                             mimetype='application/json')
