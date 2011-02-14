@@ -52,6 +52,8 @@ class SubscribeToFeed(Task):
             log.debug("Attempting subscription of topic %s with hub %s" % (
                 feed_url, hub))
             subscription = Subscription.objects.subscribe(feed_url, hub=hub)
+            log.info("Created subscription with callback url: %s" % (
+                subscription.callback_url,))
         except SubscriptionError, e:
             log.warning("SubscriptionError. Retrying (%s)" % (link.url,))
             log.warning("Error: %s" % (str(e),))
@@ -105,8 +107,10 @@ class HandleNotification(Task):
         title = getattr(entry, 'title', None)
         uri = getattr(entry, 'link', None)
         if not (title and uri):
+            self.log.warn("Received pubsub update with no title or uri")
             return
         for link in sender.link_set.all():
+            self.log.info("Creating activity entry for link: %d" % (link.id,))
             remote_obj = RemoteObject(
                 link=link, title=title, uri=uri, object_type=object_type)
             remote_obj.save()
@@ -118,9 +122,9 @@ class HandleNotification(Task):
 
     def run(self, notification, sender, **kwargs):
         """Parse feed and create activity entries."""
-        log = self.get_logger(**kwargs)
+        self.log = self.get_logger(**kwargs)
         prefix = self.get_activity_namespace_prefix(notification)
         for entry in notification.entries:
-            log.debug("Received notification of entry: %s, %s" % (
+            self.log.debug("Received notification of entry: %s, %s" % (
                 entry.title, entry.link))
             self.create_activity_entry(entry, sender, activity_prefix=prefix)
