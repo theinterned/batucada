@@ -1,6 +1,7 @@
 /* @override 
 	http://127.0.0.1:8000/media/css/batucada.css?v=1
 	https://drumbeat.org/media/css/batucada.css?v=1
+	http://0.0.0.0:8000/media/css/batucada.css?v=1
 */
 
 html {
@@ -832,7 +833,7 @@ header {}
 		-moz-border-radius:3px;
 		-o-border-radius:3px;
 		-webkit-border-radius:3px;
-		background: #fff;
+		background: #fff;		
 	}
 	.card-list .card img{
 		margin-bottom: 0.5em;		
@@ -846,15 +847,19 @@ header {}
 		-webkit-border-radius: 5px;
 		behavior: url("/media/css/PIE.htc");
 	}
+	.card-list .user.card img{
+		float: left;
+		vertical-align: middle;
+	}
+	.card-list .info{
+		height: 7.5em;
+		overflow: hidden;
+	}
 	.card-list .project.card h1{
 		margin: 0 0 0.5em;
 		font-size: 14px;
 		line-height: 18px;
 		font-weight: bold;
-	}
-	.card-list .user.card img{
-		float: left;
-		vertical-align: middle;
 	}
 	.card-list .user.card h1{
 		margin: 18px 0 9px 65px;
