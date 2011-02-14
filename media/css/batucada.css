@@ -891,6 +891,9 @@ header {}
 	.card-list .user.card .description {
 		height: 6em;
 	}
+	.card-list #new_users .card .description  {	
+		display: none;
+	}
 	.card-list .card .meta{
 		background: #f4f4f4;
 		padding: 8px;
