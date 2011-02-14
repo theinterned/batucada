@@ -106,6 +106,9 @@ def dashboard(request):
         Q(verb='http://activitystrea.ms/schema/1.0/follow'),
         Q(target_user__isnull=True),
         Q(project__in=project_ids),
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(actor=profile),
     ).order_by('-created_on')[0:25]
     user_projects = Project.objects.filter(created_by=profile)
     show_welcome = not profile.discard_welcome

@@ -45,7 +45,7 @@ var usernameAvailability = function() {
         var $elem = $(this);
         if ($elem.val().length != 0) {
             $.ajax({
-                url: '/check_username/',
+                url: '/ajax/check_username/',
                 data: {
                     username: this.value
                 },
@@ -144,6 +144,14 @@ var attachFileUploadHandler = function($inputs) {
 var batucada = {
     splash: {
         onload: function() {
+        }
+    },
+    compose_message: {
+        onload: function() {
+            $('#id_recipient').autocomplete({
+                source: '/ajax/following/',
+                minLength: 2
+            });
         }
     },
     create_profile: {
