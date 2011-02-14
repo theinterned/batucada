@@ -138,7 +138,7 @@ class TestLogins(TestCase):
         self.assertEqual(302, ok.status_code)
 
     def test_check_username_uniqueness(self):
-        path = "/en-US/check_username/"
+        path = "/ajax/check_username/"
         existing = self.client.get(path, {
             'username': self.test_username,
         })
