@@ -802,9 +802,17 @@ header {}
 		list-style: none;
 		margin: 0; padding: 0;
 	}
+	.ie7 .card-list .project-list,
+  	.ie7 .card-list .user-list,
+  	.ie8 .card-list .project-list,
+  	.ie8 .card-list .user-list {
+		margin-right: -18px;
+	}
   	.card-list .project-list li,
   	.card-list .user-list li{
 		display: inline-block;
+		zoom:1;
+		*display:inline;
 		width: 215px;
 		vertical-align: top;
 		margin: 0 18px 18px 0;
@@ -898,7 +906,9 @@ header {}
 	}
 	.card-list .card dl{
 		display: inline-block;
-		width: 32%;
+		zoom:1;
+		*display:inline;
+		width: 31%;
 	}
 	.card-list .card dd,
 	.card-list .card dt{
