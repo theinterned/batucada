@@ -13,30 +13,46 @@ To install Batucada, you must clone the repository: ::
 
    git clone git://github.com/paulosman/batucada.git
 
-To get started, you'll need to make sure that ``virtualenv`` and ``pip`` are installed. ::
+If you're planning on contributing back to the project, `fork the repository`_ instead in the usual GitHub fashion.
+
+.. _fork the repository: http://help.github.com/forking/
+
+Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them: ::
 
    sudo easy_install virtualenv
    sudo easy_install pip
+   
+Using ``virtualenvwrapper`` is also recommended (see the `installation instructions`_). Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
-I recommend using ``virtualenvwrapper`` to manage your virtual environments. Follow the `installation instructions`_. Once installed, create your virtual environment for ``batucada`` and install the dependencies ::
+   # in .bashrc or .bash_profile
+   export WORKON_HOME=$HOME/.virtualenvs
+   export PIP_VIRTUALENV_BASE=$WORKON_HOME
+   export PIP_RESPECT_VIRTUALENV=true
+   source /usr/bin/virtualenvwrapper.sh
+
+.. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
+
+Now create a virtual environment for ``batucada`` and install its dependencies: ::
 
    cd batucada
-   mkvirtualenv batucada 
+   mkvirtualenv --no-site-packages batucada
    workon batucada
    pip install -r requirements/compiled.txt
    pip install -r requirements/prod.txt
 
-.. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
+Substitute ``requirements/prod.txt`` with ``requirements/dev.txt`` if you'll be doing development. It includes a few extra packages related to testing and debugging.
 
-If you are doing an update, you might find it helps to delete pyc files: ::
+There's a chance that packages listed in ``requirements/compiled.txt`` won't install cleanly if your system is missing some key development libraries. For example, lxml requires ``libxsml2-dev`` and ``libxslt-dev``. These should be available from your system's package manager.
+   
+To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
     find . -name "*.pyc" | xargs rm
 
-You should create a settings_local.py. Most people will be able to get away with the template provided. ::
+Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
    cp settings_local.dist.py settings_local.py
 
-Next, sync the database and run migrations. ::
+Now sync the database and run migrations. ::
 
    python manage.py syncdb --noinput 
 
