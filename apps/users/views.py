@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -266,7 +267,11 @@ def profile_view(request, username):
     links = Link.objects.select_related('subscription').filter(user=profile)
     activities = Activity.objects.select_related(
         'actor', 'status', 'project').filter(
-        actor=profile).order_by('-created_on')[0:25]
+        actor=profile,
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(target_user__isnull=False),
+    ).order_by('-created_on')[0:25]
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -431,3 +436,14 @@ def check_username(request):
     except UserProfile.DoesNotExist:
         pass
     return http.HttpResponse(status=404)
+
+
+@login_required
+def following(request):
+    user = request.user.get_profile()
+    term = request.GET.get('term', '').lower()
+    usernames = [u.username for u in user.following()
+                 if term in u.username.lower() or
+                 term in u.display_name.lower()]
+    return http.HttpResponse(simplejson.dumps(usernames),
+                             mimetype='application/json')

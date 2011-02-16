@@ -3,6 +3,7 @@ import random
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db import connection
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -16,6 +17,32 @@ from dashboard.models import FeedEntry
 from relationships.models import Relationship
 
 
+def splash_page_activities():
+
+    def query_list(query):
+        cursor = connection.cursor()
+        cursor.execute(query)
+        while True:
+            row = cursor.fetchone()
+            if row is None:
+                break
+            yield row[0]
+
+    activity_ids = query_list("""
+        SELECT a.id
+        FROM activity_activity a
+        INNER JOIN users_userprofile u ON u.id = a.actor_id
+        WHERE u.display_name IS NOT NULL
+            AND u.image IS NOT NULL
+            AND u.image != ''
+            AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
+        GROUP BY a.actor_id
+        ORDER BY a.created_on DESC LIMIT 10;
+    """)
+    return Activity.objects.filter(
+        id__in=activity_ids).order_by('-created_on')
+
+
 @anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
@@ -25,7 +52,7 @@ def splash(request):
         project = random.choice(projects)
         project.followers_count = Relationship.objects.filter(
             target_project=project).count()
-    activities = Activity.objects.all().order_by('-created_on')[0:10]
+    activities = splash_page_activities()
     feed_entries = FeedEntry.objects.all().order_by('-created_on')[0:4]
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
     return render_to_response('dashboard/splash.html', {
@@ -75,6 +102,13 @@ def dashboard(request):
         'remote_object__link', 'target_project').filter(
         Q(actor__exact=profile) |
         Q(actor__in=user_ids) | Q(project__in=project_ids),
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(target_user__isnull=True),
+        Q(project__in=project_ids),
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(actor=profile),
     ).order_by('-created_on')[0:25]
     user_projects = Project.objects.filter(created_by=profile)
     show_welcome = not profile.discard_welcome

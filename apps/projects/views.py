@@ -35,6 +35,8 @@ def show(request, slug):
         is_following = profile.is_following(project)
     activities = Activity.objects.filter(
         Q(project=project) | Q(target_project=project),
+    ).exclude(
+        verb='http://activitystrea.ms/schema/1.0/follow'
     ).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
