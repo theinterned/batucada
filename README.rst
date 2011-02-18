@@ -38,9 +38,7 @@ Now create a virtual environment for ``batucada`` and install its dependencies: 
    mkvirtualenv --no-site-packages batucada
    workon batucada
    pip install -r requirements/compiled.txt
-   pip install -r requirements/prod.txt
-
-Substitute ``requirements/prod.txt`` with ``requirements/dev.txt`` if you'll be doing development. It includes a few extra packages related to testing and debugging.
+   pip install -r requirements/dev.txt
 
 There's a chance that packages listed in ``requirements/compiled.txt`` won't install cleanly if your system is missing some key development libraries. For example, lxml requires ``libxsml2-dev`` and ``libxslt-dev``. These should be available from your system's package manager.
    
