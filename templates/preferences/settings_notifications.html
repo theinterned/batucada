@@ -3,7 +3,7 @@
 {% block bodyclasses %}edit account notifications{% endblock %}
 {% block title %}{{ _('Notification Settings') }}{% endblock %}
 {% block form %}
-<fieldset id="edit_account_notifications" class="edit account notifications">
+<fieldset id="edit_account_notifications" class="edit account notifications tabpane">
     <h2>{{ _('Send me an email when...') }}</h2>
     <form action="{% locale_url preferences_settings %}" method="post">
       {% csrf_token %}

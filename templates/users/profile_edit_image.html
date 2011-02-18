@@ -5,7 +5,7 @@
 {% block bodyclasses %}profile edit image{% endblock %}
 {% block form %}
 
-<fieldset id="profile_edit_image" class="profile edit image">
+<fieldset id="profile_edit_image" class="profile edit image tabpane">
 <form action="{% locale_url users_profile_edit_image %}" method="post" enctype="multipart/form-data"
       data-url="{% locale_url users_profile_edit_image_async %}">
   {% csrf_token %}
