@@ -72,6 +72,12 @@ class CreateProfileForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(CreateProfileForm, self).__init__(*args, **kwargs)
+
+        if not settings.RECAPTCHA_PRIVATE_KEY:
+            del self.fields['recaptcha']
+
 
 class RegisterForm(forms.ModelForm):
     username = UsernameField()
