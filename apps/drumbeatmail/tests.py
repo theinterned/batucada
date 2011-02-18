@@ -27,15 +27,6 @@ class TestDrumbeatMail(test_utils.TestCase):
         self.user_two.save()
         self.user_two.create_django_user()
 
-    def test_messaging_user_not_following(self):
-        form = ComposeForm(data={
-            'recipient': self.user_two,
-            'subject': 'Foo',
-            'body': 'Bar',
-        }, sender=self.user)
-        self.assertTrue(form.is_bound)
-        self.assertFalse(form.is_valid())
-
     def test_messaging_user_following(self):
         print "From test: %s" % (self.user.user,)
         print "From test: %s" % (self.user_two.user,)
