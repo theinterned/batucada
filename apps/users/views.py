@@ -30,6 +30,23 @@ from activity.models import Activity
 log = logging.getLogger(__name__)
 
 
+def unconfirmed_account_notice(request, user):
+    log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
+    msg1 = _(('A link to activate your user account was sent by email '
+              'to your address {0}. You have to click it before you '
+              'can log in.').format(user.email))
+    url = request.build_absolute_uri(
+        reverse('users_confirm_resend',
+                kwargs=dict(username=user.username)))
+    msg2 = _(('If you did not receive the confirmation email, make '
+              'sure your email service did not mark it as "junk '
+              'mail" or "spam". If you need to, you can have us '
+              '<a href="%s">resend the confirmation message</a> '
+              'to your email address mentioned above.') % url)
+    messages.error(request, msg1)
+    messages.info(request, msg2, safe=True)
+
+
 def render_openid_failure(request, message, status, template_name):
     if request.method == 'POST':
         form = forms.OpenIDForm(request.POST)
@@ -84,20 +101,7 @@ def login(request):
 
         if user.confirmation_code:
             logout(request)
-            log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
-            msg1 = _(('A link to activate your user account was sent by email '
-                      'to your address {0}. You have to click it before you '
-                      'can log in.').format(user.email))
-            url = request.build_absolute_uri(
-                reverse('users_confirm_resend',
-                        kwargs=dict(username=user.username)))
-            msg2 = _(('If you did not receive the confirmation email, make '
-                      'sure your email service did not mark it as "junk '
-                      'mail" or "spam". If you need to, you can have us '
-                      '<a href="%s">resend the confirmation message</a> '
-                      'to your email address mentioned above.') % url)
-            messages.error(request, msg1)
-            messages.info(request, msg2, safe=True)
+            unconfirmed_account_notice(request, user)
             return render_to_response('users/signin.html', {
                 'form': auth_forms.AuthenticationForm(),
             }, context_instance=RequestContext(request))
@@ -140,8 +144,17 @@ def login_openid(request):
 @anonymous_only
 def login_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', False)
-    return openid_views.login_complete(
+    r = openid_views.login_complete(
         request, render_failure=render_openid_login_failure)
+    if isinstance(r, http.HttpResponseRedirect):
+        user = request.user.get_profile()
+        if user.confirmation_code:
+            logout(request)
+            unconfirmed_account_notice(request, user)
+            return render_to_response('users/login_openid.html', {
+                'form': forms.OpenIDForm(),
+            }, context_instance=RequestContext(request))
+    return r
 
 
 @login_required(profile_required=False)
