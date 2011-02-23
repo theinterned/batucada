@@ -1,13 +1,14 @@
 import logging
 
 from django.core.urlresolvers import reverse
+from django.db.utils import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
 
-from challenges.models import Challenge, Submission
-from challenges.forms import ChallengeForm, SubmissionForm
+from challenges.models import Challenge, Submission, Judge
+from challenges.forms import ChallengeForm, SubmissionForm, JudgeForm
 from projects.models import Project
 
 from drumbeat import messages
@@ -92,3 +93,54 @@ def create_submission(request, slug):
 
     return render_to_response('challenges/submission_create.html', context,
                               context_instance=RequestContext(request))
+
+@login_required
+def challenge_judges(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+
+    if request.method == 'POST':
+        form = JudgeForm(request.POST)
+        if form.is_valid():
+            judge = form.save(commit=False)
+            judge.challenge = challenge
+
+            try:
+                judge.save()
+                messages.success(request, _('Judge has been added'))
+            except IntegrityError:
+                messages.error(request, _('User is already a judge'))
+
+
+            return HttpResponseRedirect(reverse('challenges_judges', kwargs={
+                'slug' : challenge.slug,
+                }))
+        else:
+            messages.error(request, _('Unable to add judge.'))
+    else:
+        form = JudgeForm()
+
+    judges = Judge.objects.filter( challenge=challenge )
+
+    context = {
+        'challenge' : challenge,
+        'form' : form,
+        'judges' : judges,
+    }
+
+    return render_to_response('challenges/challenge_judges.html', context,
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def challenge_judges_delete(request, slug, judge):
+    if request.method == 'POST':
+        challenge = get_object_or_404(Challenge, slug=slug)
+        judge = get_object_or_404(Judge, pk=judge)
+        if judge.challenge != challenge:
+            return HttpResponseForbidden()
+        judge.delete()
+        messages.success(request, _('Judge removed.'))
+    return HttpResponseRedirect(reverse('challenges_judges',kwargs={
+                'slug': challenge.slug,
+                }))
+    
