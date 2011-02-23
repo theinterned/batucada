@@ -4,7 +4,7 @@ import logging
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 
-from challenges.models import Challenge, Submission
+from challenges.models import Challenge, Submission, Judge
 
 log = logging.getLogger(__name__)
 
@@ -22,3 +22,9 @@ class SubmissionForm(forms.ModelForm):
   class Meta:
     model = Submission
     fields = ('title', 'description')
+
+
+class JudgeForm(forms.ModelForm):
+  class Meta:
+    model = Judge
+    fields = ('user', )

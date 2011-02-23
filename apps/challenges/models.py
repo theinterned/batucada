@@ -23,6 +23,7 @@ class ChallengeManager(caching.base.CachingManager):
 class Challenge(ModelBase):
     """ Inovation (design) Challenges """
     title = models.CharField(max_length=100, unique=True)
+
     description = models.TextField()
     description_html = models.TextField(null=True, blank=True)
 
@@ -66,3 +67,22 @@ class Submission(ModelBase):
     challenge = models.ManyToManyField(Challenge)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='submissions')
+admin.site.register(Submission)
+
+
+class Judge(ModelBase):
+    challenge = models.ForeignKey(Challenge)
+    user = models.ForeignKey('users.UserProfile',
+                                   related_name='judges')
+
+
+    class Meta:
+        unique_together = ( ('challenge', 'user'), )
+
+    
+admin.site.register(Judge)
+
+
+### Signals
+
+

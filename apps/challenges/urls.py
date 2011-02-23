@@ -12,5 +12,13 @@ urlpatterns = patterns('',
   # Submissions
   url(r'^(?P<slug>[\w-]+)/submission/create', 
       'challenges.views.create_submission',
-      name='submissions_create')
+      name='submissions_create'),
+
+  # Judges              
+  url(r'^(?P<slug>[\w-]+)/judges/$', 'challenges.views.challenge_judges',
+      name='challenges_judges'),
+  url(r'^(?P<slug>[\w-]+)/judges/delete/(?P<judge>[\d]+)/$', 'challenges.views.challenge_judges_delete',
+      name='challenges_judge_delete'),
+                       
+
 )
