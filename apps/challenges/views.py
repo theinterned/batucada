@@ -1,5 +1,6 @@
 import logging
 
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.db.utils import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponseForbidden
@@ -47,8 +48,21 @@ def create_challenge(request, project_id):
 
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
-    submissions = challenge.submission_set.all()[0:10] # TODO: order by created_on
-    nsubmissions = challenge.submission_set.count()
+
+    submission_set = challenge.submission_set.all() # TODO: order by created_on
+    paginator = Paginator(submission_set, 3)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        submissions = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        submissions = paginator.page(paginator.num_pages)
+
+    nsubmissions = challenge.submission_set.all().count()
     
     context = {
         'challenge' : challenge,

@@ -50,10 +50,26 @@
 
 <div id="main">
   <ul id="posts">
-    {% for submission in submissions %}
+    {% for submission in submissions.object_list %}
       {% include "challenges/_submission_resource.html" %}
     {% endfor %}
   </ul>
+
+  <div class="pagination">
+    <span class="step-links">
+      {% if submissions.has_previous %}
+      <a href="?page={{ submissions.previous_page_number }}">previous</a>
+      {% endif %}
+      
+      <span class="current">
+        Page {{ submissions.number }} of {{ submissions.paginator.num_pages }}
+      </span>
+      
+      {% if submissions.has_next %}
+      <a href="?page={{ submissions.next_page_number }}">next</a>
+      {% endif %}
+    </span>
+  </div>
 </div>
 {% endblock %}
 
