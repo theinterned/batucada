@@ -67,8 +67,8 @@ var usernameAvailability = function() {
 var openidHandlers = function() {
     var oneClick = {
         'google': 'https://www.google.com/accounts/o8/id',
-        'yahoo': 'http://yahoo.com',
-        'myopenid': 'http://myopenid.com'
+        'yahoo': 'https://yahoo.com',
+        'myopenid': 'https://www.myopenid.com'
     };
     $.each(oneClick, function(key, value) {
         $('.openid_providers #' + key).bind('click', function(e) {
