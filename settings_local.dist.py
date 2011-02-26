@@ -7,7 +7,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'NAME': 'batucada',
+        'NAME': 'lernanta',
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '',
         'PORT': '',
