@@ -41,7 +41,6 @@ def create(request):
 
 @login_required
 def create_project_todo(request, project_id):
-    print 'in create_project_todo'
     if request.method != 'POST':
         return HttpResponseRedirect('/')
     project = get_object_or_404(Project, id=project_id)
