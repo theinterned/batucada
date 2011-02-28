@@ -17,41 +17,9 @@
   <link rel="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico">
   <link rel="apple-touch-icon" href="{{ MEDIA_URL }}images/apple-touch-icon.png">
 
-  <!--
-  /*
-   * MyFonts Webfont Build ID 235749, 2011-01-03T09:54:22-0500
-   * 
-   * The fonts listed in this notice are subject to the End User License
-   * Agreement(s) entered into by the website owner. All other parties are 
-   * explicitly restricted from using the Licensed Webfonts(s).
-   * 
-   * You may obtain a valid license at the urls below.
-   * 
-   * Webfont: Museo Sans 500
-   * Url: http://new.myfonts.com/fonts/exljbris/museo-sans/500/
-   * Foundry: exljbris
-   * Copyright: Copyright (c) 2008 by Jos Buivenga. All rights reserved.
-   * License: http://www.myfonts.com/viewlicense?1056
-   * Licensed pageviews: unspecified
-   * CSS font-family: MuseoSans-500
-   * CSS font-weight: normal
-   * 
-   * Webfont: Museo Sans 500 Italic
-   * Url: http://new.myfonts.com/fonts/exljbris/museo-sans/500-italic/
-   * Foundry: exljbris
-   * Copyright: Copyright (c) 2008 by Jos Buivenga. All rights reserved.
-   * License: http://www.myfonts.com/viewlicense?1056
-   * Licensed pageviews: unlimited/month
-   * CSS font-family: MuseoSans-500Italic
-   * CSS font-weight: normal
-   * 
-   * (c) 2011 Bitstream, Inc
-  */
-  -->
-  <script type="text/javascript" src="{{ MEDIA_URL }}fonts/MuseoSans500/MuseoSans500.js"></script>
-  <noscript><!-- load the fonts for those without js -->
-    <link rel="stylesheet" href="{{ MEDIA_URL }}fonts/MuseoSans500/MuseoSans500.css">
-  </noscript>
+  <!-- Arvo font from google font api -->
+  <link href='http://fonts.googleapis.com/css?family=Arvo:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+  <script src="js/libs/modernizr-1.6.min.js"></script>
   
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=1">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/batucada.css?v=1">
@@ -63,7 +31,7 @@
   <header>
     <div id="masthead">
       <div class="container">
-	<a id="logo" class="ir" href="{% locale_url dashboard_index %}">mozilla Drumbeat</a>
+	<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
 	<nav id="main-nav">
 	  <ul>
 	    <li><a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a></li>
@@ -115,13 +83,13 @@
 	    </li> <!-- /#inbox -->
 	    <li class="separator ir"></li>
 	    <li id="logout">
-	      <a class="top-level" href="{% locale_url users_logout %}">Sign Out</a>
+	      <a class="top-level" href="{% locale_url users_logout %}">{{ _('Logout') }}</a>
 	    </li>
 	  </ul>
 	  {% else %} {# user not logged in #}
 	  <ul id="login">
-	    <li><a class="top-level" href="{% locale_url users_login %}">{{ _('Sign in') }}</a></li>
-	    <li><a class="top-level" href="{% locale_url users_register %}">{{ _('Sign up') }}</a></li>
+	    <li><a class="top-level" href="{% locale_url users_login %}">{{ _('Login') }}</a></li>
+	    <li><a class="top-level" href="{% locale_url users_register %}">{{ _('Join') }}</a></li>
 	  {% endif %}
 	</nav> <!-- /#user-nav -->
       </div> <!-- /.container -->
