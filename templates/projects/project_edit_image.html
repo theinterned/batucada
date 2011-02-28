@@ -3,18 +3,18 @@
 {% block bodyclasses %}project edit image{% endblock %}
 
 {% block form %}
-{# <p>{{ _('Use this form to upload a project image. The image will appear in search results and in the project listing page.') }}</p> #}
+{# <p>{{ _('Use this form to upload a course image. The image will appear in search results and in the course listing page.') }}</p> #}
 
 <form action="{% locale_url projects_edit_image slug=project.slug %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% if project.image %}
   <h2>Replace Project Image</h2>
-  <p class="hint">{{ _('The project image is shown in search results and on the project listing page.') }}</p>
-  <p class="hint">{{ _('Upload an image file from your computer to replace your current project image:') }}</p>  
+  <p class="hint">{{ _('The course image is shown in search results and on the course listing page.') }}</p>
+  <p class="hint">{{ _('Upload an image file from your computer to replace your current course image:') }}</p>  
   {% else %}
-  <h2>Upload a Project Image</h2>
-  <p class="hint">{{ _('The project image is shown in search results and on the project listing page.') }}</p>
-  <p class="hint">{{ _('Personalize your project by uploading an image file from your computer:') }}</p>  
+  <h2>Upload a Course Image</h2>
+  <p class="hint">{{ _('The course image is shown in search results and on the course listing page.') }}</p>
+  <p class="hint">{{ _('Personalize your course by uploading an image file from your computer:') }}</p>  
   {% endif %}
   <p>
     {{ form.image }}

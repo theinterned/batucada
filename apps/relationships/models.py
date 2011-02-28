@@ -61,10 +61,10 @@ def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     if not isinstance(rel, Relationship):
         return
-    user_subject = _("%(name)s is following you on Drumbeat!" % {
+    user_subject = _("%(name)s is following you on P2PU!" % {
         'name': rel.source.name,
     })
-    project_subject = _("%(name)s is following your project on Drumbeat!" % {
+    project_subject = _("%(name)s is following your course on P2PU!" % {
         'name': rel.source.name,
     })
     activity = Activity(actor=rel.source,

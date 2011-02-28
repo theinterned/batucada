@@ -6,20 +6,20 @@
 <form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% endif %}" method="post">
   {% csrf_token %}
   <p>
-    <label for="id_name">{{ _('Project name') }}</label>
-    <span class="hint block">{{ _('A good project name is short and descriptive. People should know what your project is about without reading the description.') }}</span>
+    <label for="id_name">{{ _('Course name') }}</label>
+    <span class="hint block">{{ _('A good course name is short and descriptive. People should know what your course is about without reading the description.') }}</span>
     {{ form.name }}
     {{ form.name.errors }}
   </p>
   <p>
     <label for="id_short_description">{{ _('One sentence description') }}</label>
-    <span class="hint block">{{ _('This description will be used on the search results and project listing pages.') }}</span>
+    <span class="hint block">{{ _('This description will be used on the search results and course listing pages.') }}</span>
     {{ form.short_description }}
     {{ form.short_description.errors }}
   </p>
   <p>
     <label for="id_long_description">{{ _('Two paragraph description') }}</label>
-    <span class="hint block">{{ _('This description is shown on the project page. It can go into a bit more detail about the project, but it should be brief and to the point.') }}</span>
+    <span class="hint block">{{ _('This description is shown on the course page. It can go into a bit more detail about the course, but it should be brief and to the point.') }}</span>
     {{ form.long_description }}
     {{ form.long_description.errors }}
   </p>

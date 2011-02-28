@@ -108,7 +108,7 @@ class ProjectContactUsersForm(forms.Form):
             project = Project.objects.get(id=int(project))
         except Project.DoesNotExist:
             raise forms.ValidationError(
-                _(u'Hmm, that does not look like a valid project'))
+                _(u'Hmm, that does not look like a valid course'))
         recipients = project.followers()
         subject = self.cleaned_data['subject']
         body = self.cleaned_data['body']

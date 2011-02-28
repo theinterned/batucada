@@ -10,14 +10,14 @@
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
     </nav>
 
     {% if user.get_profile == project.created_by %}
       <div id="project-actions">
-        <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
+        <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Course') }}</a>
         <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
       </div>
     {% endif %}
@@ -53,7 +53,7 @@
 	{% else %}
 	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
 	    {% csrf_token %}
-	    <button>{{ _('Follow Project') }}</button>
+	    <button>{{ _('Follow Course') }}</button>
 	  </form>
 	{% endif %}
       {% endif %}
@@ -88,22 +88,22 @@
     {% endif %}
 
     {% if project.detailed_description %}
-    <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Project Description</a>
+    <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Course Description</a>
     {% endif %}
     {% if user.get_profile != project.created_by %}
     <p class="supplemental_actions">
       <a class="report abuse action" href="{% locale_url drumbeat_abuse  obj=project.id type="project" %}">{{_('Report Abuse')}}</a>
     </p>  
-    {% endif %}      
+    {% endif %}
   </section>
     
   {% if links %}
-  <nav id="project-links" class="panel">      
+  <nav id="project-links" class="panel">
     <ul>
       {% for link in links %}
         <li><a href="{{ link.url }}">{{ link.name }}</a></li>
       {% endfor %}
-    </ul>       
+    </ul>
   </nav>
   {% endif %} 
 
@@ -150,8 +150,8 @@
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
 	{% csrf_token %}
-	<input type="text" value="{{ _('Post a message to this project') }}" title="{{_('Post a message to this project')}}">
-	<textarea name="status" title="{{_('Post a message to this project')}}"></textarea>
+	<input type="text" value="{{ _('Post a message to this course') }}" title="{{_('Post a message to this course')}}">
+	<textarea name="status" title="{{_('Post a message to this course')}}"></textarea>
 	
 	<div class="status-and-actions">
 	  <div class="post-char-count">750</div>

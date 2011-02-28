@@ -1,6 +1,6 @@
 {% extends "projects/project_edit.html" %}
 {% load l10n_tags %}
-{% block bodyclasses %}project edit preparation status{% endblock %}
+{% block bodyclasses %}course edit preparation status{% endblock %}
 
 {% block form %}
 <form action="{% locale_url projects_edit_preparation_status slug=project.slug %}" method="post">

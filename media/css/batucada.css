@@ -1419,6 +1419,39 @@ header {}
 #splash #content header .container{
 	position: relative;
 }
+#intro-links {
+  float: right;
+  text-align: left;
+  width: 275px;
+}
+#intro-links a {
+  display: block;
+  font-size: 47px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 17px 40px 20px;
+  line-height: 47px;
+  width: 215px;
+}
+#intro-links a.big-find-course {
+  color: #fff;
+  background: url("../images/bg.find-your-course.png") no-repeat;
+  height: 138px;
+  margin-bottom: 5px;
+}
+#intro-links a.big-find-course:hover {
+  background-position: 0 -175px;
+}
+#intro-links a.big-run-course {
+  margin-left: 7px;
+  padding-left: 33px;
+  background: url("../images/bg.run-a-course.png") no-repeat;
+  color: #5a6579;
+  height: 84px;
+}
+#intro-links a.big-run-course:hover {
+  background-position: 0 -121px;
+}
 #splash #content header h1{
   color: #a9b2c1;
   font-size: 58px;

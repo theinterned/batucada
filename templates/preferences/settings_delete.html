@@ -5,7 +5,7 @@
 {% block form %}
 <div class="warning">
   <h2>{{ _('Delete Your Account') }}</h2>
-  <p>{{ _('Are you sure you would like to delete your account? Be aware that this is <strong>permanent</strong>, there is no undo. If you have any projects on Drumbeat, they will be deleted as well.') }}</p>
+  <p>{{ _('Are you sure you would like to delete your account? Be aware that this is <strong>permanent</strong>, there is no undo. If you have any courses on P2PU, they will be deleted as well.') }}</p>
 </div>
 <form method="post" action="{% locale_url preferences_delete %}">
   {% csrf_token %}

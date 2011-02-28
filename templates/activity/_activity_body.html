@@ -9,7 +9,7 @@
 
 {% if activity|should_show_verb %}
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
-    {{ _('Created a new project') }}
+    {{ _('Created a new course') }}
   {% else %}
     {% if activity.target_todo %}
       {{ _('Posted a task') }} 
