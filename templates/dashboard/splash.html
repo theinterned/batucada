@@ -12,48 +12,18 @@
 <header id="intro">
   <div class="container">
     <hgroup>
-      <h1>Open collaboration<br>
-          for an open Web
-      </h1>
-      <h2>Drumbeat provides tools to empower everybody to create, discover, and collaborate on projects that promote and grow the open web.</h2>
+      <h1>We are an <em class="highlight1">online</em><br>community that<br><em class="highlight2">enables learning</em>.</h1>
+      <p><em class="highlight1">P</em><em class="highlight2">2</em><em class="highlight3">P</em><em class="highlight4">U</em> isn&rsquo;t a school, there are no teachers or students just peers. Individuals are responsible for learning together with the help of a facilitator. </p>
     </hgroup>
-    <img src="{{ MEDIA_URL }}/images/drumbeat-logo-splash.png" width="300" height="282" alt="Drumbeat Logo"/>    
   </div>
 </header> <!-- /#intro -->
-<section id="calls">
-  <ul class="buttons container">
-    <li><a class="button submit" href="{% locale_url users_register %}">Sign Up</a></li>
-    <li><a class="button" href="{% locale_url drumbeat_about %}">{{ _('Learn More') }}</a></li>
-    <li><a class="button" href="https://donate.mozilla.org/page/contribute/openwebfund">Donate</a></li>
-  </ul>
-</section>
 <section id="main">
   <div class="container">
-    <h1>{{ _('Recent Activity') }}</h1>
     <ul id="posts">
       {% for activity in activities %}
         {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
-    <asside>
-      <section id="featured_project">
-        <h1>Featured Project</h1>
-	{% if featured_project %}
-          {% with featured_project as project %}
-            {% include "projects/_project_card.html" %}
-          {% endwith %}
-	{% endif %}
-      </section>
-      <section id="planet_drumbeat">
-        <h1>Planet Drumbeat <a href="{{ feed_url }}" title="Subscribe to the Planet Drumbeat feed"> feed</a></h1>
-	{% for entry in feed_entries %}
-        <article>
-          <h1><a href="{{ entry.link }}">{{ entry.title }}</a></h1>
-	  <p>{{ entry.body|truncatewords:50 }}</p>
-        </article>
-	{% endfor %}
-      </section>
-    </asside>
   </div>  
 </section>
 {% include "_footer.html" %}
