@@ -88,6 +88,9 @@ class Project(ModelBase):
 
     objects = ProjectManager()
 
+    class Meta:
+        verbose_name = _('course')
+
     def followers(self):
         """Return a list of users following this project."""
         relationships = Relationship.objects.select_related(

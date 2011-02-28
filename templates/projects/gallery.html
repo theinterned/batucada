@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
-{% block title %}{{ _('Projects') }}{% endblock %}
+{% block title %}{{ _('Courses') }}{% endblock %}
 {% block bodyid %}project_gallery{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
     </nav>
     {% if user.is_authenticated %}
     <div id="project-actions">
-      <a id="create-project" class="button" href="{% locale_url projects_create %}">Create a project</a>
+      <a id="create-project" class="button" href="{% locale_url projects_create %}">Create a course</a>
     </div>
     {% endif %}
   </div> <!-- /.container -->
@@ -18,7 +18,7 @@
 
 {% block body %}
 
-<h1>{{ _('Browse <b>Projects</b>') }}</h1>
+<h1>{{ _('Browse <b>Courses</b>') }}</h1>
 {% if featured %}
 <section>
   <h1><span>{{_('Featured')}}</span></h1>
@@ -32,7 +32,7 @@
 
 {% if active %}
 <section>
-  <h1><span>{{ _('Popular Projects') }}</span></h1>
+  <h1><span>{{ _('Popular Courses') }}</span></h1>
   <ul class="project-list">
     {% for project in active %}
       <li>{% include "projects/_project_card.html" %}</li>
@@ -43,7 +43,7 @@
 
 {% if new %}
 <section>
-  <h1><span>{{ _('New Projects') }}</span></h1>
+  <h1><span>{{ _('New Courses') }}</span></h1>
   <ul class="project-list">
     {% for project in new %}
       <li>{% include "projects/_project_card.html" %}</li>

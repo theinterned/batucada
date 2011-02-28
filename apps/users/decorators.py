@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.utils.decorators import available_attrs
+from django.contrib.auth.decorators import user_passes_test
 
 from drumbeat import messages
 from users.models import UserProfile
@@ -24,23 +25,6 @@ def anonymous_only(func):
                           _("You are already logged into an account."))
             return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
         return func(*args, **kwargs)
-    return decorator
-
-
-def user_passes_test(test_func):
-    """
-    Custom user_passes_test that punts login url redirecting to the
-    dashboard_index view.
-    """
-
-    def decorator(view_func):
-
-        def _wrapped_view(request, *args, **kwargs):
-            if test_func(request.user):
-                return view_func(request, *args, **kwargs)
-            return HttpResponseRedirect(reverse('dashboard_index'))
-        return wraps(view_func,
-                     assigned=available_attrs(view_func))(_wrapped_view)
     return decorator
 
 

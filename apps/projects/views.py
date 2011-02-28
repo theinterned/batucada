@@ -111,7 +111,7 @@ def edit_image(request, slug):
         form = project_forms.ProjectImageForm(request.POST, request.FILES,
                                               instance=project)
         if form.is_valid():
-            messages.success(request, _('Project image updated'))
+            messages.success(request, _('Course image updated'))
             form.save()
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
@@ -186,7 +186,7 @@ def edit_links(request, slug):
             link.project = project
             link.user = project.created_by
             link.save()
-            messages.success(request, _('Project link added.'))
+            messages.success(request, _('Course link added.'))
             return http.HttpResponseRedirect(
                 reverse('projects_edit_links', kwargs=dict(slug=project.slug)))
         else:
@@ -224,7 +224,7 @@ def add_follower(request, slug):
                 new_rel.save()
             except IntegrityError: 
                 messages.error(
-                    request, _('You are already following this project'))
+                    request, _('You are already following this course'))
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 @login_required
@@ -286,7 +286,7 @@ def create(request):
             }))
         else:
             messages.error(request,
-                _("There was a problem creating your project."))
+                _("There was a problem creating your course."))
     else:
         form = project_forms.ProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
@@ -332,7 +332,7 @@ def edit_preparation_status(request, slug):
             }))
         else:
             messages.error(request,
-                           _('There was a problem saving the preparation status of your project.'))
+                           _('There was a problem saving the preparation status of your course.'))
     else:
         form = project_forms.ProjectPreparationStatusForm(instance=project)
     return render_to_response('projects/project_edit_preparation_status.html', {
