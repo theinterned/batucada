@@ -26,7 +26,7 @@
   <script src="{{ MEDIA_URL }}js/libs/modernizr-1.6.min.js"></script>  
   {% block links %}{% endblock %}
 </head>
-<body id="{% block bodyid %}{% endblock %}" class="{% block bodyclasses %}{% endblock %}">
+<body id="{% block bodyid %}body{% endblock %}" class="{% block bodyclasses %}.body{% endblock %}">
 
   <header>
     <div id="masthead">
@@ -90,6 +90,7 @@
 	  <ul id="login">
 	    <li><a class="top-level" href="{% locale_url users_login %}">{{ _('Login') }}</a></li>
 	    <li><a class="top-level" href="{% locale_url users_register %}">{{ _('Join') }}</a></li>
+	  </ul>
 	  {% endif %}
 	</nav> <!-- /#user-nav -->
       </div> <!-- /.container -->
@@ -101,9 +102,9 @@
 
   <div id="content" class="container">
     {% if messages %}
-    <ul>
+    <ul class="messages">
     {% for message in messages %}
-     <li>{{ message }}</li>
+      <li class="{{message.tags}}">{{ message }}</li>
     {% endfor %}
     </ul>
     {% endif %}
@@ -113,6 +114,8 @@
   <script src="{{ MEDIA_URL }}js/libs/jquery-1.4.2.min.js"></script>
   <script src="{{ MEDIA_URL }}js/libs/jquery-ui-1.8.7.custom.min.js"></script>  
   <script src="{{ MEDIA_URL }}js/libs/jquery.tmpl.min.js"></script>
+  <script src="{{ MEDIA_URL }}js/libs/jquery.wmd.js"></script>
+  <script src="{{ MEDIA_URL }}js/libs/jquery.ajaxupload.js"></script>
 
   {% block js %}{% endblock %}
   
@@ -120,6 +123,21 @@
   <script src="{{ MEDIA_URL }}js/plugins.js"></script>
   <script src="{{ MEDIA_URL }}js/script.js"></script>
   <!-- end concatenated and minified scripts-->
+
+  <!-- START OF SmartSource Data Collector TAG -->
+  <!-- Copyright (c) 1996-2010 WebTrends Inc.  All rights reserved. -->
+  <!-- Version: 8.6.2 -->
+  <!-- Tag Builder Version: 3.0  -->
+  <!-- Created: 5/10/2010 6:56:34 PM -->
+  <script src="{{ MEDIA_URL }}js/utils/webtrends.js"></script>
+  
+  <script type="text/javascript">
+    //<![CDATA[
+    var _tag=new WebTrends();
+    _tag.dcsGetId();
+    _tag.dcsCollect();
+    //]]>>
+  </script>
   
 </body>
 </html>

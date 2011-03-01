@@ -1,9 +1,11 @@
 import os
 import logging
 import datetime
-from bleach import Bleach
+import bleach
+
 from markdown import markdown
 
+from django.core.cache import cache
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
@@ -18,6 +20,7 @@ from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
 
+from projects.utils import strip_remote_images
 from projects.tasks import ThumbnailGenerator
 
 import caching.base
@@ -41,8 +44,12 @@ def determine_image_upload_path(instance, filename):
     }
 
 
-def determine_video_upload_path(instance, filename):
-    return "videos/projects/%(partition)d/%(filename)s" % {
+def determine_media_upload_path(instance, filename):
+    if instance.is_video():
+        fmt = "videos/projects/%(partition)d/%(filename)s"
+    else:
+        fmt = "images/projects/%(partition)d/%(filename)s"
+    return fmt % {
         'partition': get_partition_id(instance.project.pk),
         'filename': safe_filename(filename),
     }
@@ -50,11 +57,14 @@ def determine_video_upload_path(instance, filename):
 
 class ProjectManager(caching.base.CachingManager):
     def get_popular(self, limit=0):
-        statuses = Status.objects.values('project_id').annotate(
-            Count('id')).exclude(project__isnull=True).filter(
-                project__featured=False).order_by('-id__count')[:limit]
-        project_ids = [s['project_id'] for s in statuses]
-        return Project.objects.filter(id__in=project_ids)
+        popular = cache.get('projects_popular')
+        if not popular:
+            rels = Relationship.objects.values('target_project').annotate(
+                Count('id')).exclude(target_project__isnull=True).filter(
+                target_project__featured=False).order_by('-id__count')[:limit]
+            popular = [r['target_project'] for r in rels]
+            cache.set('projects_popular', popular, 3000)
+        return Project.objects.filter(id__in=popular)
 
 
 class Project(ModelBase):
@@ -63,14 +73,14 @@ class Project(ModelBase):
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
     name = models.CharField(max_length=100, unique=True)
-    short_description = models.CharField(max_length=100)
+    short_description = models.CharField(max_length=125)
     long_description = models.TextField()
 
     detailed_description = models.TextField()
     detailed_description_html = models.TextField(null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
-                              storage=storage.ImageStorage())
+                              storage=storage.ImageStorage(), blank=True)
 
     slug = models.SlugField(unique=True)
     created_by = models.ForeignKey('users.UserProfile',
@@ -123,16 +133,33 @@ admin.site.register(Project)
 
 
 class ProjectMedia(ModelBase):
-    project_file = models.FileField(upload_to=determine_video_upload_path)
+    video_mimetypes = (
+        'video/ogg',
+        'video/webm',
+        'video/mp4',
+        'application/ogg',
+        'audio/ogg',
+    )
+    image_mimetypes = (
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+        'image/gif',
+    )
+    accepted_mimetypes = video_mimetypes + image_mimetypes
+    project_file = models.FileField(upload_to=determine_media_upload_path)
     project = models.ForeignKey(Project)
     mime_type = models.CharField(max_length=80, null=True)
-    thumbnail = models.ImageField(upload_to=determine_video_upload_path,
+    thumbnail = models.ImageField(upload_to=determine_image_upload_path,
                                   null=True, blank=True,
                                   storage=storage.ImageStorage())
 
     def thumbnail_or_default(self):
         """Return project media's thumbnail or a default."""
         return self.thumbnail or 'images/file-default.png'
+
+    def is_video(self):
+        return self.mime_type in self.video_mimetypes
 
 
 ###########
@@ -146,10 +173,12 @@ def project_markdown_handler(sender, **kwargs):
         return
     log.debug("Creating html project description")
     if project.detailed_description:
-        bl = Bleach()
-        project.detailed_description_html = bl.clean(
+        project.detailed_description_html = bleach.clean(
             markdown(project.detailed_description),
             tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
+        project.detailed_description_html = strip_remote_images(
+            project.detailed_description_html, project.pk)
+
 pre_save.connect(project_markdown_handler, sender=Project)
 
 

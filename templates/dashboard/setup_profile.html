@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "users/profile_form_base.html" %}
 
 {% load l10n_tags %}
 
@@ -82,3 +82,6 @@ var RecaptchaOptions = {'theme': 'custom'};
 </script>
 <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
 {% endblock %}
+{% block heading %}{{ _('Create Profile') }}{% endblock %}
+{% block action %}{% locale_url users_profile_create %}{% endblock %}
+{% block button_label %}{{ _('Save') }}{% endblock %}

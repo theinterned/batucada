@@ -6,15 +6,21 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils import simplejson
+from django.views.decorators.http import require_http_methods
+from django.forms import ValidationError
 
 from django_openid_auth import views as openid_views
+from commonware.decorators import xframe_sameorigin
 
 from users import forms
 from users.models import UserProfile
+from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from links.models import Link
 from projects.models import Project
@@ -22,6 +28,23 @@ from drumbeat import messages
 from activity.models import Activity
 
 log = logging.getLogger(__name__)
+
+
+def unconfirmed_account_notice(request, user):
+    log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
+    msg1 = _(('A link to activate your user account was sent by email '
+              'to your address {0}. You have to click it before you '
+              'can log in.').format(user.email))
+    url = request.build_absolute_uri(
+        reverse('users_confirm_resend',
+                kwargs=dict(username=user.username)))
+    msg2 = _(('If you did not receive the confirmation email, make '
+              'sure your email service did not mark it as "junk '
+              'mail" or "spam". If you need to, you can have us '
+              '<a href="%s">resend the confirmation message</a> '
+              'to your email address mentioned above.') % url)
+    messages.error(request, msg1)
+    messages.info(request, msg2, safe=True)
 
 
 def render_openid_failure(request, message, status, template_name):
@@ -78,20 +101,7 @@ def login(request):
 
         if user.confirmation_code:
             logout(request)
-            log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
-            msg1 = _(('A link to activate your user account was sent by email '
-                      'to your address {0}. You have to click it before you '
-                      'can log in.').format(user.email))
-            url = request.build_absolute_uri(
-                reverse('users_confirm_resend',
-                        kwargs=dict(username=user.username)))
-            msg2 = _(('If you did not receive the confirmation email, make '
-                      'sure your email service did not mark it as "junk '
-                      'mail" or "spam". If you need to, you can have us '
-                      '<a href="%s">resend the confirmation message</a> '
-                      'to your email address mentioned above.') % url)
-            messages.error(request, msg1)
-            messages.info(request, msg2, safe=True)
+            unconfirmed_account_notice(request, user)
             return render_to_response('users/signin.html', {
                 'form': auth_forms.AuthenticationForm(),
             }, context_instance=RequestContext(request))
@@ -103,15 +113,15 @@ def login(request):
         next_param = request.session.get('next', None)
         if next_param:
             del request.session['next']
+            if not next_param.startswith('/'):
+                next_param = '/%s' % (next_param,)
             return http.HttpResponseRedirect(next_param)
 
     elif request.method == 'POST':
         messages.error(request, _('Incorrect email or password.'))
-        data = request.POST.copy()
-        del data['password']
-        return render_to_response('users/signin.html', {
-            'form': auth_forms.AuthenticationForm(initial=data),
-        }, context_instance=RequestContext(request))
+        # run through auth_views.login again to render template with messages.
+        r = auth_views.login(request, template_name='users/signin.html',
+                         authentication_form=forms.AuthenticationForm)
 
     return r
 
@@ -134,8 +144,17 @@ def login_openid(request):
 @anonymous_only
 def login_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', False)
-    return openid_views.login_complete(
+    r = openid_views.login_complete(
         request, render_failure=render_openid_login_failure)
+    if isinstance(r, http.HttpResponseRedirect):
+        user = request.user.get_profile()
+        if user.confirmation_code:
+            logout(request)
+            unconfirmed_account_notice(request, user)
+            return render_to_response('users/login_openid.html', {
+                'form': forms.OpenIDForm(),
+            }, context_instance=RequestContext(request))
+    return r
 
 
 @login_required(profile_required=False)
@@ -173,7 +192,7 @@ def register(request):
                     'registration.').format(user.email)
             messages.info(request, msg)
 
-            return http.HttpResponseRedirect(reverse('dashboard_index'))
+            return http.HttpResponseRedirect(reverse('users_login'))
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -261,7 +280,11 @@ def profile_view(request, username):
     links = Link.objects.select_related('subscription').filter(user=profile)
     activities = Activity.objects.select_related(
         'actor', 'status', 'project').filter(
-        actor=profile).order_by('-created_on')[0:25]
+        actor=profile,
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(target_user__isnull=False),
+    ).order_by('-created_on')[0:25]
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -301,6 +324,9 @@ def profile_create(request):
                 'registration.').format(profile.email)
         messages.info(request, msg)
         return http.HttpResponseRedirect(reverse('dashboard_index'))
+    else:
+        messages.error(request, _('There are errors in this form. Please '
+                                      'correct them and resubmit.'))
     return render_to_response('dashboard/setup_profile.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -316,9 +342,8 @@ def profile_edit(request):
             messages.success(request, _('Profile updated'))
             form.save()
             return http.HttpResponseRedirect(
-                reverse('users_profile_view', kwargs={
-                    'username': profile.username,
-            }))
+                reverse('users_profile_edit'),
+            )
         else:
             messages.error(request, _('There were problems updating your '
                                       'profile. Please correct the problems '
@@ -333,8 +358,26 @@ def profile_edit(request):
 
 
 @login_required
+@xframe_sameorigin
+@require_http_methods(['POST'])
+def profile_edit_image_async(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    form = forms.ProfileImageForm(request.POST, request.FILES,
+                                  instance=profile)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.image.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
+
+
+@login_required
 def profile_edit_image(request):
     profile = get_object_or_404(UserProfile, user=request.user)
+
     if request.method == 'POST':
         form = forms.ProfileImageForm(request.POST, request.FILES,
                                       instance=profile)
@@ -348,6 +391,7 @@ def profile_edit_image(request):
                                       'your image.'))
     else:
         form = forms.ProfileImageForm(instance=profile)
+
     return render_to_response('users/profile_edit_image.html', {
         'profile': profile,
         'form': form,
@@ -366,9 +410,7 @@ def profile_edit_links(request):
             link.user = profile
             link.save()
             return http.HttpResponseRedirect(
-                reverse('users_profile_view', kwargs={
-                    'username': request.user.get_profile().username,
-                }),
+                reverse('users_profile_edit_links'),
             )
         else:
             messages.error(request, _('There was an error saving '
@@ -376,6 +418,7 @@ def profile_edit_links(request):
     else:
         form = forms.ProfileLinksForm()
     links = Link.objects.select_related('subscription').filter(user=profile)
+
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
         'form': form,
@@ -385,25 +428,38 @@ def profile_edit_links(request):
 
 @login_required
 def profile_edit_links_delete(request, link):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    link = get_object_or_404(Link, pk=link)
-    if link.user != profile:
-        return http.HttpResponseForbidden()
-    link.delete()
-    messages.success(request, _('The link was deleted.'))
-    form = forms.ProfileLinksForm()
-    return render_to_response('users/profile_edit_links.html', {
-        'profile': profile,
-        'form': form,
-    }, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        profile = get_object_or_404(UserProfile, user=request.user)
+        link = get_object_or_404(Link, pk=link)
+        if link.user != profile:
+            return http.HttpResponseForbidden()
+        link.delete()
+        messages.success(request, _('The link was deleted.'))
+    return http.HttpResponseRedirect(reverse('users_profile_edit_links'))
 
 
 def check_username(request):
+    """Validate a username and check for uniqueness."""
     username = request.GET.get('username', None)
-    if not username:
-        return http.HttpResponse(status=404)
+    f = UsernameField()
+    try:
+        f.clean(username)
+    except ValidationError:
+        return http.HttpResponse()
     try:
         UserProfile.objects.get(username=username)
         return http.HttpResponse()
     except UserProfile.DoesNotExist:
-        return http.HttpResponse(status=404)
+        pass
+    return http.HttpResponse(status=404)
+
+
+@login_required
+def following(request):
+    user = request.user.get_profile()
+    term = request.GET.get('term', '').lower()
+    usernames = [u.username for u in user.following()
+                 if term in u.username.lower() or
+                 term in u.display_name.lower()]
+    return http.HttpResponse(simplejson.dumps(usernames),
+                             mimetype='application/json')

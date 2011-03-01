@@ -1,8 +1,9 @@
 {% extends "preferences/settings.html" %}
 {% load l10n_tags %}
-{% block bodyclasses %}edit delete{% endblock %}
+{% block bodyclasses %}edit account delete{% endblock %}
 {% block title %}{{ _('Delete Your Account') }}{% endblock %}
 {% block form %}
+<fieldset id="edit_account_delete" class="edit account delete tabpane">
 <div class="warning">
   <h2>{{ _('Delete Your Account') }}</h2>
   <p>{{ _('Are you sure you would like to delete your account? Be aware that this is <strong>permanent</strong>, there is no undo. If you have any courses on P2PU, they will be deleted as well.') }}</p>
@@ -14,4 +15,5 @@
     <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
   </p>
 </form>
+</fieldset>
 {% endblock %}

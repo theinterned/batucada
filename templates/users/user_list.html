@@ -16,7 +16,7 @@
 {% block body %}
 <h1>{{ _('Browse <b>People</b>') }}</h1>
 {% if featured %}
-<section>
+<section id="featured_users">
   <h1><span>{{ _('Featured') }}</span></h1>
   <ul class="user-list">
     {% for person in featured %}
@@ -26,7 +26,7 @@
 </section>
 {% endif %}
 {% if popular %}
-  <section>
+  <section id="popular_users">
   <h1><span>{{ _('Popular this Week') }}</span></h1>
   <ul class="user-list">
     {% for person in popular %}
@@ -36,7 +36,7 @@
 </section>
 {% endif %}
 
-<section>
+<section id="new_users">
   <h1><span>{{ _('New People') }}</span></h1>
   <ul class="user-list">
     {% for person in new %}

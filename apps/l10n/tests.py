@@ -4,18 +4,33 @@ from django.conf import settings
 from django.test import Client
 
 from users.models import UserProfile
-from l10n.locales import LOCALES
+from l10n import locales
 
 import test_utils
 
 
 class TestLocaleURLs(test_utils.TestCase):
+
     def setUp(self):
         self.client = Client()
+        locales.LOCALES['de-DE'] = locales.Language(
+            external=u'de-DE',
+            internal=u'de',
+            english=u'German',
+            native=u'Deutsch',
+            dictionary='de-DE',
+        )
+
+        locales.INTERNAL_MAP = dict(
+            [(locales.LOCALES[k].internal, k) for k in locales.LOCALES])
+        locales.LANGUAGES = dict(
+            [(i.lower(), locales.LOCALES[i].native) for i in locales.LOCALES])
+        locales.LANGUAGE_URL_MAP = dict(
+            [(i.lower(), i) for i in locales.LOCALES])
 
     def test_default_rewrites(self):
         """Test that the client gets what they ask for if it's supported."""
-        for supported in LOCALES.keys():
+        for supported in locales.LOCALES.keys():
             response = self.client.get('/', HTTP_ACCEPT_LANGUAGE=supported)
             self.assertRedirects(response, '/%s/' % (supported,),
                                  status_code=301)
@@ -36,7 +51,7 @@ class TestLocaleURLs(test_utils.TestCase):
         should check for a more general match (xx-YY -> xx).
         """
         response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='de-AT')
-        self.assertRedirects(response, '/de/', status_code=301)
+        self.assertRedirects(response, '/de-DE/', status_code=301)
 
     def test_unsupported_locale(self):
         """If locale is not supported, we should send them the default."""
@@ -64,9 +79,9 @@ class TestLocaleURLs(test_utils.TestCase):
         user.set_password('testpass')
         user.save()
         user.create_django_user()
-        response = self.client.get('/de/login/')
+        response = self.client.get('/de-DE/login/')
         self.assertContains(response, 'csrfmiddlewaretoken')
-        response = self.client.post('/de/login/', {
+        response = self.client.post('/de-DE/login/', {
             'username': user.username,
             'password': 'testpass',
         })
