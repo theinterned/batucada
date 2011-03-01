@@ -11,23 +11,23 @@
     <fieldset>
         <form action="{% locale_url users_login %}" method="post">
         {% csrf_token %}
-        <p>
+        <div class="field{% if form.username.errors %} error{% endif %}">
           <label for="id_username">{{ _('Username or Email') }}</label>
           {{ form.username }}
           {{ form.username.errors }}
-        </p>
-        <p>
+        </div>
+        <div class="field{% if form.password.errors %} error{% endif %}">
           <label for="id_password">{{ _('Password') }} <small class="hint">(<a href="{% locale_url users_forgot_password %}" tabindex="6">{{ _('Forgot your password?') }}</a>)</small></label>
           {{ form.password }}
           {{ form.password.errors }}          
-        </p>
-        <p>
+        </div>
+        <div class="field inline_label{% if form.remember_me.errors %} error{% endif %}">
           <label for="id_remember_me">
           {{ form.remember_me }}
           {{ form.remember_me.errors }}
           {{ _('Remember Me') }}
           </label>
-        </p>        
+        </div>        
         <p class="submit">
           <button type="submit" tabindex="4">{{ _('Sign In') }}</button>
           {{ _('or use') }}

@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     (r'^messages/',      include('drumbeatmail.urls')),
     (r'^account/',       include('preferences.urls')),
     (r'^pubsub/',        include('django_push.subscriber.urls')),
-    (r'',                include('users.urls')),
+    (r'',                include('users.urls')),    
 )
 
 #if settings.DEBUG:

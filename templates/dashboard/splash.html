@@ -28,6 +28,17 @@
         {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
+    <aside>
+    	{% if featured_project %}
+      <section id="featured_project" class="card-list">
+        <h1>{{ _('Featured Courses') }}</h1>
+	      <ul class="project-list">
+          {% with featured_project as project %}
+            <li>{% include "projects/_project_card.html" %}</li>
+          {% endwith %}
+        </ul>
+      </section>
+    	{% endif %}
   </div>  
 </section>
 {% include "_footer.html" %}

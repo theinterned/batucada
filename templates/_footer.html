@@ -1,25 +1,24 @@
+{% load l10n_tags %}
 <footer>
 <div class="container">
-<!-- TODO: wire up this form -->
-  <div id="newsletter" action="#" method="post">
-    <p><a href="http://www.mozilla.org/drumbeat/newsletter/" title="Drumbeat Newsletter">Sign up for the Drumbeat Newsletter</a></p>
+  <div id="newsletter">
+    <p><a href="http://www.mozilla.org/drumbeat/newsletter/" title="{{ _('Drumbeat Newsletter') }}">{{ _('Sign up for the Drumbeat Newsletter') }}</a></p>
   </div>
   <nav >
     <ul id="supporting_links">
-      <li><a href="https://wiki.mozilla.org/Drumbeat">Drumbeat Wiki</a></li>
-      <li><a href="http://www.mozilla.org/" title="Home of the Mozilla Project">Mozilla.org</a></li>
-      <li><a href="http://www.mozilla.org/about/policies/privacy-policy.html" title="Mozilla Privacy Policy">Privacy Policy</a></li>
+      <li><a href="http://www.netvibes.com/drumbeat#Drumbeat_news" title="{{ _('Mozilla Drumbeat Social Media Dashboard') }}">{{ _('Social Media Dashboard') }}</a></li>
+      <li><a href="http://www.mozilla.org/" title="{{ _('Home of the Mozilla Project') }}">{{ _('Mozilla.org') }}</a></li>
+      <li><a href="http://www.mozilla.org/about/policies/privacy-policy.html" title="{{ _('Mozilla Privacy Policy') }}">{{ _('Privacy Policy') }}</a></li>
     </ul>
     <ul id="social">
-      <li id="twitter"><a href="http://twitter.com/mozilladrumbeat" title="Mozilla Drumbeat (mozilladrumbeat) on Twitter">Twitter</a></li>
-      <li id="facebook"><a href="http://www.facebook.com/mozilladrumbeat" title="Mozilla Drumbeat | Facebook">Facebook</a></li>
-      <li id="flickr"><a href="http://www.flickr.com/photos/tags/mozilla+drumbeat/" title="Flickr: 'mozilla drumbeat'">Flickr</a></li>
+      <li id="twitter"><a href="http://twitter.com/mozilladrumbeat" title="{{ _('Mozilla Drumbeat (mozilladrumbeat) on Twitter') }}">{{ _('Twitter') }}</a></li>
+      <li id="facebook"><a href="http://www.facebook.com/mozilladrumbeat" title="{{ _('Mozilla Drumbeat | Facebook') }}">{{ _('Facebook') }}</a></li>
+      <li id="flickr"><a href="http://www.flickr.com/photos/tags/mozilla+drumbeat/" title="{{ _('Flickr: \'mozilla drumbeat\'') }}">{{ _('Flickr') }}</a></li>
     </ul>
   </nav>
 </div>
 <div id="legal" class="container">
-  <!-- TODO: is there a more specific license we should be linking to in the footer? Right now just linking to creativecommons.org/ root -->
-  <p>Portions of this content are &copy; 2010 by individual drumbeat.org contributors. Content available under a <a href="http://creativecommons.org/" title="Creative Commons">Creative Commons license</a>.</p>
+  <p>{{ _('Portions of this content are &copy; 2010 by individual drumbeat.org contributors. Content available under a <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" title="Creative Commons">Creative Commons license</a>.') }}</p>
 </div>
 </footer>
 

@@ -41,7 +41,7 @@ class ThumbnailGenerator(Task):
             return False
         return True
 
-    def create_thumbnail(self, media):
+    def create_video_thumbnail(self, media):
         """
         Select a random frame from the video to use as the video thumbnail.
         """
@@ -61,10 +61,27 @@ class ThumbnailGenerator(Task):
         im.save(abs_path, 'PNG')
         return True
 
+    def create_image_thumbnail(self, media):
+        """Create a thumbnail for an image using PIL."""
+        image = os.path.join(settings.MEDIA_ROOT, media.project_file.name)
+        thumbnail_filename = self.determine_path(
+            media.project, "%s_thumbnail.%s" % (os.path.splitext(
+                os.path.basename(media.project_file.name))))
+        thumbnail_path = os.path.join(settings.MEDIA_ROOT, thumbnail_filename)
+        im = Image.open(image)
+        im.thumbnail((128, 128), Image.ANTIALIAS)
+        im.save(thumbnail_path, im.format)
+        media.thumbnail = thumbnail_filename
+        media.save()
+        return True
+
     def run(self, media):
 
         self.ffmpeg = getattr(settings, 'FFMPEG_PATH', None)
         self.vframes = getattr(settings, 'FFMPEG_VFRAMES', 10)
+
+        if not media.is_video():
+            return self.create_image_thumbnail(media)
 
         if not self.ffmpeg:
             log.warn("No ffmpeg path set. Nothing to do.")
@@ -76,7 +93,7 @@ class ThumbnailGenerator(Task):
             log.warn("Error creating frames.")
             return
 
-        if not self.create_thumbnail(media):
+        if not self.create_video_thumbnail(media):
             log.warn("Error creating thumbnail")
             return
 

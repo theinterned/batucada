@@ -3,23 +3,25 @@
 {% block bodyclasses %}project edit media{% endblock %}
 
 {% block form %}
+<fieldset id="project _edit_media" class="project edit media tabpane">
 <h2>{{ _('Upload Images &amp; Video') }}</h2>
 <p>
   {{ _('You can use this form to upload images and videos that are relevant to your course. You may upload a max of <strong>six</strong> files.') }}
 </p>
 <form action="{% locale_url projects_edit_media slug=project.slug %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <p id="file_upload">
+  <div id="file_upload" class="field{% if form.project_file.errors %} error{% endif %}">
     {{ form.project_file }}
     {{ form.project_file.errors }}
-  </p>
+  </div>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
   </p>
 </form>
-{% if files %}
+
 <ul class="project-media">
+{% if files %}
 {% for file in files %}
   <li id="file_{{ file.id}}">
     <form method="post" action="{% locale_url projects_delete_media slug=project.slug %}">
@@ -33,8 +35,9 @@
     </form>
   </li>
 {% endfor %}
-</ul>
 {% else %}
-  <p class="hint no-files">{{ _("You haven't uploaded any media yet") }}</p>
+  <li class="hint no-files">{{ _("You haven't uploaded any media yet") }}</li>
 {% endif %}
+</ul>
+</fieldset>
 {% endblock %}

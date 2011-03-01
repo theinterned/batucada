@@ -1,4 +1,5 @@
 from django.test import Client
+from django.core.urlresolvers import reverse
 
 from drumbeat.utils import get_partition_id
 from users.models import UserProfile
@@ -101,22 +102,6 @@ class TestLogins(TestCase):
         })
         self.assertNotEqual('http://www.mozilla.org/', response['location'])
 
-    def test_registration_opt_in(self):
-        """Test account registration."""
-        path = "/%s/register/" % (self.locale,)
-        params = {
-            'display_name': 'Joe User',
-            'username': 'joeuser',
-            'password': 'abcdefghijklmno1',
-            'password_confirm': 'abcdefghijklmno1',
-            'email': 'joe@mozilla.com',
-        }
-        response = self.client.post(path, params)
-        self.assertContains(response, 'You must agree to the licensing terms')
-        params['policy_optin'] = 'on'
-        response = self.client.post(path, params)
-        self.assertEqual(response.status_code, 302)
-
     def test_profile_image_directories(self):
         """Test that we partition image directories properly."""
         for i in range(1, 1001):
@@ -129,3 +114,37 @@ class TestLogins(TestCase):
             p_id = get_partition_id(i)
             self.assertEqual(11, p_id)
         self.assertEqual(12, get_partition_id(11002))
+
+    def test_protected_usernames(self):
+        """
+        Ensure that users cannot register using usernames that would conflict
+        with other urlpatterns.
+        """
+        path = reverse('users_register')
+        bad = ('projects', 'admin', 'people', 'events')
+        for username in bad:
+            response = self.client.post(path, {
+                'username': username,
+                'password': 'foobar123',
+                'password_confirm': 'foobar123',
+                'email': 'foobar123@example.com',
+            })
+            self.assertContains(response, 'Please choose another')
+        ok = self.client.post(path, {
+            'username': 'iamtrulyunique',
+            'password': 'foobar123',
+            'password_confirm': 'foobar123',
+            'email': 'foobar123@example.com',
+        })
+        self.assertEqual(302, ok.status_code)
+
+    def test_check_username_uniqueness(self):
+        path = "/ajax/check_username/"
+        existing = self.client.get(path, {
+            'username': self.test_username,
+        })
+        self.assertEqual(200, existing.status_code)
+        notfound = self.client.get(path, {
+            'username': 'butterfly',
+        })
+        self.assertEqual(404, notfound.status_code)

@@ -6,6 +6,7 @@ import hashlib
 import os
 
 from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
@@ -91,6 +92,7 @@ class UserProfile(ModelBase):
     location = models.CharField(max_length=255, blank=True, default='')
     featured = models.BooleanField()
     newsletter = models.BooleanField()
+    discard_welcome = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
 
@@ -137,7 +139,7 @@ class UserProfile(ModelBase):
     def create_django_user(self):
         """Make a django.contrib.auth.models.User for this UserProfile."""
         self.user = User(id=self.pk)
-        self.user.username = self.email
+        self.user.username = self.username
         self.user.email = self.email
         self.user.date_joined = self.created_on
         self.user.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -181,3 +183,4 @@ class UserProfile(ModelBase):
     @property
     def name(self):
         return self.display_name or self.username
+admin.site.register(UserProfile)

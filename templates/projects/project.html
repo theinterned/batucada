@@ -58,17 +58,13 @@
 	{% endif %}
       {% endif %}
     </div> <!-- /#project-follow -->
+    {% endif %}
 
     <dl id="project-stats">
       <dt>Followers</dt>
-      <dd>
-	<a href="#">{{ project.followers|length }}</a>
-      </dd>
+      <dd>{{ followers_count }}</dd>
       <dt>Updates</dt>
       <dd>{{ update_count }}</dd>
-
-      <dt>Created</dt>
-      <dd>August 2009</dd>
     </dl> <!-- /#project-stats -->
 
     <div id="project-summary">
@@ -80,7 +76,7 @@
         {% for file in files %}
           <li id="file_{{ file.id}}">
             <a href="{{ MEDIA_URL }}{{ file.project_file }}">
-              <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
+              <img src="{{ MEDIA_URL }}{{ file.thumbnail_or_default }}" class="project media" />
             </a>
           </li>
         {% endfor %}
@@ -90,7 +86,7 @@
     {% if project.detailed_description %}
     <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Course Description</a>
     {% endif %}
-    {% if user.get_profile != project.created_by %}
+    {% if user.is_authenticated and user.get_profile != project.created_by %}
     <p class="supplemental_actions">
       <a class="report abuse action" href="{% locale_url drumbeat_abuse  obj=project.id type="project" %}">{{_('Report Abuse')}}</a>
     </p>  
@@ -117,6 +113,7 @@
         <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
       </h3>
 
+      {% if user.is_authenticated %}
       <div class="member-actions">
         {% if project.created_by != user.get_profile %}
           {% if project.created_by in user.get_profile.following %}
@@ -133,6 +130,7 @@
           <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Private Message')}}</a>
         {% endif %}
       </div>     
+      {% endif %}
 
     </div> <!-- /.member-details -->
     
@@ -144,7 +142,6 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
-  
   {% if user.is_authenticated %}
   <div id="create-post">
     <div class="post-container">
@@ -160,13 +157,13 @@
 	    <li><span>{{ project.name }}</span></li>
 	  </ul>
 
-    <button class="button update submit" id="post-project-update">Post Update</button>
-
+          <button class="button update submit" id="post-project-update">Post Update</button>
 
 	</div> <!-- /.status-and-actions -->
 	</form>
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
+    {% endif %}
 
     <!-- todos -->
     <div id="create-todo">
