@@ -19,7 +19,7 @@
           {{ form.title.errors }}
         </div>
 
-        <div class="field{% if form.description.errors %} error{% endif %}">
+        <div id="wmd-editor" class="wmd-panel description field{% if form.description.errors %} error{% endif %}">
           <label for="id_name">{{ _('Description') }}</label>
           <span class="hint block"></span>
           {{ form.description }}
