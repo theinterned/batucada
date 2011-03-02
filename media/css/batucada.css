@@ -328,6 +328,10 @@ header {}
           height: 14px;
           padding: 4px 10px 8px;
         }
+        .no-rgba #main-nav a:hover {
+          color: #fff;
+          background: #36cdc4;
+        }
 
     #user-nav {
       height: 37px;
@@ -355,6 +359,7 @@ header {}
       }
       .no-rgba a:hover {
         background: url("/media/images/user-nav.bg.png");
+		color: #fff;
       }
 
       #user-link {}
