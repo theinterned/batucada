@@ -360,6 +360,9 @@ header {}
       #user-link {}
 
         #user-picture {
+          position: relative;
+		  float:left;
+          top: 0px;
           box-shadow: #000 -1px -1px 1px;
           -moz-box-shadow: #000 -1px -1px 1px;
           -webkit-box-shadow: #000 -1px -1px 1px;
