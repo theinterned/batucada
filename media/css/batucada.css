@@ -322,6 +322,12 @@ header {}
         }
 
         /*BOILERPLATE alternate style for non-rgba broswers*/
+		
+		.no-rgba #main-nav a:hover {
+          color: #fff;
+          background: #36cdc4;
+		}
+		
         .no-rgba #main-nav a {
           color: #a9b2c1;
           display: block;
@@ -355,6 +361,7 @@ header {}
       }
       .no-rgba a:hover {
         background: url("/media/images/user-nav.bg.png");
+		color: #fff;
       }
 
       #user-link {}
