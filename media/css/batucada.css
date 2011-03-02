@@ -362,6 +362,7 @@ header {}
 
         #user-picture {
           position: relative;
+		  float:left;
           top: 6px;
           box-shadow: #000 -1px -1px 1px;
           -moz-box-shadow: #000 -1px -1px 1px;
