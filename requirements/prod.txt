@@ -11,6 +11,7 @@ django-messages==0.4.4
 python-openid==2.2.5
 markdown==2.0.3
 bleach==0.5.0
+lxml
 
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
 -e git://github.com/jsocol/commonware.git#egg=commonware
