@@ -49,7 +49,7 @@ def create_challenge(request, project_id):
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
-    submission_set = challenge.submission_set.all() # TODO: order by created_on
+    submission_set = challenge.submission_set.all().order_by('-created_on')
     paginator = Paginator(submission_set, 10)
 
     try:
