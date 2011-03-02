@@ -50,7 +50,7 @@ def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
     submission_set = challenge.submission_set.all() # TODO: order by created_on
-    paginator = Paginator(submission_set, 3)
+    paginator = Paginator(submission_set, 10)
 
     try:
         page = int(request.GET.get('page', '1'))
