@@ -9,7 +9,7 @@
 <form action="{% locale_url projects_edit_image slug=project.slug %}" method="post" enctype="multipart/form-data" data-url="{% locale_url projects_edit_image_async slug=project.slug %}">
   {% csrf_token %}
   {% if project.image %}
-  <h2>Replace Project Image</h2>
+  <h2>Replace Course Image</h2>
   <p class="hint">{{ _('The course image is shown in search results and on the course listing page.') }}</p>
   <p class="hint">{{ _('Upload an image file from your computer to replace your current course image:') }}</p>  
   {% else %}
