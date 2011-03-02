@@ -35,6 +35,9 @@ class Challenge(ModelBase):
     project = models.ForeignKey(Project)
     created_by = models.ForeignKey('users.UserProfile', 
                                    related_name='challenges')
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.now())
+    
 
     is_open = models.BooleanField()
 
@@ -68,6 +71,9 @@ class Submission(ModelBase):
     challenge = models.ManyToManyField(Challenge)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='submissions')
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.now())
+    
 admin.site.register(Submission)
 
 
