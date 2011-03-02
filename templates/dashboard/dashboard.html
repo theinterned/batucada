@@ -42,13 +42,13 @@
         {% else %}
         <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name|truncatechars:35 }}
+        {{ project.name|truncatechars:23 }} {% if project.created_by == user.get_profile %}({{ _('organizer') }}){% endif %}
       </a>
     </li>
   {% endfor %}
   </ul>
 </div> <!-- /#member_relationships-->
-<!-- TODO: add support for owned project summary card -->
+<!-- TODO: add support for owned project summary card 
 <div id="member_projects" class="panel">
 {% for project in projects_following %}
   {% if project.created_by == user.get_profile %}
@@ -63,7 +63,6 @@
 	<dd><a href="#" title="{{ _('See all updates') }}">{{ project.status_set.count }}</a></dd>
       </dl>
       <article class="update project">
-	<!-- TODO: replace with actual data -->
 	<h1>{{ _('Course Status Update') }}</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 	<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -71,16 +70,15 @@
     </article>
   {% endif %}
 {% endfor %}
-</div> <!-- /#member_projects -->
+</div> -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
   {% if show_welcome %}
     <article class="welcome">
       <header><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"></a></header>
-      <h1>Welcome to Drumbeat!</h1>
-      <p>We've changed things up a bit! Drumbeat is all about connecting you with people and projects building a more awesome web and world.</p>
-      <p>To get started, you should <a href="{% locale_url users_profile_edit %}" title="update your profile">update your profile</a>. This is a great way to tell people a bit more about yourself. Then find <a href="{% locale_url users_user_list %}" title="People">people</a> and <a href="{% locale_url projects_gallery %}" title="Projects">projects</a> that interest you and start following them! You can also <a href="{% locale_url projects_create %}" title="Create a Project">create your own project</a>.</p>
+      <h1>Welcome to P2PU!</h1>
+      <p>To get started, you should <a href="{% locale_url users_profile_edit %}" title="update your profile">update your profile</a>. This is a great way to tell people a bit more about yourself. Then find <a href="{% locale_url users_user_list %}" title="People">people</a> and <a href="{% locale_url projects_gallery %}" title="Courses">courses</a> that interest you and start following them! You can also <a href="{% locale_url projects_create %}" title="Create a Course">create your own course</a>.</p>
     </article>
   {% endif %}
   <div id="create-post">

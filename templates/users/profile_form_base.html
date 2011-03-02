@@ -19,7 +19,7 @@
           <label for="id_username">{{ _('Username') }}</label>
           {{ form.username }}
           {{ form.username.errors }}
-          <small class="hint">{{ _('Your public profile: http://drumbeat.org/') }}<b>{{ _('username') }}</b></small>
+          <small class="hint">{{ _('Your public profile: http://p2pu.org/') }}<b>{{ _('username') }}</b></small>
           <small class="hint" id="availability"></small>          
         </div>
         {% block password_fields %}{% endblock %}
@@ -27,13 +27,13 @@
           <label for="id_email">{{ _('Email Address') }}</label>
           {{ form.email }}
           {{ form.email.errors }}
-          <small class="hint">{{ _('Required to send you notifications about your Drumbeat account.') }}</small>
+          <small class="hint">{{ _('Required to send you notifications about your P2PU account.') }}</small>
         </div>
         <div class="consents">
           <div class="field inline_label{% if form.newsletter.errors %} error{% endif %}">
             <label for="id_newsletter">
               {{ form.newsletter }}
-              {{ _('Please sign me up for the Drumbeat newsletter.') }}
+              {{ _('Please sign me up for the P2PU newsletter.') }}
             </label>
             {{ form.newsletter.errors }}
           </div>
@@ -60,15 +60,12 @@
           {{ _('Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at Wil.') }}
         </p>
         {% endif %}
+        <p>
+          By creating an account on p2pu.org, you accept our <a href="http://p2pu.org/privacy">{{ _('privacy guidelines') }}</a> , <a href="http://p2pu.org/license">{{ _('license provisions') }}</a> and <a href="http://p2pu.org/terms-of-use">{{ _('terms of use') }}</a>. By default all content you create on this site is publicly viewable.
+        </p>
         <p class="submit">
           <button type="submit">{% block button_label %}{% endblock %}</button>
           {% block openid_link %}{% endblock %}
-        </p>
-        <p>
-          If you would like, you may read the 
-          <a href="http://www.mozilla.com/en-US/about/legal.html">{{ _('Legal Notices') }}</a> and 
-          <a href="http://www.mozilla.org/about/policies/privacy-policy.html">{{ _('Privacy Policy') }}</a>
-          that govern use of this site.
         </p>
       </form>
     </fieldset>

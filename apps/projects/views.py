@@ -78,7 +78,7 @@ def edit(request, slug):
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            messages.success(request, _('Project updated!'))
+            messages.success(request, _('Course updated!'))
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
@@ -99,7 +99,7 @@ def edit_description(request, slug):
             request.POST, instance=project)
         if form.is_valid():
             form.save()
-            messages.success(request, _('Project description updated!'))
+            messages.success(request, _('Course description updated!'))
             return http.HttpResponseRedirect(reverse('projects_edit_description', kwargs={
                 'slug': project.slug,
             }))
@@ -332,7 +332,7 @@ def create(request):
             project = form.save(commit=False)
             project.created_by = user
             project.save()
-            messages.success(request, _('Your new project has been created.'))
+            messages.success(request, _('Your new course has been created.'))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
