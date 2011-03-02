@@ -30,8 +30,7 @@
 {% block body %}
 <div id="sidebar">
   <section id="project"class="panel">
-    <h1 id="project-name">{{ project.name }} ({{ project.get_preparation_status_display }})</h1>
-
+    <h1 id="project-name">{{ project.name }}</h1>
     <figure>
       <a href="{% locale_url projects_show slug=project.slug %}">
         {% if project.image %}
@@ -44,21 +43,20 @@
 
 
     <div id="project-follow">
-      {% if user.get_profile != project.created_by %}
-	{% if following %}
-	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Unfollow') }}</button>
-	  </form>
-	{% else %}
-	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Follow Course') }}</button>
-	  </form>
-	{% endif %}
+      {% if user.is_authenticated and user.get_profile != project.created_by %}
+        {% if following %}
+          <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
+            {% csrf_token %}
+            <button>{{ _('Unfollow') }}</button>
+          </form>
+        {% else %}
+          <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
+            {% csrf_token %}
+            <button>{{ _('Follow Course') }}</button>
+          </form>
+        {% endif %}
       {% endif %}
     </div> <!-- /#project-follow -->
-    {% endif %}
 
     <dl id="project-stats">
       <dt>Followers</dt>
@@ -104,6 +102,8 @@
   {% endif %} 
 
   <section id="project-lead" class="panel">
+    <h2>Organizer</h2>
+    <br>
     <a href="{{ project.created_by.get_absolute_url }}">
       <img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
     </a>
@@ -133,7 +133,6 @@
       {% endif %}
 
     </div> <!-- /.member-details -->
-    
     <div class="member-bio">
       {{ project.created_by.bio }}
     </div>
@@ -165,7 +164,7 @@
     </div> <!-- /.#create-post -->
     {% endif %}
 
-    <!-- todos -->
+    <!-- create todos 
     <div id="create-todo">
         <div class="todo-container">
             <form action="{% locale_url todos_create_project project_id=project.id %}" method="post" id="post-project-todo-update">
@@ -176,10 +175,9 @@
             <input type="submit" value="Submit" />
             
             </form>
-        </div> <!-- /.todo-container -->
-    </div> <!-- /.#create-todo -->
+        </div>
+    </div> -->
 
-    {% endif %}
 
     <ul id="posts">
       {% for activity in activities %}

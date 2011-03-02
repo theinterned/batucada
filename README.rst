@@ -92,3 +92,10 @@ After updating a database model you will have to make a migration for the change
 
    python manage.py schemamigration <appname> --auto
    python manage.py migrate <appname>
+
+Get Involved
+------------
+
+To help out with lernanta, join the `P2PU dev mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
+
+.. _P2PU dev mailing list: http://lists.p2pu.org/mailman/listinfo/p2pu-dev
