@@ -21,7 +21,7 @@ class SubmissionForm(forms.ModelForm):
 
   class Meta:
     model = Submission
-    fields = ('title', 'description')
+    fields = ('title', 'summary', 'description')
     widgets = {
       'description': forms.Textarea(attrs={'class': 'wmd'}),
     }
