@@ -11,6 +11,7 @@ from captcha import fields as captcha_fields
 from users.blacklist import passwords as blacklisted_passwords
 from users.models import UserProfile
 from users.fields import UsernameField
+from users import drupal
 from links.models import Link
 
 
@@ -112,6 +113,9 @@ class RegisterForm(forms.ModelForm):
         """Ensure password and password_confirm match."""
         super(RegisterForm, self).clean()
         data = self.cleaned_data
+        if 'username' in data and drupal.get_user(data['username']):
+            self._errors['username'] = forms.util.ErrorList([
+                _('You can login directly with your credentials from the old P2PU website.')])
         if 'password' in data and 'password_confirm' in data:
             if data['password'] != data['password_confirm']:
                 self._errors['password_confirm'] = forms.util.ErrorList([

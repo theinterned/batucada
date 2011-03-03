@@ -22,6 +22,7 @@ from users import forms
 from users.models import UserProfile
 from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
+from users import drupal
 from links.models import Link
 from projects.models import Project
 from drumbeat import messages
@@ -450,7 +451,8 @@ def check_username(request):
         UserProfile.objects.get(username=username)
         return http.HttpResponse()
     except UserProfile.DoesNotExist:
-        pass
+        if drupal.get_user(username):
+            return http.HttpResponse()
     return http.HttpResponse(status=404)
 
 
