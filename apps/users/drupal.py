@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import check_password as django_check_password
+from django.contrib.auth.models import get_hexdigest as django_get_hexdigest
 
 
 DRUPAL_DB = 'drupal_users'
@@ -12,6 +14,22 @@ def get_user(username):
             return Users.objects.using(DRUPAL_DB).get(name=username)
     except Users.DoesNotExist:
         return None
+
+
+def check_password(drupal_user, password):
+    if '$' not in drupal_user.password:
+        return (drupal_user.password == django_get_hexdigest('md5', '', password))
+    else:
+        return django_check_password(password, drupal_user.password)
+
+
+def get_user_data(drupal_user):
+    display_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
+    return {
+        'username': drupal_user.name,
+        'email': drupal_user.mail,
+        'display_name': display_name,
+   }
 
 
 class Users(models.Model):
@@ -39,4 +57,12 @@ class Users(models.Model):
 
     class Meta:
         db_table = u'users'
+
+
+class Realname(models.Model):
+    uid = models.IntegerField(primary_key=True)
+    realname = models.CharField(max_length=765)
+    class Meta:
+        db_table = u'realname'
+
 
