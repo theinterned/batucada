@@ -156,6 +156,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 AUTHENTICATION_BACKENDS = (
     'users.backends.CustomUserBackend',
     'django_openid_auth.auth.OpenIDBackend',
+    'users.backends.DrupalUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
