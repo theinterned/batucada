@@ -9,11 +9,19 @@ DATABASES = {
     'default': {
         'NAME': 'lernanta',
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '',
-        'PORT': '',
-        'USER': 'root',
+        'USER': 'lernanta',
         'PASSWORD': '',
+        'HOST': '', # An empty string means localhost.
+        'PORT': '', # An empty string means the default port.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+    },
+    'drupal_users': {
+        'NAME': 'drupal_user_data',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'drupal_db_user',
+        'PASSWORD': '',
+        'HOST': '', # An empty string means localhost.
+        'PORT': '', # An empty string means the default port.
     }
 }
 
