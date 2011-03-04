@@ -45,7 +45,7 @@ Using ``virtualenvwrapper`` is also recommended (see the `installation instructi
    export WORKON_HOME=$HOME/.virtualenvs
    export PIP_VIRTUALENV_BASE=$WORKON_HOME
    export PIP_RESPECT_VIRTUALENV=true
-   source /usr/bin/virtualenvwrapper.sh
+   source /usr/local/bin/virtualenvwrapper.sh
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
 
