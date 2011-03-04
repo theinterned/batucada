@@ -3,6 +3,7 @@
 {% block bodyclasses %}project edit followers{% endblock %}
 
 {% block form %}
+<fieldset id="project_edit_followers" class="project edit followers tabpane">
 <h2>{{ _('Manage Followers') }}</h2>
 <p>
   {{ _('View, add and remove members of your course.') }}
@@ -31,4 +32,5 @@
 {% else %}
   <p class="hint no-followers">{{ _("Your course has no followers yet.") }}</p>
 {% endif %}
+</fieldset>
 {% endblock %}

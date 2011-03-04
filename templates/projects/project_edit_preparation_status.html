@@ -1,19 +1,21 @@
 {% extends "projects/project_edit.html" %}
 {% load l10n_tags %}
-{% block bodyclasses %}course edit preparation status{% endblock %}
+{% block bodyclasses %}project edit preparation status{% endblock %}
 
 {% block form %}
+<fieldset id="project_edit_preparation_status" class="project edit preparation_status tabpane">
 <form action="{% locale_url projects_edit_preparation_status slug=project.slug %}" method="post">
   {% csrf_token %}
   <p>
     <h2>{{ _('Preparation Status') }}</h2>
-    <span class="hint block">{{ _('A private draft will not be listed anywhere, but you can share its url. You can allow more people to contribute by making the draft public. When you think that the draft is mature enough to be run by someone, change the preparation status to ready.') }}</span>
     {{ form.preparation_status }}
     {{ form.preparation_status.errors }}
+    <span class="hint block">{{ _('A private draft will not be listed anywhere, but you can share its url. You can allow more people to contribute by making the draft public. When you think that the draft is mature enough to be run by someone, change the preparation status to ready.') }}</span>
   </p>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
   </p>
 </form>
+</fieldset>
 {% endblock %}

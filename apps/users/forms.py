@@ -10,8 +10,8 @@ from captcha import fields as captcha_fields
 
 from users.blacklist import passwords as blacklisted_passwords
 from users.models import UserProfile
+from users.fields import UsernameField
 from links.models import Link
-from drumbeat.utils import slug_validator
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
@@ -63,8 +63,6 @@ class OpenIDForm(forms.Form):
 
 class CreateProfileForm(forms.ModelForm):
     recaptcha = captcha_fields.ReCaptchaField()
-    policy_optin = forms.BooleanField(required=True, error_messages={
-        'required': _('You must agree to the licensing terms.')})
 
     class Meta:
         model = UserProfile
@@ -82,6 +80,7 @@ class CreateProfileForm(forms.ModelForm):
 
 
 class RegisterForm(forms.ModelForm):
+    username = UsernameField()
     password = forms.CharField(
         max_length=255,
         widget=forms.PasswordInput(render_value=False))
@@ -89,8 +88,6 @@ class RegisterForm(forms.ModelForm):
         max_length=255,
         widget=forms.PasswordInput(render_value=False))
     recaptcha = captcha_fields.ReCaptchaField()
-    policy_optin = forms.BooleanField(required=True, error_messages={
-        'required': _('You must agree to the licensing terms.')})
 
     class Meta:
         model = UserProfile
@@ -103,12 +100,6 @@ class RegisterForm(forms.ModelForm):
 
         if not settings.RECAPTCHA_PRIVATE_KEY:
             del self.fields['recaptcha']
-
-    def clean_username(self):
-        """Make sure that username has no invalid characters."""
-        username = self.cleaned_data['username']
-        slug_validator(username, lower=False)
-        return username
 
     def clean_password(self):
         password = self.cleaned_data['password']
@@ -147,8 +138,8 @@ class ProfileImageForm(forms.ModelForm):
         if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
             max_size = settings.MAX_IMAGE_SIZE / 1024
             raise forms.ValidationError(
-                _("Image exceeds max image size: %(max)dk",
-                  dict(max=max_size)))
+                _("Image exceeds max image size: %(max)dk") % dict(
+                    max=max_size))
         return self.cleaned_data['image']
 
 

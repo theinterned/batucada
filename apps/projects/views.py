@@ -1,4 +1,3 @@
-import os
 import logging
 
 from django import http
@@ -8,14 +7,19 @@ from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect 
 from django.template import RequestContext
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
+
+from commonware.decorators import xframe_sameorigin
 
 from projects import forms as project_forms
 from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia
 
+from relationships.models import Relationship
 from activity.models import Activity
+from links.models import Link
 from statuses.models import Status
 from relationships.models import Relationship
 from users.models import UserProfile
@@ -37,13 +41,18 @@ def show(request, slug):
         is_following = profile.is_following(project)
     activities = Activity.objects.filter(
         Q(project=project) | Q(target_project=project),
+    ).exclude(
+        verb='http://activitystrea.ms/schema/1.0/follow'
     ).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
     files = project.projectmedia_set.all()
+    followers_count = Relationship.objects.filter(
+        target_project=project).count()
     context = {
         'project': project,
         'following': is_following,
+        'followers_count': followers_count,
         'activities': activities,
         'todo_form': TodoForm(),
         'update_count': nstatuses,
@@ -69,8 +78,9 @@ def edit(request, slug):
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
+            messages.success(request, _('Course updated!'))
             return http.HttpResponseRedirect(
-                reverse('projects_show', kwargs=dict(slug=project.slug)))
+                reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
         form = project_forms.ProjectForm(instance=project)
 
@@ -89,7 +99,8 @@ def edit_description(request, slug):
             request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            messages.success(request, _('Course description updated!'))
+            return http.HttpResponseRedirect(reverse('projects_edit_description', kwargs={
                 'slug': project.slug,
             }))
         else:
@@ -101,6 +112,24 @@ def edit_description(request, slug):
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@xframe_sameorigin
+@ownership_required
+@require_http_methods(['POST'])
+def edit_image_async(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    form = project_forms.ProjectImageForm(request.POST, request.FILES,
+                                          instance=project)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.image.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
 
 
 @login_required
@@ -193,9 +222,11 @@ def edit_links(request, slug):
             messages.error(request, _('There was an error adding your link.'))
     else:
         form = project_forms.ProjectLinksForm()
+    links = Link.objects.select_related('subscription').filter(project=project)
     return render_to_response('projects/project_edit_links.html', {
         'project': project,
         'form': form,
+        'links': links,
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -257,14 +288,34 @@ def delete_follower(request, slug):
         'slug': project.slug,
     }))        
 
-def edit_links_delete(request, slug):
-    pass
+@login_required
+@ownership_required
+def edit_links_delete(request, slug, link):
+    if request.method == 'POST':
+        project = get_object_or_404(Project, slug=slug)
+        link = get_object_or_404(Link, pk=link)
+        if link.project != project:
+            return http.HttpResponseForbidden()
+        link.delete()
+        messages.success(request, _('The link was deleted'))
+    return http.HttpResponseRedirect(
+        reverse('projects_edit_links', kwargs=dict(slug=slug)))
 
 
 def list(request):
     featured = Project.objects.filter(featured=True)
     new = Project.objects.all().order_by('-created_on')[:4]
     active = Project.objects.get_popular(limit=4)
+
+    def assign_counts(projects):
+        for project in projects:
+            project.followers_count = Relationship.objects.filter(
+                target_project=project).count()
+
+    assign_counts(featured)
+    assign_counts(new)
+    assign_counts(active)
+
     return render_to_response('projects/gallery.html', {
         'featured': featured,
         'new': new,
@@ -281,6 +332,7 @@ def create(request):
             project = form.save(commit=False)
             project.created_by = user
             project.save()
+            messages.success(request, _('Your new course has been created.'))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
