@@ -16,6 +16,13 @@ def get_user(username):
         return None
 
 
+def get_openid_user(identity_url):
+    try:
+        authmap = Authmap.objects.using(DRUPAL_DB).get(authname=identity_url)
+        return Users.objects.using(DRUPAL_DB).get(uid=authmap.uid)
+    except Authmap.DoesNotExist, Users.DoesNotExist:
+        return None
+
 def check_password(drupal_user, password):
     if '$' not in drupal_user.password:
         return (drupal_user.password == django_get_hexdigest('md5', '', password))
@@ -65,4 +72,12 @@ class Realname(models.Model):
     class Meta:
         db_table = u'realname'
 
+
+class Authmap(models.Model):
+    aid = models.IntegerField(primary_key=True)
+    uid = models.IntegerField()
+    authname = models.CharField(unique=True, max_length=384)
+    module = models.CharField(max_length=384)
+    class Meta:
+        db_table = u'authmap'
 
