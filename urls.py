@@ -12,13 +12,13 @@ urlpatterns = patterns('',
     (r'',                include('activity.urls')),
     (r'^statuses/',      include('statuses.urls')),
     (r'^todos/',         include('todos.urls')),
-    (r'^courses/',      include('projects.urls')),
+    (r'^courses/',       include('projects.urls')),
     (r'^events/',        include('events.urls')),
     (r'^relationships/', include('relationships.urls')),
     (r'^messages/',      include('drumbeatmail.urls')),
     (r'^account/',       include('preferences.urls')),
     (r'^pubsub/',        include('django_push.subscriber.urls')),
-    (r'',                include('users.urls')),
+    (r'',                include('users.urls')),    
 )
 
 #if settings.DEBUG:

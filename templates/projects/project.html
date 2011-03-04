@@ -30,8 +30,7 @@
 {% block body %}
 <div id="sidebar">
   <section id="project"class="panel">
-    <h1 id="project-name">{{ project.name }} ({{ project.get_preparation_status_display }})</h1>
-
+    <h1 id="project-name">{{ project.name }}</h1>
     <figure>
       <a href="{% locale_url projects_show slug=project.slug %}">
         {% if project.image %}
@@ -44,31 +43,26 @@
 
 
     <div id="project-follow">
-      {% if user.get_profile != project.created_by %}
-	{% if following %}
-	  <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Unfollow') }}</button>
-	  </form>
-	{% else %}
-	  <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
-	    {% csrf_token %}
-	    <button>{{ _('Follow Course') }}</button>
-	  </form>
-	{% endif %}
+      {% if user.is_authenticated and user.get_profile != project.created_by %}
+        {% if following %}
+          <form method="post" action="{% locale_url relationships_unfollow object_type='project' slug=project.slug %}">
+            {% csrf_token %}
+            <button>{{ _('Unfollow') }}</button>
+          </form>
+        {% else %}
+          <form method="post" action="{% locale_url relationships_follow object_type='project' slug=project.slug %}">
+            {% csrf_token %}
+            <button>{{ _('Follow Course') }}</button>
+          </form>
+        {% endif %}
       {% endif %}
     </div> <!-- /#project-follow -->
 
     <dl id="project-stats">
       <dt>Followers</dt>
-      <dd>
-	<a href="#">{{ project.followers|length }}</a>
-      </dd>
+      <dd>{{ followers_count }}</dd>
       <dt>Updates</dt>
       <dd>{{ update_count }}</dd>
-
-      <dt>Created</dt>
-      <dd>August 2009</dd>
     </dl> <!-- /#project-stats -->
 
     <div id="project-summary">
@@ -80,7 +74,7 @@
         {% for file in files %}
           <li id="file_{{ file.id}}">
             <a href="{{ MEDIA_URL }}{{ file.project_file }}">
-              <img src="{{ MEDIA_URL }}{{ file.thumbnail }}" class="project media" />
+              <img src="{{ MEDIA_URL }}{{ file.thumbnail_or_default }}" class="project media" />
             </a>
           </li>
         {% endfor %}
@@ -90,7 +84,7 @@
     {% if project.detailed_description %}
     <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Course Description</a>
     {% endif %}
-    {% if user.get_profile != project.created_by %}
+    {% if user.is_authenticated and user.get_profile != project.created_by %}
     <p class="supplemental_actions">
       <a class="report abuse action" href="{% locale_url drumbeat_abuse  obj=project.id type="project" %}">{{_('Report Abuse')}}</a>
     </p>  
@@ -108,6 +102,8 @@
   {% endif %} 
 
   <section id="project-lead" class="panel">
+    <h2>Organizer</h2>
+    <br>
     <a href="{{ project.created_by.get_absolute_url }}">
       <img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="54" width="54">
     </a>
@@ -117,6 +113,7 @@
         <a href="{{ project.created_by.get_absolute_url }}">{{ project.created_by.name }}</a>
       </h3>
 
+      {% if user.is_authenticated %}
       <div class="member-actions">
         {% if project.created_by != user.get_profile %}
           {% if project.created_by in user.get_profile.following %}
@@ -133,9 +130,9 @@
           <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Private Message')}}</a>
         {% endif %}
       </div>     
+      {% endif %}
 
     </div> <!-- /.member-details -->
-    
     <div class="member-bio">
       {{ project.created_by.bio }}
     </div>
@@ -144,7 +141,6 @@
 </div> <!-- /#sidebar -->
 
 <div id="main">
-  
   {% if user.is_authenticated %}
   <div id="create-post">
     <div class="post-container">
@@ -160,15 +156,15 @@
 	    <li><span>{{ project.name }}</span></li>
 	  </ul>
 
-    <button class="button update submit" id="post-project-update">Post Update</button>
-
+          <button class="button update submit" id="post-project-update">Post Update</button>
 
 	</div> <!-- /.status-and-actions -->
 	</form>
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
+    {% endif %}
 
-    <!-- todos -->
+    <!-- create todos 
     <div id="create-todo">
         <div class="todo-container">
             <form action="{% locale_url todos_create_project project_id=project.id %}" method="post" id="post-project-todo-update">
@@ -179,10 +175,9 @@
             <input type="submit" value="Submit" />
             
             </form>
-        </div> <!-- /.todo-container -->
-    </div> <!-- /.#create-todo -->
+        </div>
+    </div> -->
 
-    {% endif %}
 
     <ul id="posts">
       {% for activity in activities %}

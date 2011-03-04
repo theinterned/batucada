@@ -50,7 +50,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub')
+SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts', 'ajax')
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -174,7 +174,7 @@ CACHE_COUNT_TIMEOUT = 60
 
 # Email goes to the console by default.  s/console/smtp/ for regular delivery
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Mozilla Drumbeat <drumbeat@mozilla.org>'
+DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
 
 # Copy these to your settings_local.py
 RECAPTCHA_PUBLIC_KEY = ''
