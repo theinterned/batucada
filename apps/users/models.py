@@ -143,6 +143,9 @@ class UserProfile(ModelBase):
         self.user.email = self.email
         self.user.date_joined = self.created_on
         self.user.backend = 'django.contrib.auth.backends.ModelBackend'
+        if User.objects.all().count() == 0:
+            self.user.is_superuser = True
+            self.user.is_staff = True
         self.user.save()
         self.save()
         return self.user
