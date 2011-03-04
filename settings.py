@@ -157,6 +157,7 @@ AUTHENTICATION_BACKENDS = (
     'users.backends.CustomUserBackend',
     'django_openid_auth.auth.OpenIDBackend',
     'users.backends.DrupalUserBackend',
+    'users.backends.DrupalOpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

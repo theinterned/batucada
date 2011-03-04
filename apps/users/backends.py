@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 from users.models import UserProfile
 from users import drupal
+from django_openid_auth.auth import OpenIDBackend, SUCCESS
+from django_openid_auth.models import UserOpenID
 
 log = logging.getLogger(__name__)
 
@@ -33,10 +35,8 @@ class CustomUserBackend(object):
         except User.DoesNotExist:
             return None
 
-class DrupalUserBackend(object):
-    supports_object_permissions = False
-    supports_anonymous_user = False
-    supports_inactive_user = False
+
+class DrupalUserBackend(CustomUserBackend):
 
     def authenticate(self, username=None, password=None):
         log.debug("Attempting to authenticate drupal user %s" % (username,))
@@ -59,8 +59,36 @@ class DrupalUserBackend(object):
             log.debug("Drupal user does not exist: %s" % (username,))
             return None
 
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
+
+class DrupalOpenIDBackend(OpenIDBackend):
+
+    def authenticate(self, **kwargs):
+        """Authenticate the user based on an OpenID response."""
+        # Require that the OpenID response be passed in as a keyword
+        # argument, to make sure we don't match the username/password
+        # calling conventions of authenticate.
+
+        openid_response = kwargs.get('openid_response')
+        if openid_response is None:
             return None
+
+        if openid_response.status != SUCCESS:
+            return None
+
+        user = None
+        try:
+            user_openid = UserOpenID.objects.get(
+                claimed_id__exact=openid_response.identity_url)
+            log.debug("Drupal openid user resgistered already: %s" % (openid_response.identity_url,))
+            return None
+        except UserOpenID.DoesNotExist:
+            drupal_user = drupal.get_openid_user(openid_response.identity_url)
+            if drupal_user:
+                user_data = drupal.get_user_data(drupal_user)
+                profile = UserProfile(**user_data)
+                profile.save()
+                if profile.user is None:
+                    profile.create_django_user()
+                self.associate_openid(profile.user, openid_response)
+                return profile.user
+
