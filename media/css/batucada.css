@@ -1940,6 +1940,9 @@ footer nav #social a {
 	vertical-align: middle;
 	text-indent: -9999px;
 	}
+footer nav #social #statusnet a {
+	background: url(/media/images/statusnet.png) 0 0 no-repeat;
+	}
 footer nav #social #twitter a {
 	background: url(/media/images/twitter.png) 0 0 no-repeat;
 	}
