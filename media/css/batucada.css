@@ -322,6 +322,12 @@ header {}
         }
 
         /*BOILERPLATE alternate style for non-rgba broswers*/
+		
+		.no-rgba #main-nav a:hover {
+          color: #fff;
+          background: #36cdc4;
+		}
+		
         .no-rgba #main-nav a {
           color: #a9b2c1;
           display: block;
@@ -492,11 +498,12 @@ header {}
     
   #breadcrumbs {
     height: 31px;
-    width: 1000px;
-    margin-left: 132px;
+    width: 990px;
+    margin: auto auto;
     background: #fff;
     font-size: 11px;
     line-height: 31px;
+	padding-left:10px
   }
     #breadcrumbs nav{
     }
