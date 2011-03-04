@@ -62,6 +62,14 @@ class OpenIDForm(forms.Form):
             'placeholder': _('enter any OpenID URL')}))
 
 
+def validate_user_identity(form, data):
+    drupal_user_msg = _('You can login directly with your credentials from the old P2PU website.')
+    if 'username' in data and drupal.get_user(data['username']):
+        form._errors['username'] = forms.util.ErrorList([drupal_user_msg])
+    if 'email' in data and drupal.get_user(data['email']):
+        form._errors['email'] = forms.util.ErrorList([drupal_user_msg])
+
+
 class CreateProfileForm(forms.ModelForm):
     recaptcha = captcha_fields.ReCaptchaField()
 
@@ -78,6 +86,12 @@ class CreateProfileForm(forms.ModelForm):
 
         if not settings.RECAPTCHA_PRIVATE_KEY:
             del self.fields['recaptcha']
+
+    def clean(self):
+        super(CreateProfileForm, self).clean()
+        data = self.cleaned_data
+        validate_user_identity(self, data)
+        return data
 
 
 class RegisterForm(forms.ModelForm):
@@ -110,12 +124,9 @@ class RegisterForm(forms.ModelForm):
         return password
 
     def clean(self):
-        """Ensure password and password_confirm match."""
         super(RegisterForm, self).clean()
         data = self.cleaned_data
-        if 'username' in data and drupal.get_user(data['username']):
-            self._errors['username'] = forms.util.ErrorList([
-                _('You can login directly with your credentials from the old P2PU website.')])
+        validate_user_identity(self, data)
         if 'password' in data and 'password_confirm' in data:
             if data['password'] != data['password_confirm']:
                 self._errors['password_confirm'] = forms.util.ErrorList([
