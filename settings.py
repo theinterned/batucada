@@ -140,7 +140,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'drumbeat.context_processors.django_conf',
     'messages.context_processors.inbox',
     'users.context_processors.messages',
-    'users.context_processors.login_with_redirect',
+    'users.context_processors.login_with_redirect_url',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
