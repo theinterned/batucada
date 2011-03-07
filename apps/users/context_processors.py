@@ -1,8 +1,9 @@
 from django.utils.http import urlquote
-from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 
 from messages.models import Message
+from l10n.urlresolvers import reverse
+
 
 def messages(request):
     if request.user.is_authenticated():
@@ -13,8 +14,8 @@ def messages(request):
     else:
         return {}
 
-def login_with_redirect(request):
-    login_url = settings.LOGIN_URL
+
+def login_with_redirect_url(request):
     path = urlquote(request.get_full_path())
-    url = '%s?%s=%s' % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, path)
-    return {'login_url': url}    
+    url = '%s?%s=%s' % (reverse('users_login'), REDIRECT_FIELD_NAME, path)
+    return {'login_with_redirect_url': url}
