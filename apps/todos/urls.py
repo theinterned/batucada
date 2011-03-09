@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-  url(r'^(?P<todo>\d+)/$', 'todos.views.show',
+  url(r'^(?P<todo_id>\d+)/$', 'todos.views.show',
       name='todos_show'),
   url(r'^create/$', 'todos.views.create',
       name='todos_create'),

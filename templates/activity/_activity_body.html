@@ -11,9 +11,8 @@
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
     {{ _('Created a new course') }}
   {% else %}
-    {% if activity.target_todo %}
-      {{ _('Posted a task') }} 
-      {{ activity.target_todo.title|safe }}
+    {% if activity.target_object %}
+      {{ activity.target_object.friendly_verb }}
     {% else %}
       {{ activity|friendly_verb }}
     {% endif %}
@@ -40,11 +39,8 @@
   {% if activity.status %}
     {{ activity.status|safe }}
   {% else %}
-    {% if activity.target_todo %}
-      {{ activity.target_todo.description|safe }}
-      {% if activity.target_todo.due_on %}
-        Due on {{ activity.target_todo.due_on }}
-      {% endif %}
+    {% if activity.target_object %}
+      {{ activity.target_object.representation }}
     {% else %}
       {{ activity|activity_representation }}
     {% endif %}
