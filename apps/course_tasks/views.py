@@ -7,20 +7,12 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from course_tasks.forms import TaskForm
-from course_tasks.models import CourseTask
 from projects.models import Project
 from users.decorators import login_required
 
 from drumbeat import messages
 
 log = logging.getLogger(__name__)
-
-
-def show(request, task_id):
-    task = get_object_or_404(CourseTask, id=task_id)
-    return render_to_response('course_tasks/show.html', {
-        'task': task,
-    }, context_instance=RequestContext(request))
 
 
 @login_required
