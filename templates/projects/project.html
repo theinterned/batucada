@@ -15,12 +15,15 @@
       <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
     </nav>
 
-    {% if user.get_profile == project.created_by %}
       <div id="project-actions">
+        {% if user.get_profile == project.created_by %}
         <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Course') }}</a>
+        {% endif %}
+        <a class="button" href="{% locale_url create_project_task project_id=project.id %}">{{ _('Post Task') }}</a>
+        {% if user.get_profile == project.created_by %}
         <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
+        {% endif %}
       </div>
-    {% endif %}
 
   </div> <!-- /.container -->
 {% endblock %}
@@ -163,20 +166,6 @@
       </div> <!-- /.post-container -->
     </div> <!-- /.#create-post -->
     {% endif %}
-
-    <!-- create todos 
-    <div id="create-todo">
-        <div class="todo-container">
-            <form action="{% locale_url todos_create_project project_id=project.id %}" method="post" id="post-project-todo-update">
-            {% csrf_token %}
-
-            {{ todo_form.as_p }}
-                       
-            <input type="submit" value="Submit" />
-            
-            </form>
-        </div>
-    </div> -->
 
 
     <ul id="posts">
