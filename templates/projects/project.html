@@ -19,7 +19,9 @@
         {% if user.get_profile == project.created_by %}
         <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Course') }}</a>
         {% endif %}
+        {% if user.is_authenticated %}
         <a class="button" href="{% locale_url create_project_task project_id=project.id %}">{{ _('Post Task') }}</a>
+        {% endif %}
         {% if user.get_profile == project.created_by %}
         <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
         {% endif %}
