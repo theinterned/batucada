@@ -17,6 +17,7 @@ DATABASES = {
     },
     'drupal_users': {
         'NAME': 'drupal_user_data',
+        'TEST_NAME': 'drupal_user_data',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'drupal_db_user',
         'PASSWORD': '',

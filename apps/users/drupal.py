@@ -76,7 +76,7 @@ class Realname(models.Model):
 class Authmap(models.Model):
     aid = models.IntegerField(primary_key=True)
     uid = models.IntegerField()
-    authname = models.CharField(unique=True, max_length=384)
+    authname = models.CharField(max_length=384)
     module = models.CharField(max_length=384)
     class Meta:
         db_table = u'authmap'
