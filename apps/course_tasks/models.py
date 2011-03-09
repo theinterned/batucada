@@ -9,6 +9,7 @@ from django.utils.timesince import timesince
 from django.utils.html import urlize
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
+from django.contrib.contenttypes.models import ContentType
 
 from activity.models import Activity
 from drumbeat.models import ModelBase
@@ -30,11 +31,10 @@ class CourseTask(ModelBase):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('task_show', (), {
-            'task_id': self.pk,
-        })
+        task_type = ContentType.objects.get_for_model(self)
+        activity = Activity.objects.get(target_content_type__pk=task_type.pk, target_id=self.id)
+        return activity.get_absolute_url()
 
     def timesince(self, now=None):
         return timesince(self.created_on, now)
