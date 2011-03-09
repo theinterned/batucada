@@ -51,10 +51,11 @@ def create_project_status(request, project_id):
         status.author = request.user.get_profile()
         status.project = project
         status.save()
+        log.debug("Saved status by user (%d) to project (%d): %s" % (
+        profile.id, project.id, status))
     else:
+        log.debug("form error: %s" % (str(form.errors)))
         messages.error(request, _('There was an error posting '
                                   'your status update'))
-    log.debug("Saved status by user (%d) to project (%d): %s" % (
-        profile.id, project.id, status))
     return HttpResponseRedirect(
         reverse('projects_show', kwargs=dict(slug=project.slug)))

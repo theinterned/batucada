@@ -51,10 +51,11 @@ def create_project_todo(request, project_id):
         todo.author = request.user.get_profile()
         todo.project = project
         todo.save()
+        log.debug("Saved todo by user (%d) to project (%d): %s" % (
+            profile.id, project.id, todo))
     else:
+        log.debug("form error: %s" % (str(form.errors)))
         messages.error(request, _('There was an error posting '
                                   'your todo update'))
-    log.debug("Saved todo by user (%d) to project (%d): %s" % (
-        profile.id, project.id, todo))
     return HttpResponseRedirect(
         reverse('projects_show', kwargs=dict(slug=project.slug)))

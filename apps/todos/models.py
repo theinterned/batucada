@@ -7,6 +7,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
 from django.utils.html import urlize
+from django.utils.translation import ugettext_lazy as _
+from django.utils.safestring import mark_safe
 
 from activity.models import Activity
 from drumbeat.models import ModelBase
@@ -37,6 +39,15 @@ class Todo(ModelBase):
     def timesince(self, now=None):
         return timesince(self.created_on, now)
 
+    def friendly_verb(self):
+        return mark_safe(_('Posted a task %s') % self.title)
+
+    def representation(self):
+        if self.due_on:
+            return mark_safe("%(desc)s Due on %(due)s" % {'desc': self.description, 'due': self.due_on})
+        else:
+            return mark_safe(self.description)
+
 admin.site.register(Todo)
 
 
@@ -59,7 +70,7 @@ def todo_creation_handler(sender, **kwargs):
     activity = Activity(
         actor=todo.author,
         verb='http://activitystrea.ms/schema/1.0/post',
-        target_todo=todo,
+        target_object=todo,
     )
     if todo.project:
         activity.target_project = todo.project

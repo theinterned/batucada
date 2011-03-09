@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 from drumbeat.models import ModelBase
 from activity import schema
@@ -23,7 +25,9 @@ class Activity(ModelBase):
     actor = models.ForeignKey('users.UserProfile')
     verb = models.URLField(verify_exists=False)
     status = models.ForeignKey('statuses.Status', null=True)
-    target_todo = models.ForeignKey('todos.Todo', null=True)
+    target_content_type = models.ForeignKey(ContentType, null=True)
+    target_id = models.PositiveIntegerField(null=True)
+    target_object = generic.GenericForeignKey('target_content_type', 'target_id')
     project = models.ForeignKey('projects.Project', null=True)
     target_user = models.ForeignKey('users.UserProfile', null=True,
                                     related_name='target_user')
@@ -42,13 +46,13 @@ class Activity(ModelBase):
     @property
     def object_type(self):
         obj = (self.status or self.target_user or self.remote_object 
-        or self.target_todo or None)
+        or self.target_object or None)
         return obj and obj.object_type or None
 
     @property
     def object_url(self):
         obj = (self.status or self.target_user or self.remote_object 
-        or self.target_todo or None)
+        or self.target_object or None)
         return obj and obj.get_absolute_url() or None
 
     def textual_representation(self):
@@ -62,8 +66,8 @@ class Activity(ModelBase):
         elif self.remote_object:
             return self.remote_object.title
 
-        elif self.target_todo:
-            return self.target_todo.title
+        elif self.target_object:
+            return self.target_object.title
 
         friendly_verb = schema.verbs_by_uri[self.verb]
         return _("%s activity performed by %s") % (friendly_verb,
