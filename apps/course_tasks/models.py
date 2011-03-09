@@ -25,7 +25,7 @@ class CourseTask(ModelBase):
     description = models.CharField(max_length=1000)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
-    due_on = models.DateTimeField(null=True, blank=True)
+    due_on = models.DateField(null=True, blank=True)
 
     def __unicode__(self):
         return self.title

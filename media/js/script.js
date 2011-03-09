@@ -418,6 +418,7 @@ $(document).ready(function() {
     });
     
     $('.modal nav.tabs a').tabLinks('.tabpane');
+    $('#id_due_on').datepicker();
 });
 
 // Recaptcha
