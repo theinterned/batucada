@@ -1,11 +1,11 @@
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('',
-  url(r'^(?P<todo_id>\d+)/$', 'todos.views.show',
+urlpatterns = patterns('course_tasks.views',
+  url(r'^(?P<todo_id>\d+)/$', 'show',
       name='todos_show'),
-  url(r'^create/$', 'todos.views.create',
+  url(r'^create/$', 'create',
       name='todos_create'),
   url(r'^create/project/(?P<project_id>\d+)/$',
-      'todos.views.create_project_todo',
+      'create_project_todo',
       name='todos_create_project'),
 )
