@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
-from todos.forms import TodoForm
-from todos.models import Todo
+from course_tasks.forms import TodoForm
+from course_tasks.models import Todo
 from projects.models import Project
 from users.decorators import login_required
 

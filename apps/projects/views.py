@@ -24,8 +24,8 @@ from statuses.models import Status
 from relationships.models import Relationship
 from users.models import UserProfile
 
-from todos.models import Todo
-from todos.forms import TodoForm
+from course_tasks.models import Todo
+from course_tasks.forms import TodoForm
 
 from drumbeat import messages
 from users.decorators import login_required

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 
-from todos.models import Todo
+from course_tasks.models import Todo
 
 
 class TodoForm(forms.ModelForm):
