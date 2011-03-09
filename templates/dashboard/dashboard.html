@@ -6,6 +6,16 @@
 <link rel="alternate" type="application/atom+xml" href="{% locale_url activity_dashboard_feed %}" />
 {% endblock %}
 {% block bodyid %}dashboard{%endblock%}
+
+{% block breadcrumbs %}
+  <div class="container">
+      <nav><a href="{% locale_url dashboard_index %}">{{ _('Dashboard') }}</a></nav>
+      <div id="project-actions">
+        <a class="button" href="{% locale_url create_task %}">{{ _('Post Task') }}</a>
+      </div>
+  </div> <!-- /.container -->
+{% endblock %}
+
 {% block body %}
 
 <div id="sidebar">

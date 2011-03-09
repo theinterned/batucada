@@ -24,9 +24,6 @@ from statuses.models import Status
 from relationships.models import Relationship
 from users.models import UserProfile
 
-from course_tasks.models import Todo
-from course_tasks.forms import TodoForm
-
 from drumbeat import messages
 from users.decorators import login_required
 
@@ -54,7 +51,6 @@ def show(request, slug):
         'following': is_following,
         'followers_count': followers_count,
         'activities': activities,
-        'todo_form': TodoForm(),
         'update_count': nstatuses,
         'links': links,
         'files': files,

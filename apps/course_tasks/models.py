@@ -16,7 +16,7 @@ from drumbeat.models import ModelBase
 TAGS = ('a', 'b', 'em', 'i', 'strong', 'p')
 
 
-class Todo(ModelBase):
+class CourseTask(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/event'
 
     author = models.ForeignKey('users.UserProfile')
@@ -32,8 +32,8 @@ class Todo(ModelBase):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('todos_show', (), {
-            'todo_id': self.pk,
+        return ('task_show', (), {
+            'task_id': self.pk,
         })
 
     def timesince(self, now=None):
@@ -48,33 +48,33 @@ class Todo(ModelBase):
         else:
             return mark_safe(self.description)
 
-admin.site.register(Todo)
+admin.site.register(CourseTask)
 
 
-def todo_creation_handler(sender, **kwargs):
-    todo = kwargs.get('instance', None)
+def task_creation_handler(sender, **kwargs):
+    task = kwargs.get('instance', None)
     created = kwargs.get('created', False)
 
-    if not created or not isinstance(todo, Todo):
+    if not created or not isinstance(task, CourseTask):
         return
 
-    # convert todo body to markdown and bleachify
+    # convert task body to markdown and bleachify
     bl = Bleach()
-    todo.title = urlize(todo.title)
-    todo.description = urlize(todo.description)
-    todo.title = bl.clean(markdown(todo.title), tags=TAGS)
-    todo.description = bl.clean(markdown(todo.description), tags=TAGS)
-    todo.save()
+    task.title = urlize(task.title)
+    task.description = urlize(task.description)
+    task.title = bl.clean(markdown(task.title), tags=TAGS)
+    task.description = bl.clean(markdown(task.description), tags=TAGS)
+    task.save()
 
     # fire activity
     activity = Activity(
-        actor=todo.author,
+        actor=task.author,
         verb='http://activitystrea.ms/schema/1.0/post',
-        target_object=todo,
+        target_object=task,
     )
-    if todo.project:
-        activity.target_project = todo.project
+    if task.project:
+        activity.target_project = task.project
     activity.save()
 
-post_save.connect(todo_creation_handler, sender=Todo)
+post_save.connect(task_creation_handler, sender=CourseTask)
 
