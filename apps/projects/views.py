@@ -92,7 +92,8 @@ def edit_description(request, slug):
         if form.is_valid():
             form.save()
             messages.success(request, _('Project description updated!'))
-            return http.HttpResponseRedirect(reverse('projects_edit_description', kwargs={
+            return http.HttpResponseRedirect(
+                reverse('projects_edit_description', kwargs={
                 'slug': project.slug,
             }))
         else:

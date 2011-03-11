@@ -18,4 +18,3 @@ urlpatterns += patterns('',
        'drumbeat.views.report_abuse',
        name='drumbeat_abuse'),
 )
-
