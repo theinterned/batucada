@@ -168,7 +168,7 @@ MAX_UPLOAD_SIZE = 1024 * 1024 * 50
 MAX_PROJECT_FILES = 6
 
 GLOBAL_LOG_LEVEL = logging.DEBUG
-GLOBAL_LOG_HANDLERS = [logging.StreamHandler()]
+GLOBAL_LOG_HANDLERS = [logging.FileHandler(path('lernanta.log'))]
 
 CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 CACHE_PREFIX = 'lernanta'
