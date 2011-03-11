@@ -7,10 +7,11 @@ from django.template.defaultfilters import stringfilter
 
 register = Library()
 
+
 def truncate_chars(s, num):
     """
-    Template filter to truncate a string to at most num characters respecting word
-    boundaries.
+    Template filter to truncate a string to at most num characters
+    respecting word boundaries.
     """
     s = force_unicode(s)
     length = int(num)
@@ -27,10 +28,12 @@ def truncate_chars(s, num):
     return s
 truncate_chars = allow_lazy(truncate_chars, unicode)
 
+
 def truncatechars(value, arg):
     """
-    Truncates a string after a certain number of characters, but respects word boundaries.
-    
+    Truncates a string after a certain number of characters, but respects word
+    boundaries.
+
     Argument: Number of characters to truncate after.
     """
     try:
