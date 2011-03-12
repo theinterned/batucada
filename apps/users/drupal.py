@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import check_password as django_check_password
 from django.contrib.auth.models import get_hexdigest as django_get_hexdigest
 
@@ -7,6 +8,8 @@ DRUPAL_DB = 'drupal_users'
 
 
 def get_user(username):
+    if not DRUPAL_DB in settings.DATABASES:
+        return None
     try:
         if '@' in username:
             return Users.objects.using(DRUPAL_DB).get(mail=username)
@@ -17,6 +20,8 @@ def get_user(username):
 
 
 def get_openid_user(identity_url):
+    if not DRUPAL_DB in settings.DATABASES:
+        return None
     try:
         authmap = Authmap.objects.using(DRUPAL_DB).get(authname=identity_url)
         return Users.objects.using(DRUPAL_DB).get(uid=authmap.uid)
