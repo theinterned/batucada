@@ -1,16 +1,16 @@
-from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from django.utils.feedgenerator import Atom1Feed, rfc3339_date
+from django.utils.feedgenerator import rfc3339_date
 
+from django_push.publisher.feeds import Feed, HubAtom1Feed
 from activity.models import Activity
 from projects.models import Project
 from users.models import UserProfile
 
 
-class ActivityStreamAtomFeed(Atom1Feed):
+class ActivityStreamAtomFeed(HubAtom1Feed):
 
     def root_attributes(self):
         attrs = super(ActivityStreamAtomFeed, self).root_attributes()
