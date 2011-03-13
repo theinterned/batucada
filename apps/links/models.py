@@ -57,5 +57,7 @@ def listener(notification, **kwargs):
     sender = kwargs.get('sender', None)
     if not sender:
         return
-    tasks.HandleNotification.apply_async(args=(notification, sender))
+    log.debug('Received feed update notification: %s, sender: %s' % (notification, sender))
+    eager_result = tasks.HandleNotification.apply_async(args=(notification, sender))
+    log.debug('Result from the feed notification handler: %s, %s' % (eager_result.status, eager_result.result))
 updated.connect(listener)
