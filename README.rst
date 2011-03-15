@@ -99,3 +99,70 @@ Get Involved
 To help out with lernanta, join the `P2PU dev mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
 
 .. _P2PU dev mailing list: http://lists.p2pu.org/mailman/listinfo/p2pu-dev
+
+Setup in Production with Apache and WSGI
+------------
+
+Configure a new virtualhost for the site ::
+
+    vim /etc/apache2/sites-available/lernanta
+
+This is an example of configuration (replace the values between brackets) ::
+
+    <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName [domain]
+        ErrorLog /var/log/apache2/lernanta-error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+        CustomLog /var/log/apache2/lernanta-access.log combined
+
+        # run mod_wsgi process for django in daemon mode
+        # this allows avoiding confused timezone settings when
+        # another application runs in the same virtual host
+        WSGIDaemonProcess Lernanta
+        WSGIProcessGroup Lernanta
+
+        # force all content to be served as static files
+        # otherwise django will be crunching images through itself wasting time
+        Alias /media/ "[path to the source code]/media/"
+        <Directory "[path to the source code]/media">
+            Order deny,allow
+            Allow from all
+            Options Indexes MultiViews FollowSymLinks
+            AllowOverride None
+        </Directory>
+
+        Alias /en-US/admin-media/ "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media/"
+        <Directory "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media">
+            Order deny,allow
+            Allow from all
+            Options Indexes MultiViews FollowSymLinks
+            AllowOverride None
+        </Directory>
+
+        #this is your wsgi script described in the prev section
+        WSGIScriptAlias / [path to the source code]/wsgi/batucada.wsgi
+    </VirtualHost>
+
+Add the necessary paths to sitedir (replace the values between brackets) ::
+
+   site.addsitedir(os.path.abspath(os.path.join(wsgidir, '[path to the virtualenv]/lib/python2.6/site-packages')))
+   site.addsitedir(os.path.abspath(os.path.join(wsgidir, '[path to the virtualenv]/src')))
+
+Reload apache ::
+
+   /etc/init.d/apache reload
+
+Update the Site instance's domain from the admin interface and configure your SUPERFEEDR username and password (now in settings.py, but soon in settings_local.py).
+
+Configure email settings (DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER) and the email backend ::
+
+   EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+If you have to update the source code in production, remember to mark the .wsgi file as updated ::
+
+   touch wsgi/batucada.wsgi
+
