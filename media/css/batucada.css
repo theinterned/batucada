@@ -957,7 +957,7 @@ header {}
     #main .post-tags li, #main .post-char-count {
 		display: inline-block;
 		float: none;
-		margin: 0;
+		margin: 10px 0px 0px 0px;
     }
     #main .post-char-count {
 		float: left;
