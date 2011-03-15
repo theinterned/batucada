@@ -42,7 +42,7 @@ class ProjectTests(TestCase):
             created_by=self.user,
         )
         project2.save()
-        self.assertEqual('my-cool-project1', project2.slug)
+        self.assertEqual('my-cool-project-2', project2.slug)
 
     def test_activity_firing(self):
         """Test that when a project is created, an activity is created."""
