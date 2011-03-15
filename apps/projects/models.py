@@ -72,7 +72,7 @@ class Project(ModelBase):
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=125)
     long_description = models.TextField()
 
@@ -126,7 +126,7 @@ class Project(ModelBase):
                 existing = Project.objects.filter(slug=self.slug)
                 if len(existing) == 0:
                     break
-                self.slug = slug + str(count)
+                self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(Project, self).save()
 admin.site.register(Project)
