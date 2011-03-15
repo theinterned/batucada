@@ -40,6 +40,14 @@ def create(request):
 
 
 @login_required
+def reply(request, parent_id):
+    parent = get_object_or_404(Status, id=parent_id)
+    return render_to_response('statuses/reply.html', {
+        'parent': parent,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
 def create_project_status(request, project_id):
     if request.method != 'POST' or 'status' not in request.POST:
         return HttpResponseRedirect('/')
