@@ -8,6 +8,8 @@ urlpatterns = patterns('',
 
   url(r'^(?P<slug>[\w-]+)/$', 'challenges.views.show_challenge',
       name='challenges_show'),
+  url(r'^(?P<slug>[\w-]+)/full$', 'challenges.views.show_challenge_full',
+      name='challenges_show_full'),
 
   # Submissions
   url(r'^(?P<slug>[\w-]+)/submission/create', 

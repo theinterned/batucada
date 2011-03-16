@@ -23,11 +23,14 @@ class ChallengeManager(caching.base.CachingManager):
 class Challenge(ModelBase):
     """ Inovation (design) Challenges """
     title = models.CharField(max_length=100, unique=True)
-
-    description = models.TextField()
-    description_html = models.TextField(null=True, blank=True)
-
     slug = models.SlugField(unique=True)
+
+    title_long = models.CharField(max_length=255)
+    brief = models.TextField()
+    guidelines = models.TextField()
+    important_dates = models.TextField()
+    resources = models.TextField()
+    rules = models.TextField()
     
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()
@@ -38,7 +41,6 @@ class Challenge(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.now())
     
-
     is_open = models.BooleanField()
 
     objects = ChallengeManager()
