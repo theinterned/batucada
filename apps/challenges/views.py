@@ -46,6 +46,39 @@ def create_challenge(request, project_id):
     return render_to_response('challenges/challenge_edit.html', context,
                               context_instance=RequestContext(request))
 
+@login_required
+def edit_challenge(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    user = request.user.get_profile()
+
+    if user != challenge.created_by:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form = ChallengeForm(request.POST, instance=challenge)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Challenge updated!'))
+            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+                'slug': challenge.slug,
+                }))
+        else:
+            messages.error(request, _('Unable to update your challenge.'))
+    else:
+        form = ChallengeForm(instance=challenge)
+
+    context = {
+        'form': form,
+        'project': challenge.project,
+        'challenge' : challenge
+    }
+
+    return render_to_response('challenges/challenge_edit.html', context,
+                              context_instance=RequestContext(request))
+
+
+    
+
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
