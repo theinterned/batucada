@@ -73,6 +73,16 @@ def show_challenge(request, slug):
     return render_to_response('challenges/challenge.html', context,
                               context_instance=RequestContext(request))
 
+def show_challenge_full(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+
+    context = {
+        'challenge' : challenge,
+    }
+
+    return render_to_response('challenges/challenge_full.html', context,
+                              context_instance=RequestContext(request))
+
 @login_required
 def create_submission(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)

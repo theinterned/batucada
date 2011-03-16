@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 class ChallengeForm(forms.ModelForm):
   class Meta:
     model = Challenge
-    fields = ('title', 'description', 'start_date', 'end_date' )
+    exclude = ('slug', 'project', 'created_by', 'created_on', 'is_open')
     widgets = {
       'start_date': SelectDateWidget(),
       'end_date': SelectDateWidget(),      

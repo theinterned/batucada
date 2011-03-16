@@ -17,17 +17,31 @@
       <form method="post" action="{% locale_url challenges_create project_id=project.id%}">
         {% csrf_token %}
         <div class="field{% if form.title.errors %} error{% endif %}">
-          <label for="id_name">{{ _('Challenge Title') }}</label>
+          <label for="id_name">{{ _('Title') }}</label>
           <span class="hint block"></span>
           {{ form.title }}
           {{ form.title.errors }}
         </div>
 
-        <div class="field{% if form.description.errors %} error{% endif %}">
-          <label for="id_name">{{ _('Description') }}</label>
+        <div class="field{% if form.title_long.errors %} error{% endif %}">
+          <label for="id_name">{{ _('Title (long)') }}</label>
           <span class="hint block"></span>
-          {{ form.description }}
-          {{ form.description.errors }}
+          {{ form.title_long }}
+          {{ form.title_long.errors }}
+        </div>
+
+        <div class="field{% if form.brief.errors %} error{% endif %}">
+          <label for="id_name">{{ _('The Brief') }}</label>
+          <span class="hint block"></span>
+          {{ form.brief }}
+          {{ form.brief.errors }}
+        </div>
+
+        <div class="field{% if form.guidelines.errors %} error{% endif %}">
+          <label for="id_name">{{ _('How does it work? (Submission guidelines)') }}</label>
+          <span class="hint block"></span>
+          {{ form.guidelines }}
+          {{ form.guidelines.errors }}
         </div>
 
         <div class="field{% if form.description.errors %} error{% endif %}">
@@ -42,6 +56,27 @@
           <span class="hint block"></span>
           {{ form.end_date }}
           {{ form.end_date.errors }}
+        </div>
+
+        <div class="field{% if form.important_dates.errors %} error{% endif %}">
+          <label for="id_name">{{ _('Other Important Dates') }}</label>
+          <span class="hint block"></span>
+          {{ form.important_dates }}
+          {{ form.important_dates.errors }}
+        </div>
+
+        <div class="field{% if form.resources.errors %} error{% endif %}">
+          <label for="id_name">{{ _('Resources and Support') }}</label>
+          <span class="hint block"></span>
+          {{ form.resources }}
+          {{ form.resources.errors }}
+        </div>
+
+        <div class="field{% if form.rules.errors %} error{% endif %}">
+          <label for="id_name">{{ _('Rules') }}</label>
+          <span class="hint block"></span>
+          {{ form.rules }}
+          {{ form.rules.errors }}
         </div>
 
         <p class="buttons">    
