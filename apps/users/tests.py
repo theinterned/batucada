@@ -72,7 +72,8 @@ class TestLogins(TestCase):
 
     def test_login_redirect_param(self):
         """Test that user is redirected properly after logging in."""
-        path = "/%s/login/?%s=/%s/profile/edit/" % (self.locale, REDIRECT_FIELD_NAME, self.locale)
+        path = "/%s/login/?%s=/%s/profile/edit/" % (
+            self.locale, REDIRECT_FIELD_NAME, self.locale)
         response = self.client.post(path, {
             'username': self.test_username,
             'password': self.test_password,
@@ -83,20 +84,26 @@ class TestLogins(TestCase):
         )
 
     def test_login_redirect_param_header_injection(self):
-        """Test that we can't inject headers into response with redirect param."""
+        """
+        Test that we can't inject headers into response with redirect param.
+        """
         path = "/%s/login/" % (self.locale,)
         redirect_param = "foo\r\nLocation: http://example.com"
-        response = self.client.post(path + "?%s=%s" % (REDIRECT_FIELD_NAME, redirect_param), {
+        response = self.client.post(path + "?%s=%s" % (
+            REDIRECT_FIELD_NAME, redirect_param), {
             'username': self.test_username,
             'password': self.test_password,
         })
         self.assertNotEqual('http://example.com', response['location'])
 
     def test_redirect_param_outside_site(self):
-        """Test that redirect parameter cannot be used as an open redirector."""
+        """
+        Test that redirect parameter cannot be used as an open redirector.
+        """
         path = "/%s/login/" % (self.locale,)
         redirect_param = "http://www.mozilla.org/"
-        response = self.client.post(path + "?%s=%s" % (REDIRECT_FIELD_NAME, redirect_param), {
+        response = self.client.post(path + "?%s=%s" % (
+            REDIRECT_FIELD_NAME, redirect_param), {
             'username': self.test_username,
             'password': self.test_password,
         })

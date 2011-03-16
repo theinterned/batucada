@@ -21,6 +21,7 @@ def determine_image_upload_path(instance, filename):
 
 
 class Mock(object):
+
     def __init__(self, pk):
         self.pk = pk
 
