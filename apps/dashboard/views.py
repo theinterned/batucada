@@ -33,6 +33,7 @@ def splash_page_activities():
         FROM activity_activity a
         INNER JOIN users_userprofile u ON u.id = a.actor_id
         WHERE u.display_name IS NOT NULL
+            AND a.parent_id IS NULL
             AND u.image IS NOT NULL
             AND u.image != ''
             AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
@@ -109,7 +110,7 @@ def dashboard(request):
     ).exclude(
         Q(verb='http://activitystrea.ms/schema/1.0/follow'),
         Q(actor=profile),
-    ).order_by('-created_on')[0:25]
+    ).exclude(parent__isnull=False).order_by('-created_on')[0:25]
     user_projects = Project.objects.filter(created_by=profile)
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {

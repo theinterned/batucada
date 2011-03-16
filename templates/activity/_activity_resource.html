@@ -2,9 +2,8 @@
 {% load activity_tags %}
 
 <li class="post-container">
-  {% if user.is_authenticated and user.id != activity.actor.id %}
+  <a class="action reply-to" href="{% locale_url statuses_reply in_reply_to=activity.id %}">{{ _('Reply') }}</a>
   <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=activity.id type="activity" %}">{{_('Report Abuse')}}</a>
- {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.image_or_default }}">
   </a>
@@ -33,6 +32,12 @@
     <ul class="post-tags">
       <li><a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project }}</a></li>
     </ul>
+    {% endif %}
+    
+    {% if activity.comments.count %}
+      <div class="post-comments">
+        {{ activity.comments.count }} {{ _('Comments') }}
+      </div>
     {% endif %}
 
     <div class="clear ir"></div>
