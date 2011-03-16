@@ -14,7 +14,7 @@
     </h1>
 
     <fieldset id="challenge_edit" class="challenge edit">
-      <form method="post" action="{% locale_url challenges_create project_id=project.id%}">
+      <form method="post" action="{% if challenge %}{% locale_url challenges_edit slug=challenge.slug %}{% else %}{% locale_url challenges_create project_id=project.id%}{% endif %}">
         {% csrf_token %}
         <div class="field{% if form.title.errors %} error{% endif %}">
           <label for="id_name">{{ _('Title') }}</label>

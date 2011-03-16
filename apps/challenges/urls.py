@@ -5,7 +5,9 @@ urlpatterns = patterns('',
   url(r'^create/project/(?P<project_id>\d+)/$',
       'challenges.views.create_challenge',
       name='challenges_create'),
-
+  url(r'^(?P<slug>[\w-]+)/edit$', 'challenges.views.edit_challenge',
+      name='challenges_edit'),
+                
   url(r'^(?P<slug>[\w-]+)/$', 'challenges.views.show_challenge',
       name='challenges_show'),
   url(r'^(?P<slug>[\w-]+)/full$', 'challenges.views.show_challenge_full',
