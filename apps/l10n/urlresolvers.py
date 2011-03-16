@@ -12,15 +12,19 @@ import l10n.locales
 # Thread-local storage for URL prefixes. Access with (get|set)_url_prefix.
 _locals = threading.local()
 
+
 def set_url_prefix(prefix):
     """Set the ``prefix`` for the current thread."""
     _locals.prefix = prefix
+
 
 def get_url_prefix():
     """Get the prefix for the current thread, or None."""
     return getattr(_locals, 'prefix', None)
 
-def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None, current_app=None):
+
+def reverse(viewname, urlconf=None, args=None, kwargs=None,
+            prefix=None, current_app=None):
     """Wraps Django's reverse to prepend the correct locale."""
     prefixer = get_url_prefix()
 
@@ -32,9 +36,10 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None, current
     else:
         return url
 
+
 def find_supported(test):
-    return [l10n.locales.LANGUAGE_URL_MAP[x] for 
-            x in l10n.locales.LANGUAGE_URL_MAP if 
+    return [l10n.locales.LANGUAGE_URL_MAP[x] for
+            x in l10n.locales.LANGUAGE_URL_MAP if
             x.split('-', 1)[0] == test.lower().split('-', 1)[0]]
 
 
@@ -108,4 +113,3 @@ class Prefixer(object):
         url_parts.append(path)
 
         return '/'.join(url_parts)
-

@@ -168,6 +168,7 @@ def login_openid_complete(request):
 
     return r
 
+
 @login_required(profile_required=False)
 def logout(request):
     """Destroy user session."""

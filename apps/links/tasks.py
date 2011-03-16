@@ -78,6 +78,7 @@ class HandleNotification(Task):
     When a notification of a new or updated entry is received, parse
     the entry and create an activity representation of it.
     """
+
     def get_activity_namespace_prefix(self, feed):
         """Discover the prefix used for the activity namespace."""
         namespaces = feed.namespaces

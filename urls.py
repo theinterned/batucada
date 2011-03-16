@@ -21,12 +21,12 @@ urlpatterns = patterns('',
     (r'',                include('users.urls')),    
 )
 
-#if settings.DEBUG:
 media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
 urlpatterns += patterns('',
     (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
-     { 'document_root': settings.MEDIA_ROOT }
-    ),
+     {
+         'document_root': settings.MEDIA_ROOT,
+     }),
 )
 
 handler500 = 'drumbeat.views.server_error'
