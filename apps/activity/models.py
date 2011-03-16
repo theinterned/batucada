@@ -29,7 +29,7 @@ class Activity(ModelBase):
     target_project = models.ForeignKey('projects.Project', null=True,
                                        related_name='target_project')
     remote_object = models.ForeignKey(RemoteObject, null=True)
-    parent = models.ForeignKey('self', null=True)
+    parent = models.ForeignKey('self', null=True, related_name='comments')
     created_on = models.DateTimeField(auto_now_add=True)
 
     @models.permalink

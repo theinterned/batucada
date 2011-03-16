@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
+from activity.models import Activity
 from statuses.forms import StatusForm
 from statuses.models import Status
 from projects.models import Project
@@ -40,8 +41,9 @@ def create(request):
 
 
 @login_required
-def reply(request, parent_id):
-    parent = get_object_or_404(Status, id=parent_id)
+def reply(request, in_reply_to):
+    """Create a status update that is a reply to an activity."""
+    parent = get_object_or_404(Activity, id=in_reply_to)
     return render_to_response('statuses/reply.html', {
         'parent': parent,
     }, context_instance=RequestContext(request))

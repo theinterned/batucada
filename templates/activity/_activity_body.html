@@ -1,9 +1,13 @@
 {% load activity_tags %}
+
+
 {% spaceless %}
 {% if activity|should_show_verb and show_actor %}
   <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.name }}</a>
 {% endif %}
 {% endspaceless %} {% spaceless %}
+
+
 {% if activity|should_show_verb %}
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
     {{ _('Created a new project') }}
@@ -11,6 +15,8 @@
     {{ activity|friendly_verb }}
   {% endif %}
 {% endif %}
+
+
 {% endspaceless %} {% spaceless %}
 {% if activity|should_hyperlink %}
   {% if activity.target_user %}
