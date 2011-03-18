@@ -111,7 +111,7 @@
         {% else %}
         <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name|truncatechars:23 }} {% if project.created_by == user.get_profile %}({{ _('organizer') }}){% endif %}
+        {{ project.name|truncatechars:23 }} {% if project.created_by == profile %}({{ _('organizer') }}){% endif %}
       </a>
     </li>
   {% endfor %}
