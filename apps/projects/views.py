@@ -23,6 +23,7 @@ from links.models import Link
 from statuses.models import Status
 from relationships.models import Relationship
 from users.models import UserProfile
+from content.models import Page
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -59,13 +60,6 @@ def show(request, slug):
                           context_instance=RequestContext(request))
 
 
-def show_detailed(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    return render_to_response('projects/project_full_description.html', {
-        'project': project,
-    }, context_instance=RequestContext(request))
-
-
 @login_required
 @ownership_required
 def edit(request, slug):
@@ -81,30 +75,6 @@ def edit(request, slug):
         form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/project_edit_summary.html', {
-        'form': form,
-        'project': project,
-    }, context_instance=RequestContext(request))
-
-
-@login_required
-@ownership_required
-def edit_description(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    if request.method == 'POST':
-        form = project_forms.ProjectDescriptionForm(
-            request.POST, instance=project)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Course description updated!'))
-            return http.HttpResponseRedirect(reverse('projects_edit_description', kwargs={
-                'slug': project.slug,
-            }))
-        else:
-            messages.error(request,
-                           _('There was a problem saving your description.'))
-    else:
-        form = project_forms.ProjectDescriptionForm(instance=project)
-    return render_to_response('projects/project_edit_description.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
@@ -327,6 +297,12 @@ def create(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.created_by = user
+            project.save()
+            detailed_description = Page(title='Full Course Description',
+                content='<p>Please fill out.</p>', listed=False,
+                author_id=user.id, project_id=project.id)
+            detailed_description.save()
+            project.detailed_description_id = detailed_description.id
             project.save()
             messages.success(request, _('Your new course has been created.'))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={

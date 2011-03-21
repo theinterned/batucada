@@ -1,16 +1,13 @@
 import os
 import logging
 import datetime
-import bleach
-
-from markdown import markdown
 
 from django.core.cache import cache
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.db.models import Count
-from django.db.models.signals import pre_save, post_save, post_delete
+from django.db.models.signals import post_save, post_delete
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 
@@ -19,20 +16,12 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
+from content.models import Page
 
-from projects.utils import strip_remote_images
 from projects.tasks import ThumbnailGenerator
 
 import caching.base
 
-TAGS = ('h1', 'h2', 'a', 'b', 'em', 'i', 'strong',
-        'ol', 'ul', 'li', 'hr', 'blockquote', 'p',
-        'span', 'pre', 'code', 'img')
-
-ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'title'],
-    'img': ['src', 'alt'],
-}
 
 log = logging.getLogger(__name__)
 
@@ -76,8 +65,7 @@ class Project(ModelBase):
     short_description = models.CharField(max_length=125)
     long_description = models.TextField()
 
-    detailed_description = models.TextField()
-    detailed_description_html = models.TextField(null=True, blank=True)
+    detailed_description = models.ForeignKey('content.Page', related_name='desc_project', null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
@@ -165,21 +153,6 @@ class ProjectMedia(ModelBase):
 ###########
 # Signals #
 ###########
-
-
-def project_markdown_handler(sender, **kwargs):
-    project = kwargs.get('instance', None)
-    if not isinstance(project, Project):
-        return
-    log.debug("Creating html project description")
-    if project.detailed_description:
-        project.detailed_description_html = bleach.clean(
-            markdown(project.detailed_description),
-            tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
-        project.detailed_description_html = strip_remote_images(
-            project.detailed_description_html, project.pk)
-
-pre_save.connect(project_markdown_handler, sender=Project)
 
 
 def project_creation_handler(sender, **kwargs):

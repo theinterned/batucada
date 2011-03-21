@@ -1,0 +1,27 @@
+{% extends "content/base.html" %}
+{% load l10n_tags %}
+
+{% block content_body %}
+    <h1>{{ _('Edit ') }} {{ page.title }}</h1>
+    <br />
+    <form action="{% locale_url page_edit slug=page.slug %}" method="post">
+      {% csrf_token %}
+      {% if form.title %}
+        <div class="field{% if form.title.errors %} error{% endif %}">
+          <label for="id_title">{{ _('Title') }}</label>
+          {{ form.title }}
+          {{ form.title.errors }}
+        </div>
+      {% endif %}
+      <div class="field{% if form.content.errors %} error{% endif %}">
+        {{ form.content }}
+        {{ form.content.errors }}
+      </div>
+      <p class="buttons">
+        <a class="button" href="{% locale_url page_show slug=page.slug %}">
+          {{ _('Cancel') }}
+        </a>
+        <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+      </p>
+    </form>
+{% endblock %}

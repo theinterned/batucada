@@ -20,3 +20,4 @@ lxml
 -e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
 -e git://github.com/paulosman/django-push.git#egg=django_push
 -e git://github.com/paulosman/django-openid-auth.git#egg=django_openid_auth
+-e git://github.com/shaunsephton/django-ckeditor.git#egg=django_ckeditor

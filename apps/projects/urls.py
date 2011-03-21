@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns, url, include
 
 urlpatterns = patterns('',
   url(r'^$', 'projects.views.list',
@@ -7,18 +7,16 @@ urlpatterns = patterns('',
       name='projects_create'),
   url(r'^(?P<slug>[\w-]+)/$', 'projects.views.show',
       name='projects_show'),
-  url(r'^(?P<slug>[\w-]+)/description/$', 'projects.views.show_detailed',
-      name='projects_show_detailed'),
   url(r'^(?P<slug>[\w-]+)/contactfollowers/$',
       'projects.views.contact_followers',
       name='projects_contact_followers'),
 
+  # Project Content URLs
+  (r'^content/', include('content.urls')),
+
   # Project Edit URLs
   url(r'^(?P<slug>[\w-]+)/edit/$', 'projects.views.edit',
       name='projects_edit'),
-  url(r'^(?P<slug>[\w-]+)/edit/description/$',
-      'projects.views.edit_description',
-      name='projects_edit_description'),
   url(r'^(?P<slug>[\w-]+)/edit/image/$',
       'projects.views.edit_image',
       name='projects_edit_image'),
