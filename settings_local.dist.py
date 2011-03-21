@@ -56,3 +56,29 @@ CELERY_ALWAYS_EAGER = True
 
 # Path to ffmpeg. This will have to be installed to create video thumbnails
 FFMPEG_PATH = '/usr/bin/ffmpeg'
+
+# Ckeditor
+CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
+CKEDITOR_UPLOAD_PATH = path("uploads")
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Source'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'TextColor','BGColor', 'Blockquote'],
+            ['Maximize'],
+            ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare', 'SourceCode', 'Smiley', 'SpecialChar', 'Table'],
+            ['Format','Font','FontSize'],
+        ],
+        'skin': 'kama',
+        'width': '650',
+        'height': '255',
+        'removePlugins': 'resize, elementspath',
+        'toolbarCanCollapse': False,
+        'extraPlugins': 'youtube,slideshare,prettify',
+        'format_tags': 'p;h1;h2;h3;h4;h5;h6',
+        'prettify': { 'element' : 'pre', 'attributes' : { 'class' : 'prettyprint' }},
+    },
+}
+

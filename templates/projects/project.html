@@ -86,9 +86,7 @@
       </ul>
     {% endif %}
 
-    {% if project.detailed_description %}
-    <a id="project-description-link" href="{% locale_url projects_show_detailed slug=project.slug %}">View Full Course Description</a>
-    {% endif %}
+    <a id="project-description-link" href="{% locale_url page_show slug=project.detailed_description.slug %}">View Full Course Description</a>
     {% if user.is_authenticated and user.get_profile != project.created_by %}
     <p class="supplemental_actions">
       <a class="report abuse action" href="{% locale_url drumbeat_abuse  obj=project.id type="project" %}">{{_('Report Abuse')}}</a>

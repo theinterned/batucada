@@ -130,6 +130,8 @@ INSTALLED_APPS = (
     'djcelery',
     'events',
     'django_openid_auth',
+    'ckeditor',
+    'content'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

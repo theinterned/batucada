@@ -382,6 +382,55 @@ var initWMD = function(){
     }).wmd({'preview': false});
 };
 
+
+var customizeCKEditor = function() {
+
+    CKEDITOR.on( 'dialogDefinition', function( ev ) {
+        // Take the dialog name and its definition from the event
+        // data.
+        var dialogName = ev.data.name;
+        var dialogDefinition = ev.data.definition;
+
+        // Check if the definition is from the "Link" dialog.
+        if ( dialogName == 'link' ) {
+            // Get a reference to the "Link Info" tab.
+            var infoTab = dialogDefinition.getContents( 'info' );
+            infoTab.remove( 'linkType' );
+            infoTab.remove( 'browse' );
+            infoTab.remove('anchorOptions');
+            infoTab.remove('emailOptions');
+            // Get a reference to the "Advanced" tab.
+            var advancedTab = dialogDefinition.getContents( 'advanced' );
+            infoTab.add(advancedTab.get('advTitle'));
+            // Remove uneccesary tabs.
+            dialogDefinition.removeContents( 'target' );
+            dialogDefinition.removeContents( 'upload' );
+            dialogDefinition.removeContents( 'advanced' );
+        }
+        if (dialogName == 'image') {
+            // Get a reference to the "Image Info" tab.
+            var infoTab = dialogDefinition.getContents( 'info' );
+            infoTab.remove( 'browse' );
+            // Get a reference to the "Link" tab.
+            var linkTab = dialogDefinition.getContents( 'Link' );
+            var linkUrl = linkTab.get('txtUrl');
+            linkUrl['label'] = 'Link URL';
+            infoTab.add(linkUrl);
+            // Get a reference to the "Advanced" tab.
+            var advancedTab = dialogDefinition.getContents( 'advanced' );
+            infoTab.add(advancedTab.get('txtGenTitle'));
+            // Remove uneccesary tabs.
+            dialogDefinition.removeContents( 'Link' );
+            dialogDefinition.removeContents( 'Upload' );
+            dialogDefinition.removeContents( 'advanced' );
+        }
+    });
+    
+    prettyPrint();
+
+};
+
+
 $(document).ready(function() {
     // dispatch per-page onload handlers 
     var ns = window.batucada;
@@ -419,6 +468,7 @@ $(document).ready(function() {
     
     $('.modal nav.tabs a').tabLinks('.tabpane');
     $('#id_due_on').datepicker();
+    customizeCKEditor();
 });
 
 // Recaptcha

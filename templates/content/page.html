@@ -1,0 +1,20 @@
+{% extends "content/base.html" %}
+{% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
+
+
+{% block content_actions %}
+    {% if user.get_profile == page.project.created_by %}
+      <div id="project-actions">
+        <a class="button" href="{% locale_url page_edit slug=page.slug %}">{{ _('Edit') }}</a>
+      </div>
+    {% endif %}
+
+  </div> <!-- /.container -->
+{% endblock %}
+{% block content_body %}
+<h1><span>{{ page.title }}</span></h1>
+<hr />
+{{ page.content|youtube|slideshare|safe }}
+{% endblock %}
