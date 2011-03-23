@@ -310,15 +310,15 @@ header {}
         #main-nav li:first-child {
           margin-left: 0px;
         }
-        #main-nav a {
-          color: #a9b2c1;
-          display: block;
-          height: 14px;
-          padding: 4px 10px 8px 10px;
-        }
+		#main-nav a {
+		color: #444;
+		display: block;
+		height: 14px;
+		padding: 4px 10px 8px 10px;
+		}
         #main-nav a:hover {
-          color: #fff;
-          background: #36cdc4;
+          color: #222;
+          /*background: #36cdc4;*/
         }
 
         /*BOILERPLATE alternate style for non-rgba broswers*/
