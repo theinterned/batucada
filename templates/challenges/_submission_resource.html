@@ -1,4 +1,7 @@
 {% load l10n_tags %}
+{% load voting_tags %}
+{% score_for_object submission as score %}
+{% vote_by_user user on submission as vote %}
 
 <li class="post-container submission">
   <a href="{{ submission.created_by.get_absolute_url }}">
@@ -6,6 +9,20 @@
   </a>
 
   <div class="post-contents">
+    <div class="voting">
+      <form method="post" id="upvote" action="{% if vote and vote.is_upvote %}{% locale_url submission_vote object_id=submission.pk direction='clear' %}{% else %}{% locale_url submission_vote object_id=submission.pk direction='up' %}{% endif %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{% locale_url challenges_show slug=challenge.slug %}" />
+        <input type="image" src="{{ MEDIA_URL }}/images/vote_up_{% if vote and vote.is_upvote %}on{% else %}off{% endif %}.png" alt="up!" />
+      </form>
+      <div class="score">{{ score.score|default:0 }}</div>
+      <form method="post" id="downvote" action="{% if vote and vote.is_downvote %}{% locale_url submission_vote object_id=submission.pk direction='clear' %}{% else %}{% locale_url submission_vote object_id=submission.pk direction='down' %}{% endif %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{% locale_url challenges_show slug=challenge.slug %}" />
+        <input type="image" src="{{ MEDIA_URL }}/images/vote_down_{% if vote and vote.is_downvote %}on{% else %}off{% endif %}.png" alt="vote down!" />
+      </form>
+    </div>
+
     <div class="submission-title">
       {{ submission.title }} 
     </div>

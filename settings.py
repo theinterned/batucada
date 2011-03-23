@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'djcelery',
     'events',
     'django_openid_auth',
+    'voting'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
