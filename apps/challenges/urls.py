@@ -1,4 +1,12 @@
 from django.conf.urls.defaults import patterns, url
+from models import Submission
+from voting.views import vote_on_object
+
+vote_dict = {
+  'model' : Submission,
+  'template_object_name' : 'submission',
+  'allow_xmlhttprequest' : True,
+}
 
 urlpatterns = patterns('',
   # Challenges
@@ -14,15 +22,17 @@ urlpatterns = patterns('',
       name='challenges_show_full'),
 
   # Submissions
-  url(r'^(?P<slug>[\w-]+)/submission/create', 
+  url(r'^(?P<slug>[\w-]+)/submission/create/$', 
       'challenges.views.create_submission',
       name='submissions_create'),
+
+  # Voting 
+  url(r'^submission/(?P<object_id>\d+)/(?P<direction>up|down|clear)vote/?$',
+      vote_on_object, vote_dict, name='submission_vote'),
 
   # Judges              
   url(r'^(?P<slug>[\w-]+)/judges/$', 'challenges.views.challenge_judges',
       name='challenges_judges'),
   url(r'^(?P<slug>[\w-]+)/judges/delete/(?P<judge>[\d]+)/$', 'challenges.views.challenge_judges_delete',
       name='challenges_judge_delete'),
-                       
-
 )

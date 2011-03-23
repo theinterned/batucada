@@ -2389,3 +2389,14 @@ ul.ui-autocomplete #ui-active-menuitem {
     background-color: #0a246a;
     color: #fff;
 }
+
+div.voting {
+    width: 24px;
+    float: right;
+}
+
+div.voting div.score {
+    font-size: 1.2em;
+    text-align: center;
+    color: #777;
+}
