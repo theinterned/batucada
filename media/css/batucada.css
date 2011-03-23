@@ -949,11 +949,16 @@ header {}
 	}
 
   
-  #main {
-    margin-left: 40px;
-    width: 620px;
-    float: left;
-  }
+#main {
+margin-left: 40px;
+width: 620px;
+float: left;
+background-color: white;
+padding: 15px;
+border-radius: 10px;
+border: solid 1px #EEE;
+}
+
     #main .post-container, #create-todo {
       background: -webkit-gradient(linear,0 top,0 bottom,from(#fff),to(#f4f4f4));
       background: -moz-linear-gradient(top,#fff,#f4f4f4);
