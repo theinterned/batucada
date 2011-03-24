@@ -51,7 +51,6 @@ class Challenge(ModelBase):
     def save(self):
         """Make sure each challenge has a unique slug."""
         count = 1
-        print self.slug
         if not self.slug:
             slug = slugify(self.title)
             self.slug = slug
