@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db.models.signals import post_save, post_delete
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -17,6 +17,7 @@ from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
 from content.models import Page
+from activity.models import Activity
 
 from projects.tasks import ThumbnailGenerator
 
@@ -94,6 +95,14 @@ class Project(ModelBase):
         relationships = Relationship.objects.select_related(
             'source', 'created_by').filter(target_project=self)
         return [rel.source for rel in relationships]
+
+    def activities(self):
+        activities = Activity.objects.filter(
+            Q(project=self) | Q(target_project=self),
+        ).exclude(
+            verb='http://activitystrea.ms/schema/1.0/follow'
+        ).order_by('-created_on')
+        return activities
 
     def __unicode__(self):
         return self.name

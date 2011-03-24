@@ -5,7 +5,7 @@ urlpatterns = patterns('',
       name='statuses_show'),
   url(r'^create/$', 'statuses.views.create',
       name='statuses_create'),
-  url(r'^create/project/(?P<project_id>\d+)/$',
+  url(r'^create/course/(?P<project_id>\d+)/$',
       'statuses.views.create_project_status',
       name='statuses_create_project'),
 )

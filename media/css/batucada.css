@@ -1291,7 +1291,7 @@ header {}
 			margin-bottom: 5px;
 		}
 		.modal fieldset{
-			padding: 0 36px;
+			padding: 0 10px;
 			width: 516px;
 		}
 		.modal.nav fieldset {
@@ -1327,7 +1327,6 @@ header {}
 			height: 25px;
 			position: absolute;
 			right: -12px; top: 0;
-			background: transparent url(/media/images/modal-nav-arrow.png) right top no-repeat;
 		}
 		.modal nav.tabs li.dirty {
 			font-style: italic;

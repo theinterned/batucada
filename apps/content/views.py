@@ -6,23 +6,26 @@ from django.utils.translation import ugettext as _
 
 from users.decorators import login_required
 from drumbeat import messages
+from projects.decorators import ownership_required
+from projects.models import Project
 
 from content.forms import PageForm, NotListedPageForm
 from content.models import Page
 
-def show_page(request, slug):
-    page = get_object_or_404(Page, slug=slug)
+
+def show_page(request, slug, page_slug):
+    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     return render_to_response('content/page.html', {
         'page': page,
+        'project': page.project,
     }, context_instance=RequestContext(request))
 
 
 @login_required
-def edit_page(request, slug):
-    page = get_object_or_404(Page, slug=slug)
+@ownership_required
+def edit_page(request, slug, page_slug):
+    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     user = request.user.get_profile()
-    if page.project.created_by != user:
-        raise Http404
     if page.listed:
         form_cls = PageForm
     else:
@@ -30,10 +33,16 @@ def edit_page(request, slug):
     if request.method == 'POST':
         form = form_cls(request.POST, instance=page)
         if form.is_valid():
-            form.save()
+            page = form.save(commit=False)
+            # the author is the last author not the creator
+            # when pages have versions in the future the creator will
+            # be the author of the first version.
+            page.author = user
+            page.save()
             messages.success(request, _('Page updated!'))
             return HttpResponseRedirect(reverse('page_show', kwargs={
-                'slug': page.slug,
+                'slug': slug,
+                'page_slug': page_slug,
             }))
         else:
             messages.error(request,
@@ -43,5 +52,33 @@ def edit_page(request, slug):
     return render_to_response('content/edit_page.html', {
         'form': form,
         'page': page,
+        'project': page.project,
     }, context_instance=RequestContext(request))
 
+
+@login_required
+@ownership_required
+def create_page(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    user = request.user.get_profile()
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            page = form.save(commit=False)
+            page.project = project
+            page.author = user
+            page.save()
+            messages.success(request, _('Page created!'))
+            return HttpResponseRedirect(reverse('page_show', kwargs={
+                'slug': slug,
+                'page_slug': page.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was a problem creating the page.'))
+    else:
+        form = PageForm()
+    return render_to_response('content/create_page.html', {
+        'form': form,
+        'project': project,
+    }, context_instance=RequestContext(request))

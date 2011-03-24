@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    {% block page_form_title %}{% endblock %}
+    <br />
+    <fieldset>
+    <form action="{% block page_form_url %}{% endblock %}" method="post">
+      {% csrf_token %}
+      {% if form.title %}
+        <div class="field{% if form.title.errors %} error{% endif %}">
+          <label for="id_title">{{ _('Title') }}</label>
+          <span class="hint block">{{ _('A good title is short and descriptive. People should know what the page is about by reading the title in the course content index.') }}</span>
+          {{ form.title }}
+          {{ form.title.errors }}
+        </div>
+      {% endif %}
+      <div class="field{% if form.content.errors %} error{% endif %}">
+        {{ form.content }}
+        {{ form.content.errors }}
+      </div>
+      <p class="buttons">
+        {% block page_form_buttons %}{% endblock %}
+      </p>
+    </form>
+    </fieldset>
+  </article>
+</section>
+{% include "_footer.html" %}
+{% endblock %}

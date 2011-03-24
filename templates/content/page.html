@@ -1,20 +1,36 @@
-{% extends "content/base.html" %}
+{% extends "base.html" %}
 {% load l10n_tags %}
 {% load youtube %}
 {% load slideshare %}
+{% load project_tags %}
 
+{% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
 
-{% block content_actions %}
+{% block bodyid %}page{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+    </nav>
     {% if user.get_profile == page.project.created_by %}
       <div id="project-actions">
-        <a class="button" href="{% locale_url page_edit slug=page.slug %}">{{ _('Edit') }}</a>
+        <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
       </div>
     {% endif %}
-
   </div> <!-- /.container -->
 {% endblock %}
-{% block content_body %}
+
+{% block body %}
+{% sidebar %}
+<div id="main">
 <h1><span>{{ page.title }}</span></h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
+</div>
 {% endblock %}
+
