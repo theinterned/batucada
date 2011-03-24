@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>{{ _('Thank you for voting') }}</h1>
+    <fieldset>
+      <form method="post" id="voter_details" action="{% locale_url submissions_voter_details submission_id=submission.pk %}">
+        {% csrf_token %}
+        <p>{{ _("Please choose 1, 2 or 3 of the following that best describe you.") }}</p>
+        <div class="field{% if form.taxonomy.errors %} error{% endif %}">
+          {{ form.taxonomy }}
+          {{ form.taxonomy.errors }}
+        </div>
+        <p class="buttons">
+          <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+        </p>
+      </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

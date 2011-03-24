@@ -79,11 +79,24 @@ class Submission(ModelBase):
     
 admin.site.register(Submission)
 
+class VoterTaxonomy(ModelBase):
+    description = models.CharField(max_length = 255)
+
+    def __unicode__(self):
+        return self.description
+
+admin.site.register(VoterTaxonomy)
+
+class VoterDetails(ModelBase):
+    user = models.ForeignKey('users.UserProfile',
+                             related_name='voter_details')
+    taxonomy = models.ManyToManyField(VoterTaxonomy)
+
 
 class Judge(ModelBase):
     challenge = models.ForeignKey(Challenge)
     user = models.ForeignKey('users.UserProfile',
-                                   related_name='judges')
+                             related_name='judges')
 
 
     class Meta:

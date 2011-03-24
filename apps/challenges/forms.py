@@ -3,8 +3,9 @@ import logging
 
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
+from django.utils.translation import ugettext_lazy as _
 
-from challenges.models import Challenge, Submission, Judge
+from challenges.models import Challenge, Submission, Judge, VoterTaxonomy, VoterDetails
 
 log = logging.getLogger(__name__)
 
@@ -26,6 +27,12 @@ class SubmissionForm(forms.ModelForm):
       'description': forms.Textarea(attrs={'class': 'wmd'}),
     }
 
+class VoterDetailsForm(forms.ModelForm):
+  taxonomy = forms.ModelMultipleChoiceField(queryset=VoterTaxonomy.objects.all(), required=True, widget=forms.CheckboxSelectMultiple)
+
+  class Meta:
+    model = VoterDetails
+    fields = ('taxonomy', )
 
 class JudgeForm(forms.ModelForm):
   class Meta:

@@ -8,8 +8,8 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
 
-from challenges.models import Challenge, Submission, Judge
-from challenges.forms import ChallengeForm, SubmissionForm, JudgeForm
+from challenges.models import Challenge, Submission, Judge, VoterDetails
+from challenges.forms import ChallengeForm, SubmissionForm, JudgeForm, VoterDetailsForm
 from projects.models import Project
 
 from drumbeat import messages
@@ -101,6 +101,7 @@ def show_challenge(request, slug):
         'challenge' : challenge,
         'submissions' : submissions,
         'nsubmissions' : nsubmissions,
+        'profile' : request.user.get_profile()
     }
 
     return render_to_response('challenges/challenge.html', context,
@@ -201,3 +202,36 @@ def challenge_judges_delete(request, slug, judge):
                 'slug': challenge.slug,
                 }))
     
+@login_required
+def submissions_voter_details(request, submission_id):
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    try:
+        voter = VoterDetails.objects.get(user=request.user.get_profile())
+    except:
+        voter = None
+    
+    if request.method == 'POST':
+        form = VoterDetailsForm(request.POST, instance=voter)
+        if form.is_valid():
+            details = form.save(commit=False)
+            details.user = request.user.get_profile()
+            details.save()
+            form.save_m2m()
+
+            messages.success(request, _('Your details were saved.'))
+            
+            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+                'slug' : submission.challenge.get().slug,
+            }))
+        else:
+            messages.error(request, _('Unable to save details'))
+    else:
+        form = VoterDetailsForm(instance=voter)
+    context = {
+        'form': form,
+        'submission': submission
+    }
+    
+    return render_to_response('challenges/voter_details.html', context,
+                              context_instance=RequestContext(request))
