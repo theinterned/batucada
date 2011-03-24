@@ -1,0 +1,109 @@
+{% load l10n_tags %}
+
+<div id="sidebar">
+  <section id="project"class="panel">
+    <h1 id="project-name">{{ project.name }}</h1>
+    <br>
+    <figure>
+      <a href="{% locale_url projects_show slug=project.slug %}">
+        {% if project.image %}
+  	<img src="{{ MEDIA_URL }}{{ project.image }}" width="197" height="120" alt="project image"/>
+        {% else %}
+        <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
+        {% endif %}
+      </a>
+    </figure>
+    <br>
+    <div id="project-summary">
+      {{ project.long_description }}
+    </div>
+    {% if user.get_profile == project.created_by %}
+      <br>
+      <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
+      <br>
+    {% endif %}
+    <dl id="project-stats">
+      <dt>{{ _('Followers') }}</dt>
+      <dd>{{ followers_count }}</dd>
+      <dt>{{ _('Updates') }}</dt>
+      <dd>{{ update_count }}</dd>
+    </dl> <!-- /#project-stats -->
+    {% if user.is_authenticated and user.get_profile != project.created_by %}
+    <p class="supplemental_actions">
+      <a class="report abuse action" href="{% locale_url drumbeat_abuse  obj=project.id type="project" %}">{{_('Report Abuse')}}</a>
+    </p>
+    {% endif %}
+    <a id="project-description-link"
+       href="{% locale_url page_show slug=project.slug page_slug=project.detailed_description.slug %}">
+      {{ _('View Full Description') }}
+    </a>
+
+  </section>
+
+<section id="people" class="panel">
+  <h2>{{ _('People') }}</h2>
+  <br>
+  {% for user_following in project.followers|slice:":36" %}
+   <a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }} {% ifequal project.created_by user_following %}(organizer){% endifequal %}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a>
+  {% endfor %}
+  {% if user.is_authenticated and user.get_profile != project.created_by %}
+    <br><br>
+    {% if following %}
+      <form method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
+        {% csrf_token %}
+        <button>{{ _('Unfollow') }}</button>
+      </form>
+    {% else %}
+      <form method="post" action="{% locale_url relationships_follow object_type='course' slug=project.slug %}">
+        {% csrf_token %}
+        <button>{{ _('Follow Course') }}</button>
+      </form>
+    {% endif %}
+  {% endif %}
+</section>
+
+<section id="course-content" class="panel">
+  <h2>Course Content</h2>
+  <br>
+  {% if content_pages %}
+    <nav id="content-pages">
+      <ul>
+        {% for page in content_pages %}
+          <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% else %}
+    {{ _('No course content has being added.') }}
+        <br>
+  {% endif %}
+  {% if user.get_profile == project.created_by %}
+    <br>
+    <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Page') }}</a>
+  {% endif %}
+</section>
+
+
+<section id="external-links" class="panel">
+  <h2>External Links</h2>
+  <br>
+  {% if links %}
+    <nav id="project-links">
+      <ul>
+        {% for link in links %}
+          <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% else %}
+    {{ _('No external links have being added.') }}
+    <br>
+  {% endif %}
+  {% if user.get_profile == project.created_by %}
+    <br>
+    <a class="button" href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Edit Links') }}</a>
+  {% endif %}
+</section>
+
+</div> <!-- /#sidebar -->
+

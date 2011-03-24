@@ -4,9 +4,14 @@ import bleach
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib import admin
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
+from django.template.defaultfilters import truncatewords_html
+from django.utils.safestring import mark_safe
+from django.utils.timesince import timesince
+from django.utils.translation import ugettext_lazy as _
 
 from drumbeat.models import ModelBase
+from activity.models import Activity
 
 
 TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'b', 'em', 'i', 'strong',
@@ -51,6 +56,7 @@ class Page(ModelBase):
     @models.permalink
     def get_absolute_url(self):
         return ('page_show', (), {
+            'slug': self.project.slug,
             'page_slug': self.slug,
         })
 
@@ -58,7 +64,7 @@ class Page(ModelBase):
         """Make sure each project has a unique slug."""
         count = 1
         if not self.slug:
-            slug = slugify('%s %s' % (self.project.slug, self.title))
+            slug = slugify(self.title)
             self.slug = slug
             while True:
                 existing = Page.objects.filter(project__slug=self.project.slug, slug=self.slug)
@@ -67,6 +73,16 @@ class Page(ModelBase):
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(Page, self).save()
+
+    def timesince(self, now=None):
+        return timesince(self.created_on, now)
+
+    def friendly_verb(self):
+        return mark_safe(_('Added content'))
+
+    def representation(self):
+        return mark_safe('<a href="%s">%s</a>' % (self.get_absolute_url(), self.title))
+
 admin.site.register(Page)
 
 
@@ -87,4 +103,22 @@ def clean_html(sender, **kwargs):
 
 pre_save.connect(clean_html, sender=Page)
 
+
+def fire_new_page_activity(sender, **kwargs):
+    page = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+
+    if not created or not isinstance(page, Page):
+        return
+
+    # fire activity
+    activity = Activity(
+        actor=page.author,
+        verb='http://activitystrea.ms/schema/1.0/post',
+        target_object=page,
+    )
+    activity.target_project = page.project
+    activity.save()
+
+post_save.connect(fire_new_page_activity, sender=Page)
 

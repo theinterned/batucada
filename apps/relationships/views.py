@@ -15,15 +15,18 @@ from drumbeat import messages
 
 log = logging.getLogger(__name__)
 
+PROJECT = 'course'
+USER = 'user'
+
 
 @login_required
 @require_http_methods(['POST'])
 def follow(request, object_type, slug):
     profile = request.user.get_profile()
-    if object_type == 'project':
+    if object_type == PROJECT:
         project = get_object_or_404(Project, slug=slug)
         relationship = Relationship(source=profile, target_project=project)
-    elif object_type == 'user':
+    elif object_type == USER:
         user = get_object_or_404(UserProfile, username=slug)
         relationship = Relationship(source=profile, target_user=user)
     else:
@@ -31,7 +34,7 @@ def follow(request, object_type, slug):
     try:
         relationship.save()
     except IntegrityError:
-        if object_type == 'project':
+        if object_type == PROJECT:
             messages.error(
                 request, _('You are already following this course'))
         else:
@@ -45,13 +48,13 @@ def follow(request, object_type, slug):
 @require_http_methods(['POST'])
 def unfollow(request, object_type, slug):
     profile = request.user.get_profile()
-    if object_type == 'project':
+    if object_type == PROJECT:
         project = get_object_or_404(Project, slug=slug)
         if project.created_by == profile:
             return HttpResponseForbidden()
         Relationship.objects.filter(
             source=profile, target_project=project).delete()
-    elif object_type == 'user':
+    elif object_type == PROJECT:
         user = get_object_or_404(UserProfile, username=slug)
         Relationship.objects.filter(
             source=profile, target_user=user).delete()

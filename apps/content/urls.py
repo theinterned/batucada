@@ -1,8 +1,10 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-  url(r'^(?P<slug>[\w-]+)/$', 'content.views.show_page',
+  url(r'^create/$', 'content.views.create_page',
+      name='page_create'),
+  url(r'^(?P<page_slug>[\w-]+)/$', 'content.views.show_page',
       name='page_show'),
-  url(r'^(?P<slug>[\w-]+)/edit/$', 'content.views.edit_page',
+  url(r'^(?P<page_slug>[\w-]+)/edit/$', 'content.views.edit_page',
       name='page_edit'),
 )

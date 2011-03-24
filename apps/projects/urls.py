@@ -12,7 +12,7 @@ urlpatterns = patterns('',
       name='projects_contact_followers'),
 
   # Project Content URLs
-  (r'^content/', include('content.urls')),
+  (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),
 
   # Project Edit URLs
   url(r'^(?P<slug>[\w-]+)/edit/$', 'projects.views.edit',
@@ -23,9 +23,6 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/edit/ajax_image/$',
       'projects.views.edit_image_async',
       name='projects_edit_image_async'),
-    url(r'^(?P<slug>[\w-]+)/edit/media/$',
-      'projects.views.edit_media',
-      name='projects_edit_media'),
   url(r'^(?P<slug>[\w-]+)/edit/links/$',
       'projects.views.edit_links',
       name='projects_edit_links'),
