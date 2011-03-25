@@ -347,7 +347,7 @@ header {}
       z-index: 2;
     }
       #user-nav a {
-        color: #a9b2c1;
+		color: #444;
         font-size: 17px;
         display: block;
         padding: 10px 12px;
