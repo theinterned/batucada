@@ -9,7 +9,7 @@ from drumbeat import messages
 from projects.decorators import participation_required
 from projects.models import Project
 
-from content.forms import PageForm, NotListedPageForm
+from content.forms import PageForm, NotListedPageForm, CommentForm
 from content.models import Page
 
 
@@ -87,4 +87,33 @@ def create_page(request, slug):
     return render_to_response('content/create_page.html', {
         'form': form,
         'project': project,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@participation_required
+def comment_page(request, slug, page_slug):
+    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    user = request.user.get_profile()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.page = page
+            comment.author = user
+            comment.save()
+            messages.success(request, _('Comment posted!'))
+            return HttpResponseRedirect(reverse('page_show', kwargs={
+                'slug': slug,
+                'page_slug': page.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was a problem posting the comment.'))
+    else:
+        form = CommentForm()
+    return render_to_response('content/comment_page.html', {
+        'form': form,
+        'project': page.project,
+        'page': page,
     }, context_instance=RequestContext(request))

@@ -1,5 +1,6 @@
 import logging
 import bleach
+import datetime
 
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -9,6 +10,7 @@ from django.template.defaultfilters import truncatewords_html
 from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
@@ -49,6 +51,8 @@ class Page(ModelBase):
     listed = models.BooleanField(default=True)
     author = models.ForeignKey('users.UserProfile', related_name='pages')
     project = models.ForeignKey('projects.Project', related_name='pages')
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
 
     def __unicode__(self):
         return self.title
@@ -61,7 +65,7 @@ class Page(ModelBase):
         })
 
     def save(self):
-        """Make sure each project has a unique slug."""
+        """Make sure each page has a unique url."""
         count = 1
         if not self.slug:
             slug = slugify(self.title)
@@ -78,7 +82,7 @@ class Page(ModelBase):
         return timesince(self.created_on, now)
 
     def friendly_verb(self):
-        return mark_safe(_('Added content'))
+        return mark_safe(_('Added content page'))
 
     def representation(self):
         return mark_safe('<a href="%s">%s</a>' % (self.get_absolute_url(), self.title))
@@ -86,39 +90,72 @@ class Page(ModelBase):
 admin.site.register(Page)
 
 
+class PageComment(ModelBase):
+    """Placeholder model for comments."""
+    object_type = 'http://activitystrea.ms/schema/1.0/comment'
+
+    content = models.TextField()
+    author = models.ForeignKey('users.UserProfile', related_name='comments')
+    page = models.ForeignKey('content.Page', related_name='comments')
+    created_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
+
+    def __unicode__(self):
+        return _('Comment to page %s') % self.page.title
+
+    def get_absolute_url(self):
+        return reverse('page_show', kwargs={
+            'slug': self.project.slug,
+            'page_slug': self.page.slug,
+        }) + '#%s' % self.id
+
+    def timesince(self, now=None):
+        return timesince(self.created_on, now)
+
+    def friendly_verb(self):
+        return mark_safe(_('Posted comment'))
+
+    def representation(self):
+        return mark_safe(' at <a href="%s">%s</a> page' % (self.get_absolute_url(), self.page.title))
+
+    @property
+    def project(self):
+        return self.page.project
+
+admin.site.register(PageComment)
+
 ###########
 # Signals #
 ###########
 
 
 def clean_html(sender, **kwargs):
-    page = kwargs.get('instance', None)
-    if not isinstance(page, Page):
-        return
-    log.debug("Cleaning page html.")
-    if page.content:
-        page.content = bleach.clean(page.content,
-            tags=TAGS, attributes=ALLOWED_ATTRIBUTES,
-            styles=ALLOWED_STYLES)
+    instance = kwargs.get('instance', None)
+    if isinstance(instance, Page) or isinstance(instance, PageComment):
+        log.debug("Cleaning html.")
+        if instance.content:
+            instance.content = bleach.clean(instance.content,
+                tags=TAGS, attributes=ALLOWED_ATTRIBUTES,
+                styles=ALLOWED_STYLES)
 
 pre_save.connect(clean_html, sender=Page)
+pre_save.connect(clean_html, sender=PageComment)
 
 
-def fire_new_page_activity(sender, **kwargs):
-    page = kwargs.get('instance', None)
+def fire_activity(sender, **kwargs):
+    instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
 
-    if not created or not isinstance(page, Page):
-        return
+    if created and (isinstance(instance, Page) or isinstance(instance, PageComment)):
+        # fire activity
+        activity = Activity(
+            actor=instance.author,
+            verb='http://activitystrea.ms/schema/1.0/post',
+            target_object=instance,
+        )
+        activity.target_project = instance.project
+        activity.save()
 
-    # fire activity
-    activity = Activity(
-        actor=page.author,
-        verb='http://activitystrea.ms/schema/1.0/post',
-        target_object=page,
-    )
-    activity.target_project = page.project
-    activity.save()
-
-post_save.connect(fire_new_page_activity, sender=Page)
+post_save.connect(fire_activity, sender=Page)
+post_save.connect(fire_activity, sender=PageComment)
 

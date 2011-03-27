@@ -7,4 +7,6 @@ urlpatterns = patterns('',
       name='page_show'),
   url(r'^(?P<page_slug>[\w-]+)/edit/$', 'content.views.edit_page',
       name='page_edit'),
+  url(r'^(?P<page_slug>[\w-]+)/comment/$', 'content.views.comment_page',
+      name='page_comment')
 )
