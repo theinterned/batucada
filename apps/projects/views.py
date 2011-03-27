@@ -1,20 +1,23 @@
 import logging
+import datetime
 
 from django import http
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect 
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
+from django.db import IntegrityError
+from django.utils import simplejson
 
 from commonware.decorators import xframe_sameorigin
 
 from projects import forms as project_forms
 from projects.decorators import ownership_required
-from projects.models import Project, ProjectMedia
+from projects.models import Project, ProjectMedia, Participation
 
 from relationships.models import Relationship
 from links.models import Link
@@ -124,64 +127,6 @@ def edit_links(request, slug):
         'links': links,
     }, context_instance=RequestContext(request))
 
-@login_required
-@ownership_required
-def edit_followers(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    followers = project.followers()
-    return render_to_response('projects/project_edit_followers.html', {
-        'project': project,
-        'followers': followers
-    }, context_instance=RequestContext(request))
-
-@login_required
-@ownership_required
-def add_follower(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    if request.method == 'POST' and 'username' in request.POST:
-        username = request.POST['username']
-        user = UserProfile.objects.filter(username=username)[0]
-        if not user:
-            messages.error(
-                request, _('Username %s does not exist' % username))
-        else:
-            new_rel = Relationship(source=user, target_project=project)
-            try:
-                new_rel.save()
-            except IntegrityError: 
-                messages.error(
-                    request, _('You are already following this course'))
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-@login_required
-@ownership_required
-def delete_follower(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    # TODO should use a proper django form for this?
-    if request.method == 'POST' and 'follower_id' in request.POST:
-        follower_id = int(request.POST['follower_id'])
-        follower = UserProfile.objects.get(id=follower_id)
-        # use filter() instead of get() to return None instead of raise an
-        # error for objects that do not exist. 
-        rel = Relationship.objects.filter(
-            source=follower, target_project=project
-        )[0]
-        if project.created_by == follower:
-            messages.error(request, _(
-                "You cannot unfollow your own course" ))
-        elif rel :
-            rel.delete()
-            messages.success(request, _(
-                "The follower %s has been removed." % follower.display_name))
-        else:
-            messages.error(request, _(
-                "The user is not following this course"))
-    else:
-        messages.error(request, _(
-            "There was an error removing the user."))
-    return http.HttpResponseRedirect(reverse('projects_edit_followers', kwargs={
-        'slug': project.slug,
-    }))        
 
 @login_required
 @ownership_required
@@ -197,19 +142,66 @@ def edit_links_delete(request, slug, link):
         reverse('projects_edit_links', kwargs=dict(slug=slug)))
 
 
-def list(request):
+@login_required
+@ownership_required
+def edit_participants(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = project_forms.ProjectAddParticipantForm(project, request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            participantion = Participation(project= project, user=user)
+            participantion.save()
+            new_rel = Relationship(source=user, target_project=project)
+            try:
+                new_rel.save()
+            except IntegrityError:
+                pass
+            messages.success(request, _('Participant added.'))
+            return http.HttpResponseRedirect(
+                reverse('projects_edit_participants', kwargs=dict(slug=project.slug)))
+        else:
+            messages.error(request, _('There was an error adding the participant.'))
+    else:
+        form = project_forms.ProjectAddParticipantForm(project)
+    return render_to_response('projects/project_edit_participants.html', {
+        'project': project,
+        'form': form,
+        'participations': project.participants(),
+    }, context_instance=RequestContext(request))
+
+
+def matching_non_participants(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if len(request.GET['term']) == 0:
+        raise CommandException(_("Invalid request"))
+
+    non_participants = UserProfile.objects.exclude(pk=project.created_by.pk)
+    non_participants = non_participants.exclude(id__in=project.participants().values('user_id'))
+    matching_users = non_participants.filter(username__icontains = request.GET['term'])
+    json = simplejson.dumps([user.username for user in matching_users])
+
+    return HttpResponse(json, mimetype="application/x-javascript")
+
+@login_required
+@ownership_required
+def edit_participants_delete(request, slug, username):
+    participation = get_object_or_404(Participation,
+            project__slug=slug, user__username=username, left_on__isnull=True)
+    if request.method == 'POST':
+        participation.left_on = datetime.date.today()
+        participation.save()
+        messages.success(request, _(
+            "The participant %s has been removed." % participation.user.display_name))
+    return http.HttpResponseRedirect(reverse('projects_edit_participants', kwargs={
+        'slug': participation.project.slug,
+    }))
+
+
+def project_list(request):
     featured = Project.objects.filter(featured=True)
-    new = Project.objects.all().order_by('-created_on')[:4]
-    active = Project.objects.get_popular(limit=4)
-
-    def assign_counts(projects):
-        for project in projects:
-            project.followers_count = Relationship.objects.filter(
-                target_project=project).count()
-
-    assign_counts(featured)
-    assign_counts(new)
-    assign_counts(active)
+    new = Project.objects.all().order_by('-created_on')[:8]
+    active = Project.objects.get_popular(limit=8)
 
     return render_to_response('projects/gallery.html', {
         'featured': featured,

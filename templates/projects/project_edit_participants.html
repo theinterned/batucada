@@ -1,0 +1,61 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit participants{% endblock %}
+
+{% block form %}
+<fieldset id="project_edit_participants" class="project edit participants tabpane">
+<h2>{{ _('Participants') }}</h2>
+<p class="hint">{{ _('View, add and remove participants of your course.') }}</p>
+<form action="{% locale_url projects_edit_participants slug=project.slug %}" method="post">
+  {% csrf_token %}
+  <p>
+    <div class="field participant user{% if form.user.errors %} error{% endif %}">
+      <label for="id_user">{{ _('Username') }}</label>
+      {{ form.user }}
+      {{ form.user.errors }}
+    </div>
+  </p>
+  <p class="buttons add-participant">
+    <button type="submit">{{ _('Add') }}</button>
+  </p>
+</form>
+
+{% if participations %}
+<table>
+<thead>
+  <tr>
+    <th>{{ _('Name') }}</th>
+    <th>{{ _('Actions') }}</th>
+  </tr>
+</thead>
+<tbody>
+  {% for participation in participations %}
+    <tr>
+      <td class="name"><a href="{{ participation.user.get_absolute_url }}">{{ participation.user.display_name }}</a></td>
+      <td class="actions">
+        <form action="{% locale_url projects_edit_participants_delete slug=project.slug username=participation.user.username %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+</fieldset>
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $('#id_user').autocomplete({
+        source: function( request, response ) {
+                url = "{% url matching_non_participants slug=project.slug %}?term=" + request.term;
+                $.getJSON(url, function(data) {
+                    response(data);
+                });
+            }
+    });
+  </script>
+{% endblock %}

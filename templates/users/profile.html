@@ -101,17 +101,16 @@
   {% endfor %}
   </ul>
   {% if projects|length > 0 %}
-  <h3>{{ _('Courses') }} <span class="projects count">{{ projects|length}}</span></h3>
-  <ul class="projects following">
-  {% for project in projects %}
+  <h3>{{ _('Courses') }} <span class="projects count">{{ projects_following|length}}</span></h3>
+  <ul>
+  {% for project in projects_following %}
     <li>
-      <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
+      <a href="{{ project.get_absolute_url }}" title="{{project.name}} {{project.relation_text}}">
         {% if project.image %}
         <img src="{{ MEDIA_URL }}{{ project.image }}" width="42" height="26" alt="project image"/>
         {% else %}
         <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name|truncatechars:23 }} {% if project.created_by == profile %}({{ _('organizer') }}){% endif %}
       </a>
     </li>
   {% endfor %}
@@ -138,3 +137,4 @@
 </div> <!-- /#main -->
 
 {% endblock %}
+

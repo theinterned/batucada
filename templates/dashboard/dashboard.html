@@ -34,44 +34,20 @@
   {% endfor %}
   </ul>
   <h3>{{ _('Courses') }} <span class="projects count">{{ projects_following|length}}</span></h3>
-  <ul class="projects following">
+  <ul class="following">
   {% for project in projects_following %}
     <li>
-      <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
+      <a href="{{ project.get_absolute_url }}" title="{{project.name}} {{project.relation_text}}">
         {% if project.image %}
         <img src="{{ MEDIA_URL }}{{ project.image }}" width="42" height="26" alt="project image" class="project picture"/>
         {% else %}
         <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
         {% endif %}
-        {{ project.name|truncatechars:23 }} {% if project.created_by == user.get_profile %}({{ _('organizer') }}){% endif %}
       </a>
     </li>
   {% endfor %}
   </ul>
 </div> <!-- /#member_relationships-->
-<!-- TODO: add support for owned project summary card 
-<div id="member_projects" class="panel">
-{% for project in projects_following %}
-  {% if project.created_by == user.get_profile %}
-    <article id="member_project_{{ project.slug }}" class="project summary">
-      <h1><a href="{{ project.get_absolute_url }}" title="{{ project.name }}">{{ project.name }}</a></h1>
-      <dl class="followers">
-	<dt>{{ _('Followers') }}</dt>
-	<dd><a href="#" title="{{ _('See all followers') }}">{{ project.followers|length }}</a></dd>
-      </dl>
-      <dl class="updates">
-	<dt>{{ _('Updates') }}</dt>
-	<dd><a href="#" title="{{ _('See all updates') }}">{{ project.status_set.count }}</a></dd>
-      </dl>
-      <article class="update project">
-	<h1>{{ _('Course Status Update') }}</h1>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-	<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </article>
-    </article>
-  {% endif %}
-{% endfor %}
-</div> -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
@@ -103,5 +79,7 @@
       {% include "activity/_activity_resource.html" %}
     {% endfor %}
   </ul>
+
+</div> <!-- /#main -->
 
 {% endblock %}

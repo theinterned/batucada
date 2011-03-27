@@ -230,8 +230,8 @@ def register_openid_complete(request):
 def user_list(request):
     """Display a list of users on the site. Featured, new and active."""
     featured = UserProfile.objects.filter(featured=True)
-    new = UserProfile.objects.all().order_by('-created_on')[:4]
-    popular = UserProfile.objects.get_popular(limit=8)
+    new = UserProfile.objects.all().order_by('-created_on')[:20]
+    popular = UserProfile.objects.get_popular(limit=20)
     return render_to_response('users/user_list.html', {
         'featured': featured,
         'new': new,
@@ -276,7 +276,14 @@ def confirm_resend(request, username):
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, username=username)
     following = profile.following()
-    projects = profile.following(model=Project)
+    projects_following = profile.following(model=Project)
+    for project in projects_following:
+        if project.created_by == profile:
+            project.relation_text = _('(organizing)')
+        elif project.participants().filter(user=profile).exists():
+            project.relation_text = _('(participanting)')
+        else:
+            project.relation_text = _('(following)')
     followers = profile.followers()
     links = Link.objects.select_related('subscription').filter(user=profile)
     activities = Activity.objects.select_related(
@@ -290,7 +297,7 @@ def profile_view(request, username):
         'profile': profile,
         'following': following,
         'followers': followers,
-        'projects': projects,
+        'projects_following': projects_following,
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
         'links': links,
