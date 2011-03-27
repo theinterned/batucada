@@ -7,6 +7,7 @@ from django.db import connection
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 from activity.models import Activity
 from users.decorators import anonymous_only, login_required
@@ -93,6 +94,13 @@ def dashboard(request):
             'form': form,
         }, context_instance=RequestContext(request))
     projects_following = profile.following(model=Project)
+    for project in projects_following:
+        if project.created_by == profile:
+            project.relation_text = _('(organizing)')
+        elif project.participants().filter(user=profile).exists():
+            project.relation_text = _('(participanting)')
+        else:
+            project.relation_text = _('(following)')
     users_following = profile.following()
     users_followers = profile.followers()
     project_ids = [p.pk for p in projects_following]

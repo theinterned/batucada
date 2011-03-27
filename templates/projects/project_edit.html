@@ -35,8 +35,8 @@
       <ul>
 	<li class="summary"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Course Summary') }}</a></li>
 	<li class="image"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Course Image') }}</a></li>
+	<li class="participants"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
 	<li class="links"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
-	<!--<li class="followers"><a href="{% locale_url projects_edit_followers slug=project.slug %}">{{ _('Followers') }}</a></li>-->
     <!--<li class="preparation_status"><a href="{% locale_url projects_edit_preparation_status slug=project.slug %}">{{ _('Preparation Status') }}</a></li>-->
       </ul>
     </nav>
@@ -47,3 +47,4 @@
   </article>
 </section>
 {% endblock %}
+

@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 
 from users.decorators import login_required
 from drumbeat import messages
-from projects.decorators import ownership_required
+from projects.decorators import participation_required
 from projects.models import Project
 
 from content.forms import PageForm, NotListedPageForm
@@ -15,14 +15,20 @@ from content.models import Page
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    if request.user.is_authenticated():
+        user = request.user.get_profile()
+        is_participating = page.project.participants().filter(user__pk=user.pk).exists()
+    else:
+        is_participating = False
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
+        'is_participating': is_participating,
     }, context_instance=RequestContext(request))
 
 
 @login_required
-@ownership_required
+@participation_required
 def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     user = request.user.get_profile()
@@ -57,7 +63,7 @@ def edit_page(request, slug, page_slug):
 
 
 @login_required
-@ownership_required
+@participation_required
 def create_page(request, slug):
     project = get_object_or_404(Project, slug=slug)
     user = request.user.get_profile()

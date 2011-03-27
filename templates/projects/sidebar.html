@@ -4,7 +4,7 @@
   <section id="project"class="panel">
     <h1 id="project-name">{{ project.name }}</h1>
     <br>
-    <figure>
+    <figure class="project_img">
       <a href="{% locale_url projects_show slug=project.slug %}">
         {% if project.image %}
   	<img src="{{ MEDIA_URL }}{{ project.image }}" width="197" height="120" alt="project image"/>
@@ -23,10 +23,12 @@
       <br>
     {% endif %}
     <dl id="project-stats">
-      <dt>{{ _('Followers') }}</dt>
-      <dd>{{ followers_count }}</dd>
       <dt>{{ _('Updates') }}</dt>
       <dd>{{ update_count }}</dd>
+      <dt>{{ _('Participants') }}<dt>
+      <dd>{{ participants_count }}</dd>
+      <dt>{{ _('Followers') }}</dt>
+      <dd>{{ followers_count }}</dd>
     </dl> <!-- /#project-stats -->
     {% if user.is_authenticated and user.get_profile != project.created_by %}
     <p class="supplemental_actions">
@@ -43,10 +45,15 @@
 <section id="people" class="panel">
   <h2>{{ _('People') }}</h2>
   <br>
-  {% for user_following in project.followers|slice:":36" %}
-   <a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }} {% ifequal project.created_by user_following %}(organizer){% endifequal %}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a>
+   <a href="{{ project.created_by.get_absolute_url }}" title="{{ project.created_by.name }} (organizer)"><img class="member-picture" src="{{ MEDIA_URL }}{{ project.created_by.image_or_default }}" height="26" width="26" alt="{{ project.created_by.name }} (organizer)"></a>
+  {% for participant in project.participants %}
+   <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user.name }} (participant)"><img class="member-picture" src="{{ MEDIA_URL }}{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user.name }} (participant)"></a>
   {% endfor %}
-  {% if user.is_authenticated and user.get_profile != project.created_by %}
+  {% for non_participant_follower in project.non_participant_followers %}
+   <a href="{{ non_participant_follower.get_absolute_url }}" title="{{ non_participant_follower.name }} (follower)">
+   <img class="member-picture" src="{{ MEDIA_URL }}{{ non_participant_follower.image_or_default }}" height="26" width="26" alt="{{ non_participant_follower.name }} (follower)"></a>
+  {% endfor %}
+  {% if user.is_authenticated and user.get_profile != project.created_by and not participating %}
     <br><br>
     {% if following %}
       <form method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
@@ -59,6 +66,10 @@
         <button>{{ _('Follow Course') }}</button>
       </form>
     {% endif %}
+  {% endif %}
+  {% if user.get_profile == project.created_by %}
+    <br><br>
+    <a class="button" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
   {% endif %}
 </section>
 
@@ -77,7 +88,7 @@
     {{ _('No course content has being added.') }}
         <br>
   {% endif %}
-  {% if user.get_profile == project.created_by %}
+  {% if user.get_profile == project.created_by or participating %}
     <br>
     <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Page') }}</a>
   {% endif %}

@@ -96,6 +96,19 @@ class Project(ModelBase):
             'source', 'created_by').filter(target_project=self)
         return [rel.source for rel in relationships]
 
+    def non_participant_followers(self):
+        from users.models import UserProfile
+        followers_ids = Relationship.objects.select_related(
+            'source', 'created_by').filter(target_project=self).values('source_id')
+        followers = UserProfile.objects.filter(id__in=followers_ids)
+        non_participants = followers.exclude(pk=self.created_by.pk)
+        non_participants = non_participants.exclude(id__in=self.participants().values('user_id'))
+        return non_participants
+
+    def participants(self):
+        """Return a list of users participanting in this project."""
+        return Participation.objects.filter(project=self, left_on__isnull=True)
+
     def activities(self):
         activities = Activity.objects.filter(
             Q(project=self) | Q(target_project=self),
@@ -158,6 +171,13 @@ class ProjectMedia(ModelBase):
     def is_video(self):
         return self.mime_type in self.video_mimetypes
 
+
+class Participation(ModelBase):
+    user = models.ForeignKey('users.UserProfile', related_name='participantions')
+    project = models.ForeignKey('projects.Project', related_name='participantions')
+    joined_on = models.DateTimeField(
+        auto_now_add=True, default=datetime.date.today())
+    left_on = models.DateTimeField(blank=True, null=True)
 
 ###########
 # Signals #

@@ -8,7 +8,8 @@ from django.utils.translation import ugettext as _
 
 from links.models import Link
 from messages.models import Message
-from projects.models import Project, ProjectMedia
+from projects.models import Project, ProjectMedia, Participation
+from users.models import UserProfile
 
 log = logging.getLogger(__name__)
 
@@ -134,5 +135,29 @@ class ProjectPreparationStatusForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('preparation_status',)
+
+
+class ProjectAddParticipantForm(forms.Form):
+    user = forms.CharField()
+
+    def __init__(self, project, *args, **kwargs):
+        super(ProjectAddParticipantForm, self).__init__(*args, **kwargs)
+        self.project = project
+
+    def clean_user(self):
+        username = self.cleaned_data['user']
+        try:
+            user = UserProfile.objects.get(username=username)
+        except UserProfile.DoesNotExist:
+            raise forms.ValidationError(_('There is no user with username: %s.') % username)
+        if user == self.project.created_by:
+            raise forms.ValidationError(_('User %s is organizing the course.') % username)
+        try:
+            participantion = self.project.participants().get(user=user)
+            raise forms.ValidationError(_('User %s is already a participant.') % username)
+        except Participation.DoesNotExist:
+            pass
+        return user
+
 
 

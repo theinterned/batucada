@@ -17,7 +17,7 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
     </nav>
-    {% if user.get_profile == page.project.created_by %}
+    {% if user.get_profile == page.project.created_by or is_participating %}
       <div id="project-actions">
         <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
       </div>
@@ -27,7 +27,7 @@
 
 {% block body %}
 {% sidebar %}
-<div id="main">
+<div id="main" class="content_page">
 <h1><span>{{ page.title }}</span></h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}

@@ -525,10 +525,12 @@ header {}
     }
 #content {
   padding-top: 25px;
-}  
+}
   #sidebar {
     float: left;
-    width: 300px;
+    width: 250px;
+    background: #fff;
+    padding: 6px;
   }
   	#sidebar h2{
 		font-size: 18px;
@@ -696,21 +698,13 @@ header {}
 		#member_relationships ul{
 			margin-bottom: 18px;
 			margin-left: 0;
-			list-style: none;			
+			list-style: none;
 		}
 		#member_relationships ul:last-child {
 			margin-bottom: 0;
 			}
 		#member_relationships ul li {
 			display: inline-block;
-		}
-		#member_relationships .projects.following li{
-			display: block;
-			font-size: 18px;
-			margin-bottom: 3px;
-		}
-		#member_relationships .projects.following li img{
-			vertical-align: middle;
 		}
 		#member_projects.panel {
 			margin-top: -1px;
@@ -808,9 +802,9 @@ header {}
 	}
 	.card-list section > h1{
 		text-align: center;
-		margin-top: -0.65em;		
+		margin-top: -0.65em;
 		font-family: Georgia, "Times New Roman", Times, serif;
-		font-style: italic;		
+		font-style: italic;
 	}
 	.card-list section h1 span{
 		background: #F3F4F6;
@@ -833,7 +827,7 @@ header {}
 		display: inline-block;
 		zoom:1;
 		*display:inline;
-		width: 215px;
+		width: 225px;
 		vertical-align: top;
 		margin: 0 18px 18px 0;
 		padding: 3px;
@@ -863,8 +857,8 @@ header {}
 		-webkit-border-radius:3px;
 		background: #fff;		
 	}
-	.card-list .card img{
-		margin-bottom: 0.5em;		
+	.card-list .card img, .project_img img{
+		margin-bottom: 0.5em;
 		box-shadow: white 1px 1px 1px;
 		-moz-box-shadow: white 1px 1px 1px;
 		-webkit-box-shadow: white 1px 1px 1px;
@@ -875,12 +869,12 @@ header {}
 		-webkit-border-radius: 5px;
 		behavior: url("/media/css/PIE.htc");
 	}
-	.card-list .user.card img{
+	.card-list .user.card img {
 		float: left;
 		vertical-align: middle;
 	}
 	.card-list .info{
-		height: 7.5em;
+		height: 5em;
 		overflow: hidden;
 	}
 	.card-list .project.card h1{
@@ -929,14 +923,16 @@ header {}
 	}
 	.card-list .card dl{
 		display: inline-block;
-		zoom:1;
-		*display:inline;
-		width: 31%;
+		*display: inline;
+		width: 32%;
+		text-align: center;
 	}
 	.card-list .card dd,
 	.card-list .card dt{
 		font-size: 11px;
-		line-height: 14px;
+		margin-top: -4px;
+		margin-bottom: -4px;
+		line-height: 17px;
 		text-shadow: 1px 1px #fff;
 		-moz-text-shadow: 1px 1px #fff;
 		-webkit-text-shadow: 1px 1px #fff;
@@ -955,8 +951,7 @@ header {}
     float: left;
   }
     #main .post-container, #create-todo {
-      background: -webkit-gradient(linear,0 top,0 bottom,from(#fff),to(#f4f4f4));
-      background: -moz-linear-gradient(top,#fff,#f4f4f4);
+      background: #fff;
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
       border-radius: 6px;
       -moz-border-radius: 6px;
@@ -1013,7 +1008,7 @@ header {}
 	.tags li a:hover{
 		background-color: #DFEFFB;
 		border-color: #b7d1e5;
-		color: #2084CA;		
+		color: #2084CA;
 		/*text-shadow: -1px -1px 0 rgba(0,0,0,0.2);*/
 		text-decoration: none;
 		cursor: pointer;
@@ -1056,10 +1051,10 @@ header {}
         width: 574px;
         display: block;
         font-size: 16px;
-        padding: 12px;                    
+        padding: 12px;
       }
       #create-post input{
-	  	color: #999;
+	  	color: #919191;
 	  	margin-bottom: 0;
 	  }
       #create-post textarea, #create-post .status-and-actions {
@@ -1110,7 +1105,7 @@ header {}
     .supplemental_actions .action {
 	  display: none;
       float: right;
-      color: #ababab;
+      color: #919191;
       text-decoration: none;
       padding-left: 20px;
       margin-left: 18px;
@@ -1157,7 +1152,7 @@ header {}
       padding-left: 64px;
     }
       #posts .post-details, #posts .post-details a {
-        color: #ababab;
+        color: #919191;
       }
       #posts .post-details a {
         text-decoration: underline;
@@ -1332,32 +1327,39 @@ header {}
 			font-style: italic;
 		}
 
-		.modal .link {
+		.modal .participant {
 			display: inline-block;
 			width: 178px;
-			margin-bottom: 12px;
+			margin-bottom: 0;
 			vertical-align: middle;
-			}
+			padding-right: 35px;
+		}
+	    .modal .link {
+			display: inline-block;
+			width: 178px;
+			margin-bottom: 30px;
+			vertical-align: middle;
+		}
 		.modal .link.url{
 			width: 246px;
 			padding: 0;
-			}
-		.modal .links input[type=text] {
+		}
+		.modal .links input[type=text], .modal .participants input[type=text] {
 			width: 154px;
-			}
+		}
 		.modal .links .url input[type=text] {
 			width: 221px;
 		}
-		.modal .links .add-link {
+		.modal .links .add-link, , .modal .participants .add-participant {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button {
+		.modal .links .add-link button, .modal .participants .add-participant button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
-		.modal .links table {
+		.modal .links table, .modal .participants table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1369,8 +1371,7 @@ header {}
 		    -moz-box-shadow: #ddd 0 1px 4px inset;
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
-		.modal .links th,
-		.modal .links td {
+		.modal .links th, .modal .links td, .modal .participants th, .modal .participants td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1383,8 +1384,7 @@ header {}
 			
 			/*width: 25%;*/
 		}
-		.modal .links table .name,
-		.modal .links table .url {
+		.modal .links table .name, .modal .links table .url, .modal .participants table .name {
 			width: 154px;
 		}
 		.modal .links table .url a {
@@ -1398,26 +1398,26 @@ header {}
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
 		}
-		.modal .links tbody tr:last-child td{
+		.modal .links tbody tr:last-child td, .modal .participants tbody tr:last-child td{
 			/*border-bottom: none;*/
 			-webkit-box-shadow: none;
 		}
-		.modal .links thead {
-			background: #f1faff;			
+		.modal .links thead, .modal .participants thead {
+			background: #f1faff;
 		}
-		.modal .links th {
+		.modal .links th, .modal .participants th {
 			border: #e0edf5 1px solid;
 			border-width: 1px 0;
 		}
-		.modal .links th:first-child {
+		.modal .links th:first-child, .modal .participants th:first-child {
 			border-radius: 5px 0 0;
 			border-left-width: 1px;
 		}
-		.modal .links th:last-child {
+		.modal .links th:last-child, .modal .participants th:last-child {
 			border-radius:0 5px 0 0;
 			border-right-width: 1px;
 		}
-		.modal .links table button {
+		.modal .links table button, .modal .participants table button {
 			font-size: 11px;
 			line-height: 1.6;
 			min-height: 18px;
@@ -1857,6 +1857,7 @@ body#signup .modal button[type=submit] {
 	}	
 /* FOOTER */
 footer{
+    clear: both;
 	padding-top: 27px;
 }
 footer .container {
@@ -2122,8 +2123,7 @@ div.warning h2 {
 	color: #a00;
 	}
 /* special case errors */
-.edit.image .errorlist,
-.edit.links .errorlist {
+.edit.image .errorlist, .edit.links .errorlist {
 	top:  4.5em; left: 0;
 	width: 140px;
 	z-index: 1;
@@ -2131,8 +2131,7 @@ div.warning h2 {
 .edit.links .errorlist {
 	top:  5em;
 	}	
-.edit.image .errorlist:before,
-.edit.links .errorlist:before  {
+.edit.image .errorlist:before, .edit.links .errorlist:before {
 	background-image: url(/media/images/modal-error-arrow-up.png);
 	background-position: 0 0;
 	top:-9px; left: 6px;
@@ -2338,4 +2337,9 @@ ul.ui-autocomplete li a {
 ul.ui-autocomplete #ui-active-menuitem {
     background-color: #0a246a;
     color: #fff;
+}
+
+.content_page {
+  background: #fff;
+  padding: 6px;
 }
