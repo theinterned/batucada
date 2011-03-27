@@ -44,7 +44,7 @@ class Page(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/article'
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
     content = models.TextField()
     listed = models.BooleanField(default=True)
     author = models.ForeignKey('users.UserProfile', related_name='pages')
