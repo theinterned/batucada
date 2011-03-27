@@ -29,6 +29,7 @@
 </head>
 <body id="{% block bodyid %}body{% endblock %}" class="{% block bodyclasses %}.body{% endblock %}">
 
+{% block header %}
   <header>
     <div id="masthead">
       <div class="container">
@@ -100,6 +101,7 @@
       {% block breadcrumbs %}{% endblock %}
     </div>
   </header>
+{% endblock %}
 
   <div id="content" class="container">
     {% if messages %}
