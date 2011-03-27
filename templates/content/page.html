@@ -20,6 +20,7 @@
     {% if user.get_profile == page.project.created_by or is_participating %}
       <div id="project-actions">
         <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
+        <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Comment') }}</a>
       </div>
     {% endif %}
   </div> <!-- /.container -->
@@ -31,6 +32,16 @@
 <h1><span>{{ page.title }}</span></h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
+{% if page.comments.all %}
+<br>
+<h1>{{_('Comments')}}</h1>
+{% for comment in page.comments.all %}
+<hr>
+<a name="{{ comment.id }}"></a>
+<h2><a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a> &nbsp; &nbsp; <a href="{{ page.get_absolute_url }}#{{ comment.id }}">{{comment.created_on}}</a></h2><br>
+{{ comment.content|youtube|slideshare|safe }}
+{% endfor %}
+{% endif %}
 </div>
 {% endblock %}
 

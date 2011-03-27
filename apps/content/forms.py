@@ -2,7 +2,7 @@ from django import forms
 
 from ckeditor.widgets import CKEditorWidget
 
-from content.models import Page
+from content.models import Page, PageComment
 
 
 class PageForm(forms.ModelForm):
@@ -13,8 +13,6 @@ class PageForm(forms.ModelForm):
         widgets = {
             'content': CKEditorWidget(),
         }
-        
-
 
 
 class NotListedPageForm(forms.ModelForm):
@@ -26,3 +24,12 @@ class NotListedPageForm(forms.ModelForm):
             'content': CKEditorWidget(),
         }
 
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = PageComment
+        fields = ('content',)
+        widgets = {
+            'content': CKEditorWidget(),
+        }

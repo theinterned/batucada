@@ -1,0 +1,35 @@
+{% extends "content/base_page_form.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
+
+{% block bodyid %}comment{% endblock %}
+
+
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
+
+
+{% block page_form_title %}
+  <h1>{{ _('Comment') }} {{ page.title }}</h1>
+{% endblock %}
+
+{% block page_form_url %}
+  {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
+{% endblock %}
+
+{% block page_form_buttons %}
+  <a class="button" href="{% locale_url page_show slug=page.project.slug page_slug=page.slug %}">
+    {{ _('Cancel') }}
+  </a>
+  <button type="submit" value="{{ _('Save') }}">{{ _('Post') }}</button>
+{% endblock %}
