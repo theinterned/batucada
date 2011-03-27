@@ -91,6 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'l10n.middleware.LocaleURLRewriter',
+    'maintenancemode.middleware.MaintenanceModeMiddleware',
     'commonware.middleware.HidePasswordOnException',
     'commonware.middleware.FrameOptionsHeader',
     'jogging.middleware.LoggingMiddleware',
