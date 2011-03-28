@@ -2,7 +2,7 @@ You have received a new direct message from {{sender}}:
 
 {{ message }}
 
-Reply: http://www.p2pu.org{{ reply_url }}
+Reply: http://{{domain}}{{ reply_url }}
 
 Sincerely,
 The P2PU Team

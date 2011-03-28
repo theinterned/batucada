@@ -10,9 +10,12 @@ from django.db.models import Count, Q
 from django.db.models.signals import post_save, post_delete
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
+from users.tasks import SendUserEmail
 from drumbeat.models import ModelBase
 from statuses.models import Status
 from relationships.models import Relationship
@@ -139,6 +142,24 @@ class Project(ModelBase):
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(Project, self).save()
+
+    def send_update_notification(self, activity):
+        """Send update notifications."""
+        subject = _('[p2pu-%(slug)s-updates] Course %(name)s was updated') % {
+            'slug': self.slug,
+            'name': self.name,
+            }
+        body = render_to_string("projects/emails/course_updated.txt", {
+            'activity': activity,
+            'project': self,
+            'domain': Site.objects.get_current().domain,
+        })
+        for participation in self.participants():
+            if participation.no_updates:
+                continue
+            SendUserEmail.apply_async((participation.user, subject, body))
+        SendUserEmail.apply_async((self.created_by, subject, body))
+
 admin.site.register(Project)
 
 
@@ -173,11 +194,14 @@ class ProjectMedia(ModelBase):
 
 
 class Participation(ModelBase):
-    user = models.ForeignKey('users.UserProfile', related_name='participantions')
-    project = models.ForeignKey('projects.Project', related_name='participantions')
+    user = models.ForeignKey('users.UserProfile', related_name='participations')
+    project = models.ForeignKey('projects.Project', related_name='participations')
     joined_on = models.DateTimeField(
         auto_now_add=True, default=datetime.date.today())
     left_on = models.DateTimeField(blank=True, null=True)
+    # The user can configure this preference but the organizer can by pass
+    # it with the contact participant form.
+    no_updates = models.BooleanField(default=False)
 
 ###########
 # Signals #

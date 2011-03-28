@@ -1,7 +1,7 @@
-{{ user.name }} is now following {% if project %}your course{% else %}you{% endif %} on P2PU! 
+{{ user.name }} is now following {% if project %}{{ project }}{% else %}you{% endif %} on P2PU! 
 
 You can see their profile here:
-http://www.p2pu.org{{ user.get_absolute_url }}
+http://{{ domain }}{{ user.get_absolute_url }}
 
 Sincerely,
 The P2PU Team

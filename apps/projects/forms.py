@@ -110,14 +110,14 @@ class ProjectContactUsersForm(forms.Form):
         except Project.DoesNotExist:
             raise forms.ValidationError(
                 _(u'Hmm, that does not look like a valid course'))
-        recipients = project.followers()
-        subject = self.cleaned_data['subject']
+        recipients = project.participants()
+        subject = "[p2pu-%s] " % project.slug + self.cleaned_data['subject']
         body = self.cleaned_data['body']
         message_list = []
         for r in recipients:
             msg = Message(
                 sender=sender,
-                recipient=r.user,
+                recipient=r.user.user,
                 subject=subject,
                 body=body,
             )
@@ -153,7 +153,7 @@ class ProjectAddParticipantForm(forms.Form):
         if user == self.project.created_by:
             raise forms.ValidationError(_('User %s is organizing the course.') % username)
         try:
-            participantion = self.project.participants().get(user=user)
+            participation = self.project.participants().get(user=user)
             raise forms.ValidationError(_('User %s is already a participant.') % username)
         except Participation.DoesNotExist:
             pass

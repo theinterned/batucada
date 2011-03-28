@@ -7,9 +7,9 @@ urlpatterns = patterns('',
       name='projects_create'),
   url(r'^(?P<slug>[\w-]+)/$', 'projects.views.show',
       name='projects_show'),
-  url(r'^(?P<slug>[\w-]+)/contactfollowers/$',
-      'projects.views.contact_followers',
-      name='projects_contact_followers'),
+  url(r'^(?P<slug>[\w-]+)/contactparticipants/$',
+      'projects.views.contact_participants',
+      name='projects_contact_participants'),
 
   # Project Content URLs
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),

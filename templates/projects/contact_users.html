@@ -3,9 +3,9 @@
 {% block body %}
 <section class="modal">
   <article>
-    <h1>{{ _('Send Message to Followers of ') }} {{project.name}}</h1>
+    <h1>{{ _('Contact Participants of ') }} {{project.name}}</h1>
     <fieldset>
-    <form action="{% locale_url projects_contact_followers slug=project.slug %}" method="post">
+    <form action="{% locale_url projects_contact_participants slug=project.slug %}" method="post">
       {% csrf_token %}
       {{ form.project }}
       <div class="field{% if form.subject.errors %} error{% endif %}">
