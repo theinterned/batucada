@@ -32,9 +32,17 @@ log = logging.getLogger(__name__)
 
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    user = request.user
+    can_post_wall = user.is_superuser
+    if user.is_authenticated(): 
+        profile = request.user.get_profile()
+        can_post_wall = can_post_wall or (profile == project.created_by)
+        can_post_wall = can_post_wall or project.participants().filter(
+            user=profile).exists()
     context = {
         'project': project,
         'activities': project.activities()[0:10],
+        'can_post_wall': can_post_wall,
     }
     return render_to_response('projects/project.html', context,
                           context_instance=RequestContext(request))
@@ -150,8 +158,8 @@ def edit_participants(request, slug):
         form = project_forms.ProjectAddParticipantForm(project, request.POST)
         if form.is_valid():
             user = form.cleaned_data['user']
-            participantion = Participation(project= project, user=user)
-            participantion.save()
+            participation = Participation(project= project, user=user)
+            participation.save()
             new_rel = Relationship(source=user, target_project=project)
             try:
                 new_rel.save()
@@ -240,7 +248,7 @@ def create(request):
 
 
 @login_required
-def contact_followers(request, slug):
+def contact_participants(request, slug):
     user = request.user.get_profile()
     project = get_object_or_404(Project, slug=slug)
     if project.created_by != user:

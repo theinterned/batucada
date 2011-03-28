@@ -45,6 +45,9 @@ def create_project_status(request, project_id):
         return HttpResponseRedirect('/')
     project = get_object_or_404(Project, id=project_id)
     profile = request.user.get_profile()
+    if profile != project.created_by and not profile.user.is_superuser \
+            and not project.participants().filter(user=profile).exists():
+        return HttpResponseRedirect('/')
     form = StatusForm(data=request.POST)
     if form.is_valid():
         status = form.save(commit=False)

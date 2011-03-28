@@ -60,4 +60,7 @@ def status_creation_handler(sender, **kwargs):
     if status.project:
         activity.target_project = status.project
     activity.save()
+    # Send notifications.
+    if activity.target_project:
+        activity.target_project.send_update_notification(activity)
 post_save.connect(status_creation_handler, sender=Status)

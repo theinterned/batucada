@@ -155,6 +155,8 @@ def fire_activity(sender, **kwargs):
         )
         activity.target_project = instance.project
         activity.save()
+        # Send notifications.
+        activity.target_project.send_update_notification(activity)
 
 post_save.connect(fire_activity, sender=Page)
 post_save.connect(fire_activity, sender=PageComment)

@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from messages.models import Message
 from users.tasks import SendUserEmail
@@ -29,6 +30,7 @@ def message_sent_handler(sender, **kwargs):
     body = render_to_string('drumbeatmail/emails/direct_message.txt', {
         'sender': sender,
         'message': message.body,
+        'domain': Site.objects.get_current().domain,
         'reply_url': reverse('drumbeatmail_reply', kwargs={
             'message': message.pk,
         }),

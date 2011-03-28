@@ -1,0 +1,6 @@
+Course {{ project.name }} was updated:
+
+See: http://{{domain}}{{ activity.get_absolute_url }}
+
+Sincerely,
+The P2PU Team

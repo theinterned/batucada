@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
@@ -64,8 +65,9 @@ def follow_handler(sender, **kwargs):
     user_subject = _("%(name)s is following you on P2PU!" % {
         'name': rel.source.name,
     })
-    project_subject = _("%(name)s is following your course on P2PU!" % {
+    project_subject = _("%(name)s is following %(project)s on P2PU!" % {
         'name': rel.source.name,
+        'project': rel.target_project,
     })
     activity = Activity(actor=rel.source,
                         verb='http://activitystrea.ms/schema/1.0/follow')
@@ -90,6 +92,7 @@ def follow_handler(sender, **kwargs):
     body = render_to_string("relationships/emails/new_follower.txt", {
         'user': rel.source,
         'project': rel.target_project,
+        'domain': Site.objects.get_current().domain,
     })
     SendUserEmail.apply_async((user, subject, body))
 post_save.connect(follow_handler, sender=Relationship)

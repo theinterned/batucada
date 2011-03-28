@@ -18,7 +18,7 @@
 
       <div id="project-actions">
         {% if user.get_profile == project.created_by %}
-        <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
+        <a class="button" href="{% locale_url projects_contact_participants slug=project.slug %}">{{ _('Contact Participants') }}</a>
         {% else %}{% if user.is_authenticated %}
           <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Contact Organizer')}}</a>
         {% endif %}{% endif %}
@@ -34,7 +34,7 @@
 {% sidebar %}
 
 <div id="main">
-  {% if user.is_authenticated %}
+  {% if can_post_wall %}
   <div id="create-post">
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">

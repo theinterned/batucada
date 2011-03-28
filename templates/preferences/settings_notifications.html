@@ -10,7 +10,7 @@
       <p>
         <label for="id_no_email_message_received">
           <input type="checkbox" id="id_no_email_message_received" name="no_email_message_received" {% if not no_email_message_received %}checked="checked"{% endif %} />
-          {{ _('A user messages me on drumbeat.org.') }}
+          {{ _('A user messages me on') }} {{domain}}.
         </label>
       </p>
       <p>
@@ -25,6 +25,14 @@
           {{ _('Someone starts following one of my courses.') }}
         </label>
       </p>
+      {% for participation in participations %}
+      <p>
+        <label for="id_no_updates_{{ participation.project.slug }}">
+          <input type="checkbox" id="id_no_updates_{{ participation.project.slug}}" name="no_updates_{{ participation.project.slug }}" {% if not participation.no_updates %}checked="checked"{% endif %} />
+          {{ _('Course') }} {{participation.project.name }} {{ _('is updated.') }}
+        </label>
+      </p>
+      {% endfor %}
       <p class="buttons">
         <a class="button" href="{% locale_url dashboard_index %}">{{ _('Cancel') }}</a>
         <button type="submit" value="{{ _('Save') }}" >{{ _('Save') }}</button>
