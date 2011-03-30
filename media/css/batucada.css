@@ -310,15 +310,15 @@ header {}
         #main-nav li:first-child {
           margin-left: 0px;
         }
-        #main-nav a {
-          color: #a9b2c1;
-          display: block;
-          height: 14px;
-          padding: 4px 10px 8px 10px;
-        }
+		#main-nav a {
+		color: #444;
+		display: block;
+		height: 14px;
+		padding: 4px 10px 8px 10px;
+		}
         #main-nav a:hover {
-          color: #fff;
-          background: #36cdc4;
+          color: #222;
+          /*background: #36cdc4;*/
         }
 
         /*BOILERPLATE alternate style for non-rgba broswers*/
@@ -347,7 +347,7 @@ header {}
       z-index: 2;
     }
       #user-nav a {
-        color: #a9b2c1;
+		color: #444;
         font-size: 17px;
         display: block;
         padding: 10px 12px;
@@ -945,11 +945,16 @@ header {}
 	}
 
   
-  #main {
-    margin-left: 40px;
-    width: 620px;
-    float: left;
-  }
+#main {
+margin-left: 40px;
+width: 620px;
+float: left;
+background-color: white;
+padding: 15px;
+border-radius: 10px;
+border: solid 1px #EEE;
+}
+
     #main .post-container, #create-todo {
       background: #fff;
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
