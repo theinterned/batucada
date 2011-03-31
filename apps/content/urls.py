@@ -8,5 +8,11 @@ urlpatterns = patterns('',
   url(r'^(?P<page_slug>[\w-]+)/edit/$', 'content.views.edit_page',
       name='page_edit'),
   url(r'^(?P<page_slug>[\w-]+)/comment/$', 'content.views.comment_page',
-      name='page_comment')
+      name='page_comment'),
+  url(r'^(?P<page_slug>[\w-]+)/history/$', 'content.views.history_page',
+      name='page_history'),
+  url(r'^(?P<page_slug>[\w-]+)/history/(?P<version_id>\d+)/$', 'content.views.version_page',
+      name='page_version'),
+  url(r'^(?P<page_slug>[\w-]+)/history/(?P<version_id>\d+)/restore/$', 'content.views.restore_version',
+      name='version_restore'),
 )

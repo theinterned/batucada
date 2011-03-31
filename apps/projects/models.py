@@ -79,7 +79,7 @@ class Project(ModelBase):
                                    related_name='projects')
     featured = models.BooleanField()
     created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+        auto_now_add=True, default=datetime.datetime.now)
 
     PRIVATE_DRAFT, PUBLIC_DRAFT, READY = (1, 2, 3)
     preparation_status_choices = ((PRIVATE_DRAFT, _('Private Draft')),
@@ -197,7 +197,7 @@ class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile', related_name='participations')
     project = models.ForeignKey('projects.Project', related_name='participations')
     joined_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+        auto_now_add=True, default=datetime.datetime.now)
     left_on = models.DateTimeField(blank=True, null=True)
     # The user can configure this preference but the organizer can by pass
     # it with the contact participant form.

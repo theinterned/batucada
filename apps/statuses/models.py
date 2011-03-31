@@ -21,7 +21,7 @@ class Status(ModelBase):
     project = models.ForeignKey('projects.Project', null=True, blank=True)
     status = models.CharField(max_length=750)
     created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+        auto_now_add=True, default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.status

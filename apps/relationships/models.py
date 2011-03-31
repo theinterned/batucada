@@ -30,7 +30,7 @@ class Relationship(ModelBase):
         'projects.Project', null=True, blank=True)
 
     created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+        auto_now_add=True, default=datetime.datetime.now)
 
     def save(self, *args, **kwargs):
         """Check that the source and the target are not the same user."""
