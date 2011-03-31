@@ -48,11 +48,10 @@ class Page(ModelBase):
     title = models.CharField(max_length=100)
     slug = models.SlugField()
     content = models.TextField()
-    listed = models.BooleanField(default=True)
     author = models.ForeignKey('users.UserProfile', related_name='pages')
+    last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     project = models.ForeignKey('projects.Project', related_name='pages')
-    created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+    listed = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.title
@@ -90,6 +89,25 @@ class Page(ModelBase):
 admin.site.register(Page)
 
 
+class PageVersion(ModelBase):
+
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    author = models.ForeignKey('users.UserProfile', related_name='page_versions')
+    date = models.DateTimeField()
+    page = models.ForeignKey('content.Page', related_name='page_versions')
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('page_version', (), {
+            'slug': self.page.project.slug,
+            'page_slug': self.page.slug,
+            'version_id': self.id,
+        })
+
+admin.site.register(PageVersion)
+
+
 class PageComment(ModelBase):
     """Placeholder model for comments."""
     object_type = 'http://activitystrea.ms/schema/1.0/comment'
@@ -98,7 +116,7 @@ class PageComment(ModelBase):
     author = models.ForeignKey('users.UserProfile', related_name='comments')
     page = models.ForeignKey('content.Page', related_name='comments')
     created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+        auto_now_add=True, default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('Comment to page %s') % self.page.title
@@ -123,6 +141,7 @@ class PageComment(ModelBase):
         return self.page.project
 
 admin.site.register(PageComment)
+
 
 ###########
 # Signals #

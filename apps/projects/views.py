@@ -197,7 +197,7 @@ def edit_participants_delete(request, slug, username):
     participation = get_object_or_404(Participation,
             project__slug=slug, user__username=username, left_on__isnull=True)
     if request.method == 'POST':
-        participation.left_on = datetime.date.today()
+        participation.left_on = datetime.datetime.now()
         participation.save()
         messages.success(request, _(
             "The participant %s has been removed." % participation.user.display_name))

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
+{% load project_tags %}
+
+{% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
+
+{% block bodyid %}page{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('History') }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
+
+{% block body %}
+{% sidebar %}
+<div id="main" class="content_page">
+<h1>{{ _('History') }} {{ page.title }}</h1>
+<hr />
+<ul>
+  <li>{{ _('(current)') }} &nbsp; <a href="{{ page.get_absolute_url }}">{{ page.last_update }}</a>
+    &nbsp;
+    <a href="{{ page.author.get_absolute_url }}">{{ page.author.display_name }}</a></li>
+  {% for version in versions %}
+    <li><a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
+    &nbsp;
+    <a href="{{ version.author.get_absolute_url }}">{{ version.author.display_name }}</a></li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}
+

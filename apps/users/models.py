@@ -94,7 +94,7 @@ class UserProfile(ModelBase):
     newsletter = models.BooleanField()
     discard_welcome = models.BooleanField(default=False)
     created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.date.today())
+        auto_now_add=True, default=datetime.datetime.now)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
     tags = TaggableManager(through=TaggedProfile)

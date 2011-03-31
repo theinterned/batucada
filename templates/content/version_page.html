@@ -16,12 +16,14 @@
       <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('History') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
     </nav>
     {% if user.get_profile == page.project.created_by or is_participating %}
       <div id="project-actions">
-        <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
-        <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
-        <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Comment') }}</a>
+        <a class="button" href="{% locale_url version_restore slug=project.slug page_slug=page.slug version_id=version.id %}">{{ _('Restore') }}</a>
       </div>
     {% endif %}
   </div> <!-- /.container -->
@@ -30,19 +32,9 @@
 {% block body %}
 {% sidebar %}
 <div id="main" class="content_page">
-<h1>{{ page.title }}</h1>
+<h1>{{ version.title }} {{ version.date }}</h1>
 <hr />
-{{ page.content|youtube|slideshare|safe }}
-{% if page.comments.all %}
-<br>
-<h1>{{_('Comments')}}</h1>
-{% for comment in page.comments.all %}
-<hr>
-<a name="{{ comment.id }}"></a>
-<h2><a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a> &nbsp; &nbsp; <a href="{{ page.get_absolute_url }}#{{ comment.id }}">{{comment.created_on}}</a></h2><br>
-{{ comment.content|youtube|slideshare|safe }}
-{% endfor %}
-{% endif %}
+{{ version.content|youtube|slideshare|safe }}
 </div>
 {% endblock %}
 
