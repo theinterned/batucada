@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ submission.title }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url challenges_show slug=challenge.slug %}">{{ challenge.title }}</a>
+  </nav>
+
+  <div id="project-actions">
+    {% if challenge.is_active %}
+    <a class="button" href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.id%}">{{ _('Edit Submission') }}</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block bodyid %}submission_show{% endblock %}
+
+{% block body %}
+<section class="submission">
+  <article>
+    <h1 id="challenge-title">{{ submission.title }}</h1>
+    <div class="post-details">
+      <a class="member-name" href="{{ submission.created_by.get_absolute_url }}">{{ submission.created_by.name }}</a>
+      <span>{{ submission.created_on|timesince }} {{ _(' ago') }}</span>
+    </div>
+    <h2>{{ _('Summary') }}</h2>
+    <div class="summary">
+      {{ submission.summary }}
+    </div>
+    <h2>{{ _('Description') }}</h2>
+    <div class="details">
+      {{ submission.description|safe }}
+    </div>
+  </article>
+</section>
+{% endblock %}
+

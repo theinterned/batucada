@@ -149,8 +149,52 @@ def create_submission(request, slug):
         'challenge' : challenge
     }
 
-    return render_to_response('challenges/submission_create.html', context,
+    return render_to_response('challenges/submission_edit.html', context,
                               context_instance=RequestContext(request))
+
+@login_required
+def edit_submission(request, slug, submission_id):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    submission = get_object_or_404(Submission, pk=submission_id)
+    user = request.user.get_profile()
+
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST, instance=submission)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Your submission has been edited.'))
+
+            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+                'slug': challenge.slug,
+                }))
+        else:
+            messages.error(request, _('Unable to update your submission'))
+    else:
+        form = SubmissionForm(instance=submission)
+
+    context = {
+        'challenge' : challenge,
+        'submission' : submission,
+        'form' : form
+    }
+    
+    return render_to_response('challenges/submission_edit.html', context,
+                              context_instance=RequestContext(request))
+    
+
+def show_submission(request, slug, submission_id):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    context = {
+        'challenge' : challenge,
+        'submission' : submission,
+    }
+
+    return render_to_response('challenges/submission_show.html', context,
+                              context_instance=RequestContext(request))
+    
+    
 
 @login_required
 def challenge_judges(request, slug):
