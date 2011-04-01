@@ -25,6 +25,13 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/submission/create/$', 
       'challenges.views.create_submission',
       name='submissions_create'),
+  url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/$', 
+      'challenges.views.show_submission',
+      name='submission_show'),
+  url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/edit/$', 
+      'challenges.views.edit_submission',
+      name='submission_edit'),
+
 
   # Voting 
   url(r'^submission/(?P<object_id>\d+)/(?P<direction>up|down|clear)vote/?$',
