@@ -12,6 +12,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 from django.utils import simplejson
+from django.template.loader import render_to_string
 
 from commonware.decorators import xframe_sameorigin
 
@@ -227,8 +228,11 @@ def create(request):
             project = form.save(commit=False)
             project.created_by = user
             project.save()
+            detail_description_content = render_to_string(
+                "projects/detailed_description_initial_content.html",
+                {})
             detailed_description = Page(title='Full Description',
-                content='<p>Please fill out.</p>', listed=False,
+                content=detail_description_content, listed=False,
                 author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
