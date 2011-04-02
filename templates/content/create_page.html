@@ -10,7 +10,7 @@
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
     </nav>
   </div> <!-- /.container -->
 {% endblock %}
@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block page_form_buttons %}
-  <a class="button" href="{% locale_url projects_show slug=project.slug %}">
+  <a class="button" href="{{ project.get_absolute_url }}">
     {{ _('Cancel') }}
   </a>
   <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>

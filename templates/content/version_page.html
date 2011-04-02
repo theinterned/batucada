@@ -13,9 +13,9 @@
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+      <a href="{% page.get_absolute_url %}">{{ page.title }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('History') }}</a>
       <span class="arrow">&rsaquo;</span>

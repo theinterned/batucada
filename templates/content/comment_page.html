@@ -11,24 +11,40 @@
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+      <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+      {% if reply_to %}
+        <span class="arrow">&rsaquo;</span>
+        <a href="{{ reply_to.get_absolute_url }}">{{ reply_to.author }} {{ reply_to.created_on }}</a>
+      {% endif %}
     </nav>
   </div> <!-- /.container -->
 {% endblock %}
 
 
 {% block page_form_title %}
-  <h1>{{ _('Comment') }} {{ page.title }}</h1>
+  {% if reply_to %}
+    <h1>{{ _('Reply Comment') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
+  {% else %}
+    <h1>{{ _('Comment') }} {{ page.title }}</h1>
+  {% endif %}
 {% endblock %}
 
 {% block page_form_url %}
-  {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
+  {% if reply_to %}
+    {% locale_url comment_reply slug=page.project.slug page_slug=page.slug comment_id=reply_to.id %}
+  {% else %}
+    {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
+  {% endif %}
 {% endblock %}
 
 {% block page_form_buttons %}
-  <a class="button" href="{% locale_url page_show slug=page.project.slug page_slug=page.slug %}">
+  {% if reply_to %}
+    <a class="button" href="{{ reply_to.get_absolute_url }}">
+  {% else %}
+    <a class="button" href="{{ page.get_absolute_url }}">
+  {% endif %}
     {{ _('Cancel') }}
   </a>
   <button type="submit" value="{{ _('Save') }}">{{ _('Post') }}</button>

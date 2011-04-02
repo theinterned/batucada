@@ -10,12 +10,12 @@
       <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
       <span class="arrow">&rsaquo;</span>
       {% if project %}
-      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
       {% else %}
       <a href="{% locale_url projects_create %}">New</a>
-      {% endif %}      
+      {% endif %}
     </nav>
   </div> <!-- /.container -->
 {% endblock %}
@@ -26,7 +26,7 @@
     <h1>
       {% if project %}
       {{ _('Edit Course') }}
-      <a class="pester back_link" href="{% locale_url projects_show slug=project.slug %}">({{ _('View Course') }})</a>      
+      <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View Course') }})</a>
       {% else %}
       {{ _('Create Course') }}
       {% endif %}</h1>

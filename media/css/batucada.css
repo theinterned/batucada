@@ -1131,6 +1131,10 @@ border: solid 1px #EEE;
 	#page #main .action {
 	    float: right;
 	}
+	#page #main .post-replies {
+	    margin-left: 30px;
+	    width: 575px;
+	}
     #posts .action:hover,
     .supplemental_actions .action:hover {
       color: #777;
