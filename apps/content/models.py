@@ -52,6 +52,7 @@ class Page(ModelBase):
     last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     project = models.ForeignKey('projects.Project', related_name='pages')
     listed = models.BooleanField(default=True)
+    collaborative = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.title
@@ -85,6 +86,18 @@ class Page(ModelBase):
 
     def representation(self):
         return mark_safe('<a href="%s">%s</a>' % (self.get_absolute_url(), self.title))
+
+    def can_edit(self, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            if self.collaborative:
+                is_participating = self.project.participants().filter(user__pk=profile.pk).exists()
+                return (profile == self.project.created_by or is_participating)
+            else:
+                return (profile == self.project.created_by)
+        else:
+            return False
+
 
 admin.site.register(Page)
 

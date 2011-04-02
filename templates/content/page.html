@@ -17,13 +17,13 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
     </nav>
-    {% if user.get_profile == page.project.created_by or is_participating %}
       <div id="project-actions">
         <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
-        <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
-        <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Comment') }}</a>
+        {% if can_edit %}
+          <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
+          <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Comment') }}</a>
+        {% endif %}
       </div>
-    {% endif %}
   </div> <!-- /.container -->
 {% endblock %}
 

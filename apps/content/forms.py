@@ -25,6 +25,26 @@ class NotListedPageForm(forms.ModelForm):
         }
 
 
+class OwnersPageForm(forms.ModelForm):
+
+    class Meta:
+        model = Page
+        fields = ('title', 'content', 'collaborative',)
+        widgets = {
+            'content': CKEditorWidget(),
+        }
+
+
+class OwnersNotListedPageForm(forms.ModelForm):
+
+    class Meta:
+        model = Page
+        fields = ('content', 'collaborative',)
+        widgets = {
+            'content': CKEditorWidget(),
+        }
+
+
 class CommentForm(forms.ModelForm):
 
     class Meta:
