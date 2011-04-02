@@ -21,6 +21,12 @@
         {{ form.content }}
         {{ form.content.errors }}
       </div>
+      {% if form.collaborative %}
+        <div class="field{% if form.collaborative.errors %} error{% endif %}">
+          {{ form.collaborative }} {{ _('Collaborative work') }}
+          {{ form.collaborative.errors }}
+        </div>
+      {% endif %}
       <p class="buttons">
         {% block page_form_buttons %}{% endblock %}
       </p>

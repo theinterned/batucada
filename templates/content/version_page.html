@@ -21,7 +21,7 @@
       <span class="arrow">&rsaquo;</span>
       <a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
     </nav>
-    {% if user.get_profile == page.project.created_by or is_participating %}
+    {% if can_edit %}
       <div id="project-actions">
         <a class="button" href="{% locale_url version_restore slug=project.slug page_slug=page.slug version_id=version.id %}">{{ _('Restore') }}</a>
       </div>

@@ -1,7 +1,7 @@
 import datetime
 
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -11,21 +11,16 @@ from drumbeat import messages
 from projects.decorators import participation_required
 from projects.models import Project
 
-from content.forms import PageForm, NotListedPageForm, CommentForm
+from content.forms import PageForm, NotListedPageForm, CommentForm, OwnersPageForm, OwnersNotListedPageForm
 from content.models import Page, PageVersion
 
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if request.user.is_authenticated():
-        user = request.user.get_profile()
-        is_participating = page.project.participants().filter(user__pk=user.pk).exists()
-    else:
-        is_participating = False
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
-        'is_participating': is_participating,
+        'can_edit': page.can_edit(request.user),
     }, context_instance=RequestContext(request))
 
 
@@ -34,10 +29,13 @@ def show_page(request, slug, page_slug):
 def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     user = request.user.get_profile()
-    if page.listed:
-        form_cls = PageForm
+    if request.user.is_superuser or user == page.project.created_by:
+        form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
+    elif page.collaborative:
+        form_cls = PageForm if page.listed else NotListedPageForm
     else:
-        form_cls = NotListedPageForm
+        # Restrict permissions for non-collaborative pages.
+        return HttpResponseForbidden()
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page)
@@ -70,8 +68,12 @@ def edit_page(request, slug, page_slug):
 def create_page(request, slug):
     project = get_object_or_404(Project, slug=slug)
     user = request.user.get_profile()
+    if request.user.is_superuser or user == project.created_by:
+        form_cls = OwnersPageForm
+    else:
+        form_cls = PageForm
     if request.method == 'POST':
-        form = PageForm(request.POST)
+        form = form_cls(request.POST)
         if form.is_valid():
             page = form.save(commit=False)
             page.project = project
@@ -86,7 +88,7 @@ def create_page(request, slug):
             messages.error(request,
                            _('There was a problem creating the page.'))
     else:
-        form = PageForm()
+        form = form_cls()
     return render_to_response('content/create_page.html', {
         'form': form,
         'project': project,
@@ -122,21 +124,13 @@ def comment_page(request, slug, page_slug):
     }, context_instance=RequestContext(request))
 
 
-@login_required
-@participation_required
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if request.user.is_authenticated():
-        user = request.user.get_profile()
-        is_participating = page.project.participants().filter(user__pk=user.pk).exists()
-    else:
-        is_participating = False
     versions = PageVersion.objects.filter(page=page).order_by('-date')
     return render_to_response('content/history_page.html', {
         'page': page,
         'versions': versions,
         'project': page.project,
-        'is_participating': is_participating,
     }, context_instance=RequestContext(request))
 
 
@@ -144,16 +138,11 @@ def version_page(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id)
     page = version.page
-    if request.user.is_authenticated():
-        user = request.user.get_profile()
-        is_participating = page.project.participants().filter(user__pk=user.pk).exists()
-    else:
-        is_participating = False
     return render_to_response('content/version_page.html', {
         'page': page,
         'version': version,
         'project': page.project,
-        'is_participating': is_participating,
+        'can_edit': page.can_edit(request.user),
     }, context_instance=RequestContext(request))
 
 
@@ -164,10 +153,13 @@ def restore_version(request, slug, page_slug, version_id):
         page__slug=page_slug, id=version_id)
     page = version.page
     user = request.user.get_profile()
-    if page.listed:
-        form_cls = PageForm
+    if request.user.is_superuser or user == page.project.created_by:
+        form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
+    elif page.collaborative:
+        form_cls = PageForm if page.listed else NotListedPageForm
     else:
-        form_cls = NotListedPageForm
+        # Restrict permissions for non-collaborative pages.
+        return HttpResponseForbidden()
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page)
