@@ -142,6 +142,10 @@ class PageComment(ModelBase):
             'page_slug': self.page.slug,
         }) + '#%s' % self.id
 
+    @property
+    def title(self):
+        return _('Comment to page %s') % self.page.title
+
     def timesince(self, now=None):
         return timesince(self.created_on, now)
 
