@@ -109,7 +109,7 @@ class Project(ModelBase):
         return non_participants
 
     def participants(self):
-        """Return a list of users participanting in this project."""
+        """Return a list of users participating in this project."""
         return Participation.objects.filter(project=self, left_on__isnull=True)
 
     def activities(self):

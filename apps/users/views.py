@@ -281,7 +281,7 @@ def profile_view(request, username):
         if project.created_by == profile:
             project.relation_text = _('(organizing)')
         elif project.participants().filter(user=profile).exists():
-            project.relation_text = _('(participanting)')
+            project.relation_text = _('(participating)')
         else:
             project.relation_text = _('(following)')
     followers = profile.followers()

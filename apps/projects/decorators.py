@@ -25,7 +25,7 @@ def ownership_required(func):
 def participation_required(func):
     """
     Because I'm lazy, check here that the currently logged in user is
-    participanting in the project specified by the ``slug`` kwarg. Return a
+    participating in the project specified by the ``slug`` kwarg. Return a
     403 response if they're not.
     """
     def decorator(*args, **kwargs):
