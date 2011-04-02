@@ -17,10 +17,12 @@ from content.models import Page, PageVersion
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    first_level_comments = page.comments.filter(reply_to__isnull=True)
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
         'can_edit': page.can_edit(request.user),
+        'first_level_comments': first_level_comments,
     }, context_instance=RequestContext(request))
 
 
@@ -97,15 +99,24 @@ def create_page(request, slug):
 
 @login_required
 @participation_required
-def comment_page(request, slug, page_slug):
+def comment_page(request, slug, page_slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     user = request.user.get_profile()
+    reply_to = abs_reply_to = None
+    if comment_id:
+        reply_to = page.comments.get(pk=comment_id)
+        abs_reply_to = reply_to
+        while abs_reply_to.reply_to:
+            abs_reply_to = abs_reply_to.reply_to
+    print comment_id, reply_to, abs_reply_to
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.page = page
             comment.author = user
+            comment.reply_to = reply_to
+            comment.abs_reply_to = abs_reply_to
             comment.save()
             messages.success(request, _('Comment posted!'))
             return HttpResponseRedirect(reverse('page_show', kwargs={
@@ -121,6 +132,7 @@ def comment_page(request, slug, page_slug):
         'form': form,
         'project': page.project,
         'page': page,
+        'reply_to': reply_to,
     }, context_instance=RequestContext(request))
 
 

@@ -13,9 +13,9 @@
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_show slug=project.slug %}">{{ project.name }}</a>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url page_show slug=project.slug page_slug=page.slug %}">{{ page.title }}</a>
+      <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
     </nav>
       <div id="project-actions">
         <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
@@ -36,14 +36,15 @@
 <h1>{{ page.title }}</h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
-{% if page.comments.all %}
+{% if first_level_comments %}
 <br>
 <h1>{{_('Comments')}}</h1>
 <br>
 <ul id="posts">
-{% for comment in page.comments.all %}
+{% for comment in first_level_comments %}
 <li class="post-container">
   <a name="{{ comment.id }}"></a>
+  <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
   <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="pagecomment" pk=comment.id %}">{{_('Report Abuse')}}</a>
   <a href="{{ comment.author.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ comment.author.image_or_default }}">
@@ -52,13 +53,37 @@
     <div class="post-details">
       <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
       &nbsp;
-      <a href="{{ page.get_absolute_url }}#{{ comment.id }}">{{comment.created_on}}</a>
+      <a href="{{ comment.get_absolute_url }}">{{comment.created_on}}</a>
     </div>
     <div class="post-body">
       {{ comment.content|youtube|slideshare|safe }}
     </div>
   </div>
 </li>
+{% for reply in comment.all_replies.all %}
+  <li class="post-container post-replies">
+    <a name="{{ reply.id }}"></a>
+    <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
+    <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="pagecomment" pk=reply.id %}">{{_('Report Abuse')}}</a>
+    <a href="{{ reply.author.get_absolute_url }}">
+      <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ reply.author.image_or_default }}">
+    </a>
+    <div class="post-contents">
+      <div class="post-details">
+        <a href="{{ reply.author.get_absolute_url }}">{{ reply.author.display_name }}</a>
+        &nbsp;
+        <a href="{{ reply.get_absolute_url }}">{{reply.created_on}}</a>
+        <br> {{ _('In Reply To:') }} &nbsp;
+        <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author.display_name }}</a>
+        &nbsp;
+        <a href="{{ reply.reply_to.get_absolute_url }}">{{reply.reply_to.created_on}}</a>
+      </div>
+      <div class="post-body">
+        {{ reply.content|youtube|slideshare|safe }}
+      </div>
+    </div>
+</li>
+{% endfor %}
 {% endfor %}
 </ul>
 {% endif %}

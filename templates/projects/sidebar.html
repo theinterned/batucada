@@ -5,7 +5,7 @@
     <h1 id="project-name">{{ project.name }}</h1>
     <br>
     <figure class="project_img">
-      <a href="{% locale_url projects_show slug=project.slug %}">
+      <a href="{{ project.get_absolute_url }}">
         {% if project.image %}
   	<img src="{{ MEDIA_URL }}{{ project.image }}" width="197" height="120" alt="project image"/>
         {% else %}
@@ -36,7 +36,7 @@
     </p>
     {% endif %}
     <a id="project-description-link"
-       href="{% locale_url page_show slug=project.slug page_slug=project.detailed_description.slug %}">
+       href="{{ project.detailed_description.get_absolute_url }}">
       {{ _('View Full Description') }}
     </a>
 

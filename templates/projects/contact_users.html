@@ -19,7 +19,7 @@
         {{ form.body.errors }}
       </div>
       <p class="buttons">
-        <a class="button" href="{% locale_url projects_show slug=project.slug %}">
+        <a class="button" href="{{ project.get_absolute_url }}">
           {{ _('Cancel') }}
         </a>
         <button type="submit" value="{{ _('Send') }}">{{ _('Send') }}</button>

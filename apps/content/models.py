@@ -130,6 +130,8 @@ class PageComment(ModelBase):
     page = models.ForeignKey('content.Page', related_name='comments')
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
+    reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='replies')
+    abs_reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='all_replies')
 
     def __unicode__(self):
         return _('Comment to page %s') % self.page.title
