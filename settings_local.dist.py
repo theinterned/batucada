@@ -5,6 +5,14 @@ from settings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+
+# Include at least one admin who will receive the reports of abuse.
+ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
+)
+MANAGERS = ADMINS
+
+
 DATABASES = {
 
     'default': {
