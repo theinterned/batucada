@@ -1128,6 +1128,9 @@ border: solid 1px #EEE;
 		margin: 0 5px 0 0px;
 		float: none;
 	}
+	#page #main .action {
+	    float: right;
+	}
     #posts .action:hover,
     .supplemental_actions .action:hover {
       color: #777;

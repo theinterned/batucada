@@ -30,18 +30,37 @@
 {% block body %}
 {% sidebar %}
 <div id="main" class="content_page">
+{% if user.is_authenticated %}
+    <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="page" pk=page.id %}">{{_('Report Abuse')}}</a></p>
+{% endif %}
 <h1>{{ page.title }}</h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
 {% if page.comments.all %}
 <br>
 <h1>{{_('Comments')}}</h1>
+<br>
+<ul id="posts">
 {% for comment in page.comments.all %}
-<hr>
-<a name="{{ comment.id }}"></a>
-<h2><a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a> &nbsp; &nbsp; <a href="{{ page.get_absolute_url }}#{{ comment.id }}">{{comment.created_on}}</a></h2><br>
-{{ comment.content|youtube|slideshare|safe }}
+<li class="post-container">
+  <a name="{{ comment.id }}"></a>
+  <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="pagecomment" pk=comment.id %}">{{_('Report Abuse')}}</a>
+  <a href="{{ comment.author.get_absolute_url }}">
+    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ comment.author.image_or_default }}">
+  </a>
+  <div class="post-contents">
+    <div class="post-details">
+      <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
+      &nbsp;
+      <a href="{{ page.get_absolute_url }}#{{ comment.id }}">{{comment.created_on}}</a>
+    </div>
+    <div class="post-body">
+      {{ comment.content|youtube|slideshare|safe }}
+    </div>
+  </div>
+</li>
 {% endfor %}
+</ul>
 {% endif %}
 </div>
 {% endblock %}

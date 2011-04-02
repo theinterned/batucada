@@ -82,7 +82,7 @@
   {% endif %}
   {% if user.is_authenticated and user != profile.user %}
   <p class="supplemental_actions">
-    <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=profile.id type="user" %}">{{_('Report Abuse')}}</a>
+    <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="user" pk=profile.id  %}">{{_('Report Abuse')}}</a>
   </p>  
   {% endif %}
 </div> <!-- /.vcard -->
