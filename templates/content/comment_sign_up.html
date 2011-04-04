@@ -3,7 +3,7 @@
 
 {% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
 
-{% block bodyid %}comment{% endblock %}
+{% block bodyid %}sign_up_task{% endblock %}
 
 
 {% block breadcrumbs %}
@@ -22,22 +22,39 @@
   </div> <!-- /.container -->
 {% endblock %}
 
-
 {% block page_form_title %}
   {% if reply_to %}
-    <h1>{{ _('Reply Comment') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
+    <h1>{{ _('Reply') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
   {% else %}
-    <h1>{{ _('Comment') }} {{ page.title }}</h1>
+    <h1>{{ _('Answer') }} {{ page.title }} {{ _('Questions') }}</h1>
   {% endif %}
 {% endblock %}
 
 {% block page_form_url %}
   {% if reply_to %}
-    {% locale_url comment_reply slug=page.project.slug page_slug=page.slug comment_id=reply_to.id %}
+    {% locale_url sign_up_reply slug=page.project.slug comment_id=reply_to.id %}
   {% else %}
     {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
   {% endif %}
 {% endblock %}
+
+{% block form_extra_attributes %}
+  {% if not reply_to %}
+   enctype="multipart/form-data" data-url="{% locale_url users_profile_edit_image_async %}"
+  {% endif %}
+{% endblock %}
+
+{% block extra_fields %}
+  {% if not reply_to %}
+    <h2>{{ _('Profile') }}</h2>
+    <p class="hint">{{ _('First update your profile information, which will be included with your answer.') }}</p>
+    {% include "users/_profile_edit_image.html" %}
+    {% include "users/_profile_edit.html" %}
+    <h2>Questions</h2>
+    <p class="hint">{{ _('Then answer the following sign-up questions.') }}</p>
+    {% include "projects/sign_up_initial_content.html" %}
+  {% endif %}
+{%endblock%}
 
 {% block page_form_buttons %}
   {% if reply_to %}
@@ -47,5 +64,9 @@
   {% endif %}
     {{ _('Cancel') }}
   </a>
-  <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
+  {% if reply_to %}
+    <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
+  {% else %}
+    <button type="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+  {% endif %}
 {% endblock %}

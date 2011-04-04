@@ -7,8 +7,9 @@
     {% block page_form_title %}{% endblock %}
     <br />
     <fieldset>
-    <form action="{% block page_form_url %}{% endblock %}" method="post">
+    <form action="{% block page_form_url %}{% endblock %}" method="post" {% block form_extra_attributes %}{% endblock %}>
       {% csrf_token %}
+      {% block extra_fields %}{%endblock%}
       {% if form.title %}
         <div class="field{% if form.title.errors %} error{% endif %}">
           <label for="id_title">{{ _('Title') }}</label>
@@ -27,7 +28,7 @@
           {{ form.collaborative.errors }}
         </div>
       {% endif %}
-      <p class="buttons">
+      <p class="content_buttons">
         {% block page_form_buttons %}{% endblock %}
       </p>
     </form>

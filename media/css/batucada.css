@@ -528,7 +528,7 @@ header {}
 }
   #sidebar {
     float: left;
-    width: 250px;
+    width: 260px;
     background: #fff;
     padding: 6px;
   }
@@ -1438,11 +1438,11 @@ border: solid 1px #EEE;
 
 
 		.modal .picture-preview {
-			float: left;			
-			margin-left: 18px;
+			float: left;
 			width: 211px;
 			/*min-height: 120px;*/
 			padding: 18px;
+			margin-top: 1px;
 			background-color: #F9F9F9;
 		    border: #C6C6C6 1px solid;
 			border-radius: 5px;

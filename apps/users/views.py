@@ -361,7 +361,7 @@ def profile_edit(request):
 
     return render_to_response('users/profile_edit_main.html', {
         'profile': profile,
-        'form': form,
+        'profile_form': form,
     }, context_instance=RequestContext(request))
 
 
@@ -402,7 +402,7 @@ def profile_edit_image(request):
 
     return render_to_response('users/profile_edit_image.html', {
         'profile': profile,
-        'form': form,
+        'profile_image_form': form,
     }, context_instance=RequestContext(request))
 
 
