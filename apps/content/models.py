@@ -53,6 +53,7 @@ class Page(ModelBase):
     project = models.ForeignKey('projects.Project', related_name='pages')
     listed = models.BooleanField(default=True)
     collaborative = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.title
@@ -88,6 +89,8 @@ class Page(ModelBase):
         return mark_safe('<a href="%s">%s</a>' % (self.get_absolute_url(), self.title))
 
     def can_edit(self, user):
+        if not self.editable:
+            return False
         if user.is_authenticated():
             profile = user.get_profile()
             if self.collaborative:
@@ -184,7 +187,12 @@ def fire_activity(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
 
-    if created and (isinstance(instance, Page) or isinstance(instance, PageComment)):
+    is_page = isinstance(instance, Page)
+    is_comment = isinstance(instance, PageComment)
+    if created and (is_page or is_comment):
+        # Do not fire activities for comments on the sign-up page.
+        if is_comment and instance.page.slug == 'sign-up':
+            return
         # fire activity
         activity = Activity(
             actor=instance.author,

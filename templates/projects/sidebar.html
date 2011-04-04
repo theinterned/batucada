@@ -39,6 +39,10 @@
        href="{{ project.detailed_description.get_absolute_url }}">
       {{ _('View Full Description') }}
     </a>
+    <a id="project-description-link"
+       href="{{ project.sign_up.get_absolute_url }}">
+      {{ _('View Sign-Up Task') }}
+    </a>
 
   </section>
 
@@ -63,14 +67,21 @@
     {% else %}
       <form method="post" action="{% locale_url relationships_follow object_type='course' slug=project.slug %}">
         {% csrf_token %}
-        <button>{{ _('Follow Course') }}</button>
+        <button>{{ _('Follow') }}</button>
       </form>
     {% endif %}
+    <br>
+    <a class="button" href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a>
   {% endif %}
   {% if user.get_profile == project.created_by %}
     <br><br>
     <a class="button" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
-  {% endif %}
+    <br><br>
+    <a class="button" href="{% locale_url projects_contact_participants slug=project.slug %}">{{ _('Contact Participants') }}</a>
+  {% else %}{% if user.is_authenticated %}
+    <br><br>
+    <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Contact Organizer')}}</a>
+  {% endif %}{% endif %}
 </section>
 
 <section id="course-content" class="panel">

@@ -225,6 +225,14 @@ var batucada = {
             }
         }
     },
+    sign_up_task: {
+        onload: function() {
+            var $inputs = $('input[type=file]');
+            if ($inputs) {
+                attachFileUploadHandler($inputs);
+            }
+        }
+    },
     inbox: {
         onload: function() {
             loadMoreMessages();

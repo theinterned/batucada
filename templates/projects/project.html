@@ -16,14 +16,6 @@
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
     </nav>
 
-      <div id="project-actions">
-        {% if user.get_profile == project.created_by %}
-        <a class="button" href="{% locale_url projects_contact_participants slug=project.slug %}">{{ _('Contact Participants') }}</a>
-        {% else %}{% if user.is_authenticated %}
-          <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Contact Organizer')}}</a>
-        {% endif %}{% endif %}
-      </div>
-
   </div> <!-- /.container -->
 {% endblock %}
 

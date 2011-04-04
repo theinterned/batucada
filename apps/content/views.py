@@ -5,8 +5,10 @@ from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from django.db.models import Q
 
 from users.decorators import login_required
+from users.forms import ProfileEditForm, ProfileImageForm
 from drumbeat import messages
 from projects.decorators import participation_required
 from projects.models import Project
@@ -30,6 +32,8 @@ def show_page(request, slug, page_slug):
 @participation_required
 def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    if not page.editable:
+        return HttpResponseForbidden()
     user = request.user.get_profile()
     if request.user.is_superuser or user == page.project.created_by:
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
@@ -101,6 +105,8 @@ def create_page(request, slug):
 @participation_required
 def comment_page(request, slug, page_slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    if not page.editable:
+        return HttpResponseForbidden()
     user = request.user.get_profile()
     reply_to = abs_reply_to = None
     if comment_id:
@@ -138,6 +144,8 @@ def comment_page(request, slug, page_slug, comment_id=None):
 
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    if not page.editable:
+        return HttpResponseForbidden()
     versions = PageVersion.objects.filter(page=page).order_by('-date')
     return render_to_response('content/history_page.html', {
         'page': page,
@@ -150,6 +158,8 @@ def version_page(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id)
     page = version.page
+    if not page.editable:
+        return HttpResponseForbidden()
     return render_to_response('content/version_page.html', {
         'page': page,
         'version': version,
@@ -164,6 +174,8 @@ def restore_version(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id)
     page = version.page
+    if not page.editable:
+        return HttpResponseForbidden()
     user = request.user.get_profile()
     if request.user.is_superuser or user == page.project.created_by:
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
@@ -201,3 +213,83 @@ def restore_version(request, slug, page_slug, version_id):
         'project': page.project,
     }, context_instance=RequestContext(request))
 
+
+def sign_up(request, slug):
+    page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
+    project = page.project
+    if request.user.is_authenticated():
+        profile = request.user.get_profile()
+        first_level_comments = page.comments.filter(reply_to__isnull=True)
+        if profile != project.created_by:
+            participants = project.participants()
+            if participants.filter(user=profile).exists():
+                approved = Q(author__in=participants.values('user_id')) | Q(author=project.created_by)
+                first_level_comments = first_level_comments.filter(approved)
+            else:
+                first_level_comments = first_level_comments.filter(author=profile)
+    else:
+        first_level_comments = []
+    return render_to_response('content/sign_up.html', {
+        'page': page,
+        'project': project,
+        'first_level_comments': first_level_comments,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+def comment_sign_up(request, slug, comment_id=None):
+    page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
+    project = page.project
+    user = request.user.get_profile()
+    reply_to = abs_reply_to = None
+    if comment_id:
+        reply_to = page.comments.get(pk=comment_id)
+        abs_reply_to = reply_to
+        while abs_reply_to.reply_to:
+            abs_reply_to = abs_reply_to.reply_to
+
+    if user != project.created_by:
+        participants = project.participants()
+        if participants.filter(user=user).exists():
+            if abs_reply_to.author != project.created_by \
+                    and not participants.filter(user=abs_reply_to.author).exists():
+                return HttpResponseForbidden()
+        elif abs_reply_to.author != user:
+            return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        profile_form = ProfileEditForm(request.POST, instance=user)
+        profile_image_form = ProfileImageForm()
+        if form.is_valid() and (reply_to or profile_form.is_valid()):
+            if not reply_to:
+                profile_form.save()
+            comment = form.save(commit=False)
+            comment.page = page
+            comment.author = user
+            comment.reply_to = reply_to
+            comment.abs_reply_to = abs_reply_to
+            comment.save()
+            success_msg = _('Reply posted!') if reply_to else _('Answer submitted!')
+            messages.success(request, success_msg)
+            return HttpResponseRedirect(reverse('page_show', kwargs={
+                'slug': slug,
+                'page_slug': page.slug,
+            }))
+        else:
+            error_msg = _('There was a problem posting your reply.') if reply_to \
+                        else _('There was a problem submitting your answer.')
+            messages.error(request, error_msg)
+    else:
+        profile_form = ProfileEditForm(instance=user)
+        profile_image_form = ProfileImageForm()
+        form = CommentForm()
+    return render_to_response('content/comment_sign_up.html', {
+        'profile_image_form': profile_image_form,
+        'profile_form': profile_form,
+        'profile': user,
+        'form': form,
+        'project': project,
+        'page': page,
+        'reply_to': reply_to,
+    }, context_instance=RequestContext(request))

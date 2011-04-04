@@ -70,6 +70,7 @@ class Project(ModelBase):
     long_description = models.TextField()
 
     detailed_description = models.ForeignKey('content.Page', related_name='desc_project', null=True, blank=True)
+    sign_up = models.ForeignKey('content.Page', related_name='sign_up_project', null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
