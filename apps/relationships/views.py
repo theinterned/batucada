@@ -36,7 +36,7 @@ def follow(request, object_type, slug):
     except IntegrityError:
         if object_type == PROJECT:
             messages.error(
-                request, _('You are already following this course'))
+                request, _('You are already following this study group'))
         else:
             messages.error(request, _('You are already following this user'))
         log.warn("Attempt to create duplicate relationship: %s" % (

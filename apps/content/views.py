@@ -55,14 +55,14 @@ def edit_page(request, slug, page_slug):
             page.author = user
             page.last_update = datetime.datetime.now()
             page.save()
-            messages.success(request, _('Page updated!'))
+            messages.success(request, _('%s updated!') % page.title)
             return HttpResponseRedirect(reverse('page_show', kwargs={
                 'slug': slug,
                 'page_slug': page_slug,
             }))
         else:
             messages.error(request,
-                           _('There was a problem saving the page.'))
+                           _('There was a problem saving %s.' % page.title))
     else:
         form = form_cls(instance=page)
     return render_to_response('content/edit_page.html', {
@@ -88,14 +88,14 @@ def create_page(request, slug):
             page.project = project
             page.author = user
             page.save()
-            messages.success(request, _('Page created!'))
+            messages.success(request, _('Task created!'))
             return HttpResponseRedirect(reverse('page_show', kwargs={
                 'slug': slug,
                 'page_slug': page.slug,
             }))
         else:
             messages.error(request,
-                           _('There was a problem creating the page.'))
+                           _('There was a problem creating the task.'))
     else:
         form = form_cls()
     return render_to_response('content/create_page.html', {
@@ -196,14 +196,14 @@ def restore_version(request, slug, page_slug, version_id):
             page.author = user
             page.last_update = datetime.datetime.now()
             page.save()
-            messages.success(request, _('Page restored!'))
+            messages.success(request, _('%s restored!') % page.title)
             return HttpResponseRedirect(reverse('page_show', kwargs={
                 'slug': slug,
                 'page_slug': page_slug,
             }))
         else:
             messages.error(request,
-                           _('There was a problem saving the page.'))
+                           _('There was a problem saving %s.' % page.title))
     else:
         page.title = version.title
         page.content = version.content

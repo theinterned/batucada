@@ -2,12 +2,12 @@
 
 {% load l10n_tags %}
 
-{% block title %}{% if project %}{{ _('Edit Course') }}{% else %}{{ _('Create Course') }}{% endif %}{% endblock %}
+{% block title %}{% if project %}{{ _('Edit Study Group') }}{% else %}{{ _('Create Study Group') }}{% endif %}{% endblock %}
 {% block bodyid %}project_edit{% endblock %}
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
       {% if project %}
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
@@ -25,16 +25,16 @@
   <article>
     <h1>
       {% if project %}
-      {{ _('Edit Course') }}
-      <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View Course') }})</a>
+      {{ _('Edit Study Group') }}
+      <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View Study Group') }})</a>
       {% else %}
-      {{ _('Create Course') }}
+      {{ _('Create Study Group') }}
       {% endif %}</h1>
     {% if project %}
     <nav id="project-edit-nav" class="tabs">
       <ul>
-	<li class="summary"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Course Summary') }}</a></li>
-	<li class="image"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Course Image') }}</a></li>
+	<li class="summary"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Summary') }}</a></li>
+	<li class="image"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Image') }}</a></li>
 	<li class="participants"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
 	<li class="links"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
     <!--<li class="preparation_status"><a href="{% locale_url projects_edit_preparation_status slug=project.slug %}">{{ _('Preparation Status') }}</a></li>-->

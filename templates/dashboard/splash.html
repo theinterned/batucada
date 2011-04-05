@@ -10,12 +10,12 @@
 <header id="intro">
   <div class="container">
     <nav id="intro-links">
-      <a href="{% locale_url projects_gallery %}" class="big-find-course">{{ _('Find Your Course.') }}</a>
-      <a href="{% locale_url projects_create %}" class="big-run-course">{{ _('Run a Course.') }}</a>
+      <a href="{% locale_url projects_gallery %}" class="big-find-course">{{ _('Find A Study Group.') }}</a>
+      <a href="{% locale_url projects_create %}" class="big-run-course">{{ _('Create A Study Group.') }}</a>
     </nav>
     <hgroup>
       <h1>We are an <em class="highlight1">online</em><br>community that<br><em class="highlight2">enables learning</em>. <em class="highlight3">So</em></h1>
-      <p><em class="highlight1">P</em><em class="highlight2">2</em><em class="highlight3">P</em><em class="highlight4">U</em> isn&rsquo;t a school, there are no teachers or students just peers. Individuals are responsible for learning together with the help of a facilitator. </p>
+      <p>At <em class="highlight1">P</em><em class="highlight2">2</em><em class="highlight3">P</em><em class="highlight4">U</em>, a study group gathers people who work together to learn a particular topic by completing tasks, assessing individual and group work, and providing constructive feedback.</p>
     </hgroup>
   </div>
 </header> <!-- /#intro -->
@@ -29,7 +29,7 @@
     <aside>
     	{% if featured_project %}
       <section id="featured_project" class="card-list">
-        <h1>{{ _('Featured Courses') }}</h1>
+        <h1>{{ _('Featured') }}</h1>
 	      <ul class="project-list">
           {% with featured_project as project %}
             <li>{% include "projects/_project_card.html" %}</li>

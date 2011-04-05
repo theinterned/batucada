@@ -5,7 +5,7 @@
 {% block form %}
 <fieldset id="project_edit_participants" class="project edit participants tabpane">
 <h2>{{ _('Participants') }}</h2>
-<p class="hint">{{ _('View, add and remove participants of your course.') }}</p>
+<p class="hint">{{ _('View, add and remove participants of your study group.') }}</p>
 <form action="{% locale_url projects_edit_participants slug=project.slug %}" method="post">
   {% csrf_token %}
   <p>

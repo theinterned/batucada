@@ -1,14 +1,14 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
 
-{% block title %}{{ project.name }} | {{ _('Create Page') }}{% endblock %}
+{% block title %}{{ project.name }} | {{ _('Create Task') }}{% endblock %}
 
 {% block bodyid %}create_page{% endblock %}
 
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
     </nav>
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block page_form_title %}
-  <h1>{{ _('Create Page') }}</h1>
+  <h1>{{ _('Create Task') }}</h1>
 {% endblock %}
 
 {% block page_form_url %}

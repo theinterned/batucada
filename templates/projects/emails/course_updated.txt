@@ -1,5 +1,7 @@
 Course {{ project.name }} was updated:
 
+{{ activity.target_object.friendly_verb }} {{ activity.target_object.representation|removetags:"a" }}
+
 See: http://{{domain}}{{ activity.get_absolute_url }}
 
 Sincerely,

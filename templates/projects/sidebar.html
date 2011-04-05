@@ -85,7 +85,7 @@
 </section>
 
 <section id="course-content" class="panel">
-  <h2>Course Content</h2>
+  <h2>Tasks</h2>
   <br>
   {% if content_pages %}
     <nav id="content-pages">
@@ -96,12 +96,12 @@
       </ul>
     </nav>
   {% else %}
-    {{ _('No course content has being added.') }}
+    {{ _('No tasks have being added.') }}
         <br>
   {% endif %}
   {% if user.get_profile == project.created_by or participating %}
     <br>
-    <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Page') }}</a>
+    <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
   {% endif %}
 </section>
 

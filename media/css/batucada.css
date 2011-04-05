@@ -1462,6 +1462,10 @@ border: solid 1px #EEE;
 			border-color: #C6C6C6;
 			margin-bottom: 0;
 		}
+		.project.edit.image .modal .picture-preview {
+		    margin-left: 17px;
+		    margin-top: 0px;
+		}
 		.modal .image form {
 			width: 249px;
 			display: inline-block;
@@ -1605,7 +1609,7 @@ border: solid 1px #EEE;
   padding-left: 33px;
   background: url("../images/bg.run-a-course.png") no-repeat;
   color: #5a6579;
-  height: 84px;
+  height: 138px;
 }
 #intro-links a.big-run-course:hover {
   background-position: 0 -121px;
