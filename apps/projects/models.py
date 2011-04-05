@@ -156,10 +156,11 @@ class Project(ModelBase):
             'domain': Site.objects.get_current().domain,
         })
         for participation in self.participants():
-            if participation.no_updates:
+            if participation.no_updates or activity.actor == participation.user:
                 continue
             SendUserEmail.apply_async((participation.user, subject, body))
-        SendUserEmail.apply_async((self.created_by, subject, body))
+        if activity.actor != self.created_by:
+            SendUserEmail.apply_async((self.created_by, subject, body))
 
 admin.site.register(Project)
 

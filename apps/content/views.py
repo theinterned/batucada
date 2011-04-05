@@ -117,7 +117,6 @@ def comment_page(request, slug, page_slug, comment_id=None):
         abs_reply_to = reply_to
         while abs_reply_to.reply_to:
             abs_reply_to = abs_reply_to.reply_to
-    print comment_id, reply_to, abs_reply_to
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
