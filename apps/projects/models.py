@@ -203,6 +203,8 @@ class Participation(ModelBase):
     # The user can configure this preference but the organizer can by pass
     # it with the contact participant form.
     no_updates = models.BooleanField(default=False)
+    # Sign-Up answer.
+    sign_up = models.OneToOneField('content.PageComment', related_name='participation', null=True, blank=True)
 
 ###########
 # Signals #

@@ -48,13 +48,19 @@
     <div class="post-details">
       <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
       &nbsp;
-      <a href="{{ comment.get_absolute_url }}">{{comment.created_on}}</a>
+      <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
     </div>
     <div class="post-body">
       <p><strong>Bio:</strong> {{ comment.author.bio }}</p>
       <p><strong>Location:</strong> {{ comment.author.location }}</p>
       <h3>Anwer:</h3>
       {{ comment.content|youtube|slideshare|safe }}
+      {% if not comment.participation and user.id == project.created_by.id and comment.author.id != user.id %}
+        <form method="post" action="{% locale_url sign_up_accept slug=project.slug comment_id=comment.id %}">
+          {% csrf_token %}
+          <button>{{ _('Accept') }}</button>
+        </form>
+      {% endif %}
     </div>
   </div>
 </li>

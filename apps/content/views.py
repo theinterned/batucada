@@ -6,15 +6,18 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.db.models import Q
+from django.template.loader import render_to_string
+from django.db import IntegrityError
 
 from users.decorators import login_required
 from users.forms import ProfileEditForm, ProfileImageForm
 from drumbeat import messages
-from projects.decorators import participation_required
-from projects.models import Project
+from projects.decorators import participation_required, ownership_required
+from projects.models import Project, Participation
+from relationships.models import Relationship
 
 from content.forms import PageForm, NotListedPageForm, CommentForm, OwnersPageForm, OwnersNotListedPageForm
-from content.models import Page, PageVersion
+from content.models import Page, PageVersion, PageComment
 
 
 def show_page(request, slug, page_slug):
@@ -250,11 +253,11 @@ def comment_sign_up(request, slug, comment_id=None):
 
     if user != project.created_by:
         participants = project.participants()
+        author = abs_reply_to.author if abs_reply_to else user
         if participants.filter(user=user).exists():
-            if abs_reply_to.author != project.created_by \
-                    and not participants.filter(user=abs_reply_to.author).exists():
+            if author != project.created_by and not participants.filter(user=author).exists():
                 return HttpResponseForbidden()
-        elif abs_reply_to.author != user:
+        elif author != user:
             return HttpResponseForbidden()
 
     if request.method == 'POST':
@@ -264,6 +267,11 @@ def comment_sign_up(request, slug, comment_id=None):
         if form.is_valid() and (reply_to or profile_form.is_valid()):
             if not reply_to:
                 profile_form.save()
+                new_rel = Relationship(source=user, target_project=project)
+                try:
+                    new_rel.save()
+                except IntegrityError:
+                    pass
             comment = form.save(commit=False)
             comment.page = page
             comment.author = user
@@ -293,3 +301,44 @@ def comment_sign_up(request, slug, comment_id=None):
         'page': page,
         'reply_to': reply_to,
     }, context_instance=RequestContext(request))
+
+@login_required
+@ownership_required
+def accept_sign_up(request, slug, comment_id):
+    page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
+    project = page.project
+    user = request.user.get_profile()
+    answer = page.comments.get(pk=comment_id)
+    if answer.reply_to or answer.author == project.created_by or request.method != 'POST':
+        return HttpResponseForbidden()
+    try:
+        participation = answer.participation
+        return HttpResponseForbidden()
+    except Participation.DoesNotExist:
+        pass
+    try:
+        participation = project.participants().get(user=answer.author)
+        if participation.sign_up:
+            participation.left_on = datetime.datetime.now()
+            participation.save()
+            raise Participation.DoesNotExist
+        else:
+            participation.sign_up = answer
+    except Participation.DoesNotExist:
+        participation = Participation(project= project, user=answer.author, sign_up=answer)
+    participation.save()
+    new_rel = Relationship(source=answer.author, target_project=project)
+    try:
+        new_rel.save()
+    except IntegrityError:
+        pass
+    accept_content = detail_description_content = render_to_string(
+            "content/accept_sign_up_comment.html",
+            {})
+    accept_comment = PageComment(content=accept_content, author=user,
+        page=page, reply_to=answer, abs_reply_to=answer)
+    accept_comment.save()
+    messages.success(request, _('Participant added!'))
+    return HttpResponseRedirect(answer.get_absolute_url())
+
+
