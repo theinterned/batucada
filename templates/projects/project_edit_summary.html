@@ -7,27 +7,27 @@
 <form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% endif %}" method="post">
   {% csrf_token %}
   <div class="field{% if form.name.errors %} error{% endif %}">
-    <label for="id_name">{{ _('Course name') }}</label>
-    <span class="hint block">{{ _('A good course name is short and descriptive. People should know what your course is about without reading the description.') }}</span>
+    <label for="id_name">{{ _('Name') }}</label>
+    <span class="hint block">{{ _('A good name is short and descriptive. People should know what your study group is about without reading the description.') }}</span>
     {{ form.name }}
     {{ form.name.errors }}
   </div>
   <div class="field{% if form.short_description.errors %} error{% endif %}">
     <label for="id_short_description">{{ _('One sentence description') }}</label>
-    <span class="hint block">{{ _('This description will be used on the search results and course listing pages.') }}</span>
+    <span class="hint block">{{ _('This description will be used on search results and listing pages.') }}</span>
     {{ form.short_description }}
     {{ form.short_description.errors }}
   </div>
   <div class="field long-description{% if form.long_description.errors %} error{% endif %}">
-    <label for="id_long_description">{{ _('Two paragraph description') }}</label>
-    <span class="hint block">{{ _('This description is shown on the course page. It can go into a bit more detail about the course, but it should be brief and to the point.') }}</span>
+    <label for="id_long_description">{{ _('One paragraph description') }}</label>
+    <span class="hint block">{{ _('This description is shown on the study group page. It can go into a bit more detail, but it should be brief and to the point.') }}</span>
     {{ form.long_description }}
     {{ form.long_description.errors }}
   </div>
   <p class="buttons">    
     {% if project %}
     <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
-    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>    
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
     {% else %}
     <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>

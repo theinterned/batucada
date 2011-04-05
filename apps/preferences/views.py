@@ -49,6 +49,7 @@ def settings(request):
 
 @login_required
 def delete(request):
+    return HttpResponseRedirect(reverse('preferences_settings'))
     if request.method == 'POST':
         profile = request.user.get_profile()
         profile.user.delete()

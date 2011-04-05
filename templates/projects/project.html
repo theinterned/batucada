@@ -11,7 +11,7 @@
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
     </nav>
@@ -31,8 +31,8 @@
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
 	{% csrf_token %}
-	<input type="text" value="{{ _('Post a message to this course') }}" title="{{_('Post a message to this course')}}">
-	<textarea name="status" title="{{_('Post a message to this course')}}"></textarea>
+	<input type="text" value="{{ _('Post a message to this study group') }}">
+	<textarea name="status"></textarea>
 	
 	<div class="status-and-actions">
 	  <div class="post-char-count">750</div>

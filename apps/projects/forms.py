@@ -109,7 +109,7 @@ class ProjectContactUsersForm(forms.Form):
             project = Project.objects.get(id=int(project))
         except Project.DoesNotExist:
             raise forms.ValidationError(
-                _(u'Hmm, that does not look like a valid course'))
+                _(u'That study group does not exist.'))
         recipients = project.participants()
         subject = "[p2pu-%s] " % project.slug + self.cleaned_data['subject']
         body = self.cleaned_data['body']
@@ -151,7 +151,7 @@ class ProjectAddParticipantForm(forms.Form):
         except UserProfile.DoesNotExist:
             raise forms.ValidationError(_('There is no user with username: %s.') % username)
         if user == self.project.created_by:
-            raise forms.ValidationError(_('User %s is organizing the course.') % username)
+            raise forms.ValidationError(_('User %s is organizing the study group.') % username)
         try:
             participation = self.project.participants().get(user=user)
             raise forms.ValidationError(_('User %s is already a participant.') % username)

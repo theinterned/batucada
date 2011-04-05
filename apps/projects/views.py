@@ -244,13 +244,13 @@ def create(request):
             sign_up.save()
             project.sign_up_id = sign_up.id
             project.save()
-            messages.success(request, _('Your new course has been created.'))
+            messages.success(request, _('The study group has been created.'))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
         else:
             messages.error(request,
-                _("There was a problem creating your course."))
+                _("There was a problem creating the study group."))
     else:
         form = project_forms.ProjectForm()
     return render_to_response('projects/project_edit_summary.html', {

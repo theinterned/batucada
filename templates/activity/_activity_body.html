@@ -9,7 +9,7 @@
 
 {% if activity|should_show_verb %}
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
-    {{ _('Created a new course') }}
+    {{ _('Created') }}
   {% else %}
     {% if activity.target_object %}
       {{ activity.target_object.friendly_verb }}
@@ -27,7 +27,7 @@
     <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
   {% else %}
     {% if activity.project %}
-      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a>
+      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a> study group.
     {% else %}
       {{ activity|get_link_name }} 
       <a href="{{ activity|get_link }}">

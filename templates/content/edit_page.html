@@ -9,7 +9,7 @@
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
@@ -20,7 +20,7 @@
 
 
 {% block page_form_title %}
-  <h1>{{ _('Edit Page') }} {{ page.title }}</h1>
+  <h1>{{ _('Edit') }} {{ page.title }}</h1>
 {% endblock %}
 
 {% block page_form_url %}

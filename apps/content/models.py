@@ -83,10 +83,10 @@ class Page(ModelBase):
         return timesince(self.created_on, now)
 
     def friendly_verb(self):
-        return mark_safe(_('Added content page'))
+        return mark_safe(_('Added'))
 
     def representation(self):
-        return mark_safe('<a href="%s">%s</a>' % (self.get_absolute_url(), self.title))
+        return mark_safe('<a href="%s">%s</a>.' % (self.get_absolute_url(), self.title))
 
     def can_edit(self, user):
         if not self.editable:
@@ -137,7 +137,7 @@ class PageComment(ModelBase):
     abs_reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='all_replies')
 
     def __unicode__(self):
-        return _('Comment to page %s') % self.page.title
+        return _('Comment to %s') % self.page.title
 
     def get_absolute_url(self):
         return reverse('page_show', kwargs={
@@ -147,7 +147,7 @@ class PageComment(ModelBase):
 
     @property
     def title(self):
-        return _('Comment to page %s') % self.page.title
+        return _('Comment to %s') % self.page.title
 
     def timesince(self, now=None):
         return timesince(self.created_on, now)
@@ -156,7 +156,7 @@ class PageComment(ModelBase):
         return mark_safe(_('Posted comment'))
 
     def representation(self):
-        return mark_safe(' at <a href="%s">%s</a> page' % (self.get_absolute_url(), self.page.title))
+        return mark_safe(' at <a href="%s">%s</a>.' % (self.get_absolute_url(), self.page.title))
 
     @property
     def project(self):

@@ -33,7 +33,7 @@
     <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }}"><img class="member-picture" src="{{ MEDIA_URL }}{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
   {% endfor %}
   </ul>
-  <h3>{{ _('Courses') }} <span class="projects count">{{ projects_following|length}}</span></h3>
+  <h3>{{ _('Study Groups') }} <span class="projects count">{{ projects_following|length}}</span></h3>
   <ul class="following">
   {% for project in projects_following %}
     <li>
@@ -55,7 +55,7 @@
     <article class="welcome">
       <header><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"></a></header>
       <h1>Welcome to P2PU!</h1>
-      <p>To get started, you should <a href="{% locale_url users_profile_edit %}" title="update your profile">update your profile</a>. This is a great way to tell people a bit more about yourself. Then find <a href="{% locale_url users_user_list %}" title="People">people</a> and <a href="{% locale_url projects_gallery %}" title="Courses">courses</a> that interest you and start following them! You can also <a href="{% locale_url projects_create %}" title="Create a Course">create your own course</a>.</p>
+      <p>To get started, you should <a href="{% locale_url users_profile_edit %}">update your profile</a>. This is a great way to tell people a bit more about yourself. Then find <a href="{% locale_url users_user_list %}">people</a> and <a href="{% locale_url projects_gallery %}">study groups</a> that interest you and start following them! You can also <a href="{% locale_url projects_create %}">create a new study group</a>.</p>
     </article>
   {% endif %}
   <div id="create-post">

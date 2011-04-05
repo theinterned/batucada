@@ -11,16 +11,18 @@
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Courses') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
     </nav>
       <div id="project-actions">
+        {% if can_edit %}
+          <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit') }}</a>
+        {% endif %}
         <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
         {% if can_edit %}
-          <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit Page') }}</a>
           <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Comment') }}</a>
         {% endif %}
       </div>
