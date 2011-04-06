@@ -12,10 +12,12 @@ from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.db.models import Max
-
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
+from users.tasks import SendUserEmail
 
 
 TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'b', 'em', 'i', 'strong',
@@ -171,6 +173,30 @@ class PageComment(ModelBase):
     def project(self):
         return self.page.project
 
+    def send_sign_up_notification(self):
+        """Send sign_up notifications."""
+        if self.page.slug != 'sign-up':
+            return
+        project = self.page.project
+        subject = _('[p2pu-%(slug)s-signup] Course %(name)s\'s signup page was updated') % {
+            'slug': project.slug,
+            'name': project.name,
+            }
+        body = render_to_string("content/emails/sign_up_updated.txt", {
+            'comment': self,
+            'project': project,
+            'domain': Site.objects.get_current().domain,
+        })
+        recipients = {project.created_by.username: project.created_by}
+        if self.reply_to:
+            comment = self
+            while comment.reply_to:
+                comment = comment.reply_to
+                recipients[comment.author.username] = comment.author
+        for username in recipients:
+            if recipients[username] != self.author:
+                SendUserEmail.apply_async((recipients[username], subject, body))
+
 admin.site.register(PageComment)
 
 
@@ -201,6 +227,7 @@ def fire_activity(sender, **kwargs):
     if created and (is_page or is_comment):
         # Do not fire activities for comments on the sign-up page.
         if is_comment and instance.page.slug == 'sign-up':
+            instance.send_sign_up_notification()
             return
         # fire activity
         activity = Activity(

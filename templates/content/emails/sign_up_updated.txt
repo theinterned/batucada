@@ -1,0 +1,12 @@
+Course {{ project.name }}'s signup page was updated:
+
+{% if comment.reply_to %}
+{{ comment.author.display_name }} posted a reply.
+{% else %}
+{{ comment.author.display_name }} submitted an answer.
+{% endif %}
+
+See: http://{{domain}}{{ comment.get_absolute_url }}
+
+Sincerely,
+The P2PU Team
