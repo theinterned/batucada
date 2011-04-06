@@ -11,6 +11,8 @@ from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.db.models import Max
+
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
@@ -54,6 +56,7 @@ class Page(ModelBase):
     listed = models.BooleanField(default=True)
     collaborative = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+    index = models.IntegerField()
 
     def __unicode__(self):
         return self.title
@@ -77,6 +80,12 @@ class Page(ModelBase):
                     break
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
+        if not self.index:
+            if self.listed:
+                max_index = Page.objects.filter(project=self.project, listed=True).aggregate(Max('index'))['index__max']
+                self.index = max_index + 1 if max_index else 1
+            else:
+                self.index = 0
         super(Page, self).save()
 
     def timesince(self, now=None):

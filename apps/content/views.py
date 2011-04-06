@@ -341,3 +341,44 @@ def accept_sign_up(request, slug, comment_id):
     return HttpResponseRedirect(answer.get_absolute_url())
 
 
+@login_required
+@participation_required
+def index_up(request, slug, counter):
+    """Page goes up in the sidebar index (page.index decreases)."""
+    project = get_object_or_404(Project, slug=slug)
+    print counter
+    try:
+        counter = int(counter)
+    except ValueError:
+        raise Http404
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True).order_by('index')
+    if counter < 1 or content_pages.count() <= counter:
+        raise Http404
+    prev_page = content_pages[counter - 1]
+    page = content_pages[counter]
+    prev_page.index, page.index = page.index, prev_page.index
+    page.save()
+    prev_page.save()
+    return HttpResponseRedirect(project.get_absolute_url() + '#tasks')
+
+
+@login_required
+@participation_required
+def index_down(request, slug, counter):
+    """Page goes down in the sidebar index (page.index increases)."""
+    project = get_object_or_404(Project, slug=slug)
+    try:
+        counter = int(counter)
+    except ValueError:
+        raise Http404
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True).order_by('index')
+    if counter < 0 or content_pages.count() - 1 <= counter:
+        raise Http404
+    next_page = content_pages[counter + 1]
+    page = content_pages[counter]
+    next_page.index, page.index = page.index, next_page.index
+    page.save()
+    next_page.save()
+    return HttpResponseRedirect(project.get_absolute_url() + '#tasks')
+
+
