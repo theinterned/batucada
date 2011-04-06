@@ -85,15 +85,21 @@
 </section>
 
 <section id="course-content" class="panel">
+  <a name="tasks"></a>
   <h2>Tasks</h2>
   <br>
   {% if content_pages %}
     <nav id="content-pages">
-      <ul>
+      <table>
         {% for page in content_pages %}
-          <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+          <tr>
+            <td><a href="{{ page.get_absolute_url }}">{{ page.title }}</a> &nbsp;</td>
+            <td>{% if not forloop.first %}<a href="{% locale_url index_up slug=project.slug counter=forloop.counter0 %}">(up)</a>{% endif %}&nbsp;</td>
+            <td>{% if not forloop.last %}<a href="{% locale_url index_down slug=project.slug counter=forloop.counter0 %}">(down)</a>{% endif %}</td>
+            <td></td>
+          </tr>
         {% endfor %}
-      </ul>
+      </table>
     </nav>
   {% else %}
     {{ _('No tasks have being added.') }}
