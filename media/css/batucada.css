@@ -2391,13 +2391,13 @@ ul.ui-autocomplete #ui-active-menuitem {
 }
 
 div.voting {
-    width: 24px;
+    width: 50px;
     float: right;
 }
 
 div.voting div.score {
+    float: right;
     font-size: 1.2em;
-    text-align: center;
     color: #777;
 }
 
