@@ -6,12 +6,16 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
+from ckeditor.widgets import CKEditorWidget
+
 from links.models import Link
 from messages.models import Message
 from projects.models import Project, ProjectMedia, Participation
 from users.models import UserProfile
 
 log = logging.getLogger(__name__)
+ 
+
 
 
 class ProjectForm(forms.ModelForm):
@@ -19,6 +23,10 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'short_description', 'long_description')
+	widgets = {
+		'short_description': CKEditorWidget(),		
+		'long_description': CKEditorWidget(),
+	}
 
 
 class ProjectDescriptionForm(forms.ModelForm):
