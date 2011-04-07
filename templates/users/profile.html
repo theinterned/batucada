@@ -56,7 +56,7 @@
   </div> 
   
   <div class="member-bio">
-	  {{ profile.bio }}
+	  {{ profile.bio|safe }}
 	</div>
 	
 	{% if profile.location %}
