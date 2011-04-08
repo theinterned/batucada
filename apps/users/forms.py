@@ -135,8 +135,7 @@ class RegisterForm(forms.ModelForm):
                     _('Passwords do not match.')])
         return data
 
-
-class ProfileEditForm(forms.ModelForm):
+class ProfileEditForm(forms.ModelForm): 
 
     class Meta:
         model = UserProfile
@@ -145,7 +144,6 @@ class ProfileEditForm(forms.ModelForm):
         widgets = {
             'bio': CKEditorWidget(),
         }
-
 
 class ProfileImageForm(forms.ModelForm):
 

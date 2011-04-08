@@ -21,8 +21,7 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'short_description', 'long_description')
-	widgets = {
-		'short_description': CKEditorWidget(),		
+	widgets = { 		
 		'long_description': CKEditorWidget(),
 	}
 
