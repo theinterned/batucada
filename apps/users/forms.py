@@ -141,7 +141,7 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('confirmation_code', 'password', 'username', 'email',
-                   'created_on', 'user', 'image', 'featured') 
+                   'created_on', 'user', 'image', 'featured')
         widgets = {
             'bio': CKEditorWidget(),
         }

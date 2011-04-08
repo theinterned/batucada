@@ -14,8 +14,6 @@ from projects.models import Project, ProjectMedia, Participation
 from users.models import UserProfile
 
 log = logging.getLogger(__name__)
- 
-
 
 
 class ProjectForm(forms.ModelForm):

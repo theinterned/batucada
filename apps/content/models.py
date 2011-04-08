@@ -189,7 +189,7 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.content:
             instance.content = bleach.clean(instance.content,
-                tags=settings.TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
+                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
                 styles=settings.ALLOWED_STYLES)
 
 pre_save.connect(clean_html, sender=Page)
