@@ -215,10 +215,6 @@ def clean_html(sender, **kwargs):
     instance = kwargs.get('instance', None)
     if isinstance(instance, Project):
         log.debug("Cleaning html.")
-        if instance.short_description:
-            instance.short_description = bleach.clean(instance.short_description,
-                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
-                styles=settings.ALLOWED_STYLES)
         if instance.long_description:
             instance.long_description = bleach.clean(instance.long_description,
                 tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
