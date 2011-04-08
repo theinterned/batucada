@@ -208,7 +208,7 @@ SOUTH_TESTS_MIGRATE = False
 SPLASH_PAGE_FEED = 'http://planet.drumbeat.org/atom.xml'
 
 # Constants for clean_html
-TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'b', 'em', 'i', 'strong',
+ALLOWED_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'b', 'em', 'i', 'strong',
         'ol', 'ul', 'li', 'hr', 'blockquote', 'p',
         'span', 'pre', 'code', 'img',
         'u', 'strike', 'sub', 'sup', 'address', 'div',
@@ -226,6 +226,6 @@ ALLOWED_ATTRIBUTES = {
     'code': ['class'],
 }
 
-ALLOWED_STYLES = ['text-align', 'margin-left', 'border-width',
+ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
     'border-style', 'margin', 'float', 'width', 'height',
-    'font-family', 'font-size', 'color', 'background-color']
+    'font-family', 'font-size', 'color', 'background-color')
