@@ -184,7 +184,6 @@ admin.site.register(PageComment)
 
 
 def clean_html(sender, **kwargs):
-    raise Exception
     instance = kwargs.get('instance', None)
     if isinstance(instance, Page) or isinstance(instance, PageComment):
         log.debug("Cleaning html.")
