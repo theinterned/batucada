@@ -1,13 +1,14 @@
 import os
 import logging
 import datetime
+import bleach
 
 from django.core.cache import cache
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
-from django.db.models import Count, Q
-from django.db.models.signals import post_save, post_delete
+from django.db.models import Count, Q 
+from django.db.models.signals import pre_save, post_save, post_delete 
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
@@ -25,8 +26,7 @@ from activity.models import Activity
 from projects.tasks import ThumbnailGenerator
 
 import caching.base
-
-
+ 
 log = logging.getLogger(__name__)
 
 
@@ -216,6 +216,16 @@ class Participation(ModelBase):
 # Signals #
 ###########
 
+def clean_html(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    if isinstance(instance, Project):
+        log.debug("Cleaning html.")
+        if instance.long_description:
+            instance.long_description = bleach.clean(instance.long_description,
+                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
+                styles=settings.ALLOWED_STYLES)
+
+pre_save.connect(clean_html, sender=Project) 
 
 def project_creation_handler(sender, **kwargs):
     project = kwargs.get('instance', None)
