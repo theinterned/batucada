@@ -51,7 +51,7 @@
       <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
     </div>
     <div class="post-body">
-      <p><strong>Bio:</strong> {{ comment.author.bio }}</p>
+      <p><strong>Bio:</strong> {{ comment.author.bio|safe }}</p>
       <p><strong>Location:</strong> {{ comment.author.location }}</p>
       <h3>Anwer:</h3>
       {{ comment.content|youtube|slideshare|safe }}
