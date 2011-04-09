@@ -10,3 +10,4 @@ settings_local.py
 sample_data.py
 sql/
 celery-schedule
+lernanta.log
