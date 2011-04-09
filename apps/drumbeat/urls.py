@@ -8,6 +8,9 @@ urlpatterns = patterns('django.views.generic.simple',
    url(r'^about/$', 'direct_to_template', {
        'template': 'drumbeat/about.html',
    }, name='drumbeat_about'),
+   url(r'^editing-help/$', 'direct_to_template', {
+        'template': 'drumbeat/editing.html',
+   }, name='drumbeat_editing'),
 )
 
 urlpatterns += patterns('',

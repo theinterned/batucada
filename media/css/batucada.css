@@ -1371,7 +1371,7 @@ border: solid 1px #EEE;
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
-		.modal .links table, .modal .participants table {
+		#editing table, .modal .links table, .modal .participants table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1383,7 +1383,7 @@ border: solid 1px #EEE;
 		    -moz-box-shadow: #ddd 0 1px 4px inset;
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
-		.modal .links th, .modal .links td, .modal .participants th, .modal .participants td {
+		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1414,18 +1414,18 @@ border: solid 1px #EEE;
 			/*border-bottom: none;*/
 			-webkit-box-shadow: none;
 		}
-		.modal .links thead, .modal .participants thead {
+		#editing table thead, .modal .links thead, .modal .participants thead {
 			background: #f1faff;
 		}
-		.modal .links th, .modal .participants th {
+		#editing table th, .modal .links th, .modal .participants th {
 			border: #e0edf5 1px solid;
 			border-width: 1px 0;
 		}
-		.modal .links th:first-child, .modal .participants th:first-child {
+		#editing table th:first-child, .modal .links th:first-child, .modal .participants th:first-child {
 			border-radius: 5px 0 0;
 			border-left-width: 1px;
 		}
-		.modal .links th:last-child, .modal .participants th:last-child {
+		#editing table th:last-child, .modal .links th:last-child, .modal .participants th:last-child {
 			border-radius:0 5px 0 0;
 			border-right-width: 1px;
 		}
@@ -1915,6 +1915,9 @@ footer nav #social a {
 	height: 32px;
 	vertical-align: middle;
 	text-indent: -9999px;
+	}
+footer nav #social #statusnet a {
+	background: url(/media/images/statusnet.png) 0 0 no-repeat;
 	}
 footer nav #social #twitter a {
 	background: url(/media/images/twitter.png) 0 0 no-repeat;

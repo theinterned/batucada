@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_exempt
 
 from activity.models import Activity
 from users.decorators import anonymous_only, login_required
@@ -65,6 +66,7 @@ def splash(request):
 
 
 @login_required
+@csrf_exempt
 def hide_welcome(request):
     profile = request.user.get_profile()
     if not profile.discard_welcome:
