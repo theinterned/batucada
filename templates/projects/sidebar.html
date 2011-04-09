@@ -94,8 +94,10 @@
         {% for page in content_pages %}
           <tr>
             <td><a href="{{ page.get_absolute_url }}">{{ page.title }}</a> &nbsp;</td>
+            {% if user.get_profile == project.created_by or participating %}
             <td>{% if not forloop.first %}<a href="{% locale_url index_up slug=project.slug counter=forloop.counter0 %}">(up)</a>{% endif %}&nbsp;</td>
             <td>{% if not forloop.last %}<a href="{% locale_url index_down slug=project.slug counter=forloop.counter0 %}">(down)</a>{% endif %}</td>
+            {% endif %}
             <td></td>
           </tr>
         {% endfor %}

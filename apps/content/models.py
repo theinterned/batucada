@@ -97,7 +97,7 @@ class Page(ModelBase):
         return mark_safe(_('Added'))
 
     def representation(self):
-        return mark_safe('<a href="%s">%s</a>.' % (self.get_absolute_url(), self.title))
+        return mark_safe(' <a href="%s">%s</a>.' % (self.get_absolute_url(), self.title))
 
     def can_edit(self, user):
         if not self.editable:
@@ -238,7 +238,7 @@ def fire_activity(sender, **kwargs):
         activity.target_project = instance.project
         activity.save()
         # Send notifications.
-        activity.target_project.send_update_notification(activity)
+        activity.target_project.send_update_notification(activity, wall=False)
 
 post_save.connect(fire_activity, sender=Page)
 post_save.connect(fire_activity, sender=PageComment)
