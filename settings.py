@@ -249,7 +249,7 @@ CKEDITOR_CONFIGS = {
 
 # Constants for cleaning ckeditor html.
 
-REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike', 'sub', 'sup')
+REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike', 'sub', 'sup', 'br')
 RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
         'ol', 'ul', 'li', 'hr', 'blockquote',
         'span', 'pre', 'code', 'div',
