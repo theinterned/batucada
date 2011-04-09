@@ -32,6 +32,11 @@ def settings(request):
                 participation.no_updates = False
             else:
                 participation.no_updates = True
+            key = 'no_wall_updates_%s' % participation.project.slug
+            if key in request.POST and request.POST[key] == 'on':
+                participation.no_wall_updates = False
+            else:
+                participation.no_wall_updates = True
             participation.save()
         messages.success(
             request,

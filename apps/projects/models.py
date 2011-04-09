@@ -144,19 +144,22 @@ class Project(ModelBase):
                 count += 1
         super(Project, self).save()
 
-    def send_update_notification(self, activity):
+    def send_update_notification(self, activity, wall=True):
         """Send update notifications."""
-        subject = _('[p2pu-%(slug)s-updates] Course %(name)s was updated') % {
+        subject = _('[p2pu-%(slug)s-updates] Study group %(name)s was updated') % {
             'slug': self.slug,
             'name': self.name,
             }
         body = render_to_string("projects/emails/course_updated.txt", {
             'activity': activity,
             'project': self,
+            'wall': wall,
             'domain': Site.objects.get_current().domain,
         })
         for participation in self.participants():
-            if participation.no_updates or activity.actor == participation.user:
+            if activity.actor == participation.user:
+                continue
+            if (wall and participation.no_wall_updates) or (not wall and participation.no_updates):
                 continue
             SendUserEmail.apply_async((participation.user, subject, body))
         if activity.actor != self.created_by:
@@ -203,6 +206,8 @@ class Participation(ModelBase):
     left_on = models.DateTimeField(blank=True, null=True)
     # The user can configure this preference but the organizer can by pass
     # it with the contact participant form.
+    no_wall_updates = models.BooleanField(default=False)
+    # for new pages or comments.
     no_updates = models.BooleanField(default=False)
     # Sign-Up answer.
     sign_up = models.OneToOneField('content.PageComment', related_name='participation', null=True, blank=True)
