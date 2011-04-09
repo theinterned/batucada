@@ -1,4 +1,5 @@
 from django.test import Client
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
 
 from drumbeat.utils import get_partition_id
@@ -70,9 +71,10 @@ class TestLogins(TestCase):
         })
         self.assertContains(response5, 'id="id_username"')
 
-    def test_login_next_param(self):
+    def test_login_redirect_param(self):
         """Test that user is redirected properly after logging in."""
-        path = "/%s/login/?next=/%s/profile/edit/" % (self.locale, self.locale)
+        path = "/%s/login/?%s=/%s/profile/edit/" % (
+            self.locale, REDIRECT_FIELD_NAME, self.locale)
         response = self.client.post(path, {
             'username': self.test_username,
             'password': self.test_password,
@@ -82,21 +84,27 @@ class TestLogins(TestCase):
             response["location"],
         )
 
-    def test_login_next_param_header_injection(self):
-        """Test that we can't inject headers into response with next param."""
+    def test_login_redirect_param_header_injection(self):
+        """
+        Test that we can't inject headers into response with redirect param.
+        """
         path = "/%s/login/" % (self.locale,)
-        next_param = "foo\r\nLocation: http://example.com"
-        response = self.client.post(path + "?next=%s" % (next_param), {
+        redirect_param = "foo\r\nLocation: http://example.com"
+        response = self.client.post(path + "?%s=%s" % (
+            REDIRECT_FIELD_NAME, redirect_param), {
             'username': self.test_username,
             'password': self.test_password,
         })
         self.assertNotEqual('http://example.com', response['location'])
 
-    def test_next_param_outside_site(self):
-        """Test that next parameter cannot be used as an open redirector."""
+    def test_redirect_param_outside_site(self):
+        """
+        Test that redirect parameter cannot be used as an open redirector.
+        """
         path = "/%s/login/" % (self.locale,)
-        next_param = "http://www.mozilla.org/"
-        response = self.client.post(path + "?next=%s" % (next_param), {
+        redirect_param = "http://www.mozilla.org/"
+        response = self.client.post(path + "?%s=%s" % (
+            REDIRECT_FIELD_NAME, redirect_param), {
             'username': self.test_username,
             'password': self.test_password,
         })

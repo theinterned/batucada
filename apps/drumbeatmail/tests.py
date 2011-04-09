@@ -68,4 +68,3 @@ class TestDrumbeatMail(test_utils.TestCase):
                           password=self.test_password)
         response = self.client.get("/%s/messages/inbox/" % (self.locale,))
         self.assertContains(response, 'test message body')
-

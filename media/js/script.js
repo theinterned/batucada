@@ -387,7 +387,7 @@ var initWMD = function(){
     $('textarea.wmd').not(function(){
         // we need to make sure this textarea hasn't been initialized already
         return ($(this).siblings('.wmd-button-bar').length != 0);
-    }).wmd({'preview': false});
+    }).wmd({'preview': false, 'helpLink' : '/editing-help/'});
 };
 
 

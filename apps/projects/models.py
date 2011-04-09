@@ -18,7 +18,6 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from users.tasks import SendUserEmail
 from drumbeat.models import ModelBase
-from statuses.models import Status
 from relationships.models import Relationship
 from content.models import Page
 from activity.models import Activity
@@ -49,6 +48,7 @@ def determine_media_upload_path(instance, filename):
 
 
 class ProjectManager(caching.base.CachingManager):
+
     def get_popular(self, limit=0):
         popular = cache.get('projects_popular')
         if not popular:

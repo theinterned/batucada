@@ -18,15 +18,15 @@ urlpatterns = patterns('',
     (r'^account/',       include('preferences.urls')),
     (r'^pubsub/',        include('django_push.subscriber.urls')),
     (r'^ckeditor/',      include('ckeditor.urls')),
-    (r'',                include('users.urls')),    
+    (r'',                include('users.urls')),
 )
 
-#if settings.DEBUG:
 media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
 urlpatterns += patterns('',
     (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
-     { 'document_root': settings.MEDIA_ROOT }
-    ),
+     {
+         'document_root': settings.MEDIA_ROOT,
+     }),
 )
 
 handler500 = 'drumbeat.views.server_error'
