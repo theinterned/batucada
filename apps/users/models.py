@@ -200,8 +200,7 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.bio:
             instance.bio = bleach.clean(instance.bio,
-                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
-                styles=settings.ALLOWED_STYLES)
+                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)
 
 pre_save.connect(clean_html, sender=UserProfile) 
 

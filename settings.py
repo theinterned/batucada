@@ -207,15 +207,57 @@ SOUTH_TESTS_MIGRATE = False
 # Feed to show contents of on the splash page
 SPLASH_PAGE_FEED = 'http://planet.drumbeat.org/atom.xml'
 
-# Constants for clean_html
-ALLOWED_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'b', 'em', 'i', 'strong',
-        'ol', 'ul', 'li', 'hr', 'blockquote', 'p',
-        'span', 'pre', 'code', 'img',
-        'u', 'strike', 'sub', 'sup', 'address', 'div',
+# Ckeditor
+CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
+CKEDITOR_UPLOAD_PATH = path("uploads")
+CKEDITOR_CONFIGS = {
+    'rich': {
+        'toolbar': [
+            ['Source'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'SourceCode', 'Blockquote'],
+            ['Maximize'],
+            ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare', 'Smiley', 'SpecialChar', 'Table'],
+            ['Format','Font','FontSize', 'TextColor','BGColor'],
+        ],
+        'skin': 'kama',
+        'width': '570',
+        'height': '255',
+        'removePlugins': 'resize, elementspath',
+        'toolbarCanCollapse': False,
+        'extraPlugins': 'youtube,slideshare,prettify',
+        'format_tags': 'p;h1;h2;h3;h4;h5;h6',
+        'prettify': { 'element' : 'pre', 'attributes' : { 'class' : 'prettyprint' }},
+    },
+    'reduced': {
+        'toolbar': [
+            ['Source', '-' , 'Bold', 'Italic', '-', 'Link', 'Unlink'],
+        ],
+        'skin': 'kama',
+        'width': '420',
+        'height': '110',
+        'removePlugins': 'resize, elementspath',
+        'toolbarCanCollapse': False,
+        'extraPlugins': 'youtube,slideshare,prettify',
+        'format_tags': 'p;h1;h2;h3;h4;h5;h6',
+        'prettify': { 'element' : 'pre', 'attributes' : { 'class' : 'prettyprint' }},
+    }
+}
+
+# Constants for cleaning ckeditor html.
+
+REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike', 'sub', 'sup')
+RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'ol', 'ul', 'li', 'hr', 'blockquote',
+        'span', 'pre', 'code', 'div',
         'table', 'thead', 'tr', 'th', 'caption', 'tbody', 'td', 'br')
 
-ALLOWED_ATTRIBUTES = {
+REDUCED_ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title'],
+}
+RICH_ALLOWED_ATTRIBUTES = REDUCED_ALLOWED_ATTRIBUTES.copy()
+RICH_ALLOWED_ATTRIBUTES.update({
     'img': ['src', 'alt', 'style', 'title'],
     'p': ['style'],
     'table': ['align', 'border', 'cellpadding', 'cellspacing',
@@ -224,8 +266,9 @@ ALLOWED_ATTRIBUTES = {
     'span': ['style'],
     'pre': ['class'],
     'code': ['class'],
-}
+})
 
-ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
+RICH_ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
     'border-style', 'margin', 'float', 'width', 'height',
     'font-family', 'font-size', 'color', 'background-color')
+

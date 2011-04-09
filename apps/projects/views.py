@@ -57,7 +57,7 @@ def edit(request, slug):
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            messages.success(request, _('Course updated!'))
+            messages.success(request, _('Study group updated!'))
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:

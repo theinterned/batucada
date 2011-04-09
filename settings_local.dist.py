@@ -65,31 +65,6 @@ CELERY_ALWAYS_EAGER = True
 # Path to ffmpeg. This will have to be installed to create video thumbnails
 FFMPEG_PATH = '/usr/bin/ffmpeg'
 
-# Ckeditor
-CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
-CKEDITOR_UPLOAD_PATH = path("uploads")
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': [
-            ['Source'],
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'SourceCode', 'Blockquote'],
-            ['Maximize'],
-            ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare', 'Smiley', 'SpecialChar', 'Table'],
-            ['Format','Font','FontSize', 'TextColor','BGColor'],
-        ],
-        'skin': 'kama',
-        'width': '470',
-        'height': '255',
-        'removePlugins': 'resize, elementspath',
-        'toolbarCanCollapse': False,
-        'extraPlugins': 'youtube,slideshare,prettify',
-        'format_tags': 'p;h1;h2;h3;h4;h5;h6',
-        'prettify': { 'element' : 'pre', 'attributes' : { 'class' : 'prettyprint' }},
-    },
-}
-
 # Set to True at production before upgrading lernanta.
 # Remember to login as admin before activating maintenance mode.
 MAINTENANCE_MODE = False

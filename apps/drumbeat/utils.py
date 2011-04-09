@@ -7,6 +7,8 @@ import unicodedata
 from django.core.validators import ValidationError, validate_slug
 from django.utils.encoding import smart_unicode
 
+from ckeditor.widgets import CKEditorWidget as BaseCKEditorWidget
+
 # Some utility functions shamelessly lifted from zamboni
 
 # Extra characters outside of alphanumerics that we'll allow.
@@ -52,3 +54,11 @@ def safe_filename(filename):
     """Generate a safe filename for storage."""
     name, ext = os.path.splitext(filename)
     return "%s%s" % (hashlib.md5(name.encode('utf8')).hexdigest(), ext)
+
+
+class CKEditorWidget(BaseCKEditorWidget):
+    def __init__(self, *args, **kwargs):
+        super(CKEditorWidget, self).__init__(*args, **kwargs)
+        # Temporary bug fix in CKEDITOR widget (do not share configuration).
+        self.config = self.config.copy()
+

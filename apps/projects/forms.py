@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
-from ckeditor.widgets import CKEditorWidget
+from drumbeat.utils import CKEditorWidget
 
 from links.models import Link
 from messages.models import Message
@@ -22,7 +22,7 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ('name', 'short_description', 'long_description')
 	widgets = { 		
-		'long_description': CKEditorWidget(),
+		'long_description': CKEditorWidget(config_name='reduced'),
 	}
 
 

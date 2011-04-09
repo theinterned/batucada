@@ -222,8 +222,7 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.long_description:
             instance.long_description = bleach.clean(instance.long_description,
-                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
-                styles=settings.ALLOWED_STYLES)
+                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)
 
 pre_save.connect(clean_html, sender=Project) 
 
