@@ -54,6 +54,12 @@ MIDDLEWARE_CLASSES += (
 )
 INTERNAL_IPS = ('127.0.0.1',)
 
+# Sign up for an API key at https://www.google.com/recaptcha/admin/create
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
+                 RECAPTCHA_PUBLIC_KEY)
+
 # Use dummy caching for development.
 CACHE_BACKEND = 'dummy://'
 CACHE_PREFIX = 'batucada'
