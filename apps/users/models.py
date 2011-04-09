@@ -1,13 +1,16 @@
 import logging
 import datetime
+import bleach
 import random
 import string
 import hashlib
 import os
 
+from django.conf import settings
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_save
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
@@ -186,4 +189,20 @@ class UserProfile(ModelBase):
     @property
     def name(self):
         return self.display_name or self.username
+
+###########
+# Signals #
+###########
+
+def clean_html(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    if isinstance(instance, UserProfile):
+        log.debug("Cleaning html.")
+        if instance.bio:
+            instance.bio = bleach.clean(instance.bio,
+                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
+                styles=settings.ALLOWED_STYLES)
+
+pre_save.connect(clean_html, sender=UserProfile) 
+
 admin.site.register(UserProfile)

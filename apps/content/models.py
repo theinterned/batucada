@@ -2,6 +2,7 @@ import logging
 import bleach
 import datetime
 
+from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib import admin
@@ -18,29 +19,6 @@ from django.contrib.sites.models import Site
 from drumbeat.models import ModelBase
 from activity.models import Activity
 from users.tasks import SendUserEmail
-
-
-TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'b', 'em', 'i', 'strong',
-        'ol', 'ul', 'li', 'hr', 'blockquote', 'p',
-        'span', 'pre', 'code', 'img',
-        'u', 'strike', 'sub', 'sup', 'address', 'div',
-        'table', 'thead', 'tr', 'th', 'caption', 'tbody', 'td', 'br')
-
-ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'title'],
-    'img': ['src', 'alt', 'style', 'title'],
-    'p': ['style'],
-    'table': ['align', 'border', 'cellpadding', 'cellspacing',
-        'style', 'summary'],
-    'th': ['scope'],
-    'span': ['style'],
-    'pre': ['class'],
-    'code': ['class'],
-}
-
-ALLOWED_STYLES = ['text-align', 'margin-left', 'border-width',
-    'border-style', 'margin', 'float', 'width', 'height',
-    'font-family', 'font-size', 'color', 'background-color']
 
 log = logging.getLogger(__name__)
 
@@ -211,8 +189,8 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.content:
             instance.content = bleach.clean(instance.content,
-                tags=TAGS, attributes=ALLOWED_ATTRIBUTES,
-                styles=ALLOWED_STYLES)
+                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
+                styles=settings.ALLOWED_STYLES)
 
 pre_save.connect(clean_html, sender=Page)
 pre_save.connect(clean_html, sender=PageComment)
