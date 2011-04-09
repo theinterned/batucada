@@ -184,13 +184,14 @@ admin.site.register(PageComment)
 
 
 def clean_html(sender, **kwargs):
+    raise Exception
     instance = kwargs.get('instance', None)
     if isinstance(instance, Page) or isinstance(instance, PageComment):
         log.debug("Cleaning html.")
         if instance.content:
             instance.content = bleach.clean(instance.content,
-                tags=settings.ALLOWED_TAGS, attributes=settings.ALLOWED_ATTRIBUTES,
-                styles=settings.ALLOWED_STYLES)
+                tags=settings.RICH_ALLOWED_TAGS, attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                styles=settings.RICH_ALLOWED_STYLES)
 
 pre_save.connect(clean_html, sender=Page)
 pre_save.connect(clean_html, sender=PageComment)

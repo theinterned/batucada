@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import forms as auth_forms
 from django.utils.translation import ugettext as _
 
-from ckeditor.widgets import CKEditorWidget
+from drumbeat.utils import CKEditorWidget
 
 from captcha import fields as captcha_fields
 
@@ -142,7 +142,7 @@ class ProfileEditForm(forms.ModelForm):
         exclude = ('confirmation_code', 'password', 'username', 'email',
                    'created_on', 'user', 'image', 'featured')
         widgets = {
-            'bio': CKEditorWidget(),
+            'bio': CKEditorWidget(config_name='reduced'),
         }
 
 class ProfileImageForm(forms.ModelForm):

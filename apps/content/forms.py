@@ -1,8 +1,11 @@
 from django import forms
 
-from ckeditor.widgets import CKEditorWidget
+from drumbeat.utils import CKEditorWidget
 
 from content.models import Page, PageComment
+
+
+CKEDITOR_CONFIG_NAME = 'rich'
 
 
 class PageForm(forms.ModelForm):
@@ -11,7 +14,7 @@ class PageForm(forms.ModelForm):
         model = Page
         fields = ('title', 'content',)
         widgets = {
-            'content': CKEditorWidget(),
+            'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
 
@@ -21,7 +24,7 @@ class NotListedPageForm(forms.ModelForm):
         model = Page
         fields = ('content',)
         widgets = {
-            'content': CKEditorWidget(),
+            'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
 
@@ -31,7 +34,7 @@ class OwnersPageForm(forms.ModelForm):
         model = Page
         fields = ('title', 'content', 'collaborative',)
         widgets = {
-            'content': CKEditorWidget(),
+            'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
 
@@ -41,7 +44,7 @@ class OwnersNotListedPageForm(forms.ModelForm):
         model = Page
         fields = ('content', 'collaborative',)
         widgets = {
-            'content': CKEditorWidget(),
+            'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
 
@@ -51,5 +54,5 @@ class CommentForm(forms.ModelForm):
         model = PageComment
         fields = ('content',)
         widgets = {
-            'content': CKEditorWidget(),
+            'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
