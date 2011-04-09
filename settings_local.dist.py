@@ -80,7 +80,7 @@ CKEDITOR_CONFIGS = {
             ['Format','Font','FontSize', 'TextColor','BGColor'],
         ],
         'skin': 'kama',
-        'width': '570',
+        'width': '470',
         'height': '255',
         'removePlugins': 'resize, elementspath',
         'toolbarCanCollapse': False,
