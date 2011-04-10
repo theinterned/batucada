@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ school.name }}{% endblock %}
+
+{% block bodyid %}school_home{% endblock %}
+
+{% block body %}
+
+<div id="main">
+  {{ school.description|safe }}
+</div> <!-- /#main -->
+<div id="sidebar">
+<h2>{{ _('Study Groups') }}</h2>
+<br>
+  {% if school.projects.all %}
+    {% for project in school.projects.all %}
+      <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
+        {% if project.image %}
+        <img src="{{ MEDIA_URL }}{{ project.image }}" width="42" height="26" alt="project image" class="project picture"/>
+        {% else %}
+        <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
+        {% endif %}
+      </a>
+    {% endfor %}
+  {% else %}
+    {{ _('No study groups have being associated with this school.') }}
+  {% endif %}
+</div>
+
+{% endblock %}
+
