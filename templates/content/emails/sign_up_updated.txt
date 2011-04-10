@@ -6,6 +6,8 @@
 {{ comment.author.display_name }} submitted an answer.
 {% endif %}
 
+{{ comment.content|removetags:"p" }}
+
 See: http://{{domain}}{{ comment.get_absolute_url }}
 
 Sincerely,
