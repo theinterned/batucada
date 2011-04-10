@@ -131,7 +131,8 @@ INSTALLED_APPS = (
     'events',
     'django_openid_auth',
     'ckeditor',
-    'content'
+    'content',
+    'schools',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

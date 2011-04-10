@@ -23,6 +23,8 @@
       <br>
     {% endif %}
     <dl id="project-stats">
+      <dt>{{ _('School') }}</dt>
+      <dd><a href="{{ project.school.get_absolute_url }}">{{ project.school.name }}</a></dd>
       <dt>{{ _('Updates') }}</dt>
       <dd>{{ update_count }}</dd>
       <dt>{{ _('Participants') }}<dt>

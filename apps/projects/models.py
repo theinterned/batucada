@@ -68,6 +68,7 @@ class Project(ModelBase):
     name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=125)
     long_description = models.TextField()
+    school = models.ForeignKey('schools.School', related_name='projects', null=True, blank=True)
 
     detailed_description = models.ForeignKey('content.Page', related_name='desc_project', null=True, blank=True)
     sign_up = models.ForeignKey('content.Page', related_name='sign_up_project', null=True, blank=True)
@@ -92,7 +93,7 @@ class Project(ModelBase):
     objects = ProjectManager()
 
     class Meta:
-        verbose_name = _('course')
+        verbose_name = _('study group')
 
     def followers(self):
         """Return a list of users following this project."""

@@ -298,46 +298,6 @@ header {}
       background: #fff;
       z-index: 1;
     }
-      #main-nav ul {
-        height: 42px;
-      }
-        #main-nav li {
-          float: left;
-          margin-left: 7px;
-          margin-top: 7px;
-          padding: 0;
-        }
-        #main-nav li:first-child {
-          margin-left: 0px;
-        }
-		#main-nav a {
-		color: #444;
-		display: block;
-		height: 14px;
-		padding: 4px 10px 8px 10px;
-		}
-        #main-nav a:hover {
-          color: #222;
-          /*background: #36cdc4;*/
-        }
-
-        /*BOILERPLATE alternate style for non-rgba broswers*/
-		
-		.no-rgba #main-nav a:hover {
-          color: #fff;
-          background: #36cdc4;
-		}
-		
-        .no-rgba #main-nav a {
-          color: #a9b2c1;
-          display: block;
-          height: 14px;
-          padding: 4px 10px 8px;
-        }
-        .no-rgba #main-nav a:hover {
-          color: #fff;
-          background: #36cdc4;
-        }
 
     #user-nav {
       height: 37px;
@@ -346,24 +306,24 @@ header {}
       margin-left: 665px;
       z-index: 2;
     }
-      #user-nav a {
-		color: #444;
+      #user-nav a, #main-nav a {
+        color: #444;
         font-size: 17px;
         display: block;
         padding: 10px 12px;
       }
       
-      #user-nav a.top-level {
+      #user-nav a.top-level, #main-nav a.top-level {
         display: block;
         height: 14px;
         padding: 4px 10px 8px 10px;
       }
 
-      #user-nav a:hover {
+      #user-nav .menu a:hover, #main-nav .menu a:hover {
         background: #36cdc4;
         color: #fff;
       }
-      .no-rgba a:hover {
+      .no-rgba #user-nav .menu a:hover, .no-rgba #main-nav .menu a:hover {
         background: url("/media/images/user-nav.bg.png");
 		color: #fff;
       }
@@ -385,17 +345,17 @@ header {}
           float: right;
         }
 
-      #user-nav ul {
+      #user-nav ul, #main-nav ul {
         list-style: none;
       }
-        #user-nav > ul > li {
+        #user-nav > ul > li, #main-nav > ul > li {
           float: left;
           margin-left: 7px;
           margin-top: 7px;
           padding: 0;
         }
       
-      #user-nav .separator {
+      #user-nav .separator, #main-nav .separator {
         width: 2px;
         margin: 0 5px 0 3px;
         background: url("/media/images/separator.bg.png") no-repeat left center;
@@ -446,13 +406,14 @@ header {}
           behavior: url("/media/css/PIE.htc");
         }
 
-          #user.open ul a {
+          #user.open ul a, #schools.open ul a {
             border: 0 none;
             color: #fff;
           }
-          #user-actions {
+          #user-actions, #school-menu-items {
             border-top: 1px solid #76bae9;
             min-width: 146px;
+            color: #fff;
           }
       
       #inbox {}
@@ -532,6 +493,11 @@ header {}
     background: #fff;
     padding: 6px;
   }
+
+  #school_home #sidebar {
+      float: right;
+  }
+
   	#sidebar h2{
 		font-size: 18px;
 		line-height: 1;
@@ -575,7 +541,9 @@ header {}
           float: left;
           width: 90px;
         }
-      
+        #project-stats dd {
+          text-align: center;
+        }
       #project-summary { 
 	      font-size: 12px;
           line-height: 18px;
