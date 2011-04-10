@@ -19,7 +19,7 @@
           <label for="id_username">{{ _('Username') }}</label>
           {{ form.username }}
           {{ form.username.errors }}
-          <small class="hint">{{ _('Your public profile: http://p2pu.org/') }}<b>{{ _('username') }}</b></small>
+          <small class="hint">{{ _('Your public profile:') }} http://p2pu.org/<b>{{ _('username') }}</b></small>
           <small class="hint" id="availability"></small>          
         </div>
         {% block password_fields %}{% endblock %}
@@ -53,8 +53,8 @@
 	        <div id="recaptcha_image"></div>
             <div id="recaptcha_response_field" class="field{% if form.recaptcha.errors %} error{% endif %}">
                 <label for="recaptcha_response_field">&nbsp;</label>
-    	        <input type="text" name="recaptcha_response_field"
-    		       id="recaptcha_response_field" />
+                <input type="text" name="recaptcha_response_field"
+                    id="recaptcha_response_field" />
     	        {{ form.recaptcha.errors }}
     	    </div>
 	      </div>
@@ -64,7 +64,7 @@
         </p>
         {% endif %}
         <p>
-          By creating an account on p2pu.org, you accept our <a href="http://p2pu.org/privacy">{{ _('privacy guidelines') }}</a> , <a href="http://p2pu.org/license">{{ _('license provisions') }}</a> and <a href="http://p2pu.org/terms-of-use">{{ _('terms of use') }}</a>. By default all content you create on this site is publicly viewable.
+          {{ _('By creating an account on p2pu.org, you accept our') }} <a href="http://p2pu.org/privacy">{{ _('privacy guidelines') }}</a> , <a href="http://p2pu.org/license">{{ _('license provisions') }}</a> {{ _('and') }} <a href="http://p2pu.org/terms-of-use">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
         </p>
         <p class="submit">
           <button type="submit">{% block button_label %}{% endblock %}</button>
