@@ -2,8 +2,10 @@
 {% load activity_tags %}
 
 <li class="post-container">
-  <a class="action reply-to" href="{% locale_url statuses_reply in_reply_to=activity.id %}">{{ _('Reply') }}</a>
-  <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=activity.id type="activity" %}">{{_('Report Abuse')}}</a>
+  {% if user.is_authenticated %}
+    <a class="action reply-to" href="{% locale_url statuses_reply in_reply_to=activity.id %}">{{ _('Reply') }}</a>
+    <a class="report abuse action" href="{% locale_url drumbeat_abuse obj=activity.id type="activity" %}">{{_('Report Abuse')}}</a>
+  {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.image_or_default }}">
   </a>
@@ -20,11 +22,12 @@
     </div> <!-- /.post-body -->
 
     <div class="post-details">
-      <a href="{% locale_url activity_index activity_id=activity.id %}">
-        {{ activity|created_on }}
-      </a>
+      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity|created_on }}</a>
+      {{ _('via') }}
       {% if activity.remote_object %}
-	{{ _('via ') }}<a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
+        <a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
+      {% else %}
+        drumbeat.org
       {% endif %}
     </div>
 
