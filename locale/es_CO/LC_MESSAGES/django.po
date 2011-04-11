@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-11 10:11-0500\n"
+"POT-Creation-Date: 2011-04-11 10:45-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: apps/activity/feeds.py:70
 #, python-format
 msgid "Activity feed for %s"
-msgstr ""
+msgstr "Bitácora de actividades para %s"
 
 #: apps/activity/models.py:73
 #, python-format
@@ -1044,7 +1044,7 @@ msgstr "Subir una archivo con una imagen desde su computador:"
 #: templates/projects/project_edit_image.html:20
 #: templates/users/_profile_edit_image.html:6
 msgid "JPG, GIF or PNG only. Max size of 700k."
-msgstr "JPG, GIF o PNG solamente. Tamaño ximo 700k."
+msgstr "JPG, GIF o PNG solamente. Tamaño máximo 700k."
 
 #: templates/projects/project_edit_image.html:25
 #: templates/users/profile_edit_image.html:22
@@ -1218,7 +1218,8 @@ msgid "Contact Organizer"
 msgstr "Contactar Organizador"
 
 #: templates/projects/sidebar.html:117
-msgid "No tasks have being added."
+#, fuzzy
+msgid "No tasks have been added."
 msgstr "No se han añadido tareas"
 
 #: templates/projects/sidebar.html:122
@@ -1226,7 +1227,8 @@ msgid "New Task"
 msgstr "Nueva Tarea"
 
 #: templates/projects/sidebar.html:139
-msgid "No external links have being added."
+#, fuzzy
+msgid "No external links have been added."
 msgstr "No se han añadido enlaces externos."
 
 #: templates/projects/sidebar.html:144
