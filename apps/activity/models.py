@@ -67,7 +67,9 @@ class ActivityManager(ManagerBase):
         ).exclude(
             models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
             models.Q(actor=user),
-        ).exclude(parent__isnull=False).order_by('-created_on')[0:25]
+        ).exclude(parent__isnull=False).exclude(
+            models.Q(status__in_reply_to__isnull=False),
+        ).order_by('-created_on')[0:25]
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
@@ -77,6 +79,8 @@ class ActivityManager(ManagerBase):
         ).exclude(
             models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
             models.Q(target_user__isnull=False),
+        ).exclude(
+            models.Q(status__in_reply_to__isnull=False),
         ).order_by('-created_on')[0:25]
 
 
