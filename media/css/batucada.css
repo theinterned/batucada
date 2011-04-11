@@ -297,14 +297,16 @@ header {}
       width: 740px;
       background: #fff;
       z-index: 1;
+      border-radius: 10px;
+      border: solid 1px #EEE;
     }
 
     #user-nav {
       height: 37px;
-      position: absolute;
+      position: relative;
       margin-top: 38px;
-      margin-left: 665px;
       z-index: 2;
+      float: right;
     }
       #user-nav a, #main-nav a {
         color: #444;
@@ -464,7 +466,9 @@ header {}
     background: #fff;
     font-size: 11px;
     line-height: 31px;
-	padding-left:10px
+	padding-left:10px;
+	border-radius: 10px;
+    border: solid 1px #EEE;
   }
     #breadcrumbs nav{
     }
@@ -482,7 +486,7 @@ header {}
     
     #project-actions .button {
       float: left;
-      margin-left: 15px;
+      margin-right: 15px;
     }
 #content {
   padding-top: 25px;
@@ -492,6 +496,8 @@ header {}
     width: 260px;
     background: #fff;
     padding: 6px;
+    border-radius: 10px;
+    border: solid 1px #EEE;
   }
 
   #school_home #sidebar {
@@ -536,14 +542,9 @@ header {}
         font-size: 14px;
         line-height: 22px;
         padding: 15px 0;
+        margin: 0;
+        list-style: none;
       }
-        #project-stats dt {
-          float: left;
-          width: 90px;
-        }
-        #project-stats dd {
-          text-align: center;
-        }
       #project-summary { 
 	      font-size: 12px;
           line-height: 18px;
@@ -797,7 +798,7 @@ header {}
 		*display:inline;
 		width: 225px;
 		vertical-align: top;
-		margin: 0 18px 18px 0;
+		margin: 0 8px 8px 0;
 		padding: 3px;
 		border: 1px solid #636363;
 		border-radius:6px;
@@ -914,16 +915,22 @@ header {}
 
   
 #main {
-margin-left: 40px;
-width: 620px;
-float: left;
-background-color: white;
-padding: 15px;
-border-radius: 10px;
-border: solid 1px #EEE;
+  margin-left: 40px;
+  width: 650px;
+  float: left;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: solid 1px #EEE;
 }
 
-    #main .post-container, #create-todo {
+#project_gallery #main, #school_home #main , #user_list #main {
+  width: 970px;
+  margin-right: 40px;
+  margin-left: 0;
+}
+
+    #main .post-container {
       background: #fff;
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
       border-radius: 6px;
@@ -937,7 +944,7 @@ border: solid 1px #EEE;
       padding: 8px;
       behavior: url("/media/css/PIE.htc");
       float: left;
-      width: 602px;
+      width: 630px;
     }
 
 
@@ -1021,7 +1028,7 @@ border: solid 1px #EEE;
       }
       
       #create-post input, #create-post textarea {
-        width: 574px;
+        width: 600px;
         display: block;
         font-size: 16px;
         padding: 12px;
@@ -1580,7 +1587,7 @@ border: solid 1px #EEE;
   height: 138px;
 }
 #intro-links a.big-run-course:hover {
-  background-position: 0 -121px;
+  background-position: 0 -175px;
 }
 
 #splash #content header h1,
@@ -1847,6 +1854,8 @@ footer{
 footer .container {
 	border-top: 1px solid #d5d6d8;
 	padding: 9px 0 7px;
+	border-radius: 10px;
+    border: solid 1px #EEE;
 	}
 footer #newsletter {
 	float: left;
