@@ -76,7 +76,6 @@ class ProjectManager(caching.base.CachingManager):
                 activities = activities.filter(target_project__school=school)
             if limit:
                 activities = activities[:limit]
-            print activities
             active = [a['target_project'] for a in activities]
             cache.set('projects_active', active, 3000)
         return Project.objects.filter(id__in=active)
