@@ -18,7 +18,7 @@
       <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
     </nav>
       <div id="project-actions">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and not project.signup_closed %}
           <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Answer') }}</a>
         {% endif %}
       </div>

@@ -249,6 +249,8 @@ def comment_sign_up(request, slug, comment_id=None):
         abs_reply_to = reply_to
         while abs_reply_to.reply_to:
             abs_reply_to = abs_reply_to.reply_to
+    elif project.signup_closed:
+        return HttpResponseForbidden()
 
     if user != project.created_by:
         participants = project.participants()

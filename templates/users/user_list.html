@@ -14,6 +14,7 @@
 {% endblock %}
 
 {% block body %}
+<div id="main">
 <h1>{{ _('Browse <b>People</b>') }}</h1>
 {% if featured %}
 <section id="featured_users">
@@ -44,4 +45,5 @@
     {% endfor %}
   </ul>
 </section>
+</div>
 {% endblock %}
