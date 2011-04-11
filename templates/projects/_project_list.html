@@ -44,6 +44,17 @@
 </section>
 {% endif %}
 
+{% if under_development %}
+<section id="under_development_projects">
+  <h1><span>{{ _('Study Groups Under Development') }}</span></h1>
+  <ul class="project-list">
+    {% for project in under_development %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 {% if new %}
 <section id="new_projects">
   <h1><span>{{ _('New Study Groups') }}</span></h1>
