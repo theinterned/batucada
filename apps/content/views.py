@@ -348,7 +348,6 @@ def accept_sign_up(request, slug, comment_id):
 def index_up(request, slug, counter):
     """Page goes up in the sidebar index (page.index decreases)."""
     project = get_object_or_404(Project, slug=slug)
-    print counter
     try:
         counter = int(counter)
     except ValueError:
