@@ -70,7 +70,7 @@ class Activity(ModelBase):
             return self.target_object.title
 
         friendly_verb = schema.verbs_by_uri[self.verb]
-        return _("%s activity performed by %s") % (friendly_verb,
+        return _("%(friendly_verb)s activity performed by %(self.actor.name)s") % (friendly_verb,
                                                    self.actor.name)
 
     def html_representation(self):
@@ -80,5 +80,5 @@ class Activity(ModelBase):
         })
 
     def __unicode__(self):
-        return _("Activity ID %d. Actor id %d, Verb %s") % (
+        return _("Activity ID %(self.pk)d. Actor id %(self.actor.pk)d, Verb %(self.verb)s") % (
             self.pk, self.actor.pk, self.verb)

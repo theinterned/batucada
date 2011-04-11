@@ -2,7 +2,6 @@
 *.db
 *.swp
 *~
-locale/
 media/images/profiles/
 media/images/projects/
 media/videos
