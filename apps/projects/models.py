@@ -54,7 +54,7 @@ class ProjectManager(caching.base.CachingManager):
         if not popular:
             rels = Relationship.objects.values('target_project').annotate(
                 Count('id')).exclude(target_project__isnull=True).filter(
-                target_project__featured=False, target_project__under_development=False,
+                target_project__under_development=False,
                 target_project__testing_sandbox=False).order_by('-id__count')
             if school:
                 rels = rels.filter(target_project__school=school)
