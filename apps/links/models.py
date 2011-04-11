@@ -57,5 +57,8 @@ def listener(notification, **kwargs):
     sender = kwargs.get('sender', None)
     if not sender:
         return
-    tasks.HandleNotification.apply_async(args=(notification, sender))
+    try:
+        tasks.HandleNotification.apply_async(args=(notification, sender))
+    except:
+        log.warn("Unprocessable notification: %s" % (notification,))
 updated.connect(listener)
