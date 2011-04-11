@@ -40,15 +40,16 @@ def project_list(school=None, limit=8):
     popular = Project.objects.get_popular(limit=limit, school=school)
     new = listed.order_by('-created_on')
     open_signup = listed.filter(signup_closed=False)
+    under_development = Project.objects.filter(under_development=True, testing_sandbox=False)
     if school:
         featured = featured.filter(school=school)
         new = new.filter(school=school)
         open_signup = open_signup.filter(school=school)
+        under_development = under_development.filter(school=school)
     if limit:
-        featured = featured[:limit]
         new = new[:limit]
-        open_signup = open_signup[:limit]
-    return {'featured': featured, 'active': active, 'popular': popular, 'new': new, 'open_signup': open_signup}
+    return {'featured': featured, 'active': active, 'popular': popular,
+           'new': new, 'open_signup': open_signup, 'under_development': under_development}
 
 register.inclusion_tag('projects/_project_list.html')(project_list)
 
