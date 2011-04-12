@@ -128,9 +128,13 @@
     
     <div class="challenges">
       <h3>{{ _('Active Challenges') }}</h3>
-      {% for challenge in challenges %}
-      <a href="{% locale_url challenges_show slug=challenge.slug %}">{{challenge.title}}</a>
-      {% endfor %}
+      {% if challenges %}
+      <ul>
+        {% for challenge in challenges %}
+        <li><a href="{% locale_url challenges_show slug=challenge.slug %}">{{challenge.title}}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </div> <!-- /.challenges -->
 
   </section> <!-- /#project-lead -->
