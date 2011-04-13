@@ -1,4 +1,11 @@
 {
+    "es-CO":{
+        "English":"Spanish",
+        "internal":"es",
+        "external":"es-CO",
+        "dictionary":"es-CO",
+        "native":"Espanol"
+    },
     "en-US":{
         "English":"English",
         "internal":"en",
