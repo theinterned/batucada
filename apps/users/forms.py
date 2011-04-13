@@ -1,4 +1,5 @@
 import re
+import logging
 
 from django import forms
 from django.conf import settings
@@ -15,6 +16,9 @@ from users.models import UserProfile
 from users.fields import UsernameField
 from users import drupal
 from links.models import Link
+
+
+log = logging.getLogger(__name__)
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
@@ -66,6 +70,9 @@ class OpenIDForm(forms.Form):
 
 def validate_user_identity(form, data):
     drupal_user_msg = _('You can login directly with your credentials from the old P2PU website.')
+    log.error("%s %s" % (type(data), repr(data)))
+    if 'username' in data:
+        log.error("Validate user identity: %s" % repr(data['username']))
     if 'username' in data and drupal.get_user(data['username']):
         form._errors['username'] = forms.util.ErrorList([drupal_user_msg])
     if 'email' in data and drupal.get_user(data['email']):

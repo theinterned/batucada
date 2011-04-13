@@ -1,0 +1,68 @@
+{% load l10n_tags %}
+
+{% if featured %}
+<section id="featured_projects">
+  <h1><span>{{_('Featured Study Groups')}}</span></h1>
+  <ul class="project-list">
+  {% for project in featured %}
+    <li>{% include "projects/_project_card.html" %}</li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if open_signup %}
+<section id="open_signup_projects">
+  <h1><span>{{ _('Study Groups Open for Sign-Up') }}</span></h1>
+  <ul class="project-list">
+    {% for project in open_signup %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if active %}
+<section id="active_projects">
+  <h1><span>{{ _('Active Study Groups') }}</span></h1>
+  <ul class="project-list">
+    {% for project in active %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if popular %}
+<section id="popular_projects">
+  <h1><span>{{ _('Popular Study Groups') }}</span></h1>
+  <ul class="project-list">
+    {% for project in popular %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if new %}
+<section id="new_projects">
+  <h1><span>{{ _('New Study Groups') }}</span></h1>
+  <ul class="project-list">
+    {% for project in new %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if under_development %}
+<section id="under_development_projects">
+  <h1><span>{{ _('Study Groups Under Development') }}</span></h1>
+  <ul class="project-list">
+    {% for project in under_development %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+

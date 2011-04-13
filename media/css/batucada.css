@@ -297,73 +297,35 @@ header {}
       width: 740px;
       background: #fff;
       z-index: 1;
+      border-radius: 10px;
+      border: solid 1px #EEE;
     }
-      #main-nav ul {
-        height: 42px;
-      }
-        #main-nav li {
-          float: left;
-          margin-left: 7px;
-          margin-top: 7px;
-          padding: 0;
-        }
-        #main-nav li:first-child {
-          margin-left: 0px;
-        }
-		#main-nav a {
-		color: #444;
-		display: block;
-		height: 14px;
-		padding: 4px 10px 8px 10px;
-		}
-        #main-nav a:hover {
-          color: #222;
-          /*background: #36cdc4;*/
-        }
-
-        /*BOILERPLATE alternate style for non-rgba broswers*/
-		
-		.no-rgba #main-nav a:hover {
-          color: #fff;
-          background: #36cdc4;
-		}
-		
-        .no-rgba #main-nav a {
-          color: #a9b2c1;
-          display: block;
-          height: 14px;
-          padding: 4px 10px 8px;
-        }
-        .no-rgba #main-nav a:hover {
-          color: #fff;
-          background: #36cdc4;
-        }
 
     #user-nav {
       height: 37px;
-      position: absolute;
+      position: relative;
       margin-top: 38px;
-      margin-left: 665px;
       z-index: 2;
+      float: right;
     }
-      #user-nav a {
-		color: #444;
+      #user-nav a, #main-nav a {
+        color: #444;
         font-size: 17px;
         display: block;
         padding: 10px 12px;
       }
       
-      #user-nav a.top-level {
+      #user-nav a.top-level, #main-nav a.top-level {
         display: block;
         height: 14px;
         padding: 4px 10px 8px 10px;
       }
 
-      #user-nav a:hover {
+      #user-nav .menu a:hover, #main-nav .menu a:hover {
         background: #36cdc4;
         color: #fff;
       }
-      .no-rgba a:hover {
+      .no-rgba #user-nav .menu a:hover, .no-rgba #main-nav .menu a:hover {
         background: url("/media/images/user-nav.bg.png");
 		color: #fff;
       }
@@ -385,17 +347,17 @@ header {}
           float: right;
         }
 
-      #user-nav ul {
+      #user-nav ul, #main-nav ul {
         list-style: none;
       }
-        #user-nav > ul > li {
+        #user-nav > ul > li, #main-nav > ul > li {
           float: left;
           margin-left: 7px;
           margin-top: 7px;
           padding: 0;
         }
       
-      #user-nav .separator {
+      #user-nav .separator, #main-nav .separator {
         width: 2px;
         margin: 0 5px 0 3px;
         background: url("/media/images/separator.bg.png") no-repeat left center;
@@ -446,13 +408,14 @@ header {}
           behavior: url("/media/css/PIE.htc");
         }
 
-          #user.open ul a {
+          #user.open ul a, #schools.open ul a {
             border: 0 none;
             color: #fff;
           }
-          #user-actions {
+          #user-actions, #school-menu-items {
             border-top: 1px solid #76bae9;
             min-width: 146px;
+            color: #fff;
           }
       
       #inbox {}
@@ -503,7 +466,9 @@ header {}
     background: #fff;
     font-size: 11px;
     line-height: 31px;
-	padding-left:10px
+	padding-left:10px;
+	border-radius: 10px;
+    border: solid 1px #EEE;
   }
     #breadcrumbs nav{
     }
@@ -521,7 +486,7 @@ header {}
     
     #project-actions .button {
       float: left;
-      margin-left: 15px;
+      margin-right: 15px;
     }
 #content {
   padding-top: 25px;
@@ -531,7 +496,14 @@ header {}
     width: 260px;
     background: #fff;
     padding: 6px;
+    border-radius: 10px;
+    border: solid 1px #EEE;
   }
+
+  #school_home #sidebar {
+      float: right;
+  }
+
   	#sidebar h2{
 		font-size: 18px;
 		line-height: 1;
@@ -570,12 +542,9 @@ header {}
         font-size: 14px;
         line-height: 22px;
         padding: 15px 0;
+        margin: 0;
+        list-style: none;
       }
-        #project-stats dt {
-          float: left;
-          width: 90px;
-        }
-      
       #project-summary { 
 	      font-size: 12px;
           line-height: 18px;
@@ -829,7 +798,7 @@ header {}
 		*display:inline;
 		width: 225px;
 		vertical-align: top;
-		margin: 0 18px 18px 0;
+		margin: 0 8px 8px 0;
 		padding: 3px;
 		border: 1px solid #636363;
 		border-radius:6px;
@@ -946,16 +915,22 @@ header {}
 
   
 #main {
-margin-left: 40px;
-width: 620px;
-float: left;
-background-color: white;
-padding: 15px;
-border-radius: 10px;
-border: solid 1px #EEE;
+  margin-left: 40px;
+  width: 650px;
+  float: left;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: solid 1px #EEE;
 }
 
-    #main .post-container, #create-todo {
+#project_gallery #main, #school_home #main , #user_list #main {
+  width: 970px;
+  margin-right: 40px;
+  margin-left: 0;
+}
+
+    #main .post-container {
       background: #fff;
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
       border-radius: 6px;
@@ -969,7 +944,7 @@ border: solid 1px #EEE;
       padding: 8px;
       behavior: url("/media/css/PIE.htc");
       float: left;
-      width: 602px;
+      width: 630px;
     }
 
 
@@ -1053,7 +1028,7 @@ border: solid 1px #EEE;
       }
       
       #create-post input, #create-post textarea {
-        width: 574px;
+        width: 600px;
         display: block;
         font-size: 16px;
         padding: 12px;
@@ -1612,7 +1587,7 @@ border: solid 1px #EEE;
   height: 138px;
 }
 #intro-links a.big-run-course:hover {
-  background-position: 0 -121px;
+  background-position: 0 -175px;
 }
 
 #splash #content header h1,
@@ -1879,6 +1854,8 @@ footer{
 footer .container {
 	border-top: 1px solid #d5d6d8;
 	padding: 9px 0 7px;
+	border-radius: 10px;
+    border: solid 1px #EEE;
 	}
 footer #newsletter {
 	float: left;

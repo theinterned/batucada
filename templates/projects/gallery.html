@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load project_tags %}
 {% block title %}{{ _('Courses') }}{% endblock %}
 {% block bodyid %}project_gallery{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
@@ -17,38 +18,9 @@
 {% endblock %}
 
 {% block body %}
-
+<div id="main">
 <h1>{{ _('Browse <b>Study Groups</b>') }}</h1>
-{% if featured %}
-<section id="featured_projects">
-  <h1><span>{{_('Featured')}}</span></h1>
-  <ul class="project-list">
-  {% for project in featured %}
-    <li>{% include "projects/_project_card.html" %}</li>
-  {% endfor %}
-  </ul>
-</section>
-{% endif %}
-
-{% if active %}
-<section id="popular_projects">
-  <h1><span>{{ _('Popular') }}</span></h1>
-  <ul class="project-list">
-    {% for project in active %}
-      <li>{% include "projects/_project_card.html" %}</li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
-
-{% if new %}
-<section id="new_projects">
-  <h1><span>{{ _('New') }}</span></h1>
-  <ul class="project-list">
-    {% for project in new %}
-      <li>{% include "projects/_project_card.html" %}</li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
+<br><br>
+{% project_list %}
+</div>
 {% endblock %}

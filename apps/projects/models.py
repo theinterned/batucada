@@ -7,7 +7,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
-from django.db.models import Count, Q 
+from django.db.models import Count, Q, Max
 from django.db.models.signals import pre_save, post_save, post_delete 
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -49,15 +49,36 @@ def determine_media_upload_path(instance, filename):
 
 class ProjectManager(caching.base.CachingManager):
 
-    def get_popular(self, limit=0):
+    def get_popular(self, limit=0, school=None):
         popular = cache.get('projects_popular')
         if not popular:
             rels = Relationship.objects.values('target_project').annotate(
                 Count('id')).exclude(target_project__isnull=True).filter(
-                target_project__featured=False).order_by('-id__count')[:limit]
+                target_project__under_development=False,
+                target_project__testing_sandbox=False).order_by('-id__count')
+            if school:
+                rels = rels.filter(target_project__school=school)
+            if limit:
+                rels = rels[:limit]
             popular = [r['target_project'] for r in rels]
             cache.set('projects_popular', popular, 3000)
         return Project.objects.filter(id__in=popular)
+
+    def get_active(self, limit=0, school=None):
+        active = cache.get('projects_active')
+        if not active:
+            activities = Activity.objects.values('target_project').annotate(
+                Max('created_on')).exclude(target_project__isnull=True,
+                verb='http://activitystrea.ms/schema/1.0/follow',
+                remote_object__isnull=False).filter(target_project__under_development=False,
+                target_project__testing_sandbox=False).order_by('-created_on__max')
+            if school:
+                activities = activities.filter(target_project__school=school)
+            if limit:
+                activities = activities[:limit]
+            active = [a['target_project'] for a in activities]
+            cache.set('projects_active', active, 3000)
+        return Project.objects.filter(id__in=active)
 
 
 class Project(ModelBase):
@@ -68,6 +89,7 @@ class Project(ModelBase):
     name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=125)
     long_description = models.TextField()
+    school = models.ForeignKey('schools.School', related_name='projects', null=True, blank=True)
 
     detailed_description = models.ForeignKey('content.Page', related_name='desc_project', null=True, blank=True)
     sign_up = models.ForeignKey('content.Page', related_name='sign_up_project', null=True, blank=True)
@@ -78,21 +100,18 @@ class Project(ModelBase):
     slug = models.SlugField(unique=True)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='projects')
-    featured = models.BooleanField()
+    featured = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
 
-    PRIVATE_DRAFT, PUBLIC_DRAFT, READY = (1, 2, 3)
-    preparation_status_choices = ((PRIVATE_DRAFT, _('Private Draft')),
-        (PUBLIC_DRAFT, _('Public Draft')),
-        (READY, _('Ready')))
-    preparation_status = models.PositiveSmallIntegerField(_('Preparation Status'),
-        choices=preparation_status_choices, default=PRIVATE_DRAFT)
+    under_development = models.BooleanField(default=True)
+    testing_sandbox = models.BooleanField(default=False)
+    signup_closed = models.BooleanField(default=True)
 
     objects = ProjectManager()
 
     class Meta:
-        verbose_name = _('course')
+        verbose_name = _('study group')
 
     def followers(self):
         """Return a list of users following this project."""

@@ -20,8 +20,8 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'short_description', 'long_description')
-	widgets = { 		
+        fields = ('name', 'short_description', 'long_description', 'school')
+	widgets = {
 		'long_description': CKEditorWidget(config_name='reduced'),
 	}
 
@@ -135,11 +135,11 @@ class ProjectContactUsersForm(forms.Form):
         return message_list
 
 
-class ProjectPreparationStatusForm(forms.ModelForm):
+class ProjectStatusForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('preparation_status',)
+        fields = ('under_development', 'testing_sandbox', 'signup_closed')
 
 
 class ProjectAddParticipantForm(forms.Form):

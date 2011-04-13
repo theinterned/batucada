@@ -17,6 +17,9 @@ def get_user(username):
             return Users.objects.using(DRUPAL_DB).get(name=username)
     except Users.DoesNotExist:
         return None
+    except TypeError:
+        # TypeError: 'DoesNotExist' object is not callable
+        return None
 
 
 def get_openid_user(identity_url):

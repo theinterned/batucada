@@ -1,4 +1,5 @@
 {% load l10n_tags %}
+{% load school_tags%}
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -36,8 +37,9 @@
 	<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
 	<nav id="main-nav">
 	  <ul>
-	    <li><a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a></li>
-	    <li><a href="{% locale_url users_user_list %}">{{ _('People') }}</a></li>
+	    <li><a href="{% locale_url projects_gallery %}" class="top-level">{{ _('Study Groups') }}</a></li>
+	    <li><a href="{% locale_url users_user_list %}" class="top-level">{{ _('People') }}</a></li>
+	    {% schools_menu %}
 	  </ul>
 	</nav>
 	<nav id="user-nav">
