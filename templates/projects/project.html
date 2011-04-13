@@ -126,21 +126,33 @@
       {{ project.created_by.bio }}
     </div>
     
-    <div class="challenges">
-      <h3>{{ _('Active Challenges') }}</h3>
-      {% if challenges %}
-      <ul>
-        {% for challenge in challenges %}
-        <li><a href="{% locale_url challenges_show slug=challenge.slug %}">{{challenge.title}}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div> <!-- /.challenges -->
-
   </section> <!-- /#project-lead -->
 </div> <!-- /#sidebar -->
 
 <div id="main">
+  {% if challenges %}
+  <div id="challenge_header" class="challenges">
+    <h2>{{ _('Open Challenges') }}</h2>
+    <ul>
+      {% for challenge in challenges %}
+      <li>
+        <a href="{% locale_url challenges_show slug=challenge.slug %}">
+          {% if challenge.image %}
+          <img src="{{ challenge.image.url }}" alt="{{ challenge }} image" />
+          {% else %}
+          <img src="/media/images/project-missing.png" alt="{{ challenge }} image"/>
+          {% endif %}
+        </a>
+
+        <a href="{% locale_url challenges_show slug=challenge.slug %}">{{challenge.title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div> <!-- /.challenges -->
+  {% endif %}
+
+
+
   {% if user.is_authenticated %}
   <div id="create-post">
     <div class="post-container">
