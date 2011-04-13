@@ -54,6 +54,7 @@
     {% endfor %}
   </ul>
 
+  {% if submissions.paginator.num_pages > 1 %}
   <div class="pagination">
     <span class="step-links">
       {% if submissions.has_previous %}
@@ -69,6 +70,7 @@
       {% endif %}
     </span>
   </div>
+  {% endif %}
 </div>
 {% endblock %}
 
