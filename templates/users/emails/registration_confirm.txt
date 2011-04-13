@@ -1,10 +1,10 @@
-Welcome to P2PU!
+{{ _('Welcome to P2PU!') }}
 
-To complete the sign up process, please confirm your email address by clicking here:
+{{ _('To complete the sign up process, please confirm your email address by clicking here:') }}
 
 {{ confirmation_url }}
 
-Thank you!
+{{ _('Thank you!') }}
 
-Sincerely,
-The P2PU Team
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}

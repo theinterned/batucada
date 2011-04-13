@@ -8,8 +8,8 @@
   {% csrf_token %}
 {% include "users/_profile_edit.html" %}
   <p class="buttons">
-    <a class="button" href="{{ profile.get_absolute_url }}">Cancel</a>
-    <button type="submit" >Save</button>
+  <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
+  <button type="submit" >{{ _('Save') }}</button>
   </p>
 </form>
 </fieldset>

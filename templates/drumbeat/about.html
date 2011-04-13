@@ -17,19 +17,19 @@
   <h1>{{ _('What is Mozilla Drumbeat?') }}</h1>
   <img src="{{ MEDIA_URL }}images/drumbeat-people-montage1.jpg">
   <p>
-    <em>Drumbeat is a global community of innovators like you, building a more
+  <em>{{ _('Drumbeat is a global community of innovators like you, building a more
     awesome web and world.</em> Connect with others.  Find projects that need
-    your help. Or share your own.
+    your help. Or share your own.') }}
   </p>
   <p>
-    <em>Mozilla is all about shaping the future of the web for the public
+  <em>{{ _('Mozilla is all about shaping the future of the web for the public
     good.</em> With Drumbeat, we’re moving beyond Firefox to build more things
     that make the web better, not just software.  We&apos;re doing that by
     reaching out to new kinds of people &ndash; educators, filmmakers,
     journalists, scientists, artists &ndash; to work together on open projects
     and design challenges that build a better web and world. We did that with
     Firefox. Now we want to do it on a broader scale, with new projects and
-    people like you.
+    people like you.') }}
   </p>
 </section>
 
@@ -37,59 +37,59 @@
   <h2>{{ _('How can Drumbeat help you?') }}</h2>
   <img src="{{ MEDIA_URL }}images/drumbeat-about2.jpg">
   <p>
-    <em>By connecting you with like-minded collaborators and projects.</em>
+  <em>{{ _('By connecting you with like-minded collaborators and projects.</em>
     Our online community and project platform are all about enabling
     collaboration and &quot;working in the open&quot; on projects that build a
-    better web and world. Drumbeat&apos;s web site makes it easy for you to:
+    better web and world. Drumbeat&apos;s web site makes it easy for you to:') }}
   </p>
   
   <ul>
     <li>
-      <a href="{% locale_url users_user_list %}">Connect with other innovators
-      like you.</a> Find like-minded people who sare your passion, skill-set
+    <a href="{% locale_url users_user_list %}">{{ _('Connect with other innovators like you.') }}</a> 
+    {{ _(' Find like-minded people who sare your passion, skill-set
       or subject area.  Raise your profile and let others know about your
-      work.
+      work.') }}
     </li>
     <li>
-      <a href="{% locale_url projects_gallery %}">Find projects that need your
-      help.</a> Contribute your skills, knowledge and feedback to projects
-      that do good. Help build a more open web and world.
+    <a href="{% locale_url projects_gallery %}">{{ _('Find projects that need your
+	    help.') }}</a> {{ _('Contribute your skills, knowledge and feedback to projects
+      that do good. Help build a more open web and world.') }}
     </li>
     <li>
-      <a href="{% locale_url projects_create %}">Share your own project.</a> Setting up a 
+    <a href="{% locale_url projects_create %}">{{ _('Share your own project.') }}</a> {{ _('Setting up a 
       project page on Drumbeat.org makes it easy for others to help. By understanding what 
       your project&apos;s about, accessing the project tools you&apos;re using, and keeping 
-      up with the latest project news.
+      up with the latest project news.') }}
     </li>
     <li>
-      <a href="{% locale_url events_index %}">Connect with Drumbeat events.</a> Learn about 
-      the annual Drumbeat Festival, find events near you, or start your own locale Drumbeat event.
+    <a href="{% locale_url events_index %}">{{ _('Connect with Drumbeat events') }}.</a> {{ _('Learn about 
+      the annual Drumbeat Festival, find events near you, or start your own locale Drumbeat event.') }}
     </li>
   </ul>
   
 <!--  <img src="{{ MEDIA_URL }}images/drumbeat-about3.png"> -->
   <p class='clear'>
-    <em>Anyone can share a project on Drumbeat.</em> Sharing your project on
+  <em>{{ _('Anyone can share a project on Drumbeat.') }}</em> {{ _('Sharing your project on
     Drumbeat makes it easy to connect with our growing community of innovators
     and technologists, get feedback and help, and raise your project&apos;s
     profile.  What makes for a great Drumbeat project? The best Drumbeat
-    projects:
+    projects:') }}
   </p>
   
   <ul class='clear'>
     <li>
-      <em>Make it easy for others to participate</em> and get their hands
-      dirty.  Drumbeat is all about co-creation. Making and building together.
+    <em>{{ _('Make it easy for others to participate') }}</em> {{ _('and get their hands
+    dirty.') }}  {{ _('Drumbeat is all about co-creation.') }} {{ _('Making and building together.') }}
     </li>
     <li>
-      <em>Drive innovation for the open web and the wider world.</em> Showing
-      how open technologies can improve other parts of life.
+    <em>{{ _('Drive innovation for the open web and the wider world') }}.</em> 
+    {{ _('Showing how open technologies can improve other parts of life.') }}
     </li>
     <li>
-      <em>Bring together people with diverse backgrounds and skill-sets.</em>
-      Non-technical people working with techies. Educators collaborating with
+    <em>{{ _('Bring together people with diverse backgrounds and skill-sets.') }}</em>
+    {{ _('Non-technical people working with techies. Educators collaborating with
       engineers. Translation experts jamming with Javascript developers. All
-      scratching each other&apos;s backs.
+      scratching each other&apos;s backs.') }}
     </li>
   </ul>
 
