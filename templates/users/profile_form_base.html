@@ -19,7 +19,7 @@
           <label for="id_username">{{ _('Username') }}</label>
           {{ form.username }}
           {{ form.username.errors }}
-          <small class="hint">{{ _('Your public profile: http://p2pu.org/') }}<b>{{ _('username') }}</b></small>
+          <small class="hint">{{ _('Your public profile:') }} http://p2pu.org/<b>{{ _('username') }}</b></small>
           <small class="hint" id="availability"></small>          
         </div>
         {% block password_fields %}{% endblock %}
@@ -40,28 +40,31 @@
         </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
 	      <p>
-	        <label for="recaptcha_response_field">
+	        <label>
 	          {{ _('Are you human?') }}
 	        </label>
 	      </p>
 	      <p>
-	        If this is hard to read, you can
-	        <a href="#" id="recaptcha_different">try different words</a> or
-	        <a href="#" id="recaptcha_audio">listen to something</a> instead.
+	        {{ _('If this is hard to read, you can') }}
+	        <a href="#" id="recaptcha_different">{{ _('try different words') }}</a> {{ _('or') }}
+	        <a href="#" id="recaptcha_audio">{{ _('listen to something') }}</a> {{ _('instead.') }}
 	      </p>
-	      <p>
+	      <div id="recaptcha_block">
 	        <div id="recaptcha_image"></div>
-	        <input type="text" name="recaptcha_response_field"
-		       id="recaptcha_response_field" size="30" />
-	        {{ form.recaptcha.errors }}
-	      </p>
+            <div id="recaptcha_response_field" class="field{% if form.recaptcha.errors %} error{% endif %}">
+                <label for="recaptcha_response_field">&nbsp;</label>
+                <input type="text" name="recaptcha_response_field"
+                    id="recaptcha_response_field" />
+    	        {{ form.recaptcha.errors }}
+    	    </div>
+	      </div>
         {% else %}
         <p class="hint">
-          {{ _('Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at Wil.') }}
+          ReCaptcha is not configured in settings_local.py, so it is disabled.
         </p>
         {% endif %}
         <p>
-          By creating an account on p2pu.org, you accept our <a href="http://p2pu.org/privacy">{{ _('privacy guidelines') }}</a> , <a href="http://p2pu.org/license">{{ _('license provisions') }}</a> and <a href="http://p2pu.org/terms-of-use">{{ _('terms of use') }}</a>. By default all content you create on this site is publicly viewable.
+          {{ _('By creating an account on p2pu.org, you accept our') }} <a href="http://p2pu.org/privacy">{{ _('privacy guidelines') }}</a> , <a href="http://p2pu.org/license">{{ _('license provisions') }}</a> {{ _('and') }} <a href="http://p2pu.org/terms-of-use">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
         </p>
         <p class="submit">
           <button type="submit">{% block button_label %}{% endblock %}</button>
