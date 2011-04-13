@@ -15,8 +15,14 @@
 
     <nav class="tabs" id="project-edit-nav">
       <ul>
+        {% if challenge %}
         <li class="summary"><a href="{% locale_url challenges_edit slug=challenge.slug %}">{{ _('Challenge Summary') }}</a></li>
 	      <li class="image"><a href="{% locale_url challenges_edit_image slug=challenge.slug %}">{{ _('Challenge Image') }}</a></li>
+        {% else %}
+        <li class="summary"><a href="#">{{ _('Challenge Summary') }}</a></li>
+	      <li class="image"><a href="#">{{ _('Challenge Image') }}</a></li>
+
+        {% endif %}
       </ul>
     </nav>
 
