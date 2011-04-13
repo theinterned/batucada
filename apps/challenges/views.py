@@ -3,13 +3,17 @@ import logging
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.db.utils import IntegrityError
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
+from django.views.decorators.http import require_http_methods
+
+from commonware.decorators import xframe_sameorigin
 
 from challenges.models import Challenge, Submission, Judge, VoterDetails
-from challenges.forms import ChallengeForm, SubmissionForm, JudgeForm, VoterDetailsForm
+from challenges.forms import ChallengeForm, ChallengeImageForm, SubmissionForm, JudgeForm, VoterDetailsForm
 from projects.models import Project
 
 from drumbeat import messages
@@ -43,7 +47,7 @@ def create_challenge(request, project_id):
         'form': form,
         'project': project,
     }
-    return render_to_response('challenges/challenge_edit.html', context,
+    return render_to_response('challenges/challenge_edit_summary.html', context,
                               context_instance=RequestContext(request))
 
 @login_required
@@ -73,11 +77,52 @@ def edit_challenge(request, slug):
         'challenge' : challenge
     }
 
-    return render_to_response('challenges/challenge_edit.html', context,
+    return render_to_response('challenges/challenge_edit_summary.html', context,
                               context_instance=RequestContext(request))
 
 
-    
+@login_required
+@xframe_sameorigin
+@require_http_methods(['POST'])
+def edit_challenge_image_async(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    form = ChallengeImageForm(request.POST, request.FILES, instance=challenge)
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponse(simplejson.dumps({
+            'filename': instance.image.name,
+        }))
+    return HttpResponse(simplejson.dumps({
+        'error': _('There was an error uploading your image.')
+    }))
+
+@login_required
+def edit_challenge_image(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+
+    if request.method == "POST":
+        form = ChallengeImageForm(request.POST, request.FILES, instance=challenge)
+        if form.is_valid():
+            messages.success(request, _('Challenge image updated'))
+            form.save()
+            return HttpResponseRedirect(reverse('challenges_edit_image', kwargs= {
+                'slug': challenge.slug
+            }))
+        else:
+            messages.error(request,
+                           _('There was an error uploading your image'))
+    else:
+        form = ChallengeImageForm(instance=challenge)
+
+
+    context = {
+        'form': form,
+        'challenge' : challenge,
+    }
+
+    return render_to_response('challenges/challenge_edit_image.html', context,
+                              context_instance=RequestContext(request))
+
 
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)

@@ -5,12 +5,20 @@ from django.contrib import admin
 from django.db import models
 from django.template.defaultfilters import slugify
 
+from drumbeat import storage
+from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from projects.models import Project 
 
 import caching.base
 
 log = logging.getLogger(__name__)
+
+def determine_image_upload_path(instance, filename):
+    return "images/challenges/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.pk),
+        'filename': safe_filename(filename),
+    }
 
 class ChallengeManager(caching.base.CachingManager):
     def active(self, project_id=0):
@@ -35,11 +43,14 @@ class Challenge(ModelBase):
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()
 
+    image = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage(), blank=True)
+
+
     project = models.ForeignKey(Project)
     created_by = models.ForeignKey('users.UserProfile', 
                                    related_name='challenges')
-    created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.now())
+    created_on = models.DateTimeField(auto_now_add=True, default=datetime.now())
     
     is_open = models.BooleanField()
 
