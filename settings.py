@@ -131,7 +131,8 @@ INSTALLED_APPS = (
     'events',
     'django_openid_auth',
     'ckeditor',
-    'content'
+    'content',
+    'schools',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -252,7 +253,7 @@ CKEDITOR_CONFIGS = {
 REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike', 'sub', 'sup', 'br')
 RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
         'ol', 'ul', 'li', 'hr', 'blockquote',
-        'span', 'pre', 'code', 'div',
+        'span', 'pre', 'code', 'div', 'img',
         'table', 'thead', 'tr', 'th', 'caption', 'tbody', 'td', 'br')
 
 REDUCED_ALLOWED_ATTRIBUTES = {

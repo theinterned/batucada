@@ -249,6 +249,8 @@ def comment_sign_up(request, slug, comment_id=None):
         abs_reply_to = reply_to
         while abs_reply_to.reply_to:
             abs_reply_to = abs_reply_to.reply_to
+    elif project.signup_closed:
+        return HttpResponseForbidden()
 
     if user != project.created_by:
         participants = project.participants()
@@ -346,7 +348,6 @@ def accept_sign_up(request, slug, comment_id):
 def index_up(request, slug, counter):
     """Page goes up in the sidebar index (page.index decreases)."""
     project = get_object_or_404(Project, slug=slug)
-    print counter
     try:
         counter = int(counter)
     except ValueError:

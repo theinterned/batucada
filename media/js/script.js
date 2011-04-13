@@ -451,6 +451,9 @@ $(document).ready(function() {
     $('#user-nav').find('li.menu').bind('click', function(event) {
         $(this).toggleClass('open');
     });
+    $('#main-nav').find('li.menu').bind('click', function(event) {
+        $(this).toggleClass('open');
+    });
 
     // wire up any RTEs with wmd
     initWMD();

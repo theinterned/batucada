@@ -24,6 +24,7 @@ from relationships.models import Relationship
 from links.models import Link
 from users.models import UserProfile
 from content.models import Page
+from schools.models import School
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -208,15 +209,8 @@ def edit_participants_delete(request, slug, username):
 
 
 def project_list(request):
-    featured = Project.objects.filter(featured=True)
-    new = Project.objects.all().order_by('-created_on')[:8]
-    active = Project.objects.get_popular(limit=8)
-
-    return render_to_response('projects/gallery.html', {
-        'featured': featured,
-        'new': new,
-        'active': active,
-    }, context_instance=RequestContext(request))
+    return render_to_response('projects/gallery.html', {},
+                              context_instance=RequestContext(request))
 
 
 @login_required
@@ -252,7 +246,14 @@ def create(request):
             messages.error(request,
                 _("There was a problem creating the study group."))
     else:
-        form = project_forms.ProjectForm()
+        if 'school' in request.GET:
+            try:
+                school = School.objects.get(slug=request.GET['school'])
+                form = project_forms.ProjectForm(initial={'school': school})
+            except School.DoesNotExist:
+                return http.HttpResponseRedirect(reverse('projects_create'))
+        else:
+            form = project_forms.ProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -284,10 +285,10 @@ def contact_participants(request, slug):
 
 @login_required
 @ownership_required
-def edit_preparation_status(request, slug):
+def edit_status(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.method == 'POST':
-        form = project_forms.ProjectPreparationStatusForm(
+        form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
         if form.is_valid():
             form.save()
@@ -296,10 +297,10 @@ def edit_preparation_status(request, slug):
             }))
         else:
             messages.error(request,
-                           _('There was a problem saving the preparation status.'))
+                           _('There was a problem saving study group\'s status.'))
     else:
-        form = project_forms.ProjectPreparationStatusForm(instance=project)
-    return render_to_response('projects/project_edit_preparation_status.html', {
+        form = project_forms.ProjectStatusForm(instance=project)
+    return render_to_response('projects/project_edit_status.html', {
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
