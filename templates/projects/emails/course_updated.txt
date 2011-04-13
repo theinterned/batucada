@@ -5,7 +5,7 @@
 {% if wall %}
 {{ activity.status|removetags:"p" }}
 {% else %}
-{{ activity.actor.display_name  }} {{ activity.target_object.friendly_verb }}{{ activity.target_object.representation|removetags:"a" }}
+{{ activity.actor.display_name }} {{ activity.target_object.friendly_verb }}{{ activity.target_object.representation|removetags:"a" }}
 {{ activity.target_object.content|removetags:"p" }}
 
 {% endif %}
