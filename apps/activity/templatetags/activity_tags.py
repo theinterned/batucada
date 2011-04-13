@@ -79,6 +79,6 @@ def should_show_verb(activity):
 def friendly_verb(activity):
     try:
         verb = schema.verbs_by_uri[activity.verb]
-        return schema.past_tense[verb].capitalize()
+        return schema.past_tense[verb]
     except KeyError:
         return activity.verb

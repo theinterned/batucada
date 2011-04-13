@@ -182,12 +182,6 @@ CACHE_COUNT_TIMEOUT = 60
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
 
-# Copy these to your settings_local.py
-RECAPTCHA_PUBLIC_KEY = ''
-RECAPTCHA_PRIVATE_KEY = ''
-RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
-                 RECAPTCHA_PUBLIC_KEY)
-
 # RabbitMQ Config
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672

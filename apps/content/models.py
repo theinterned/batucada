@@ -72,7 +72,7 @@ class Page(ModelBase):
         return timesince(self.created_on, now)
 
     def friendly_verb(self):
-        return mark_safe(_('Added'))
+        return mark_safe(_('added'))
 
     def representation(self):
         return mark_safe(' <a href="%s">%s</a>.' % (self.get_absolute_url(), self.title))
@@ -142,7 +142,7 @@ class PageComment(ModelBase):
         return timesince(self.created_on, now)
 
     def friendly_verb(self):
-        return mark_safe(_('Posted comment'))
+        return mark_safe(_('posted comment'))
 
     def representation(self):
         return mark_safe(' at <a href="%s">%s</a>.' % (self.get_absolute_url(), self.page.title))
