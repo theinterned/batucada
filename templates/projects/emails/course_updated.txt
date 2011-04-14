@@ -1,6 +1,6 @@
 
 
-{% if wall %}{{ activity.actor.display_name  }} updated the wall of {% endif %}{{ project.name }} study group:
+{% if wall %}{{ activity.actor.display_name  }} {{ _('updated the wall of ') }}{% endif %}{{ project.name }} study group:
 
 {% if wall %}
 {{ activity.status|removetags:"p" }}
@@ -12,5 +12,5 @@
 
 See: http://{{domain}}{% if wall %}{{ activity.get_absolute_url }}{% else%}{{ activity.target_object.get_absolute_url }}{% endif %}
 
-Sincerely,
-The P2PU Team
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}

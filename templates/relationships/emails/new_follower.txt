@@ -1,7 +1,7 @@
-{{ user.name }} is now following {% if project %}{{ project }}{% else %}you{% endif %} on P2PU! 
+{{ user.name }} {{ _('is now following ') }}{% if project %}{{ project }}{% else %}{{ _('you') }}{% endif %} {{ _('on P2PU!') }}
 
-You can see their profile here:
+{{ _('You can see their profile here:') }}
 http://{{ domain }}{{ user.get_absolute_url }}
 
-Sincerely,
-The P2PU Team
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}

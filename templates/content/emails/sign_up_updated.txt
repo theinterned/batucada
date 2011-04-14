@@ -8,7 +8,7 @@
 
 {{ comment.content|removetags:"p" }}
 
-See: http://{{domain}}{{ comment.get_absolute_url }}
+{{ _('See:') }} http://{{domain}}{{ comment.get_absolute_url }}
 
-Sincerely,
-The P2PU Team
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}
