@@ -59,6 +59,12 @@ class Challenge(ModelBase):
     def is_active(self):
         return self.start_date < datetime.now() and self.end_date > datetime.now()
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('challenges_show', (), {
+            'slug': self.slug,
+        })
+
     def save(self):
         """Make sure each challenge has a unique slug."""
         count = 1
