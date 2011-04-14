@@ -45,7 +45,7 @@ var usernameAvailability = function() {
         var $elem = $(this);
         if ($elem.val().length != 0) {
             $.ajax({
-                url: '/check_username/',
+                url: '/ajax/check_username/',
                 data: {
                     username: this.value
                 },
@@ -67,8 +67,8 @@ var usernameAvailability = function() {
 var openidHandlers = function() {
     var oneClick = {
         'google': 'https://www.google.com/accounts/o8/id',
-        'yahoo': 'http://yahoo.com',
-        'myopenid': 'http://myopenid.com'
+        'yahoo': 'https://yahoo.com',
+        'myopenid': 'https://www.myopenid.com'
     };
     $.each(oneClick, function(key, value) {
         $('.openid_providers #' + key).bind('click', function(e) {
@@ -146,6 +146,14 @@ var batucada = {
         onload: function() {
         }
     },
+    compose_message: {
+        onload: function() {
+            $('#id_recipient').autocomplete({
+                source: '/ajax/following/',
+                minLength: 2
+            });
+        }
+    },
     create_profile: {
         onload: function() {
             usernameHint();
@@ -178,7 +186,8 @@ var batucada = {
                 $(e.target).parent().submit();
                 return false;
             });
-            $('.close_button').bind('click', function() {
+            $('.close_button').bind('click', function(e) {
+                e.preventDefault();
                 $('.welcome').animate({
                     opacity: 'hide',
                     height: 'hide',
@@ -186,7 +195,9 @@ var batucada = {
                     paddingBottom: 0,
                     marginTop: 0,
                     marginBottom: 0
-                }, 600, 'jswing');
+                }, 600, 'jswing', function() {
+                    $.post('/broadcasts/hide_welcome/');
+                });
             });
         }
     },
@@ -368,7 +379,7 @@ var initWMD = function(){
     $('textarea.wmd').not(function(){
         // we need to make sure this textarea hasn't been initialized already
         return ($(this).siblings('.wmd-button-bar').length != 0);
-    }).wmd({'preview': false});
+    }).wmd({'preview': false, 'helpLink' : '/editing-help/'});
 };
 
 $(document).ready(function() {
@@ -406,7 +417,7 @@ $(document).ready(function() {
         return false;
     });
     
-    $('.modal nav.tabs a').tabLinks('section fieldset');
+    $('.modal nav.tabs a').tabLinks('.tabpane');
 });
 
 // Recaptcha

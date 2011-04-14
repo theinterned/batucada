@@ -20,7 +20,7 @@
 
 <h1>{{ _('Browse <b>Projects</b>') }}</h1>
 {% if featured %}
-<section>
+<section id="featured_projects">
   <h1><span>{{_('Featured')}}</span></h1>
   <ul class="project-list">
   {% for project in featured %}
@@ -31,7 +31,7 @@
 {% endif %}
 
 {% if active %}
-<section>
+<section id="popular_projects">
   <h1><span>{{ _('Popular Projects') }}</span></h1>
   <ul class="project-list">
     {% for project in active %}
@@ -42,7 +42,7 @@
 {% endif %}
 
 {% if new %}
-<section>
+<section id="new_projects">
   <h1><span>{{ _('New Projects') }}</span></h1>
   <ul class="project-list">
     {% for project in new %}

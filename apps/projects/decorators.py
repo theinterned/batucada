@@ -10,6 +10,7 @@ def ownership_required(func):
     the owner of the project specified by the ``slug`` kwarg. Return a
     403 response if they're not.
     """
+
     def decorator(*args, **kwargs):
         request = args[0]
         project = kwargs['slug']

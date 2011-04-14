@@ -14,7 +14,9 @@
   </nav>
 
   <div id="project-actions">
+    {% if challenge.is_active %}
     <a class="button" href="{% locale_url submissions_create slug=challenge.slug %}">{{ _('Enter Submission') }}</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
@@ -41,17 +43,34 @@
     </dl>
   </section>
 
-  <div id="challenge-description">
-    {{ challenge.description }}
-  </div>
+  <a id="project-description-link" href="{% locale_url challenges_show_full slug=challenge.slug %}">View Full Details</a>  
+
 </div><!-- /#sidebar -->
 
 <div id="main">
   <ul id="posts">
-    {% for submission in submissions %}
+    {% for submission in submissions.object_list %}
       {% include "challenges/_submission_resource.html" %}
     {% endfor %}
   </ul>
+
+  {% if submissions.paginator.num_pages > 1 %}
+  <div class="pagination">
+    <span class="step-links">
+      {% if submissions.has_previous %}
+      <a href="?page={{ submissions.previous_page_number }}">previous</a>
+      {% endif %}
+      
+      <span class="current">
+        Page {{ submissions.number }} of {{ submissions.paginator.num_pages }}
+      </span>
+      
+      {% if submissions.has_next %}
+      <a href="?page={{ submissions.next_page_number }}">next</a>
+      {% endif %}
+    </span>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
 

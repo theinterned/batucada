@@ -5,12 +5,5 @@
         "external":"en-US",
         "dictionary":"en-US",
         "native":"English"
-    },
-    "de":{
-        "English":"German",
-        "internal":"de",
-        "external":"de",
-        "dictionary":"de-DE",
-        "native":"Deutsch"
     }
 }

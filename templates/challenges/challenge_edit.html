@@ -3,7 +3,7 @@
 {% load l10n_tags %}
 
 {% block body %}
-<section class="modal{% if challenge %} nav{% endif %}">
+<section class="modal nav">
   <article>
     <h1>
       {% if challenge %}
@@ -13,50 +13,20 @@
       {% endif %}
     </h1>
 
-    <fieldset id="challenge_edit" class="challenge edit">
-      <form method="post" action="{% locale_url challenges_create project_id=project.id%}">
-        {% csrf_token %}
-        <div class="field{% if form.title.errors %} error{% endif %}">
-          <label for="id_name">{{ _('Challenge Title') }}</label>
-          <span class="hint block"></span>
-          {{ form.title }}
-          {{ form.title.errors }}
-        </div>
+    <nav class="tabs" id="project-edit-nav">
+      <ul>
+        {% if challenge %}
+        <li class="summary"><a href="{% locale_url challenges_edit slug=challenge.slug %}">{{ _('Challenge Summary') }}</a></li>
+	      <li class="image"><a href="{% locale_url challenges_edit_image slug=challenge.slug %}">{{ _('Challenge Image') }}</a></li>
+        {% else %}
+        <li class="summary"><a href="#">{{ _('Challenge Summary') }}</a></li>
+	      <li class="image"><a href="#">{{ _('Challenge Image') }}</a></li>
 
-        <div class="field{% if form.description.errors %} error{% endif %}">
-          <label for="id_name">{{ _('Description') }}</label>
-          <span class="hint block"></span>
-          {{ form.description }}
-          {{ form.description.errors }}
-        </div>
+        {% endif %}
+      </ul>
+    </nav>
 
-        <div class="field{% if form.description.errors %} error{% endif %}">
-          <label for="id_name">{{ _('Start Date') }}</label>
-          <span class="hint block"></span>
-          {{ form.start_date }}
-          {{ form.start_date.errors }}
-        </div>
-
-        <div class="field{% if form.description.errors %} error{% endif %}">
-          <label for="id_name">{{ _('End Date') }}</label>
-          <span class="hint block"></span>
-          {{ form.end_date }}
-          {{ form.end_date.errors }}
-        </div>
-
-        <p class="buttons">    
-          {% if challenge %}
-          <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
-          <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>    
-          {% else %}
-          <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
-          <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
-          {% endif %}
-        </p>
-
-
-      </form>
-    </fieldset>
+    {% block form %}{% endblock %}
 
   </article>
 </section>

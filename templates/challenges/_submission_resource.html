@@ -1,4 +1,7 @@
 {% load l10n_tags %}
+{% load voting_tags %}
+{% score_for_object submission as score %}
+{% vote_by_user user on submission as vote %}
 
 <li class="post-container submission">
   <a href="{{ submission.created_by.get_absolute_url }}">
@@ -6,11 +9,25 @@
   </a>
 
   <div class="post-contents">
+    <div class="voting">
+      <div class="score">{{ score.score|default:0 }}</div>
+      <form method="post" id="upvote" action="{% if vote and vote.is_upvote %}{% locale_url submission_vote object_id=submission.pk direction='clear' %}{% else %}{% locale_url submission_vote object_id=submission.pk direction='up' %}{% endif %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{% if profile.voter_details.count %}{% locale_url challenges_show slug=challenge.slug %}{% else %}{% locale_url submissions_voter_details submission_id=submission.pk %}{% endif %}" />
+        <input type="image" src="{{ MEDIA_URL }}images/thumb{% if not vote or not vote.is_upvote %}-off{% endif %}.png" alt="{{ _('Like this submission') }}" />
+      </form>
+    </div>
+    
+    <div class="post-details">
+      <a class="member-name" href="{{ submission.created_by.get_absolute_url }}">{{ submission.created_by.name }}</a>
+      <a href="{% locale_url  submission_show slug=challenge.slug submission_id=submission.pk %}">{{ submission.created_on|timesince }} {{ _(' ago') }}</a>
+    </div>
+
     <div class="submission-title">
       {{ submission.title }} 
     </div>
     <div class="post-body">
-      {{ submission.description }}
+      {{ submission.summary }}
     </div>
   </div>
 </li> <!-- /li.post-container -->

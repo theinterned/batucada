@@ -16,11 +16,13 @@ from projects import forms as project_forms
 from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia
 
+from relationships.models import Relationship
 from activity.models import Activity
 from links.models import Link
 from statuses.models import Status
 from drumbeat import messages
 from users.decorators import login_required
+from challenges.models import Challenge
 
 log = logging.getLogger(__name__)
 
@@ -33,20 +35,28 @@ def show(request, slug):
         is_following = profile.is_following(project)
     activities = Activity.objects.filter(
         Q(project=project) | Q(target_project=project),
+    ).exclude(
+        verb='http://activitystrea.ms/schema/1.0/follow'
     ).order_by('-created_on')[0:10]
     nstatuses = Status.objects.filter(project=project).count()
     links = project.link_set.all()
     files = project.projectmedia_set.all()
+    followers_count = Relationship.objects.filter(
+        target_project=project).count()
+    challenges = Challenge.objects.active()
+    
     context = {
         'project': project,
         'following': is_following,
+        'followers_count': followers_count,
         'activities': activities,
         'update_count': nstatuses,
         'links': links,
         'files': files,
+        'challenges': challenges,
     }
     return render_to_response('projects/project.html', context,
-                          context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 def show_detailed(request, slug):
@@ -86,7 +96,8 @@ def edit_description(request, slug):
         if form.is_valid():
             form.save()
             messages.success(request, _('Project description updated!'))
-            return http.HttpResponseRedirect(reverse('projects_edit_description', kwargs={
+            return http.HttpResponseRedirect(
+                reverse('projects_edit_description', kwargs={
                 'slug': project.slug,
             }))
         else:
@@ -234,6 +245,16 @@ def list(request):
     featured = Project.objects.filter(featured=True)
     new = Project.objects.all().order_by('-created_on')[:4]
     active = Project.objects.get_popular(limit=4)
+
+    def assign_counts(projects):
+        for project in projects:
+            project.followers_count = Relationship.objects.filter(
+                target_project=project).count()
+
+    assign_counts(featured)
+    assign_counts(new)
+    assign_counts(active)
+
     return render_to_response('projects/gallery.html', {
         'featured': featured,
         'new': new,

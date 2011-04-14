@@ -33,10 +33,10 @@
         {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
-    <asside>
+    <aside>
     	{% if featured_project %}
       <section id="featured_project" class="card-list">
-        <h1>Featured Project</h1>
+        <h1>{{ _('Featured Project') }}</h1>
 	      <ul class="project-list">
           {% with featured_project as project %}
             <li>{% include "projects/_project_card.html" %}</li>
@@ -45,15 +45,15 @@
       </section>
     	{% endif %}
       <section id="planet_drumbeat">
-        <h1>Planet Drumbeat <a href="{{ feed_url }}" title="Subscribe to the Planet Drumbeat feed"> feed</a></h1>
+        <h1><a href="http://planet.drumbeat.org/" title="{{ _('Planet Drumbeat') }}">{{ _('Planet Drumbeat') }}</a> <a class="feed-link" href="{{ feed_url }}" title="{{ _('Subscribe to the Planet Drumbeat feed') }}"> {{ _('feed') }}</a></h1>
 	{% for entry in feed_entries %}
         <article>
           <h1><a href="{{ entry.link }}">{{ entry.title }}</a></h1>
-	  <p>{{ entry.body|truncatewords:50 }}</p>
+          <p>{{ entry.body|truncatewords:50 }}</p>
         </article>
 	{% endfor %}
       </section>
-    </asside>
+    </aside>
   </div>  
 </section>
 {% include "_footer.html" %}

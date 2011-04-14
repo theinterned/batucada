@@ -1,16 +1,16 @@
-from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from django.utils.feedgenerator import Atom1Feed
+from django.utils.feedgenerator import rfc3339_date
 
+from django_push.publisher.feeds import Feed, HubAtom1Feed
 from activity.models import Activity
 from projects.models import Project
 from users.models import UserProfile
 
 
-class ActivityStreamAtomFeed(Atom1Feed):
+class ActivityStreamAtomFeed(HubAtom1Feed):
 
     def root_attributes(self):
         attrs = super(ActivityStreamAtomFeed, self).root_attributes()
@@ -23,11 +23,6 @@ class ActivityStreamAtomFeed(Atom1Feed):
                                 'http://activitystrea.ms/schema/1.0/person')
         handler.addQuickElement(u'name', author_name)
         handler.addQuickElement(u'uri', author_link)
-        handler.addQuickElement(u'link', u'', {
-            'type': 'text/html',
-            'rel': 'alternate',
-            'href': author_link,
-        })
         handler.endElement(u'author')
 
     def add_root_elements(self, handler):
@@ -37,6 +32,7 @@ class ActivityStreamAtomFeed(Atom1Feed):
         super(ActivityStreamAtomFeed, self).add_root_elements(handler)
 
     def add_item_elements(self, handler, item):
+        handler.addQuickElement(u'updated', rfc3339_date(item['updated']))
         if item['author_name'] is not None:
             self._add_author_info(
                 handler, item['author_name'], item['author_link'])
@@ -95,6 +91,7 @@ class UserActivityFeed(Feed):
 
     def item_extra_kwargs(self, item):
         return {
+            'updated': item.created_on,
             'activity': {
                 'verb': item.verb,
                 'object': {

@@ -3,7 +3,7 @@
 {% load l10n_tags %}
 {% block bodyclasses %}profile edit info{% endblock %}
 {% block form %}
-<fieldset id="profile_edit_info" class="profile edit info">
+<fieldset id="profile_edit_info" class="profile edit info tabpane">
 <form action="{% locale_url users_profile_edit %}" method="post">
   {% csrf_token %}
   <div class="field{% if form.display_name.errors %} error{% endif %}">

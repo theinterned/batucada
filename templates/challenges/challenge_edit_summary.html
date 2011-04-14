@@ -1,0 +1,84 @@
+{% extends "challenges/challenge_edit.html" %}
+{% load l10n_tags %}
+
+{% block form %}
+<fieldset id="challenge_edit_summary" class="challenge edit tabpane">
+  <form method="post" action="{% if challenge %}{% locale_url challenges_edit slug=challenge.slug %}{% else %}{% locale_url challenges_create project_id=project.id%}{% endif %}">
+    {% csrf_token %}
+    <div class="field{% if form.title.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Title') }}</label>
+      <span class="hint block"></span>
+      {{ form.title }}
+      {{ form.title.errors }}
+    </div>
+
+    <div class="field{% if form.title_long.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Title (long)') }}</label>
+      <span class="hint block"></span>
+      {{ form.title_long }}
+      {{ form.title_long.errors }}
+    </div>
+    
+    <div class="field{% if form.brief.errors %} error{% endif %}">
+      <label for="id_name">{{ _('The Brief') }}</label>
+      <span class="hint block"></span>
+      {{ form.brief }}
+      {{ form.brief.errors }}
+    </div>
+
+    <div class="field{% if form.guidelines.errors %} error{% endif %}">
+      <label for="id_name">{{ _('How does it work? (Submission guidelines)') }}</label>
+      <span class="hint block"></span>
+      {{ form.guidelines }}
+      {{ form.guidelines.errors }}
+    </div>
+    
+    <div class="field{% if form.description.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Start Date') }}</label>
+      <span class="hint block"></span>
+      {{ form.start_date }}
+      {{ form.start_date.errors }}
+    </div>
+    
+    <div class="field{% if form.description.errors %} error{% endif %}">
+      <label for="id_name">{{ _('End Date') }}</label>
+      <span class="hint block"></span>
+      {{ form.end_date }}
+      {{ form.end_date.errors }}
+    </div>
+    
+    <div class="field{% if form.important_dates.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Other Important Dates') }}</label>
+      <span class="hint block"></span>
+      {{ form.important_dates }}
+      {{ form.important_dates.errors }}
+    </div>
+    
+    <div class="field{% if form.resources.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Resources and Support') }}</label>
+      <span class="hint block"></span>
+      {{ form.resources }}
+      {{ form.resources.errors }}
+    </div>
+    
+    <div class="field{% if form.rules.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Rules') }}</label>
+      <span class="hint block"></span>
+      {{ form.rules }}
+      {{ form.rules.errors }}
+    </div>
+    
+    <p class="buttons">    
+      {% if challenge %}
+      <a class="button" href="{% locale_url challenges_show slug=challenge.slug %}">{{ _('Cancel') }}</a>
+      <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>    
+      {% else %}
+      <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
+      <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+      {% endif %}
+    </p>
+    
+    
+  </form>
+</fieldset>
+{% endblock %}
