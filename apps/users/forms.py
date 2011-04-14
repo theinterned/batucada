@@ -10,8 +10,8 @@ from captcha import fields as captcha_fields
 
 from users.blacklist import passwords as blacklisted_passwords
 from users.models import UserProfile
+from users.fields import UsernameField
 from links.models import Link
-from drumbeat.utils import slug_validator
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
@@ -72,8 +72,15 @@ class CreateProfileForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(CreateProfileForm, self).__init__(*args, **kwargs)
+
+        if not settings.RECAPTCHA_PRIVATE_KEY:
+            del self.fields['recaptcha']
+
 
 class RegisterForm(forms.ModelForm):
+    username = UsernameField()
     password = forms.CharField(
         max_length=255,
         widget=forms.PasswordInput(render_value=False))
@@ -93,12 +100,6 @@ class RegisterForm(forms.ModelForm):
 
         if not settings.RECAPTCHA_PRIVATE_KEY:
             del self.fields['recaptcha']
-
-    def clean_username(self):
-        """Make sure that username has no invalid characters."""
-        username = self.cleaned_data['username']
-        slug_validator(username, lower=False)
-        return username
 
     def clean_password(self):
         password = self.cleaned_data['password']

@@ -107,9 +107,9 @@
     <li>
       <a href="{{ project.get_absolute_url }}" title="{{project.name}}">
         {% if project.image %}
-        <img src="{{ MEDIA_URL }}{{ project.image }}" width="26" height="26" alt="project image"/>
+        <img src="{{ MEDIA_URL }}{{ project.image }}" width="42" height="26" alt="project image"/>
         {% else %}
-        <img src="/media/images/project-missing.png" width="26" height="26" alt="project image" class="project picture"/>
+        <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
         {% endif %}
         {{ project.name|truncatechars:35 }}
       </a>

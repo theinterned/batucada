@@ -25,4 +25,3 @@ for k in locales:
 INTERNAL_MAP = dict([(LOCALES[k].internal, k) for k in LOCALES])
 LANGUAGES = dict([(i.lower(), LOCALES[i].native) for i in LOCALES])
 LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in LOCALES])
-

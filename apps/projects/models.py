@@ -5,6 +5,7 @@ import bleach
 
 from markdown import markdown
 
+from django.core.cache import cache
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
@@ -15,7 +16,6 @@ from django.template.defaultfilters import slugify
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
-from statuses.models import Status
 from relationships.models import Relationship
 
 from projects.utils import strip_remote_images
@@ -54,12 +54,16 @@ def determine_media_upload_path(instance, filename):
 
 
 class ProjectManager(caching.base.CachingManager):
+
     def get_popular(self, limit=0):
-        statuses = Status.objects.values('project_id').annotate(
-            Count('id')).exclude(project__isnull=True).filter(
-                project__featured=False).order_by('-id__count')[:limit]
-        project_ids = [s['project_id'] for s in statuses]
-        return Project.objects.filter(id__in=project_ids)
+        popular = cache.get('projects_popular')
+        if not popular:
+            rels = Relationship.objects.values('target_project').annotate(
+                Count('id')).exclude(target_project__isnull=True).filter(
+                target_project__featured=False).order_by('-id__count')[:limit]
+            popular = [r['target_project'] for r in rels]
+            cache.set('projects_popular', popular, 3000)
+        return Project.objects.filter(id__in=popular)
 
 
 class Project(ModelBase):
@@ -75,7 +79,7 @@ class Project(ModelBase):
     detailed_description_html = models.TextField(null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
-                              storage=storage.ImageStorage())
+                              storage=storage.ImageStorage(), blank=True)
 
     slug = models.SlugField(unique=True)
     created_by = models.ForeignKey('users.UserProfile',

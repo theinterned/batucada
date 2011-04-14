@@ -5,19 +5,23 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
+from django.forms import ValidationError
 
 from django_openid_auth import views as openid_views
 from commonware.decorators import xframe_sameorigin
 
 from users import forms
 from users.models import UserProfile
+from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from links.models import Link
 from projects.models import Project
@@ -25,6 +29,23 @@ from drumbeat import messages
 from activity.models import Activity
 
 log = logging.getLogger(__name__)
+
+
+def unconfirmed_account_notice(request, user):
+    log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
+    msg1 = _(('A link to activate your user account was sent by email '
+              'to your address {0}. You have to click it before you '
+              'can log in.').format(user.email))
+    url = request.build_absolute_uri(
+        reverse('users_confirm_resend',
+                kwargs=dict(username=user.username)))
+    msg2 = _(('If you did not receive the confirmation email, make '
+              'sure your email service did not mark it as "junk '
+              'mail" or "spam". If you need to, you can have us '
+              '<a href="%s">resend the confirmation message</a> '
+              'to your email address mentioned above.') % url)
+    messages.error(request, msg1)
+    messages.info(request, msg2, safe=True)
 
 
 def render_openid_failure(request, message, status, template_name):
@@ -49,24 +70,33 @@ def render_openid_login_failure(request, message, status=403):
         request, message, status, 'users/login_openid.html')
 
 
-def _clean_next_url(request):
+def _clean_redirect_url(request):
     """Taken from zamboni. Prevent us from redirecting outside of drumbeat."""
     gets = request.GET.copy()
-    url = gets['next']
+    url = gets[REDIRECT_FIELD_NAME]
     if url and '://' in url:
         url = None
-    gets['next'] = url
+    gets[REDIRECT_FIELD_NAME] = url
     request.GET = gets
     return request
+
+
+def _get_redirect_url(request):
+    url = request.session.get(REDIRECT_FIELD_NAME, None)
+    if url:
+        del request.session[REDIRECT_FIELD_NAME]
+        if not url.startswith('/'):
+            url = '/%s' % (url,)
+        return url
 
 
 @anonymous_only
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
 
-    if 'next' in request.GET:
-        request = _clean_next_url(request)
-        request.session['next'] = request.GET['next']
+    if REDIRECT_FIELD_NAME in request.GET:
+        request = _clean_redirect_url(request)
+        request.session[REDIRECT_FIELD_NAME] = request.GET[REDIRECT_FIELD_NAME]
 
     logout(request)
 
@@ -81,20 +111,7 @@ def login(request):
 
         if user.confirmation_code:
             logout(request)
-            log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
-            msg1 = _(('A link to activate your user account was sent by email '
-                      'to your address {0}. You have to click it before you '
-                      'can log in.').format(user.email))
-            url = request.build_absolute_uri(
-                reverse('users_confirm_resend',
-                        kwargs=dict(username=user.username)))
-            msg2 = _(('If you did not receive the confirmation email, make '
-                      'sure your email service did not mark it as "junk '
-                      'mail" or "spam". If you need to, you can have us '
-                      '<a href="%s">resend the confirmation message</a> '
-                      'to your email address mentioned above.') % url)
-            messages.error(request, msg1)
-            messages.info(request, msg2, safe=True)
+            unconfirmed_account_notice(request, user)
             return render_to_response('users/signin.html', {
                 'form': auth_forms.AuthenticationForm(),
             }, context_instance=RequestContext(request))
@@ -103,12 +120,9 @@ def login(request):
             request.session.set_expiry(settings.SESSION_COOKIE_AGE)
             log.debug(u'User signed in with remember_me option')
 
-        next_param = request.session.get('next', None)
-        if next_param:
-            del request.session['next']
-            if not next_param.startswith('/'):
-                next_param = '/%s' % (next_param,)
-            return http.HttpResponseRedirect(next_param)
+        redirect_url = _get_redirect_url(request)
+        if redirect_url:
+            return http.HttpResponseRedirect(redirect_url)
 
     elif request.method == 'POST':
         messages.error(request, _('Incorrect email or password.'))
@@ -137,8 +151,22 @@ def login_openid(request):
 @anonymous_only
 def login_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', False)
-    return openid_views.login_complete(
+    r = openid_views.login_complete(
         request, render_failure=render_openid_login_failure)
+    if isinstance(r, http.HttpResponseRedirect):
+        user = request.user.get_profile()
+        if user.confirmation_code:
+            logout(request)
+            unconfirmed_account_notice(request, user)
+            return render_to_response('users/login_openid.html', {
+                'form': forms.OpenIDForm(),
+            }, context_instance=RequestContext(request))
+
+        redirect_url = _get_redirect_url(request)
+        if redirect_url:
+            return http.HttpResponseRedirect(redirect_url)
+
+    return r
 
 
 @login_required(profile_required=False)
@@ -264,7 +292,11 @@ def profile_view(request, username):
     links = Link.objects.select_related('subscription').filter(user=profile)
     activities = Activity.objects.select_related(
         'actor', 'status', 'project').filter(
-        actor=profile).order_by('-created_on')[0:25]
+        actor=profile,
+    ).exclude(
+        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+        Q(target_user__isnull=False),
+    ).order_by('-created_on')[0:25]
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,
@@ -304,6 +336,9 @@ def profile_create(request):
                 'registration.').format(profile.email)
         messages.info(request, msg)
         return http.HttpResponseRedirect(reverse('dashboard_index'))
+    else:
+        messages.error(request, _('There are errors in this form. Please '
+                                      'correct them and resubmit.'))
     return render_to_response('dashboard/setup_profile.html', {
         'form': form,
     }, context_instance=RequestContext(request))
@@ -416,11 +451,27 @@ def profile_edit_links_delete(request, link):
 
 
 def check_username(request):
+    """Validate a username and check for uniqueness."""
     username = request.GET.get('username', None)
-    if not username:
-        return http.HttpResponse(status=404)
+    f = UsernameField()
+    try:
+        f.clean(username)
+    except ValidationError:
+        return http.HttpResponse()
     try:
         UserProfile.objects.get(username=username)
         return http.HttpResponse()
     except UserProfile.DoesNotExist:
-        return http.HttpResponse(status=404)
+        pass
+    return http.HttpResponse(status=404)
+
+
+@login_required
+def following(request):
+    user = request.user.get_profile()
+    term = request.GET.get('term', '').lower()
+    usernames = [u.username for u in user.following()
+                 if term in u.username.lower() or
+                 term in u.display_name.lower()]
+    return http.HttpResponse(simplejson.dumps(usernames),
+                             mimetype='application/json')

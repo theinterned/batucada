@@ -5,8 +5,9 @@ from django.middleware.locale import LocaleMiddleware
 
 from l10n import urlresolvers
 
+
 class LocaleURLRewriter(LocaleMiddleware):
-    
+
     def process_request(self, request):
         prefixer = urlresolvers.Prefixer(request)
         urlresolvers.set_url_prefix(prefixer)
@@ -32,5 +33,5 @@ class LocaleURLRewriter(LocaleMiddleware):
         request.path_info = '/' + prefixer.shortened_path
         request.locale = prefixer.locale
         request.META['HTTP_ACCEPT_LANGUAGE'] = request.locale
-        
+
         super(LocaleURLRewriter, self).process_request(request)
