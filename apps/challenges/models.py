@@ -65,6 +65,12 @@ class Challenge(ModelBase):
             'slug': self.slug,
         })
 
+    def __unicode__(self):
+        return u"%s (%s - %s)" % (
+            self.title,
+            datetime.strftime(self.start_date, "%b %d %Y"),
+            datetime.strftime(self.end_date, "%b %d %Y"))
+
     def save(self):
         """Make sure each challenge has a unique slug."""
         count = 1
