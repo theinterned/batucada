@@ -109,7 +109,7 @@ msgid "(organizing)"
 msgstr "(organizando)"
 
 #: apps/dashboard/views.py:103
-msgid "(participanting)"
+msgid "(participating)"
 msgstr "(participando)"
 
 #: apps/dashboard/views.py:105 apps/users/views.py:298
