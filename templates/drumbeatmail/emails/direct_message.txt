@@ -1,8 +1,8 @@
-You have received a new direct message from {{sender}}:
+{{ _('You have received a new direct message from ') }} {{ sender}}:
 
 {{ message }}
 
-Reply: http://{{domain}}{{ reply_url }}
+{{ _('Reply:') }} http://{{domain}}{{ reply_url }}
 
-Sincerely,
-The P2PU Team
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}

@@ -4,7 +4,7 @@
 
 {% block form %}
 <fieldset id="project_edit_links" class="project edit links tabpane">
-<h2>Links &amp; Content</h2>
+	<h2>{{ _('Links &amp; Content') }}</h2>
 <p class="hint">{{ _('Add links to websites associated with this study group such as a blog, homepage, twitter profile, github repository etc. These links will appear on the study group page.') }}</p>
 <form action="{% locale_url projects_edit_links slug=project.slug %}" method="post">
   {% csrf_token %}
