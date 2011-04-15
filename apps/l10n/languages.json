@@ -1,16 +1,16 @@
 {
-    "es-CO":{
+    "es":{
         "English":"Spanish",
         "internal":"es",
-        "external":"es-CO",
-        "dictionary":"es-CO",
+        "external":"es",
+        "dictionary":"es",
         "native":"Espanol"
     },
-    "en-US":{
+    "en":{
         "English":"English",
         "internal":"en",
-        "external":"en-US",
-        "dictionary":"en-US",
+        "external":"en",
+        "dictionary":"en",
         "native":"English"
     }
 }
