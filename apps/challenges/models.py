@@ -98,7 +98,22 @@ class Submission(ModelBase):
                                    related_name='submissions')
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.now())
-    
+
+    @models.permalink
+    def get_absolute_url(self):
+        challenges = self.challenge.all()
+        if challenges:
+            slug = challenges[0].slug
+        else:
+            slug = 'foo'  # TODO - Figure out what to do if no challenges exist
+        return ('submission_show', (), {
+            'slug': slug,
+            'submission_id': self.id,
+        })
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.title, self.summary)
+
 admin.site.register(Submission)
 
 class VoterTaxonomy(ModelBase):
