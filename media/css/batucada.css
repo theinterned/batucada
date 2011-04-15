@@ -288,6 +288,37 @@ header {}
       position: absolute;
       z-index: 2;
     }
+
+    #language-nav {
+      background-color: #ffffff;
+      background-image: url("/media/images/icon.world.png");
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-position: 5px center;
+      line-height: 18px;
+      overflow-x: visible;
+      overflow-y: visible;
+      text-align: right;
+      position: absolute;
+      z-index: 3;
+      font-size: 12px;
+      margin-left: 865px;
+      padding-top: 5px;
+      padding-right: 7px;
+      padding-bottom: 5px;
+      padding-left: 26px;
+      border-radius: 10px;
+      border: solid 1px #EEE;
+    }
+
+    #language-nav a {
+      margin-top: 0pt;
+      margin-right: 0pt;
+      margin-bottom: 0pt;
+      margin-left: 5px;
+      color: #444;
+    }
+
     #main-nav {
       font-size: 17px;
       position: absolute;
