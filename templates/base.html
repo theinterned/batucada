@@ -49,7 +49,7 @@
 	      <a href="#" id="user-link" class="top-level">
 		{# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
 		{% if user.get_profile %}
-		<img id="user-picture" src="{{ MEDIA_URL }}{{ user.get_profile.image_or_default }}" height="19" width="19">
+		<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="19" width="19">
 		{% else %}
 		<img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19">
 		{% endif %}
