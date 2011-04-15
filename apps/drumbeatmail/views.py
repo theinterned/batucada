@@ -197,7 +197,7 @@ def reply(request, message):
 def compose(request, username=None):
     kwargs = {}
     if username:
-        kwargs['user'] = get_object_or_404(UserProfile, username=username)
+        kwargs['sender'] = get_object_or_404(UserProfile, username=username)
     if request.method == 'POST':
         form = forms.ComposeForm(data=request.POST,
                                  sender=request.user.get_profile())
