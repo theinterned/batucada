@@ -9,7 +9,7 @@
   <article>
     <h1>{{ _('Report Abuse') }}</h1>
     <fieldset>
-      <form action="{% locale_url drumbeat_abuse content_type=content_type pk=pk %}" method="post">
+      <form action="{% locale_url drumbeat_abuse model=model app_label=app_label pk=pk %}" method="post">
 	{% csrf_token %}
         <p>{{ _('Would you like to report this content as objectionable? This can be anything from suspected spam to offensive content.') }}</p>
         <p>

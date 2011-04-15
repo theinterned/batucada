@@ -59,7 +59,7 @@ def serialize(inbox, sent_view=False):
             img = img.name
         serialized = {
             'abuse_url': reverse('drumbeat_abuse', kwargs=dict(
-                content_type='message', pk=msg.id)),
+                model='message', app_label='messages', pk=msg.id)),
             'reply_url': reverse('drumbeatmail_reply', kwargs=dict(
                 message=msg.id)),
             'sender_url': sender.get_profile().get_absolute_url(),

@@ -51,6 +51,7 @@
 	      </p>
 	      <div id="recaptcha_block">
 	        <div id="recaptcha_image"></div>
+	        <br><br>
             <div id="recaptcha_response_field" class="field{% if form.recaptcha.errors %} error{% endif %}">
                 <label for="recaptcha_response_field">&nbsp;</label>
                 <input type="text" name="recaptcha_response_field"
@@ -63,6 +64,7 @@
           ReCaptcha is not configured in settings_local.py, so it is disabled.
         </p>
         {% endif %}
+        <br><br>
         <p>
           {{ _('By creating an account on p2pu.org, you accept our') }} <a href="http://p2pu.org/privacy">{{ _('privacy guidelines') }}</a> , <a href="http://p2pu.org/license">{{ _('license provisions') }}</a> {{ _('and') }} <a href="http://p2pu.org/terms-of-use">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
         </p>

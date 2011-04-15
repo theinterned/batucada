@@ -33,7 +33,7 @@
 {% sidebar %}
 <div id="main" class="content_page">
 {% if user.is_authenticated %}
-    <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="page" pk=page.id %}">{{_('Report Abuse')}}</a></p>
+    <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse model="page" app_label="content" pk=page.id %}">{{_('Report Abuse')}}</a></p>
 {% endif %}
 <h1>{{ page.title }}</h1>
 <hr />
@@ -47,7 +47,7 @@
 <li class="post-container">
   <a name="{{ comment.id }}"></a>
   <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
-  <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="pagecomment" pk=comment.id %}">{{_('Report Abuse')}}</a>
+  <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{_('Report Abuse')}}</a>
   <a href="{{ comment.author.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ comment.author.image_or_default }}">
   </a>
@@ -66,7 +66,7 @@
   <li class="post-container post-replies">
     <a name="{{ reply.id }}"></a>
     <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
-    <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="pagecomment" pk=reply.id %}">{{_('Report Abuse')}}</a>
+    <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{_('Report Abuse')}}</a>
     <a href="{{ reply.author.get_absolute_url }}">
       <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ reply.author.image_or_default }}">
     </a>
