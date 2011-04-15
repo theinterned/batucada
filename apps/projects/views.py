@@ -225,7 +225,7 @@ def create(request):
             detail_description_content = render_to_string(
                 "projects/detailed_description_initial_content.html",
                 {})
-            detailed_description = Page(title='Full Description',
+            detailed_description = Page(title=_('Full Description'),
                 content=detail_description_content, listed=False,
                 author_id=user.id, project_id=project.id)
             detailed_description.save()
