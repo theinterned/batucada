@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 from models import Submission
-from challenges.feeds import ChallengesFeed, ProjectChallengesFeed
+from challenges.feeds import (ChallengesFeed, ProjectChallengesFeed,
+                              SubmissionsFeed)
 from voting.views import vote_on_object
 
 vote_dict = {
@@ -20,6 +21,9 @@ urlpatterns = patterns('',
       name='challenges_edit_image'),
   url(r'^(?P<slug>[\w-]+)/edit/image/async$', 'challenges.views.edit_challenge_image_async',
       name='challenges_edit_image_async'),
+
+  url(r'^(?P<challenge>[\w-]+)/submissions/feed/$', SubmissionsFeed(),
+      name='challenges_submissions_feed'),
   url(r'^(?P<project>[\w-]+)/feed/$', ProjectChallengesFeed(),
       name='challenges_project_feed'),
   url(r'^feed/$', ChallengesFeed(), name='challenges_feed'),
