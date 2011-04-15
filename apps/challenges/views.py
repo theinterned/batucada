@@ -3,7 +3,8 @@ import logging
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.db.utils import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import (HttpResponse, HttpResponseRedirect,
+                         HttpResponseForbidden)
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
@@ -13,7 +14,8 @@ from django.views.decorators.http import require_http_methods
 from commonware.decorators import xframe_sameorigin
 
 from challenges.models import Challenge, Submission, Judge, VoterDetails
-from challenges.forms import ChallengeForm, ChallengeImageForm, SubmissionForm, JudgeForm, VoterDetailsForm
+from challenges.forms import (ChallengeForm, ChallengeImageForm,
+                              SubmissionForm, JudgeForm, VoterDetailsForm)
 from projects.models import Project
 
 from drumbeat import messages
@@ -21,11 +23,12 @@ from users.decorators import login_required
 
 log = logging.getLogger(__name__)
 
+
 @login_required
 def create_challenge(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     user = request.user.get_profile()
-    
+
     if request.method == 'POST':
         form = ChallengeForm(request.POST)
         if form.is_valid():
@@ -34,7 +37,8 @@ def create_challenge(request, project_id):
             challenge.project = project
             challenge.save()
 
-            messages.success(request, _('Your new challenge has been created.'))
+            messages.success(request,
+                             _('Your new challenge has been created.'))
             return HttpResponseRedirect(reverse('challenges_show', kwargs={
                 'slug': challenge.slug,
                 }))
@@ -47,8 +51,10 @@ def create_challenge(request, project_id):
         'form': form,
         'project': project,
     }
-    return render_to_response('challenges/challenge_edit_summary.html', context,
+    return render_to_response('challenges/challenge_edit_summary.html',
+                              context,
                               context_instance=RequestContext(request))
+
 
 @login_required
 def edit_challenge(request, slug):
@@ -74,10 +80,11 @@ def edit_challenge(request, slug):
     context = {
         'form': form,
         'project': challenge.project,
-        'challenge' : challenge
+        'challenge': challenge,
     }
 
-    return render_to_response('challenges/challenge_edit_summary.html', context,
+    return render_to_response('challenges/challenge_edit_summary.html',
+                              context,
                               context_instance=RequestContext(request))
 
 
@@ -93,31 +100,33 @@ def edit_challenge_image_async(request, slug):
             'filename': instance.image.name,
         }))
     return HttpResponse(simplejson.dumps({
-        'error': _('There was an error uploading your image.')
+        'error': _('There was an error uploading your image.'),
     }))
+
 
 @login_required
 def edit_challenge_image(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
     if request.method == "POST":
-        form = ChallengeImageForm(request.POST, request.FILES, instance=challenge)
+        form = ChallengeImageForm(
+            request.POST, request.FILES, instance=challenge)
         if form.is_valid():
             messages.success(request, _('Challenge image updated'))
             form.save()
-            return HttpResponseRedirect(reverse('challenges_edit_image', kwargs= {
-                'slug': challenge.slug
-            }))
+            return HttpResponseRedirect(
+                reverse('challenges_edit_image', kwargs={
+                    'slug': challenge.slug,
+                }))
         else:
             messages.error(request,
                            _('There was an error uploading your image'))
     else:
         form = ChallengeImageForm(instance=challenge)
 
-
     context = {
         'form': form,
-        'challenge' : challenge,
+        'challenge': challenge,
     }
 
     return render_to_response('challenges/challenge_edit_image.html', context,
@@ -141,33 +150,35 @@ def show_challenge(request, slug):
         submissions = paginator.page(paginator.num_pages)
 
     nsubmissions = challenge.submission_set.all().count()
-    
+
     context = {
-        'challenge' : challenge,
-        'submissions' : submissions,
-        'nsubmissions' : nsubmissions,
-        'profile' : request.user.get_profile()
+        'challenge': challenge,
+        'submissions': submissions,
+        'nsubmissions': nsubmissions,
+        'profile': request.user.get_profile(),
     }
 
     return render_to_response('challenges/challenge.html', context,
                               context_instance=RequestContext(request))
 
+
 def show_challenge_full(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
     context = {
-        'challenge' : challenge,
+        'challenge': challenge,
     }
 
     return render_to_response('challenges/challenge_full.html', context,
                               context_instance=RequestContext(request))
+
 
 @login_required
 def create_submission(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
     if not challenge.is_active():
         return HttpResponseForbidden()
-    
+
     user = request.user.get_profile()
 
     if request.method == 'POST':
@@ -178,7 +189,7 @@ def create_submission(request, slug):
             submission.save()
 
             submission.challenge.add(challenge)
-            
+
             messages.success(request, _('Your submission has been created'))
 
             return HttpResponseRedirect(reverse('challenges_show', kwargs={
@@ -190,18 +201,18 @@ def create_submission(request, slug):
         form = SubmissionForm()
 
     context = {
-        'form' : form,
-        'challenge' : challenge
+        'form': form,
+        'challenge': challenge,
     }
 
     return render_to_response('challenges/submission_edit.html', context,
                               context_instance=RequestContext(request))
 
+
 @login_required
 def edit_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)
-    user = request.user.get_profile()
 
     if request.method == 'POST':
         form = SubmissionForm(request.POST, instance=submission)
@@ -218,28 +229,27 @@ def edit_submission(request, slug, submission_id):
         form = SubmissionForm(instance=submission)
 
     context = {
-        'challenge' : challenge,
-        'submission' : submission,
-        'form' : form
+        'challenge': challenge,
+        'submission': submission,
+        'form': form,
     }
-    
+
     return render_to_response('challenges/submission_edit.html', context,
                               context_instance=RequestContext(request))
-    
+
 
 def show_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)
 
     context = {
-        'challenge' : challenge,
-        'submission' : submission,
+        'challenge': challenge,
+        'submission': submission,
     }
 
     return render_to_response('challenges/submission_show.html', context,
                               context_instance=RequestContext(request))
-    
-    
+
 
 @login_required
 def challenge_judges(request, slug):
@@ -257,21 +267,20 @@ def challenge_judges(request, slug):
             except IntegrityError:
                 messages.error(request, _('User is already a judge'))
 
-
             return HttpResponseRedirect(reverse('challenges_judges', kwargs={
-                'slug' : challenge.slug,
-                }))
+                'slug': challenge.slug,
+            }))
         else:
             messages.error(request, _('Unable to add judge.'))
     else:
         form = JudgeForm()
 
-    judges = Judge.objects.filter( challenge=challenge )
+    judges = Judge.objects.filter(challenge=challenge)
 
     context = {
-        'challenge' : challenge,
-        'form' : form,
-        'judges' : judges,
+        'challenge': challenge,
+        'form': form,
+        'judges': judges,
     }
 
     return render_to_response('challenges/challenge_judges.html', context,
@@ -287,10 +296,11 @@ def challenge_judges_delete(request, slug, judge):
             return HttpResponseForbidden()
         judge.delete()
         messages.success(request, _('Judge removed.'))
-    return HttpResponseRedirect(reverse('challenges_judges',kwargs={
-                'slug': challenge.slug,
-                }))
-    
+    return HttpResponseRedirect(reverse('challenges_judges', kwargs={
+        'slug': challenge.slug,
+    }))
+
+
 @login_required
 def submissions_voter_details(request, submission_id):
     submission = get_object_or_404(Submission, pk=submission_id)
@@ -299,7 +309,7 @@ def submissions_voter_details(request, submission_id):
         voter = VoterDetails.objects.get(user=request.user.get_profile())
     except:
         voter = None
-    
+
     if request.method == 'POST':
         form = VoterDetailsForm(request.POST, instance=voter)
         if form.is_valid():
@@ -309,9 +319,9 @@ def submissions_voter_details(request, submission_id):
             form.save_m2m()
 
             messages.success(request, _('Your details were saved.'))
-            
+
             return HttpResponseRedirect(reverse('challenges_show', kwargs={
-                'slug' : submission.challenge.get().slug,
+                'slug': submission.challenge.get().slug,
             }))
         else:
             messages.error(request, _('Unable to save details'))
@@ -319,8 +329,8 @@ def submissions_voter_details(request, submission_id):
         form = VoterDetailsForm(instance=voter)
     context = {
         'form': form,
-        'submission': submission
+        'submission': submission,
     }
-    
+
     return render_to_response('challenges/voter_details.html', context,
                               context_instance=RequestContext(request))
