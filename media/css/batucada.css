@@ -576,13 +576,23 @@ header {}
         margin: 0;
         list-style: none;
       }
-      #project-summary { 
-	      font-size: 12px;
-          line-height: 18px;
-		  }
-		#project-summary p {
-			margin-bottom: 18px;
-	        }
+        
+      #project-summary,
+      #sidebar #project-description { 
+	    font-size: 12px;
+        line-height: 18px;
+      }
+      
+	  #project-summary p,
+	  #sidebar #project-description p {
+	    margin-bottom: 18px;
+	  }
+	  
+	  #sidebar #project-description {
+        font-weight: bold;
+        font-size: 100%;
+      }
+      
       #project-icons img {
         margin-right: 5px;
         border: 1px solid #d0d0d0;
