@@ -44,6 +44,14 @@ def create(request):
 def reply(request, in_reply_to):
     """Create a status update that is a reply to an activity."""
     parent = get_object_or_404(Activity, id=in_reply_to)
+    if request.method == 'POST':
+        form = StatusForm(data=request.POST)
+        if form.is_valid():
+            status = form.save(commit=False)
+            status.author = request.user.get_profile()
+            status.in_reply_to = parent
+            status.save()
+        return HttpResponseRedirect('/')
     return render_to_response('statuses/reply.html', {
         'parent': parent,
     }, context_instance=RequestContext(request))
