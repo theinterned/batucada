@@ -8,6 +8,4 @@ urlpatterns = patterns('',
   url(r'^create/project/(?P<project_id>\d+)/$',
       'statuses.views.create_project_status',
       name='statuses_create_project'),
-  url(r'^reply/(?P<in_reply_to>\d+)/$', 'statuses.views.reply',
-      name='statuses_reply'),
 )
