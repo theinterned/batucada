@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ _('Knight Mozilla News Technology Partnership') }}{% endblock %}
+{% block bodyid %}journalism{% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url drumbeat_journalism %}">{{ _('Journalism') }}</a>
+  </nav>
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+{% block body %}
+<h1>{{ _('Knight Mozilla News Technology Partnership') }}</h1>
+<video poster="{{ MEDIA_URL }}images/knight-mozilla-poster.jpg" controls="controls" id="video-element" height="270" width="480">
+  <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.webm">
+  <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.mp4">
+  <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.ogv">
+  {{ _('Your browser does not support HTML5 video. Get <a href="http://www.firefox.com/">Firefox 4</a> now!') }}
+</video>
+{% endblock %}
