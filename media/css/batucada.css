@@ -408,11 +408,11 @@ header {}
           behavior: url("/media/css/PIE.htc");
         }
 
-          #user.open ul a, #schools.open ul a {
+          #user.open ul a, #schools.open ul a, #help.open ul a  {
             border: 0 none;
             color: #fff;
           }
-          #user-actions, #school-menu-items {
+          #user-actions, #school-menu-items, #help-menu-items {
             border-top: 1px solid #76bae9;
             min-width: 146px;
             color: #fff;
