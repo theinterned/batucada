@@ -2412,6 +2412,6 @@ div.video-js-box {
     margin: 20px 0px 20px 0px;
 }
 
-#journalism ul {
+body#journalism > ul {
     margin-bottom: 1.4em;
 }
