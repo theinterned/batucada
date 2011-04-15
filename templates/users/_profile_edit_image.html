@@ -1,5 +1,5 @@
   <label for="id_image">{{ _('Image') }}</label>
-  <p class="picture-preview"><img class="member-picture" src="{{ MEDIA_URL }}{{ profile.image_or_default }}" /></p>
+  <p class="picture-preview"><img class="member-picture" src="{{ profile.image_or_default }}" /></p>
   <br clear="all" />
   <div class="field{% if profile_image_form.image.errors %} error{% endif %}">
     {{ profile_image_form.image }}
