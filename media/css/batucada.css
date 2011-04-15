@@ -2389,3 +2389,21 @@ ul.ui-autocomplete #ui-active-menuitem {
     background-color: #0a246a;
     color: #fff;
 }
+
+
+.notice {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 250px;
+    margin-top: 125px;
+}
+
+.notice h2 {
+    font-size: 2.8em;
+    padding-bottom: 40px;
+}
+
+.notice p {
+    font-size: 1.2em;
+}
