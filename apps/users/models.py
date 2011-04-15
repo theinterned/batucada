@@ -5,7 +5,7 @@ import random
 import string
 import hashlib
 import os
-import urllib
+
 
 from django.conf import settings
 from django.db import models
@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
+from django.utils.http import urlquote_plus
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 
@@ -25,8 +26,7 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
-from users import tasks
-from hashlib import md5
+from users import tasks 
 
 import caching.base
 
@@ -167,9 +167,8 @@ class UserProfile(ModelBase):
 
     def image_or_default(self):
         """Return user profile image or a default."""
-        """ self.image or 'images/member-missing.png' """
         gravatarUrl = self.gravatar(54) 
-        avatar = '/media/images/member-missing.png'
+        avatar = '%s%s' % (settings.MEDIA_URL, '/images/member-missing.png')
         if self.image:
         	avatar =  '%s%s' % (settings.MEDIA_URL, self.image)
         elif gravatarUrl:
@@ -178,14 +177,14 @@ class UserProfile(ModelBase):
 
     def gravatar(self, size=54):
         hash = hashlib.md5(self.email.lower()).hexdigest() 
-        retval = GRAVATAR_TEMPLATE % {
+        default = urlquote_plus(settings.DEFAULT_PROFILE_IMAGE)
+        return GRAVATAR_TEMPLATE % {
             'size': size,
             'gravatar_hash': hash,
-            'default': settings.DEFAULT_PROFILE_IMAGE,
+            'default': default,
             'rating': "g",
             'username': self.username,
             } 
-        return retval 
     
     def generate_confirmation_code(self):
         if not self.confirmation_code:
