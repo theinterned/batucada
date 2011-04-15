@@ -75,6 +75,3 @@ FFMPEG_PATH = '/usr/bin/ffmpeg'
 # Set to True at production before upgrading lernanta.
 # Remember to login as admin before activating maintenance mode.
 MAINTENANCE_MODE = False
-
-# Where the default image for sending to Gravatar
-DEFAULT_PROFILE_IMAGE = 'http%3A%2F%2Fnew.p2pu.org%2Fmedia%2Fimages%2Fmember-missing.png'

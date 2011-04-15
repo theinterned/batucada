@@ -269,3 +269,5 @@ RICH_ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
     'border-style', 'margin', 'float', 'width', 'height',
     'font-family', 'font-size', 'color', 'background-color')
 
+# Where the default image for sending to Gravatar
+DEFAULT_PROFILE_IMAGE = 'http://new.p2pu.org/media/images/member-missing.png'

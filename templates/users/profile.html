@@ -91,13 +91,13 @@
   <h3>{{ _('Followers') }} <span class="followers count">{{ followers|length }}</span></h3>
   <ul class="users followers">
   {% for user_follower in followers|slice:":36" %}
-    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.name }}"><img class="member-picture" src="{{ user_follower.image_or_default|safe }}" height="26" width="26" alt="{{ user_follower.name }}"></a></li>
+    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.name }}"><img class="member-picture" src="{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.name }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Following') }} <span class="following count">{{ following|length }}</span></h3>
   <ul class="users following">
   {% for user_following in following|slice:":36" %}
-    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }}"><img class="member-picture" src="{{ user_following.image_or_default|safe }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
+    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.name }}"><img class="member-picture" src="{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
   {% endfor %}
   </ul>
   {% if projects|length > 0 %}
