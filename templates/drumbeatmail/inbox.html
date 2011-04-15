@@ -46,7 +46,7 @@
     <li class="post-container">
       {% if message.sender != user %}
         <a href="{% locale_url drumbeatmail_reply message=message.id %}" class="reply-to action">{{ _('Reply') }}</a>
-        <a href="{% locale_url drumbeat_abuse content_type="message" pk=message.id %}" class="report abuse action">{{_('Report Abuse')}}</a>
+        <a href="{% locale_url drumbeat_abuse model="message" app_label="messages" pk=message.id %}" class="report abuse action">{{_('Report Abuse')}}</a>
       {% endif %}
       
       {% if message.sender == user %}

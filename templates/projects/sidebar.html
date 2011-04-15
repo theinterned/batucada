@@ -44,7 +44,7 @@
     </ul> <!-- /#project-stats -->
     {% if user.is_authenticated and user.get_profile != project.created_by %}
     <p class="supplemental_actions">
-      <a class="report abuse action" href="{% locale_url drumbeat_abuse  content_type="project" pk=project.id %}">{{_('Report Abuse')}}</a>
+      <a class="report abuse action" href="{% locale_url drumbeat_abuse  model="project" app_label="projects" pk=project.id %}">{{_('Report Abuse')}}</a>
     </p>
     {% endif %}
     <a id="project-description-link"
