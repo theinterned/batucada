@@ -1,5 +1,5 @@
 =========
-Learnanta
+Lernanta
 =========
 
 Lernanta is the new platform for P2PU. We are building on the codebase from

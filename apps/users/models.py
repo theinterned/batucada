@@ -6,6 +6,7 @@ import string
 import hashlib
 import os
 
+
 from django.conf import settings
 from django.db import models
 from django.contrib import admin
@@ -13,7 +14,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
+from django.utils.http import urlquote_plus
 from django.utils.translation import ugettext as _
+from django.utils.safestring import mark_safe
 
 from taggit.models import GenericTaggedItemBase, Tag
 from taggit.managers import TaggableManager
@@ -23,12 +26,13 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project
-from users import tasks
+from users import tasks 
 
 import caching.base
 
 log = logging.getLogger(__name__)
 
+GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
 
 def determine_upload_path(instance, filename):
     chunk_size = 1000  # max files per directory
@@ -163,8 +167,25 @@ class UserProfile(ModelBase):
 
     def image_or_default(self):
         """Return user profile image or a default."""
-        return self.image or 'images/member-missing.png'
+        gravatarUrl = self.gravatar(54) 
+        avatar = '%s%s' % (settings.MEDIA_URL, '/images/member-missing.png')
+        if self.image:
+        	avatar =  '%s%s' % (settings.MEDIA_URL, self.image)
+        elif gravatarUrl:
+        	avatar = gravatarUrl
+        return mark_safe(avatar)
 
+    def gravatar(self, size=54):
+        hash = hashlib.md5(self.email.lower()).hexdigest() 
+        default = urlquote_plus(settings.DEFAULT_PROFILE_IMAGE)
+        return GRAVATAR_TEMPLATE % {
+            'size': size,
+            'gravatar_hash': hash,
+            'default': default,
+            'rating': "g",
+            'username': self.username,
+            } 
+    
     def generate_confirmation_code(self):
         if not self.confirmation_code:
             self.confirmation_code = ''.join(random.sample(string.letters +
@@ -189,15 +210,14 @@ class UserProfile(ModelBase):
     @property
     def name(self):
         return self.display_name or self.username
-
+        
 ###########
 # Signals #
 ###########
 
 def clean_html(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    if isinstance(instance, UserProfile):
-        log.debug("Cleaning html.")
+    if isinstance(instance, UserProfile): 
         if instance.bio:
             instance.bio = bleach.clean(instance.bio,
                 tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)

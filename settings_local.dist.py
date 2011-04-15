@@ -75,4 +75,3 @@ FFMPEG_PATH = '/usr/bin/ffmpeg'
 # Set to True at production before upgrading lernanta.
 # Remember to login as admin before activating maintenance mode.
 MAINTENANCE_MODE = False
-
