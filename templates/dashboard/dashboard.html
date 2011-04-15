@@ -54,8 +54,8 @@
   {% if show_welcome %}
     <article class="welcome">
       <header><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"></a></header>
-      <h1>Welcome to P2PU!</h1>
-      <p>To get started, you should <a href="{% locale_url users_profile_edit %}">update your profile</a>. This is a great way to tell people a bit more about yourself. Then find <a href="{% locale_url users_user_list %}">people</a> and <a href="{% locale_url projects_gallery %}">study groups</a> that interest you and start following them! You can also <a href="{% locale_url projects_create %}">create a new study group</a>.</p>
+      <h1>{{ _('Welcome to P2PU!') }}</h1>
+      <p>{{ _('To get started, you should') }} <a href="{% locale_url users_profile_edit %}">{{ _('update your profile') }}</a>. {{ _('This is a great way to tell people a bit more about yourself') }}. {{ _('Then find') }} <a href="{% locale_url users_user_list %}">{{ _('people') }}</a> {{ _('and') }} <a href="{% locale_url projects_gallery %}">{{ _('study groups') }}</a> {{ _('that interest you and start following them!') }} {{ _('You can also') }} <a href="{% locale_url projects_create %}">{{ _('create a new study group') }}</a>.</p>
     </article>
   {% endif %}
   <div id="create-post">
@@ -67,7 +67,7 @@
 
 	<div class="status-and-actions">
 	  <div class="post-char-count">750</div>
-	    <button class="button update submit" id="post-update">Post Update</button>
+	  <button class="button update submit" id="post-update">{{ _('Post Update') }}</button>
 	</div> <!-- /.status-and-actions -->
 
       </form>
