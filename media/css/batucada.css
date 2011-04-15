@@ -2407,3 +2407,11 @@ ul.ui-autocomplete #ui-active-menuitem {
 .notice p {
     font-size: 1.2em;
 }
+
+div.video-js-box {
+    margin: 20px 0px 20px 0px;
+}
+
+#journalism ul {
+    margin-bottom: 1.4em;
+}
