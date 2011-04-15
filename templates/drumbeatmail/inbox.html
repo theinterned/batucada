@@ -51,11 +51,11 @@
       
       {% if message.sender == user %}
         <a href="{{ message.recipient.get_profile.get_absolute_url }}">
-          <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ message.recipient.get_profile.image_or_default }}">
+          <img class="member-picture" width="54" height="54" src="{{ message.recipient.get_profile.image_or_default }}">
         </a>
       {% else %}
         <a href="{{ message.sender.get_profile.get_absolute_url }}">
-          <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ message.sender.get_profile.image_or_default }}">
+          <img class="member-picture" width="54" height="54" src="{{ message.sender.get_profile.image_or_default }}">
         </a>
       {% endif %}
 
@@ -96,7 +96,7 @@
           <a href="${abuse_url}" class="report abuse action">{{_('Report Abuse')}}</a>
         {% endif %}
         <a href="${sender_url}">
-          <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}${sender_img}">
+          <img class="member-picture" width="54" height="54" src="${sender_img}">
         </a>
         <div class="post-contents">
           <div class="post-details">

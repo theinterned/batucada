@@ -5,7 +5,7 @@
   <a class="report abuse action" href="{% locale_url drumbeat_abuse content_type="activity" pk=activity.id %}">{{_('Report Abuse')}}</a>
  {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
-    <img class="member-picture" width="54" height="54" src="{{ MEDIA_URL }}{{ activity.actor.image_or_default }}">
+    <img class="member-picture" width="54" height="54" src="{{ activity.actor.image_or_default }}">
   </a>
 
   <div class="post-contents">
