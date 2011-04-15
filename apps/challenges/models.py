@@ -8,11 +8,13 @@ from django.template.defaultfilters import slugify
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
-from projects.models import Project 
+
+from projects.models import Project
 
 import caching.base
 
 log = logging.getLogger(__name__)
+
 
 def determine_image_upload_path(instance, filename):
     return "images/challenges/%(partition)d/%(filename)s" % {
@@ -20,9 +22,12 @@ def determine_image_upload_path(instance, filename):
         'filename': safe_filename(filename),
     }
 
+
 class ChallengeManager(caching.base.CachingManager):
     def active(self, project_id=0):
-        q = Challenge.objects.filter(start_date__lte=datetime.now()).filter(end_date__gte=datetime.now())
+        q = Challenge.objects.filter(
+            start_date__lte=datetime.now()).filter(
+            end_date__gte=datetime.now())
         if project_id:
             q = q.filter(id=project_id)
         return q
@@ -39,25 +44,26 @@ class Challenge(ModelBase):
     important_dates = models.TextField()
     resources = models.TextField()
     rules = models.TextField()
-    
+
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
 
-
     project = models.ForeignKey(Project)
-    created_by = models.ForeignKey('users.UserProfile', 
+    created_by = models.ForeignKey('users.UserProfile',
                                    related_name='challenges')
-    created_on = models.DateTimeField(auto_now_add=True, default=datetime.now())
-    
+    created_on = models.DateTimeField(auto_now_add=True,
+                                      default=datetime.now())
+
     is_open = models.BooleanField()
 
     objects = ChallengeManager()
 
     def is_active(self):
-        return self.start_date < datetime.now() and self.end_date > datetime.now()
+        return (self.start_date < datetime.now() and
+                self.end_date > datetime.now())
 
     @models.permalink
     def get_absolute_url(self):
@@ -84,12 +90,13 @@ class Challenge(ModelBase):
                 self.slug = slug + str(count)
                 count += 1
         super(Challenge, self).save()
-admin.site.register(Challenge)    
+admin.site.register(Challenge)
+
 
 class Submission(ModelBase):
-    """ A submitted entry for a Challenge """ 
+    """ A submitted entry for a Challenge."""
     title = models.CharField(max_length=100, unique=True)
-    summary = models.TextField()    
+    summary = models.TextField()
     description = models.TextField()
     description_html = models.TextField(null=True, blank=True)
 
@@ -116,13 +123,15 @@ class Submission(ModelBase):
 
 admin.site.register(Submission)
 
+
 class VoterTaxonomy(ModelBase):
-    description = models.CharField(max_length = 255)
+    description = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.description
 
 admin.site.register(VoterTaxonomy)
+
 
 class VoterDetails(ModelBase):
     user = models.ForeignKey('users.UserProfile',
@@ -135,14 +144,11 @@ class Judge(ModelBase):
     user = models.ForeignKey('users.UserProfile',
                              related_name='judges')
 
-
     class Meta:
-        unique_together = ( ('challenge', 'user'), )
+        unique_together = (('challenge', 'user'),)
 
-    
+
 admin.site.register(Judge)
 
 
 ### Signals
-
-
