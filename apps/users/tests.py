@@ -15,7 +15,7 @@ class TestLogins(TestCase):
     test_email = 'test@mozillafoundation.org'
 
     def setUp(self):
-        self.locale = 'en-US'
+        self.locale = 'en'
         self.client = Client()
         self.user = UserProfile(username=self.test_username,
                                 email=self.test_email)
@@ -61,8 +61,7 @@ class TestLogins(TestCase):
         # TODO - Improve this so it doesn't take so many redirects to get a 200
         response2 = self.client.get(response["location"])
         response3 = self.client.get(response2["location"])
-        response4 = self.client.get(response3["location"])
-        self.assertContains(response4, 'id="dashboard"')
+        self.assertContains(response3, 'id="dashboard"')
         self.client.logout()
 
         response5 = self.client.post(path, {
@@ -129,7 +128,7 @@ class TestLogins(TestCase):
         with other urlpatterns.
         """
         path = reverse('users_register')
-        bad = ('courses', 'admin', 'people', 'events')
+        bad = ('groups', 'admin', 'people', 'events')
         for username in bad:
             response = self.client.post(path, {
                 'username': username,

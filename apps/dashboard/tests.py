@@ -12,7 +12,7 @@ class DashboardTests(TestCase):
     test_email = 'test@mozillafoundation.org'
 
     def setUp(self):
-        self.locale = 'en-US'
+        self.locale = 'en'
         self.client = Client()
         self.user = User.objects.create_user(self.test_username,
                                              self.test_email,

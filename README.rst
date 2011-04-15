@@ -135,7 +135,7 @@ This is an example of configuration (replace the values between brackets) ::
             AllowOverride None
         </Directory>
 
-        Alias /en-US/admin-media/ "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media/"
+        Alias /en/admin-media/ "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media/"
         <Directory "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media">
             Order deny,allow
             Allow from all
