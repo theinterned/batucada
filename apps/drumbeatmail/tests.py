@@ -14,7 +14,7 @@ class TestDrumbeatMail(test_utils.TestCase):
     test_email = 'test@mozillafoundation.org'
 
     def setUp(self):
-        self.locale = 'en-US'
+        self.locale = 'en'
         self.user = UserProfile(username=self.test_username,
                                 email=self.test_email)
         self.user.set_password(self.test_password)

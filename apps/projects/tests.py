@@ -16,7 +16,7 @@ class ProjectTests(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.locale = 'en-US'
+        self.locale = 'en'
         self.user = UserProfile(
             username=self.test_username,
             email=self.test_email,

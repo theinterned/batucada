@@ -35,29 +35,19 @@ class TestLocaleURLs(test_utils.TestCase):
             self.assertRedirects(response, '/%s/' % (supported,),
                                  status_code=301)
 
-    def test_specificity(self):
-        """We support a more specific code than the general one sent."""
-        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='en')
-        self.assertRedirects(response, '/en-US/', status_code=301)
-
-    def test_close_match(self):
-        """Client sends xx-YY, we support xx-ZZ. We give them xx-ZZ."""
-        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='en-CA')
-        self.assertRedirects(response, '/en-US/', status_code=301)
-
     def test_general(self):
         """
         If the client sends a specific locale that is unsupported, we
         should check for a more general match (xx-YY -> xx).
         """
-        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='de-AT')
-        self.assertRedirects(response, '/de-DE/', status_code=301)
+        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='es-CO')
+        self.assertRedirects(response, '/es/', status_code=301)
 
     def test_unsupported_locale(self):
         """If locale is not supported, we should send them the default."""
         # if the default locale is not normalized, we'll get an additional 301
         default_locale = settings.LANGUAGE_CODE
-        is_normalized = lambda l: re.match(r'[a-z]+-[A-Z]+', l) != None
+        is_normalized = lambda l: re.match(r'[a-z]+(-[A-Z]+)?', l) != None
         expected_target_code = is_normalized(default_locale) and 200 or 301
         response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='xx')
         self.assertRedirects(response,
@@ -68,7 +58,7 @@ class TestLocaleURLs(test_utils.TestCase):
     def test_normalized_case(self):
         """Accept-Language header is case insensitive."""
         response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='en-us')
-        self.assertRedirects(response, '/en-US/', status_code=301)
+        self.assertRedirects(response, '/en/', status_code=301)
 
     def test_login_post_redirect(self):
         """Test that post requests are treated properly."""
