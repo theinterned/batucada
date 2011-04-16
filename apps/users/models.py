@@ -86,7 +86,7 @@ class UserProfile(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/person'
 
     username = models.CharField(max_length=255, default='', unique=True)
-    display_name = models.CharField(
+    full_name = models.CharField(
         max_length=255, default='', null=True, blank=True)
     password = models.CharField(max_length=255, default='')
     email = models.EmailField(unique=True, null=True)
@@ -109,7 +109,7 @@ class UserProfile(ModelBase):
     objects = UserProfileManager()
 
     def __unicode__(self):
-        return self.display_name or self.username
+        return self.full_name or self.username
 
     def following(self, model=None):
         """
@@ -208,8 +208,9 @@ class UserProfile(ModelBase):
         return hsh == get_hexdigest(algo, salt, raw_password)
 
     @property
-    def name(self):
-        return self.display_name or self.username
+    def display_name(self):
+        return self.full_name or self.username
+
         
 ###########
 # Signals #

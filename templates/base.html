@@ -84,7 +84,7 @@
 		{% for message in preview_messages %}
 		  <li class="message">
 		    <a href="{% locale_url drumbeatmail_inbox %}#message{{message.id}}">
-		      <span class="from">{{ message.sender.get_profile.name }}:</span>
+		      <span class="from">{{ message.sender.get_profile.display_name }}:</span>
 		      <span class="snippet">{{ message.body|truncatewords_html:10 }}</span>
 		    </a>
 		  </li>

@@ -22,8 +22,8 @@ msgstr "Bitácora de actividades para %s"
 
 #: apps/activity/models.py:73
 #, python-format
-msgid "%(friendly_verb)s activity performed by %(self.actor.name)s"
-msgstr "La actividad %(friendly_verb)s fue realizada por %(self.actor.name)s"
+msgid "%(friendly_verb)s activity performed by %(self.actor.display_name)s"
+msgstr "La actividad %(friendly_verb)s fue realizada por %(self.actor.display_name)s"
 
 #: apps/activity/models.py:83
 #, python-format
@@ -47,9 +47,9 @@ msgstr "comentario publicado"
 
 #: apps/content/models.py:159
 #, python-format
-msgid "[p2pu-%(slug)s-signup] Course %(name)s's signup page was updated"
+msgid "[p2pu-%(slug)s-signup] Study group %(display_name)s's signup page was updated"
 msgstr ""
-"[p2pu-%(slug)s-signup] La página de suscripción del curso %(name)s's fue "
+"[p2pu-%(slug)s-signup] La página de suscripción del curso %(display_name)s's fue "
 "actualizada"
 
 #: apps/content/views.py:58
@@ -121,8 +121,8 @@ msgstr "No hay un usuario con esa identificación o correo."
 
 #: apps/drumbeatmail/models.py:27
 #, python-format
-msgid "New Message from %(name)s"
-msgstr "Nuevo mensaje de %(name)s"
+msgid "New Message from %(display_name)s"
+msgstr "Nuevo mensaje de %(display_name)s"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:206
 #: apps/projects/views.py:273
@@ -251,18 +251,18 @@ msgstr "No pueden crearse relaciones auto referenciadas."
 
 #: apps/relationships/models.py:65
 #, python-format
-msgid "%(name)s is following you on P2PU!"
-msgstr "¡%(name)s te está siguiente en P2PU!"
+msgid "%(display_name)s is following you on P2PU!"
+msgstr "¡%(display_name)s te está siguiente en P2PU!"
 
 #: apps/relationships/models.py:68
 #, python-format
-msgid "%(name)s is following %(project)s on P2PU!"
-msgstr "¡%(name)s está siguiente a %(project)s en P2PU!"
+msgid "%(display_name)s is following %(project)s on P2PU!"
+msgstr "¡%(display_name)s está siguiente a %(project)s en P2PU!"
 
 #: apps/relationships/models.py:74
 #, python-format
-msgid "%(name)s is now following"
-msgstr "%(name)s ahora está siguiendo"
+msgid "%(display_name)s is now following"
+msgstr "%(display_name)s ahora está siguiendo"
 
 #: apps/relationships/views.py:39
 msgid "You are already following this study group"

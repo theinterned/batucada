@@ -1,7 +1,7 @@
-  <div class="field{% if profile_form.display_name.errors %} error{% endif %}">
-    <label for="id_display_name">{{ _('Full Name') }}</label>
-    {{ profile_form.display_name }}
-    {{ profile_form.display_name.errors }}
+  <div class="field{% if profile_form.full_name.errors %} error{% endif %}">
+    <label for="id_full_name">{{ _('Display Name') }}</label>
+    {{ profile_form.full_name }}
+    {{ profile_form.full_name.errors }}
   </div>
   <div class="field{% if profile_form.location.errors %} error{% endif %}">
     <label for="id_location">{{ _('Location') }}</label>

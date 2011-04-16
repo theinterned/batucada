@@ -156,7 +156,7 @@ class PageComment(ModelBase):
         if self.page.slug != 'sign-up':
             return
         project = self.page.project
-        subject = _('[p2pu-%(slug)s-signup] Course %(name)s\'s signup page was updated') % {
+        subject = _('[p2pu-%(slug)s-signup] Study group %(name)s\'s signup page was updated') % {
             'slug': project.slug,
             'name': project.name,
             }

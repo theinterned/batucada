@@ -1,4 +1,4 @@
-{{ user.name }} {{ _('is now following ') }}{% if project %}{{ project }}{% else %}{{ _('you') }}{% endif %} {{ _('on P2PU!') }}
+{{ user.display_name }} {{ _('is now following ') }}{% if project %}{{ project }}{% else %}{{ _('you') }}{% endif %} {{ _('on P2PU!') }}
 
 {{ _('You can see their profile here:') }}
 http://{{ domain }}{{ user.get_absolute_url }}

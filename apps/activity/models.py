@@ -59,7 +59,7 @@ class Activity(ModelBase):
         target = self.target_user or self.target_project or self.project
         if target and self.verb == schema.verbs['follow']:
             return "%s %s %s" % (
-                self.actor.name, schema.past_tense['follow'],
+                self.actor.display_name, schema.past_tense['follow'],
                 target.name)
         if self.status:
             return self.status.status
@@ -70,7 +70,7 @@ class Activity(ModelBase):
             return self.target_object.title
 
         friendly_verb = schema.verbs_by_uri[self.verb]
-        return _("%(friendly_verb)s activity performed by %(self.actor.name)s") % (friendly_verb,
+        return _("%(friendly_verb)s activity performed by %(self.actor.display_name)s") % (friendly_verb,
                                                    self.actor.name)
 
     def html_representation(self):

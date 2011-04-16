@@ -23,9 +23,9 @@ def message_sent_handler(sender, **kwargs):
     for preference in preferences:
         if preference.value and preference.key == 'no_email_message_received':
             return
-    sender = message.sender.get_profile().name
-    subject = _('New Message from %(name)s' % {
-        'name': sender,
+    sender = message.sender.get_profile().display_name
+    subject = _('New Message from %(display_name)s' % {
+        'display_name': sender,
     })
     body = render_to_string('drumbeatmail/emails/direct_message.txt', {
         'sender': sender,
