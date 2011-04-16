@@ -2409,9 +2409,7 @@ ul.ui-autocomplete #ui-active-menuitem {
 }
 
 div.video-js-box {
-    margin: 20px 0px 20px 0px;
-}
-
-body#journalism > ul {
-    margin-bottom: 1.4em;
+    margin-top: 20px;
+    float: right;
+    left: 20px;
 }
