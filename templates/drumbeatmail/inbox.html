@@ -29,7 +29,7 @@
     {% if senders %}
       <ul id="conversations">
 	{% for sender, count in senders %}
-	  <li><a href="{% locale_url drumbeatmail_inbox_filtered filter=sender.username %}">{{ sender.name }} ({{ count }})</a></li>
+	  <li><a href="{% locale_url drumbeatmail_inbox_filtered filter=sender.username %}">{{ sender.display_name }} ({{ count }})</a></li>
 	{% endfor %}
       </ul>
     {% endif %}
@@ -62,9 +62,9 @@
       <div class="post-contents">
         <div class="post-details">
           {% if message.sender == user %}
-            <a class="member-name" href="{{ message.recipient.get_profile.get_absolute_url }}">{{ message.recipient.get_profile.name }}</a>
+            <a class="member-name" href="{{ message.recipient.get_profile.get_absolute_url }}">{{ message.recipient.get_profile.display_name }}</a>
           {% else %}
-            <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile.name }}</a>
+            <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile.display_name }}</a>
           {% endif %}
           {{ message.sent_at }}
         </div>

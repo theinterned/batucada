@@ -61,13 +61,13 @@
 <section id="people" class="panel">
   <h2>{{ _('People') }}</h2>
   <br>
-   <a href="{{ project.created_by.get_absolute_url }}" title="{{ project.created_by.name }} (organizer)"><img class="member-picture" src="{{ project.created_by.image_or_default }}" height="26" width="26" alt="{{ project.created_by.name }} (organizer)"></a>
+   <a href="{{ project.created_by.get_absolute_url }}" title="{{ project.created_by.display_name }} (organizer)"><img class="member-picture" src="{{ project.created_by.image_or_default }}" height="26" width="26" alt="{{ project.created_by.display_name }} (organizer)"></a>
   {% for participant in project.participants %}
-   <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user.name }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user.name }} (participant)"></a>
+   <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user.display_name }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user.display_name }} (participant)"></a>
   {% endfor %}
   {% for non_participant_follower in project.non_participant_followers %}
-   <a href="{{ non_participant_follower.get_absolute_url }}" title="{{ non_participant_follower.name }} (follower)">
-   <img class="member-picture" src="{{ non_participant_follower.image_or_default }}" height="26" width="26" alt="{{ non_participant_follower.name }} (follower)"></a>
+   <a href="{{ non_participant_follower.get_absolute_url }}" title="{{ non_participant_follower.display_name }} (follower)">
+   <img class="member-picture" src="{{ non_participant_follower.image_or_default }}" height="26" width="26" alt="{{ non_participant_follower.display_name }} (follower)"></a>
   {% endfor %}
   <br><br>
   {% if user.is_authenticated and user.get_profile != project.created_by and not participating %}

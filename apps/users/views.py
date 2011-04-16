@@ -481,6 +481,6 @@ def following(request):
     term = request.GET.get('term', '').lower()
     usernames = [u.username for u in user.following()
                  if term in u.username.lower() or
-                 term in u.display_name.lower()]
+                 term in u.full_name.lower()]
     return http.HttpResponse(simplejson.dumps(usernames),
                              mimetype='application/json')

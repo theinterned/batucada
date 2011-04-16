@@ -2,7 +2,7 @@
 {% spaceless %}
 
 {% if activity|should_show_verb and show_actor %}
-  <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.name }}</a>
+  <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.display_name }}</a>
 {% endif %}
 
 {% endspaceless %} {% spaceless %}

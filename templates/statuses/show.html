@@ -10,7 +10,7 @@
       {% endif %}
     </a>
   </div>
-  <a href="{{ status.author.get_profile.get_absolute_url }}">{{ status.author.get_profile.get_full_name_or_username }}</a>
+  <a href="{{ status.author.get_profile.get_absolute_url }}">{{ status.author.get_profile.display_name }}</a>
   {{ status.status }} (<small><a href="{{ status.get_absolute_url }}">{{ status.timesince }} ago</a></small>)
 </div>
 {% endblock %}

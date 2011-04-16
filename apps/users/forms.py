@@ -84,7 +84,7 @@ class CreateProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('username', 'display_name',
+        fields = ('username', 'full_name',
                   'bio', 'image', 'newsletter', 'email')
         widgets = {
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),

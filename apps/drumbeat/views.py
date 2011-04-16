@@ -35,7 +35,7 @@ def report_abuse(request, model, app_label, pk):
         %s
         
         (model: %s, app_label: %s, pk: %s)
-        """ % (request.user.get_profile().name, url, model, app_label, pk)
+        """ % (request.user.get_profile().display_name, url, model, app_label, pk)
         subject = "Abuse Report"
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])

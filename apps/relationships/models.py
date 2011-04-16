@@ -62,16 +62,16 @@ def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     if not isinstance(rel, Relationship):
         return
-    user_subject = _("%(name)s is following you on P2PU!" % {
-        'name': rel.source.name,
+    user_subject = _("%(display_name)s is following you on P2PU!" % {
+        'display_name': rel.source.display_name,
     })
-    project_subject = _("%(name)s is following %(project)s on P2PU!" % {
-        'name': rel.source.name,
+    project_subject = _("%(display_name)s is following %(project)s on P2PU!" % {
+        'display_name': rel.source.display_name,
         'project': rel.target_project,
     })
     activity = Activity(actor=rel.source,
                         verb='http://activitystrea.ms/schema/1.0/follow')
-    subject = _(u"%(name)s is now following")
+    subject = _(u"%(display_name)s is now following")
     if rel.target_user:
         activity.target_user = rel.target_user
         user = rel.target_user

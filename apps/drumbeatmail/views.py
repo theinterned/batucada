@@ -64,7 +64,7 @@ def serialize(inbox, sent_view=False):
                 message=msg.id)),
             'sender_url': sender.get_profile().get_absolute_url(),
             'sender_img': img,
-            'sender_name': sender.get_profile().name,
+            'sender_name': sender.get_profile().display_name,
             'subject': msg.subject,
             'body': msg.body,
             'sent_at': msg.sent_at.strftime('%b. %d, %Y, %I:%M %p').replace(

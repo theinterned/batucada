@@ -39,11 +39,11 @@ def check_password(drupal_user, password):
 
 
 def get_user_data(drupal_user):
-    display_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
+    full_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
     return {
         'username': drupal_user.name,
         'email': drupal_user.mail,
-        'display_name': display_name,
+        'full_name': full_name,
    }
 
 

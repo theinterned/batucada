@@ -9,10 +9,10 @@
     <fieldset>
       <form action="{% block action %}{% endblock %}" method="post">
         {% csrf_token %}
-        <div class="field{% if form.display_name.errors %} error{% endif %}">
-          <label for="id_display_name">{{ _('Display Name') }}</label>
-          {{ form.display_name }}
-          {{ form.display_name.errors }}
+        <div class="field{% if form.full_name.errors %} error{% endif %}">
+          <label for="id_full_name">{{ _('Display Name') }}</label>
+          {{ form.full_name }}
+          {{ form.full_name.errors }}
           <small class="hint">{{ _('A name that will identify you to other users. This is optional.') }}</small>
         </div>
         <div id="username" class="field{% if form.username.errors %} error{% endif %}">

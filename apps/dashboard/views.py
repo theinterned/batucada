@@ -34,7 +34,7 @@ def splash_page_activities():
         SELECT a.id
         FROM activity_activity a
         INNER JOIN users_userprofile u ON u.id = a.actor_id
-        WHERE u.display_name IS NOT NULL
+        WHERE u.full_name IS NOT NULL
             AND u.image IS NOT NULL
             AND u.image != ''
             AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
@@ -88,7 +88,7 @@ def dashboard(request):
         if user.username[:10] != 'openiduser':
             username = user.username
         form = CreateProfileForm(initial={
-            'display_name': ' '.join((user.first_name, user.last_name)),
+            'full_name': ' '.join((user.first_name, user.last_name)),
             'email': user.email,
             'username': username,
         })
