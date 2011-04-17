@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-17 01:46-0400\n"
+"POT-Creation-Date: 2011-04-17 02:32-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -511,7 +511,11 @@ msgstr ""
 msgid "Learning for everyone, by everyone, about almost anything."
 msgstr "Aprendizaje para todos, por medio de todos y acerca de casi todo"
 
-#: templates/base.html:44 templates/content/comment_page.html:12
+#: templates/base.html:42
+msgid "BETA"
+msgstr ""
+
+#: templates/base.html:45 templates/content/comment_page.html:12
 #: templates/content/comment_sign_up.html:12
 #: templates/content/create_page.html:11 templates/content/edit_page.html:12
 #: templates/content/history_page.html:14 templates/content/page.html:14
@@ -523,52 +527,52 @@ msgstr "Aprendizaje para todos, por medio de todos y acerca de casi todo"
 msgid "Study Groups"
 msgstr "Grupos de Estudio"
 
-#: templates/base.html:45 templates/projects/sidebar.html:67
+#: templates/base.html:46 templates/projects/sidebar.html:67
 #: templates/users/profile.html:16 templates/users/profile_edit.html:11
 #: templates/users/user_list.html:5 templates/users/user_list.html.py:11
 msgid "People"
 msgstr "Gente"
 
-#: templates/base.html:48
+#: templates/base.html:49
 msgid "Help"
 msgstr ""
 
-#: templates/base.html:50
+#: templates/base.html:51
 msgid "FAQ"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:52
 msgid "P2PU Help Desk"
 msgstr ""
 
-#: templates/base.html:70 templates/dashboard/dashboard.html:4
+#: templates/base.html:71 templates/dashboard/dashboard.html:4
 msgid "Your Dashboard"
 msgstr "Su Tablero"
 
-#: templates/base.html:71
+#: templates/base.html:72
 msgid "Your Profile"
 msgstr "Su Perfil"
 
-#: templates/base.html:72 templates/preferences/settings.html:6
+#: templates/base.html:73 templates/preferences/settings.html:6
 #: templates/preferences/settings.html:12
 #: templates/preferences/settings.html:20
 msgid "Account Settings"
 msgstr "Configuración de Cuenta"
 
-#: templates/base.html:78 templates/drumbeatmail/inbox.html:4
+#: templates/base.html:79 templates/drumbeatmail/inbox.html:4
 #: templates/drumbeatmail/inbox.html:9 templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:93
+#: templates/base.html:94
 msgid "View All Messages"
 msgstr "Ver Todos los Mensajes"
 
-#: templates/base.html:99
+#: templates/base.html:100
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:104
+#: templates/base.html:105
 msgid "Login"
 msgstr "Ingresar"
 
@@ -777,28 +781,6 @@ msgstr "Respuesta:"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: templates/content/emails/sign_up_updated.txt:11
-msgid "See:"
-msgstr "Ver:"
-
-#: templates/content/emails/sign_up_updated.txt:13
-#: templates/drumbeatmail/emails/direct_message.txt:7
-#: templates/projects/emails/course_updated.txt:15
-#: templates/relationships/emails/new_follower.txt:6
-#: templates/users/emails/forgot_password.txt:10
-#: templates/users/emails/registration_confirm.txt:9
-msgid "Sincerely,"
-msgstr "Sinceramente,"
-
-#: templates/content/emails/sign_up_updated.txt:14
-#: templates/drumbeatmail/emails/direct_message.txt:8
-#: templates/projects/emails/course_updated.txt:16
-#: templates/relationships/emails/new_follower.txt:7
-#: templates/users/emails/forgot_password.txt:11
-#: templates/users/emails/registration_confirm.txt:10
-msgid "The P2PU Team"
-msgstr "El Equipo P2PU"
-
 #: templates/dashboard/dashboard.html:14
 msgid "'s profile picture"
 msgstr " imagen del perfil"
@@ -819,7 +801,6 @@ msgid "Following"
 msgstr "Siguiendo"
 
 #: templates/dashboard/dashboard.html:57
-#: templates/users/emails/registration_confirm.txt:1
 msgid "Welcome to P2PU!"
 msgstr "¡Bienvenido a P2PU!"
 
@@ -1088,14 +1069,6 @@ msgstr "No tiene mensajes"
 #: templates/drumbeatmail/inbox.html:116
 msgid "More"
 msgstr "Más"
-
-#: templates/drumbeatmail/emails/direct_message.txt:1
-msgid "You have received a new direct message from "
-msgstr "Ha recibido un nuevo mensaje directo de "
-
-#: templates/drumbeatmail/emails/direct_message.txt:5
-msgid "Reply:"
-msgstr "Respuesta:"
 
 #: templates/events/index.html:4 templates/events/index.html.py:10
 msgid "Events"
@@ -1616,26 +1589,6 @@ msgstr ""
 "Todos los participantes podrán ver sus respuestas cuando sea aceptado en el "
 "grupo de estudio."
 
-#: templates/projects/emails/course_updated.txt:3
-msgid "updated the wall of "
-msgstr "actualizado el muro de "
-
-#: templates/relationships/emails/new_follower.txt:1
-msgid "is now following "
-msgstr "ahora está siguiendo "
-
-#: templates/relationships/emails/new_follower.txt:1
-msgid "you"
-msgstr "usted"
-
-#: templates/relationships/emails/new_follower.txt:1
-msgid "on P2PU!"
-msgstr "en P2PU!"
-
-#: templates/relationships/emails/new_follower.txt:3
-msgid "You can see their profile here:"
-msgstr "Puede ver su perfil aquí:"
-
 #: templates/schools/home.html:13 templates/schools/menu.html:4
 msgid "Schools"
 msgstr "Escuelas"
@@ -1730,7 +1683,6 @@ msgstr "Hmm, no parece un enlace correcto."
 
 #: templates/users/forgot_password_done.html:3
 #: templates/users/forgot_password_done.html:8
-#: templates/users/emails/forgot_password.txt:1
 msgid "Password Reset"
 msgstr "Restablecer Contraseña"
 
@@ -1929,34 +1881,60 @@ msgstr "Popular esta Semana"
 msgid "New People"
 msgstr "Gente Nueva"
 
-#: templates/users/emails/forgot_password.txt:3
-msgid "A request was received to reset the password for this account on "
-msgstr ""
-"Se ha recibido una solicitud para restablecer la clave de esta cuenta en "
+#~ msgid "See:"
+#~ msgstr "Ver:"
 
-#: templates/users/emails/forgot_password.txt:4
-msgid ""
-"To change this password please click on the following link, or paste it into "
-"your browser's location bar:"
-msgstr ""
-"Para cambiar esta clave, pulse sobre el siguiente enlace o peguelo en la "
-"barra de direcciones de su navegador:"
+#~ msgid "Sincerely,"
+#~ msgstr "Sinceramente,"
 
-#: templates/users/emails/forgot_password.txt:8
-msgid "If you did not request this email there is no need for further action."
-msgstr "Si no solicitó este mensaje, no realice acción alguna."
+#~ msgid "The P2PU Team"
+#~ msgstr "El Equipo P2PU"
 
-#: templates/users/emails/registration_confirm.txt:3
-msgid ""
-"To complete the sign up process, please confirm your email address by "
-"clicking here:"
-msgstr ""
-"Para completar el proceso de suscripción, por favor confirme su dirección de "
-"correo-e pulsando aquí:"
+#~ msgid "You have received a new direct message from "
+#~ msgstr "Ha recibido un nuevo mensaje directo de "
 
-#: templates/users/emails/registration_confirm.txt:7
-msgid "Thank you!"
-msgstr "¡Gracias!"
+#~ msgid "Reply:"
+#~ msgstr "Respuesta:"
+
+#~ msgid "updated the wall of "
+#~ msgstr "actualizado el muro de "
+
+#~ msgid "is now following "
+#~ msgstr "ahora está siguiendo "
+
+#~ msgid "you"
+#~ msgstr "usted"
+
+#~ msgid "on P2PU!"
+#~ msgstr "en P2PU!"
+
+#~ msgid "You can see their profile here:"
+#~ msgstr "Puede ver su perfil aquí:"
+
+#~ msgid "A request was received to reset the password for this account on "
+#~ msgstr ""
+#~ "Se ha recibido una solicitud para restablecer la clave de esta cuenta en "
+
+#~ msgid ""
+#~ "To change this password please click on the following link, or paste it "
+#~ "into your browser's location bar:"
+#~ msgstr ""
+#~ "Para cambiar esta clave, pulse sobre el siguiente enlace o peguelo en la "
+#~ "barra de direcciones de su navegador:"
+
+#~ msgid ""
+#~ "If you did not request this email there is no need for further action."
+#~ msgstr "Si no solicitó este mensaje, no realice acción alguna."
+
+#~ msgid ""
+#~ "To complete the sign up process, please confirm your email address by "
+#~ "clicking here:"
+#~ msgstr ""
+#~ "Para completar el proceso de suscripción, por favor confirme su dirección "
+#~ "de correo-e pulsando aquí:"
+
+#~ msgid "Thank you!"
+#~ msgstr "¡Gracias!"
 
 #, fuzzy
 #~ msgid "Status & Dates"
