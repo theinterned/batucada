@@ -36,6 +36,11 @@
       {% if project.testing_sandbox %}
       <li>{{ _('Testing Sandbox') }}</li>
       {% endif %}
+      {% if project.start_date or project.end_date %}
+        <li>{{ _('Runs') }} {% if project.start_date %} {{ project.start_date }} {% endif %} 
+        {% if project.end_date %} {{ _('to') }}  
+        {{ project.end_date }}{% endif %} </li>
+      {% endif %}
       <li>
         {{ _('Signup') }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="{{ project.sign_up.get_absolute_url }}">
