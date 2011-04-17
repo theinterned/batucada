@@ -11,3 +11,4 @@ sql/
 celery-schedule
 lernanta.log
 .project
+.pydevproject
