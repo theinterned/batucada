@@ -34,7 +34,7 @@ If you're planning on contributing back to the project, `fork the repository`_ i
 
 .. _fork the repository: http://help.github.com/forking/
 
-Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using ``virtualenvwrapper`` is also recommended. ::
+Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using `virtualenvwrapper`_ is also recommended. ::
 
    sudo easy_install virtualenv
    sudo easy_install pip
