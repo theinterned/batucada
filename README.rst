@@ -34,12 +34,13 @@ If you're planning on contributing back to the project, `fork the repository`_ i
 
 .. _fork the repository: http://help.github.com/forking/
 
-Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them: ::
+Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using `virtualenvwrapper`_ is also recommended. ::
 
    sudo easy_install virtualenv
    sudo easy_install pip
+   pip install virtualenvwrapper
    
-Using ``virtualenvwrapper`` is also recommended (see the `installation instructions`_). Be sure to configure your shell so that pip knows where to find your virtual environments: ::
+Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
    # in .bashrc or .bash_profile
    export WORKON_HOME=$HOME/.virtualenvs
@@ -47,7 +48,7 @@ Using ``virtualenvwrapper`` is also recommended (see the `installation instructi
    export PIP_RESPECT_VIRTUALENV=true
    source /usr/local/bin/virtualenvwrapper.sh
 
-.. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
+.. _virtualenvwrapper: http://www.doughellmann.com/docs/virtualenvwrapper/
 
 Once installed, create your virtual environment for ``lernanta`` and install the dependencies ::
 
