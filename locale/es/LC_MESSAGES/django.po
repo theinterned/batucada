@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-16 11:08-0400\n"
+"POT-Creation-Date: 2011-04-16 22:50-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,12 +23,15 @@ msgstr "Bitácora de actividades para %s"
 #: apps/activity/models.py:73
 #, python-format
 msgid "%(friendly_verb)s activity performed by %(self.actor.display_name)s"
-msgstr "La actividad %(friendly_verb)s fue realizada por %(self.actor.display_name)s"
+msgstr ""
+"La actividad %(friendly_verb)s fue realizada por %(self.actor.display_name)s"
 
 #: apps/activity/models.py:83
 #, python-format
 msgid "Activity ID %(self.pk)d. Actor id %(self.actor.pk)d, Verb %(self.verb)s"
-msgstr "Id de actividad %(self.pk)d. Id  de Actor %(self.actor.pk)d, Verbo %(self.verb)s"
+msgstr ""
+"Id de actividad %(self.pk)d. Id  de Actor %(self.actor.pk)d, Verbo "
+"%(self.verb)s"
 
 #: apps/content/models.py:75
 msgid "added"
@@ -46,7 +49,8 @@ msgstr "comentario publicado"
 #: apps/content/models.py:159
 #, fuzzy, python-format
 msgid "[p2pu-%(slug)s-signup] Study group %(name)s's signup page was updated"
-msgstr "[p2pu-%(slug)s-signup] La página de suscripción del curso %(display_name)s's "
+msgstr ""
+"[p2pu-%(slug)s-signup] La página de suscripción del curso %(display_name)s's "
 "fue actualizada"
 
 #: apps/content/views.py:58
@@ -72,7 +76,8 @@ msgid "Comment posted!"
 msgstr "Comentaado!"
 
 #: apps/content/views.py:136
-msgid "There was a problem posting the comment."
+#, fuzzy
+msgid "There was a problem posting the comment. Comments cannot be empty."
 msgstr "Ocurrió un problema publicando el comentario."
 
 #: apps/content/views.py:199
@@ -1047,7 +1052,7 @@ msgstr "¿Eres humano?"
 #: templates/drumbeatmail/base.html:46
 msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
-"Wil."
+"will."
 msgstr ""
 
 #: templates/drumbeatmail/base.html:55 templates/messages/compose.html:8
