@@ -301,6 +301,19 @@ header {}
       z-index: 2;
     }
 
+    #beta-tag {
+        position: absolute;
+        margin-top: 80px;
+        margin-left: 109px; 
+        font-size: 21px; 
+        color: #f08c00; 
+        z-index: 5;
+    }
+    
+    a#beta-tag:hover {
+        color: #36cdc4;
+    }
+
     #language-nav {
       background-color: #ffffff;
       background-image: url("/media/images/icon.world.png");
