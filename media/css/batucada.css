@@ -203,6 +203,7 @@ label {
 	line-height: 1.5;
 	color: #262626;
 	}	
+	
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -266,6 +267,17 @@ form .small {
     margin-bottom: 1.5em;
     display: block;
 	}	
+
+.start_date input, 
+.end_date input {
+    width: 7em !important;
+}
+
+.start_date label,
+.end_date label {
+    display: inline;
+}
+
 /* 
  * LAYOUT 
  */
@@ -2141,6 +2153,12 @@ div.warning h2 {
 #comment .errorlist {
 	right: -160px;
 	top: 100px;
+}
+
+.start_date .errorlist, 
+.end_date .errorlist {
+    right: -150px;
+    top: -9px;    
 }
 
 .errorlist:before {
