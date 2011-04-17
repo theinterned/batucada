@@ -2108,7 +2108,7 @@ div.warning h2 {
     font-size: 0.8em;
     font-weight: bold;
 }
-/* Stye for errors in forms */
+/* Style for errors in forms */
 .errorlist{
     position: absolute;
     top: 18px; right: -108px;
@@ -2133,9 +2133,16 @@ div.warning h2 {
 		rgba(0,0,0,0.3) 2px 2px 2px;
 	list-style: none;
 	}
+
 .signin .errorlist {
 	right: -154px;
 	}	
+
+#comment .errorlist {
+	right: -160px;
+	top: 100px;
+}
+
 .errorlist:before {
 	content: "\0020";
 	display: block;

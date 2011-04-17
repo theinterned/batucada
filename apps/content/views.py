@@ -133,7 +133,7 @@ def comment_page(request, slug, page_slug, comment_id=None):
             }))
         else:
             messages.error(request,
-                           _('There was a problem posting the comment.'))
+                           _('There was a problem posting the comment. Comments cannot be empty.'))
     else:
         form = CommentForm()
     return render_to_response('content/comment_page.html', {
