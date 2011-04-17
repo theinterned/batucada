@@ -479,6 +479,8 @@ $(document).ready(function() {
     
     $('.modal nav.tabs a').tabLinks('.tabpane');
     $('#id_due_on').datepicker();
+    $('#id_start_date').datepicker();
+    $('#id_end_date').datepicker();
     customizeCKEditor();
 });
 

@@ -203,6 +203,7 @@ label {
 	line-height: 1.5;
 	color: #262626;
 	}	
+	
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -266,6 +267,17 @@ form .small {
     margin-bottom: 1.5em;
     display: block;
 	}	
+
+.start_date input, 
+.end_date input {
+    width: 7em !important;
+}
+
+.start_date label,
+.end_date label {
+    display: inline;
+}
+
 /* 
  * LAYOUT 
  */
@@ -287,6 +299,19 @@ header {}
       margin-right: 20px;
       position: absolute;
       z-index: 2;
+    }
+
+    #beta-tag {
+        position: absolute;
+        margin-top: 80px;
+        margin-left: 109px; 
+        font-size: 21px; 
+        color: #f08c00; 
+        z-index: 5;
+    }
+    
+    a#beta-tag:hover {
+        color: #36cdc4;
     }
 
     #language-nav {
@@ -2108,7 +2133,7 @@ div.warning h2 {
     font-size: 0.8em;
     font-weight: bold;
 }
-/* Stye for errors in forms */
+/* Style for errors in forms */
 .errorlist{
     position: absolute;
     top: 18px; right: -108px;
@@ -2133,9 +2158,22 @@ div.warning h2 {
 		rgba(0,0,0,0.3) 2px 2px 2px;
 	list-style: none;
 	}
+
 .signin .errorlist {
 	right: -154px;
 	}	
+
+#comment .errorlist {
+	right: -160px;
+	top: 100px;
+}
+
+.start_date .errorlist, 
+.end_date .errorlist {
+    right: -150px;
+    top: -9px;    
+}
+
 .errorlist:before {
 	content: "\0020";
 	display: block;

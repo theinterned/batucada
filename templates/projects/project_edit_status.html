@@ -4,10 +4,11 @@
 
 {% block form %}
 <fieldset id="project_edit_status" class="project edit status tabpane">
-<h2>{{ _('Status') }}</h2>
-<p class="hint">{{ _('Configure your study group\'s status, such that it appears in the appropiate lists.') }}</p>
-<form action="{% locale_url projects_edit_status slug=project.slug %}" method="post">
-  {% csrf_token %}
+
+<h2>{{ _('Status &amp; Dates') }}</h2>
+   <form action="{% locale_url projects_edit_status slug=project.slug %}" method="post">
+  {% csrf_token %} 
+<p class="hint">{{ _('Configure your study group\'s status, such that it appears in the appropriate lists. Dates are optional and will show on the group\'s home page.') }}</p>
    <p>
     <label for="id_under_development">
     {{ form.under_development }}
@@ -28,6 +29,23 @@
     {{ _('Testing Sandbox.') }}
     </label>
     {{ form.testing_sandbox.errors }}
+  </p>
+  <p>
+      <span class="field start_date {% if form.start_date.errors %} error{% endif %} "> 
+        <label for="id_start_date">
+        {{ _('Open from') }}
+        </label>
+        {{ form.start_date }}
+      </span>
+       
+      <span class="field end_date {% if form.end_date.errors %} error{% endif %}"> 
+        <label for="id_end_date">
+        {{ _('to') }}
+        </label>
+        {{ form.end_date }}
+        {{ form.start_date.errors }}
+        {{ form.end_date.errors }}
+      </span>
   </p>
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
