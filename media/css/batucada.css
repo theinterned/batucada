@@ -601,6 +601,25 @@ header {}
         margin: 0;
         list-style: none;
       }
+
+      #project-stats li {
+        clear:both;
+      }
+
+      #project-stats .label{
+	float:left;
+      }
+      #project-stats .value{
+	float:right;
+      }
+
+#project-stats .beta-development{
+	text-align:center;
+	background-color:red;
+	color:white;
+}
+
+
         
       #project-summary,
       #sidebar #project-description { 
