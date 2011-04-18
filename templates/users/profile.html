@@ -46,7 +46,7 @@
         {% else %}
         <form action="{% locale_url relationships_follow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <button id="follow-user">Follow</button>
+          <button id="follow-user">{{ _('Follow') }}</button>
         </form>
         {% endif %}
         <a class="button" href="{% locale_url drumbeatmail_compose_to username=profile.username %}">{{ _('Private Message')}}</a>

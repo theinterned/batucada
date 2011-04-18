@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 03:15-0500\n"
+"POT-Creation-Date: 2011-04-18 09:59-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,6 +233,10 @@ msgstr "El participante %s ha sido retirado."
 #: apps/projects/views.py:228
 msgid "Full Description"
 msgstr "Descripción Completa"
+
+#: apps/projects/views.py:235
+msgid "Sign-Up"
+msgstr "Suscripción"
 
 #: apps/projects/views.py:241
 msgid "The study group has been created."
@@ -1093,7 +1097,7 @@ msgstr "Todos los Mensajes"
 
 #: templates/drumbeatmail/inbox.html:26
 msgid "Sent"
-msgstr "Enviar"
+msgstr "Enviados"
 
 #: templates/drumbeatmail/inbox.html:41
 msgid "You have no messages"
@@ -1557,7 +1561,7 @@ msgstr "Ver Descripción Completa"
 msgid "Unfollow"
 msgstr "Dejar de Seguir"
 
-#: templates/projects/sidebar.html:88
+#: templates/projects/sidebar.html:88 templates/users/profile.html:49
 msgid "Follow"
 msgstr "Seguir"
 
@@ -1608,10 +1612,10 @@ msgid ""
 "their interest and background in the topic and commit to working with the "
 "rest of the study group. Please provide details about:"
 msgstr ""
-"Cualquier persona puede seguir un grupo de estudio en P2PU.Participar es el "
-"siguiente nivel de involucramiento.  La suscripción es un espacio en el que "
-"los individuos interesados pueden expresar sus intereses y transfonod en el "
-"tema y decidirse a trabajar con el resto del grupo de estudio.  Por favor "
+"Cualquier persona puede seguir un grupo de estudio en P2PU.  Participar es "
+"el siguiente nivel de involucramiento.  La suscripción es un espacio en el "
+"que los individuos interesados pueden expresar sus intereses y transfondo en "
+"el tema y decidirse a trabajar con el resto del grupo de estudio.  Por favor "
 "provea detalles sobre:"
 
 #: templates/projects/sign_up_initial_content.html:4
