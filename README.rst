@@ -50,7 +50,7 @@ Be sure to configure your shell so that pip knows where to find your virtual env
 
 .. _virtualenvwrapper: http://www.doughellmann.com/docs/virtualenvwrapper/
 
-Once installed, create your virtual environment for ``lernanta`` and install the dependencies ::
+Once installed, create your virtual environment for ``lernanta`` and install the dependencies. There's a chance that packages listed in ``requirements/compiled.txt`` won't install cleanly if your system is missing some key development libraries. For example, lxml requires ``libxml2-dev`` and ``libxslt-dev``. These should be available from your system's package manager. ::
 
    cd lernanta
    mkvirtualenv --no-site-packages lernanta 
@@ -58,8 +58,6 @@ Once installed, create your virtual environment for ``lernanta`` and install the
    pip install -r requirements/compiled.txt
    pip install -r requirements/prod.txt
    pip install -r requirements/dev.txt
-
-There's a chance that packages listed in ``requirements/compiled.txt`` won't install cleanly if your system is missing some key development libraries. For example, lxml requires ``libxml2-dev`` and ``libxslt-dev``. These should be available from your system's package manager.
    
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
