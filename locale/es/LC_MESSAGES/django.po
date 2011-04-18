@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-17 02:32-0400\n"
+"POT-Creation-Date: 2011-04-18 09:59-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,11 +47,11 @@ msgid "posted comment"
 msgstr "comentario publicado"
 
 #: apps/content/models.py:159
-#, fuzzy, python-format
+#, python-format
 msgid "[p2pu-%(slug)s-signup] Study group %(name)s's signup page was updated"
 msgstr ""
-"[p2pu-%(slug)s-signup] La página de suscripción del curso %(display_name)s's "
-"fue actualizada"
+"[p2pu-%(slug)s-signup] Se actualizó la página de suscripción del grupo de "
+"estudio %(name)s"
 
 #: apps/content/views.py:58
 #, python-format
@@ -76,9 +76,8 @@ msgid "Comment posted!"
 msgstr "Comentaado!"
 
 #: apps/content/views.py:136
-#, fuzzy
 msgid "There was a problem posting the comment. Comments cannot be empty."
-msgstr "Ocurrió un problema publicando el comentario."
+msgstr "Ocurrió un problema publicando el comentario.  No pueden ser vacíos."
 
 #: apps/content/views.py:199
 #, python-format
@@ -234,6 +233,10 @@ msgstr "El participante %s ha sido retirado."
 #: apps/projects/views.py:228
 msgid "Full Description"
 msgstr "Descripción Completa"
+
+#: apps/projects/views.py:235
+msgid "Sign-Up"
+msgstr "Suscripción"
 
 #: apps/projects/views.py:241
 msgid "The study group has been created."
@@ -505,17 +508,21 @@ msgstr "aprender más sobre P2Pu e involucrarse?"
 
 #: templates/_footer.html:25
 msgid "Looking for the current P2PU website?"
-msgstr ""
+msgstr "¿Busca el sitio web actual de P2PU?"
 
-#: templates/base.html:14
+#: templates/base.html:14 tmp/base.html:14
 msgid "Learning for everyone, by everyone, about almost anything."
 msgstr "Aprendizaje para todos, por medio de todos y acerca de casi todo"
 
-#: templates/base.html:42
-msgid "BETA"
-msgstr ""
+#: templates/base.html:26 tmp/base.html:26
+msgid "css/style-lang.css"
+msgstr "css/estilo.css"
 
-#: templates/base.html:45 templates/content/comment_page.html:12
+#: templates/base.html:43
+msgid "BETA"
+msgstr "BETA"
+
+#: templates/base.html:46 templates/content/comment_page.html:12
 #: templates/content/comment_sign_up.html:12
 #: templates/content/create_page.html:11 templates/content/edit_page.html:12
 #: templates/content/history_page.html:14 templates/content/page.html:14
@@ -524,55 +531,59 @@ msgstr ""
 #: templates/dashboard/dashboard.html:36 templates/projects/gallery.html:4
 #: templates/projects/gallery.html.py:10 templates/projects/project.html:14
 #: templates/projects/project_edit.html:10 templates/users/profile.html:104
+#: tmp/base.html:45
 msgid "Study Groups"
 msgstr "Grupos de Estudio"
 
-#: templates/base.html:46 templates/projects/sidebar.html:67
+#: templates/base.html:47 templates/projects/sidebar.html:67
 #: templates/users/profile.html:16 templates/users/profile_edit.html:11
 #: templates/users/user_list.html:5 templates/users/user_list.html.py:11
+#: tmp/base.html:46
 msgid "People"
 msgstr "Gente"
 
-#: templates/base.html:49
+#: templates/base.html:50 tmp/base.html:49
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
-#: templates/base.html:51
+#: templates/base.html:52 tmp/base.html:51
 msgid "FAQ"
-msgstr ""
+msgstr "Preguntas Frecuentes"
 
-#: templates/base.html:52
+#: templates/base.html:53 tmp/base.html:52
 msgid "P2PU Help Desk"
-msgstr ""
+msgstr "Escritorio de Ayuda P2PU"
 
-#: templates/base.html:71 templates/dashboard/dashboard.html:4
+#: templates/base.html:72 templates/dashboard/dashboard.html:4
+#: tmp/base.html:71
 msgid "Your Dashboard"
 msgstr "Su Tablero"
 
-#: templates/base.html:72
+#: templates/base.html:73 tmp/base.html:72
 msgid "Your Profile"
 msgstr "Su Perfil"
 
-#: templates/base.html:73 templates/preferences/settings.html:6
+#: templates/base.html:74 templates/preferences/settings.html:6
 #: templates/preferences/settings.html:12
-#: templates/preferences/settings.html:20
+#: templates/preferences/settings.html:20 tmp/base.html:73
 msgid "Account Settings"
 msgstr "Configuración de Cuenta"
 
-#: templates/base.html:79 templates/drumbeatmail/inbox.html:4
+#: templates/base.html:80 templates/drumbeatmail/inbox.html:4
 #: templates/drumbeatmail/inbox.html:9 templates/drumbeatmail/inbox.html:20
+#: tmp/base.html:79
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:94
+#: templates/base.html:95 tmp/base.html:94
 msgid "View All Messages"
 msgstr "Ver Todos los Mensajes"
 
-#: templates/base.html:100
+#: templates/base.html:101 tmp/base.html:100
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:105
+#: templates/base.html:106 tmp/base.html:105
 msgid "Login"
 msgstr "Ingresar"
 
@@ -781,6 +792,28 @@ msgstr "Respuesta:"
 msgid "Accept"
 msgstr "Aceptar"
 
+#: templates/content/emails/sign_up_updated.txt:11
+msgid "See:"
+msgstr "Ver:"
+
+#: templates/content/emails/sign_up_updated.txt:13
+#: templates/drumbeatmail/emails/direct_message.txt:7
+#: templates/projects/emails/course_updated.txt:15
+#: templates/relationships/emails/new_follower.txt:6
+#: templates/users/emails/forgot_password.txt:10
+#: templates/users/emails/registration_confirm.txt:9
+msgid "Sincerely,"
+msgstr "Sinceramente,"
+
+#: templates/content/emails/sign_up_updated.txt:14
+#: templates/drumbeatmail/emails/direct_message.txt:8
+#: templates/projects/emails/course_updated.txt:16
+#: templates/relationships/emails/new_follower.txt:7
+#: templates/users/emails/forgot_password.txt:11
+#: templates/users/emails/registration_confirm.txt:10
+msgid "The P2PU Team"
+msgstr "El Equipo P2PU"
+
 #: templates/dashboard/dashboard.html:14
 msgid "'s profile picture"
 msgstr " imagen del perfil"
@@ -801,6 +834,7 @@ msgid "Following"
 msgstr "Siguiendo"
 
 #: templates/dashboard/dashboard.html:57
+#: templates/users/emails/registration_confirm.txt:1
 msgid "Welcome to P2PU!"
 msgstr "¡Bienvenido a P2PU!"
 
@@ -875,9 +909,10 @@ msgid ""
 "We are an <em class=\"highlight1\">online</em><br>community that<br><em "
 "class=\"highlight2\">enables learning</em>. <em class=\"highlight3\">So</em>"
 msgstr ""
-"Somos una comunidad<br><em class=\"highlight1\">en línea</em> que <br><em "
-"class=\"highlight2\">posibilita el aprendizaje</em>. <em class="
-"\"highlight3\">Así</em>"
+"<div style='font-size=50'>Somos una comunidad<br><em class=\"highlight1\">en "
+"línea</em> que <em class=\"highlight2\">posibilita<br> el aprendizaje</em>, "
+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em class="
+"\"highlight3\" align=\"right\">así</em></div>"
 
 #: templates/dashboard/splash.html:18
 msgid "At"
@@ -1035,6 +1070,8 @@ msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
 "will."
 msgstr ""
+"Bienvenidos Robots, ReCaptch ha sido deshabilitado para su conveniencia.  "
+"Envíe spam como lo desee."
 
 #: templates/drumbeatmail/base.html:55 templates/messages/compose.html:8
 #: templates/projects/contact_users.html:25
@@ -1060,7 +1097,7 @@ msgstr "Todos los Mensajes"
 
 #: templates/drumbeatmail/inbox.html:26
 msgid "Sent"
-msgstr "Enviar"
+msgstr "Enviados"
 
 #: templates/drumbeatmail/inbox.html:41
 msgid "You have no messages"
@@ -1069,6 +1106,14 @@ msgstr "No tiene mensajes"
 #: templates/drumbeatmail/inbox.html:116
 msgid "More"
 msgstr "Más"
+
+#: templates/drumbeatmail/emails/direct_message.txt:1
+msgid "You have received a new direct message from "
+msgstr "Ha recibido un nuevo mensaje directo de "
+
+#: templates/drumbeatmail/emails/direct_message.txt:5
+msgid "Reply:"
+msgstr "Respuesta:"
 
 #: templates/events/index.html:4 templates/events/index.html.py:10
 msgid "Events"
@@ -1322,7 +1367,7 @@ msgstr "Imagen"
 #: templates/projects/project_edit.html:38
 #: templates/projects/project_edit_status.html:8
 msgid "Status &amp; Dates"
-msgstr "Estado &amp; Dates"
+msgstr "Estado &amp; Fechas"
 
 #: templates/projects/project_edit.html:40
 #: templates/projects/project_edit_links.html:7
@@ -1330,9 +1375,8 @@ msgid "Links &amp; Content"
 msgstr "Enlaces &amp; Contenido"
 
 #: templates/projects/project_edit_image.html:14
-#, fuzzy
 msgid "Upload a Study Group Image"
-msgstr "Subir una Imagen del Curso"
+msgstr "Subir una Imagen del Grupo de Estudio"
 
 #: templates/projects/project_edit_image.html:16
 msgid "This image is shown in search results and on the listing page."
@@ -1349,6 +1393,8 @@ msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
 "195x120 pixels"
 msgstr ""
+"Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
+"Dimensiones: 195x120 pixels"
 
 #: templates/projects/project_edit_image.html:25
 #: templates/users/profile_edit_image.html:22
@@ -1416,13 +1462,13 @@ msgid "Username"
 msgstr "Usuario"
 
 #: templates/projects/project_edit_status.html:11
-#, fuzzy
 msgid ""
 "Configure your study group's status, such that it appears in the appropriate "
 "lists. Dates are optional and will show on the group's home page."
 msgstr ""
 "Configure el estado de su grupo de estudio, de forma que aparezca en las "
-"listas apropiadas."
+"listas apropiadas.   Las fechas son opcionales y aparencerán en la página "
+"del grupo."
 
 #: templates/projects/project_edit_status.html:15
 msgid "Under Development."
@@ -1437,14 +1483,13 @@ msgid "Testing Sandbox."
 msgstr "Probar en la arenera"
 
 #: templates/projects/project_edit_status.html:36
-#, fuzzy
 msgid "Open from"
-msgstr "Abierto"
+msgstr "Abierto desde"
 
 #: templates/projects/project_edit_status.html:43
 #: templates/projects/sidebar.html:41
 msgid "to"
-msgstr ""
+msgstr "a"
 
 #: templates/projects/project_edit_summary.html:11
 msgid ""
@@ -1494,7 +1539,7 @@ msgstr "Arenera de Prueba"
 
 #: templates/projects/sidebar.html:40
 msgid "Runs"
-msgstr ""
+msgstr "Corre"
 
 #: templates/projects/sidebar.html:45
 msgid "Signup"
@@ -1516,7 +1561,7 @@ msgstr "Ver Descripción Completa"
 msgid "Unfollow"
 msgstr "Dejar de Seguir"
 
-#: templates/projects/sidebar.html:88
+#: templates/projects/sidebar.html:88 templates/users/profile.html:49
 msgid "Follow"
 msgstr "Seguir"
 
@@ -1567,10 +1612,10 @@ msgid ""
 "their interest and background in the topic and commit to working with the "
 "rest of the study group. Please provide details about:"
 msgstr ""
-"Cualquier persona puede seguir un grupo de estudio en P2PU.Participar es el "
-"siguiente nivel de involucramiento.  La suscripción es un espacio en el que "
-"los individuos interesados pueden expresar sus intereses y transfonod en el "
-"tema y decidirse a trabajar con el resto del grupo de estudio.  Por favor "
+"Cualquier persona puede seguir un grupo de estudio en P2PU.  Participar es "
+"el siguiente nivel de involucramiento.  La suscripción es un espacio en el "
+"que los individuos interesados pueden expresar sus intereses y transfondo en "
+"el tema y decidirse a trabajar con el resto del grupo de estudio.  Por favor "
 "provea detalles sobre:"
 
 #: templates/projects/sign_up_initial_content.html:4
@@ -1588,6 +1633,26 @@ msgid ""
 msgstr ""
 "Todos los participantes podrán ver sus respuestas cuando sea aceptado en el "
 "grupo de estudio."
+
+#: templates/projects/emails/course_updated.txt:3
+msgid "updated the wall of "
+msgstr "actualizado el muro de "
+
+#: templates/relationships/emails/new_follower.txt:1
+msgid "is now following "
+msgstr "ahora está siguiendo "
+
+#: templates/relationships/emails/new_follower.txt:1
+msgid "you"
+msgstr "usted"
+
+#: templates/relationships/emails/new_follower.txt:1
+msgid "on P2PU!"
+msgstr "en P2PU!"
+
+#: templates/relationships/emails/new_follower.txt:3
+msgid "You can see their profile here:"
+msgstr "Puede ver su perfil aquí:"
 
 #: templates/schools/home.html:13 templates/schools/menu.html:4
 msgid "Schools"
@@ -1627,6 +1692,8 @@ msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
 "pixels"
 msgstr ""
+"Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
+"Dimensiones: 57x57 pixels"
 
 #: templates/users/forgot_password.html:3
 msgid "Forgot Your Password?"
@@ -1683,6 +1750,7 @@ msgstr "Hmm, no parece un enlace correcto."
 
 #: templates/users/forgot_password_done.html:3
 #: templates/users/forgot_password_done.html:8
+#: templates/users/emails/forgot_password.txt:1
 msgid "Password Reset"
 msgstr "Restablecer Contraseña"
 
@@ -1697,7 +1765,7 @@ msgstr ""
 msgid "Sign In with OpenID"
 msgstr "Ingrese con OpenID"
 
-#: templates/users/login_openid.html:11
+#: templates/users/login_openid.html:11 templates/users/signin.html:10
 msgid "create an account"
 msgstr "crear una cuenta"
 
@@ -1755,7 +1823,7 @@ msgstr ""
 
 #: templates/users/profile_form_base.html:8
 #: templates/users/profile_form_base.html:49
-#: templates/users/register_openid.html:9
+#: templates/users/register_openid.html:9 templates/users/signin.html:10
 msgid "or"
 msgstr "o"
 
@@ -1881,67 +1949,40 @@ msgstr "Popular esta Semana"
 msgid "New People"
 msgstr "Gente Nueva"
 
-#~ msgid "See:"
-#~ msgstr "Ver:"
+#: templates/users/emails/forgot_password.txt:3
+msgid "A request was received to reset the password for this account on "
+msgstr ""
+"Se ha recibido una solicitud para restablecer la clave de esta cuenta en "
 
-#~ msgid "Sincerely,"
-#~ msgstr "Sinceramente,"
+#: templates/users/emails/forgot_password.txt:4
+msgid ""
+"To change this password please click on the following link, or paste it into "
+"your browser's location bar:"
+msgstr ""
+"Para cambiar esta clave, pulse sobre el siguiente enlace o peguelo en la "
+"barra de direcciones de su navegador:"
 
-#~ msgid "The P2PU Team"
-#~ msgstr "El Equipo P2PU"
+#: templates/users/emails/forgot_password.txt:8
+msgid "If you did not request this email there is no need for further action."
+msgstr "Si no solicitó este mensaje, no realice acción alguna."
 
-#~ msgid "You have received a new direct message from "
-#~ msgstr "Ha recibido un nuevo mensaje directo de "
+#: templates/users/emails/registration_confirm.txt:3
+msgid ""
+"To complete the sign up process, please confirm your email address by "
+"clicking here:"
+msgstr ""
+"Para completar el proceso de suscripción, por favor confirme su dirección de "
+"correo-e pulsando aquí:"
 
-#~ msgid "Reply:"
-#~ msgstr "Respuesta:"
-
-#~ msgid "updated the wall of "
-#~ msgstr "actualizado el muro de "
-
-#~ msgid "is now following "
-#~ msgstr "ahora está siguiendo "
-
-#~ msgid "you"
-#~ msgstr "usted"
-
-#~ msgid "on P2PU!"
-#~ msgstr "en P2PU!"
-
-#~ msgid "You can see their profile here:"
-#~ msgstr "Puede ver su perfil aquí:"
-
-#~ msgid "A request was received to reset the password for this account on "
-#~ msgstr ""
-#~ "Se ha recibido una solicitud para restablecer la clave de esta cuenta en "
-
-#~ msgid ""
-#~ "To change this password please click on the following link, or paste it "
-#~ "into your browser's location bar:"
-#~ msgstr ""
-#~ "Para cambiar esta clave, pulse sobre el siguiente enlace o peguelo en la "
-#~ "barra de direcciones de su navegador:"
-
-#~ msgid ""
-#~ "If you did not request this email there is no need for further action."
-#~ msgstr "Si no solicitó este mensaje, no realice acción alguna."
-
-#~ msgid ""
-#~ "To complete the sign up process, please confirm your email address by "
-#~ "clicking here:"
-#~ msgstr ""
-#~ "Para completar el proceso de suscripción, por favor confirme su dirección "
-#~ "de correo-e pulsando aquí:"
-
-#~ msgid "Thank you!"
-#~ msgstr "¡Gracias!"
-
-#, fuzzy
-#~ msgid "Status & Dates"
-#~ msgstr "Estado"
+#: templates/users/emails/registration_confirm.txt:7
+msgid "Thank you!"
+msgstr "¡Gracias!"
 
 #~ msgid "Courses"
 #~ msgstr "Cursos"
+
+#~ msgid "Status"
+#~ msgstr "Estado"
 
 #~ msgid "JPG, GIF or PNG only. Max size of 700k."
 #~ msgstr "JPG, GIF o PNG solamente. Tamaño máximo 700k."

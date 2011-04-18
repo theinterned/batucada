@@ -95,6 +95,7 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.HidePasswordOnException',
     'commonware.middleware.FrameOptionsHeader',
     'jogging.middleware.LoggingMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'
