@@ -601,6 +601,25 @@ header {}
         margin: 0;
         list-style: none;
       }
+
+      #project-stats li {
+        clear:both;
+      }
+
+      #project-stats .label{
+	float:left;
+      }
+      #project-stats .value{
+	float:right;
+      }
+
+#project-stats .beta-development{
+	text-align:center;
+	background-color:red;
+	color:white;
+}
+
+
         
       #project-summary,
       #sidebar #project-description { 
@@ -2418,3 +2437,14 @@ ul.ui-autocomplete #ui-active-menuitem {
   background: #fff;
   padding: 6px;
 }
+
+
+/*task list styling*/
+	#content-pages li{display:block; margin-top:10px; padding-bottom:10px; border-bottom:solid 1px #eee; position:relative;}
+	#content-pages ul li{width:260px;}	
+	#content-pages li .taskLink{display:inline-block; width:200px}
+	#content-pages .robttn {position:absolute; width:20px; height:20px; overflow:hidden; text-indent:-200px;}
+	#content-pages .up{right:0px; background-image:url('/media/images/arrows.png');}
+	#content-pages .dwn{right:20px; background-image:url('/media/images/arrows.png'); background-position: 20px 0px;}
+	#content-pages .up:hover{background-position: 0px 20px;}
+	#content-pages .dwn:hover{background-position: 20px 20px;}
