@@ -232,7 +232,7 @@ def create(request):
             project.detailed_description_id = detailed_description.id
             sign_up_content = render_to_string("projects/sign_up_initial_content.html",
                 {})
-            sign_up = Page(title='Sign-Up',
+            sign_up = Page(title=_('Sign-Up'),
                 content=sign_up_content, listed=False, editable=False,
                 author_id=user.id, project_id=project.id)
             sign_up.save()

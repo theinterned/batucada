@@ -51,7 +51,6 @@ INSTALLED_APPS += (
 
 MIDDLEWARE_CLASSES += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
 )
 INTERNAL_IPS = ('127.0.0.1',)
 
