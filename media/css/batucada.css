@@ -957,7 +957,7 @@ header {}
     #main .post-tags li, #main .post-char-count {
 		display: inline-block;
 		float: none;
-		margin: 0;
+		margin: 10px 0px 0px 0px;
     }
     #main .post-char-count {
 		float: left;
@@ -2388,4 +2388,28 @@ ul.ui-autocomplete li a {
 ul.ui-autocomplete #ui-active-menuitem {
     background-color: #0a246a;
     color: #fff;
+}
+
+
+.notice {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 250px;
+    margin-top: 125px;
+}
+
+.notice h2 {
+    font-size: 2.8em;
+    padding-bottom: 40px;
+}
+
+.notice p {
+    font-size: 1.2em;
+}
+
+div.video-js-box {
+    margin-top: 20px;
+    float: right;
+    left: 20px;
 }

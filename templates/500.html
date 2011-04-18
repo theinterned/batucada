@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
-<p style="font-size: 500%;">Hmm, something has gone wrong.</p>
-<p>
-  Clearly what was supposed to happen, didn't. Perhaps you could <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Websites&component=www.drumbeat.org">file a bug</a> and tell us exactly what you were doing?
-</p>
+<div class="notice">
+  <h2>{{ _('Uh-oh. An error has occurred.) }}</h2>
+  <p>
+    {{ _('It appears to have been our fault. Sorry about that. Perhaps you would like to <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Websites&component=www.drumbeat.org">file a bug</a> and tell us exactly what you were doing when you got this page?') }}
+    </p>
+</div>
 {% include "_footer.html" %}
 {% endblock %}

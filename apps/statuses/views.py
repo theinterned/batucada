@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
+from activity.models import Activity
 from statuses.forms import StatusForm
 from statuses.models import Status
 from projects.models import Project
@@ -37,6 +38,23 @@ def create(request):
         messages.error(request, _('There was an error posting '
                                   'your status update'))
     return HttpResponseRedirect('/')
+
+
+@login_required
+def reply(request, in_reply_to):
+    """Create a status update that is a reply to an activity."""
+    parent = get_object_or_404(Activity, id=in_reply_to)
+    if request.method == 'POST':
+        form = StatusForm(data=request.POST)
+        if form.is_valid():
+            status = form.save(commit=False)
+            status.author = request.user.get_profile()
+            status.in_reply_to = parent
+            status.save()
+        return HttpResponseRedirect('/')
+    return render_to_response('statuses/reply.html', {
+        'parent': parent,
+    }, context_instance=RequestContext(request))
 
 
 @login_required
