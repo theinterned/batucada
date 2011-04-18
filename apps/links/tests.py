@@ -1,8 +1,23 @@
 import os
+import urllib2
+import feedparser
+from StringIO import StringIO
 
-from links import utils
+from django_push.subscriber.models import Subscription
+
+from links import utils, tasks
+from links.models import Link
 
 from test_utils import TestCase
+from activity.models import Activity
+from users.models import UserProfile
+
+
+def mock_open(r):
+    return urllib2.HTTPError('request', 204, 'no-op', {}, StringIO(''))
+
+urllib2.urlopen = mock_open
+urllib2.Request = lambda x, y, z: 'request'
 
 
 class TestLinkParsing(TestCase):
@@ -13,6 +28,12 @@ class TestLinkParsing(TestCase):
         fixture_dir = os.path.join(root, 'fixtures')
         for f in os.listdir(fixture_dir):
             self.fixtures[f] = file(os.path.join(fixture_dir, f)).read()
+
+        self.user = UserProfile(username='testuser',
+                                email='test@mozillafoundation.org')
+        self.user.set_password('testpassword')
+        self.user.save()
+        self.user.create_django_user()
 
     def test_feed_parser(self):
         """Perform a straightforward test of the feed url parser."""
@@ -117,3 +138,36 @@ class TestLinkParsing(TestCase):
     def test_normalize_url_good_url(self):
         url = 'http://example.com/atom'
         self.assertEqual(url, utils.normalize_url(url, 'http://example.com'))
+
+    def test_notification(self):
+        sub = Subscription.objects.create(
+            hub='http://blah/', topic='http://blah')
+        Link.objects.create(
+            name='foo',
+            url='http://blah/',
+            subscription=sub,
+            user=self.user)
+        count = Activity.objects.count()
+        test_feed_data = """<?xml version='1.0'?>
+        <feed xmlns='http://www.w3.org/2005/Atom'
+              xmlns:activity='http://activitystrea.ms/spec/1.0/'
+              xml:lang='en-US'>
+            <link type='text/html' rel='alternate' href='http://example.com'/>
+            <link type='application/atom+xml' rel='self'
+                href='http://example.com/feed/'/>
+            <entry>
+               <activity:verb>
+                 http://activitystrea.ms/schema/1.0/follow
+               </activity:verb>
+               <activity:object-type>
+                 http://activitystrea.ms/schema/1.0/person
+               </activity:object-type>
+               <link type='text/html' rel='alternate'
+                   href='http://example.com/activity/'/>
+               <title>Jane started following John</title>
+            </entry>
+        </feed>"""
+        parsed = feedparser.parse(test_feed_data)
+        handler = tasks.HandleNotification()
+        handler.run(parsed, sub)
+        self.assertEqual(Activity.objects.count(), count + 1)
