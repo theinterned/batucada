@@ -21,6 +21,8 @@
 
 {% include "challenges/_challenge_sidebar.html" %}
 <div id="main">
+  <h1>{{ challenge.project }}</h1>
+  <h2>{{ challenge.title }}</h2>
 
   {% if user.is_authenticated and challenge.is_active %}
   <p>{{ remaining.days }} days to respond to this challenge</p>
