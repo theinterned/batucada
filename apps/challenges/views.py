@@ -9,13 +9,15 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
+from django.template.defaultfilters import truncatewords
 from django.views.decorators.http import require_http_methods
 
 from commonware.decorators import xframe_sameorigin
 
 from challenges.models import Challenge, Submission, Judge, VoterDetails
 from challenges.forms import (ChallengeForm, ChallengeImageForm,
-                              SubmissionForm, JudgeForm, VoterDetailsForm)
+                              SubmissionSummaryForm, SubmissionForm,
+                              JudgeForm, VoterDetailsForm)
 from projects.models import Project
 
 from drumbeat import messages
@@ -150,11 +152,13 @@ def show_challenge(request, slug):
         submissions = paginator.page(paginator.num_pages)
 
     nsubmissions = challenge.submission_set.all().count()
+    form = SubmissionSummaryForm()
 
     context = {
         'challenge': challenge,
         'submissions': submissions,
         'nsubmissions': nsubmissions,
+        'form': form,
     }
 
     return render_to_response('challenges/challenge.html', context,
@@ -181,9 +185,12 @@ def create_submission(request, slug):
     user = request.user.get_profile()
 
     if request.method == 'POST':
-        form = SubmissionForm(request.POST)
+        post_data = request.POST.copy()
+        post_data['title'] = truncatewords(post_data['summary'], 10)
+        form = SubmissionForm(post_data)
         if form.is_valid():
             submission = form.save(commit=False)
+            submission.title = truncatewords(submission.summary, 10)
             submission.created_by = user
             submission.save()
 
@@ -191,8 +198,9 @@ def create_submission(request, slug):
 
             messages.success(request, _('Your submission has been created'))
 
-            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+            return HttpResponseRedirect(reverse('submission_edit', kwargs={
                 'slug': challenge.slug,
+                'submission_id': submission.pk,
                 }))
         else:
             messages.error(request, _('Unable to create your submission'))

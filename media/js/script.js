@@ -209,6 +209,14 @@ var batucada = {
             });
         }
     },
+    challenge_landing: {
+        onload: function() {
+            createPostTextArea();
+            $('#post-challenge').bind('click', function() {
+                $('#post-challenge-summary').submit();
+            });
+        }
+    },
     user_profile: {
         onload: function() {
             createPostTextArea();
