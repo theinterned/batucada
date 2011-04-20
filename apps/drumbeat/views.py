@@ -41,3 +41,9 @@ def report_abuse(request, obj, type):
         'obj': obj,
         'type': type,
     }, context_instance=RequestContext(request))
+
+
+def journalism(request):
+    return render_to_response('drumbeat/journalism.html', {
+
+    }, context_instance=RequestContext(request))
