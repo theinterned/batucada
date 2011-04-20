@@ -12,12 +12,6 @@
     <span class="arrow">&rsaquo;</span>
     <a href="{% locale_url challenges_show slug=challenge.slug %}">{{ challenge.title }}</a>
   </nav>
-
-  <div id="project-actions">
-    {% if challenge.is_active %}
-    <a class="button" href="{% locale_url submissions_create slug=challenge.slug %}">{{ _('Enter Submission') }}</a>
-    {% endif %}
-  </div>
 </div>
 {% endblock %}
 
@@ -28,7 +22,7 @@
 {% include "challenges/_challenge_sidebar.html" %}
 <div id="main">
 
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and challenge.is_active %}
   <div id="create-post">
     <div class="post-container">
       <form action="{% locale_url submissions_create slug=challenge.slug %}" method="post" id="post-challenge-summary">
