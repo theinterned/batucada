@@ -1,8 +1,12 @@
 from datetime import datetime
 import logging
+import bleach
+
+from markdown import markdown
 
 from django.contrib import admin
 from django.db import models
+from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 
 from drumbeat import storage
@@ -12,6 +16,15 @@ from drumbeat.models import ModelBase
 from projects.models import Project
 
 import caching.base
+
+TAGS = ('h1', 'h2', 'a', 'b', 'em', 'i', 'strong',
+        'ol', 'ul', 'li', 'hr', 'blockquote', 'p',
+        'span', 'pre', 'code', 'img')
+
+ALLOWED_ATTRIBUTES = {
+    'a': ['href', 'title'],
+    'img': ['src', 'alt'],
+}
 
 log = logging.getLogger(__name__)
 
@@ -152,3 +165,13 @@ admin.site.register(Judge)
 
 
 ### Signals
+
+def submission_markdown_handler(sender, **kwargs):
+    submission = kwargs.get('instance', None)
+    if not isinstance(submission, Submission):
+        return
+    if submission.description:
+        submission.description_html = bleach.clean(
+            markdown(submission.description),
+            tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
+pre_save.connect(submission_markdown_handler, sender=Submission)
