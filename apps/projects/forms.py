@@ -137,8 +137,8 @@ class ProjectContactUsersForm(forms.Form):
 
 class ProjectStatusForm(forms.ModelForm):
 
-    start_date = forms.DateField(localize=True)
-    end_date = forms.DateField(localize=True)
+    start_date = forms.DateField(localize=True, required=False)
+    end_date = forms.DateField(localize=True, required=False)
 
     class Meta:
         model = Project
