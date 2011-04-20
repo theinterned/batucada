@@ -95,9 +95,9 @@ admin.site.register(Challenge)
 
 class Submission(ModelBase):
     """ A submitted entry for a Challenge."""
-    title = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
     summary = models.TextField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     description_html = models.TextField(null=True, blank=True)
 
     challenge = models.ManyToManyField(Challenge)
