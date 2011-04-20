@@ -19,6 +19,8 @@ from challenges.forms import (ChallengeForm, ChallengeImageForm,
                               SubmissionSummaryForm, SubmissionForm,
                               SubmissionDescriptionForm,
                               JudgeForm, VoterDetailsForm)
+from challenges.decorators import (challenge_owner_required,
+                                   submission_owner_required)
 from projects.models import Project
 
 from drumbeat import messages
@@ -60,6 +62,7 @@ def create_challenge(request, project_id):
 
 
 @login_required
+@challenge_owner_required
 def edit_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
     user = request.user.get_profile()
@@ -94,6 +97,7 @@ def edit_challenge(request, slug):
 @login_required
 @xframe_sameorigin
 @require_http_methods(['POST'])
+@challenge_owner_required
 def edit_challenge_image_async(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
     form = ChallengeImageForm(request.POST, request.FILES, instance=challenge)
@@ -108,6 +112,7 @@ def edit_challenge_image_async(request, slug):
 
 
 @login_required
+@challenge_owner_required
 def edit_challenge_image(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
@@ -218,6 +223,7 @@ def create_submission(request, slug):
 
 
 @login_required
+@submission_owner_required
 def edit_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)
@@ -248,6 +254,7 @@ def edit_submission(request, slug, submission_id):
 
 
 @login_required
+@submission_owner_required
 def edit_submission_description(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)
@@ -291,6 +298,7 @@ def show_submission(request, slug, submission_id):
 
 
 @login_required
+@challenge_owner_required
 def challenge_judges(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
@@ -327,6 +335,7 @@ def challenge_judges(request, slug):
 
 
 @login_required
+@challenge_owner_required
 def challenge_judges_delete(request, slug, judge):
     if request.method == 'POST':
         challenge = get_object_or_404(Challenge, slug=slug)
