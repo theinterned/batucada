@@ -1,12 +1,12 @@
 import logging
 
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 
+from l10n.urlresolvers import reverse
 from drumbeat import messages
 from users.decorators import login_required
 from preferences.models import AccountPreferences

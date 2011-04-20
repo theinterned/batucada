@@ -37,6 +37,7 @@
 </section>
 {% endif %}
 
+{% if new %}
 <section id="new_users">
   <h1><span>{{ _('New People') }}</span></h1>
   <ul class="user-list">
@@ -45,5 +46,6 @@
     {% endfor %}
   </ul>
 </section>
+{% endif %}
 </div>
 {% endblock %}

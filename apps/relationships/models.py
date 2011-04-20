@@ -5,7 +5,8 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
@@ -62,16 +63,16 @@ def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     if not isinstance(rel, Relationship):
         return
-    user_subject = _("%(display_name)s is following you on P2PU!" % {
+    user_subject = ugettext('%(display_name)s is following you on P2PU!') % {
         'display_name': rel.source.display_name,
-    })
-    project_subject = _("%(display_name)s is following %(project)s on P2PU!" % {
+    }
+    project_subject = ugettext('%(display_name)s is following %(project)s on P2PU!') % {
         'display_name': rel.source.display_name,
         'project': rel.target_project,
-    })
+    }
     activity = Activity(actor=rel.source,
                         verb='http://activitystrea.ms/schema/1.0/follow')
-    subject = _(u"%(display_name)s is now following")
+    subject = ugettext('%(display_name)s is now following')
     if rel.target_user:
         activity.target_user = rel.target_user
         user = rel.target_user

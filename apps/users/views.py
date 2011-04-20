@@ -6,7 +6,6 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
@@ -19,6 +18,7 @@ from django.forms import ValidationError
 from django_openid_auth import views as openid_views
 from commonware.decorators import xframe_sameorigin
 
+from l10n.urlresolvers import reverse
 from users import forms
 from users.models import UserProfile
 from users.fields import UsernameField
@@ -126,7 +126,7 @@ def login(request):
             return http.HttpResponseRedirect(redirect_url)
 
     elif request.method == 'POST':
-        messages.error(request, _('Incorrect email or password.'))
+        messages.error(request, _('Incorrect username, email or password.'))
         # run through auth_views.login again to render template with messages.
         r = auth_views.login(request, template_name='users/signin.html',
                          authentication_form=forms.AuthenticationForm)

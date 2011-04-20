@@ -8,3 +8,8 @@
   font-size: 30px;
 }
 
+#user-nav a.top-level, #main-nav a.top-level {
+  padding: 4px 5px 8px 5px;
+}
+
+

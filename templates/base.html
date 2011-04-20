@@ -23,7 +23,7 @@
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=1">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/batucada.css?v=1">
-  <link rel="stylesheet" href="{{ MEDIA_URL }}{{ _('css/style-lang.css') }}">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}{{ _('css/style-en.css') }}">
   <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/prettify/prettify.css">
   <script src="{{ MEDIA_URL }}js/libs/modernizr-1.6.min.js"></script>
   <script src="{{ MEDIA_URL }}ckeditor/ckeditor.js"></script>
@@ -139,6 +139,8 @@
   <!-- scripts concatenated and minified via ant build script-->
   <script src="{{ MEDIA_URL }}js/plugins.js"></script>
   <script src="{{ MEDIA_URL }}js/script.js"></script>
+  <script src="{{ MEDIA_URL }}{{ _('js/script-en.css') }}"></script>
+  <script src="{{ MEDIA_URL }}js/libs/{{ _('jquery.ui.datepicker-en.js') }}"></script>
   <!-- end concatenated and minified scripts-->
 
   <!-- START OF SmartSource Data Collector TAG -->

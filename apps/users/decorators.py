@@ -1,12 +1,12 @@
 from functools import wraps
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.utils.decorators import available_attrs
 from django.contrib.auth.decorators import user_passes_test
 
+from l10n.urlresolvers import reverse
 from drumbeat import messages
 from users.models import UserProfile
 

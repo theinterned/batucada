@@ -22,9 +22,7 @@
       {{ project.long_description|safe }}
     </div>
     {% if user.get_profile == project.created_by %}
-      <br>
       <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
-      <br>
     {% endif %}
     <ul id="project-stats">
       {% if project.school %}
@@ -36,6 +34,7 @@
       {% if project.testing_sandbox %}
       <li class="beta-development">{{ _('Testing Sandbox') }}</li>
       {% endif %}
+      <!-- This line is here so the {{ _('DATE_FORMAT') }} gets configured for different locales -->
       {% if project.start_date or project.end_date %}
         <li>{{ _('Runs') }} {% if project.start_date %} {{ project.start_date }} {% endif %} 
         {% if project.end_date %} {{ _('to') }}  

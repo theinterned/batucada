@@ -11,11 +11,12 @@ from django.template.defaultfilters import truncatewords_html
 from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext
 from django.db.models import Max
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
+from l10n.urlresolvers import reverse
 from drumbeat.models import ModelBase
 from activity.models import Activity
 from users.tasks import SendUserEmail
@@ -72,10 +73,11 @@ class Page(ModelBase):
         return timesince(self.created_on, now)
 
     def friendly_verb(self):
-        return mark_safe(_('added'))
+        return mark_safe(ugettext('added'))
 
     def representation(self):
-        return mark_safe(' <a href="%s">%s</a>.' % (self.get_absolute_url(), self.title))
+        return mark_safe(ugettext(' <a href="%(page_url)s">%(page_title)s</a>.') % dict(page_url=self.get_absolute_url(),
+            page_title=self.title))
 
     def can_edit(self, user):
         if not self.editable:
@@ -136,16 +138,17 @@ class PageComment(ModelBase):
 
     @property
     def title(self):
-        return _('Comment to %s') % self.page.title
+        return ugettext('Comment to %s') % self.page.title
 
     def timesince(self, now=None):
         return timesince(self.created_on, now)
 
     def friendly_verb(self):
-        return mark_safe(_('posted comment'))
+        return mark_safe(ugettext('posted comment'))
 
     def representation(self):
-        return mark_safe(' at <a href="%s">%s</a>.' % (self.get_absolute_url(), self.page.title))
+        return mark_safe(ugettext(' at <a href="%(comment_url)s">%(page_title)s</a>.') % dict(
+            comment_url=self.get_absolute_url(), page_title=self.page.title))
 
     @property
     def project(self):
@@ -156,7 +159,7 @@ class PageComment(ModelBase):
         if self.page.slug != 'sign-up':
             return
         project = self.page.project
-        subject = _('[p2pu-%(slug)s-signup] Study group %(name)s\'s signup page was updated') % {
+        subject = ugettext('[p2pu-%(slug)s-signup] Study group %(name)s\'s signup page was updated') % {
             'slug': project.slug,
             'name': project.name,
             }

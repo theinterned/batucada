@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
 
 # a list of verbs defined in the activity schema
 verbs = {
@@ -23,20 +23,20 @@ for key, value in verbs.iteritems():
     verbs_by_uri[value] = key
 
 past_tense = {
-    'favorite': _lazy('favorited'),
-    'follow': _lazy('started following'),
-    'like': _lazy('liked'),
-    'make-friend': _lazy('is now friends with'),
-    'join': _lazy('joined'),
-    'play': _lazy('played'),
-    'post': _lazy('posted'),
-    'save': _lazy('saved'),
-    'share': _lazy('shared'),
-    'tag': _lazy('tagged'),
-    'update': _lazy('updated'),
-    'rsvp-yes': _lazy('is attending'),
-    'rsvp-no': _lazy('is not attending'),
-    'rsvp-maybe': _lazy('might be attending'),
+    'favorite': _('favorited'),
+    'follow': _('started following'),
+    'like': _('liked'),
+    'make-friend': _('is now friends with'),
+    'join': _('joined'),
+    'play': _('played'),
+    'post': _('posted'),
+    'save': _('saved'),
+    'share': _('shared'),
+    'tag': _('tagged'),
+    'update': _('updated'),
+    'rsvp-yes': _('is attending'),
+    'rsvp-no': _('is not attending'),
+    'rsvp-maybe': _('might be attending'),
 }
 
 # a list of base object types defined in the activity schema

@@ -214,7 +214,7 @@ CKEDITOR_CONFIGS = {
             ['Source'],
             ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
             ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'SourceCode', 'Blockquote'],
+            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'SyntaxHighlighting', 'Blockquote'],
             ['Maximize'],
             ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare', 'Smiley', 'SpecialChar', 'Table'],
             ['Format','Font','FontSize', 'TextColor','BGColor'],

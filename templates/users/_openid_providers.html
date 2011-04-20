@@ -7,7 +7,7 @@
   <li id="yahoo"><a href="#yahoo" title="{{ _('Sign In with your Yahoo! account') }}">Yahoo!</a></li>
   <li id="myopenid"><a href="#myopenid" title="{{ _('Sign In with your myOpenID account') }}">myOpenID</a></li>
 </ul>
-<p class="or"><span>or</span></p>
+<p class="or"><span>{{ _('or') }}</span></p>
 {{ form.openid_identifier }}
 {{ form.openid_identifier.errors }}
 <button type="submit" value="submit" id="other_submit">{{ _('Go') }}</button>

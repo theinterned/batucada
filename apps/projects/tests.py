@@ -1,6 +1,6 @@
 from django.test import Client
-from django.core.urlresolvers import reverse
 
+from l10n.urlresolvers import reverse
 from users.models import UserProfile
 from activity.models import Activity
 from projects.models import Project

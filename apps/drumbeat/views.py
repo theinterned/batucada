@@ -3,8 +3,9 @@ from django import http
 from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.core.urlresolvers import NoReverseMatch
 
+from l10n.urlresolvers import reverse
 from users.models import UserProfile
 from users.tasks import SendUserEmail
 from drumbeat.forms import AbuseForm
