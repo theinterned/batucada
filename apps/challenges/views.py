@@ -155,7 +155,6 @@ def show_challenge(request, slug):
         'challenge': challenge,
         'submissions': submissions,
         'nsubmissions': nsubmissions,
-        'profile': request.user.get_profile(),
     }
 
     return render_to_response('challenges/challenge.html', context,
