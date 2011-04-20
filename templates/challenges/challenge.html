@@ -23,6 +23,8 @@
 <div id="main">
 
   {% if user.is_authenticated and challenge.is_active %}
+  <p>{{ remaining.days }} days to respond to this challenge</p>
+
   <div id="create-post">
     <div class="post-container">
       <form action="{% locale_url submissions_create slug=challenge.slug %}" method="post" id="post-challenge-summary">

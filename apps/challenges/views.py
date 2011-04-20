@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -158,11 +159,13 @@ def show_challenge(request, slug):
         submissions = paginator.page(paginator.num_pages)
 
     form = SubmissionSummaryForm()
+    remaining = challenge.end_date - datetime.now()
 
     context = {
         'challenge': challenge,
         'submissions': submissions,
         'form': form,
+        'remaining': remaining,
     }
 
     return render_to_response('challenges/challenge.html', context,
