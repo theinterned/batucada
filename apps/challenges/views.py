@@ -17,6 +17,7 @@ from commonware.decorators import xframe_sameorigin
 from challenges.models import Challenge, Submission, Judge, VoterDetails
 from challenges.forms import (ChallengeForm, ChallengeImageForm,
                               SubmissionSummaryForm, SubmissionForm,
+                              SubmissionDescriptionForm,
                               JudgeForm, VoterDetailsForm)
 from projects.models import Project
 
@@ -227,22 +228,53 @@ def edit_submission(request, slug, submission_id):
             form.save()
             messages.success(request, _('Your submission has been edited.'))
 
-            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+            return HttpResponseRedirect(reverse('submission_show', kwargs={
                 'slug': challenge.slug,
-                }))
+                'submission_id': submission.pk,
+            }))
         else:
             messages.error(request, _('Unable to update your submission'))
     else:
         form = SubmissionForm(instance=submission)
 
-    context = {
+    ctx = {
         'challenge': challenge,
         'submission': submission,
         'form': form,
     }
 
-    return render_to_response('challenges/submission_edit.html', context,
-                              context_instance=RequestContext(request))
+    return render_to_response('challenges/submission_edit_summary.html',
+                              ctx, context_instance=RequestContext(request))
+
+
+@login_required
+def edit_submission_description(request, slug, submission_id):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    if request.method == 'POST':
+        form = SubmissionDescriptionForm(request.POST, instance=submission)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Your submission has been edited.'))
+
+            return HttpResponseRedirect(reverse('submission_show', kwargs={
+                'slug': challenge.slug,
+                'submission_id': submission.pk
+            }))
+        else:
+            messages.error(request, _('Unable to update your submission'))
+    else:
+        form = SubmissionDescriptionForm(instance=submission)
+
+    ctx = {
+        'challenge': challenge,
+        'submission': submission,
+        'form': form
+    }
+
+    return render_to_response('challenges/submission_edit_description.html',
+                              ctx, context_instance=RequestContext(request))
 
 
 def show_submission(request, slug, submission_id):

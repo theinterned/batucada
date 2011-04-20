@@ -45,6 +45,9 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/edit/$',
       'challenges.views.edit_submission',
       name='submission_edit'),
+  url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/edit/desc/$',
+      'challenges.views.edit_submission_description',
+      name='submission_edit_description'),
 
 
   # Voting

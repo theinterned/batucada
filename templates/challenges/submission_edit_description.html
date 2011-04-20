@@ -1,0 +1,29 @@
+{% extends "challenges/submission_edit.html" %}
+
+{% load l10n_tags %}
+
+{% block bodyclasses %}submission edit description{% endblock %}
+
+{% block form %}
+<fieldset id="submission_edit" class="submission edit tabpane">
+  <form method="post" action="{% locale_url submission_edit_description slug=challenge.slug submission_id=submission.pk %}">
+    {% csrf_token %}
+    <div id="wmd-editor" class="wmd-panel description field{% if form.description.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Description') }}</label>
+      <span class="hint block"></span>
+      {{ form.description }}
+      {{ form.description.errors }}
+    </div>
+
+    <p class="buttons">    
+      {% if submission %}
+      <a class="button" href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}">{{ _('Cancel') }}</a>
+      <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>            
+      {% else %}
+      <a class="button" href="{% locale_url challenges_show slug=challenge.slug %}">{{ _('Cancel') }}</a>
+      <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+      {% endif %}
+    </p>
+  </form>
+</fieldset>
+{% endblock %}
