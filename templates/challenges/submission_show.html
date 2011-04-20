@@ -24,6 +24,9 @@
 {% block bodyid %}submission_show{% endblock %}
 
 {% block body %}
+{% include "challenges/_challenge_sidebar.html" %}
+
+<div id="main">
 <section class="submission">
   <article>
     <h1 id="challenge-title">{{ submission.title }}</h1>
@@ -41,5 +44,6 @@
     </div>
   </article>
 </section>
+</div>
 {% endblock %}
 
