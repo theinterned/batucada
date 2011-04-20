@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-20 13:09-0400\n"
+"POT-Creation-Date: 2011-04-20 16:51-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -599,7 +599,7 @@ msgstr "BETA"
 #: templates/content/history_page.html:14 templates/content/page.html:14
 #: templates/content/restore_version.html:12 templates/content/sign_up.html:14
 #: templates/content/version_page.html:14
-#: templates/dashboard/dashboard.html:36 templates/projects/gallery.html:4
+#: templates/dashboard/dashboard.html:44 templates/projects/gallery.html:4
 #: templates/projects/gallery.html.py:10 templates/projects/project.html:14
 #: templates/projects/project_edit.html:10 templates/users/profile.html:102
 msgid "Study Groups"
@@ -893,39 +893,44 @@ msgstr "Sinceramente,"
 msgid "The P2PU Team"
 msgstr "El Equipo de P2PU"
 
-#: templates/dashboard/dashboard.html:14
+#: templates/dashboard/dashboard.html:13
+#: templates/preferences/settings.html:10
+msgid "Dashboard"
+msgstr "Mi Página"
+
+#: templates/dashboard/dashboard.html:22
 msgid "alt=\""
 msgstr "alt=\"imagen de perfil de "
 
-#: templates/dashboard/dashboard.html:14
+#: templates/dashboard/dashboard.html:22
 msgid "'s profile picture\""
 msgstr "\""
 
-#: templates/dashboard/dashboard.html:19 templates/users/profile_edit.html:25
+#: templates/dashboard/dashboard.html:27 templates/users/profile_edit.html:25
 msgid "View Profile"
 msgstr "Ver Perfil"
 
-#: templates/dashboard/dashboard.html:24
+#: templates/dashboard/dashboard.html:32
 #: templates/projects/_project_card.html:31 templates/projects/sidebar.html:56
 #: templates/users/_user_card.html:12 templates/users/profile.html:89
 msgid "Followers"
 msgstr "Seguidores"
 
-#: templates/dashboard/dashboard.html:30 templates/users/_user_card.html:16
+#: templates/dashboard/dashboard.html:38 templates/users/_user_card.html:16
 #: templates/users/profile.html:95
 msgid "Following"
 msgstr "Siguiendo"
 
-#: templates/dashboard/dashboard.html:57
+#: templates/dashboard/dashboard.html:65
 #: templates/users/emails/registration_confirm.txt:1
 msgid "Welcome to P2PU!"
 msgstr "¡Bienvenido a P2PU!"
 
-#: templates/dashboard/dashboard.html:58
+#: templates/dashboard/dashboard.html:66
 msgid "To get started, you should "
 msgstr "Para comenzar debería "
 
-#: templates/dashboard/dashboard.html:58
+#: templates/dashboard/dashboard.html:66
 msgid ""
 "update your profile</a>. This is a great way to tell people a bit more about "
 "yourself. Then find "
@@ -933,26 +938,26 @@ msgstr ""
 "actualizar su perfil</a>. Esta es una buena forma de decirle a otros un poco "
 "más acerca de usted. Después busque "
 
-#: templates/dashboard/dashboard.html:58
+#: templates/dashboard/dashboard.html:66
 msgid "people</a> and "
 msgstr "personas</a> y "
 
-#: templates/dashboard/dashboard.html:58
+#: templates/dashboard/dashboard.html:66
 msgid ""
 "study groups</a> that interest you and start following them! You can also "
 msgstr ""
 "grupos de estudio</a> que sean de su interés y ¡comience a seguirlos! "
 "También puede "
 
-#: templates/dashboard/dashboard.html:58
+#: templates/dashboard/dashboard.html:66
 msgid "create a new study group</a>."
 msgstr "crear un grupo de estudio nuevo</a>."
 
-#: templates/dashboard/dashboard.html:65
+#: templates/dashboard/dashboard.html:73
 msgid "Post a message to your followers"
 msgstr "Publicar un mensaje para sus seguidores"
 
-#: templates/dashboard/dashboard.html:70
+#: templates/dashboard/dashboard.html:78
 msgid "Post Update"
 msgstr "Publicar Actualización"
 
@@ -1235,10 +1240,6 @@ msgstr "j N Y P"
 #: templates/messages/inbox.html:32
 msgid "delete"
 msgstr "eliminar"
-
-#: templates/preferences/settings.html:10
-msgid "Dashboard"
-msgstr "Mi Página"
 
 #: templates/preferences/settings.html:21
 msgid "Return to Dashboard"
