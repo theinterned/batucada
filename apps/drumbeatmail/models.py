@@ -1,9 +1,10 @@
-from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
+from l10n.urlresolvers import reverse
 from messages.models import Message
 from users.tasks import SendUserEmail
 from preferences.models import AccountPreferences
@@ -24,7 +25,7 @@ def message_sent_handler(sender, **kwargs):
         if preference.value and preference.key == 'no_email_message_received':
             return
     sender = message.sender.get_profile().display_name
-    subject = _('New Message from %(display_name)s' % {
+    subject = ugettext('New Message from %(display_name)s' % {
         'display_name': sender,
     })
     body = render_to_string('drumbeatmail/emails/direct_message.txt', {

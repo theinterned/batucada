@@ -15,8 +15,6 @@
     <nav>
       <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
       <span class="arrow">&rsaquo;</span>
-      <span>All</span>
-      <span class="arrow">&rsaquo;</span>
       <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
     </nav>
     {% if user == profile.user %}
@@ -41,7 +39,7 @@
         {% if profile in user.get_profile.following %}
         <form action="{% locale_url relationships_unfollow object_type='user' slug=profile.username %}" method="post">
           {% csrf_token %}
-          <button id="unfollow-user" >Unfollow</button>
+          <button id="unfollow-user" >{{ _('Unfollow') }}</button>
         </form>
         {% else %}
         <form action="{% locale_url relationships_follow object_type='user' slug=profile.username %}" method="post">

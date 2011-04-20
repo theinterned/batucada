@@ -2,6 +2,9 @@
   <p class="picture-preview"><img class="member-picture" src="{{ profile.image_or_default }}" /></p>
   <br clear="all" />
   <div class="field{% if profile_image_form.image.errors %} error{% endif %}">
+    <!-- Note the "Browse..." button comes from your OS so it will
+    only appear in another language if you configure your PC for that language.
+    -->
     {{ profile_image_form.image }}
     <small class="hint block">{{ _('File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 pixels') }}</small>
     {{ profile_image_form.image.errors }}

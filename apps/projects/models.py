@@ -11,6 +11,7 @@ from django.db.models import Count, Q, Max
 from django.db.models.signals import pre_save, post_save, post_delete 
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as ugettext
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
@@ -169,7 +170,7 @@ class Project(ModelBase):
 
     def send_update_notification(self, activity, wall=True):
         """Send update notifications."""
-        subject = _('[p2pu-%(slug)s-updates] Study group %(name)s was updated') % {
+        subject = ugettext('[p2pu-%(slug)s-updates] Study group %(name)s was updated') % {
             'slug': self.slug,
             'name': self.name,
             }

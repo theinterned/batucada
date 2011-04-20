@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load l10n_tags %}
 {% block body %}
 
 <section class="content_page">
 <h1>{{ _('Page not found') }}</h1>
     <br>
-    <p>{{ _('If you think it should be here, please let us know by ') }}<a href="http://p2pu.lighthouseapp.com/projects/71002">{{ _('filing a bug report') }}</a>.</p> 
+    <p>{{ _('If you think it should be here, please let us know by <a href="http://p2pu.lighthouseapp.com/projects/71002">filing a bug report</a>.') }}</p>
 </section>
 
 {% endblock %}

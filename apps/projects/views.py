@@ -3,7 +3,6 @@ import datetime
 
 from django import http
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -20,6 +19,7 @@ from projects import forms as project_forms
 from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia, Participation
 
+from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from links.models import Link
 from users.models import UserProfile
@@ -225,14 +225,14 @@ def create(request):
             detail_description_content = render_to_string(
                 "projects/detailed_description_initial_content.html",
                 {})
-            detailed_description = Page(title=_('Full Description'),
+            detailed_description = Page(title=_('Full Description'), slug='full-description',
                 content=detail_description_content, listed=False,
                 author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
             sign_up_content = render_to_string("projects/sign_up_initial_content.html",
                 {})
-            sign_up = Page(title=_('Sign-Up'),
+            sign_up = Page(title=_('Sign-Up'), slug='sign-up',
                 content=sign_up_content, listed=False, editable=False,
                 author_id=user.id, project_id=project.id)
             sign_up.save()

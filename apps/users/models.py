@@ -15,7 +15,8 @@ from django.db.models.signals import pre_save
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.http import urlquote_plus
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.utils.safestring import mark_safe
 
 from taggit.models import GenericTaggedItemBase, Tag
@@ -162,7 +163,7 @@ class UserProfile(ModelBase):
         body = render_to_string('users/emails/registration_confirm.txt', {
             'confirmation_url': url,
         })
-        subject = _('Complete Registration')
+        subject = ugettext('Complete Registration')
         tasks.SendUserEmail.apply_async(args=(self, subject, body))
 
     def image_or_default(self):

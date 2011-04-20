@@ -295,7 +295,7 @@ header {}
       background-position: 0 -49px;
       background-image: url("/media/images/logo.png");
       height: 120px;
-      width: 262px;
+      width: 180px;
       margin-right: 20px;
       position: absolute;
       z-index: 2;
@@ -348,9 +348,9 @@ header {}
       font-size: 17px;
       position: absolute;
       margin-top: 38px;
-      padding-left: 260px;
+      padding-left: 180px;
       height: 42px;
-      width: 740px;
+      width: 820px;
       background: #fff;
       z-index: 1;
       border-radius: 10px;
@@ -977,13 +977,15 @@ header {}
 	}
 	.card-list .card dl{
 		display: inline-block;
-		*display: inline;
-		width: 32%;
 		text-align: center;
+                width: 30%;
 	}
+        .card-list .card dl.updates {
+                width: 37%;
+        }
 	.card-list .card dd,
 	.card-list .card dt{
-		font-size: 11px;
+		font-size: 9px;
 		margin-top: -4px;
 		margin-bottom: -4px;
 		line-height: 17px;

@@ -26,7 +26,7 @@
   {% if reply_to %}
     <h1>{{ _('Reply') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
   {% else %}
-    <h1>{{ _('Answer') }} {{ page.title }} {{ _('Questions') }}</h1>
+    <h1>{{ page.title }} {{ _(': Answer Questions') }}</h1>
   {% endif %}
 {% endblock %}
 
@@ -50,7 +50,7 @@
     <p class="hint">{{ _('First update your profile information, which will be included with your answer.') }}</p>
     {% include "users/_profile_edit_image.html" %}
     {% include "users/_profile_edit.html" %}
-    <h2>Questions</h2>
+    <h2>{{ _('Questions') }}</h2>
     <p class="hint">{{ _('Then answer the sign-up questions listed below.') }}</p>
     {% include "projects/sign_up_initial_content.html" %}
   {% endif %}

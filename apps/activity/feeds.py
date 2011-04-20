@@ -1,9 +1,9 @@
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.utils.feedgenerator import rfc3339_date
 
+from l10n.urlresolvers import reverse
 from django_push.publisher.feeds import Feed, HubAtom1Feed
 from activity.models import Activity
 from projects.models import Project
@@ -58,16 +58,20 @@ class UserActivityFeed(Feed):
     feed_type = ActivityStreamAtomFeed
 
     def item_author_name(self, item):
-        return item.actor.name
+        return item.actor.display_name
 
     def item_author_link(self, item):
         return self._request.build_absolute_uri(item.actor.get_absolute_url())
 
     def title(self, user):
-        return user.name
+        return user.display_name
 
     def subtitle(self, user):
-        return _('Activity feed for %s' % (user.name,))
+        try:
+            name = user.display_name
+        except AttributeError:
+            name = user.name
+        return _('Activity feed for %s') % (name,)
 
     def link(self, user):
         return reverse('users_profile_view',

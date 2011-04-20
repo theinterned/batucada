@@ -6,10 +6,10 @@ from django.template import RequestContext
 from django.db import connection
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
 
+from l10n.urlresolvers import reverse
 from activity.models import Activity
 from users.decorators import anonymous_only, login_required
 from users.models import UserProfile

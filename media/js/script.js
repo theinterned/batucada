@@ -422,7 +422,6 @@ var customizeCKEditor = function() {
             // Get a reference to the "Link" tab.
             var linkTab = dialogDefinition.getContents( 'Link' );
             var linkUrl = linkTab.get('txtUrl');
-            linkUrl['label'] = 'Link URL';
             infoTab.add(linkUrl);
             // Get a reference to the "Advanced" tab.
             var advancedTab = dialogDefinition.getContents( 'advanced' );
@@ -478,7 +477,6 @@ $(document).ready(function() {
     });
     
     $('.modal nav.tabs a').tabLinks('.tabpane');
-    $('#id_due_on').datepicker();
     $('#id_start_date').datepicker();
     $('#id_end_date').datepicker();
     customizeCKEditor();

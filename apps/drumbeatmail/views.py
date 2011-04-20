@@ -5,12 +5,12 @@ import operator
 
 from django import http
 from django.db.models.fields.files import ImageFieldFile
-from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
+from l10n.urlresolvers import reverse
 from drumbeat import messages
 from drumbeatmail import forms
 from messages.models import Message

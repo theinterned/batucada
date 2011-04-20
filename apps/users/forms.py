@@ -34,9 +34,7 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
 
 def check_password_complexity(password):
-    message = _('Password must be at least 8 ' +
-                'characters long and contain ' +
-                'both numbers and letters')
+    message = _('Password must be at least 8 characters long and contain both numbers and letters.')
     if len(password) < 8 or not (
         re.search('[A-Za-z]', password) and re.search('[0-9]', password)):
         return message

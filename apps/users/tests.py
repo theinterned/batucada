@@ -1,7 +1,7 @@
 from django.test import Client
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.core.urlresolvers import reverse
 
+from l10n.urlresolvers import reverse
 from drumbeat.utils import get_partition_id
 from users.models import UserProfile
 

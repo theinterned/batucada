@@ -1,4 +1,5 @@
 {% load activity_tags %}
+{% load l10n_tags %}
 {% spaceless %}
 
 {% if activity|should_show_verb and show_actor %}
@@ -9,7 +10,7 @@
 
 {% if activity|should_show_verb %}
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
-    {{ _('Created') }}
+    {{ _('created') }}
   {% else %}
     {% if activity.target_object %}
       {{ activity.target_object.friendly_verb }}
@@ -27,7 +28,7 @@
     <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
   {% else %}
     {% if activity.project %}
-      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a> study group.
+      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a>{{ _(' study group.') }}
     {% else %}
       {{ activity|get_link_name }} 
       <a href="{{ activity|get_link }}">

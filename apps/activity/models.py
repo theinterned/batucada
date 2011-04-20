@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -58,9 +59,9 @@ class Activity(ModelBase):
     def textual_representation(self):
         target = self.target_user or self.target_project or self.project
         if target and self.verb == schema.verbs['follow']:
-            return "%s %s %s" % (
-                self.actor.display_name, schema.past_tense['follow'],
-                target.name)
+            return _('%(actor)s %(verb)s %(target)s') % dict(
+                actor=self.actor.display_name, verb=schema.past_tense['follow'],
+                target=target.name)
         if self.status:
             return self.status.status
         elif self.remote_object:
@@ -70,8 +71,8 @@ class Activity(ModelBase):
             return self.target_object.title
 
         friendly_verb = schema.verbs_by_uri[self.verb]
-        return _("%(friendly_verb)s activity performed by %(self.actor.display_name)s") % (friendly_verb,
-                                                   self.actor.name)
+        return ugettext('%(verb)s activity performed by %(actor)s') % dict(verb=friendly_verb,
+                                                   actor=self.actor.display_name)
 
     def html_representation(self):
         return render_to_string('activity/_activity_body.html', {

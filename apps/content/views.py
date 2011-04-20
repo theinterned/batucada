@@ -3,12 +3,12 @@ import datetime
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.template import RequestContext
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.db import IntegrityError
 
+from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from users.forms import ProfileEditForm, ProfileImageForm
 from drumbeat import messages
