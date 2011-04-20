@@ -157,13 +157,11 @@ def show_challenge(request, slug):
     except (EmptyPage, InvalidPage):
         submissions = paginator.page(paginator.num_pages)
 
-    nsubmissions = challenge.submission_set.all().count()
     form = SubmissionSummaryForm()
 
     context = {
         'challenge': challenge,
         'submissions': submissions,
-        'nsubmissions': nsubmissions,
         'form': form,
     }
 
