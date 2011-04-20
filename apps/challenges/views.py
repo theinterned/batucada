@@ -3,6 +3,8 @@ import logging
 
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
+from django.db import connection
 from django.db.utils import IntegrityError
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponseForbidden)
@@ -26,6 +28,7 @@ from projects.models import Project
 
 from drumbeat import messages
 from users.decorators import login_required
+from voting.models import Vote
 
 log = logging.getLogger(__name__)
 
@@ -145,7 +148,19 @@ def edit_challenge_image(request, slug):
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
-    submission_set = challenge.submission_set.all().order_by('-created_on')
+    qn = connection.ops.quote_name
+    ctype = ContentType.objects.get_for_model(Submission)
+
+    submission_set = challenge.submission_set.extra(select={'score': """
+        SELECT SUM(vote)
+        FROM %s
+        WHERE content_type_id = %s
+        AND object_id = %s.id
+        """ % (qn(Vote._meta.db_table), ctype.id,
+               qn(Submission._meta.db_table))
+        },
+        order_by=['-score']
+    )
     paginator = Paginator(submission_set, 10)
 
     try:

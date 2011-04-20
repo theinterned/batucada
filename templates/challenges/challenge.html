@@ -49,11 +49,14 @@
   </div> <!-- /.#create-post -->
   {% endif %}
   
+  {% if submissions.object_list %}
+  <h2>{{ _('Popular Ideas') }}</h2>
   <ul id="posts">
     {% for submission in submissions.object_list %}
-      {% include "challenges/_submission_resource.html" %}
+    {% include "challenges/_submission_resource.html" %}
     {% endfor %}
   </ul>
+  {% endif %}
 
   {% if submissions.paginator.num_pages > 1 %}
   <div class="pagination">
