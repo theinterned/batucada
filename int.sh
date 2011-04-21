@@ -5,6 +5,6 @@
 
 l=`(cd locale; ls)`
 for lang in $l; do
-	python manage.py makemessages -e ".html,.txt" -l $lang
+	python manage.py makemessages -e ".html,.txt,.py" -l $lang
 done;
 python manage.py compilemessages
