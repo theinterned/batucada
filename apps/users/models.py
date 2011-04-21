@@ -33,7 +33,8 @@ import caching.base
 
 log = logging.getLogger(__name__)
 
-GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
+GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s"
+                     "?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
 
 def determine_upload_path(instance, filename):
     chunk_size = 1000  # max files per directory
