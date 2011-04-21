@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-21 12:24-0400\n"
+"POT-Creation-Date: 2011-04-21 14:11-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,7 +192,7 @@ msgstr "(siguiendo)"
 msgid "No such user with that username or email."
 msgstr "No hay nadie con ese nombre de usuario o correo."
 
-#: apps/drumbeatmail/models.py:28
+#: apps/drumbeatmail/models.py:29
 #, python-format
 msgid "New Message from %(display_name)s"
 msgstr "Nuevo mensaje de %(display_name)s"
@@ -210,44 +210,51 @@ msgstr "Ocurrió un error al enviar el mensaje. Por favor intente nuevamente."
 msgid "Thank you, your settings have been saved."
 msgstr "Gracias, su configuración ha sido guardada."
 
-#: apps/projects/forms.py:56 apps/users/forms.py:164
+#: apps/projects/forms.py:57 apps/users/forms.py:164
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/projects/forms.py:84
+#: apps/projects/forms.py:85
 msgid "Unsupported file type."
 msgstr "Tipo de archivo no soportado."
 
-#: apps/projects/forms.py:88
+#: apps/projects/forms.py:89
 #, python-format
 msgid "File exceeds max file size: %(max)dMB"
 msgstr "El archivo excede el tamaño máximo: %(max)dMB"
 
-#: apps/projects/forms.py:105 templates/drumbeatmail/base.html:17
+#: apps/projects/forms.py:106 templates/drumbeatmail/base.html:17
 #: templates/messages/inbox.html:12 templates/projects/contact_users.html:12
 msgid "Subject"
 msgstr "Asunto"
 
-#: apps/projects/forms.py:107
+#: apps/projects/forms.py:108
 msgid "Body"
 msgstr "Cuerpo"
 
-#: apps/projects/forms.py:117
+#: apps/projects/forms.py:118
 msgid "That study group does not exist."
 msgstr "Ese grupo de estudio no existe."
 
-#: apps/projects/forms.py:160
+#: apps/projects/forms.py:122
+#, python-format
+msgid ""
+"You received this because you are a participant in %(project)s: http://"
+"%(domain)s%(url)s"
+msgstr ""
+
+#: apps/projects/forms.py:165
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:162
+#: apps/projects/forms.py:167
 #, python-format
 msgid "User %s is organizing the study group."
 msgstr "El usuario %s está organizando el grupo de estudio."
 
-#: apps/projects/forms.py:165
+#: apps/projects/forms.py:170
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
@@ -326,17 +333,17 @@ msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 msgid "Cannot create self referencing relationship."
 msgstr "No puede crear una relacion consigo mismo."
 
-#: apps/relationships/models.py:66
+#: apps/relationships/models.py:67
 #, python-format
 msgid "%(display_name)s is following you on P2PU!"
 msgstr "¡%(display_name)s te está siguiendo en P2PU!"
 
-#: apps/relationships/models.py:69
+#: apps/relationships/models.py:70
 #, python-format
 msgid "%(display_name)s is following %(project)s on P2PU!"
 msgstr "¡%(display_name)s está siguiendo %(project)s en P2PU!"
 
-#: apps/relationships/models.py:75
+#: apps/relationships/models.py:76
 #, python-format
 msgid "%(display_name)s is now following"
 msgstr "%(display_name)s ahora está siguiendo"
@@ -385,7 +392,7 @@ msgstr "Puede entrar directamente con sus credenciales de p2pu.org."
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
-#: apps/users/models.py:166
+#: apps/users/models.py:167
 msgid "Complete Registration"
 msgstr "Termine de Crear su Cuenta"
 
@@ -893,6 +900,13 @@ msgstr "Sinceramente,"
 msgid "The P2PU Team"
 msgstr "El Equipo de P2PU"
 
+#: templates/content/emails/sign_up_updated.txt:16
+#: templates/drumbeatmail/emails/direct_message.txt:10
+#: templates/projects/emails/course_updated.txt:18
+#: templates/relationships/emails/new_follower.txt:9
+msgid "Manage your subscriptions:"
+msgstr ""
+
 #: templates/dashboard/dashboard.html:13
 #: templates/preferences/settings.html:10
 msgid "Dashboard"
@@ -1182,7 +1196,8 @@ msgid "More"
 msgstr "Más"
 
 #: templates/drumbeatmail/emails/direct_message.txt:1
-msgid "You have received a new direct message from "
+#, fuzzy
+msgid "You have received a new direct message from"
 msgstr "Ha recibido un nuevo mensaje directo de "
 
 #: templates/drumbeatmail/emails/direct_message.txt:5
