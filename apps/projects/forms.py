@@ -5,6 +5,7 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
+from django.contrib.sites.models import Site
 
 from drumbeat.utils import CKEditorWidget
 
@@ -118,6 +119,10 @@ class ProjectContactUsersForm(forms.Form):
         recipients = project.participants()
         subject = "[p2pu-%s] " % project.slug + self.cleaned_data['subject']
         body = self.cleaned_data['body']
+        body = '%s\n\n%s' % (self.cleaned_data['body'], _('You received this because you are a participant ' 
+               'in %(project)s: http://%(domain)s%(url)s') % {'project':project.name, 
+               'domain':Site.objects.get_current().domain, 'url':project.get_absolute_url()})
+                       
         message_list = []
         for r in recipients:
             msg = Message(
