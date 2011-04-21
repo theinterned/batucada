@@ -193,7 +193,7 @@ def clean_html(sender, **kwargs):
         if instance.content:
             instance.content = bleach.clean(instance.content,
                 tags=settings.RICH_ALLOWED_TAGS, attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                styles=settings.RICH_ALLOWED_STYLES)
+                styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
 pre_save.connect(clean_html, sender=Page)
 pre_save.connect(clean_html, sender=PageComment)
