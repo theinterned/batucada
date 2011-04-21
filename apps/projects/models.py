@@ -255,10 +255,8 @@ def project_creation_handler(sender, **kwargs):
     created = kwargs.get('created', False)
 
     if not created or not isinstance(project, Project):
-        log.debug("Nothing to do, returning")
         return
 
-    log.debug("Creating relationship between project creator and project")
     Relationship(source=project.created_by,
                  target_project=project).save()
 
