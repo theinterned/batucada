@@ -53,7 +53,7 @@ def clean_html(sender, **kwargs):
         if instance.description:
             instance.description = bleach.clean(instance.description,
                 tags=settings.RICH_ALLOWED_TAGS, attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                styles=settings.RICH_ALLOWED_STYLES)
+                styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
 pre_save.connect(clean_html, sender=School)
 
