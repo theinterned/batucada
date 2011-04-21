@@ -1,4 +1,4 @@
-{{ _('You have received a new direct message from ') }} {{ sender}}:
+{{ _('You have received a new direct message from') }} {{ sender}}:
 
 {{ message }}
 
@@ -6,3 +6,5 @@
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
+
+{{ _('Manage your subscriptions:') }} http://{{domain}}/account/settings/
