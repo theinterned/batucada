@@ -102,7 +102,7 @@ class Project(ModelBase):
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
 
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=110)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='projects')
     featured = models.BooleanField(default=False)

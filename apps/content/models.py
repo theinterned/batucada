@@ -29,7 +29,7 @@ class Page(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/article'
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=110)
     content = models.TextField()
     author = models.ForeignKey('users.UserProfile', related_name='pages')
     last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
