@@ -12,6 +12,12 @@
     <span class="arrow">&rsaquo;</span>
     <a href="{% locale_url challenges_show slug=challenge.slug %}">{{ challenge.title }}</a>
   </nav>
+
+  <div id="project-actions">
+    {% if user.get_profile == challenge.created_by %}
+    <a class="button" href="{% locale_url challenges_edit slug=challenge.slug %}">{{ _('Edit Challenge') }}</a>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
 
