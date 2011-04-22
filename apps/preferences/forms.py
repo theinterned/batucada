@@ -36,7 +36,6 @@ class PasswordEditForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'render_value': 'False'}),
         } 
  
-        
     def clean_password(self):
         password = self.cleaned_data['password']
         message = check_password_complexity(password)
