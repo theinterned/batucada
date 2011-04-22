@@ -51,11 +51,11 @@ urlpatterns = patterns('',
 
 
   # Voting
-  # url(r'^submission/(?P<object_id>\d+)/(?P<direction>up|clear)vote/?$',
-  #    vote_on_object, vote_dict, name='submission_vote'),
-  #url(r'^submission/(?P<submission_id>\d+)/voter_details/',
-  #    'challenges.views.submissions_voter_details',
-  #    name='submissions_voter_details'),
+  url(r'^submission/(?P<object_id>\d+)/(?P<direction>up|clear)vote/?$',
+      vote_on_object, vote_dict, name='submission_vote'),
+  url(r'^submission/(?P<submission_id>\d+)/voter_details/',
+      'challenges.views.submissions_voter_details',
+      name='submissions_voter_details'),
 
   # Judges
   url(r'^(?P<slug>[\w-]+)/judges/$', 'challenges.views.challenge_judges',

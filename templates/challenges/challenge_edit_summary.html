@@ -53,6 +53,12 @@
       {{ form.important_dates }}
       {{ form.important_dates.errors }}
     </div>
+
+    <div class="field{% if form.allow_voting.errors %} error{% endif %}">
+      <label for="id_allow_voting">{{ form.allow_voting }} {{ _('Allow users to vote on submissions?') }}</label>
+      <span class="hint block"></span>
+      {{ form.allow_voting.errors }}
+    </div>
     
     <div class="field{% if form.resources.errors %} error{% endif %}">
       <label for="id_name">{{ _('Resources and Support') }}</label>

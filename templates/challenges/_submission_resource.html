@@ -9,7 +9,7 @@
   </a>
 
   <div class="post-contents">
-    {% comment %}
+    {% if challenge.allow_voting %}
     <div class="voting">
       <div class="score">{{ score.score|default:0 }}</div>
       <form method="post" id="upvote" action="{% if vote and vote.is_upvote %}{% locale_url submission_vote object_id=submission.pk direction='clear' %}{% else %}{% locale_url submission_vote object_id=submission.pk direction='up' %}{% endif %}">
@@ -18,7 +18,7 @@
         <input type="image" src="{{ MEDIA_URL }}images/thumb{% if not vote or not vote.is_upvote %}-off{% endif %}.png" alt="{{ _('Like this submission') }}" />
       </form>
     </div>
-    {% endcomment %}
+    {% endif %}
 
     <div class="post-details">
       <a class="member-name" href="{{ submission.created_by.get_absolute_url }}">{{ submission.created_by.name }}</a>

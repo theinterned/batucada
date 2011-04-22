@@ -71,6 +71,7 @@ class Challenge(ModelBase):
                                       default=datetime.now())
 
     is_open = models.BooleanField()
+    allow_voting = models.BooleanField(default=False)
 
     objects = ChallengeManager()
 
