@@ -1,16 +1,21 @@
-{{ project.name }}'s signup page was updated:
-
-{% if comment.reply_to %}
-{{ comment.author.display_name }} posted a reply.
+{% if is_answer %}
+{{ comment.author }}{{ _(' submitted a new answer at the sign-up page of ') }}{{ project.name }}{{ _('.') }}
 {% else %}
-{{ comment.author.display_name }} submitted an answer.
+{{ comment.author }}{{ _(' posted a new comment at the sign-up page of ') }}{{ project.name }}{{ _('.') }}
 {% endif %}
 
-{{ comment.content|removetags:"p" }}
+{% if is_answer %}
+{{ _('Bio:') }} {{ comment.author.bio|striptags|safe }}
 
-{{ _('See:') }} http://{{domain}}{{ comment.get_absolute_url }}
+{{ _('Location:') }} {{ comment.author.location }}
+
+{{ _('Answer:') }}
+{% else %}
+{{ _('Comment:') }}
+{% endif %}
+{{ comment.content|striptags|safe }}
+
+{% if is_answer %}{{ _('See answer at:') }}{% else %}{{ _('See comment at:') }}{% endif %} http://{{domain}}{{ comment.get_absolute_url }}
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
-
-{{ _('Manage your subscriptions:') }} http://{{domain}}/account/settings/
