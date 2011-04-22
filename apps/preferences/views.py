@@ -81,10 +81,10 @@ def password(request):
     if request.method == "POST":
         form = forms.PasswordEditForm(request.POST, request.FILES,
                                      instance=profile)
-        """
-        should we require existing password before saving? email to confirm?
-        after saved, should the user be logged out and forced to log in with the new password?
-        """
+        
+        # should we require existing password before saving? email to confirm?
+        # after saved, should the user be logged out and forced to log in with the new password?
+        
         if form.is_valid():
             profile = form.save(commit=False)
             profile.set_password(form.cleaned_data['password'])
