@@ -159,12 +159,15 @@ class PageComment(ModelBase):
         if self.page.slug != 'sign-up':
             return
         project = self.page.project
-        subject = ugettext('[p2pu-%(slug)s-signup] Study group %(name)s\'s signup page was updated') % {
-            'slug': project.slug,
-            'name': project.name,
-            }
+        is_answer = not self.reply_to
+        subject = render_to_string("content/emails/sign_up_updated_subject.txt", {
+            'comment': self,
+            'is_answer': is_answer,
+            'project': project,
+        })
         body = render_to_string("content/emails/sign_up_updated.txt", {
             'comment': self,
+            'is_answer': is_answer,
             'project': project,
             'domain': Site.objects.get_current().domain,
         })
