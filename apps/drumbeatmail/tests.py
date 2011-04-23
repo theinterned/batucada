@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from users.models import UserProfile
 from drumbeatmail.forms import ComposeForm
 from relationships.models import Relationship
@@ -26,6 +28,13 @@ class TestDrumbeatMail(test_utils.TestCase):
         self.user_two.set_password('testpassword')
         self.user_two.save()
         self.user_two.create_django_user()
+        self.old_recaptcha_pubkey = settings.RECAPTCHA_PUBLIC_KEY
+        self.old_recaptcha_privkey = settings.RECAPTCHA_PRIVATE_KEY
+        settings.RECAPTCHA_PUBLIC_KEY, settings.RECAPTCHA_PRIVATE_KEY = '', ''
+        
+    def tearDown(self):
+        settings.RECAPTCHA_PUBLIC_KEY = self.old_recaptcha_pubkey
+        settings.RECAPTCHA_PRIVATE_KEY = self.old_recaptcha_privkey
 
     def test_messaging_user_following(self):
         print "From test: %s" % (self.user.user,)
