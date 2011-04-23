@@ -29,7 +29,7 @@ class Page(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/article'
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=110)
     content = models.TextField()
     author = models.ForeignKey('users.UserProfile', related_name='pages')
     last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
@@ -159,12 +159,15 @@ class PageComment(ModelBase):
         if self.page.slug != 'sign-up':
             return
         project = self.page.project
-        subject = ugettext('[p2pu-%(slug)s-signup] Study group %(name)s\'s signup page was updated') % {
-            'slug': project.slug,
-            'name': project.name,
-            }
+        is_answer = not self.reply_to
+        subject = render_to_string("content/emails/sign_up_updated_subject.txt", {
+            'comment': self,
+            'is_answer': is_answer,
+            'project': project,
+        })
         body = render_to_string("content/emails/sign_up_updated.txt", {
             'comment': self,
+            'is_answer': is_answer,
             'project': project,
             'domain': Site.objects.get_current().domain,
         })
@@ -193,7 +196,7 @@ def clean_html(sender, **kwargs):
         if instance.content:
             instance.content = bleach.clean(instance.content,
                 tags=settings.RICH_ALLOWED_TAGS, attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                styles=settings.RICH_ALLOWED_STYLES)
+                styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
 pre_save.connect(clean_html, sender=Page)
 pre_save.connect(clean_html, sender=PageComment)

@@ -14,3 +14,5 @@ See: http://{{domain}}{% if wall %}{{ activity.get_absolute_url }}{% else%}{{ ac
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
+
+{{ _('Manage your subscriptions:') }} http://{{domain}}/account/settings/

@@ -61,7 +61,8 @@ admin.site.register(Relationship)
 
 def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
-    if not isinstance(rel, Relationship):
+    created = kwargs.get('created', False)
+    if not created or not isinstance(rel, Relationship):
         return
     user_subject = ugettext('%(display_name)s is following you on P2PU!') % {
         'display_name': rel.source.display_name,

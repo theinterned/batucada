@@ -7,6 +7,14 @@
 {% endblock %}
 {% block bodyid %}dashboard{%endblock%}
 
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url dashboard_index %}">{{ _('Dashboard') }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
+
 {% block body %}
 
 <div id="sidebar">

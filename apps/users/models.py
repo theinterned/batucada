@@ -33,7 +33,8 @@ import caching.base
 
 log = logging.getLogger(__name__)
 
-GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
+GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s"
+                     "?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
 
 def determine_upload_path(instance, filename):
     chunk_size = 1000  # max files per directory
@@ -222,7 +223,8 @@ def clean_html(sender, **kwargs):
     if isinstance(instance, UserProfile): 
         if instance.bio:
             instance.bio = bleach.clean(instance.bio,
-                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)
+                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
+                strip=True)
 
 pre_save.connect(clean_html, sender=UserProfile) 
 

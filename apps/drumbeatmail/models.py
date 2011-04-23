@@ -16,7 +16,8 @@ log = logging.getLogger(__name__)
 
 def message_sent_handler(sender, **kwargs):
     message = kwargs.get('instance', None)
-    if not isinstance(message, Message):
+    created = kwargs.get('created', False)
+    if not created or not isinstance(message, Message):
         return
     user = message.recipient
     preferences = AccountPreferences.objects.filter(

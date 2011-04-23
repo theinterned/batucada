@@ -48,7 +48,7 @@ def status_creation_handler(sender, **kwargs):
     # convert status body to markdown and bleachify
     bl = Bleach()
     status.status = urlize(status.status)
-    status.status = bl.clean(markdown(status.status), tags=TAGS)
+    status.status = bl.clean(markdown(status.status), tags=TAGS, strip=True)
     status.save()
 
     # fire activity
