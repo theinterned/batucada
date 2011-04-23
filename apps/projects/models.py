@@ -4,6 +4,7 @@ import datetime
 import bleach
 
 from django.core.cache import cache
+from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
@@ -87,9 +88,9 @@ class Project(ModelBase):
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=70)
     short_description = models.CharField(max_length=125)
-    long_description = models.TextField()
+    long_description = models.TextField(validators=[MaxLengthValidator(700)])
     
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -102,7 +103,7 @@ class Project(ModelBase):
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
 
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=110)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='projects')
     featured = models.BooleanField(default=False)
@@ -246,7 +247,7 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.long_description:
             instance.long_description = bleach.clean(instance.long_description,
-                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)
+                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
 
 pre_save.connect(clean_html, sender=Project) 
 
@@ -255,10 +256,8 @@ def project_creation_handler(sender, **kwargs):
     created = kwargs.get('created', False)
 
     if not created or not isinstance(project, Project):
-        log.debug("Nothing to do, returning")
         return
 
-    log.debug("Creating relationship between project creator and project")
     Relationship(source=project.created_by,
                  target_project=project).save()
 
