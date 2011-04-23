@@ -1,7 +1,6 @@
 import datetime
 import logging
 
-from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
@@ -51,8 +50,6 @@ class Relationship(ModelBase):
             'from': repr(self.source),
             'to': repr(self.target_user or self.target_project),
         }
-
-admin.site.register(Relationship)
 
 ###########
 # Signals #

@@ -2,7 +2,6 @@ import datetime
 from markdown import markdown
 from bleach import Bleach
 
-from django.contrib import admin
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
@@ -34,8 +33,6 @@ class Status(ModelBase):
 
     def timesince(self, now=None):
         return timesince(self.created_on, now)
-
-admin.site.register(Status)
 
 
 def status_creation_handler(sender, **kwargs):
