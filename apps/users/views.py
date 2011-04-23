@@ -105,7 +105,7 @@ def login(request):
                          authentication_form=forms.AuthenticationForm)
 
     if isinstance(r, http.HttpResponseRedirect):
-        # Succsesful log in according to django.  Now we do our checks.  I do
+        # Successful log in according to django.  Now we do our checks.  I do
         # the checks here instead of the form's clean() because I want to use
         # the messages framework and it's not available in the request there
         user = request.user.get_profile()
@@ -423,7 +423,7 @@ def profile_edit_links(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         form = forms.ProfileLinksForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): 
             messages.success(request, _('Profile link added.'))
             link = form.save(commit=False)
             log.debug("User instance: %s" % (profile.user,))
@@ -444,7 +444,28 @@ def profile_edit_links(request):
         'form': form,
         'links': links,
     }, context_instance=RequestContext(request))
+    
+@login_required
+def profile_edit_links_edit(request, link_id):
+    link = get_object_or_404(Link, id=link_id)
+    form = forms.ProfileLinksForm(request.POST or None, instance=link)
+    profile = get_object_or_404(UserProfile, user=request.user)
+    
+    if form.is_valid(): 
+        link = form.save(commit=False)
+        link.user = profile
+        messages.success(request, _('Profile link updated'))
+        link.save()
+        return http.HttpResponseRedirect(reverse('users_profile_edit_links'),)
 
+    else:
+        form = forms.ProfileLinksForm(instance=link)
+
+    return render_to_response('users/profile_edit_links_edit.html', {
+        'profile': profile,
+        'form': form,
+        'link': link,
+    }, context_instance=RequestContext(request))
 
 @login_required
 def profile_edit_links_delete(request, link):

@@ -137,6 +137,22 @@ def edit_links(request, slug):
         'links': links,
     }, context_instance=RequestContext(request))
 
+@login_required
+@ownership_required
+def edit_links_edit(request, slug, link): 
+    if request.method == 'POST':
+        log.debug("just ran edit_links_edit in post")
+        form = project_forms.ProjectForm(request.POST, instance=project)
+        links = Link.objects.select_related('subscription').filter(project=project)
+        link.save()
+        messages.success(request, _('The link was updated'))
+    else:
+        form = project_forms.ProjectLinksForm()
+    
+
+    return http.HttpResponseRedirect(
+        reverse('projects_edit_links', kwargs=dict(slug=slug)))
+    
 
 @login_required
 @ownership_required
