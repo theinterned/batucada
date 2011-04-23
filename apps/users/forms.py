@@ -165,7 +165,7 @@ class ProfileImageForm(forms.ModelForm):
                     max=max_size))
         return self.cleaned_data['image']
 
-
+        
 class ProfileLinksForm(forms.ModelForm):
 
     class Meta:
