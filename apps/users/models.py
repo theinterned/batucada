@@ -9,7 +9,6 @@ import os
 
 from django.conf import settings
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.template.loader import render_to_string
@@ -226,6 +225,4 @@ def clean_html(sender, **kwargs):
                 tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
                 strip=True)
 
-pre_save.connect(clean_html, sender=UserProfile) 
-
-admin.site.register(UserProfile)
+pre_save.connect(clean_html, sender=UserProfile)
