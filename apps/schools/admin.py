@@ -3,4 +3,3 @@ from schools.models import School
 
 
 admin.site.register(School)
-
