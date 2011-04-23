@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-21 14:11-0400\n"
+"POT-Creation-Date: 2011-04-23 04:44-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,13 +115,6 @@ msgstr "publicó un comentario"
 #, python-format
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
-
-#: apps/content/models.py:162
-#, python-format
-msgid "[p2pu-%(slug)s-signup] Study group %(name)s's signup page was updated"
-msgstr ""
-"[p2pu-%(slug)s-signup] Se actualizó la página de suscripción del grupo de "
-"estudio %(name)s"
 
 #: apps/content/views.py:58
 #, python-format
@@ -243,6 +236,7 @@ msgid ""
 "You received this because you are a participant in %(project)s: http://"
 "%(domain)s%(url)s"
 msgstr ""
+"Recibió esto porque es participante de %(project)s: http://%(domain)s%(url)s"
 
 #: apps/projects/forms.py:165
 #, python-format
@@ -259,11 +253,11 @@ msgstr "El usuario %s está organizando el grupo de estudio."
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/models.py:119
+#: apps/projects/models.py:120
 msgid "study group"
 msgstr "grupo de estudio"
 
-#: apps/projects/models.py:173
+#: apps/projects/models.py:174
 #, python-format
 msgid "[p2pu-%(slug)s-updates] Study group %(name)s was updated"
 msgstr "[p2pu-%(slug)s-updates] El grupo de estudio %(name)s fue actualizado"
@@ -315,7 +309,7 @@ msgstr "Descripción Completa"
 
 #: apps/projects/views.py:235
 msgid "Sign-Up"
-msgstr "Suscripción"
+msgstr "Inscripción"
 
 #: apps/projects/views.py:241
 msgid "The study group has been created."
@@ -717,7 +711,7 @@ msgstr "Trabajo colaborativo (editable por todos los participantes)."
 
 #: templates/content/comment_page.html:28
 msgid "Reply Comment"
-msgstr "Respusta al Comentario"
+msgstr "Respuesta al Comentario"
 
 #: templates/content/comment_page.html:30
 msgid "Comment"
@@ -775,7 +769,7 @@ msgstr "Preguntas"
 
 #: templates/content/comment_sign_up.html:54
 msgid "Then answer the sign-up questions listed below."
-msgstr "Responda las preguntas listadas a continuación."
+msgstr "Responda las preguntas de inscripción listadas a continuación."
 
 #: templates/content/comment_sign_up.html:70
 msgid "Submit"
@@ -863,14 +857,18 @@ msgid "Answers"
 msgstr "Respuestas"
 
 #: templates/content/sign_up.html:54
+#: templates/content/emails/sign_up_updated.txt:8
 msgid "Bio:"
 msgstr "Biografía:"
 
-#: templates/content/sign_up.html:55 templates/users/profile.html:62
+#: templates/content/sign_up.html:55
+#: templates/content/emails/sign_up_updated.txt:10
+#: templates/users/profile.html:62
 msgid "Location:"
 msgstr "Ubicación:"
 
 #: templates/content/sign_up.html:56
+#: templates/content/emails/sign_up_updated.txt:12
 msgid "Answer:"
 msgstr "Respuesta:"
 
@@ -878,11 +876,32 @@ msgstr "Respuesta:"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: templates/content/emails/sign_up_updated.txt:11
-msgid "See:"
-msgstr "Vea:"
+#: templates/content/emails/sign_up_updated.txt:2
+msgid " submitted a new answer at the sign-up page of "
+msgstr " envió una nueva respuesta a la página de inscripción de "
 
-#: templates/content/emails/sign_up_updated.txt:13
+#: templates/content/emails/sign_up_updated.txt:2
+#: templates/content/emails/sign_up_updated.txt:4
+msgid "."
+msgstr "."
+
+#: templates/content/emails/sign_up_updated.txt:4
+msgid " posted a new comment at the sign-up page of "
+msgstr " publicó un nuevo comentario en la página de inscripción de "
+
+#: templates/content/emails/sign_up_updated.txt:14
+msgid "Comment:"
+msgstr "Comentario:"
+
+#: templates/content/emails/sign_up_updated.txt:18
+msgid "See answer at:"
+msgstr "Ver respuesta en:"
+
+#: templates/content/emails/sign_up_updated.txt:18
+msgid "See comment at:"
+msgstr "Ver comentario en:"
+
+#: templates/content/emails/sign_up_updated.txt:20
 #: templates/drumbeatmail/emails/direct_message.txt:7
 #: templates/projects/emails/course_updated.txt:15
 #: templates/relationships/emails/new_follower.txt:6
@@ -891,7 +910,7 @@ msgstr "Vea:"
 msgid "Sincerely,"
 msgstr "Sinceramente,"
 
-#: templates/content/emails/sign_up_updated.txt:14
+#: templates/content/emails/sign_up_updated.txt:21
 #: templates/drumbeatmail/emails/direct_message.txt:8
 #: templates/projects/emails/course_updated.txt:16
 #: templates/relationships/emails/new_follower.txt:7
@@ -900,12 +919,13 @@ msgstr "Sinceramente,"
 msgid "The P2PU Team"
 msgstr "El Equipo de P2PU"
 
-#: templates/content/emails/sign_up_updated.txt:16
-#: templates/drumbeatmail/emails/direct_message.txt:10
-#: templates/projects/emails/course_updated.txt:18
-#: templates/relationships/emails/new_follower.txt:9
-msgid "Manage your subscriptions:"
-msgstr ""
+#: templates/content/emails/sign_up_updated_subject.txt:1
+msgid " submitted a new answer at the sign-up page."
+msgstr " envió una nueva respuesta a la página de inscripción."
+
+#: templates/content/emails/sign_up_updated_subject.txt:1
+msgid " posted a new comment at the sign-up page."
+msgstr " publicó un nuevo comentario en la página de inscripción."
 
 #: templates/dashboard/dashboard.html:13
 #: templates/preferences/settings.html:10
@@ -1196,13 +1216,18 @@ msgid "More"
 msgstr "Más"
 
 #: templates/drumbeatmail/emails/direct_message.txt:1
-#, fuzzy
 msgid "You have received a new direct message from"
-msgstr "Ha recibido un nuevo mensaje directo de "
+msgstr "Ha recibido un nuevo mensaje directo de"
 
 #: templates/drumbeatmail/emails/direct_message.txt:5
 msgid "Reply:"
 msgstr "Respuesta:"
+
+#: templates/drumbeatmail/emails/direct_message.txt:10
+#: templates/projects/emails/course_updated.txt:18
+#: templates/relationships/emails/new_follower.txt:9
+msgid "Manage your subscriptions:"
+msgstr "Administre sus suscripciones:"
 
 #: templates/events/index.html:4 templates/events/index.html.py:10
 msgid "Events"
@@ -1342,7 +1367,7 @@ msgstr "Grupos de Estudio Destacados"
 
 #: templates/projects/_project_list.html:16
 msgid "Study Groups Open for Sign-Up"
-msgstr "Grupos de Estudio Abiertos para Suscribirse"
+msgstr "Grupos de Estudio Abiertos para Inscribirse"
 
 #: templates/projects/_project_list.html:27
 msgid "Active Study Groups"
@@ -1560,7 +1585,7 @@ msgstr "En desarrollo"
 
 #: templates/projects/project_edit_status.html:22
 msgid "Sign-Up Closed."
-msgstr "Suscripciones cerradas"
+msgstr "Inscripciones cerradas"
 
 #: templates/projects/project_edit_status.html:29
 msgid "Testing Sandbox."
@@ -1643,7 +1668,7 @@ msgstr "Activo del"
 
 #: templates/projects/sidebar.html:44
 msgid "Signup"
-msgstr "Suscripción"
+msgstr "Inscripción"
 
 #: templates/projects/sidebar.html:45
 msgid "Closed"
@@ -1713,7 +1738,7 @@ msgid ""
 "rest of the study group. Please provide details about:"
 msgstr ""
 "Cualquier persona puede seguir un grupo de estudio en P2PU.  Participar es "
-"el siguiente nivel de compromiso.  La página de suscripción es un espacio en "
+"el siguiente nivel de compromiso.  La página de inscripción es un espacio en "
 "el que las personas pueden expresar su interés y preparación previa en el "
 "tema, y comprometerse a trabajar con el resto del grupo de estudio.  Por "
 "favor provea detalles sobre:"
@@ -2066,3 +2091,4 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
+

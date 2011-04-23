@@ -19,7 +19,7 @@
 
 <div id="sidebar">
 <div class="vcard panel">
-  <img class="member-picture" src="{{ user.get_profile.image_or_default }}" height="40" width="40" 'alt="'{{ user.username}}{{ _('\'s profile picture"') }}>
+  <img class="member-picture" src="{{ user.get_profile.image_or_default }}" height="40" width="40" {{ _('alt="') }}{{ user.username}}{{ _('\'s profile picture"') }}>
   <div class="member-details">
     <h2 class="member-name">
       <span class="fn">{{ user.get_profile.display_name }}</span>
