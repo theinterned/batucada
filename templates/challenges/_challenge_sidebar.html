@@ -1,0 +1,29 @@
+{% load l10n_tags %}
+
+<div id="sidebar">
+  <section id="challenge" class="panel">
+    <h1 id="challenge-title">{{ challenge.title }}</h1>
+    <h2 id="project-name">
+      <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
+    </h2>
+
+    <dl id="project-stats">
+      <dt>{{ _('Start date') }}:</dt>
+      <dd>{{ challenge.start_date|date:"F d, Y" }}</dd>
+
+      <dt>{{ _('End date') }}:</dt>
+      <dd>{{ challenge.end_date|date:"F d, Y" }}</dd>      
+    </dl>
+  </section>
+
+  <a id="project-description-link" href="{% locale_url challenges_show_full slug=challenge.slug %}">View Full Details</a>  
+
+  {% if challenge.image %}
+  <img src="{{ challenge.image.url }}" alt="{{ challenge }} image" width="300"/>  
+  {% endif %}
+
+  <div class="challenge_brief">
+    {{ challenge.brief }}
+  </div>
+
+</div><!-- /#sidebar -->

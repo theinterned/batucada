@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block body %}
+<section class="modal nav">
+  <article>
+    <h1>
+      {% if submission %}
+        {{ _('Edit Submission') }}
+      {% else %}
+        {{ _('Create Submission') }}
+      {% endif %}
+    </h1>
+
+    <nav class="tabs" id="project-edit-nav">
+      <ul>
+        <li class="summary"><a href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.pk %}">{{ _('Response Summary') }}</a></li>
+        <li class="desc"><a href="{% locale_url submission_edit_description slug=challenge.slug submission_id=submission.pk %}">{{ _('Full Description') }}</a></li>
+      </ul>
+    </nav>
+
+    {% block form %}{% endblock %}
+  </article>
+</section>
+{% endblock %}

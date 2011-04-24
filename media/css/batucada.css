@@ -2390,6 +2390,41 @@ ul.ui-autocomplete #ui-active-menuitem {
     color: #fff;
 }
 
+div.voting {
+    width: 50px;
+    float: right;
+}
+
+div.voting div.score {
+    float: right;
+    font-size: 1.2em;
+    color: #777;
+}
+
+#voter_details ul li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#challenge_header ul {
+    padding: 0;
+    margin: 0;
+}
+
+#challenge_header li {
+    width: 180px;
+    float: left;
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    margin: 0 20px 20px 0;
+}
+
+#challenge_header li img {
+    width: 195px;
+    height: 120px;
+}
 
 .notice {
     text-align: center;
