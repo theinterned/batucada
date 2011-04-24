@@ -14,8 +14,8 @@
   </nav>
 
   <div id="project-actions">
-    {% if challenge.is_active %}
-    <a class="button" href="{% locale_url submissions_create slug=challenge.slug %}">{{ _('Enter Submission') }}</a>
+    {% if user.get_profile == challenge.created_by %}
+    <a class="button" href="{% locale_url challenges_edit slug=challenge.slug %}">{{ _('Edit Challenge') }}</a>
     {% endif %}
   </div>
 </div>
@@ -24,35 +24,45 @@
 {% block bodyid %}challenge_landing{% endblock %}
 
 {% block body %}
-<div id="sidebar">
-  <section id="challenge" class="panel">
-    <h1 id="challenge-title">{{ challenge.title }}</h1>
-    <h2 id="project-name">
-      <a href="{% locale_url projects_show slug=challenge.project.slug %}">{{ challenge.project.name }}</a>
-    </h2>
 
-    <dl id="project-stats">
-      <dt>{{ _('Submissions') }}:</dt>
-      <dd>{{ nsubmissions }}</dd>
-
-      <dt>{{ _('Start date') }}:</dt>
-      <dd>{{ challenge.start_date  }}</dd>
-
-      <dt>{{ _('End date') }}:</dt>
-      <dd>{{ challenge.end_date  }}</dd>      
-    </dl>
-  </section>
-
-  <a id="project-description-link" href="{% locale_url challenges_show_full slug=challenge.slug %}">View Full Details</a>  
-
-</div><!-- /#sidebar -->
-
+{% include "challenges/_challenge_sidebar.html" %}
 <div id="main">
+  <h1>{{ challenge.project }}</h1>
+  <h2>{{ challenge.title }}</h2>
+
+  {% if user.is_authenticated and challenge.is_active %}
+  <p>{{ remaining.days }} days to respond to this challenge</p>
+
+  <div id="create-post">
+    <div class="post-container">
+      <form action="{% locale_url submissions_create slug=challenge.slug %}" method="post" id="post-challenge-summary">
+	      {% csrf_token %}
+	      <input type="text" value="{{ _('Respond to this Challenge!') }}">
+	      <textarea name="summary" title=""></textarea>
+	      
+	      <div class="status-and-actions">
+	        <div class="post-char-count">750</div>
+	        
+	        <ul class="post-tags">
+	          <li><span>{{ challenge.title }}</span></li>
+	        </ul>
+          
+          <button class="button update submit" id="post-challenge">Post Response</button>
+          
+	      </div> <!-- /.status-and-actions -->
+	    </form>
+    </div> <!-- /.post-container -->
+  </div> <!-- /.#create-post -->
+  {% endif %}
+  
+  {% if submissions.object_list %}
+  <h2>{{ _('Popular Ideas') }}</h2>
   <ul id="posts">
     {% for submission in submissions.object_list %}
-      {% include "challenges/_submission_resource.html" %}
+    {% include "challenges/_submission_resource.html" %}
     {% endfor %}
   </ul>
+  {% endif %}
 
   {% if submissions.paginator.num_pages > 1 %}
   <div class="pagination">
