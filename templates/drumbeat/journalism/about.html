@@ -1,6 +1,18 @@
 {% extends "mojo.html" %}
 
 {% load l10n_tags %}
+
+{% block links %}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8">
+{% endblock %}
+
+{% block script %}
+  <script src="{{ MEDIA_URL }}js/libs/video.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+    VideoJS.setupAllWhenReady();
+  </script>
+{% endblock %}
+
 {% block body %}    
     <div class="banner">   
       <div class="container">
@@ -12,11 +24,11 @@
       </div>
     </div>
     
-    <div class="homepagevideo">
-      <video poster="http://videos.mozilla.org/serv/webmademovies/mojoposter.jpg" controls="controls" id="video-element" height="270" width="480">
-        <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.webm"> 
-        <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.mp4">
-        <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.ogv">
+    <div class="homepagevideo video-js-box">
+      <video class="video-js" poster="http://videos.mozilla.org/serv/webmademovies/mojoposter.jpg" controls="controls" id="video-element" height="270" width="480">
+        <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.webm" type="video/webm"> 
+        <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.mp4" type="video/mp4">
+        <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.ogv" type="video/ogg">
         Your browser does not support HTML5 video. Get <a href="http://www.firefox.com/">Firefox 4</a> now!
         <object width="400" height="225">
           <param name="allowfullscreen" value="true" />
