@@ -22,6 +22,7 @@ from links.models import Link
 from statuses.models import Status
 from drumbeat import messages
 from users.decorators import login_required
+from challenges.models import Challenge
 
 log = logging.getLogger(__name__)
 
@@ -42,6 +43,8 @@ def show(request, slug):
     files = project.projectmedia_set.all()
     followers_count = Relationship.objects.filter(
         target_project=project).count()
+    challenges = Challenge.objects.active()
+    
     context = {
         'project': project,
         'following': is_following,
@@ -50,9 +53,10 @@ def show(request, slug):
         'update_count': nstatuses,
         'links': links,
         'files': files,
+        'challenges': challenges,
     }
     return render_to_response('projects/project.html', context,
-                          context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 def show_detailed(request, slug):
