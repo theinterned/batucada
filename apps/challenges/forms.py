@@ -46,7 +46,7 @@ class SubmissionForm(forms.ModelForm):
 
     class Meta:
         model = Submission
-        fields = ('title', 'summary')
+        fields = ('title', 'summary', 'keywords', 'bio')
 
 
 class SubmissionDescriptionForm(forms.ModelForm):
