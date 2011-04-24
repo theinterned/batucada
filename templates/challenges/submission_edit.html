@@ -2,6 +2,8 @@
 
 {% load l10n_tags %}
 
+{% block title %}{% if submission %}{{ _('Edit Submission') }}{% else %}{{ _('Create Submission') }}{% endif %}{% endblock %}
+
 {% block body %}
 <section class="modal nav">
   <article>
