@@ -314,9 +314,6 @@ $(document).ready(function() {
         $(this).toggleClass('open');
     });
 
-    // wire up any RTEs with wmd
-    initWMD();
-
     // modals using jQueryUI dialog
     $('.button.openmodal').live('click', function(){
         var url = this.href;

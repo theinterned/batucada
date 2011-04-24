@@ -134,6 +134,32 @@
   <script src="{{ MEDIA_URL }}js/libs/jquery.ajaxupload.js"></script>
   <script src="{{ MEDIA_URL }}js/libs/prettify/prettify.js"></script>
 
+  <script type="text/javascript">
+    var uservoiceOptions = {
+      /* required */
+      key: 'p2pu',
+      host: 'p2pu.uservoice.com', 
+      forum: '111843',
+      showTab: true,  
+      /* optional */
+      alignment: 'left',
+      background_color:'#f08c00', 
+      text_color: 'white',
+      hover_color: '#36cdc4',
+      lang: '{{ _('en') }}'
+    };
+
+    function _loadUserVoice() {
+      var s = document.createElement('script');
+      s.setAttribute('type', 'text/javascript');
+      s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+      document.getElementsByTagName('head')[0].appendChild(s);
+    }
+    _loadSuper = window.onload;
+    window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+  </script>
+
+
   {% block js %}{% endblock %}
   
   <!-- scripts concatenated and minified via ant build script-->
