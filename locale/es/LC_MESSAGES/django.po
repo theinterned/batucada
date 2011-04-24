@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-24 12:10-0400\n"
+"POT-Creation-Date: 2011-04-24 14:33-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -642,11 +642,16 @@ msgstr "Salir"
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:142
+#: templates/base.html:149 templates/drumbeatmail/base.html:52
+#: templates/users/profile_form_base.html:70
+msgid "en"
+msgstr "es"
+
+#: templates/base.html:168
 msgid "js/script-en.css"
 msgstr "js/script-es.css"
 
-#: templates/base.html:143
+#: templates/base.html:169
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
@@ -1213,11 +1218,6 @@ msgstr ""
 #: templates/users/forgot_password.html:18
 msgid "Send"
 msgstr "Enviar"
-
-#: templates/drumbeatmail/base.html:52
-#: templates/users/profile_form_base.html:70
-msgid "en"
-msgstr "es"
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
