@@ -24,7 +24,7 @@
 
     {% if activity.target_project %}
     <ul class="post-tags">
-      <li><a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project }}</a></li>
+      <li><a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project.name|slice:":50" }}</a></li>
     </ul>
     {% endif %}
 

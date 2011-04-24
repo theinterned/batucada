@@ -29,7 +29,7 @@
       <p>
         <label for="id_no_wall_updates_{{ participation.project.slug }}">
           <input type="checkbox" id="id_no_wall_updates_{{ participation.project.slug}}" name="no_wall_updates_{{ participation.project.slug }}" {% if not participation.no_wall_updates %}checked="checked"{% endif %} />
-          {{ _('The wall of ') }} {{participation.project.name }} {{ _(' is updated.') }}
+          {{ _('The wall of ') }} {{participation.project.name }} {{ _(' is updated (organizers can bypass this setting for important updates).') }}
         </label>
       </p>
       <p>

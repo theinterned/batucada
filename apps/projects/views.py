@@ -25,6 +25,7 @@ from links.models import Link
 from users.models import UserProfile
 from content.models import Page
 from schools.models import School
+from statuses import forms as statuses_forms 
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -36,15 +37,21 @@ def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
     user = request.user
     can_post_wall = user.is_superuser
+    form = None
     if user.is_authenticated(): 
         profile = request.user.get_profile()
         can_post_wall = can_post_wall or (profile == project.created_by)
+        if can_post_wall:
+            form = statuses_forms.ImportantStatusForm() 
         can_post_wall = can_post_wall or project.participants().filter(
             user=profile).exists()
+        if not form and can_post_wall:
+            form = statuses_forms.StatusForm()
     context = {
         'project': project,
         'activities': project.activities()[0:10],
         'can_post_wall': can_post_wall,
+        'form': form,
     }
     return render_to_response('projects/project.html', context,
                           context_instance=RequestContext(request))
@@ -256,30 +263,6 @@ def create(request):
             form = project_forms.ProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
-    }, context_instance=RequestContext(request))
-
-
-@login_required
-def contact_participants(request, slug):
-    user = request.user.get_profile()
-    project = get_object_or_404(Project, slug=slug)
-    if project.created_by != user:
-        return http.HttpResponseForbidden()
-    if request.method == 'POST':
-        form = project_forms.ProjectContactUsersForm(request.POST)
-        if form.is_valid():
-            form.save(sender=request.user)
-            messages.info(request,
-                          _("Message successfully sent."))
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
-                'slug': project.slug,
-            }))
-    else:
-        form = project_forms.ProjectContactUsersForm()
-        form.fields['project'].initial = project.pk
-    return render_to_response('projects/contact_users.html', {
-        'form': form,
-        'project': project,
     }, context_instance=RequestContext(request))
 
 

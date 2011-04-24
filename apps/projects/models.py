@@ -12,12 +12,9 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext as ugettext
-from django.template.loader import render_to_string
-from django.contrib.sites.models import Site
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
-from users.tasks import SendUserEmail
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from content.models import Page
@@ -168,27 +165,6 @@ class Project(ModelBase):
                 count += 1
         super(Project, self).save()
 
-    def send_update_notification(self, activity, wall=True):
-        """Send update notifications."""
-        subject = ugettext('[p2pu-%(slug)s-updates] Study group %(name)s was updated') % {
-            'slug': self.slug,
-            'name': self.name,
-            }
-        body = render_to_string("projects/emails/course_updated.txt", {
-            'activity': activity,
-            'project': self,
-            'wall': wall,
-            'domain': Site.objects.get_current().domain,
-        })
-        for participation in self.participants():
-            if activity.actor == participation.user:
-                continue
-            if (wall and participation.no_wall_updates) or (not wall and participation.no_updates):
-                continue
-            SendUserEmail.apply_async((participation.user, subject, body))
-        if activity.actor != self.created_by:
-            SendUserEmail.apply_async((self.created_by, subject, body))
-
 admin.site.register(Project)
 
 
@@ -264,7 +240,8 @@ def project_creation_handler(sender, **kwargs):
         from activity.models import Activity
         act = Activity(actor=project.created_by,
                        verb='http://activitystrea.ms/schema/1.0/post',
-                       project=project)
+                       project=project,
+                       target_project=project)
         act.save()
     except ImportError:
         return

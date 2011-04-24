@@ -1,7 +1,7 @@
 from django.conf import settings
 from django import http
 from django.template import RequestContext, Context, loader
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import NoReverseMatch
 
@@ -24,8 +24,8 @@ def report_abuse(request, model, app_label, pk):
     if request.method == 'POST':
         # we only use the form for the csrf middleware. skip validation.
         form = AbuseForm(request.POST)
-        content_type_cls = ContentType.objects.get(model=model, app_label=app_label).model_class()
-        instance = content_type_cls.objects.get(pk=pk)
+        content_type_cls = get_object_or_404(ContentType, model=model, app_label=app_label).model_class()
+        instance = get_object_or_404(content_type_cls, pk=pk)
         try:
             url = request.build_absolute_uri(instance.get_absolute_url())
         except NoReverseMatch:

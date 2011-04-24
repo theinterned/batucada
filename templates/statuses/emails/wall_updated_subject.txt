@@ -1,0 +1,1 @@
+[{{ project.name|slice:":20" }}] {{ status.author }}{{ _(' posted a message to the study group wall.') }}
