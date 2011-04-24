@@ -35,11 +35,25 @@ class ChallengeImageForm(forms.ModelForm):
         return self.cleaned_data['image']
 
 
+class SubmissionSummaryForm(forms.ModelForm):
+
+    class Meta:
+        model = Submission
+        fields = ('summary', )
+
+
 class SubmissionForm(forms.ModelForm):
 
     class Meta:
         model = Submission
-        fields = ('title', 'summary', 'description')
+        fields = ('title', 'summary')
+
+
+class SubmissionDescriptionForm(forms.ModelForm):
+
+    class Meta:
+        model = Submission
+        fields = ('description', )
         widgets = {
             'description': forms.Textarea(attrs={'class': 'wmd'}),
         }

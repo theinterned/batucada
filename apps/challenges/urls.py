@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns, url, include
 from models import Submission
 from challenges.feeds import (ChallengesFeed, ProjectChallengesFeed,
                               SubmissionsFeed)
@@ -45,6 +45,9 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/edit/$',
       'challenges.views.edit_submission',
       name='submission_edit'),
+  url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/edit/desc/$',
+      'challenges.views.edit_submission_description',
+      name='submission_edit_description'),
 
 
   # Voting
@@ -60,4 +63,6 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/judges/delete/(?P<judge>[\d]+)/$',
       'challenges.views.challenge_judges_delete',
       name='challenges_judge_delete'),
+
+  (r'^comments/', include('django.contrib.comments.urls')),
 )

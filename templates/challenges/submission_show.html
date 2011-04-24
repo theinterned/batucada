@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load comments %}
 
 {% block title %}{{ submission.title }}{% endblock %}
 
@@ -24,6 +25,9 @@
 {% block bodyid %}submission_show{% endblock %}
 
 {% block body %}
+{% include "challenges/_challenge_sidebar.html" %}
+
+<div id="main">
 <section class="submission">
   <article>
     <h1 id="challenge-title">{{ submission.title }}</h1>
@@ -37,9 +41,36 @@
     </div>
     <h2>{{ _('Description') }}</h2>
     <div class="details">
-      {{ submission.description|safe }}
+      {{ submission.description_html|safe }}
     </div>
   </article>
+  
+  <div id="comments">
+    <h1>{{ _('Comments') }}</h1>
+    {% render_comment_list for submission %}
+
+    {% if user.is_authenticated %}
+    <h2>{{ _('Post a comment') }}</h2>
+    {% get_comment_form for submission as form %}
+    <form action="{% comment_form_target %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}" />
+      {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+      {% endfor %}
+      <div class="field{% if form.comment.errors %} error{% endif %}">
+        <label for="id_comment">{{ _('Comment') }}</label>
+        <span class="hint block"></span>
+        {{ form.comment }}
+        {{ form.comment.errors }}
+      </div>
+      <p class="buttons">
+        <button type="submit">{{ _('Post') }}</button>
+      </p>
+    </form>  
+    {% endif %}
+  </div>
 </section>
+</div>
 {% endblock %}
 

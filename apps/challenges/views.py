@@ -1,7 +1,10 @@
+from datetime import datetime
 import logging
 
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
+from django.db import connection
 from django.db.utils import IntegrityError
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponseForbidden)
@@ -9,17 +12,23 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
+from django.template.defaultfilters import truncatewords
 from django.views.decorators.http import require_http_methods
 
 from commonware.decorators import xframe_sameorigin
 
 from challenges.models import Challenge, Submission, Judge, VoterDetails
 from challenges.forms import (ChallengeForm, ChallengeImageForm,
-                              SubmissionForm, JudgeForm, VoterDetailsForm)
+                              SubmissionSummaryForm, SubmissionForm,
+                              SubmissionDescriptionForm,
+                              JudgeForm, VoterDetailsForm)
+from challenges.decorators import (challenge_owner_required,
+                                   submission_owner_required)
 from projects.models import Project
 
 from drumbeat import messages
 from users.decorators import login_required
+from voting.models import Vote
 
 log = logging.getLogger(__name__)
 
@@ -57,6 +66,7 @@ def create_challenge(request, project_id):
 
 
 @login_required
+@challenge_owner_required
 def edit_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
     user = request.user.get_profile()
@@ -91,6 +101,7 @@ def edit_challenge(request, slug):
 @login_required
 @xframe_sameorigin
 @require_http_methods(['POST'])
+@challenge_owner_required
 def edit_challenge_image_async(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
     form = ChallengeImageForm(request.POST, request.FILES, instance=challenge)
@@ -105,6 +116,7 @@ def edit_challenge_image_async(request, slug):
 
 
 @login_required
+@challenge_owner_required
 def edit_challenge_image(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
@@ -136,7 +148,19 @@ def edit_challenge_image(request, slug):
 def show_challenge(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
-    submission_set = challenge.submission_set.all().order_by('-created_on')
+    qn = connection.ops.quote_name
+    ctype = ContentType.objects.get_for_model(Submission)
+
+    submission_set = challenge.submission_set.extra(select={'score': """
+        SELECT SUM(vote)
+        FROM %s
+        WHERE content_type_id = %s
+        AND object_id = %s.id
+        """ % (qn(Vote._meta.db_table), ctype.id,
+               qn(Submission._meta.db_table))
+        },
+        order_by=['-score']
+    )
     paginator = Paginator(submission_set, 10)
 
     try:
@@ -149,12 +173,14 @@ def show_challenge(request, slug):
     except (EmptyPage, InvalidPage):
         submissions = paginator.page(paginator.num_pages)
 
-    nsubmissions = challenge.submission_set.all().count()
+    form = SubmissionSummaryForm()
+    remaining = challenge.end_date - datetime.now()
 
     context = {
         'challenge': challenge,
         'submissions': submissions,
-        'nsubmissions': nsubmissions,
+        'form': form,
+        'remaining': remaining,
     }
 
     return render_to_response('challenges/challenge.html', context,
@@ -181,9 +207,12 @@ def create_submission(request, slug):
     user = request.user.get_profile()
 
     if request.method == 'POST':
-        form = SubmissionForm(request.POST)
+        post_data = request.POST.copy()
+        post_data['title'] = truncatewords(post_data['summary'], 10)
+        form = SubmissionForm(post_data)
         if form.is_valid():
             submission = form.save(commit=False)
+            submission.title = truncatewords(submission.summary, 10)
             submission.created_by = user
             submission.save()
 
@@ -191,8 +220,9 @@ def create_submission(request, slug):
 
             messages.success(request, _('Your submission has been created'))
 
-            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+            return HttpResponseRedirect(reverse('submission_edit', kwargs={
                 'slug': challenge.slug,
+                'submission_id': submission.pk,
                 }))
         else:
             messages.error(request, _('Unable to create your submission'))
@@ -209,6 +239,7 @@ def create_submission(request, slug):
 
 
 @login_required
+@submission_owner_required
 def edit_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)
@@ -219,22 +250,54 @@ def edit_submission(request, slug, submission_id):
             form.save()
             messages.success(request, _('Your submission has been edited.'))
 
-            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+            return HttpResponseRedirect(reverse('submission_show', kwargs={
                 'slug': challenge.slug,
-                }))
+                'submission_id': submission.pk,
+            }))
         else:
             messages.error(request, _('Unable to update your submission'))
     else:
         form = SubmissionForm(instance=submission)
 
-    context = {
+    ctx = {
         'challenge': challenge,
         'submission': submission,
         'form': form,
     }
 
-    return render_to_response('challenges/submission_edit.html', context,
-                              context_instance=RequestContext(request))
+    return render_to_response('challenges/submission_edit_summary.html',
+                              ctx, context_instance=RequestContext(request))
+
+
+@login_required
+@submission_owner_required
+def edit_submission_description(request, slug, submission_id):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    if request.method == 'POST':
+        form = SubmissionDescriptionForm(request.POST, instance=submission)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Your submission has been edited.'))
+
+            return HttpResponseRedirect(reverse('submission_show', kwargs={
+                'slug': challenge.slug,
+                'submission_id': submission.pk
+            }))
+        else:
+            messages.error(request, _('Unable to update your submission'))
+    else:
+        form = SubmissionDescriptionForm(instance=submission)
+
+    ctx = {
+        'challenge': challenge,
+        'submission': submission,
+        'form': form
+    }
+
+    return render_to_response('challenges/submission_edit_description.html',
+                              ctx, context_instance=RequestContext(request))
 
 
 def show_submission(request, slug, submission_id):
@@ -251,6 +314,7 @@ def show_submission(request, slug, submission_id):
 
 
 @login_required
+@challenge_owner_required
 def challenge_judges(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
 
@@ -287,6 +351,7 @@ def challenge_judges(request, slug):
 
 
 @login_required
+@challenge_owner_required
 def challenge_judges_delete(request, slug, judge):
     if request.method == 'POST':
         challenge = get_object_or_404(Challenge, slug=slug)
