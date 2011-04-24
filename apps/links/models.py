@@ -21,10 +21,14 @@ class Link(models.Model):
     project = models.ForeignKey('projects.Project', null=True)
     user = models.ForeignKey('users.UserProfile', null=True)
     subscription = models.ForeignKey(Subscription, null=True)
-    index = models.IntegerField(null=True, default=0)
+    index = models.IntegerField(null=True, default=0, blank=True)
 
     def save(self):
-        max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
+        if self.project:
+            max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
+        else:
+            max_index = Link.objects.filter(user=self.user).aggregate(Max('index'))['index__max']
+       
         self.index = max_index + 1 if max_index else 1
         super(Link, self).save()
          

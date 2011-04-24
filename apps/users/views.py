@@ -297,7 +297,7 @@ def profile_view(request, username):
         else:
             project.relation_text = _('(following)')
     followers = profile.followers()
-    links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True)
+    links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True).order_by('index')
     activities = Activity.objects.select_related(
         'actor', 'status', 'project').filter(
         actor=profile,
@@ -478,6 +478,41 @@ def profile_edit_links_delete(request, link):
         messages.success(request, _('The link was deleted.'))
     return http.HttpResponseRedirect(reverse('users_profile_edit_links'))
 
+@login_required 
+def link_index_up(request, counter):
+    profile = get_object_or_404(UserProfile, user=request.user)
+   #Link goes up in the sidebar index (link.index decreases).
+    try:
+        counter = int(counter)
+    except ValueError:
+        raise Http404
+    links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
+    if counter < 1 or links.count() <= counter:
+        raise Http404
+    prev_link = links[counter - 1]
+    link = links[counter]
+    prev_link.index, link.index = link.index, prev_link.index
+    link.save()
+    prev_link.save()
+    return http.HttpResponseRedirect(profile.get_absolute_url() + '#links')
+
+@login_required 
+def link_index_down(request, counter):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    #Link goes down in the sidebar index (link.index increases).
+    try:
+        counter = int(counter)
+    except ValueError:
+        raise Http404
+    links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
+    if counter < 0 or links.count() - 1 <= counter:
+        raise Http404
+    next_link = links[counter + 1]
+    link = links[counter]
+    next_link.index, link.index = link.index, next_link.index
+    link.save()
+    next_link.save()
+    return http.HttpResponseRedirect(profile.get_absolute_url() + '#links')
 
 def check_username(request):
     """Validate a username and check for uniqueness."""
