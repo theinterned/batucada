@@ -306,6 +306,26 @@ def edit_submission_description(request, slug, submission_id):
                               ctx, context_instance=RequestContext(request))
 
 
+@login_required
+@submission_owner_required
+def edit_submission_share(request, slug, submission_id):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    url = request.build_absolute_uri(reverse('submission_show', kwargs={
+        'slug': challenge.slug, 'submission_id': submission.pk
+    }))
+
+    ctx = {
+        'challenge': challenge,
+        'submission': submission,
+        'url': url,
+    }
+
+    return render_to_response('challenges/submission_edit_share.html',
+                              ctx, context_instance=RequestContext(request))
+
+
 def show_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)

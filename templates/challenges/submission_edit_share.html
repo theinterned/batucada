@@ -1,0 +1,19 @@
+{% extends "challenges/submission_edit.html" %}
+
+{% load l10n_tags %}
+
+{% block bodyclasses %}submission edit share{% endblock %}
+
+{% block form %}
+<fieldset id="submission_edit" class="submission edit sharing tabpane">
+  <h1>{{ _('Share your ideas!') }}</h1>
+  
+  <p class="statusnet"><a href="http://identi.ca/notice/new?status_textarea={{ "#mojo"|urlencode}}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/statusnet.png" class="" alt="share on statusnet" /></a></p>
+  
+  <p><a href="http://twitter.com/home?status={{ "#mojo"|urlencode }}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/twitter.png" class="" alt="share on statusnet" /></a></p>
+
+  <p class="facebook"><a href="http://www.facebook.com/sharer.php?u={{ url|urlencode }}&t={{ submission.title|urlencode }}"><img src="{{ MEDIA_URL}}images/facebook.png" class="" alt="share on statusnet" /></a></p>
+
+</fieldset>
+{% endblock %}
+
