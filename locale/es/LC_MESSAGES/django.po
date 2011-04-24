@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-24 09:54-0400\n"
+"POT-Creation-Date: 2011-04-24 12:10-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,25 +93,25 @@ msgstr "no está atendiendo"
 msgid "might be attending"
 msgstr "puede que asista a"
 
-#: apps/content/models.py:76
+#: apps/content/models.py:75
 msgid "added"
 msgstr "añadió"
 
-#: apps/content/models.py:79
+#: apps/content/models.py:78
 #, python-format
 msgid " <a href=\"%(page_url)s\">%(page_title)s</a>."
 msgstr " <a href=\"%(page_url)s\">%(page_title)s</a>."
 
-#: apps/content/models.py:131 apps/content/models.py:141
+#: apps/content/models.py:126 apps/content/models.py:136
 #, python-format
 msgid "Comment to %s"
 msgstr "Comentario para %s"
 
-#: apps/content/models.py:147
+#: apps/content/models.py:142
 msgid "posted comment"
 msgstr "publicó un comentario"
 
-#: apps/content/models.py:150
+#: apps/content/models.py:145
 #, python-format
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
@@ -141,7 +141,7 @@ msgstr "Comentario publicado!"
 #: apps/content/views.py:137
 msgid "There was a problem posting the comment. Comments cannot be empty."
 msgstr ""
-"Ocurrió un problema publicando el comentario.  Los comentatios no pueden "
+"Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
 #: apps/content/views.py:200
@@ -158,16 +158,16 @@ msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
 #: apps/content/views.py:290
-#, fuzzy
 msgid "There was a problem posting your reply. Reply cannot be empty. "
 msgstr ""
-"Ocurrió un problema publicando el comentario.  Los comentatios no pueden "
+"Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
 #: apps/content/views.py:291
-#, fuzzy
 msgid "There was a problem submitting your answer. Answer cannot be empty. "
-msgstr "Ocurrió un problema al enviar su respuesta."
+msgstr ""
+"Ocurrió un problema al enviar su respuesta. La respuesta no puede estar "
+"vacía."
 
 #: apps/content/views.py:344
 msgid "Participant added!"
@@ -223,14 +223,12 @@ msgid "Thank you, your settings have been saved."
 msgstr "Gracias, su configuración ha sido guardada."
 
 #: apps/preferences/views.py:65
-#, fuzzy
 msgid "Email updated"
-msgstr "Imagen actualizada"
+msgstr "Correo actualizado"
 
 #: apps/preferences/views.py:91
-#, fuzzy
 msgid "Password updated"
-msgstr "Contraseña Actualizada"
+msgstr "Contraseña actualizada"
 
 #: apps/preferences/views.py:95 apps/users/views.py:210
 #: apps/users/views.py:348
@@ -258,7 +256,7 @@ msgstr "El usuario %s está organizando el grupo de estudio."
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/models.py:117
+#: apps/projects/models.py:116
 msgid "study group"
 msgstr "grupo de estudio"
 
@@ -283,13 +281,12 @@ msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
 #: apps/projects/views.py:163
-#, fuzzy
 msgid "Link updated."
-msgstr " sea actualizado."
+msgstr "Enlace actualizado."
 
 #: apps/projects/views.py:184
 msgid "The link was deleted"
-msgstr "El enlace fue añadido"
+msgstr "El enlace fue removido"
 
 #: apps/projects/views.py:204
 msgid "Participant added."
@@ -301,7 +298,7 @@ msgstr "Ocurrió un error al añadir el participante."
 
 #: apps/projects/views.py:221
 msgid "Invalid request"
-msgstr "Solicitud invalida"
+msgstr "Solicitud inválida"
 
 #: apps/projects/views.py:239
 #, python-format
@@ -314,7 +311,7 @@ msgstr "Descripción Completa"
 
 #: apps/projects/views.py:269
 msgid "Sign-Up"
-msgstr "Suscripción"
+msgstr "Inscripción"
 
 #: apps/projects/views.py:275
 msgid "The study group has been created."
@@ -328,21 +325,21 @@ msgstr "Ocurrió un problema al crear el grupo de estudio."
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
-#: apps/relationships/models.py:40
+#: apps/relationships/models.py:39
 msgid "Cannot create self referencing relationship."
 msgstr "No puede crear una relacion consigo mismo."
 
-#: apps/relationships/models.py:67
+#: apps/relationships/models.py:64
 #, python-format
 msgid "%(display_name)s is following you on P2PU!"
 msgstr "¡%(display_name)s te está siguiendo en P2PU!"
 
-#: apps/relationships/models.py:70
+#: apps/relationships/models.py:67
 #, python-format
 msgid "%(display_name)s is following %(project)s on P2PU!"
 msgstr "¡%(display_name)s está siguiendo %(project)s en P2PU!"
 
-#: apps/relationships/models.py:76
+#: apps/relationships/models.py:73
 #, python-format
 msgid "%(display_name)s is now following"
 msgstr "%(display_name)s ahora está siguiendo"
@@ -357,11 +354,11 @@ msgstr "Ya está siguiendo a este usuario"
 
 #: apps/statuses/views.py:30 apps/statuses/views.py:57
 msgid "There was an error posting your status update"
-msgstr "Ocurrió un error al publicar la actualización a su estado"
+msgstr "Ocurrió un error al publicar su mensaje"
 
 #: apps/users/decorators.py:25
 msgid "You are already logged into an account."
-msgstr "Usted ya entro a su cuenta."
+msgstr "Usted ya entró a su cuenta."
 
 #: apps/users/fields.py:18
 msgid "Please choose another username."
@@ -375,7 +372,7 @@ msgstr "escriba una URL de OpenID"
 msgid "You can login directly with your credentials from the old P2PU website."
 msgstr "Puede entrar directamente con sus credenciales de p2pu.org."
 
-#: apps/users/models.py:167
+#: apps/users/models.py:166
 msgid "Complete Registration"
 msgstr "Termine de Crear su Cuenta"
 
@@ -421,24 +418,23 @@ msgstr ""
 
 #: apps/users/views.py:405
 msgid "Profile image updated"
-msgstr "Imagen del perfil actualizada"
+msgstr "Imagen actualizada"
 
 #: apps/users/views.py:410
 msgid "There was an error uploading your image."
-msgstr "Ocurrió un error al actualizar su imagen."
+msgstr "Ocurrió un error al subir la imagen."
 
 #: apps/users/views.py:427
 msgid "Profile link added."
-msgstr "Enlace añadido"
+msgstr "Enlace añadido."
 
 #: apps/users/views.py:436
 msgid "There was an error saving your link."
-msgstr "Ocurrió un error al guardar su enlace."
+msgstr "Ocurrió un error al guardar el enlace."
 
 #: apps/users/views.py:457
-#, fuzzy
 msgid "Profile link updated"
-msgstr "Perfil actualizado"
+msgstr "Enlace actualizado"
 
 #: apps/users/views.py:478
 msgid "The link was deleted."
@@ -469,7 +465,7 @@ msgid ""
 msgstr ""
 "Claramente lo que debía ocurrir no ocurrió. Puede ayudarnos a resolver el "
 "problema <a href=\"http://p2pu.lighthouseapp.com/"
-"projects/71002\">reportandolo</a>, y diciendonos que estaba haciendo cuando "
+"projects/71002\">reportándolo</a>, y diciéndonos que estaba haciendo cuando "
 "ocurrió."
 
 #: templates/503.html:5
@@ -573,7 +569,7 @@ msgstr "¿Busca el sitio web actual de P2PU?"
 
 #: templates/base.html:14
 msgid "Learning for everyone, by everyone, about almost anything."
-msgstr "Aprendizaje para todos, por todos y acerca de casi todo"
+msgstr "Aprendizaje para todos, por todos y acerca de casi todo."
 
 #: templates/base.html:26
 msgid "css/style-en.css"
@@ -702,7 +698,7 @@ msgstr "Trabajo colaborativo (editable por todos los participantes)."
 
 #: templates/content/comment_page.html:28
 msgid "Reply Comment"
-msgstr "Respusta al Comentario"
+msgstr "Respuesta al Comentario"
 
 #: templates/content/comment_page.html:30
 msgid "Comment"
@@ -763,7 +759,7 @@ msgstr "Preguntas"
 
 #: templates/content/comment_sign_up.html:54
 msgid "Then answer the sign-up questions listed below."
-msgstr "Responda las preguntas listadas a continuación."
+msgstr "Responda las preguntas de inscripción listadas a continuación."
 
 #: templates/content/comment_sign_up.html:70
 msgid "Submit"
@@ -782,8 +778,8 @@ msgid ""
 "constructed over a week, a project that lasts for a few weeks, or a month-"
 "long endeavour that everyone works on."
 msgstr ""
-"Construir una buena tarea es crucial para el proceso de aprendizaje.La tarea "
-"debe tener una meta clara y debe ser secuencial durante el proceso de "
+"Construir una buena tarea es crucial para el proceso de aprendizaje. La "
+"tarea debe tener una meta clara y ser secuencial durante el proceso de "
 "aprendizaje.  Una tarea puede ser grande o pequeña y durar tanto como usted "
 "desee - puede ser una discusión planeada para un día, un documento escrito "
 "preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
@@ -883,7 +879,7 @@ msgstr " fue actualizado."
 #: templates/content/emails/content_update.txt:3
 #: templates/content/emails/content_update_subject.txt:1
 msgid " posted a new comment at "
-msgstr "publicó un comentario en "
+msgstr " publicó un comentario en "
 
 #: templates/content/emails/content_update.txt:3
 #: templates/content/emails/content_update_subject.txt:1
@@ -895,7 +891,7 @@ msgstr "."
 #: templates/content/emails/content_update.txt:3
 #: templates/content/emails/content_update_subject.txt:1
 msgid " created a new task: "
-msgstr "creó una nueva tarea: "
+msgstr " creó una nueva tarea: "
 
 #: templates/content/emails/content_update.txt:5
 #: templates/content/emails/sign_up_updated.txt:14
@@ -905,11 +901,11 @@ msgstr "Comentario:"
 #: templates/content/emails/content_update.txt:8
 #: templates/content/emails/sign_up_updated.txt:18
 msgid "See comment at:"
-msgstr "Vea el comentatio en:"
+msgstr "Ver comentario en:"
 
 #: templates/content/emails/content_update.txt:8
 msgid "See task at:"
-msgstr "Vea la tarea en:"
+msgstr "Ver tarea en:"
 
 #: templates/content/emails/content_update.txt:10
 #: templates/content/emails/sign_up_updated.txt:20
@@ -940,23 +936,23 @@ msgstr "Configure sus notificaciones:"
 
 #: templates/content/emails/sign_up_updated.txt:2
 msgid " submitted a new answer at the sign-up page of "
-msgstr "publicó una nueva respuesta en la página de suscripción de "
+msgstr " envió una nueva respuesta a la página de inscripción de "
 
 #: templates/content/emails/sign_up_updated.txt:4
 msgid " posted a new comment at the sign-up page of "
-msgstr "publicó un nuevo comentario en la página de suscripción de "
+msgstr " publicó un nuevo comentario en la página de inscripción de "
 
 #: templates/content/emails/sign_up_updated.txt:18
 msgid "See answer at:"
-msgstr "Vea respuesta en:"
+msgstr "Ver respuesta en:"
 
 #: templates/content/emails/sign_up_updated_subject.txt:1
 msgid " submitted a new answer at the sign-up page."
-msgstr "publicó una nueva respuesta en la página de suscripción."
+msgstr " envió una nueva respuesta a la página de inscripción."
 
 #: templates/content/emails/sign_up_updated_subject.txt:1
 msgid " posted a new comment at the sign-up page."
-msgstr "publicó un nuevo comentario en la página de suscripción."
+msgstr " publicó un nuevo comentario en la página de inscripción."
 
 #: templates/dashboard/dashboard.html:13
 #: templates/preferences/settings.html:10
@@ -1024,7 +1020,7 @@ msgstr "Publicar un mensaje para sus seguidores"
 
 #: templates/dashboard/dashboard.html:82 templates/projects/project.html:54
 msgid "Post Update"
-msgstr "Publicar Actualización"
+msgstr "Publicar"
 
 #: templates/dashboard/setup_profile.html:5
 #: templates/dashboard/setup_profile.html:7
@@ -1164,8 +1160,8 @@ msgid ""
 "Would you like to report this content as objectionable? This can be anything "
 "from suspected spam to offensive content."
 msgstr ""
-"¿Desea reportar este contenido como objetable?  Es decir cualquier cosa "
-"entre publicidad no solicitada y contenido ofensivo."
+"¿Desea reportar este contenido como objetable?  Objetable puede ser "
+"cualquier cosa entre publicidad no solicitada y contenido ofensivo."
 
 #: templates/drumbeat/report_abuse.html:17
 msgid "Report"
@@ -1253,7 +1249,7 @@ msgstr "Más"
 
 #: templates/drumbeatmail/emails/direct_message.txt:1
 msgid "You have received a new direct message from"
-msgstr "Ha recibido un nuevo mensaje directo de "
+msgstr "Ha recibido un nuevo mensaje directo de"
 
 #: templates/drumbeatmail/emails/direct_message.txt:5
 msgid "Reply:"
@@ -1320,14 +1316,12 @@ msgid "Notifications"
 msgstr "Notificaciones"
 
 #: templates/preferences/settings.html:26
-#, fuzzy
 msgid "Update Email"
-msgstr "Actualizar"
+msgstr "Actualizar Correo"
 
 #: templates/preferences/settings.html:27
-#, fuzzy
 msgid "Update Password"
-msgstr "Nueva Contraseña"
+msgstr "Actualizar Contraseña"
 
 #: templates/preferences/settings.html:28
 msgid "Delete Account"
@@ -1356,9 +1350,8 @@ msgid "Delete"
 msgstr "Borrar"
 
 #: templates/preferences/settings_email.html:4
-#, fuzzy
 msgid "Email address"
-msgstr "Dirección de Correo"
+msgstr "Dirección de correo"
 
 #: templates/preferences/settings_email.html:7
 #: templates/preferences/settings_email.html:11
@@ -1395,8 +1388,8 @@ msgstr "Un mensaje para el grupo de estudio "
 #: templates/preferences/settings_notifications.html:32
 msgid " is updated (organizers can bypass this setting for important updates)."
 msgstr ""
-"sea publicado (los organizadores pueden saltarse esta configuración para las "
-"actualizaciones importantes)."
+" sea publicado (los organizadores pueden saltarse esta configuración para "
+"las actualizaciones importantes)."
 
 #: templates/preferences/settings_notifications.html:38
 msgid "The content (e.g. tasks, comments, ...) of "
@@ -1444,7 +1437,7 @@ msgstr "Grupos de Estudio Destacados"
 
 #: templates/projects/_project_list.html:16
 msgid "Study Groups Open for Sign-Up"
-msgstr "Grupos de Estudio Abiertos para Suscribirse"
+msgstr "Grupos de Estudio Abiertos para Inscribirse"
 
 #: templates/projects/_project_list.html:27
 msgid "Active Study Groups"
@@ -1511,8 +1504,8 @@ msgid ""
 "to the creation of tasks and assessing each others' contributions? What will "
 "the final task comprise?"
 msgstr ""
-"Dar otra información que pueda ser útil para la gente interesada en unirse "
-"al grupo de estudio.  ¿De qué formas los participantes pueden esperar "
+"Dar otra información que pueda ser útil a los que deseen inscribirse en el  "
+"grupo de estudio.  ¿De qué formas los participantes pueden esperar "
 "contribuir en la creación de tareas y en valorar las contribuciones de otros?"
 "¿En que consistirá la tarea final?"
 
@@ -1652,7 +1645,6 @@ msgid "yes"
 msgstr "si"
 
 #: templates/projects/project_edit_links_edit.html:8
-#, fuzzy
 msgid ""
 "Edit links to websites associated with this study group such as a blog, "
 "homepage, twitter profile, github repository etc. These links will appear on "
@@ -1687,15 +1679,15 @@ msgstr ""
 
 #: templates/projects/project_edit_status.html:15
 msgid "Under Development."
-msgstr "En desarrollo"
+msgstr "En Desarrollo."
 
 #: templates/projects/project_edit_status.html:22
 msgid "Sign-Up Closed."
-msgstr "Suscripciones cerradas"
+msgstr "Inscripción Cerrada."
 
 #: templates/projects/project_edit_status.html:29
 msgid "Testing Sandbox."
-msgstr "Grupo de Estudio de Prueba"
+msgstr "Grupo de Estudio de Prueba."
 
 #: templates/projects/project_edit_status.html:33
 msgid ""
@@ -1732,7 +1724,7 @@ msgstr "Descripción en una línea"
 msgid "This description will be used on search results and listing pages."
 msgstr ""
 "Esta descripción se usará en resultados de búsquedas y en páginas con "
-"listados"
+"listados."
 
 #: templates/projects/project_edit_summary.html:22
 msgid "School"
@@ -1774,7 +1766,7 @@ msgstr "Activo del"
 
 #: templates/projects/sidebar.html:44
 msgid "Signup"
-msgstr "Suscripción"
+msgstr "Inscripción"
 
 #: templates/projects/sidebar.html:45
 msgid "Closed"
@@ -1840,7 +1832,7 @@ msgid ""
 "rest of the study group. Please provide details about:"
 msgstr ""
 "Cualquier persona puede seguir un grupo de estudio en P2PU.  Participar es "
-"el siguiente nivel de compromiso.  La página de suscripción es un espacio en "
+"el siguiente nivel de compromiso.  La página de inscripción es un espacio en "
 "el que las personas pueden expresar su interés y preparación previa en el "
 "tema, y comprometerse a trabajar con el resto del grupo de estudio.  Por "
 "favor provea detalles sobre:"
@@ -1867,7 +1859,7 @@ msgstr "ahora está siguiendo "
 
 #: templates/relationships/emails/new_follower.txt:1
 msgid "you"
-msgstr "usted"
+msgstr "su actividad"
 
 #: templates/relationships/emails/new_follower.txt:1
 msgid "on P2PU!"
@@ -1891,7 +1883,7 @@ msgstr " publicó un mensaje para este grupo de estudio:"
 
 #: templates/statuses/emails/wall_updated.txt:11
 msgid "See message at:"
-msgstr "Vea el mensaje en:"
+msgstr "Ver mensaje en:"
 
 #: templates/statuses/emails/wall_updated.txt:17
 msgid ""
@@ -2068,13 +2060,12 @@ msgstr ""
 "github etc.  Estos enlaces aparecerán en su perfil."
 
 #: templates/users/profile_edit_links_edit.html:9
-#, fuzzy
 msgid ""
 "Edit links to your blog, homepage, twitter profile, github repository etc. "
 "These links will appear on your profile."
 msgstr ""
 "Añada enlaces a su blog, página personal, perfil de twitter, repositorio en "
-"github etc.  Estos enlaces aparecerán en su perfil."
+"github etc. Estos enlaces aparecerán en su perfil."
 
 #: templates/users/profile_form_base.html:8
 #: templates/users/register_openid.html:9
@@ -2095,7 +2086,7 @@ msgstr "nombre de usuario"
 
 #: templates/users/profile_form_base.html:30
 msgid "Required to send you notifications about your P2PU account."
-msgstr "Es necesario enviarle notificaciones sobre su cuenta en P2PU"
+msgstr "Es necesario para enviarle notificaciones sobre su cuenta en P2PU."
 
 #: templates/users/profile_form_base.html:36
 msgid "Please sign me up for the P2PU newsletter."
@@ -2200,6 +2191,3 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
-
-#~ msgid "There was a problem posting your reply."
-#~ msgstr "Ocurrió un problema al publicar su respuesta."
