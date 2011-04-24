@@ -30,7 +30,7 @@ class SubscribeToFeed(Task):
             feed_url = utils.parse_feed_url(html, link.url)
             log.debug("Found feed URL %s for %s" % (feed_url, link.url))
         except:
-            log.warning("Error discoverying feed URL for %s. Retrying." % (
+            log.warning("Error discovering feed URL for %s. Retrying." % (
                 link.url,))
             self.retry([link, ], kwargs)
 
@@ -43,7 +43,7 @@ class SubscribeToFeed(Task):
             hub_url = utils.parse_hub_url(feed, feed_url)
             log.debug("Found hub %s for %s" % (hub_url, feed_url))
         except:
-            log.warning("Error discoverying hub URL for %s. Retrying." % (
+            log.warning("Error discovering hub URL for %s. Retrying." % (
                 feed_url,))
             self.retry([link, ], kwargs)
 

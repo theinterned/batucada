@@ -19,7 +19,7 @@ def sidebar(context):
     followers_count = project.non_participant_followers().count()
     update_count = project.activities().count()
     content_pages = Page.objects.filter(project__pk=project.pk, listed=True).order_by('index')
-    links = project.link_set.all()
+    links = project.link_set.all().order_by('index')
     context.update({
         'participating': is_participating,
         'participants_count': participants_count,
