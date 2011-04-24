@@ -25,7 +25,7 @@ class Activity(ModelBase):
     """Represents a single activity entry."""
     actor = models.ForeignKey('users.UserProfile')
     verb = models.URLField(verify_exists=False)
-    status = models.ForeignKey('statuses.Status', null=True)
+    status = models.ForeignKey('statuses.Status', null=True, related_name='activity')
     target_content_type = models.ForeignKey(ContentType, null=True)
     target_id = models.PositiveIntegerField(null=True)
     target_object = generic.GenericForeignKey('target_content_type', 'target_id')

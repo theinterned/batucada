@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
-from statuses.forms import StatusForm
+from statuses.forms import StatusForm, ImportantStatusForm
 from statuses.models import Status
 from projects.models import Project
 from users.decorators import login_required
@@ -14,13 +14,6 @@ from users.decorators import login_required
 from drumbeat import messages
 
 log = logging.getLogger(__name__)
-
-
-def show(request, status_id):
-    status = get_object_or_404(Status, id=status_id)
-    return render_to_response('statuses/show.html', {
-        'status': status,
-    }, context_instance=RequestContext(request))
 
 
 @login_required
@@ -48,7 +41,10 @@ def create_project_status(request, project_id):
     if profile != project.created_by and not profile.user.is_superuser \
             and not project.participants().filter(user=profile).exists():
         return HttpResponseRedirect(reverse('dashboard_index'))
-    form = StatusForm(data=request.POST)
+    if profile == project.created_by or profile.user.is_superuser:
+        form = ImportantStatusForm(data=request.POST)
+    else:
+        form = StatusForm(data=request.POST)
     if form.is_valid():
         status = form.save(commit=False)
         status.author = request.user.get_profile()

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-21 14:11-0400\n"
+"POT-Creation-Date: 2011-04-23 21:28-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,13 +116,6 @@ msgstr "publicó un comentario"
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 
-#: apps/content/models.py:162
-#, python-format
-msgid "[p2pu-%(slug)s-signup] Study group %(name)s's signup page was updated"
-msgstr ""
-"[p2pu-%(slug)s-signup] Se actualizó la página de suscripción del grupo de "
-"estudio %(name)s"
-
 #: apps/content/views.py:58
 #, python-format
 msgid "%s updated!"
@@ -198,7 +191,6 @@ msgid "New Message from %(display_name)s"
 msgstr "Nuevo mensaje de %(display_name)s"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:206
-#: apps/projects/views.py:273
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -210,122 +202,88 @@ msgstr "Ocurrió un error al enviar el mensaje. Por favor intente nuevamente."
 msgid "Thank you, your settings have been saved."
 msgstr "Gracias, su configuración ha sido guardada."
 
-#: apps/projects/forms.py:57 apps/users/forms.py:164
+#: apps/projects/forms.py:44 apps/users/forms.py:164
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/projects/forms.py:85
-msgid "Unsupported file type."
-msgstr "Tipo de archivo no soportado."
-
-#: apps/projects/forms.py:89
-#, python-format
-msgid "File exceeds max file size: %(max)dMB"
-msgstr "El archivo excede el tamaño máximo: %(max)dMB"
-
-#: apps/projects/forms.py:106 templates/drumbeatmail/base.html:17
-#: templates/messages/inbox.html:12 templates/projects/contact_users.html:12
-msgid "Subject"
-msgstr "Asunto"
-
-#: apps/projects/forms.py:108
-msgid "Body"
-msgstr "Cuerpo"
-
-#: apps/projects/forms.py:118
-msgid "That study group does not exist."
-msgstr "Ese grupo de estudio no existe."
-
-#: apps/projects/forms.py:122
-#, python-format
-msgid ""
-"You received this because you are a participant in %(project)s: http://"
-"%(domain)s%(url)s"
-msgstr ""
-
-#: apps/projects/forms.py:165
+#: apps/projects/forms.py:71
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:167
+#: apps/projects/forms.py:73
 #, python-format
 msgid "User %s is organizing the study group."
 msgstr "El usuario %s está organizando el grupo de estudio."
 
-#: apps/projects/forms.py:170
+#: apps/projects/forms.py:76
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/models.py:119
+#: apps/projects/models.py:116
 msgid "study group"
 msgstr "grupo de estudio"
 
-#: apps/projects/models.py:173
-#, python-format
-msgid "[p2pu-%(slug)s-updates] Study group %(name)s was updated"
-msgstr "[p2pu-%(slug)s-updates] El grupo de estudio %(name)s fue actualizado"
-
-#: apps/projects/views.py:61
+#: apps/projects/views.py:68
 msgid "Study group updated!"
 msgstr "¡Grupo de estudio actualizado!"
 
-#: apps/projects/views.py:99
+#: apps/projects/views.py:106
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:106
+#: apps/projects/views.py:113
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
-#: apps/projects/views.py:126
+#: apps/projects/views.py:133
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:130
+#: apps/projects/views.py:137
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:150
+#: apps/projects/views.py:157
 msgid "The link was deleted"
 msgstr "El enlace fue añadido"
 
-#: apps/projects/views.py:170
+#: apps/projects/views.py:177
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:174
+#: apps/projects/views.py:181
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:187
+#: apps/projects/views.py:194
 msgid "Invalid request"
 msgstr "Solicitud invalida"
 
-#: apps/projects/views.py:205
+#: apps/projects/views.py:212
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:228
+#: apps/projects/views.py:235
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:235
+#: apps/projects/views.py:242
 msgid "Sign-Up"
 msgstr "Suscripción"
 
-#: apps/projects/views.py:241
+#: apps/projects/views.py:248
 msgid "The study group has been created."
 msgstr "El grupo de estudio ha sido creado."
 
-#: apps/projects/views.py:247
+#: apps/projects/views.py:254
 msgid "There was a problem creating the study group."
 msgstr "Ocurrió un problema al crear el grupo de estudio."
 
-#: apps/projects/views.py:300
+#: apps/projects/views.py:283
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
@@ -356,7 +314,7 @@ msgstr "Ya está siguiendo a este grupo de estudio"
 msgid "You are already following this user"
 msgstr "Ya está siguiendo a este usuario"
 
-#: apps/statuses/views.py:37 apps/statuses/views.py:61
+#: apps/statuses/views.py:37 apps/statuses/views.py:64
 msgid "There was an error posting your status update"
 msgstr "Ocurrió un error al publicar la actualización a su estado"
 
@@ -600,7 +558,8 @@ msgstr "css/style-es.css"
 msgid "BETA"
 msgstr "BETA"
 
-#: templates/base.html:46 templates/content/comment_page.html:12
+#: templates/base.html:46 templates/activity/index.html:12
+#: templates/content/comment_page.html:12
 #: templates/content/comment_sign_up.html:12
 #: templates/content/create_page.html:11 templates/content/edit_page.html:12
 #: templates/content/history_page.html:14 templates/content/page.html:14
@@ -612,9 +571,10 @@ msgstr "BETA"
 msgid "Study Groups"
 msgstr "Grupos de Estudio"
 
-#: templates/base.html:47 templates/projects/sidebar.html:73
-#: templates/users/profile.html:16 templates/users/profile_edit.html:11
-#: templates/users/user_list.html:5 templates/users/user_list.html.py:11
+#: templates/base.html:47 templates/activity/index.html:16
+#: templates/projects/sidebar.html:73 templates/users/profile.html:16
+#: templates/users/profile_edit.html:11 templates/users/user_list.html:5
+#: templates/users/user_list.html.py:11
 msgid "People"
 msgstr "Personas"
 
@@ -727,10 +687,11 @@ msgstr "Comentario"
 #: templates/content/comment_sign_up.html:65
 #: templates/content/create_page.html:32 templates/content/edit_page.html:38
 #: templates/content/restore_version.html:36
+#: templates/dashboard/dashboard.html:80
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/preferences/settings_delete.html:14
 #: templates/preferences/settings_notifications.html:43
-#: templates/projects/contact_users.html:23
+#: templates/projects/contact_users.html:23 templates/projects/project.html:52
 #: templates/projects/project_edit_description.html:14
 #: templates/projects/project_edit_image.html:24
 #: templates/projects/project_edit_status.html:52
@@ -863,14 +824,18 @@ msgid "Answers"
 msgstr "Respuestas"
 
 #: templates/content/sign_up.html:54
+#: templates/content/emails/sign_up_updated.txt:8
 msgid "Bio:"
 msgstr "Biografía:"
 
-#: templates/content/sign_up.html:55 templates/users/profile.html:62
+#: templates/content/sign_up.html:55
+#: templates/content/emails/sign_up_updated.txt:10
+#: templates/users/profile.html:62
 msgid "Location:"
 msgstr "Ubicación:"
 
 #: templates/content/sign_up.html:56
+#: templates/content/emails/sign_up_updated.txt:12
 msgid "Answer:"
 msgstr "Respuesta:"
 
@@ -878,34 +843,88 @@ msgstr "Respuesta:"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: templates/content/emails/sign_up_updated.txt:11
-msgid "See:"
-msgstr "Vea:"
+#: templates/content/emails/content_update.txt:1
+#: templates/statuses/emails/wall_updated.txt:1
+msgid " was updated."
+msgstr " fue actualizado."
 
-#: templates/content/emails/sign_up_updated.txt:13
+#: templates/content/emails/content_update.txt:3
+#: templates/content/emails/content_update_subject.txt:1
+msgid " posted a new comment at "
+msgstr "publicó un comentario en "
+
+#: templates/content/emails/content_update.txt:3
+#: templates/content/emails/content_update_subject.txt:1
+#: templates/content/emails/sign_up_updated.txt:2
+#: templates/content/emails/sign_up_updated.txt:4
+msgid "."
+msgstr "."
+
+#: templates/content/emails/content_update.txt:3
+#: templates/content/emails/content_update_subject.txt:1
+msgid " created a new task: "
+msgstr "creó una nueva tarea: "
+
+#: templates/content/emails/content_update.txt:5
+#: templates/content/emails/sign_up_updated.txt:14
+msgid "Comment:"
+msgstr "Comentario:"
+
+#: templates/content/emails/content_update.txt:8
+#: templates/content/emails/sign_up_updated.txt:18
+msgid "See comment at:"
+msgstr "Vea el comentatio en:"
+
+#: templates/content/emails/content_update.txt:8
+msgid "See task at:"
+msgstr "Vea la tarea en:"
+
+#: templates/content/emails/content_update.txt:10
+#: templates/content/emails/sign_up_updated.txt:20
 #: templates/drumbeatmail/emails/direct_message.txt:7
-#: templates/projects/emails/course_updated.txt:15
 #: templates/relationships/emails/new_follower.txt:6
+#: templates/statuses/emails/wall_updated.txt:13
 #: templates/users/emails/forgot_password.txt:10
 #: templates/users/emails/registration_confirm.txt:9
 msgid "Sincerely,"
 msgstr "Sinceramente,"
 
-#: templates/content/emails/sign_up_updated.txt:14
+#: templates/content/emails/content_update.txt:11
+#: templates/content/emails/sign_up_updated.txt:21
 #: templates/drumbeatmail/emails/direct_message.txt:8
-#: templates/projects/emails/course_updated.txt:16
 #: templates/relationships/emails/new_follower.txt:7
+#: templates/statuses/emails/wall_updated.txt:14
 #: templates/users/emails/forgot_password.txt:11
 #: templates/users/emails/registration_confirm.txt:10
 msgid "The P2PU Team"
 msgstr "El Equipo de P2PU"
 
-#: templates/content/emails/sign_up_updated.txt:16
+#: templates/content/emails/content_update.txt:13
 #: templates/drumbeatmail/emails/direct_message.txt:10
-#: templates/projects/emails/course_updated.txt:18
 #: templates/relationships/emails/new_follower.txt:9
+#: templates/statuses/emails/wall_updated.txt:19
 msgid "Manage your subscriptions:"
-msgstr ""
+msgstr "Configure sus notificaciones:"
+
+#: templates/content/emails/sign_up_updated.txt:2
+msgid " submitted a new answer at the sign-up page of "
+msgstr "publicó una nueva respuesta en la página de suscripción de "
+
+#: templates/content/emails/sign_up_updated.txt:4
+msgid " posted a new comment at the sign-up page of "
+msgstr "publicó un nuevo comentario en la página de suscripción de "
+
+#: templates/content/emails/sign_up_updated.txt:18
+msgid "See answer at:"
+msgstr "Vea respuesta en:"
+
+#: templates/content/emails/sign_up_updated_subject.txt:1
+msgid " submitted a new answer at the sign-up page."
+msgstr "publicó una nueva respuesta en la página de suscripción."
+
+#: templates/content/emails/sign_up_updated_subject.txt:1
+msgid " posted a new comment at the sign-up page."
+msgstr "publicó un nuevo comentario en la página de suscripción."
 
 #: templates/dashboard/dashboard.html:13
 #: templates/preferences/settings.html:10
@@ -971,7 +990,7 @@ msgstr "crear un grupo de estudio nuevo</a>."
 msgid "Post a message to your followers"
 msgstr "Publicar un mensaje para sus seguidores"
 
-#: templates/dashboard/dashboard.html:78
+#: templates/dashboard/dashboard.html:82 templates/projects/project.html:54
 msgid "Post Update"
 msgstr "Publicar Actualización"
 
@@ -1142,6 +1161,11 @@ msgstr "Sólo un espacio en el momento"
 msgid "To"
 msgstr "Para"
 
+#: templates/drumbeatmail/base.html:17 templates/messages/inbox.html:12
+#: templates/projects/contact_users.html:12
+msgid "Subject"
+msgstr "Asunto"
+
 #: templates/drumbeatmail/base.html:22
 #: templates/projects/contact_users.html:17
 msgid "Message"
@@ -1196,7 +1220,6 @@ msgid "More"
 msgstr "Más"
 
 #: templates/drumbeatmail/emails/direct_message.txt:1
-#, fuzzy
 msgid "You have received a new direct message from"
 msgstr "Ha recibido un nuevo mensaje directo de "
 
@@ -1313,16 +1336,21 @@ msgstr ""
 
 #: templates/preferences/settings_notifications.html:32
 msgid "The wall of "
-msgstr "El muro de "
+msgstr "Un mensaje para el grupo de estudio "
 
 #: templates/preferences/settings_notifications.html:32
-#: templates/preferences/settings_notifications.html:38
-msgid " is updated."
-msgstr " sea actualizado."
+msgid " is updated (organizers can bypass this setting for important updates)."
+msgstr ""
+"sea publicado (los organizadores pueden saltarse esta configuración para las "
+"actualizaciones importantes)."
 
 #: templates/preferences/settings_notifications.html:38
 msgid "The content (e.g. tasks, comments, ...) of "
 msgstr "El contenido (e.g. tareas, comentarios, ...) de "
+
+#: templates/preferences/settings_notifications.html:38
+msgid " is updated."
+msgstr " sea actualizado."
 
 #: templates/projects/_project_card.html:23 templates/projects/sidebar.html:48
 #: templates/users/_user_card.html:20
@@ -1425,6 +1453,13 @@ msgstr "Lista de <b>Grupos de Estudio</b>"
 #: templates/projects/project.html:34
 msgid "Post a message to this study group"
 msgstr "Publicar un mensaje a este grupo de estudio"
+
+#: templates/projects/project.html:39
+msgid ""
+"Important message (bypass notification preferences of all the participants)."
+msgstr ""
+"Mensaje importante (se salta las preferencias de notificación de todos los "
+"participantes)."
 
 #: templates/projects/project_edit.html:5
 #: templates/projects/project_edit.html:28
@@ -1674,34 +1709,30 @@ msgid "Edit Participants"
 msgstr "Editar Participantes"
 
 #: templates/projects/sidebar.html:106
-msgid "Contact Participants"
-msgstr "Contactar Participantes"
-
-#: templates/projects/sidebar.html:108
 msgid "Contact Organizer"
 msgstr "Contactar Organizador"
 
-#: templates/projects/sidebar.html:120
+#: templates/projects/sidebar.html:118
 msgid "Tasks"
 msgstr "Tareas"
 
-#: templates/projects/sidebar.html:138
+#: templates/projects/sidebar.html:137
 msgid "No tasks have been added."
 msgstr "Ninguna tarea ha sido añadida."
 
-#: templates/projects/sidebar.html:143
+#: templates/projects/sidebar.html:142
 msgid "New Task"
 msgstr "Nueva Tarea"
 
-#: templates/projects/sidebar.html:149
+#: templates/projects/sidebar.html:148
 msgid "External Links"
 msgstr "Enlaces Externos"
 
-#: templates/projects/sidebar.html:160
+#: templates/projects/sidebar.html:159
 msgid "No external links have been added."
 msgstr "Ningún enlace externo ha sido añadido."
 
-#: templates/projects/sidebar.html:165
+#: templates/projects/sidebar.html:164
 msgid "Edit Links"
 msgstr "Editar Enlaces"
 
@@ -1734,10 +1765,6 @@ msgstr ""
 "Todos los participantes podrán ver sus respuestas cuando sea aceptado en el "
 "grupo de estudio."
 
-#: templates/projects/emails/course_updated.txt:3
-msgid "updated the wall of "
-msgstr "actualizado el muro de "
-
 #: templates/relationships/emails/new_follower.txt:1
 msgid "is now following "
 msgstr "ahora está siguiendo "
@@ -1757,6 +1784,31 @@ msgstr "Puede ver su perfil aquí:"
 #: templates/schools/home.html:13 templates/schools/menu.html:4
 msgid "Schools"
 msgstr "Escuelas"
+
+#: templates/statuses/emails/wall_updated.txt:4
+msgid " posted an important message to the wall:"
+msgstr " publicó un mensaje importante para este grupo de estudio:"
+
+#: templates/statuses/emails/wall_updated.txt:6
+msgid " posted a message to the wall:"
+msgstr " publicó un mensaje para este grupo de estudio:"
+
+#: templates/statuses/emails/wall_updated.txt:11
+msgid "See message at:"
+msgstr "Vea el mensaje en:"
+
+#: templates/statuses/emails/wall_updated.txt:17
+msgid ""
+"This message was maked as important by the study group organizer. Important "
+"messages will always bypass participants's notification prefences."
+msgstr ""
+"Este mensaje fue marcado como importante por el organizador del grupo de "
+"estudio. Los mensajes importantes siempre se saltan las preferencias de "
+"notificación de los participantes."
+
+#: templates/statuses/emails/wall_updated_subject.txt:1
+msgid " posted a message to the study group wall."
+msgstr " publicó un mensaje para este grupo de estudio."
 
 #: templates/users/_openid_providers.html:6
 msgid "Sign In with your Google account"

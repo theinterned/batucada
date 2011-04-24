@@ -184,6 +184,30 @@ class PageComment(ModelBase):
 admin.site.register(PageComment)
 
 
+def send_content_notification(instance, is_comment):
+    """Send notification when a new page or comment is posted."""
+    project = instance.project
+    if not is_comment and not instance.listed:
+        return
+    subject = render_to_string("content/emails/content_update_subject.txt", {
+        'instance': instance,
+        'is_comment': is_comment,
+        'project': project,
+    })
+    body = render_to_string("content/emails/content_update.txt", {
+        'instance': instance,
+        'is_comment': is_comment,
+        'project': project,
+        'domain': Site.objects.get_current().domain,
+    })
+    for participation in project.participants():
+        if participation.no_updates or instance.author == participation.user:
+            continue
+        SendUserEmail.apply_async((participation.user, subject, body))
+    if instance.author != project.created_by:
+        SendUserEmail.apply_async((project.created_by, subject, body))
+
+
 ###########
 # Signals #
 ###########
@@ -209,11 +233,13 @@ def fire_activity(sender, **kwargs):
     is_page = isinstance(instance, Page)
     is_comment = isinstance(instance, PageComment)
     if created and (is_page or is_comment):
-        # Do not fire activities for comments on the sign-up page.
+        # Send notification.
         if is_comment and instance.page.slug == 'sign-up':
             instance.send_sign_up_notification()
             return
-        # fire activity
+        else:
+            send_content_notification(instance, is_comment)
+        # Fire activity.
         activity = Activity(
             actor=instance.author,
             verb='http://activitystrea.ms/schema/1.0/post',
@@ -221,8 +247,6 @@ def fire_activity(sender, **kwargs):
         )
         activity.target_project = instance.project
         activity.save()
-        # Send notifications.
-        activity.target_project.send_update_notification(activity, wall=False)
 
 post_save.connect(fire_activity, sender=Page)
 post_save.connect(fire_activity, sender=PageComment)

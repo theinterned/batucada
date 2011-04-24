@@ -14,7 +14,7 @@ urlpatterns = patterns('django.views.generic.simple',
 )
 
 urlpatterns += patterns('',
-   url(r'^abuse/(?P<model>[\w ]+)/(?P<app_label>[\w ]+)/(?P<pk>\w+)/$',
+   url(r'^abuse/(?P<model>[\w ]+)/(?P<app_label>[\w ]+)/(?P<pk>\d+)/$',
        'drumbeat.views.report_abuse',
        name='drumbeat_abuse'),
 )

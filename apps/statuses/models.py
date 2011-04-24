@@ -1,41 +1,66 @@
 import datetime
 from markdown import markdown
-from bleach import Bleach
+import bleach
 
 from django.contrib import admin
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
-from django.utils.html import urlize
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
+from django.conf import settings
 
 from activity.models import Activity
 from drumbeat.models import ModelBase
-
-TAGS = ('a', 'b', 'em', 'i', 'strong', 'p')
-
+from users.tasks import SendUserEmail
 
 class Status(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
 
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
-    status = models.CharField(max_length=750)
+    status = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
+    important = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.status
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('statuses_show', (), {
-            'status_id': self.pk,
-        })
+        return self.activity.get().get_absolute_url()
 
     def timesince(self, now=None):
         return timesince(self.created_on, now)
 
+    def send_wall_notification(self):
+        """Send update notifications for messages posted to a study group wall."""
+        if not self.project:
+            return
+        project = self.project
+        subject = render_to_string("statuses/emails/wall_updated_subject.txt", {
+            'status': self,
+            'project': project,
+        })
+        body = render_to_string("statuses/emails/wall_updated.txt", {
+            'status': self,
+            'project': project,
+            'domain': Site.objects.get_current().domain,
+        })
+        for participation in project.participants():
+            if (not self.important and participation.no_wall_updates) or self.author == participation.user:
+                continue
+            SendUserEmail.apply_async((participation.user, subject, body))
+        if self.author != project.created_by:
+            SendUserEmail.apply_async((self.author, subject, body))
+        
+
 admin.site.register(Status)
+
+
+###########
+# Signals #
+###########
 
 
 def status_creation_handler(sender, **kwargs):
@@ -45,10 +70,8 @@ def status_creation_handler(sender, **kwargs):
     if not created or not isinstance(status, Status):
         return
 
-    # convert status body to markdown and bleachify
-    bl = Bleach()
-    status.status = urlize(status.status)
-    status.status = bl.clean(markdown(status.status), tags=TAGS, strip=True)
+    # clean html
+    status.status = bleach.clean(status.status, tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
     status.save()
 
     # fire activity
@@ -61,6 +84,6 @@ def status_creation_handler(sender, **kwargs):
         activity.target_project = status.project
     activity.save()
     # Send notifications.
-    if activity.target_project:
-        activity.target_project.send_update_notification(activity)
+    if status.project:
+        status.send_wall_notification()
 post_save.connect(status_creation_handler, sender=Status)

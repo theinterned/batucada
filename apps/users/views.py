@@ -297,7 +297,7 @@ def profile_view(request, username):
         else:
             project.relation_text = _('(following)')
     followers = profile.followers()
-    links = Link.objects.select_related('subscription').filter(user=profile)
+    links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True)
     activities = Activity.objects.select_related(
         'actor', 'status', 'project').filter(
         actor=profile,

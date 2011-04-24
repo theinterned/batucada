@@ -102,8 +102,6 @@
   {% endif %}
   {% if user.get_profile == project.created_by %}
     <a class="button" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
-    <br><br>
-    <a class="button" href="{% locale_url projects_contact_participants slug=project.slug %}">{{ _('Contact Participants') }}</a>
   {% else %}{% if user.is_authenticated %}
     <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Contact Organizer')}}</a>
   {% endif %}{% endif %}
@@ -118,6 +116,7 @@
 
   <a name="tasks"></a>
   <h2>{{ _('Tasks') }}</h2>
+  <br>
   {% if content_pages %}
     <nav id="content-pages">
       <ul>

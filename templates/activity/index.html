@@ -3,6 +3,24 @@
 
 {% block title %}{{ _('Activity') }}{% endblock %}
 {% block pageid %}activity{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="container">
+    <nav>
+      {% if activity.target_project %}
+        <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+        <span class="arrow">&rsaquo;</span>
+        <a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project.name }}</a>
+      {% else %}
+        <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
+        <span class="arrow">&rsaquo;</span>
+        <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.username }}</a>
+      {% endif %}
+    </nav>
+    </div> <!-- /.container -->
+{% endblock %}
+
 {% block body %}
   <div id="main">
     <ul id="posts">
