@@ -18,6 +18,7 @@ from relationships.models import Relationship
 
 from content.forms import PageForm, NotListedPageForm, CommentForm, OwnersPageForm, OwnersNotListedPageForm
 from content.models import Page, PageVersion, PageComment
+from links.models import Link
 
 
 def show_page(request, slug, page_slug):
@@ -345,8 +346,8 @@ def accept_sign_up(request, slug, comment_id):
 
 @login_required
 @participation_required
-def index_up(request, slug, counter):
-    """Page goes up in the sidebar index (page.index decreases)."""
+def page_index_up(request, slug, counter):
+    #Page goes up in the sidebar index (page.index decreases)."""
     project = get_object_or_404(Project, slug=slug)
     try:
         counter = int(counter)
@@ -365,8 +366,8 @@ def index_up(request, slug, counter):
 
 @login_required
 @participation_required
-def index_down(request, slug, counter):
-    """Page goes down in the sidebar index (page.index increases)."""
+def page_index_down(request, slug, counter):
+    #Page goes down in the sidebar index (page.index increases). 
     project = get_object_or_404(Project, slug=slug)
     try:
         counter = int(counter)
@@ -382,4 +383,42 @@ def index_down(request, slug, counter):
     next_page.save()
     return HttpResponseRedirect(project.get_absolute_url() + '#tasks')
 
+@login_required
+@participation_required
+def link_index_up(request, slug, counter):
+   #Link goes up in the sidebar index (link.index decreases).
+    project = get_object_or_404(Project, slug=slug)
+    try:
+        counter = int(counter)
+    except ValueError:
+        raise Http404
+    links = Link.objects.filter(project__pk=project.pk).order_by('index')
+    if counter < 1 or links.count() <= counter:
+        raise Http404
+    prev_link = links[counter - 1]
+    link = links[counter]
+    prev_link.index, link.index = link.index, prev_link.index
+    link.save()
+    prev_link.save()
+    return HttpResponseRedirect(project.get_absolute_url() + '#links')
+
+
+@login_required
+@participation_required
+def link_index_down(request, slug, counter):
+    #Link goes down in the sidebar index (link.index increases).
+    project = get_object_or_404(Project, slug=slug)
+    try:
+        counter = int(counter)
+    except ValueError:
+        raise Http404
+    links = Link.objects.filter(project__pk=project.pk).order_by('index')
+    if counter < 0 or links.count() - 1 <= counter:
+        raise Http404
+    next_link = links[counter + 1]
+    link = links[counter]
+    next_link.index, link.index = link.index, next_link.index
+    link.save()
+    next_link.save()
+    return HttpResponseRedirect(project.get_absolute_url() + '#links')
 

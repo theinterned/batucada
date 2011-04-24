@@ -5,7 +5,7 @@ from django.db.models.signals import post_save, post_delete
 
 from django_push.subscriber.models import Subscription
 from django_push.subscriber.signals import updated
-
+from django.db.models import Max
 from links import tasks
 
 log = logging.getLogger(__name__)
@@ -21,15 +21,20 @@ class Link(models.Model):
     project = models.ForeignKey('projects.Project', null=True)
     user = models.ForeignKey('users.UserProfile', null=True)
     subscription = models.ForeignKey(Subscription, null=True)
+    index = models.IntegerField(null=True, default=0)
 
-
+    def save(self):
+        max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
+        self.index = max_index + 1 if max_index else 1
+        super(Link, self).save()
+         
 def link_create_handler(sender, **kwargs):
     """Check for a feed and subscribe to it if it exists."""
     link = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     if not created or not isinstance(link, Link):
         return
-
+   
     tasks.SubscribeToFeed.apply_async(args=(link,))
 post_save.connect(link_create_handler, sender=Link)
 
