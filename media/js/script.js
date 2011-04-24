@@ -237,6 +237,11 @@ var batucada = {
         onload: function() {
             loadMoreMessages();
         }
+    },
+    journalism: {
+        onload: function() {
+            VideoJS.setupAllWhenReady();
+        }
     }
 };
 
