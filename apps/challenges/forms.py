@@ -68,6 +68,11 @@ class VoterDetailsForm(forms.ModelForm):
         model = VoterDetails
         fields = ('taxonomy', )
 
+    def clean_taxonomy(self):
+        if len(self.cleaned_data['taxonomy']) > 3:
+            raise forms.ValidationError('Select no more than 3.')
+        return self.cleaned_data['taxonomy']
+
 
 class JudgeForm(forms.ModelForm):
     class Meta:
