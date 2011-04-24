@@ -287,8 +287,9 @@ def comment_sign_up(request, slug, comment_id=None):
                 'page_slug': page.slug,
             }))
         else:
-            error_msg = _('There was a problem posting your reply.') if reply_to \
-                        else _('There was a problem submitting your answer.')
+            error_msg = _('There was a problem posting your reply. Reply cannot be empty. ') if reply_to \
+                        else _('There was a problem submitting your answer. Answer cannot be empty. ')
+            
             messages.error(request, error_msg)
     else:
         profile_form = ProfileEditForm(instance=user)
