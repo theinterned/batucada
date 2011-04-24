@@ -114,6 +114,9 @@ class Submission(ModelBase):
     description = models.TextField(null=True, blank=True)
     description_html = models.TextField(null=True, blank=True)
 
+    keywords = models.CharField(max_length=255, null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
+
     challenge = models.ManyToManyField(Challenge)
     created_by = models.ForeignKey('users.UserProfile',
                                    related_name='submissions')

@@ -2,6 +2,8 @@
 
 {% load l10n_tags %}
 
+{% block title %}{% if submission %}{{ _('Edit Submission') }}{% else %}{{ _('Create Submission') }}{% endif %}{% endblock %}
+
 {% block body %}
 <section class="modal nav">
   <article>
@@ -17,6 +19,7 @@
       <ul>
         <li class="summary"><a href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.pk %}">{{ _('Response Summary') }}</a></li>
         <li class="desc"><a href="{% locale_url submission_edit_description slug=challenge.slug submission_id=submission.pk %}">{{ _('Full Description') }}</a></li>
+        <li class="share"><a href="{% locale_url submission_edit_share slug=challenge.slug submission_id=submission.pk %}">{{ _('Share Response') }}</a></li>
       </ul>
     </nav>
 

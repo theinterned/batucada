@@ -37,7 +37,7 @@
     <div class="post-container">
       <form action="{% locale_url submissions_create slug=challenge.slug %}" method="post" id="post-challenge-summary">
 	      {% csrf_token %}
-	      <input type="text" value="{{ _('Respond to this Challenge!') }}">
+	      <input type="text" value="{{ _("What's your idea?") }}">
 	      <textarea name="summary" title=""></textarea>
 	      
 	      <div class="status-and-actions">
@@ -47,7 +47,7 @@
 	          <li><span>{{ challenge.title }}</span></li>
 	        </ul>
           
-          <button class="button update submit" id="post-challenge">Post Response</button>
+          <button class="button update submit" id="post-challenge">{{ _('Continue') }}</button>
           
 	      </div> <!-- /.status-and-actions -->
 	    </form>
