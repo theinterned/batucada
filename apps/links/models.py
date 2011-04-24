@@ -27,7 +27,6 @@ def link_create_handler(sender, **kwargs):
     """Check for a feed and subscribe to it if it exists."""
     link = kwargs.get('instance', None)
     created = kwargs.get('created', False)
-
     if not created or not isinstance(link, Link):
         return
 

@@ -1415,14 +1415,25 @@ header {}
 			vertical-align: middle;
 		}
 		.modal .link.url{
-			width: 246px;
+			width: 178px;
 			padding: 0;
 		}
+		
+		.modal .link.subscribe{
+            width: 100px;
+            padding: 0;
+        }
+        
 		.modal .links input[type=text], .modal .participants input[type=text] {
 			width: 154px;
 		}
+		
+		.modal .links input[type=checkbox] {
+            width: 100px;
+        }
+        
 		.modal .links .url input[type=text] {
-			width: 221px;
+			width: 150px;
 		}
 		.modal .links .add-link, , .modal .participants .add-participant {
 			display: inline-block;
@@ -1458,9 +1469,29 @@ header {}
 			
 			/*width: 25%;*/
 		}
-		.modal .links table .name, .modal .links table .url, .modal .participants table .name {
-			width: 154px;
+		.modal .links table .name, .modal .participants table .name {
+			width: 185px;
 		}
+		
+		.modal .links table .url {
+		    width: 90px; 
+		}
+		
+		.modal .links table .subscription {
+		    width: 50px
+		}
+		
+		.modal .links table .actions {
+            width: 200px
+        }
+        
+        .modal .links table .actions form {
+            float: left;
+        }
+        
+        .modal .links table .actions button {            
+            width: 50px; 
+        }
 		.modal .links table .url a {
 			width: 154px;
 			display: block;
