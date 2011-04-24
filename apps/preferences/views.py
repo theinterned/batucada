@@ -9,7 +9,9 @@ from django.contrib.sites.models import Site
 from l10n.urlresolvers import reverse
 from drumbeat import messages
 from users.decorators import login_required
+from preferences import forms
 from preferences.models import AccountPreferences
+from users.models import UserProfile
 
 log = logging.getLogger(__name__)
 
@@ -51,7 +53,54 @@ def settings(request):
     return render_to_response('preferences/settings_notifications.html', prefs,
                               context_instance=RequestContext(request))
 
+@login_required
+def email(request):
+    profile = request.user.get_profile()
+    email = profile.user.email
+    if request.method == "POST":
+        form = forms.EmailEditForm(request.POST, request.FILES,
+                                     instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            messages.success(request, _('Email updated'))
+            profile.user = request.user
+            profile.save()
+    else:
+        form = forms.EmailEditForm(instance=profile)
 
+    return render_to_response('preferences/settings_email.html', {
+        'email': email,
+        'form': form,
+    }, context_instance=RequestContext(request))
+    
+@login_required
+def password(request):
+    profile = request.user.get_profile()
+    password = ""
+    password_confirm = ""
+    if request.method == "POST":
+        form = forms.PasswordEditForm(request.POST, request.FILES,
+                                     instance=profile)
+        
+        # should we require existing password before saving? email to confirm?
+        # after saved, should the user be logged out and forced to log in with the new password?
+        
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.set_password(form.cleaned_data['password'])
+            messages.success(request, _('Password updated'))
+            profile.user = request.user
+            profile.save()
+        else:
+            messages.error(request, _('There are errors in this form. Please '
+                                      'correct them and resubmit.'))
+    else:
+        form = forms.PasswordEditForm(instance=profile)
+
+    return render_to_response('preferences/settings_password.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))    
+    
 @login_required
 def delete(request):
     return HttpResponseRedirect(reverse('preferences_settings'))
