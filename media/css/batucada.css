@@ -286,13 +286,13 @@ form .small {
  
 header {}
   #masthead {
-    height: 145px;
+    height: 130px;
   }
     #masthead a:hover {
       text-decoration: none;
     }
     #logo {
-      background-position: 0 -49px;
+      background-position: 0 -39px;
       background-image: url("/media/images/logo.png");
       height: 120px;
       width: 180px;
@@ -303,7 +303,7 @@ header {}
 
     #beta-tag {
         position: absolute;
-        margin-top: 80px;
+        margin-top: 90px;
         margin-left: 109px; 
         font-size: 21px; 
         color: #f08c00; 
@@ -347,7 +347,7 @@ header {}
     #main-nav {
       font-size: 17px;
       position: absolute;
-      margin-top: 38px;
+      margin-top: 48px;
       padding-left: 180px;
       height: 42px;
       width: 820px;
@@ -360,7 +360,7 @@ header {}
     #user-nav {
       height: 37px;
       position: relative;
-      margin-top: 38px;
+      margin-top: 48px;
       z-index: 2;
       float: right;
     }
@@ -1118,17 +1118,17 @@ header {}
         min-height: 46px;
       }
       
-      #create-post input, #create-post textarea {
+      #create-post #fake-message-input, #create-post textarea {
         width: 600px;
         display: block;
         font-size: 16px;
         padding: 12px;
       }
-      #create-post input{
+      #create-post #fake-message-input {
 	  	color: #919191;
 	  	margin-bottom: 0;
 	  }
-      #create-post textarea, #create-post .status-and-actions {
+      #create-post textarea, #create-post #important-message, #create-post .status-and-actions {
         display: none;
       }
       #create-post .status-and-actions {
@@ -1140,27 +1140,25 @@ header {}
 		font-size: 14px;
 		line-height: 25px;
 		min-height: 31px;
-		float: right;
-        }             
+        }
+        #create-post .cancel {
+                font-size: 14px;
+                line-height: 25px;
+                min-height: 25px;
+                margin-left: 5px;
+                font-weight: bold;
+       }
       #create-post.expanded {
       }
-        #create-post.expanded input {
+        #create-post.expanded #fake-message-input {
           display: none;
         }
-        #create-post.expanded textarea, #create-post.expanded .status-and-actions {
+        #create-post.expanded textarea, #create-post.expanded #important-message, #create-post.expanded .status-and-actions {
           display: block;
         }
         #create-post.expanded textarea {
           height: 160px;
         }
-
-        /*#create-post.expanded textarea:focus {
-          outline: none;
-          border: 1px solid #3ea1e6;
-          box-shadow: inset #3ea1e6 0px 1px 4px;
-          -webkit-box-shadow: inset #3ea1e6 0px 1px 4px;
-          -moz-box-shadow: inset #3ea1e6 0px 1px 4px;
-        }*/
     
     #posts {
       list-style: none;
@@ -1668,20 +1666,26 @@ header {}
 	display: none;
 }
 #splash #content{
-	padding: 0;
-	width: 100%;
+	padding-top: 0px;
 }
-#splash #content header{	
-	padding: 20px 0 40px;
+#splash #content header{
 	background: #fff;
 }
 #splash #content header .container{
 	position: relative;
 }
+#splash #intro {
+        width: 1000px;
+        border-radius: 10px;
+        border: solid 1px #EEE;
+        border-bottom: 1px solid #fff;
+}
 #intro-links {
   float: right;
   text-align: left;
   width: 275px;
+  padding-right: 20px;
+  padding-top: 20px;
 }
 #intro-links a {
   display: block;
@@ -1718,14 +1722,15 @@ header {}
 	font: normal 42px/44px MuseoSans-500, sans-serif;
 	color: #fff;
 	text-shadow: none;
-	}
+        padding-top: 30px;
+}
 #splash #content header h1{
   color: #a9b2c1;
-  font-size: 58px;
+  font-size: 54px;
   font-weight: normal;
   line-height: 65px;
   text-transform: uppercase;
-  padding: 15px 0;
+  padding-left: 10px;
   width: 720px;
   height: 200px;
   overflow: visible;
@@ -1756,8 +1761,8 @@ header {}
 	right: 81px; bottom: -105px;
 	}
 #splash #main{
-	width: 100%;
-	padding: 36px 0 0;
+        width: 980px;
+        padding: 36px 10px 0 10px;
 	margin: 0;
 	float: none;
 	border-top: 1px solid #fff;
@@ -1767,7 +1772,7 @@ header {}
 	}
 #splash #main aside {
 	display: block;
-	margin-left: 660px;
+	margin-left: 680px;
 	}	
 #splash #main aside > section > h1{
 	position: relative;
@@ -1777,6 +1782,7 @@ header {}
 	font-size: 16px;
 	line-height: 18px;
 	font-weight: normal;
+        width: 300px;
 	border-bottom: 1px solid #dbdbdb;
 	}
 #splash #featured_project ul {
