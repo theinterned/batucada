@@ -6,7 +6,7 @@
 {% block form %}
 <fieldset id="profile_edit_links_edit" class="profile edit links tabpane">
 <h2>{{ _('Links') }}</h2>
-<p class="hint">{{ _('Add links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile.') }}</p>
+<p class="hint">{{ _('Edit links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile.') }}</p>
 <form action="{% locale_url users_profile_edit_links_edit link_id=link.id%}" method="post">
   {% csrf_token %}
   <div class="field link name{% if form.name.errors %} error{% endif %}">

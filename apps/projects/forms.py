@@ -44,6 +44,7 @@ class ProjectLinksForm(forms.ModelForm):
         fields = ('name', 'url',)
 
 
+
 class ProjectImageForm(forms.ModelForm):
 
     class Meta:
