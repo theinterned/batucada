@@ -15,6 +15,8 @@ from django.template.loader import render_to_string
 
 from commonware.decorators import xframe_sameorigin
 
+from links import tasks
+
 from projects import forms as project_forms
 from projects.decorators import ownership_required
 from projects.models import Project, ProjectMedia, Participation
@@ -119,7 +121,7 @@ def edit_image(request, slug):
     }, context_instance=RequestContext(request))
 
 
-@login_required
+@login_required 
 @ownership_required
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -144,7 +146,32 @@ def edit_links(request, slug):
         'links': links,
     }, context_instance=RequestContext(request))
 
-
+@login_required   
+@ownership_required
+def edit_links_edit(request, slug, link):
+    link = get_object_or_404(Link, id=link)
+    form = project_forms.ProjectLinksForm(request.POST or None, instance=link)
+    profile = get_object_or_404(UserProfile, user=request.user)
+    project = get_object_or_404(Project, slug=slug)
+    if link.project != project:
+        return http.HttpResponseForbidden()
+    if form.is_valid(): 
+        link = form.save(commit=False)
+        link.user = profile
+        link.project = project
+        link.save()
+        messages.success(request, _('Link updated.'))
+        tasks.SubscribeToFeed.apply_async(args=(link,))
+        return http.HttpResponseRedirect(
+            reverse('projects_edit_links', kwargs=dict(slug=project.slug)))
+    else:
+        form = project_forms.ProjectLinksForm(instance=link) 
+    return render_to_response('projects/project_edit_links_edit.html', {
+        'project': project,
+        'form': form,
+        'link': link,
+    }, context_instance=RequestContext(request))
+    
 @login_required
 @ownership_required
 def edit_links_delete(request, slug, link):
