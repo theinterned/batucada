@@ -710,11 +710,15 @@ header {}
 		  line-height: 1.5;
 		  margin-left: 0;
         }
+        /*
+        Conflicts with arrows for now
+        
           #project-links li a,
           #member_links li a{
 			background: url("/media/images/link-indicator.png") 0 0 no-repeat;
 			padding-left: 20px;
           }
+        */
       
       #project-lead {
         border-bottom: 1px solid #cfd1d2;
@@ -2473,11 +2477,42 @@ ul.ui-autocomplete #ui-active-menuitem {
 
 
 /*task list styling*/
-	#content-pages li{display:block; margin-top:10px; padding-bottom:10px; border-bottom:solid 1px #eee; position:relative;}
-	#content-pages ul li{width:260px;}	
-	#content-pages li .taskLink{display:inline-block; width:200px}
-	#content-pages .robttn {position:absolute; width:20px; height:20px; overflow:hidden; text-indent:-200px;}
-	#content-pages .up{right:0px; background-image:url('/media/images/arrows.png');}
-	#content-pages .dwn{right:20px; background-image:url('/media/images/arrows.png'); background-position: 20px 0px;}
-	#content-pages .up:hover{background-position: 0px 20px;}
-	#content-pages .dwn:hover{background-position: 20px 20px;}
+	#content-pages li,
+	#project-links li {
+	   display:block; margin-top:10px; padding-bottom:10px; border-bottom:solid 1px #eee; position:relative;
+	}
+	
+	#content-pages ul li,
+	#project-links ul li {
+	   width:260px;
+	}	
+	
+	#content-pages li .taskLink,
+	#project-links ul li .externalLink {
+	   display:inline-block; width:200px
+	}
+	
+	#content-pages .robttn,
+	#project-links .robttn {
+	   position:absolute; width:20px; height:20px; overflow:hidden; text-indent:-200px;
+	}
+	
+	#content-pages .up,
+	#project-links .up {
+	   right:0px; background-image:url('/media/images/arrows.png');
+	}
+	
+	#content-pages .dwn,
+	#project-links .dwn {
+	   right:20px; background-image:url('/media/images/arrows.png'); background-position: 20px 0px;
+	}
+	
+	#content-pages .up:hover, 
+	#project-links .up:hover {
+	   background-position: 0px 20px;
+	}
+	
+	#content-pages .dwn:hover,
+	#project-links .dwn:hover {
+        background-position: 20px 20px;
+    }

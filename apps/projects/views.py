@@ -157,7 +157,6 @@ def edit_links_edit(request, slug, link):
         tasks.SubscribeToFeed.apply_async(args=(link,))
         return http.HttpResponseRedirect(
             reverse('projects_edit_links', kwargs=dict(slug=project.slug)))
-
     else:
         form = project_forms.ProjectLinksForm(instance=link) 
     return render_to_response('projects/project_edit_links_edit.html', {
