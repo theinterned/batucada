@@ -176,10 +176,16 @@ def show_challenge(request, slug):
     form = SubmissionSummaryForm()
     remaining = challenge.end_date - datetime.now()
 
+    try:
+        profile = request.user.get_profile()
+    except:
+        profile = None
+
     context = {
         'challenge': challenge,
         'submissions': submissions,
         'form': form,
+        'profile': profile,
         'remaining': remaining,
     }
 
