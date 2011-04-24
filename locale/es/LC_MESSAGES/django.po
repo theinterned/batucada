@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 21:28-0400\n"
+"POT-Creation-Date: 2011-04-24 09:54-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,56 +116,60 @@ msgstr "publicó un comentario"
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 
-#: apps/content/views.py:58
+#: apps/content/views.py:59
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizada!"
 
-#: apps/content/views.py:65 apps/content/views.py:206
+#: apps/content/views.py:66 apps/content/views.py:207
 #, python-format
 msgid "There was a problem saving %s."
 msgstr "Ocurrió un problema al guardar %s."
 
-#: apps/content/views.py:91
+#: apps/content/views.py:92
 msgid "Task created!"
 msgstr "Tarea creada!"
 
-#: apps/content/views.py:98
+#: apps/content/views.py:99
 msgid "There was a problem creating the task."
 msgstr "Ocurrió problema creando la tarea."
 
-#: apps/content/views.py:129
+#: apps/content/views.py:130
 msgid "Comment posted!"
 msgstr "Comentario publicado!"
 
-#: apps/content/views.py:136
+#: apps/content/views.py:137
 msgid "There was a problem posting the comment. Comments cannot be empty."
 msgstr ""
 "Ocurrió un problema publicando el comentario.  Los comentatios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:199
+#: apps/content/views.py:200
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
-#: apps/content/views.py:282
+#: apps/content/views.py:283
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:282
+#: apps/content/views.py:283
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:289
-msgid "There was a problem posting your reply."
-msgstr "Ocurrió un problema al publicar su respuesta."
-
 #: apps/content/views.py:290
-msgid "There was a problem submitting your answer."
+#, fuzzy
+msgid "There was a problem posting your reply. Reply cannot be empty. "
+msgstr ""
+"Ocurrió un problema publicando el comentario.  Los comentatios no pueden "
+"estar vacíos."
+
+#: apps/content/views.py:291
+#, fuzzy
+msgid "There was a problem submitting your answer. Answer cannot be empty. "
 msgstr "Ocurrió un problema al enviar su respuesta."
 
-#: apps/content/views.py:342
+#: apps/content/views.py:344
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
@@ -198,92 +202,129 @@ msgstr "Mensaje enviado con éxito."
 msgid "There was an error sending your message. Please try again."
 msgstr "Ocurrió un error al enviar el mensaje. Por favor intente nuevamente."
 
-#: apps/preferences/views.py:43
+#: apps/preferences/forms.py:15 apps/users/forms.py:37
+msgid ""
+"Password must be at least 8 characters long and contain both numbers and "
+"letters."
+msgstr ""
+"La contraseña debe tener al menos 8 caracteres y contener tanto números como "
+"letras."
+
+#: apps/preferences/forms.py:20 apps/users/forms.py:42
+msgid "That password is too common. Please choose another."
+msgstr "Esa contraseña es muy común. Por favor elija otra."
+
+#: apps/preferences/forms.py:51 apps/users/forms.py:140
+msgid "Passwords do not match."
+msgstr "Las contraseñas no coinciden."
+
+#: apps/preferences/views.py:45
 msgid "Thank you, your settings have been saved."
 msgstr "Gracias, su configuración ha sido guardada."
 
-#: apps/projects/forms.py:44 apps/users/forms.py:164
+#: apps/preferences/views.py:65
+#, fuzzy
+msgid "Email updated"
+msgstr "Imagen actualizada"
+
+#: apps/preferences/views.py:91
+#, fuzzy
+msgid "Password updated"
+msgstr "Contraseña Actualizada"
+
+#: apps/preferences/views.py:95 apps/users/views.py:210
+#: apps/users/views.py:348
+msgid "There are errors in this form. Please correct them and resubmit."
+msgstr ""
+"Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
+
+#: apps/projects/forms.py:45 apps/users/forms.py:164
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/projects/forms.py:71
+#: apps/projects/forms.py:72
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:73
+#: apps/projects/forms.py:74
 #, python-format
 msgid "User %s is organizing the study group."
 msgstr "El usuario %s está organizando el grupo de estudio."
 
-#: apps/projects/forms.py:76
+#: apps/projects/forms.py:77
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/models.py:116
+#: apps/projects/models.py:117
 msgid "study group"
 msgstr "grupo de estudio"
 
-#: apps/projects/views.py:68
+#: apps/projects/views.py:70
 msgid "Study group updated!"
 msgstr "¡Grupo de estudio actualizado!"
 
-#: apps/projects/views.py:106
+#: apps/projects/views.py:108
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:113
+#: apps/projects/views.py:115
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
-#: apps/projects/views.py:133
+#: apps/projects/views.py:135
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:137
+#: apps/projects/views.py:139
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:157
+#: apps/projects/views.py:163
+#, fuzzy
+msgid "Link updated."
+msgstr " sea actualizado."
+
+#: apps/projects/views.py:184
 msgid "The link was deleted"
 msgstr "El enlace fue añadido"
 
-#: apps/projects/views.py:177
+#: apps/projects/views.py:204
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:181
+#: apps/projects/views.py:208
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:194
+#: apps/projects/views.py:221
 msgid "Invalid request"
 msgstr "Solicitud invalida"
 
-#: apps/projects/views.py:212
+#: apps/projects/views.py:239
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:235
+#: apps/projects/views.py:262
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:242
+#: apps/projects/views.py:269
 msgid "Sign-Up"
 msgstr "Suscripción"
 
-#: apps/projects/views.py:248
+#: apps/projects/views.py:275
 msgid "The study group has been created."
 msgstr "El grupo de estudio ha sido creado."
 
-#: apps/projects/views.py:254
+#: apps/projects/views.py:281
 msgid "There was a problem creating the study group."
 msgstr "Ocurrió un problema al crear el grupo de estudio."
 
-#: apps/projects/views.py:283
+#: apps/projects/views.py:310
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
@@ -314,7 +355,7 @@ msgstr "Ya está siguiendo a este grupo de estudio"
 msgid "You are already following this user"
 msgstr "Ya está siguiendo a este usuario"
 
-#: apps/statuses/views.py:37 apps/statuses/views.py:64
+#: apps/statuses/views.py:30 apps/statuses/views.py:57
 msgid "There was an error posting your status update"
 msgstr "Ocurrió un error al publicar la actualización a su estado"
 
@@ -326,18 +367,6 @@ msgstr "Usted ya entro a su cuenta."
 msgid "Please choose another username."
 msgstr "Por favor elija otro nombre de usuario."
 
-#: apps/users/forms.py:37
-msgid ""
-"Password must be at least 8 characters long and contain both numbers and "
-"letters."
-msgstr ""
-"La contraseña debe tener al menos 8 caracteres y contener tanto números como "
-"letras."
-
-#: apps/users/forms.py:42
-msgid "That password is too common. Please choose another."
-msgstr "Esa contraseña es muy común. Por favor elija otra."
-
 #: apps/users/forms.py:66
 msgid "enter any OpenID URL"
 msgstr "escriba una URL de OpenID"
@@ -345,10 +374,6 @@ msgstr "escriba una URL de OpenID"
 #: apps/users/forms.py:70 templates/users/signin.html:14
 msgid "You can login directly with your credentials from the old P2PU website."
 msgstr "Puede entrar directamente con sus credenciales de p2pu.org."
-
-#: apps/users/forms.py:140
-msgid "Passwords do not match."
-msgstr "Las contraseñas no coinciden."
 
 #: apps/users/models.py:167
 msgid "Complete Registration"
@@ -369,11 +394,6 @@ msgid ""
 msgstr ""
 "¡Gracias! Hemos enviado un correo a {0} con instrucciones para que termine "
 "de crear su cuenta."
-
-#: apps/users/views.py:210 apps/users/views.py:348
-msgid "There are errors in this form. Please correct them and resubmit."
-msgstr ""
-"Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
 
 #: apps/users/views.py:261
 msgid "Hmm, that doesn't look like the correct confirmation code"
@@ -416,6 +436,11 @@ msgid "There was an error saving your link."
 msgstr "Ocurrió un error al guardar su enlace."
 
 #: apps/users/views.py:457
+#, fuzzy
+msgid "Profile link updated"
+msgstr "Perfil actualizado"
+
+#: apps/users/views.py:478
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
@@ -690,7 +715,9 @@ msgstr "Comentario"
 #: templates/dashboard/dashboard.html:80
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/preferences/settings_delete.html:14
+#: templates/preferences/settings_email.html:16
 #: templates/preferences/settings_notifications.html:43
+#: templates/preferences/settings_password.html:25
 #: templates/projects/contact_users.html:23 templates/projects/project.html:52
 #: templates/projects/project_edit_description.html:14
 #: templates/projects/project_edit_image.html:24
@@ -768,13 +795,18 @@ msgid "Create"
 msgstr "Crear"
 
 #: templates/content/edit_page.html:23 templates/content/page.html:22
-#: templates/projects/project_edit.html:15 templates/projects/sidebar.html:25
+#: templates/projects/project_edit.html:15
+#: templates/projects/project_edit_links.html:46
+#: templates/projects/sidebar.html:25
+#: templates/users/profile_edit_links.html:45
 msgid "Edit"
 msgstr "Editar"
 
 #: templates/content/edit_page.html:40
 #: templates/dashboard/setup_profile.html:9
+#: templates/preferences/settings_email.html:17
 #: templates/preferences/settings_notifications.html:44
+#: templates/preferences/settings_password.html:26
 #: templates/projects/project_edit_description.html:15
 #: templates/projects/project_edit_status.html:53
 #: templates/projects/project_edit_summary.html:36
@@ -1288,6 +1320,16 @@ msgid "Notifications"
 msgstr "Notificaciones"
 
 #: templates/preferences/settings.html:26
+#, fuzzy
+msgid "Update Email"
+msgstr "Actualizar"
+
+#: templates/preferences/settings.html:27
+#, fuzzy
+msgid "Update Password"
+msgstr "Nueva Contraseña"
+
+#: templates/preferences/settings.html:28
 msgid "Delete Account"
 msgstr "Eliminar Cuenta"
 
@@ -1307,11 +1349,23 @@ msgstr ""
 "estudio en P2pU, también serán eliminados."
 
 #: templates/preferences/settings_delete.html:15
-#: templates/projects/project_edit_links.html:46
+#: templates/projects/project_edit_links.html:50
 #: templates/projects/project_edit_participants.html:38
-#: templates/users/profile_edit_links.html:45
+#: templates/users/profile_edit_links.html:49
 msgid "Delete"
 msgstr "Borrar"
+
+#: templates/preferences/settings_email.html:4
+#, fuzzy
+msgid "Email address"
+msgstr "Dirección de Correo"
+
+#: templates/preferences/settings_email.html:7
+#: templates/preferences/settings_email.html:11
+#: templates/users/forgot_password.html:13
+#: templates/users/profile_form_base.html:27
+msgid "Email Address"
+msgstr "Dirección de Correo"
 
 #: templates/preferences/settings_notifications.html:4
 msgid "Notification Settings"
@@ -1351,6 +1405,26 @@ msgstr "El contenido (e.g. tareas, comentarios, ...) de "
 #: templates/preferences/settings_notifications.html:38
 msgid " is updated."
 msgstr " sea actualizado."
+
+#: templates/preferences/settings_password.html:4
+#: templates/preferences/settings_password.html:7
+#: templates/preferences/settings_password.html:11
+#: templates/users/register.html:18 templates/users/signin.html:21
+msgid "Password"
+msgstr "Contraseña"
+
+#: templates/preferences/settings_password.html:16
+#: templates/users/register.html:22
+msgid "Confirm password"
+msgstr "Confirme la contraseña"
+
+#: templates/preferences/settings_password.html:21
+#: templates/users/register.html:27
+msgid ""
+"Passwords must be at least 8 characters and contain numbers and letters."
+msgstr ""
+"Las contraseñas deben tener al menos 8 caracteres y contener tanto números "
+"como letras."
 
 #: templates/projects/_project_card.html:23 templates/projects/sidebar.html:48
 #: templates/users/_user_card.html:20
@@ -1491,6 +1565,7 @@ msgstr "Estado y Fechas"
 
 #: templates/projects/project_edit.html:40
 #: templates/projects/project_edit_links.html:7
+#: templates/projects/project_edit_links_edit.html:7
 msgid "Links &amp; Content"
 msgstr "Enlaces y Contenido"
 
@@ -1533,15 +1608,19 @@ msgstr ""
 
 #: templates/projects/project_edit_links.html:13
 #: templates/projects/project_edit_links.html:31
+#: templates/projects/project_edit_links_edit.html:13
 #: templates/projects/project_edit_participants.html:27
 #: templates/projects/project_edit_summary.html:10
 #: templates/users/profile_edit_links.html:13
 #: templates/users/profile_edit_links.html:30
+#: templates/users/profile_edit_links_edit.html:13
 msgid "Name"
 msgstr "Nombre"
 
 #: templates/projects/project_edit_links.html:18
+#: templates/projects/project_edit_links_edit.html:18
 #: templates/users/profile_edit_links.html:18
+#: templates/users/profile_edit_links_edit.html:18
 msgid "Url"
 msgstr "Url"
 
@@ -1571,6 +1650,23 @@ msgstr "Acciones"
 #: templates/users/profile_edit_links.html:41
 msgid "yes"
 msgstr "si"
+
+#: templates/projects/project_edit_links_edit.html:8
+#, fuzzy
+msgid ""
+"Edit links to websites associated with this study group such as a blog, "
+"homepage, twitter profile, github repository etc. These links will appear on "
+"the study group page."
+msgstr ""
+"Añadir enlaces a sitios asociados con este grupo de estudio tales como un "
+"blog, página personal, perfil de twitter, repositorio github, etc.  Estos "
+"enlaces aparecerán en la página del grupo de estudio."
+
+#: templates/projects/project_edit_links_edit.html:24
+#: templates/users/forgot_password_confirm.html:26
+#: templates/users/profile_edit_links_edit.html:23
+msgid "Update"
+msgstr "Actualizar"
 
 #: templates/projects/project_edit_participants.html:8
 msgid "View, add and remove participants of your study group."
@@ -1728,11 +1824,11 @@ msgstr "Nueva Tarea"
 msgid "External Links"
 msgstr "Enlaces Externos"
 
-#: templates/projects/sidebar.html:159
+#: templates/projects/sidebar.html:166
 msgid "No external links have been added."
 msgstr "Ningún enlace externo ha sido añadido."
 
-#: templates/projects/sidebar.html:164
+#: templates/projects/sidebar.html:171
 msgid "Edit Links"
 msgstr "Editar Enlaces"
 
@@ -1861,11 +1957,6 @@ msgstr "¿Olvidó su Contraseña?"
 msgid "Forgot your password?"
 msgstr "¿Olvidó su contraseña?"
 
-#: templates/users/forgot_password.html:13
-#: templates/users/profile_form_base.html:27
-msgid "Email Address"
-msgstr "Dirección de Correo"
-
 #: templates/users/forgot_password.html:22 templates/users/login_openid.html:5
 #: templates/users/signin.html:5 templates/users/signin.html.py:10
 #: templates/users/signin.html:33
@@ -1897,10 +1988,6 @@ msgstr "Nueva Contraseña"
 #: templates/users/forgot_password_confirm.html:21
 msgid "Confirm Password"
 msgstr "Confirmar Contraseña"
-
-#: templates/users/forgot_password_confirm.html:26
-msgid "Update"
-msgstr "Actualizar"
 
 #: templates/users/forgot_password_confirm.html:31
 msgid "Hmm, that does not appear to be a correct link."
@@ -1954,6 +2041,7 @@ msgstr "Imagen del Perfil"
 
 #: templates/users/profile_edit.html:31
 #: templates/users/profile_edit_links.html:8
+#: templates/users/profile_edit_links_edit.html:8
 msgid "Links"
 msgstr "Enlaces"
 
@@ -1974,6 +2062,15 @@ msgstr ""
 #: templates/users/profile_edit_links.html:9
 msgid ""
 "Add links to your blog, homepage, twitter profile, github repository etc. "
+"These links will appear on your profile."
+msgstr ""
+"Añada enlaces a su blog, página personal, perfil de twitter, repositorio en "
+"github etc.  Estos enlaces aparecerán en su perfil."
+
+#: templates/users/profile_edit_links_edit.html:9
+#, fuzzy
+msgid ""
+"Edit links to your blog, homepage, twitter profile, github repository etc. "
 "These links will appear on your profile."
 msgstr ""
 "Añada enlaces a su blog, página personal, perfil de twitter, repositorio en "
@@ -2050,21 +2147,6 @@ msgstr "o crearla usando"
 msgid "OpenID"
 msgstr "OpenID"
 
-#: templates/users/register.html:18 templates/users/signin.html:21
-msgid "Password"
-msgstr "Contraseña"
-
-#: templates/users/register.html:22
-msgid "Confirm password"
-msgstr "Confirme la contraseña"
-
-#: templates/users/register.html:27
-msgid ""
-"Passwords must be at least 8 characters and contain numbers and letters."
-msgstr ""
-"Las contraseñas deben tener al menos 8 caracteres y contener tanto números "
-"como letras."
-
 #: templates/users/signin.html:16
 msgid "Username or Email"
 msgstr "Nombre de Usuario o Correo"
@@ -2118,3 +2200,6 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid "There was a problem posting your reply."
+#~ msgstr "Ocurrió un problema al publicar su respuesta."
