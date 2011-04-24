@@ -6,7 +6,6 @@ import bleach
 from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.conf import settings
-from django.contrib import admin
 from django.db import models
 from django.db.models import Count, Q, Max
 from django.db.models.signals import pre_save, post_save, post_delete 
@@ -165,8 +164,6 @@ class Project(ModelBase):
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(Project, self).save()
-
-admin.site.register(Project)
 
 
 class ProjectMedia(ModelBase):

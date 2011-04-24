@@ -5,7 +5,6 @@ import datetime
 from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.contrib import admin
 from django.db.models.signals import pre_save, post_save
 from django.template.defaultfilters import truncatewords_html
 from django.utils.safestring import mark_safe
@@ -93,8 +92,6 @@ class Page(ModelBase):
             return False
 
 
-admin.site.register(Page)
-
 
 class PageVersion(ModelBase):
 
@@ -111,8 +108,6 @@ class PageVersion(ModelBase):
             'page_slug': self.page.slug,
             'version_id': self.id,
         })
-
-admin.site.register(PageVersion)
 
 
 class PageComment(ModelBase):
@@ -180,8 +175,6 @@ class PageComment(ModelBase):
         for username in recipients:
             if recipients[username] != self.author:
                 SendUserEmail.apply_async((recipients[username], subject, body))
-
-admin.site.register(PageComment)
 
 
 def send_content_notification(instance, is_comment):

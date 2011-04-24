@@ -2,7 +2,6 @@ import datetime
 from markdown import markdown
 import bleach
 
-from django.contrib import admin
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.timesince import timesince
@@ -53,9 +52,6 @@ class Status(ModelBase):
             SendUserEmail.apply_async((participation.user, subject, body))
         if self.author != project.created_by:
             SendUserEmail.apply_async((self.author, subject, body))
-        
-
-admin.site.register(Status)
 
 
 ###########
