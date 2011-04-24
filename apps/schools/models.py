@@ -1,7 +1,6 @@
 import logging
 import bleach
 
-from django.contrib import admin
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
@@ -42,8 +41,6 @@ class School(ModelBase):
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(School, self).save()
-
-admin.site.register(School)
 
 
 def clean_html(sender, **kwargs):
