@@ -119,7 +119,13 @@
 <div id="member_links" class="panel">
   <ul>
     {% for link in links %}
-    <li><a href="{{ link.url }}" title="{{ link.name }}">{{ link.name }}</a></li>
+    <li><a class="externalLink" href="{{ link.url }}" title="{{ link.name }}">{{ link.name }}</a>
+      {% if user == profile.user %}
+        {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up counter=forloop.counter0 %}">(UP)</a>{% endif %}
+        {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
+      {% endif %}
+    
+    </li>
     {% endfor %}
   </ul>
 </div> <!-- /#member_links -->
