@@ -2,6 +2,9 @@ from django.conf.urls.defaults import patterns, url
 
 
 urlpatterns = patterns('django.views.generic.simple',
+   url(r'^journalism/$', 'direct_to_template', {
+       'template': 'drumbeat/journalism.html',
+   }, name='drumbeat_journalism'),
    url(r'^terms-of-service/$', 'direct_to_template', {
        'template': 'drumbeat/terms-of-service.html',
    }, name='drumbeat_tos'),
