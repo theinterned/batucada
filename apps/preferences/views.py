@@ -58,7 +58,7 @@ def email(request):
     profile = request.user.get_profile()
     email = profile.user.email
     if request.method == "POST":
-        form = forms.EmailEditForm(request.POST, request.FILES,
+        form = forms.EmailEditForm(profile.username, request.POST, request.FILES,
                                      instance=profile)
         if form.is_valid():
             profile = form.save(commit=False)
@@ -66,7 +66,7 @@ def email(request):
             profile.user = request.user
             profile.save()
     else:
-        form = forms.EmailEditForm(instance=profile)
+        form = forms.EmailEditForm(profile.username, instance=profile)
 
     return render_to_response('preferences/settings_email.html', {
         'email': email,
