@@ -96,6 +96,7 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.FrameOptionsHeader',
     'jogging.middleware.LoggingMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'users.middleware.ProfileExistMiddleware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'

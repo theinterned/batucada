@@ -1,4 +1,6 @@
-from users.models import UserProfile
+from django.contrib.auth.models import User
+
+from users.models import UserProfile, create_profile
 from drumbeatmail.forms import ComposeForm
 from relationships.models import Relationship
 from projects.models import Project
@@ -15,17 +17,17 @@ class TestDrumbeatMail(test_utils.TestCase):
 
     def setUp(self):
         self.locale = 'en'
-        self.user = UserProfile(username=self.test_username,
-                                email=self.test_email)
+        django_user = User(username=self.test_username,
+                           email=self.test_email)
+        self.user = create_profile(django_user)
         self.user.set_password(self.test_password)
         self.user.save()
-        self.user.create_django_user()
 
-        self.user_two = UserProfile(username='anotheruser',
+        django_user_two = User(username='anotheruser',
                                email='test2@mozillafoundation.org')
+        self.user_two = create_profile(django_user_two)
         self.user_two.set_password('testpassword')
         self.user_two.save()
-        self.user_two.create_django_user()
 
     def test_messaging_user_following(self):
         print "From test: %s" % (self.user.user,)

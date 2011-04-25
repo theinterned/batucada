@@ -1,9 +1,10 @@
 from django.test import Client
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.models import User
 
 from l10n.urlresolvers import reverse
 from drumbeat.utils import get_partition_id
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 
 from test_utils import TestCase
 
@@ -17,11 +18,11 @@ class TestLogins(TestCase):
     def setUp(self):
         self.locale = 'en'
         self.client = Client()
-        self.user = UserProfile(username=self.test_username,
-                                email=self.test_email)
+        django_user = User(username=self.test_username,
+                           email=self.test_email)
+        self.user = create_profile(django_user)
         self.user.set_password(self.test_password)
         self.user.save()
-        self.user.create_django_user()
 
     def test_authenticated_redirects(self):
         """Test that authenticated users are redirected in specific views."""
