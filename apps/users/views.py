@@ -34,17 +34,17 @@ log = logging.getLogger(__name__)
 
 def unconfirmed_account_notice(request, user):
     log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
-    msg1 = _(('A link to activate your user account was sent by email '
-              'to your address {0}. You have to click it before you '
-              'can log in.').format(user.email))
+    msg1 = _('A link to activate your user account was sent by email '
+              'to your address %s. You have to click it before you '
+              'can log in.') % user.email
     url = request.build_absolute_uri(
         reverse('users_confirm_resend',
                 kwargs=dict(username=user.username)))
-    msg2 = _(('If you did not receive the confirmation email, make '
+    msg2 = _('If you did not receive the confirmation email, make '
               'sure your email service did not mark it as "junk '
               'mail" or "spam". If you need to, you can have us '
               '<a href="%s">resend the confirmation message</a> '
-              'to your email address mentioned above.') % url)
+              'to your email address mentioned above.') % url
     messages.error(request, msg1)
     messages.info(request, msg2, safe=True)
 

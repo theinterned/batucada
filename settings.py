@@ -273,5 +273,8 @@ RICH_ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
 # Where the default image for sending to Gravatar
 DEFAULT_PROFILE_IMAGE = 'http://new.p2pu.org/media/images/member-missing.png'
 
-# When set to True, if the request URL does not match any of the patterns in the URLconf and it doesn't end in a slash, an HTTP redirect is issued to the same URL with a slash appended.
+# When set to True, if the request URL does not match any of the patterns in the URLconf and
+# it doesn't end in a slash, an HTTP redirect is issued to the same URL with a slash appended.
 APPEND_SLASH = True
+
+

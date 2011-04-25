@@ -84,7 +84,7 @@ class Project(ModelBase):
     object_type = 'http://drumbeat.org/activity/schema/1.0/project'
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
-    name = models.CharField(max_length=70)
+    name = models.CharField(max_length=100)
     short_description = models.CharField(max_length=125)
     long_description = models.TextField(validators=[MaxLengthValidator(700)])
     
