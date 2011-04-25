@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-24 18:44-0400\n"
+"POT-Creation-Date: 2011-04-25 03:33-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,15 +173,15 @@ msgstr ""
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/dashboard/views.py:101 apps/users/views.py:294
+#: apps/dashboard/views.py:101 apps/users/views.py:297
 msgid "(organizing)"
 msgstr "(organizando)"
 
-#: apps/dashboard/views.py:103 apps/users/views.py:296
+#: apps/dashboard/views.py:103 apps/users/views.py:299
 msgid "(participating)"
 msgstr "(participando)"
 
-#: apps/dashboard/views.py:105 apps/users/views.py:298
+#: apps/dashboard/views.py:105 apps/users/views.py:301
 msgid "(following)"
 msgstr "(siguiendo)"
 
@@ -202,7 +202,11 @@ msgstr "Mensaje enviado con éxito."
 msgid "There was an error sending your message. Please try again."
 msgstr "Ocurrió un error al enviar el mensaje. Por favor intente nuevamente."
 
-#: apps/preferences/forms.py:15 apps/users/forms.py:37
+#: apps/preferences/forms.py:21
+msgid "That email address is register at p2pu.org under a different username."
+msgstr "Ese correo está registrado en p2pu.org bajo otro nombre de usuario."
+
+#: apps/preferences/forms.py:30 apps/users/forms.py:38
 msgid ""
 "Password must be at least 8 characters long and contain both numbers and "
 "letters."
@@ -210,11 +214,11 @@ msgstr ""
 "La contraseña debe tener al menos 8 caracteres y contener tanto números como "
 "letras."
 
-#: apps/preferences/forms.py:20 apps/users/forms.py:42
+#: apps/preferences/forms.py:35 apps/users/forms.py:43
 msgid "That password is too common. Please choose another."
 msgstr "Esa contraseña es muy común. Por favor elija otra."
 
-#: apps/preferences/forms.py:51 apps/users/forms.py:140
+#: apps/preferences/forms.py:66 apps/users/forms.py:142
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
@@ -226,17 +230,17 @@ msgstr "Gracias, su configuración ha sido guardada."
 msgid "Email updated"
 msgstr "Correo actualizado"
 
-#: apps/preferences/views.py:91
+#: apps/preferences/views.py:87
 msgid "Password updated"
 msgstr "Contraseña actualizada"
 
-#: apps/preferences/views.py:95 apps/users/views.py:210
-#: apps/users/views.py:348
+#: apps/preferences/views.py:91 apps/users/views.py:213
+#: apps/users/views.py:351
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
 
-#: apps/projects/forms.py:45 apps/users/forms.py:164
+#: apps/projects/forms.py:45 apps/users/forms.py:166
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
@@ -260,68 +264,68 @@ msgstr "El usuario %s ya está participando."
 msgid "study group"
 msgstr "grupo de estudio"
 
-#: apps/projects/views.py:75
+#: apps/projects/views.py:70
 msgid "Study group updated!"
 msgstr "¡Grupo de estudio actualizado!"
 
-#: apps/projects/views.py:113
+#: apps/projects/views.py:108
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:120
+#: apps/projects/views.py:115
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
-#: apps/projects/views.py:140
+#: apps/projects/views.py:135
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:144
+#: apps/projects/views.py:139
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:168
+#: apps/projects/views.py:163
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:189
+#: apps/projects/views.py:184
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:209
+#: apps/projects/views.py:204
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:213
+#: apps/projects/views.py:208
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:226
+#: apps/projects/views.py:221
 msgid "Invalid request"
 msgstr "Solicitud inválida"
 
-#: apps/projects/views.py:244
+#: apps/projects/views.py:239
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:267
+#: apps/projects/views.py:262
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:274
+#: apps/projects/views.py:269
 msgid "Sign-Up"
 msgstr "Inscripción"
 
-#: apps/projects/views.py:280
+#: apps/projects/views.py:275
 msgid "The study group has been created."
 msgstr "El grupo de estudio ha sido creado."
 
-#: apps/projects/views.py:286
+#: apps/projects/views.py:281
 msgid "There was a problem creating the study group."
 msgstr "Ocurrió un problema al crear el grupo de estudio."
 
-#: apps/projects/views.py:315
+#: apps/projects/views.py:310
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
@@ -364,19 +368,19 @@ msgstr "Usted ya entró a su cuenta."
 msgid "Please choose another username."
 msgstr "Por favor elija otro nombre de usuario."
 
-#: apps/users/forms.py:66
+#: apps/users/forms.py:67
 msgid "enter any OpenID URL"
 msgstr "escriba una URL de OpenID"
 
-#: apps/users/forms.py:70 templates/users/signin.html:14
+#: apps/users/forms.py:71 templates/users/signin.html:14
 msgid "You can login directly with your credentials from the old P2PU website."
 msgstr "Puede entrar directamente con sus credenciales de p2pu.org."
 
-#: apps/users/models.py:166
+#: apps/users/models.py:152
 msgid "Complete Registration"
 msgstr "Termine de Crear su Cuenta"
 
-#: apps/users/views.py:37
+#: apps/users/views.py:38
 #, python-format
 msgid ""
 "A link to activate your user account was sent by email to your address %s. "
@@ -385,7 +389,7 @@ msgstr ""
 "Un enlace para activar su cuenta fue enviado por correo a su dirección: %s. "
 "Para poder entrar a su cuenta por primera vez, debe que seguir ese enlace."
 
-#: apps/users/views.py:43
+#: apps/users/views.py:44
 #, python-format
 msgid ""
 "If you did not receive the confirmation email, make sure your email service "
@@ -398,15 +402,15 @@ msgstr ""
 "href=\"%s\">reenviarle el mensaje de confirmación</a> a su dirección de "
 "correo."
 
-#: apps/users/views.py:129
+#: apps/users/views.py:130
 msgid "Incorrect username, email or password."
 msgstr "Contraseña, nombre de usuario, o correo incorrectos."
 
-#: apps/users/views.py:195
+#: apps/users/views.py:198
 msgid "Congratulations! Your user account was successfully created."
 msgstr "¡Felicitaciones! Su cuenta de usuario fue creada exitosamente."
 
-#: apps/users/views.py:203 apps/users/views.py:342
+#: apps/users/views.py:206 apps/users/views.py:345
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
@@ -414,11 +418,11 @@ msgstr ""
 "¡Gracias! Hemos enviado un correo a {0} con instrucciones para que termine "
 "de crear su cuenta."
 
-#: apps/users/views.py:261
+#: apps/users/views.py:264
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, ese no parece un código de confirmación correcto"
 
-#: apps/users/views.py:282
+#: apps/users/views.py:285
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
@@ -426,11 +430,11 @@ msgstr ""
 "Se ha enviado un código de confirmación la dirección de correo asociada a su "
 "cuenta"
 
-#: apps/users/views.py:362
+#: apps/users/views.py:365
 msgid "Profile updated"
 msgstr "Perfil actualizado"
 
-#: apps/users/views.py:368
+#: apps/users/views.py:371
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
@@ -438,27 +442,27 @@ msgstr ""
 "Ocurrieron problemas al actualizar su perfil. Por favor corríja la "
 "información e intente nuevamente."
 
-#: apps/users/views.py:405
+#: apps/users/views.py:408
 msgid "Profile image updated"
 msgstr "Imagen actualizada"
 
-#: apps/users/views.py:410
+#: apps/users/views.py:413
 msgid "There was an error uploading your image."
 msgstr "Ocurrió un error al subir la imagen."
 
-#: apps/users/views.py:427
+#: apps/users/views.py:430
 msgid "Profile link added."
 msgstr "Enlace añadido."
 
-#: apps/users/views.py:436
+#: apps/users/views.py:439
 msgid "There was an error saving your link."
 msgstr "Ocurrió un error al guardar el enlace."
 
-#: apps/users/views.py:457
+#: apps/users/views.py:460
 msgid "Profile link updated"
 msgstr "Enlace actualizado"
 
-#: apps/users/views.py:478
+#: apps/users/views.py:481
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
