@@ -63,7 +63,8 @@ def email(request):
         if form.is_valid():
             profile = form.save(commit=False)
             messages.success(request, _('Email updated'))
-            profile.user = request.user
+            profile.user.email = profile.email
+            profile.user.save()
             profile.save()
     else:
         form = forms.EmailEditForm(profile.username, instance=profile)
