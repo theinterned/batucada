@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.utils.feedgenerator import rfc3339_date
+from django.http import Http404
 
 from l10n.urlresolvers import reverse
 from django_push.publisher.feeds import Feed, HubAtom1Feed
@@ -79,6 +80,8 @@ class UserActivityFeed(Feed):
 
     def get_object(self, request, username):
         self._request = request
+        if not request.user.is_authenticated():
+            raise Http404
         return get_object_or_404(UserProfile, username=username)
 
     def items(self, user):

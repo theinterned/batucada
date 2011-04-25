@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 from users.models import UserProfile
 from users import drupal
@@ -51,7 +52,10 @@ class DrupalUserBackend(CustomUserBackend):
                     user_data = drupal.get_user_data(drupal_user)
                     profile = UserProfile(**user_data)
                     profile.set_password(password)
-                    profile.save()
+                    try:
+                        profile.save()
+                    except IntegrityError:
+                        return None
                     if profile.user is None:
                         profile.create_django_user()
                     return profile.user
@@ -86,7 +90,10 @@ class DrupalOpenIDBackend(OpenIDBackend):
             if drupal_user:
                 user_data = drupal.get_user_data(drupal_user)
                 profile = UserProfile(**user_data)
-                profile.save()
+                try:
+                    profile.save()
+                except IntegrityError:
+                    return None
                 if profile.user is None:
                     profile.create_django_user()
                 self.associate_openid(profile.user, openid_response)
