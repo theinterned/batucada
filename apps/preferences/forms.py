@@ -4,12 +4,27 @@ from django.utils.translation import ugettext as _
 import re
 from users.blacklist import passwords as blacklisted_passwords
 
-class EmailEditForm(forms.ModelForm): 
+
+class EmailEditForm(forms.ModelForm):
+
+    def __init__(self, username, *args, **kwargs):
+        super(EmailEditForm, self).__init__(self, *args, **kwargs)
+        self.username = username
 
     class Meta:
         model = UserProfile
         exclude = ('confirmation_code', 'password', 'username', 
                    'created_on', 'user', 'image', 'featured')
+
+    def clean(self):
+        super(EmailEditForm, self).clean()
+        msg = _('That email address is register at p2pu.org under a different username.')
+        data = self.cleaned_data
+        if 'email' in data:
+            drupal_user = drupal.get_user(data['email'])
+            if self.username != drupal_user.name:
+                form._errors['email'] = forms.util.ErrorList([msg])
+        
 
 def check_password_complexity(password):
     message = _('Password must be at least 8 characters long and contain both numbers and letters.')

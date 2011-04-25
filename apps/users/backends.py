@@ -3,7 +3,7 @@ import logging
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 from users import drupal
 from django_openid_auth.auth import OpenIDBackend, SUCCESS
 from django_openid_auth.models import UserOpenID
@@ -23,11 +23,9 @@ class CustomUserBackend(object):
             else:
                 profile = UserProfile.objects.get(username=username)
             if profile.check_password(password):
-                if profile.user is None:
-                    profile.create_django_user()
                 return profile.user
         except UserProfile.DoesNotExist:
-            log.debug("User does not exist: %s" % (username,))
+            log.debug("Profile does not exist: %s" % (username,))
             return None
 
     def get_user(self, user_id):
@@ -45,20 +43,20 @@ class DrupalUserBackend(CustomUserBackend):
         if drupal_user:
             try:
                 profile = UserProfile.objects.get(username=drupal_user.name)
-                log.debug("Drupal user resgistered already: %s" % (username,))
+                log.debug("Drupal user already resgistered: %s" % (username,))
                 return None
             except UserProfile.DoesNotExist:
                 if drupal.check_password(drupal_user, password):
-                    user_data = drupal.get_user_data(drupal_user)
-                    profile = UserProfile(**user_data)
-                    profile.set_password(password)
+                    username, email, full_name = drupal.get_user_data(drupal_user)
                     try:
+                        django_user = User(username=username[:30], email=email)
+                        profile = create_profile(django_user, username=username)
+                        profile.full_name = full_name
+                        profile.set_password(password)
                         profile.save()
+                        return profile.user
                     except IntegrityError:
                         return None
-                    if profile.user is None:
-                        profile.create_django_user()
-                    return profile.user
         else:
             log.debug("Drupal user does not exist: %s" % (username,))
             return None
@@ -79,7 +77,6 @@ class DrupalOpenIDBackend(OpenIDBackend):
         if openid_response.status != SUCCESS:
             return None
 
-        user = None
         try:
             user_openid = UserOpenID.objects.get(
                 claimed_id__exact=openid_response.identity_url)
@@ -88,14 +85,15 @@ class DrupalOpenIDBackend(OpenIDBackend):
         except UserOpenID.DoesNotExist:
             drupal_user = drupal.get_openid_user(openid_response.identity_url)
             if drupal_user:
-                user_data = drupal.get_user_data(drupal_user)
-                profile = UserProfile(**user_data)
+                username, email, full_name = drupal.get_user_data(drupal_user)
                 try:
+                    django_user = User(username=username[:30], email=email)
+                    profile = create_profile(django_user, username=username)
+                    profile.full_name = full_name
                     profile.save()
+                    self.associate_openid(django_user, openid_response)
+                    return django_user
                 except IntegrityError:
                     return None
-                if profile.user is None:
-                    profile.create_django_user()
-                self.associate_openid(profile.user, openid_response)
-                return profile.user
+        return None
 
