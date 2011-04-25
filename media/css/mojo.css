@@ -625,7 +625,7 @@ header {}
 
 /* participate signup */
 .participate-signup {
-  margin-top: 150px;
+  margin-top: 100px;
   padding: 10px;
   background: #f6f6f6;
   border-radius: 5px;
@@ -636,8 +636,12 @@ header {}
 }
   .participate-signup label {
     display: block; 
+    margin-bottom: 4px;
   }
-
+  .participate-signup input[type="text"] {
+    width: 290px;
+    padding: 5px;
+  }
 
 
 
