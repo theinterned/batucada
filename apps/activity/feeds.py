@@ -80,8 +80,6 @@ class UserActivityFeed(Feed):
 
     def get_object(self, request, username):
         self._request = request
-        if not request.user.is_authenticated():
-            raise Http404
         return get_object_or_404(UserProfile, username=username)
 
     def items(self, user):
@@ -134,6 +132,8 @@ class DashboardFeed(UserActivityFeed):
 
     def get_object(self, request):
         self._request = request
+        if not request.user.is_authenticated():
+            raise Http404
         return request.user.get_profile()
 
     def items(self, user):
