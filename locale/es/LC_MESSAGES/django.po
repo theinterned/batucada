@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-24 14:33-0400\n"
+"POT-Creation-Date: 2011-04-24 18:44-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/activity/feeds.py:74
+#: apps/activity/feeds.py:75
 #, python-format
 msgid "Activity feed for %s"
 msgstr "Bitácora de actividades para %s"
@@ -260,68 +260,68 @@ msgstr "El usuario %s ya está participando."
 msgid "study group"
 msgstr "grupo de estudio"
 
-#: apps/projects/views.py:70
+#: apps/projects/views.py:75
 msgid "Study group updated!"
 msgstr "¡Grupo de estudio actualizado!"
 
-#: apps/projects/views.py:108
+#: apps/projects/views.py:113
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:115
+#: apps/projects/views.py:120
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
-#: apps/projects/views.py:135
+#: apps/projects/views.py:140
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:139
+#: apps/projects/views.py:144
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:163
+#: apps/projects/views.py:168
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:184
+#: apps/projects/views.py:189
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:204
+#: apps/projects/views.py:209
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:208
+#: apps/projects/views.py:213
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:221
+#: apps/projects/views.py:226
 msgid "Invalid request"
 msgstr "Solicitud inválida"
 
-#: apps/projects/views.py:239
+#: apps/projects/views.py:244
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:262
+#: apps/projects/views.py:267
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:269
+#: apps/projects/views.py:274
 msgid "Sign-Up"
 msgstr "Inscripción"
 
-#: apps/projects/views.py:275
+#: apps/projects/views.py:280
 msgid "The study group has been created."
 msgstr "El grupo de estudio ha sido creado."
 
-#: apps/projects/views.py:281
+#: apps/projects/views.py:286
 msgid "There was a problem creating the study group."
 msgstr "Ocurrió un problema al crear el grupo de estudio."
 
-#: apps/projects/views.py:310
+#: apps/projects/views.py:315
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
@@ -375,6 +375,28 @@ msgstr "Puede entrar directamente con sus credenciales de p2pu.org."
 #: apps/users/models.py:166
 msgid "Complete Registration"
 msgstr "Termine de Crear su Cuenta"
+
+#: apps/users/views.py:37
+#, python-format
+msgid ""
+"A link to activate your user account was sent by email to your address %s. "
+"You have to click it before you can log in."
+msgstr ""
+"Un enlace para activar su cuenta fue enviado por correo a su dirección: %s. "
+"Para poder entrar a su cuenta por primera vez, debe que seguir ese enlace."
+
+#: apps/users/views.py:43
+#, python-format
+msgid ""
+"If you did not receive the confirmation email, make sure your email service "
+"did not mark it as \"junk mail\" or \"spam\". If you need to, you can have "
+"us <a href=\"%s\">resend the confirmation message</a> to your email address "
+"mentioned above."
+msgstr ""
+"Si no recibió el correo de confirmación, verifique que su servicio de correo "
+"no lo marcó como \"correo basura\" o \"spam\". Si hace falta, podemos <a "
+"href=\"%s\">reenviarle el mensaje de confirmación</a> a su dirección de "
+"correo."
 
 #: apps/users/views.py:129
 msgid "Incorrect username, email or password."

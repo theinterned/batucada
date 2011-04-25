@@ -47,6 +47,16 @@ def get_user_data(drupal_user):
    }
 
 
+def migrate(username):
+    drupal_user = get_user(username)
+    user_data = get_user_data(drupal_user)
+    from users.models import UserProfile
+    profile = UserProfile(**user_data)
+    profile.password = drupal_user.password
+    profile.save()
+    profile.create_django_user()
+
+
 class Users(models.Model):
 
     uid = models.IntegerField(primary_key=True)
