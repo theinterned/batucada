@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.utils.feedgenerator import rfc3339_date
+from django.http import Http404
 
 from l10n.urlresolvers import reverse
 from django_push.publisher.feeds import Feed, HubAtom1Feed
@@ -131,6 +132,8 @@ class DashboardFeed(UserActivityFeed):
 
     def get_object(self, request):
         self._request = request
+        if not request.user.is_authenticated():
+            raise Http404
         return request.user.get_profile()
 
     def items(self, user):

@@ -40,15 +40,20 @@ def show(request, slug):
     user = request.user
     can_post_wall = user.is_superuser
     form = None
-    if user.is_authenticated(): 
-        profile = request.user.get_profile()
-        can_post_wall = can_post_wall or (profile == project.created_by)
-        if can_post_wall:
-            form = statuses_forms.ImportantStatusForm() 
-        can_post_wall = can_post_wall or project.participants().filter(
-            user=profile).exists()
-        if not form and can_post_wall:
-            form = statuses_forms.StatusForm()
+    if user.is_authenticated():
+        try:
+            profile = request.user.get_profile()
+            can_post_wall = can_post_wall or (profile == project.created_by)
+            if can_post_wall:
+                form = statuses_forms.ImportantStatusForm() 
+            can_post_wall = can_post_wall or project.participants().filter(
+                user=profile).exists()
+            if not form and can_post_wall:
+                form = statuses_forms.StatusForm()
+        except UserProfile.DoesNotExist:
+            # Users that created new accounts with OpenID are logued in but need
+            # to create their profile.
+            can_post_wall = False
     context = {
         'project': project,
         'activities': project.activities()[0:10],
