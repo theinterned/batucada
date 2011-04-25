@@ -8,6 +8,7 @@ from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save, post_save
 from django.template.defaultfilters import truncatewords_html
 from django.utils.safestring import mark_safe
+from django.utils.html import escape
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -76,7 +77,7 @@ class Page(ModelBase):
 
     def representation(self):
         return mark_safe(ugettext(' <a href="%(page_url)s">%(page_title)s</a>.') % dict(page_url=self.get_absolute_url(),
-            page_title=self.title))
+            page_title=escape(self.title)))
 
     def can_edit(self, user):
         if not self.editable:
@@ -143,7 +144,7 @@ class PageComment(ModelBase):
 
     def representation(self):
         return mark_safe(ugettext(' at <a href="%(comment_url)s">%(page_title)s</a>.') % dict(
-            comment_url=self.get_absolute_url(), page_title=self.page.title))
+            comment_url=self.get_absolute_url(), page_title=escape(self.page.title)))
 
     @property
     def project(self):
