@@ -7,13 +7,15 @@
 {% block form %}
 <fieldset id="submission_edit" class="submission edit sharing tabpane">
   <h1>{{ _('Share your ideas!') }}</h1>
-  
-  <p class="statusnet"><a href="http://identi.ca/notice/new?status_textarea={{ "#mojo"|urlencode}}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/statusnet.png" class="" alt="share on statusnet" /></a></p>
-  
-  <p><a href="http://twitter.com/home?status={{ "#mojo"|urlencode }}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/twitter.png" class="" alt="share on statusnet" /></a></p>
+  <span class="hint block">Brainstorming is more fun with a crowd. We encourage you to share your ideas with friends—they can leave comments, suggest refinements to your idea, or spread the word. Try to drum up support and feedback for you idea—for open source projects to have legs, you need inspired collaborators!</span>
+  <p class="sharing icons">
 
-  <p class="facebook"><a href="http://www.facebook.com/sharer.php?u={{ url|urlencode }}&t={{ submission.title|urlencode }}"><img src="{{ MEDIA_URL}}images/facebook.png" class="" alt="share on statusnet" /></a></p>
+    <a href="http://identi.ca/notice/new?status_textarea={{ "#mojo"|urlencode}}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/statusnet.png" class="" alt="share on statusnet" /></a>
+  
+    <a href="http://twitter.com/home?status={{ "#mojo"|urlencode }}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/twitter.png" class="" alt="share on statusnet" /></a>
 
+    <a href="http://www.facebook.com/sharer.php?u={{ url|urlencode }}&t={{ submission.title|urlencode }}"><img src="{{ MEDIA_URL}}images/facebook.png" class="" alt="share on statusnet" /></a>
+  </p>
 </fieldset>
 {% endblock %}
 

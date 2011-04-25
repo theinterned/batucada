@@ -10,7 +10,8 @@
     {% csrf_token %}
     <div id="wmd-editor" class="wmd-panel description field{% if form.description.errors %} error{% endif %}">
       <label for="id_name">{{ _('Description') }}</label>
-      <span class="hint block"></span>
+      <span class="hint block">Use this space to flesh out your idea. Create a napkin sketch, record & embed a video, or describe your idea in detail—however you choose to best address the challenge. Be bold and don't hold back. (Note: this section uses <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> syntax. Use the editor icons to help you write. You can edit your submission until the challenge period ends, so don't worry if you make a mistake, or want to add extra details later.)
+</span>
       {{ form.description }}
       {{ form.description.errors }}
     </div>

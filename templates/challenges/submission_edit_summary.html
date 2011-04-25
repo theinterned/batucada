@@ -10,28 +10,28 @@
     {% csrf_token %}
     <div class="field{% if form.title.errors %} error{% endif %}">
       <label for="id_title">{{ _('Submission Title') }}</label>
-      <span class="hint block"></span>
+      <span class="hint block">{{ _("This is the title of your submission. We'll use it to refer to your idea. Be descriptive!") }}</span>
       {{ form.title }}
       {{ form.title.errors }}
     </div>
 
     <div class="field{% if form.summary.errors %} error{% endif %}">
       <label for="id_summary">{{ _('Summary') }}</label>
-      <span class="hint block"></span>
+      <span class="hint block">{{ _("What's the 60 second version? Use this space to summarize your idea, explain the benefits, and put it in context.") }}</span>
       {{ form.summary }}
       {{ form.summary.errors }}
     </div>
 
     <div class="field{% if form.keywords.errors %} error{% endif %}">
       <label for="id_keywords">{{ _('Tags') }}</label>
-      <span class="hint block"></span>
+      <span class="hint block">{{ _('Give us a comma-separated list of terms to describe your idea (for example: "video, html5, transcripts, editorial")') }}</span>
       {{ form.keywords }}
       {{ form.keywords.errors }}
     </div>
 
     <div class="field{% if form.bio.errors %} error{% endif %}">
       <label for="id_bio">{{ _('Bio') }}</label>
-      <span class="hint block"></span>
+      <span class="hint block">{{ _("Tell us a bit about yourself or your team. Who are you collaborating with? What are your interests?") }}</span>
       {{ form.bio }}
       {{ form.bio.errors }}
     </div>
