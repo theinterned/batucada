@@ -623,8 +623,20 @@ header {}
 
     
 
-
-
+/* participate signup */
+.participate-signup {
+  margin-top: 150px;
+  padding: 10px;
+  background: #f6f6f6;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  border: solid 1px #e2e2e2;
+  text-shadow: 1px 1px 0px #ffffff;
+  color: #5e5e5e;
+}
+  .participate-signup label {
+    display: block; 
+  }
 
 
 
