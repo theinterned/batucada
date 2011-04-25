@@ -59,9 +59,10 @@ class Activity(ModelBase):
     def textual_representation(self):
         target = self.target_user or self.target_project or self.project
         if target and self.verb == schema.verbs['follow']:
+            name = target.display_name if self.target_user else target.name
             return _('%(actor)s %(verb)s %(target)s') % dict(
                 actor=self.actor.display_name, verb=schema.past_tense['follow'],
-                target=target.name)
+                target=name)
         if self.status:
             return self.status.status
         elif self.remote_object:

@@ -66,7 +66,7 @@
 		{% else %}
 		<img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19">
 		{% endif %}
-		<span id="user-name">{{ user.get_profile.username }}</span>
+		<span id="user-name">{{ user.get_profile.username|slice:":15" }}</span>
 	      </a>
 	      <ul id="user-actions">
 		<li><a href="{% locale_url dashboard_index %}">{{ _('Your Dashboard') }}</a></li>
