@@ -4,11 +4,13 @@ from django.utils.translation import ugettext as _
 import re
 from users.blacklist import passwords as blacklisted_passwords
 
+from users import drupal
+
 
 class EmailEditForm(forms.ModelForm):
 
     def __init__(self, username, *args, **kwargs):
-        super(EmailEditForm, self).__init__(self, *args, **kwargs)
+        super(EmailEditForm, self).__init__(*args, **kwargs)
         self.username = username
 
     class Meta:
@@ -22,8 +24,8 @@ class EmailEditForm(forms.ModelForm):
         data = self.cleaned_data
         if 'email' in data:
             drupal_user = drupal.get_user(data['email'])
-            if self.username != drupal_user.name:
-                form._errors['email'] = forms.util.ErrorList([msg])
+            if drupal_user and self.username != drupal_user.name:
+                self._errors['email'] = forms.util.ErrorList([msg])
         return data
 
 def check_password_complexity(password):
