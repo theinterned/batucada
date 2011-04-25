@@ -36,6 +36,9 @@ log = logging.getLogger(__name__)
 @login_required
 def create_challenge(request, project_id):
     project = get_object_or_404(Project, id=project_id)
+    if project.slug != 'mojo':
+        return HttpResponseForbidden()
+
     user = request.user.get_profile()
 
     if request.method == 'POST':

@@ -8,11 +8,8 @@
 <section class="modal nav">
   <article>
     <h1>
-      {% if submission %}
-        {{ _('Edit Submission') }}
-      {% else %}
-        {{ _('Create Submission') }}
-      {% endif %}
+      {{ _('Challenge Submission') }}
+      <a href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}" class="pester back_link">({{ _('View Submission') }})</a>
     </h1>
 
     <nav class="tabs" id="project-edit-nav">
