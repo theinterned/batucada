@@ -38,7 +38,7 @@ def splash_page_activities():
             AND u.image IS NOT NULL
             AND u.image != ''
             AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
-        GROUP BY a.actor_id
+        GROUP BY a.id, a.actor_id, a.created_on
         ORDER BY a.created_on DESC LIMIT 10;
     """)
     return Activity.objects.filter(
