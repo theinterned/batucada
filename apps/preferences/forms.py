@@ -24,7 +24,7 @@ class EmailEditForm(forms.ModelForm):
             drupal_user = drupal.get_user(data['email'])
             if self.username != drupal_user.name:
                 form._errors['email'] = forms.util.ErrorList([msg])
-        
+        return data
 
 def check_password_complexity(password):
     message = _('Password must be at least 8 characters long and contain both numbers and letters.')
