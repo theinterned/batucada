@@ -42,7 +42,7 @@ class ChallengeManager(caching.base.CachingManager):
             start_date__lte=datetime.now()).filter(
             end_date__gte=datetime.now())
         if project_id:
-            q = q.filter(id=project_id)
+            q = q.filter(project__id=project_id)
         return q
 
 
