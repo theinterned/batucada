@@ -40,12 +40,12 @@ class Status(ModelBase):
         subject = render_to_string("statuses/emails/wall_updated_subject.txt", {
             'status': self,
             'project': project,
-        })
+        }).strip()
         body = render_to_string("statuses/emails/wall_updated.txt", {
             'status': self,
             'project': project,
             'domain': Site.objects.get_current().domain,
-        })
+        }).strip()
         for participation in project.participants():
             if (not self.important and participation.no_wall_updates) or self.author == participation.user:
                 continue

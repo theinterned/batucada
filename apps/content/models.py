@@ -160,13 +160,13 @@ class PageComment(ModelBase):
             'comment': self,
             'is_answer': is_answer,
             'project': project,
-        })
+        }).strip()
         body = render_to_string("content/emails/sign_up_updated.txt", {
             'comment': self,
             'is_answer': is_answer,
             'project': project,
             'domain': Site.objects.get_current().domain,
-        })
+        }).strip()
         recipients = {project.created_by.username: project.created_by}
         if self.reply_to:
             comment = self
@@ -187,13 +187,13 @@ def send_content_notification(instance, is_comment):
         'instance': instance,
         'is_comment': is_comment,
         'project': project,
-    })
+    }).strip()
     body = render_to_string("content/emails/content_update.txt", {
         'instance': instance,
         'is_comment': is_comment,
         'project': project,
         'domain': Site.objects.get_current().domain,
-    })
+    }).strip()
     for participation in project.participants():
         if participation.no_updates or instance.author == participation.user:
             continue
