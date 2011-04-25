@@ -19,7 +19,9 @@
       <div id="project-actions">
         <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit Project') }}</a>
         <a class="button" href="{% locale_url projects_contact_followers slug=project.slug %}">{{ _('Message Followers') }}</a>
+        {% if project.slug == 'mojo' %}
         <a class="button" href="{% locale_url challenges_create project_id=project.pk %}">{{ _('Create Challenge') }}</a>
+        {% endif %}
       </div>
     {% endif %}
 
