@@ -5,8 +5,6 @@ Lernanta
 Lernanta is the new platform for P2PU. We are building on the codebase from
 Batucada, a rewrite of drumbeat.org by Mozilla. 
 
-.. _Django: http://www.djangoproject.com/
-
 
 Get Involved
 ------------
@@ -24,6 +22,11 @@ Interested in getting involved in Lernanta code development? Check out the devel
 
 Setting up a local development environment
 ------------
+
+You will need to set up `git and your SSH keys`_ 
+
+.. _git: http://help.github.com/set-up-git-redirect
+     
 
 You need a few libraries and can grab them with this command::
 
@@ -66,13 +69,13 @@ To be extra sure you're working from a clean slate, you might find it helps to d
 
     ./rmpyc
 
+If the mysql database doesn't exist yet, create it. You will use the database name, user, and password in the next file (settings_local.py) ::
+
+   mysqladmin -u <user> -p create <database name>
+
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
    cp settings_local.dist.py settings_local.py
-
-If the mysql database doesn't exist yet, create it. ::
-
-   mysqladmin -u <user> -p create <database name>
  
 Next, sync the database and run migrations. ::
 
@@ -94,5 +97,6 @@ After updating a database model you will have to make a migration for the change
 
    python manage.py schemamigration <appname> --auto
    python manage.py migrate <appname>
-
+ 
+    
 Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki
