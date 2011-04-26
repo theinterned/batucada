@@ -8,6 +8,7 @@ from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save, post_save
 from django.template.defaultfilters import truncatewords_html
 from django.utils.safestring import mark_safe
+from django.utils.html import escape
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
@@ -76,7 +77,7 @@ class Page(ModelBase):
 
     def representation(self):
         return mark_safe(ugettext(' <a href="%(page_url)s">%(page_title)s</a>.') % dict(page_url=self.get_absolute_url(),
-            page_title=self.title))
+            page_title=escape(self.title)))
 
     def can_edit(self, user):
         if not self.editable:
@@ -143,7 +144,7 @@ class PageComment(ModelBase):
 
     def representation(self):
         return mark_safe(ugettext(' at <a href="%(comment_url)s">%(page_title)s</a>.') % dict(
-            comment_url=self.get_absolute_url(), page_title=self.page.title))
+            comment_url=self.get_absolute_url(), page_title=escape(self.page.title)))
 
     @property
     def project(self):
@@ -159,13 +160,13 @@ class PageComment(ModelBase):
             'comment': self,
             'is_answer': is_answer,
             'project': project,
-        })
+        }).strip()
         body = render_to_string("content/emails/sign_up_updated.txt", {
             'comment': self,
             'is_answer': is_answer,
             'project': project,
             'domain': Site.objects.get_current().domain,
-        })
+        }).strip()
         recipients = {project.created_by.username: project.created_by}
         if self.reply_to:
             comment = self
@@ -186,13 +187,13 @@ def send_content_notification(instance, is_comment):
         'instance': instance,
         'is_comment': is_comment,
         'project': project,
-    })
+    }).strip()
     body = render_to_string("content/emails/content_update.txt", {
         'instance': instance,
         'is_comment': is_comment,
         'project': project,
         'domain': Site.objects.get_current().domain,
-    })
+    }).strip()
     for participation in project.participants():
         if participation.no_updates or instance.author == participation.user:
             continue

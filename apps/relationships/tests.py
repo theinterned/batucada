@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from django.contrib.auth.models import User
+
 from test_utils import TestCase
 
 from activity.models import Activity
 from activity.schema import verbs
 from relationships.models import Relationship
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 from projects.models import Project
 
 
@@ -19,10 +21,10 @@ class RelationshipsTests(TestCase):
     def setUp(self):
         """Create data for testing."""
         for user in self.test_users:
-            user = UserProfile(**user)
+            django_user = User(**user)
+            user = create_profile(django_user)
             user.set_password('testpass')
             user.save()
-            user.create_django_user()
         (self.user_one, self.user_two) = UserProfile.objects.all()
 
     def test_unidirectional_user_relationship(self):

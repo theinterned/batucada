@@ -14,13 +14,14 @@ from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
 from django.forms import ValidationError
+from django.contrib.auth.models import User
 
 from django_openid_auth import views as openid_views
 from commonware.decorators import xframe_sameorigin
 
 from l10n.urlresolvers import reverse
 from users import forms
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from users import drupal
@@ -155,14 +156,16 @@ def login_openid_complete(request):
     r = openid_views.login_complete(
         request, render_failure=render_openid_login_failure)
     if isinstance(r, http.HttpResponseRedirect):
-        user = request.user.get_profile()
-        if user.confirmation_code:
-            logout(request)
-            unconfirmed_account_notice(request, user)
-            return render_to_response('users/login_openid.html', {
-                'form': forms.OpenIDForm(),
-            }, context_instance=RequestContext(request))
-
+        try:
+            user = request.user.get_profile()
+            if user.confirmation_code:
+                logout(request)
+                unconfirmed_account_notice(request, user)
+                return render_to_response('users/login_openid.html', {
+                    'form': forms.OpenIDForm(),
+                }, context_instance=RequestContext(request))
+        except UserProfile.DoesNotExist:
+            pass
         redirect_url = _get_redirect_url(request)
         if redirect_url:
             return http.HttpResponseRedirect(redirect_url)
@@ -184,11 +187,11 @@ def register(request):
         form = forms.RegisterForm(data=request.POST)
 
         if form.is_valid():
-            user = form.save(commit=False)
+            django_user = form.save(commit=False)
+            user = create_profile(django_user)
             user.set_password(form.cleaned_data['password'])
             user.generate_confirmation_code()
             user.save()
-            user.create_django_user()
 
             log.info(u"Registered new account for user (%s)", user)
 

@@ -292,10 +292,10 @@ header {}
       text-decoration: none;
     }
     #logo {
-      background-position: 0 -39px;
+      background-position: 0 -38px;
       background-image: url("/media/images/logo.png");
       height: 120px;
-      width: 180px;
+      width: 150px;
       margin-right: 20px;
       position: absolute;
       z-index: 2;
@@ -304,7 +304,7 @@ header {}
     #beta-tag {
         position: absolute;
         margin-top: 90px;
-        margin-left: 109px; 
+        margin-left: 90px; 
         font-size: 21px; 
         color: #f08c00; 
         z-index: 5;
@@ -348,9 +348,9 @@ header {}
       font-size: 17px;
       position: absolute;
       margin-top: 48px;
-      padding-left: 180px;
+      padding-left: 150px;
       height: 42px;
-      width: 820px;
+      width: 850px;
       background: #fff;
       z-index: 1;
       border-radius: 10px;

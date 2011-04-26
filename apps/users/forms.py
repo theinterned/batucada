@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import forms as auth_forms
 from django.utils.translation import ugettext as _
+from django.contrib.auth.models import User
 
 from drumbeat.utils import CKEditorWidget
 
@@ -104,15 +105,16 @@ class CreateProfileForm(forms.ModelForm):
 class RegisterForm(forms.ModelForm):
     username = UsernameField()
     password = forms.CharField(
-        max_length=255,
+        max_length=128,
         widget=forms.PasswordInput(render_value=False))
     password_confirm = forms.CharField(
-        max_length=255,
+        max_length=128,
         widget=forms.PasswordInput(render_value=False))
     recaptcha = captcha_fields.ReCaptchaField()
 
     class Meta:
-        model = UserProfile
+        model = User
+        fields = ('username',)
         widgets = {
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),
         }

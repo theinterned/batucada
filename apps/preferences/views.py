@@ -58,15 +58,16 @@ def email(request):
     profile = request.user.get_profile()
     email = profile.user.email
     if request.method == "POST":
-        form = forms.EmailEditForm(request.POST, request.FILES,
+        form = forms.EmailEditForm(profile.username, request.POST, request.FILES,
                                      instance=profile)
         if form.is_valid():
             profile = form.save(commit=False)
             messages.success(request, _('Email updated'))
-            profile.user = request.user
+            profile.user.email = profile.email
+            profile.user.save()
             profile.save()
     else:
-        form = forms.EmailEditForm(instance=profile)
+        form = forms.EmailEditForm(profile.username, instance=profile)
 
     return render_to_response('preferences/settings_email.html', {
         'email': email,
@@ -81,10 +82,6 @@ def password(request):
     if request.method == "POST":
         form = forms.PasswordEditForm(request.POST, request.FILES,
                                      instance=profile)
-        
-        # should we require existing password before saving? email to confirm?
-        # after saved, should the user be logged out and forced to log in with the new password?
-        
         if form.is_valid():
             profile = form.save(commit=False)
             profile.set_password(form.cleaned_data['password'])

@@ -1,7 +1,8 @@
 from django.test import Client
+from django.contrib.auth.models import User
 
 from l10n.urlresolvers import reverse
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 from activity.models import Activity
 from projects.models import Project
 
@@ -17,13 +18,13 @@ class ProjectTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.locale = 'en'
-        self.user = UserProfile(
+        django_user = User(
             username=self.test_username,
             email=self.test_email,
         )
+        self.user = create_profile(django_user)
         self.user.set_password(self.test_password)
         self.user.save()
-        self.user.create_django_user()
 
     def test_unique_slugs(self):
         """Test that each project will get a unique slug"""
