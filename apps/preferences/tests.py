@@ -1,8 +1,10 @@
 from django.core import mail
+from django.contrib.auth.models import User
+
 from test_utils import TestCase
 
 from relationships.models import Relationship
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 from preferences.models import AccountPreferences
 
 
@@ -16,10 +18,10 @@ class AccountPreferencesTests(TestCase):
     def setUp(self):
         """Create data for testing."""
         for user in self.test_users:
-            user = UserProfile(**user)
+            django_user = User(**user)
+            user = create_profile(django_user)
             user.set_password('testpass')
             user.save()
-            user.create_django_user()
         (self.user_one, self.user_two) = UserProfile.objects.all()
 
     def test_new_follower_email_preference(self):

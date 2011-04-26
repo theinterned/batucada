@@ -144,20 +144,6 @@ class UserProfile(ModelBase):
             'username': self.username,
         })
 
-    def create_django_user(self):
-        """Make a django.contrib.auth.models.User for this UserProfile."""
-        self.user = User(id=self.pk)
-        self.user.username = self.username
-        self.user.email = self.email
-        self.user.date_joined = self.created_on
-        self.user.backend = 'django.contrib.auth.backends.ModelBackend'
-        if User.objects.all().count() == 0:
-            self.user.is_superuser = True
-            self.user.is_staff = True
-        self.user.save()
-        self.save()
-        return self.user
-
     def email_confirmation_code(self, url):
         """Send a confirmation email to the user after registering."""
         body = render_to_string('users/emails/registration_confirm.txt', {
@@ -211,6 +197,24 @@ class UserProfile(ModelBase):
     @property
     def display_name(self):
         return self.full_name or self.username
+
+
+def create_profile(user, username=None):
+    """Make a UserProfile for this django.contrib.auth.models.User."""
+    if UserProfile.objects.all().count() == 0:
+        user.is_superuser = True
+        user.is_staff = True
+    user.save()
+    profile = UserProfile(id=user.id)
+    profile.user = user
+    profile.user_id = user.id
+    if username:
+        profile.username = username
+    else:
+        profile.username = user.username
+    profile.email = user.email
+    profile.save()
+    return profile
 
         
 ###########

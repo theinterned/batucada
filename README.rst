@@ -5,11 +5,13 @@ Lernanta
 Lernanta is the new platform for P2PU. We are building on the codebase from
 Batucada, a rewrite of drumbeat.org by Mozilla. 
 
-.. _Django: http://www.djangoproject.com/
-
 
 Get Involved
 ------------
+
+To help out with Lernanta, join the `P2PU dev mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
+
+.. _P2PU dev mailing list: http://lists.p2pu.org/mailman/listinfo/p2pu-dev
 
 Interested in getting involved in Lernanta code development? Check out the development wiki [0] for more info! For a broader view on the development and tech team at P2PU, check out the P2PU Development and Tech team [1] page on the P2PU wiki [2] . 
 
@@ -17,14 +19,18 @@ Interested in getting involved in Lernanta code development? Check out the devel
 [1] http://wiki.p2pu.org/w/page/31978748/Development-and-tech-team
 [2] http://wiki.p2pu.org
 
-Installation
+
+Setting up a local development environment
 ------------
 
-You need a few prerequisites ::
+You will need to set up `git and your SSH keys`_ 
 
-   sudo apt-get install python-setuptools python-dev build-essential
+.. _git and your SSH keys: http://help.github.com/set-up-git-redirect
+     
 
-You'll also need to have mysql installed (mysql-client, mysql-server, libmysqlclient-dev).
+You need a few libraries and can grab them with this command::
+
+   sudo apt-get install virtualenvwrapper libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
 
 To install Lernanta, you must clone the repository: ::
 
@@ -63,13 +69,13 @@ To be extra sure you're working from a clean slate, you might find it helps to d
 
     ./rmpyc
 
+If the mysql database doesn't exist yet, create it. You will use the database name, user, and password in the next file (settings_local.py) ::
+
+   mysqladmin -u <user> -p create <database name>
+
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
    cp settings_local.dist.py settings_local.py
-
-If the mysql database doesn't exist yet, create it. ::
-
-   mysqladmin -u <user> -p create <database name>
  
 Next, sync the database and run migrations. ::
 
@@ -91,77 +97,6 @@ After updating a database model you will have to make a migration for the change
 
    python manage.py schemamigration <appname> --auto
    python manage.py migrate <appname>
-
-Get Involved
-------------
-
-To help out with lernanta, join the `P2PU dev mailing list`_ and introduce yourself. We're currently looking for help from Django / Python and front-end (HTML, CSS, Javascript) developers. 
-
-.. _P2PU dev mailing list: http://lists.p2pu.org/mailman/listinfo/p2pu-dev
-
-Setup in Production with Apache and WSGI
-------------
-
-Configure a new virtualhost for the site ::
-
-    vim /etc/apache2/sites-available/lernanta
-
-This is an example of configuration (replace the values between brackets) ::
-
-    <VirtualHost *:80>
-        ServerAdmin webmaster@localhost
-        ServerName [domain]
-        ErrorLog /var/log/apache2/lernanta-error.log
-
-        # Possible values include: debug, info, notice, warn, error, crit,
-        # alert, emerg.
-        LogLevel warn
-        CustomLog /var/log/apache2/lernanta-access.log combined
-
-        # run mod_wsgi process for django in daemon mode
-        # this allows avoiding confused timezone settings when
-        # another application runs in the same virtual host
-        WSGIDaemonProcess Lernanta
-        WSGIProcessGroup Lernanta
-
-        # force all content to be served as static files
-        # otherwise django will be crunching images through itself wasting time
-        Alias /media/ "[path to the source code]/media/"
-        <Directory "[path to the source code]/media">
-            Order deny,allow
-            Allow from all
-            Options Indexes MultiViews FollowSymLinks
-            AllowOverride None
-        </Directory>
-
-        Alias /en/admin-media/ "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media/"
-        <Directory "[path to the virtualenv]/lib/python2.6/site-packages/django/contrib/admin/media">
-            Order deny,allow
-            Allow from all
-            Options Indexes MultiViews FollowSymLinks
-            AllowOverride None
-        </Directory>
-
-        #this is your wsgi script described in the prev section
-        WSGIScriptAlias / [path to the source code]/wsgi/batucada.wsgi
-    </VirtualHost>
-
-Add the necessary paths to sitedir (replace the values between brackets) ::
-
-   site.addsitedir(os.path.abspath(os.path.join(wsgidir, '[path to the virtualenv]/lib/python2.6/site-packages')))
-   site.addsitedir(os.path.abspath(os.path.join(wsgidir, '[path to the virtualenv]/src')))
-
-Reload apache ::
-
-   /etc/init.d/apache reload
-
-Update the Site instance's domain from the admin interface and configure your SUPERFEEDR username and password (now in settings.py, but soon in settings_local.py).
-
-Configure email settings (DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER) and the email backend ::
-
-   EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-If you have to update the source code in production, remember to mark the .wsgi file as updated ::
-
-   touch wsgi/batucada.wsgi
-
+ 
+    
+Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki

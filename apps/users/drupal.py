@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import check_password as django_check_password
 from django.contrib.auth.models import get_hexdigest as django_get_hexdigest
-
+from django.contrib.auth.models import User
 
 DRUPAL_DB = 'drupal_users'
 
@@ -40,21 +40,18 @@ def check_password(drupal_user, password):
 
 def get_user_data(drupal_user):
     full_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
-    return {
-        'username': drupal_user.name,
-        'email': drupal_user.mail,
-        'full_name': full_name,
-   }
+    username = drupal_user.name.replace('@', '-')
+    return username, drupal_user.mail, full_name
 
 
 def migrate(username):
     drupal_user = get_user(username)
-    user_data = get_user_data(drupal_user)
-    from users.models import UserProfile
-    profile = UserProfile(**user_data)
+    username, email, full_name = get_user_data(drupal_user)
+    django_user = User(username=username[:30], email=email)
+    from users.models import create_profile
+    profile = create_profile(django_user, username=username)
     profile.password = drupal_user.password
     profile.save()
-    profile.create_django_user()
 
 
 class Users(models.Model):

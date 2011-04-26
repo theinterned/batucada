@@ -2,8 +2,9 @@ import re
 
 from django.conf import settings
 from django.test import Client
+from django.contrib.auth.models import User
 
-from users.models import UserProfile
+from users.models import UserProfile, create_profile
 from l10n import locales
 
 import test_utils
@@ -62,13 +63,13 @@ class TestLocaleURLs(test_utils.TestCase):
 
     def test_login_post_redirect(self):
         """Test that post requests are treated properly."""
-        user = UserProfile.objects.create(
+        django_user = User(
             username='testuser',
             email='test@mozilla.com',
         )
+        user = create_profile(django_user)
         user.set_password('testpass')
         user.save()
-        user.create_django_user()
         response = self.client.get('/de-DE/login/')
         self.assertContains(response, 'csrfmiddlewaretoken')
         response = self.client.post('/de-DE/login/', {

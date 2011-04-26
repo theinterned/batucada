@@ -24,12 +24,12 @@ class Link(models.Model):
     index = models.IntegerField(null=True, default=0, blank=True)
 
     def save(self):
-        if self.project:
-            max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
-        else:
-            max_index = Link.objects.filter(user=self.user).aggregate(Max('index'))['index__max']
-       
-        self.index = max_index + 1 if max_index else 1
+        if not self.index:
+            if self.project:
+                max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
+            else:
+                max_index = Link.objects.filter(user=self.user, project__isnull=True).aggregate(Max('index'))['index__max']
+            self.index = max_index + 1 if max_index else 1
         super(Link, self).save()
          
 def link_create_handler(sender, **kwargs):
