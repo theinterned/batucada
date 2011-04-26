@@ -95,4 +95,4 @@ After updating a database model you will have to make a migration for the change
    python manage.py schemamigration <appname> --auto
    python manage.py migrate <appname>
 
-Once you have your development environment running, you can make changes or get the latest from github. .._See the wiki for more information.: https://github.com/p2pu/lernanta/wiki
+Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki
