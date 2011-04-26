@@ -25,7 +25,7 @@ Setting up a local development environment
 
 You will need to set up `git and your SSH keys`_ 
 
-.. _git: http://help.github.com/set-up-git-redirect
+.. _git and your SSH keys: http://help.github.com/set-up-git-redirect
      
 
 You need a few libraries and can grab them with this command::
