@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-25 03:33-0400\n"
+"POT-Creation-Date: 2011-04-26 19:18-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,17 +20,17 @@ msgstr ""
 msgid "Activity feed for %s"
 msgstr "Bitácora de actividades para %s"
 
-#: apps/activity/models.py:62
+#: apps/activity/models.py:63
 #, python-format
 msgid "%(actor)s %(verb)s %(target)s"
 msgstr "%(actor)s %(verb)s %(target)s"
 
-#: apps/activity/models.py:74
+#: apps/activity/models.py:75
 #, python-format
 msgid "%(verb)s activity performed by %(actor)s"
 msgstr "La actividad %(verb)s fue realizada por %(actor)s"
 
-#: apps/activity/models.py:84
+#: apps/activity/models.py:85
 #, python-format
 msgid "Activity ID %(self.pk)d. Actor id %(self.actor.pk)d, Verb %(self.verb)s"
 msgstr ""
@@ -93,25 +93,25 @@ msgstr "no está atendiendo"
 msgid "might be attending"
 msgstr "puede que asista a"
 
-#: apps/content/models.py:75
+#: apps/content/models.py:76
 msgid "added"
 msgstr "añadió"
 
-#: apps/content/models.py:78
+#: apps/content/models.py:79
 #, python-format
 msgid " <a href=\"%(page_url)s\">%(page_title)s</a>."
 msgstr " <a href=\"%(page_url)s\">%(page_title)s</a>."
 
-#: apps/content/models.py:126 apps/content/models.py:136
+#: apps/content/models.py:127 apps/content/models.py:137
 #, python-format
 msgid "Comment to %s"
 msgstr "Comentario para %s"
 
-#: apps/content/models.py:142
+#: apps/content/models.py:143
 msgid "posted comment"
 msgstr "publicó un comentario"
 
-#: apps/content/models.py:145
+#: apps/content/models.py:146
 #, python-format
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
@@ -202,11 +202,11 @@ msgstr "Mensaje enviado con éxito."
 msgid "There was an error sending your message. Please try again."
 msgstr "Ocurrió un error al enviar el mensaje. Por favor intente nuevamente."
 
-#: apps/preferences/forms.py:21
+#: apps/preferences/forms.py:23
 msgid "That email address is register at p2pu.org under a different username."
 msgstr "Ese correo está registrado en p2pu.org bajo otro nombre de usuario."
 
-#: apps/preferences/forms.py:30 apps/users/forms.py:38
+#: apps/preferences/forms.py:32 apps/users/forms.py:38
 msgid ""
 "Password must be at least 8 characters long and contain both numbers and "
 "letters."
@@ -214,11 +214,11 @@ msgstr ""
 "La contraseña debe tener al menos 8 caracteres y contener tanto números como "
 "letras."
 
-#: apps/preferences/forms.py:35 apps/users/forms.py:43
+#: apps/preferences/forms.py:37 apps/users/forms.py:43
 msgid "That password is too common. Please choose another."
 msgstr "Esa contraseña es muy común. Por favor elija otra."
 
-#: apps/preferences/forms.py:66 apps/users/forms.py:142
+#: apps/preferences/forms.py:68 apps/users/forms.py:142
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
@@ -230,11 +230,11 @@ msgstr "Gracias, su configuración ha sido guardada."
 msgid "Email updated"
 msgstr "Correo actualizado"
 
-#: apps/preferences/views.py:87
+#: apps/preferences/views.py:88
 msgid "Password updated"
 msgstr "Contraseña actualizada"
 
-#: apps/preferences/views.py:91 apps/users/views.py:213
+#: apps/preferences/views.py:92 apps/users/views.py:213
 #: apps/users/views.py:351
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
@@ -422,7 +422,7 @@ msgstr ""
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, ese no parece un código de confirmación correcto"
 
-#: apps/users/views.py:266
+#: apps/users/views.py:269
 msgid "Success! You have verified your account. You may now sign in."
 msgstr "¡Éxito! Ya verificó su cuenta. Ahora puede entrar."
 
