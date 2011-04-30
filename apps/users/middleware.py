@@ -12,8 +12,10 @@ class ProfileExistMiddleware(object):
             try:
                 profile = request.user.get_profile()
             except UserProfile.DoesNotExist:
-                dashboard_url = reverse('dashboard_index')      
-                if request.path in (dashboard_url, reverse('users_profile_create')):
+                dashboard_url = reverse('dashboard_index')
+                profile_create_url = reverse('users_profile_create')
+                logout_url = reverse('users_logout')      
+                if request.path in (dashboard_url, profile_create_url, logout_url):
                     return None
                 for prefix in settings.NO_PROFILE_URLS:
                     if request.path.startswith(prefix):

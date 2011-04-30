@@ -195,9 +195,8 @@ def send_content_notification(instance, is_comment):
         'domain': Site.objects.get_current().domain,
     }).strip()
     for participation in project.participants():
-        if participation.no_updates or instance.author == participation.user:
-            continue
-        SendUserEmail.apply_async((participation.user, subject, body))
+        if instance.author != participation.user and not participation.no_updates:
+            SendUserEmail.apply_async((participation.user, subject, body))
     if instance.author != project.created_by:
         SendUserEmail.apply_async((project.created_by, subject, body))
 
