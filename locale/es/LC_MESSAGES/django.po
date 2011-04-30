@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-30 11:41-0400\n"
+"POT-Creation-Date: 2011-04-30 12:15-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -421,6 +421,10 @@ msgstr ""
 #: apps/users/views.py:264
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, ese no parece un código de confirmación correcto"
+
+#: apps/users/views.py:269
+msgid "Success! You have verified your account. You may now sign in."
+msgstr "¡Éxito! Ya verificó su cuenta. Ahora puede entrar."
 
 #: apps/users/views.py:285
 msgid ""
@@ -1259,7 +1263,7 @@ msgstr "Nuevo Mensaje Privado"
 
 #: templates/drumbeatmail/inbox.html:12
 msgid "New Private Discussion"
-msgstr "Nueva Discusión Privada"
+msgstr "Nuevo Mensaje Privado"
 
 #: templates/drumbeatmail/inbox.html:25
 msgid "All Messages"
