@@ -266,8 +266,8 @@ def confirm_registration(request, token, username):
         return http.HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
-    messages.success(request, 'Success! You have verified your account. '
-                     'You may now sign in.')
+    messages.success(request, _('Success! You have verified your account. '
+                     'You may now sign in.'))
     return http.HttpResponseRedirect(reverse('users_login'))
 
 
