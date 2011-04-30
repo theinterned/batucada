@@ -51,7 +51,7 @@ def get_link_name(activity):
     if activity.remote_object:
         return activity.remote_object.title
     if activity.target_user:
-        return activity.target_user.name
+        return activity.target_user.display_name
 
 
 @register.filter
