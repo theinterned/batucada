@@ -1,4 +1,8 @@
+import datetime
+
 from django import template
+from django.template.defaultfilters import timesince
+from django.utils.translation import ugettext as _
 
 from activity import schema
 
@@ -82,3 +86,12 @@ def friendly_verb(activity):
         return schema.past_tense[verb]
     except KeyError:
         return activity.verb
+
+
+@register.filter
+def created_on(activity):
+    now = datetime.datetime.now()
+    delta = now - activity.created_on
+    if delta > datetime.timedelta(days=2):
+        return activity.created_on.strftime("%d %b %Y")
+    return timesince(activity.created_on) + _(" ago")

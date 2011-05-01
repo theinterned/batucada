@@ -3,8 +3,6 @@ import random
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.db import connection
-from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
@@ -19,32 +17,6 @@ from dashboard.models import FeedEntry
 from relationships.models import Relationship
 
 
-def splash_page_activities():
-
-    def query_list(query):
-        cursor = connection.cursor()
-        cursor.execute(query)
-        while True:
-            row = cursor.fetchone()
-            if row is None:
-                break
-            yield row[0]
-
-    activity_ids = query_list("""
-        SELECT a.id
-        FROM activity_activity a
-        INNER JOIN users_userprofile u ON u.id = a.actor_id
-        WHERE u.full_name IS NOT NULL
-            AND u.image IS NOT NULL
-            AND u.image != ''
-            AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
-        GROUP BY a.id, a.actor_id, a.created_on
-        ORDER BY a.created_on DESC LIMIT 10;
-    """)
-    return Activity.objects.filter(
-        id__in=activity_ids).order_by('-created_on')
-
-
 @anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
@@ -54,7 +26,7 @@ def splash(request):
         project = random.choice(projects)
         project.followers_count = Relationship.objects.filter(
             target_project=project).count()
-    activities = splash_page_activities()
+    activities = Activity.objects.public()
     feed_entries = FeedEntry.objects.all().order_by('-created_on')[0:4]
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
     return render_to_response('dashboard/splash.html', {
@@ -105,21 +77,7 @@ def dashboard(request):
             project.relation_text = _('(following)')
     users_following = profile.following()
     users_followers = profile.followers()
-    project_ids = [p.pk for p in projects_following]
-    user_ids = [u.pk for u in users_following]
-    activities = Activity.objects.select_related(
-        'actor', 'status', 'project', 'remote_object',
-        'remote_object__link', 'target_project').filter(
-        Q(actor__exact=profile) |
-        Q(actor__in=user_ids) | Q(project__in=project_ids),
-    ).exclude(
-        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-        Q(target_user__isnull=True),
-        Q(project__in=project_ids),
-    ).exclude(
-        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-        Q(actor=profile),
-    ).order_by('-created_on')[0:25]
+    activities = Activity.objects.dashboard(request.user.get_profile())
     user_projects = Project.objects.filter(created_by=profile)
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {

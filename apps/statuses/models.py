@@ -19,6 +19,8 @@ class Status(ModelBase):
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
     status = models.TextField()
+    in_reply_to = models.ForeignKey(Activity, related_name='replies',
+                                    null=True, blank=True)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     important = models.BooleanField(default=False)
@@ -77,6 +79,8 @@ def status_creation_handler(sender, **kwargs):
     )
     if status.project:
         activity.target_project = status.project
+    if status.in_reply_to:
+        activity.parent = status.in_reply_to
     activity.save()
     # Send notifications.
     if status.project:

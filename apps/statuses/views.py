@@ -7,6 +7,7 @@ from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
 from statuses.forms import StatusForm, ImportantStatusForm
+from activity.models import Activity
 from statuses.models import Status
 from projects.models import Project
 from users.decorators import login_required
@@ -30,6 +31,23 @@ def create(request):
         messages.error(request, _('There was an error posting '
                                   'your status update'))
     return HttpResponseRedirect(reverse('dashboard_index'))
+
+
+@login_required
+def reply(request, in_reply_to):
+    """Create a status update that is a reply to an activity."""
+    parent = get_object_or_404(Activity, id=in_reply_to)
+    if request.method == 'POST':
+        form = StatusForm(data=request.POST)
+        if form.is_valid():
+            status = form.save(commit=False)
+            status.author = request.user.get_profile()
+            status.in_reply_to = parent
+            status.save()
+        return HttpResponseRedirect('/')
+    return render_to_response('statuses/reply.html', {
+        'parent': parent,
+    }, context_instance=RequestContext(request))
 
 
 @login_required

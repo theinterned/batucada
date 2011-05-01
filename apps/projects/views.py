@@ -31,6 +31,7 @@ from statuses import forms as statuses_forms
 
 from drumbeat import messages
 from users.decorators import login_required
+from challenges.models import Challenge
 
 log = logging.getLogger(__name__)
 
@@ -49,14 +50,16 @@ def show(request, slug):
             user=profile).exists()
         if not form and can_post_wall:
             form = statuses_forms.StatusForm()
+    challenges = Challenge.objects.active(project_id=project.id)
     context = {
         'project': project,
         'activities': project.activities()[0:10],
         'can_post_wall': can_post_wall,
+        'challenges': challenges,
         'form': form,
     }
     return render_to_response('projects/project.html', context,
-                          context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 @login_required
