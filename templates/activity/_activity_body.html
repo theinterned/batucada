@@ -8,6 +8,7 @@
 
 {% endspaceless %} {% spaceless %}
 
+
 {% if activity|should_show_verb %}
   {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
     {{ _('created') }}

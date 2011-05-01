@@ -1,8 +1,9 @@
 {% load l10n_tags %}
+{% load activity_tags %}
 
 <li class="post-container">
   {% if user.is_authenticated and user.id != activity.actor.id %}
-  <a class="report abuse action" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{_('Report Abuse')}}</a>
+  <a class="report abuse action" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
  {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ activity.actor.image_or_default }}">
@@ -12,20 +13,32 @@
 
     <div class="post-details">
       <a class="member-name" href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.display_name }}</a>
-      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity.created_on|timesince }} {{ _(' ago') }}</a>
-      {% if activity.remote_object %}
-	{{ _('via ') }}<a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
-      {% endif %}
     </div>
 
     <div class="post-body">
       {% include "activity/_activity_body.html" %}
     </div> <!-- /.post-body -->
 
+    <div class="post-details">
+      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity|created_on }}</a>
+      {{ _('via') }}
+      {% if activity.remote_object %}
+        <a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
+      {% else %}
+        new.p2pu.org
+      {% endif %}
+    </div>
+
     {% if activity.target_project %}
     <ul class="post-tags">
       <li><a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project.name|slice:":50" }}</a></li>
     </ul>
+    {% endif %}
+    
+    {% if activity.comments.count %}
+      <div class="post-comments">
+        {{ activity.comments.count }} {{ _('Comments') }}
+      </div>
     {% endif %}
 
     <div class="clear ir"></div>
