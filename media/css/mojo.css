@@ -95,7 +95,11 @@ ul {
   margin: 20px 0 20px 20px;
 }
   
-
+h3 {
+  font-size: 16px;
+  margin: 18px 0 0 0;
+  padding-bottom: 5px;
+}
 h5 {
   font-weight: bold;
   margin: 18px 0 9px 0;
@@ -321,10 +325,13 @@ header {}
 /* banner */
 .banner {
   background: #111 url(../images/splash-header-bg.png) repeat-x 0 -59px;
-  height: 210px;
+  min-height: 210px;
   text-align: center;
   margin-bottom: -20px;
 }      
+  .banner ul {
+    overflow: auto;
+  }
   .banner h1 {
     font: normal 30px/44px MuseoSans-500, Arial, sans-serif;
     color: white;
@@ -339,6 +346,36 @@ header {}
     margin-bottom: 30px;
   }
   
+/* homepage banner */
+.banner ul {
+  margin-left: -30px;
+}
+  .banner li {
+    float: left;
+    width: 300px;
+    margin-left: 30px;
+    text-align: left;
+    margin-bottom: 20px;
+  } 
+  .banner p {
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .banner p a {
+    text-shadow: none;
+    color: #bee9ff;
+  }
+  .banner .calltoaction {
+    text-align: center;
+    color: #ffffff;
+    margin-top: 10px;
+  }
+    .banner .calltoaction .heading {
+      font: normal 30px/44px MuseoSans-500, Arial, sans-serif;
+      display: block;
+      margin-bottom: 10px;
+    }
   
 /* button */
 .button {
@@ -403,6 +440,48 @@ header {}
       .button.selected:active span {
         background: url('../images/mojo/buttons.png') right -165px no-repeat;
       }
+
+  /* button on white background */
+  .button-white {
+    height: 32px;
+    line-height: 31px;
+    display: inline-block;
+    padding-left: 15px;
+    text-align: center;
+    background: url('../images/mojo/buttons.png') left -199px no-repeat;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px #647e8b;
+    vertical-align: middle;
+  }  
+    .button-white span {
+      display: inline-block;
+      height: 31px;
+      padding-bottom: 1px;
+      padding-right: 15px;
+      background: url('../images/mojo/buttons.png') right -199px no-repeat;
+    }
+    /* hover */
+    .button-white:hover {
+      color: #ffffff;
+      text-decoration: none;
+      background: url('../images/mojo/buttons.png') left -232px no-repeat;
+    }
+    .button-white:hover span {
+      background: url('../images/mojo/buttons.png') right -232px no-repeat;
+    }
+    /* active */
+    .button-white:active {
+      background: url('../images/mojo/buttons.png') left -265px no-repeat;
+    }
+    .button-white:active span {
+      background: url('../images/mojo/buttons.png') right -265px no-repeat;
+      padding-bottom: 0px;
+      padding-top: 1px;
+      text-shadow: none;
+    }
+    .button-white:visited { color: #ffffff; text-shadow: 0px -1px 0px #647e8b; }
 
 
 /* HOMEPAGE VIDEO */
@@ -511,6 +590,140 @@ header {}
       padding-left: 20px;
       background: url('../images/mojo/bullet.png') 4px 7px no-repeat;
     }
+    
+/* HOMEPAGE */
+.homepage {
+  width: 960px;
+  margin: 60px auto 0;
+  font-size: 12px;
+  overflow: auto;
+}
+  .homepage .column-left {
+    float: left;
+    margin-right: 30px;
+    width: 630px;
+    
+  }
+  .homepage .column-right {
+    float: left;
+    width: 299px;
+  }
+
+.homepage .feed {
+  margin: 0;
+}
+  .homepage .feed a {
+    font-weight: bold;
+  }
+  .homepage .feed p {
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+  
+  
+/* CHALLENGE BOX */
+.challengebox {
+  padding: 20px;
+  background: #ffffff url('../images/mojo/box-bg.png') bottom repeat-x;
+  border: solid 1px #c6c6c6;
+  box-shadow: 0px 1px 0px #b5b7b8;
+  -moz-box-shadow: 0px 1px 0px #b5b7b8;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  margin-bottom: 27px;
+}  
+  .challengebox p {
+    font-size: 16px;
+  }
+  .challengebox p.first {
+    font-size: 18px;
+  }
+  .challengebox .button-white {
+    margin-top: 11px;
+  }
+
+.column-right .challengebox {
+  text-align: center;
+}  
+  .column-right .challengebox p.details {
+    font-size: 12px;
+    margin: -5px 0 0 0;
+    line-height: 18px;
+    color: #777777;
+  }
+  
+/* POPULAR IDEAS */
+.popularideas {
+  margin: 0;
+  border-bottom: solid 1px #ffffff;
+  border-top: solid 1px #c2c3c5;
+}
+  .popularideas li {
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #c2c3c5;
+    overflow: auto;
+    padding: 9px 0;
+  }
+    .popularideas .score {
+      float: left;
+      width: 65px;
+      margin-right: 10px;
+      background: url('../images/mojo/score-box.png') no-repeat;
+      height: 66px;
+      text-align: center;
+    }
+      .popularideas .score span {
+        display: block;
+        font-size: 24px;
+        font-weight: bold;
+        color: #474747;
+        padding: 10px 0 7px 0;
+        text-shadow: 1px 1px 0px #ffffff;
+      }
+      .popularideas .score a {
+        display: inline-block;
+        width: 51px;
+        background: #e2e2e2;
+        height: 18px;
+        line-height: 18px;
+        color: #474747;
+        text-decoration: none;
+        box-shadow: 
+          1px 1px 0px #ffffff,
+          inset 1px 1px 0px #cdcdcd;
+        -moz-box-shadow: 
+          1px 1px 0px #ffffff,
+          inset 1px 1px 0px #cdcdcd;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+      }
+        .popularideas .score a:hover,
+        .popularideas .score a.active {
+          background: #89e03c;
+          color: #41790f;
+          text-shadow: 1px 1px 0px #d0f3b1;
+          box-shadow: 
+            1px 1px 0px #ffffff,
+            inset 1px 1px 0px #78c733;
+          -moz-box-shadow: 
+            1px 1px 0px #ffffff,
+            inset 1px 1px 0px #78c733;
+        }
+    .popularideas p {
+      font-size: 12px;
+      display: block;
+      float: left;
+      width: 555px;
+      margin: 0;
+    }
+.viewallideas {
+  display: block;
+  margin: 9px 0;
+  text-align: center;
+  background: #dfeffb;
+  padding: 3px 0;
+}
+
 
 /* RULE */
 .rule {
@@ -520,7 +733,14 @@ header {}
   clear: both;
   margin: 18px 0;
 }
-
+.rule2 {
+  height: 1px;
+  overflow: hidden;
+  background: #c2c3c5;
+  border-bottom: solid 1px #ffffff;
+  clear: both;
+  margin-bottom: 9px;
+}
 
 
 /* COLUMN */
