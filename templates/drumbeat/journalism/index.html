@@ -35,7 +35,7 @@
           <li>
             <img src="{{ MEDIA_URL }}images/mojo/benefit5.jpg" width="300" height="115" alt="">
             <p>
-              The big prize: spend a year evolving your ideas in <a href="https://drumbeat.org/en-US/journalism/about/">the world's most prestigious newsrooms as a paid Knight-Mozilla fellow.
+              The big prize: spend a year evolving your ideas in <a href="{% locale_url drumbeat_journalism_about %}">the world's most prestigious newsrooms as a paid Knight-Mozilla fellow.
             </p>
           </li>
           <li class="calltoaction">
@@ -58,7 +58,7 @@
             <img style="float: right; margin-top: -10px;" src="{{ MEDIA_URL }}images/mojo/challenge1-image.png" width="190" height="126" alt="">
             <p>
 Video is a central part of many people's daily news experience. But most online video is still stuck in a boring embedded box, like "TV on a web page." How do we make web video <em>more like the web?</em></p>
-            <a class="button-white" href="https://drumbeat.org/en-US/challenges/unlocking-video/"><span>Submit Your Idea</span></a>
+            <a class="button-white" href="{% locale_url challenges_show slug="unlocking-video" %}"><span>Submit Your Idea</span></a>
           </div>
           
           <h3>Popular ideas for Challenge #1</h3>
@@ -82,20 +82,20 @@ Video is a central part of many people's daily news experience. But most online 
               </p>
             </li>
           </ul>
-          <a class="viewallideas" href="https://drumbeat.org/en-US/challenges/unlocking-video/">View All Challenge #1 Ideas</a>
+          <a class="viewallideas" href="{% locale_url challenges_show slug="unlocking-video" %}">View All Challenge #1 Ideas</a>
         </div>
         <div class="column-right">
           <div class="challengebox">
             <img src="{{ MEDIA_URL }}images/mojo/smallchallenge2.png" width="115" height="83" alt="Challenge 2" style="float:left;">
             <p class="first">
-              <a href="https://drumbeat.org/en-US/challenges/beyond-comment-threads/">Challenge 2: Comments</a><br />
+              <a href="{% locale_url challenges_show slug="beyond-comment-threads" %}">Challenge 2: Comments</a><br />
               Kicks off May 9th
             </p>
           </div>
           <div class="challengebox">
                       <img src="{{ MEDIA_URL }}images/mojo/smallchallenge3.png" width="115" height="83" alt="Challenge 3" style="float:left;">
             <p class="first">
-              <a href="https://drumbeat.org/en-US/challenges/open-webs-killer-app/">Challenge 3: Open Web Apps</a><br />
+              <a href="{% locale_url challenges_show slug="open-webs-killer-app" %}">Challenge 3: Open Web Apps</a><br />
               Kicks off May 23rd
             </p>
           </div>

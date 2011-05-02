@@ -4,8 +4,7 @@
 {% block body %}
     <div class="banner">   
       <div class="container">
-        <h1><a href=
-        https://drumbeat.org/en-US/journalism/">Knight-Mozilla News Technology Partnership (MoJo)</a></h1>
+        <h1><a href="{% locale_url drumbeat_journalism %}">Knight-Mozilla News Technology Partnership (MoJo)</a></h1>
         <h2>Web developers and designers around the world collaborating to invent the future of news.</h2>
         <a class="button" href="{% locale_url drumbeat_journalism_about %}"><span>About Mojo</span></a>
         <a class="button selected" href="{% locale_url drumbeat_journalism_participate %}"><span>Get Involved</span></a>
@@ -15,7 +14,7 @@
     
     <div class="content">
       <div class="container">
-        <a href="https://drumbeat.org/challenges/unlocking-video/"><img style="float: right; margin-top: -20px;" src="{{ MEDIA_URL }}images/mojo/badge.png" width="127" height="129" alt="First challenge undeway!"></a>
+        <a href="{% locale_url challenges_show slug="unlocking-video" %}"><img style="float: right; margin-top: -20px;" src="{{ MEDIA_URL }}images/mojo/badge.png" width="127" height="129" alt="First challenge undeway!"></a>
         <p class="intro">
           We want news organizations. Programmers and developers. Entrepreneurs. News hackers. Reporters. Design thinkers. Journalism teachers and students. Or anyone using the news to invent something new and interesting. Get involved today and <a href="http://www.twitter.com/knightmozilla">follow us on Twitter</a>.
         </p>
@@ -25,7 +24,7 @@
             <strong>Become a Knight-Mozilla Fellow:</strong> take part in one or more of our innovation challenges. 
           </p>
           <p>
-            <a class="getstarted" href="https://drumbeat.org/challenges/unlocking-video/">Get Started</a>
+            <a class="getstarted" href="{% locale_url challenges_show slug="unlocking-video" %}">Get Started</a>
           </p>
           <p>
             We're looking for 15 creative people committed to innovation in news technology to join our partnership as Knight-Mozilla News Technology Fellows.
