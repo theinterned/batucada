@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block title %}{{ _('Edit School') }}{% endblock %}
+{% block bodyid %}school_edit{% endblock %}
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <span>{{ _('Schools') }}</span>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{% locale_url schools_edit slug=school.slug %}">{{ _('Edit') }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
+
+{% block body %}
+<section class="modal nav">
+  <article>
+    <h1>
+      {{ _('Edit School') }}
+      <a class="pester back_link" href="{{ school.get_absolute_url }}">({{ _('View School') }})</a>
+    </h1>
+    <nav id="school-edit-nav" class="tabs">
+      <ul>
+	    <li class="summary active"><a href="{% locale_url schools_edit slug=school.slug %}">{{ _('Summary') }}</a></li>
+      </ul>
+    </nav>
+    {% block form %}{% endblock %}
+  </article>
+</section>
+{% endblock %}
+
