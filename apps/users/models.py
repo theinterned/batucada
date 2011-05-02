@@ -120,7 +120,8 @@ class UserProfile(ModelBase):
         will be ```Project``` or ```UserProfile``` instances. Optionally filter
         by type by including a ```model``` parameter.
         """
-        if isinstance(model, Project) or model == Project:
+        if (model == 'Project' or isinstance(model, Project) or
+            model == Project):
             relationships = Relationship.objects.select_related(
                 'target_project').filter(source=self).exclude(
                 target_project__isnull=True)

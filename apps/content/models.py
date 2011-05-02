@@ -188,7 +188,8 @@ def send_content_notification(instance, is_comment):
                 continue
         lang = get_language();
         activate(participation.user.language or 'en');
-        subject = render_to_string("content/emails/content_update_subject.txt", {
+        subject = render_to_string("content/emails/content_update_subject.txt",
+               {
                 'instance': instance,
                 'is_comment': is_comment,
                 'project': project,

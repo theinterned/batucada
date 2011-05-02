@@ -75,3 +75,6 @@ FFMPEG_PATH = '/usr/bin/ffmpeg'
 # Remember to login as admin before activating maintenance mode.
 MAINTENANCE_MODE = False
 
+# Prefixes ignored by the ProfileExistMiddleware.
+NO_PROFILE_URLS = ('/media/', '/admin-media/',)
+

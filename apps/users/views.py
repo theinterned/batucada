@@ -301,13 +301,7 @@ def profile_view(request, username):
             project.relation_text = _('(following)')
     followers = profile.followers()
     links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True).order_by('index')
-    activities = Activity.objects.select_related(
-        'actor', 'status', 'project').filter(
-        actor=profile,
-    ).exclude(
-        Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-        Q(target_user__isnull=False),
-    ).order_by('-created_on')[0:25]
+    activities = Activity.objects.for_user(profile)
     return render_to_response('users/profile.html', {
         'profile': profile,
         'following': following,

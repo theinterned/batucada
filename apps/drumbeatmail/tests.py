@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from users.models import UserProfile, create_profile
@@ -28,6 +29,13 @@ class TestDrumbeatMail(test_utils.TestCase):
         self.user_two = create_profile(django_user_two)
         self.user_two.set_password('testpassword')
         self.user_two.save()
+        self.old_recaptcha_pubkey = settings.RECAPTCHA_PUBLIC_KEY
+        self.old_recaptcha_privkey = settings.RECAPTCHA_PRIVATE_KEY
+        settings.RECAPTCHA_PUBLIC_KEY, settings.RECAPTCHA_PRIVATE_KEY = '', ''
+        
+    def tearDown(self):
+        settings.RECAPTCHA_PUBLIC_KEY = self.old_recaptcha_pubkey
+        settings.RECAPTCHA_PRIVATE_KEY = self.old_recaptcha_privkey
 
     def test_messaging_user_following(self):
         print "From test: %s" % (self.user.user,)

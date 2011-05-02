@@ -11,10 +11,22 @@ urlpatterns = patterns('django.views.generic.simple',
    url(r'^editing-help/$', 'direct_to_template', {
         'template': 'drumbeat/editing.html',
    }, name='drumbeat_editing'),
+   url(r'^journalism/$', 'direct_to_template', {
+       'template': 'drumbeat/journalism/about.html',
+   }, name='drumbeat_journalism'),
+   url(r'^journalism/participate/$', 'direct_to_template', {
+        'template': 'drumbeat/journalism/participate.html',
+   }, name='drumbeat_journalism_participate'),
+   url(r'^journalism/about/$', 'direct_to_template', {
+        'template': 'drumbeat/journalism/about.html',
+   }, name='drumbeat_journalism_about'),
 )
 
 urlpatterns += patterns('',
    url(r'^abuse/(?P<model>[\w ]+)/(?P<app_label>[\w ]+)/(?P<pk>\d+)/$',
        'drumbeat.views.report_abuse',
        name='drumbeat_abuse'),
+   url(r'^journalism/$',
+       'drumbeat.views.journalism',
+       name='drumbeat_journalism'),
 )

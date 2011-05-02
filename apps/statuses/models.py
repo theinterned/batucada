@@ -19,6 +19,8 @@ class Status(ModelBase):
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
     status = models.TextField()
+    in_reply_to = models.ForeignKey(Activity, related_name='replies',
+                                    null=True, blank=True)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     important = models.BooleanField(default=False)
@@ -47,11 +49,10 @@ class Status(ModelBase):
             'domain': Site.objects.get_current().domain,
         }).strip()
         for participation in project.participants():
-            if (not self.important and participation.no_wall_updates) or self.author == participation.user:
-                continue
-            SendUserEmail.apply_async((participation.user, subject, body))
+            if self.author != participation.user and (self.important or not participation.no_wall_updates):
+                SendUserEmail.apply_async((participation.user, subject, body))
         if self.author != project.created_by:
-            SendUserEmail.apply_async((self.author, subject, body))
+            SendUserEmail.apply_async((project.created_by, subject, body))
 
 
 ###########
@@ -78,6 +79,8 @@ def status_creation_handler(sender, **kwargs):
     )
     if status.project:
         activity.target_project = status.project
+    if status.in_reply_to:
+        activity.parent = status.in_reply_to
     activity.save()
     # Send notifications.
     if status.project:
