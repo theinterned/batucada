@@ -65,7 +65,10 @@ def listener(notification, **kwargs):
     sender = kwargs.get('sender', None)
     if not sender:
         return
-    log.debug('Received feed update notification: %s, sender: %s' % (notification, sender))
-    eager_result = tasks.HandleNotification.apply_async(args=(notification, sender))
-    log.debug('Result from the feed notification handler: %s, %s' % (eager_result.status, eager_result.result))
+    try:
+        log.debug('Received feed update notification: %s, sender: %s' % (notification, sender))
+        eager_result = tasks.HandleNotification.apply_async(args=(notification, sender))
+        log.debug('Result from the feed notification handler: %s, %s' % (eager_result.status, eager_result.result))
+    except Exception, ex:
+        log.warn("Unprocessable notification: %s (%s)" % (notification, ex))
 updated.connect(listener)

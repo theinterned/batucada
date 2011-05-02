@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.comments',
     'south',
     'jogging',
     'wellknown',
@@ -133,6 +134,7 @@ INSTALLED_APPS = (
     'preferences',
     'drumbeatmail',
     'links',
+    'challenges',
     'django_push.subscriber',
     'djcelery',
     'events',
@@ -140,6 +142,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'content',
     'schools',
+    'voting'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-26 19:44-0500\n"
+"POT-Creation-Date: 2011-04-30 12:15-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -634,54 +634,58 @@ msgid "Help"
 msgstr "Ayuda"
 
 #: templates/base.html:52
+msgid "About P2PU"
+msgstr "Acerca de P2PU"
+
+#: templates/base.html:53
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
-#: templates/base.html:53
+#: templates/base.html:54
 msgid "P2PU Help Desk"
 msgstr "Escritorio de Ayuda en P2PU"
 
-#: templates/base.html:72 templates/dashboard/dashboard.html:4
+#: templates/base.html:73 templates/dashboard/dashboard.html:4
 msgid "Your Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:73
+#: templates/base.html:74
 msgid "Your Profile"
 msgstr "Mi Perfil"
 
-#: templates/base.html:74 templates/preferences/settings.html:6
+#: templates/base.html:75 templates/preferences/settings.html:6
 #: templates/preferences/settings.html:12
 #: templates/preferences/settings.html:20
 msgid "Account Settings"
 msgstr "Preferencias"
 
-#: templates/base.html:80 templates/drumbeatmail/inbox.html:4
+#: templates/base.html:81 templates/drumbeatmail/inbox.html:4
 #: templates/drumbeatmail/inbox.html:9 templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:95
+#: templates/base.html:96
 msgid "View All Messages"
 msgstr "Ver Todos los Mensajes"
 
-#: templates/base.html:101
+#: templates/base.html:102
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:149 templates/drumbeatmail/base.html:52
+#: templates/base.html:150 templates/drumbeatmail/base.html:52
 #: templates/users/profile_form_base.html:70
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:168
+#: templates/base.html:169
 msgid "js/script-en.css"
 msgstr "js/script-es.css"
 
-#: templates/base.html:169
+#: templates/base.html:170
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
@@ -1916,8 +1920,9 @@ msgid "See message at:"
 msgstr "Ver mensaje en:"
 
 #: templates/statuses/emails/wall_updated.txt:17
+#, fuzzy
 msgid ""
-"This message was maked as important by the study group organizer. Important "
+"This message was marked as important by the study group organizer. Important "
 "messages will always bypass participants's notification prefences."
 msgstr ""
 "Este mensaje fue marcado como importante por el organizador del grupo de "

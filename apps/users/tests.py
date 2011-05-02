@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.test import Client
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
@@ -23,6 +24,13 @@ class TestLogins(TestCase):
         self.user = create_profile(django_user)
         self.user.set_password(self.test_password)
         self.user.save()
+        self.old_recaptcha_pubkey = settings.RECAPTCHA_PUBLIC_KEY
+        self.old_recaptcha_privkey = settings.RECAPTCHA_PRIVATE_KEY
+        settings.RECAPTCHA_PUBLIC_KEY, settings.RECAPTCHA_PRIVATE_KEY = '', ''
+        
+    def tearDown(self):
+        settings.RECAPTCHA_PUBLIC_KEY = self.old_recaptcha_pubkey
+        settings.RECAPTCHA_PRIVATE_KEY = self.old_recaptcha_privkey
 
     def test_authenticated_redirects(self):
         """Test that authenticated users are redirected in specific views."""
