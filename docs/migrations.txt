@@ -1,9 +1,14 @@
+MIGRATIONS IN LERNANTA
+Written by Vladimir Támara vtamara@pasosdeJesus.org.  
+Released to the public domain.
 
-INITIALIZING AND UPDATING THE DATABASE
 
 Since the model of the database changes continuosly during development,
 lernanta uses migrations (managed by the application south, see
 http://south.aeracode.org/docs/index.html ).
+
+
+1. INITIALIZING AND UPDATING THE DATABASE
 
 To initialize the database, to update it after model changes introduced 
 by the developers  (you can note them when you see changes in the
@@ -34,11 +39,7 @@ altering schemas within transactions while MySQL doesn't. See:
 http://south.aeracode.org/docs/databaseapi.html#database-specific-issues
 
 
-....
-
-To  develop:
-
-1. CHANGING THE MODEL OF AN EXISTING APPLICATION
+2. CHANGING THE MODEL OF AN EXISTING APPLICATION
 
 If you change the model of an existing application, for example users
 (i.e by changing apps/users/models.py), run:
@@ -50,7 +51,8 @@ You will be able to refine the code generated for example to add dependencies
 example apps/activity/migrations/0001_initial.py that indicates
 that activity has to be created after creating links and statuses ).
 
-2. CREATING MODEL FOR A NEW APPLICATION
+
+3. CREATING MODEL FOR A NEW APPLICATION
 
 If you develop a new application for Lernanta, let's repasa, after
 create the python mode run:
@@ -60,7 +62,7 @@ This will create the first migration that can create the required tables
 that you defined in apps/repasa/models.py
 
 
-3. TESTING MIGRATIONS
+4. TESTING MIGRATIONS
 
 To test that your migrations will run smoothly you can prepare a test 
 database in settings_local.py, for example by adding:
