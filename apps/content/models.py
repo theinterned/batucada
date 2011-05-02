@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 from django.utils.html import escape
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext, get_language, activate 
 from django.db.models import Max
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
@@ -183,21 +183,25 @@ def send_content_notification(instance, is_comment):
     project = instance.project
     if not is_comment and not instance.listed:
         return
-    subject = render_to_string("content/emails/content_update_subject.txt", {
-        'instance': instance,
-        'is_comment': is_comment,
-        'project': project,
-    }).strip()
-    body = render_to_string("content/emails/content_update.txt", {
-        'instance': instance,
-        'is_comment': is_comment,
-        'project': project,
-        'domain': Site.objects.get_current().domain,
-    }).strip()
     for participation in project.participants():
         if participation.no_updates or instance.author == participation.user:
-            continue
+                continue
+        lang = get_language();
+        activate(participation.user.language or 'en');
+        subject = render_to_string("content/emails/content_update_subject.txt", {
+                'instance': instance,
+                'is_comment': is_comment,
+                'project': project,
+                }).strip()
+        body = render_to_string("content/emails/content_update.txt", {
+                'instance': instance,
+                'is_comment': is_comment,
+                'project': project,
+                'domain': Site.objects.get_current().domain,
+                }).strip()
         SendUserEmail.apply_async((participation.user, subject, body))
+        activate(lang);
+
     if instance.author != project.created_by:
         SendUserEmail.apply_async((project.created_by, subject, body))
 
