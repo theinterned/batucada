@@ -28,7 +28,7 @@ from projects.models import Project
 
 from drumbeat import messages
 from users.decorators import login_required
-#from voting.models import Vote
+from voting.models import Vote
 
 log = logging.getLogger(__name__)
 
@@ -154,17 +154,16 @@ def show_challenge(request, slug):
     qn = connection.ops.quote_name
     ctype = ContentType.objects.get_for_model(Submission)
 
-    submission_set = {}
-    #challenge.submission_set.extra(select={'score': """
-    #    SELECT SUM(vote)
-    #    FROM %s
-    #    WHERE content_type_id = %s
-    #    AND object_id = %s.id
-    #    """ % (qn(Vote._meta.db_table), ctype.id,
-    #           qn(Submission._meta.db_table))
-    #    },
-    #    order_by=['-score']
-    #)
+    submission_set = challenge.submission_set.extra(select={'score': """
+        SELECT SUM(vote)
+        FROM %s
+        WHERE content_type_id = %s
+        AND object_id = %s.id
+        """ % (qn(Vote._meta.db_table), ctype.id,
+               qn(Submission._meta.db_table))
+        },
+        order_by=['-score']
+    )
     paginator = Paginator(submission_set, 10)
 
     try:
