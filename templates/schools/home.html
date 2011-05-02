@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
 {% load project_tags %}
 
 {% block title %}{{ school.name }}{% endblock %}
@@ -16,6 +18,9 @@
     </nav>
     {% if user.is_authenticated %}
     <div id="project-actions">
+      {% if is_organizer %}
+        <a id="edit-school" class="button" href="{% locale_url schools_edit slug=school.slug %}">{{ _('Edit School') }}</a>
+      {% endif %}
       <a id="create-project" class="button" href="{% locale_url projects_create %}?school={{ school.slug }}">{{ _('Create a Study Group') }}</a>
     </div>
     {% endif %}
@@ -26,7 +31,7 @@
 
 <div id="main">
   <h1><b>{{ school.name }}</b></h1>
-  {{ school.description|safe }}
+  {{ school.description|youtube|slideshare|safe }}
   <br><br><br><br><br>
   {% project_list school %}
 </div>
