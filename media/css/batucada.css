@@ -1349,12 +1349,12 @@ header {}
 		.modal .ajax-upload .buttons {
 			display: none;
 		}
-		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #account-settings-nav {
+		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #school-edit-nav, .modal #account-settings-nav {
 			float: left;
 			width: 190px;
 			height: 100%;
 		}
-		.modal #profile-edit-nav a, .modal #project-edit-nav a, .modal #account-settings-nav a {
+		.modal #profile-edit-nav a, .modal #project-edit-nav a, .modal #school-edit-nav a, .modal #account-settings-nav a {
 			display: block;
 			padding-left: 18px;
 			font-size: 12px;
@@ -2274,11 +2274,11 @@ div.warning h2 {
 	top:-9px; left: 6px;
 	width: 18px; height: 9px;
 	}
-.project.edit.summary .errorlist {
+.project.edit.summary .errorlist, .school.edit.summary .errorlist {
 	top: auto; 
 	bottom: 6px;
 	}	
-.project.edit.summary .long-description .errorlist {
+.project.edit.summary .long-description .errorlist, .school.edit.summary .description .errorlist {
 	bottom: 78px;
 	}
 .project.edit.media .errorlist {
