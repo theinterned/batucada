@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'content',
     'schools',
+    'voting',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
