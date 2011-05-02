@@ -7,6 +7,7 @@ from django.db import connection
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
+from django.utils.translation import activate
 from django.views.decorators.csrf import csrf_exempt
 
 from l10n.urlresolvers import reverse
@@ -83,6 +84,7 @@ def dashboard(request):
     try:
         profile = request.user.get_profile()
     except UserProfile.DoesNotExist:
+	activate(profile.language)
         user = request.user
         username = ''
         if user.username[:10] != 'openiduser':
