@@ -16,11 +16,12 @@
 {% block body %}    
     <div class="banner">   
       <div class="container">
-        <h1>Knight-Mozilla News Technology Partnership (MoJo)</h1>
+        <a href="{% locale_url drumbeat_journalism %}""><h1>Knight-Mozilla News Technology Partnership (MoJo)</h1></a>
         <h2>Web developers and designers around the world collaborating to invent the future of news.</h2>
-        <a class="button selected" href="{% locale_url drumbeat_journalism_about %}"><span>About Mojo</span></a>
+        <a class="button" href="{% locale_url drumbeat_journalism %}"><span>Home</span></a>
+       <a class="button selected" href="{% locale_url drumbeat_journalism_about %}"><span>About MoJo</span></a>
         <a class="button" href="{% locale_url drumbeat_journalism_participate %}"><span>Get Involved</span></a>
-        <a class="button" href="https://wiki.mozilla.org/Drumbeat/MoJo"><span>Mojo Wiki</span></a>
+        <a class="button" href="https://wiki.mozilla.org/Drumbeat/MoJo"><span>MoJo Wiki</span></a>
       </div>
     </div>
     
@@ -53,25 +54,23 @@
           <a class="logo-zeit" href="http://www.zeit.de"><span>Zeit Online</span></a>
         </div>
         <p class="intro">
-          The Knight-Mozilla News Technology Partnership is a three-year initiative of the Knight Foundation and Mozilla to harness open-web innovation for journalism. 
-        </p>
-        <p>
-          Through a series of <a href="{% locale_url projects_show slug="mojo" %}">innovation challenges</a> and community events, we will identity 15 fellows that will be embedded in leading newsrooms around the world. These fellows will create new tools, ideas, and news  experiences that benefit both readers and newsmakers&#8212;all using open technologies.
-        </p>
+Driving news innovation.        </p>
+        <p>For the next three years, we'll drive news innovation through the Knight-Mozilla News Technology Partnership—"MoJo."</p>
+        
+        <p>Information is a core community need. People need good, timely information to thrive in a democracy and act in their own best interest. And journalism, as an institution, must be strengthened.</p>        
+        
+        <p>Journalism and the open web are built on common values. Like the web, the future of journalism lies in universal access and participation.</p>  
+
+        <p>We intend to advance the best values of both journalism and the open web by continuous innovation. Working together, technologists and journalists can accomplish great things.</p>
         <h5>What are we doing?</h5>
         <ul>
           <li>Generating great ideas: through innovation challenges, open conversations and fellowships.</li>
           <li>Training people: on taking ideas from concept to code.</li>
           <li>Making software: demos and reference implementations of the best ideas and experiments for news. All built using open web technologies.</li>
-          <li>Thought leadership: through fellows, community & news partnerships.</li>
+          <li>Thought leadership: through 15 embedded news fellows with community & news partners.</li>
         </ul>
-        <p class="intro">
-          Journalism and the open web are built on common values. And, like the web, the future of  journalism lies in universal access and participation.  
         <p>
-          News should be universally accessible across phones, tablets, and  computers. It should be multilingual. It should be rich with audio,  video, and elegant data visualization. It should enlighten, inform, and  entertain people, and it should make them part of the story.  
-        </p>
-        <p>
-          For the next three years, we'll imagine and build stuff to advance the state of the art in web-based journalism. All of that work will be open source, and available for others to use and build upon.  
+          News should be universally accessible across phones, tablets, and  computers. It should be multilingual. It should be rich with audio,  video, and elegant data visualization. It should enlighten, inform, and  entertain people, and it should make them part of the story. All of that work will be open source, and available for others to use and build upon.  
         </p>
         <p>
           <a href="{% locale_url drumbeat_journalism_participate %}">Join us!</a>
@@ -176,7 +175,7 @@
       <div class="column-33 last">
         <h5>FAQs</h5>
         <ul>
-          <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#What_is_MoJo.3F">What is Mojo</a></li>
+          <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#What_is_MoJo.3F">What is MoJo?</a></li>
           <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#Why_is_Mozilla_interested_in_media_and_journalism.3F.E2.80.A8">Why is Mozilla interested in media and journalism?</a></li>
           <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#Who_is_eligible_for_a_Knight-Mozilla_fellowship.3F_How_do_I_apply_for_a_Knight-Mozilla_fellowship.3F.E2.80.A8.E2.80.A8">Who is eligible for a Knight-Mozilla fellowship? How do I apply for a Knight-Mozilla fellowship?</a></li>
           <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#What_do_you_mean_by_.22the_open_web.22_and_.22open_technology.3F.E2.80.A8">What do you mean by "the open web" and "open technology?"</a></li>
