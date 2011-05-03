@@ -56,7 +56,7 @@ def dashboard(request):
     try:
         profile = request.user.get_profile()
     except UserProfile.DoesNotExist:
-	activate(profile.language)
+        activate(profile.language)
         user = request.user
         username = ''
         if user.username[:10] != 'openiduser':
