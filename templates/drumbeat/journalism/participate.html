@@ -4,12 +4,12 @@
 {% block body %}
     <div class="banner">   
       <div class="container">
-        <h1><a href=
-        https://drumbeat.org/en-US/journalism/">Knight-Mozilla News Technology Partnership (MoJo)</a></h1>
+        <a href="{% locale_url drumbeat_journalism %}""><h1>Knight-Mozilla News Technology Partnership (MoJo)</h1></a>
         <h2>Web developers and designers around the world collaborating to invent the future of news.</h2>
+              <a class="button" href="{% locale_url drumbeat_journalism %}"><span>Home</span></a>
         <a class="button" href="{% locale_url drumbeat_journalism_about %}"><span>About Mojo</span></a>
         <a class="button selected" href="{% locale_url drumbeat_journalism_participate %}"><span>Get Involved</span></a>
-        <a class="button" href="https://wiki.mozilla.org/Drumbeat/MoJo"><span>Mojo Wiki</span></a>
+        <a class="button" href="https://wiki.mozilla.org/Drumbeat/MoJo"><span>MoJo Wiki</span></a>
       </div>
     </div>
     
@@ -17,26 +17,26 @@
       <div class="container">
         <a href="https://drumbeat.org/challenges/unlocking-video/"><img style="float: right; margin-top: -20px;" src="{{ MEDIA_URL }}images/mojo/badge.png" width="127" height="129" alt="First challenge undeway!"></a>
         <p class="intro">
-          We want news organizations. Programmers and developers. Entrepreneurs. News hackers. Reporters. Design thinkers. Journalism teachers and students. Or anyone using the news to invent something new and interesting. Get involved today and <a href="http://www.twitter.com/knightmozilla">follow us on Twitter</a>.
+          MoJo is an opportunity to get your byline on the future of news. Whether you are a designer, developer, student or entrepreneur, we want to help develop your best ideas about journalism's future. Get involved today and <a href="http://www.twitter.com/knightmozilla">follow us on Twitter</a>.
         </p>
         <br />
         <div class="column-50">
+            <h3><strong>Turn Your News Tech Idea Into Reality</strong></h3>
           <p>
-            <strong>Become a Knight-Mozilla Fellow:</strong> take part in one or more of our innovation challenges. 
+          </p>
+          <p class="center">
+            <a class="getstarted" href="https://drumbeat.org/challenges/unlocking-video/">Enter the challenge</a>
           </p>
           <p>
-            <a class="getstarted" href="https://drumbeat.org/challenges/unlocking-video/">Get Started</a>
-          </p>
-          <p>
-            We're looking for 15 creative people committed to innovation in news technology to join our partnership as Knight-Mozilla News Technology Fellows.
-          </p>
+          Take your news technology idea from napkin sketch, to specification, to working prototype, with Mozilla's help.
+</p>
           <ul>
-            <li>Fellowships are paid, one-year positions hosted by our news partner organizations. </li>
-            <li>Current news organizations include Al Jazeera, BBC, Boston.com, the Guardian and Zeit Online.</li>
-            <li>Each Fellow will work with the technology teams at their host organization. And with an innovation community convened by Knight and Mozilla to build world-class news tech implementations using open web tools and standards.</li>
+            <li>Participating in the Knight-Mozilla news innovation challenges will net you new collaborators and support.</li><br />
+            <li>The 60 best contributors will rub shoulders with the Web's leading lights: folks like Christian Heilmann, Burt Herman, Aza Raskin, John Resig, and many more.</li><br />
+            <li>You'll learn new skills, and more than 20 contributors will have an opportunity to develop their ideas alongside skilled developers at in-person hackfests in Berlin and London.</li>
           </ul>
-          
-          <div class="participate-signup">
+         Read the <a href="https://wiki.mozilla.org/Drumbeat/MoJo/Challenge_Rules">complete rules</a>.
+          <div class="participate-signup nudge">
             <form method="post" action="https://lists.mozilla.org/subscribe/community-mojo">
               <label for="email">Subscribe to our newsletter and get the latest updates delivered directly to your inbox</label>
               <input name="email" id="email" type="text" placeholder="email address">
@@ -45,35 +45,31 @@
           </div>
         </div>
         <div class="column-50 last">
+                <h3><strong>Become a Knight-Mozilla Fellow</strong></h3>
           <p>
-            <strong>Become a supporting news organizations:</strong> Host a fellow
+          </p>
+          <p class="center">
+            <a class="getstarted" href="https://drumbeat.org/challenges/unlocking-video/">Let's get started!</a>
           </p>
           <p>
-            <a class="getstarted" href="https://wiki.mozilla.org/Drumbeat/Mojo/Selection">Get Started</a>
-          </p>
-          <p>
-            We're looking for 10 additional news partners for our 2012 fellows. News-making organizations that:
-          </p>
-          <ul>
-            <li>are committed to the goals of the Knight-Mozilla partnership</li>
-            <li>have a strong commitment to innovation</li>
-            <li>have a history of outstanding journalism </li>
-            <li>can influence the news industry to adopt open technologies.</li>
-          </ul>
-          <p>
-            Knight-Mozilla news partners will:
+            We're looking for 15 brilliant, creative people to join MoJo as Knight-Mozilla News Technology Fellows.
           </p>
           <ul>
-            <li>Help shape our News Innovation Challenges. Select people and ideas to advance toward Fellowships.</li>
-            <li>Host at least one fellow for one year.  Provide support from their in-house tech team, and access to  news and editorial staff partners.</li>
-            <li>Join our community of news innovators.</li>
+            <li>Fellowships are paid, one-year positions. Fellows earn a $60,000 salary, plus stipends, relocation, and various benefits.</li><br />
+            <li>Current news organizations include Al Jazeera, BBC, Boston.com, the Guardian and Zeit Online.</li><br />
+            <li>Fellows will work alongside the newsroom staff at their host institutions, and the MoJo community of innovators, to build world-class news tech implementations.</li>
           </ul>
-          <p>
-            In the fall of 2011, we'll host an open application process for news partners.
+          Anyone who participates in an innovation challenge is eligible to become a fellow.
+         
+        <h3><strong>Host a Knight-Mozilla Fellow</strong></h3>
+           <p>
+            We're looking for news partners with a strong commitment to outstanding journalism and technical innovation to <a href="https://wiki.mozilla.org/Drumbeat/Mojo/Selection">host our 2012 fellows</a>.
+            </p>
+            <p>
+            Fellows are exceptional news technologists, selected and supported by Knight and Mozilla to advance their ideas inside leading newsrooms. Institutions gain access to a full-time technologist and a broad community of open source innovators. To learn more, <a href="mailto:njames@mozillafoundation.org">please be in touch</a>.
           </p>
-          <p>
-            In the meantime, join our <a href="https://lists.mozilla.org/listinfo/community-mojo">community list</a> for the latest updates and news innovation discussion. Or <a href="mailto:njames@mozillafoundation.org">contact us</a> if you'd like to be notified once the application process opens.
-          </p>
+     
+          </div>         
         </div>
       </div>
     </div>
