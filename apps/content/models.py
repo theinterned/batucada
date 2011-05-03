@@ -156,26 +156,37 @@ class PageComment(ModelBase):
             return
         project = self.page.project
         is_answer = not self.reply_to
-        subject = render_to_string("content/emails/sign_up_updated_subject.txt", {
-            'comment': self,
-            'is_answer': is_answer,
-            'project': project,
-        }).strip()
-        body = render_to_string("content/emails/sign_up_updated.txt", {
-            'comment': self,
-            'is_answer': is_answer,
-            'project': project,
-            'domain': Site.objects.get_current().domain,
-        }).strip()
         recipients = {project.created_by.username: project.created_by}
         if self.reply_to:
             comment = self
             while comment.reply_to:
                 comment = comment.reply_to
                 recipients[comment.author.username] = comment.author
+
+        lang = get_language()
+        for suplang in settings.SUPPORTED_LANGUAGES:
+            activate(suplang)
+            subject[suplang] = render_to_string(
+                "content/emails/sign_up_updated_subject.txt", {
+                    'comment': self,
+                    'is_answer': is_answer,
+                    'project': project,
+                    }).strip()
+            body[suplang] = render_to_string(
+                "content/emails/sign_up_updated.txt", {
+                     'comment': self,
+                     'is_answer': is_answer,
+                     'project': project,
+                     'domain': Site.objects.get_current().domain,
+                     }).strip()
+       
         for username in recipients:
+            reclang = recipients[username].user.language or 'en'
             if recipients[username] != self.author:
-                SendUserEmail.apply_async((recipients[username], subject, body))
+                SendUserEmail.apply_async((recipients[username], 
+                    subject[reclang], body[reclang]))
+
+        activate(lang)
 
 
 def send_content_notification(instance, is_comment):
@@ -183,28 +194,35 @@ def send_content_notification(instance, is_comment):
     project = instance.project
     if not is_comment and not instance.listed:
         return
-    for participation in project.participants():
-        if participation.no_updates or instance.author == participation.user:
-                continue
-        lang = get_language();
-        activate(participation.user.language or 'en');
-        subject = render_to_string("content/emails/content_update_subject.txt",
-               {
+    lang = get_language()
+    for suplang in settings.SUPPORTED_LANGUAGES:
+        activate(suplang)
+        subject[suplang] = render_to_string(
+            "content/emails/content_update_subject.txt", {
                 'instance': instance,
                 'is_comment': is_comment,
                 'project': project,
                 }).strip()
-        body = render_to_string("content/emails/content_update.txt", {
+        body[suplang] = render_to_string(
+            "content/emails/content_update.txt", {
                 'instance': instance,
                 'is_comment': is_comment,
                 'project': project,
                 'domain': Site.objects.get_current().domain,
                 }).strip()
-        SendUserEmail.apply_async((participation.user, subject, body))
-        activate(lang);
+
+    for participation in project.participants():
+        if participation.no_updates or instance.author == participation.user:
+                continue
+        parlang = participation.user.language or 'en'
+        SendUserEmail.apply_async((participation.user, 
+            subject[parlang], body[parlang]))
 
     if instance.author != project.created_by:
-        SendUserEmail.apply_async((project.created_by, subject, body))
+        parlang = project.created_by.user.language or 'en'
+        SendUserEmail.apply_async((project.created_by, 
+            subject[parlang], body[parlang]))
+    activate(lang)
 
 
 ###########
