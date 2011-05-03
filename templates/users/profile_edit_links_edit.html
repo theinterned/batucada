@@ -19,6 +19,10 @@
     {{ form.url }}
     {{ form.url.errors }}
   </div>
+  <div class="field link subscribe {% if form.subscribe.errors %} error{% endif %}">
+    <label for="id_subscribe">{{ _('Subscribe') }}</label>
+    {{ form.subscribe }}
+  </div>
   <p class="buttons add-link">
     <button type="submit">{{ _('Update') }}</button>
   </p>
