@@ -18,7 +18,9 @@ class School(ModelBase):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
-    organizers = models.ManyToManyField('users.UserProfile')
+    organizers = models.ManyToManyField('users.UserProfile', null=True, blank=True)
+    featured = models.ManyToManyField('projects.Project', related_name='school_featured', null=True, blank=True)
+    
 
     def __unicode__(self):
         return self.name
