@@ -93,7 +93,7 @@ class Project(ModelBase):
     
     school = models.ForeignKey('schools.School', related_name='projects', null=True, blank=True)
 
-    detailed_description = models.ForeignKey('content.Page', related_name='desc_project', default=0, null=True, blank=True)
+    detailed_description = models.ForeignKey('content.Page', related_name='desc_project', null=True, blank=True)
     sign_up = models.ForeignKey('content.Page', related_name='sign_up_project', null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
