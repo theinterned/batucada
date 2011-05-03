@@ -56,7 +56,6 @@ def dashboard(request):
     try:
         profile = request.user.get_profile()
     except UserProfile.DoesNotExist:
-        activate(profile.language)
         user = request.user
         username = ''
         if user.username[:10] != 'openiduser':
@@ -69,6 +68,7 @@ def dashboard(request):
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
+    activate(profile.language)
     projects_following = profile.following(model=Project)
     for project in projects_following:
         if project.created_by == profile:
