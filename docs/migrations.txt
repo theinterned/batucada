@@ -12,27 +12,26 @@ http://south.aeracode.org/docs/index.html ).
 
 To initialize the database, to update it after model changes introduced 
 by the developers  (you can note them when you see changes in the
-files apps/*/model.py) or just to be sure you have your models up to date, 
+files apps/*/models.py) or just to be sure you have your models up to date, 
 run from the sources directory:
 
 	./manage.py syncdb --noinput --migrate
 
-It will update the model and show the applications managed withouth
+It will update the model and show the applications managed without
 migrations first, and after them the applications managed with migrations  
 (please see http://south.aeracode.org/ticket/276 )
 
-With an empty database, this will work correctly with PostgreSQL, 
+From an empty database, this will work correctly with PostgreSQL, 
 MySQL and SQLite.
 
 
 NOTE 1: Please don't use 
 	./manage.py syncdb --all
-Since this will ignore migrations.
-If you run it, you can mark all the migrations as applied by running:
+Since this will ignore migrations. However if you have tu run it,
+you can mark all the migrations as applied by running:
 	./manage.py migrate --all --fake
-However after that if you run
-	./manage.py syncdb 
-all the applications will appear to be managed withouth migrations.
+But all the applications will appear to be managed without migrations
+(as could be seen with ./manage.py syncdb  )
 
 NOTE 2: Migrations work best with PostgreSQL since this database allows
 altering schemas within transactions while MySQL doesn't. See:
@@ -54,8 +53,8 @@ that activity has to be created after creating links and statuses ).
 
 3. CREATING MODEL FOR A NEW APPLICATION
 
-If you develop a new application for Lernanta, let's repasa, after
-create the python mode run:
+If you develop a new application for Lernanta, let's say repasa, after
+developing the python mode run:
 	./manage.py schemamigration repasa --initial
 
 This will create the first migration that can create the required tables
@@ -77,7 +76,7 @@ You are declaring a Database in SQLite,  and you can update it with:
 	./manage.py syncdb --database s --migrate
 
 If you want to be sure, everything will work with a new database, flush
-your test database (WARGNING: all the data will be deleted) with:
+your test database (WARNING: all the data will be deleted) with:
 
 	./manage.py flush --database s
 
