@@ -638,12 +638,17 @@ header {}
   .challengebox p.first {
     font-size: 18px;
   }
+  
+  .challengebox p.inner {
+    font-size: 16px;
+    max-width: 375px;
+  }
   .challengebox .button-white {
     margin-top: 11px;
   }
 
 .column-right .challengebox {
-  text-align: center;
+  text-align: right;
 }  
   .column-right .challengebox p.details {
     font-size: 12px;
@@ -862,9 +867,13 @@ header {}
     width: 290px;
     padding: 5px;
   }
+.nudge {
+margin-top: 15px;
+}
 
-
-
+.center {
+text-align:center;
+}
 
 
 
