@@ -3,8 +3,16 @@
 
 {% block title %}{{ challenge.title }}{% endblock %}
 
+
 {% block breadcrumbs %}
+
+<!--let's exclude the Nav for "if (user.get_profile == challenge.created_by and challenge.project.name == 'MoJo') or (challenge.project.name != 'MoJo')" --!>
+
+<!--instead, we should include "challenges/_challenge_sidebar.html" or whatever we need to do to make the /journalism header appear for MoJo-created challenges --!>
+
+
 <div class="container">
+    
   <nav>
     <a href="{% locale_url projects_gallery %}">{{ _('Projects') }}</a>
     <span class="arrow">&rsaquo;</span>
@@ -12,23 +20,25 @@
     <span class="arrow">&rsaquo;</span>
     <a href="{% locale_url challenges_show slug=challenge.slug %}">{{ challenge.title }}</a>
   </nav>
-
+  
   <div id="project-actions">
     {% if user.get_profile == challenge.created_by %}
     <a class="button" href="{% locale_url challenges_edit slug=challenge.slug %}">{{ _('Edit Challenge') }}</a>
     {% endif %}
   </div>
 </div>
+
 {% endblock %}
 
 {% block bodyid %}challenge_landing{% endblock %}
 
 {% block body %}
 
+   
+
 {% include "challenges/_challenge_sidebar.html" %}
 <div id="main">
-  <h1>{{ challenge.project }}</h1>
-  <h2>{{ challenge.title }}</h2>
+  <h1>{{ challenge.title }}</h1><br />
 
   {% if challenge.is_active %}
   <p>{{ remaining.days }} days to respond to this challenge</p>
@@ -60,7 +70,8 @@
   {% endif %}
   
   {% if submissions.object_list %}
-  <h2>{{ _('Popular Ideas') }}</h2>
+  <h2>{{ _('Newest Ideas') }}</h2>
+  <br />
   <ul id="posts">
     {% for submission in submissions.object_list %}
     {% include "challenges/_submission_resource.html" %}
