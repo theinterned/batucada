@@ -33,9 +33,13 @@ def sidebar(context):
 
 register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
+
 def project_list(school=None, limit=8):
     listed = Project.objects.filter(under_development=False, testing_sandbox=False)
-    featured = listed.filter(featured=True)
+    if school:
+        featured = school.featured.filter(under_development=False, testing_sandbox=False)
+    else:
+        featured = listed.filter(featured=True)
     active = Project.objects.get_active(limit=limit, school=school)
     popular = Project.objects.get_popular(limit=limit, school=school)
     new = listed.order_by('-created_on')
