@@ -1437,15 +1437,14 @@ header {}
 		.modal .link.subscribe{
             width: 100px;
             padding: 0;
+            top: -10px;
         }
+ 
         
 		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text] {
 			width: 154px;
 		}
 		
-		.modal .links input[type=checkbox] {
-            width: 100px;
-        }
         
 		.modal .links .url input[type=text] {
 			width: 150px;
@@ -1519,6 +1518,19 @@ header {}
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
 		}
+		
+		.modal .links .subscription .no{
+            display: block;
+            text-indent: -9999px;
+            background: url(/media/images/delete-x.png) 50% 50% no-repeat;
+        }
+
+        .modal .links .subscription .error{
+            display: block;
+            text-indent: -9999px;
+            background: url(/media/images/error.png) 50% 50% no-repeat;
+        }
+ 
 		.modal .links tbody tr:last-child td, .modal .participants tbody tr:last-child td{
 			/*border-bottom: none;*/
 			-webkit-box-shadow: none;

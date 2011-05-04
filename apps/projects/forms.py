@@ -28,7 +28,7 @@ class ProjectLinksForm(forms.ModelForm):
 
     class Meta:
         model = Link
-        fields = ('name', 'url',)
+        fields = ('name', 'url', 'subscribe')
 
 
 

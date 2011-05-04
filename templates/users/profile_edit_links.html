@@ -6,7 +6,7 @@
 {% block form %}
 <fieldset id="profile_edit_links" class="profile edit links tabpane">
 <h2>{{ _('Links') }}</h2>
-<p class="hint">{{ _('Add links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile.') }}</p>
+<p class="hint">{{ _('Add links to your blog, homepage, twitter profile, github repository etc. These links will appear on your profile. Check subscribe if you would like to subscribe to its feed and publish its activity to your followers.') }}</p>
 <form action="{% locale_url users_profile_edit_links %}" method="post">
   {% csrf_token %}
   <div class="field link name{% if form.name.errors %} error{% endif %}">
@@ -18,6 +18,11 @@
     <label for="id_url">{{ _('Url') }}</label>
     {{ form.url }}
     {{ form.url.errors }}
+  </div>
+  <div class="field link subscribe {% if form.subscribe.errors %} error{% endif %}">
+    <label for="id_subscribe">{{ _('Subscribe') }}</label>
+    {{ form.subscribe }}
+    {{ form.subscribe.errors }}
   </div>
   <p class="buttons add-link">
     <button type="submit">{{ _('Add') }}</button>
@@ -38,10 +43,16 @@
     <tr>
       <td class="name">{{ link.name }}</td>
       <td class="url"><a href="{{ link.url }}" title="{{ link.url }}">{{ link.url }}</a></td>
-      <td class="subscription">{% if link.subscription.verified %}<span class="yes">{{ _('yes') }}</span>{% endif %}</td>
+      <td class="subscription">
+	      {% if link.subscribe %}
+	        {% if link.subscription.verified %}<span class="yes" title="{{_('Subscribed.') }}">{{ _('yes') }}</span>
+	        {% else %}<span class="error" title="{{_('Error saving subscription.') }}">{{ _('error') }}</span>
+	        {% endif %}
+	      {% else %}
+	        <span class="no" title="{{_('Not subscribed.') }}">{{ _('no') }}</span>
+      {% endif %}</td>
       <td class="actions">
-        <form action="{% locale_url users_profile_edit_links_edit link_id=link.id %}" method="post">
-          {% csrf_token %}
+        <form action="{% locale_url users_profile_edit_links_edit link_id=link.id %}" method="get">
           <button type="submit" value="{{ _('Edit') }}">{{ _('Edit') }}</button>
         </form>
         <form action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
