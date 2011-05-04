@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from django.utils.translation import activate
 from django.views.decorators.csrf import csrf_exempt
 
 from l10n.urlresolvers import reverse
@@ -68,7 +67,6 @@ def dashboard(request):
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
-    activate(profile.language)
     projects_following = profile.following(model=Project)
     for project in projects_following:
         if project.created_by == profile:

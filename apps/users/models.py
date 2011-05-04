@@ -103,8 +103,7 @@ class UserProfile(ModelBase):
     discard_welcome = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
-    language = models.CharField(verbose_name = 'preferred language', 
-        max_length = 16, choices = settings.SUPPORTED_LANGUAGES, default='en')
+
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
     tags = TaggableManager(through=TaggedProfile)
 
