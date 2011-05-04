@@ -40,11 +40,6 @@ TIME_ZONE = 'America/Toronto'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
 
-SUPPORTED_LANGUAGES = (
-		(u'en', u'English'),
-		(u'es', u'Español'),
-		)
-
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -142,7 +137,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'content',
     'schools',
-    'voting',
+    'voting'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
