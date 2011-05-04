@@ -18,7 +18,7 @@
     {{ form.short_description }}
     {{ form.short_description.errors }}
   </div>
-  <div class="field {% if form.school.errors %} error{% endif %}">
+  <div class="field{% if form.school.errors %} error{% endif %}">
     <label for="id_school">{{ _('School') }}</label>
     <span class="hint block">{{ _('Optionally, the study group may belong to a particular school.') }}</span>
     {{ form.school }}

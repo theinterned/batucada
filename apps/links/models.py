@@ -20,10 +20,16 @@ class Link(models.Model):
     url = models.URLField(max_length=1023)
     project = models.ForeignKey('projects.Project', null=True)
     user = models.ForeignKey('users.UserProfile', null=True)
+    subscribe = models.BooleanField(default=False)
     subscription = models.ForeignKey(Subscription, null=True)
     index = models.IntegerField(null=True, default=0, blank=True)
 
     def save(self):
+        if self.subscription:
+            tasks.UnsubscribeFromFeed.apply_async(args=(self,))
+        if self.subscribe:
+            tasks.SubscribeToFeed.apply_async(args=(self,))
+
         if not self.index:
             if self.project:
                 max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
@@ -38,8 +44,8 @@ def link_create_handler(sender, **kwargs):
     created = kwargs.get('created', False)
     if not created or not isinstance(link, Link):
         return
-   
-    tasks.SubscribeToFeed.apply_async(args=(link,))
+    if link.subscribe:
+        tasks.SubscribeToFeed.apply_async(args=(link,))
 post_save.connect(link_create_handler, sender=Link)
 
 

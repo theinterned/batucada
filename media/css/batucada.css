@@ -1349,11 +1349,14 @@ header {}
 		.modal .ajax-upload .buttons {
 			display: none;
 		}
-		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #school-edit-nav, .modal #account-settings-nav {
+		.modal #profile-edit-nav, .modal #project-edit-nav, .modal #account-settings-nav, .modal #school-edit-nav {
 			float: left;
 			width: 190px;
 			height: 100%;
 		}
+        .modal #school-edit-nav li {
+            width: 190px;
+        }
 		.modal #profile-edit-nav a, .modal #project-edit-nav a, .modal #school-edit-nav a, .modal #account-settings-nav a {
 			display: block;
 			padding-left: 18px;
@@ -1364,6 +1367,10 @@ header {}
 		.modal fieldset{
 			padding: 0 10px;
 			width: 516px;
+		}
+        .modal .school.edit fieldset{
+			padding: 0 20px;
+			width: 500px;
 		}
 		.modal.nav fieldset {
 			margin-left: 190px;
@@ -1403,7 +1410,7 @@ header {}
 			font-style: italic;
 		}
 
-		.modal .participant {
+		.modal .participant, .modal .featured_group {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 0;
@@ -1424,29 +1431,28 @@ header {}
 		.modal .link.subscribe{
             width: 100px;
             padding: 0;
+            top: -10px;
         }
+ 
         
-		.modal .links input[type=text], .modal .participants input[type=text] {
+		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text] {
 			width: 154px;
 		}
 		
-		.modal .links input[type=checkbox] {
-            width: 100px;
-        }
         
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, , .modal .participants .add-participant {
+		.modal .links .add-link, , .modal .participants .add-participant, .modal .featured_groups .add-featured {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button, .modal .participants .add-participant button {
+		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
-		#editing table, .modal .links table, .modal .participants table {
+		#editing table, .modal .links table, .modal .participants table, .featured_groups table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1458,7 +1464,8 @@ header {}
 		    -moz-box-shadow: #ddd 0 1px 4px inset;
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
-		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td {
+		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
+          .modal .featured_groups th, .modal .featured_groups td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1471,7 +1478,7 @@ header {}
 			
 			/*width: 25%;*/
 		}
-		.modal .links table .name, .modal .participants table .name {
+		.modal .links table .name, .modal .participants table .name, .featured_groups table .name {
 			width: 185px;
 		}
 		
@@ -1505,6 +1512,19 @@ header {}
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
 		}
+		
+		.modal .links .subscription .no{
+            display: block;
+            text-indent: -9999px;
+            background: url(/media/images/delete-x.png) 50% 50% no-repeat;
+        }
+
+        .modal .links .subscription .error{
+            display: block;
+            text-indent: -9999px;
+            background: url(/media/images/error.png) 50% 50% no-repeat;
+        }
+ 
 		.modal .links tbody tr:last-child td, .modal .participants tbody tr:last-child td{
 			/*border-bottom: none;*/
 			-webkit-box-shadow: none;
