@@ -75,10 +75,9 @@ You are declaring a Database in SQLite,  and you can update it with:
 
 	./manage.py syncdb --database s --migrate
 
-If you want to be sure, everything will work with a new database, flush
-your test database (WARNING: all the data will be deleted) with:
-
-	./manage.py flush --database s
+If you want to be sure, everything will work with a new database, drop
+and create again the database.  For example with sqlite:
+    rm lernanta.db
 
 Apply all the migrations
 
@@ -96,7 +95,8 @@ If you want to run other interactive test with this one, rename it in
 settings_local.py from 's' to 'default' and start the server as usual:
 	./manage.py runserver
 
-The graph of migrations of directory docs can be update with:
+The graph of migrations of directory docs can be updated (given
+you have installed Graphviz) with:
 	./manage.py graphmigrations | dot -Tpng -odocs/migrations.png
 
 
