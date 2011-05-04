@@ -17,6 +17,9 @@ urlpatterns = patterns('django.views.generic.simple',
    url(r'^journalism/participate/$', 'direct_to_template', {
         'template': 'drumbeat/journalism/participate.html',
    }, name='drumbeat_journalism_participate'),
+   url(r'^journalism/process/$', 'direct_to_template', {
+        'template': 'drumbeat/journalism/process.html',
+   }, name='drumbeat_journalism_process'),
    url(r'^journalism/about/$', 'direct_to_template', {
         'template': 'drumbeat/journalism/about.html',
    }, name='drumbeat_journalism_about'),
