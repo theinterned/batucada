@@ -14,38 +14,52 @@
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-      {% if reply_to %}
+      {% if comment %}
+        <span class="arrow">&rsaquo;</span>
+        <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
+      {% else %}{% if reply_to %}
         <span class="arrow">&rsaquo;</span>
         <a href="{{ reply_to.get_absolute_url }}">{{ reply_to.author }} {{ reply_to.created_on }}</a>
-      {% endif %}
+      {% endif %}{% endif %}
+      
     </nav>
   </div> <!-- /.container -->
 {% endblock %}
 
 
 {% block page_form_title %}
-  {% if reply_to %}
+  {% if comment %}
+    <h1>{{ _('Edit Comment') }} {{ comment.author }} {{ comment.created_on }} </h1>
+  {% else %}{% if reply_to %}
     <h1>{{ _('Reply Comment') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
   {% else %}
     <h1>{{ _('Comment') }} {{ page.title }}</h1>
-  {% endif %}
+  {% endif %}{% endif %}
 {% endblock %}
 
 {% block page_form_url %}
-  {% if reply_to %}
+  {% if comment %}
+    {% locale_url comment_edit slug=page.project.slug page_slug=page.slug comment_id=comment.id %}
+  {% else %}{% if reply_to %}
     {% locale_url comment_reply slug=page.project.slug page_slug=page.slug comment_id=reply_to.id %}
   {% else %}
     {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
-  {% endif %}
+  {% endif %}{% endif %}
 {% endblock %}
 
 {% block page_form_buttons %}
-  {% if reply_to %}
+  {% if comment %}
+    <a class="button" href="{{ comment.get_absolute_url }}">
+  {% else %}{% if reply_to %}
     <a class="button" href="{{ reply_to.get_absolute_url }}">
   {% else %}
     <a class="button" href="{{ page.get_absolute_url }}">
-  {% endif %}
+  {% endif %}{% endif %}
     {{ _('Cancel') }}
   </a>
-  <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
+  {% if comment %}
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+  {% else %}
+    <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
+  {% endif %}
 {% endblock %}
