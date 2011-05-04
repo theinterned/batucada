@@ -504,6 +504,13 @@ header {}
     vertical-align: middle;
   }
 
+.videoinline {
+width: 480px;
+border: 1px solid grey;
+margin: 10px 30px 10px 30px;
+text-align: center;
+}
+
 /* HOMEPAGE LOGOS */
 .homepagelogos {
   float: right;
@@ -788,6 +795,7 @@ header {}
 }
   .column-50.last {
     padding-right: 0px;
+    padding-top: 20px;
   }
 
 /* FOOTER */
