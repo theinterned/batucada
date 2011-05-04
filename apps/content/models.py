@@ -150,6 +150,13 @@ class PageComment(ModelBase):
     def project(self):
         return self.page.project
 
+    def can_edit(self, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            return (profile == self.author)
+        else:
+            return False
+
     def send_sign_up_notification(self):
         """Send sign_up notifications."""
         if self.page.slug != 'sign-up':

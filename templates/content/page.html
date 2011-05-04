@@ -46,8 +46,16 @@
 {% for comment in first_level_comments %}
 <li class="post-container">
   <a name="{{ comment.id }}"></a>
-  <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
-  <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{_('Report Abuse')}}</a>
+  {% if user.is_authenticated %}
+    {% if can_edit %}
+      <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
+    {% endif %}
+    {% if user.get_profile == comment.author %}
+      <a class="action edit" href="{% locale_url comment_edit slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Edit') }}</a>
+    {% else %}
+      <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{_('Report Abuse')}}</a>
+    {% endif %}
+  {% endif %}
   <a href="{{ comment.author.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
   </a>
@@ -65,8 +73,16 @@
 {% for reply in comment.all_replies.all %}
   <li class="post-container post-replies">
     <a name="{{ reply.id }}"></a>
-    <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
-    <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{_('Report Abuse')}}</a>
+    {% if user.is_authenticated %}
+      {% if can_edit %}
+        <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
+      {% endif %}
+      {% if user.get_profile == reply.author %}
+        <a class="action edit" href="{% locale_url comment_edit slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Edit') }}</a>
+      {% else %}
+        <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{_('Report Abuse')}}</a>
+      {% endif %}
+    {% endif %}
     <a href="{{ reply.author.get_absolute_url }}">
       <img class="member-picture" width="54" height="54" src="{{ reply.author.image_or_default }}">
     </a>
