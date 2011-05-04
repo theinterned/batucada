@@ -1206,8 +1206,14 @@ header {}
 	#posts .post-container:hover .action{
 		display: block;
 	}
+    #page #posts .post-container .action {
+        display: block;
+    }
     #posts .reply-to{
 		background: url("/media/images/reply.icon.png") 0 0 no-repeat;
+	}
+    #posts .edit{
+		background: url("/media/images/edit.icon.png") 0 0 no-repeat;
 	}
 	#posts .report,
 	.supplemental_actions .report {
