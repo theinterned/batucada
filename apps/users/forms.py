@@ -115,7 +115,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'preflang')
         widgets = {
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),
         }
