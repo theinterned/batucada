@@ -15,7 +15,7 @@
   </nav>
 
   <div id="project-actions">
-    {% if user.get_profile == challenge.created_by %}
+    {% if user.get_profile == submission.created_by %}
     <a class="button" href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.id%}">{{ _('Edit Submission') }}</a>
     {% endif %}
   </div>
