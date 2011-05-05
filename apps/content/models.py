@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 from django.utils.html import escape
 from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
+from django.utils.translation import activate, get_language, ugettext
 from django.db.models import Max
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
@@ -163,17 +163,23 @@ class PageComment(ModelBase):
             return
         project = self.page.project
         is_answer = not self.reply_to
-        subject = render_to_string("content/emails/sign_up_updated_subject.txt", {
-            'comment': self,
-            'is_answer': is_answer,
-            'project': project,
-        }).strip()
-        body = render_to_string("content/emails/sign_up_updated.txt", {
-            'comment': self,
-            'is_answer': is_answer,
-            'project': project,
-            'domain': Site.objects.get_current().domain,
-        }).strip()
+        ulang = get_language()
+        for pl in settings.SUPPORTED_LANGUAGES:
+            activate(pl)
+            subject[pl] = render_to_string(
+                "content/emails/sign_up_updated_subject.txt", {
+                'comment': self,
+                'is_answer': is_answer,
+                'project': project,
+                }).strip()
+            body[pl] = render_to_string(
+                "content/emails/sign_up_updated.txt", {
+                'comment': self,
+                'is_answer': is_answer,
+                'project': project,
+                'domain': Site.objects.get_current().domain,
+                }).strip()
+        activate(ulang)
         recipients = {project.created_by.username: project.created_by}
         if self.reply_to:
             comment = self
@@ -182,7 +188,9 @@ class PageComment(ModelBase):
                 recipients[comment.author.username] = comment.author
         for username in recipients:
             if recipients[username] != self.author:
-                SendUserEmail.apply_async((recipients[username], subject, body))
+                pl = recipients[username].user.preflang or settings.LANGUAGE_CODE
+                SendUserEmail.apply_async((recipients[username], 
+                    subject[pl], body[pl]))
 
 
 def send_content_notification(instance, is_comment):
@@ -190,22 +198,31 @@ def send_content_notification(instance, is_comment):
     project = instance.project
     if not is_comment and not instance.listed:
         return
-    subject = render_to_string("content/emails/content_update_subject.txt", {
-        'instance': instance,
-        'is_comment': is_comment,
-        'project': project,
-    }).strip()
-    body = render_to_string("content/emails/content_update.txt", {
-        'instance': instance,
-        'is_comment': is_comment,
-        'project': project,
-        'domain': Site.objects.get_current().domain,
-    }).strip()
+    ulang = get_language()
+    for pl in settings.SUPPORTED_LANGUAGES:
+        activate(pl)
+        subject = render_to_string(
+            "content/emails/content_update_subject.txt", {
+            'instance': instance,
+            'is_comment': is_comment,
+            'project': project,
+            }).strip()
+        body = render_to_string(
+            "content/emails/content_update.txt", {
+            'instance': instance,
+            'is_comment': is_comment,
+            'project': project,
+            'domain': Site.objects.get_current().domain,
+            }).strip()
+    activate(ulang)
     for participation in project.participants():
         if instance.author != participation.user and not participation.no_updates:
-            SendUserEmail.apply_async((participation.user, subject, body))
+            pl = participation.user.preflang or settings.LANGUAGE_CODE
+            SendUserEmail.apply_async(
+                    (participation.user, subject[pl], body[pl]))
     if instance.author != project.created_by:
-        SendUserEmail.apply_async((project.created_by, subject, body))
+        pl = project.created_by.preflang or settings.LANGUAGE_CODE
+        SendUserEmail.apply_async((project.created_by, subject[pl], body[pl]))
 
 
 ###########

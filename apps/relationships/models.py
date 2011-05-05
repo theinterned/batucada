@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
+from django.utils.translation import activate, get_language, ugettext
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
@@ -87,11 +87,13 @@ def follow_handler(sender, **kwargs):
     for pref in preferences:
         if pref.value and pref.key == pref_key:
             return
-
+    ulang=get_language()
+    activate(user.preflang or settings.LANGUAGE_CODE)
     body = render_to_string("relationships/emails/new_follower.txt", {
         'user': rel.source,
         'project': rel.target_project,
         'domain': Site.objects.get_current().domain,
     })
+    activate(ulang)
     SendUserEmail.apply_async((user, subject, body))
 post_save.connect(follow_handler, sender=Relationship)
