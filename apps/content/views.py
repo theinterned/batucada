@@ -145,6 +145,31 @@ def comment_page(request, slug, page_slug, comment_id=None):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@participation_required
+def edit_comment(request, slug, page_slug, comment_id):
+    comment = get_object_or_404(PageComment, id=comment_id, page__slug=page_slug, page__project__slug=slug)
+    if not comment.can_edit(request.user):
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Comment updated!'))
+            return HttpResponseRedirect(comment.get_absolute_url())
+        else:
+            messages.error(request,
+                           _('There was a problem saving the comment.'))
+    else:
+        form = CommentForm(instance=comment)
+    return render_to_response('content/comment_page.html', {
+        'form': form,
+        'comment': comment,
+        'page': comment.page,
+        'project': comment.page.project,
+    }, context_instance=RequestContext(request))
+
+
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if not page.editable:
@@ -304,6 +329,52 @@ def comment_sign_up(request, slug, comment_id=None):
         'page': page,
         'reply_to': reply_to,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def edit_comment_sign_up(request, slug, comment_id):
+    comment = get_object_or_404(PageComment, page__project__slug=slug, page__slug='sign-up', id=comment_id)
+    if not comment.can_edit(request.user):
+        return HttpResponseForbidden()
+    abs_reply_to = comment
+    while abs_reply_to.reply_to:
+        abs_reply_to = abs_reply_to.reply_to
+    if abs_reply_to == comment:
+        abs_reply_to = reply_to = None
+    else:
+        reply_to = comment.reply_to
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        profile_form = ProfileEditForm(request.POST, instance=comment.author)
+        profile_image_form = ProfileImageForm()
+        if form.is_valid() and (reply_to or profile_form.is_valid()):
+            if not reply_to:
+                profile_form.save()
+            form.save()
+            success_msg = _('Comment updated!') if reply_to else _('Answer updated!')
+            messages.success(request, success_msg)
+            return HttpResponseRedirect(comment.get_absolute_url())
+        else:
+            error_msg = _('There was a problem updating your comment. Comments cannot be empty. ') if reply_to \
+                        else _('There was a problem updating your answer. Answers cannot be empty. ')
+            
+            messages.error(request, error_msg)
+    else:
+        profile_form = ProfileEditForm(instance=comment.author)
+        profile_image_form = ProfileImageForm()
+        form = CommentForm(instance=comment)
+    return render_to_response('content/comment_sign_up.html', {
+        'profile_image_form': profile_image_form,
+        'profile_form': profile_form,
+        'profile': comment.author,
+        'form': form,
+        'project': comment.page.project,
+        'page': comment.page,
+        'reply_to': reply_to,
+        'comment': comment,
+    }, context_instance=RequestContext(request))
+
 
 @login_required
 @ownership_required

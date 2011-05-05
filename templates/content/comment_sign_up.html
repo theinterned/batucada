@@ -14,28 +14,37 @@
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-      {% if reply_to %}
+      {% if comment %}
+        <span class="arrow">&rsaquo;</span>
+        <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
+      {% else %}{% if reply_to %}
         <span class="arrow">&rsaquo;</span>
         <a href="{{ reply_to.get_absolute_url }}">{{ reply_to.author }} {{ reply_to.created_on }}</a>
-      {% endif %}
+      {% endif %}{% endif %}
     </nav>
   </div> <!-- /.container -->
 {% endblock %}
 
 {% block page_form_title %}
-  {% if reply_to %}
+  {% if comment and reply_to %}
+    <h1>{{ _('Edit Comment') }} {{ comment.author }} {{ comment.created_on }} </h1>
+  {% else %}{% if comment %}
+    <h1>{{ _('Edit Answer') }} {{ comment.author }} {{ comment.created_on }} </h1>
+  {% else %}{% if reply_to %}
     <h1>{{ _('Reply') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
   {% else %}
     <h1>{{ page.title }} {{ _(': Answer Questions') }}</h1>
-  {% endif %}
+  {% endif %}{% endif %}{% endif %}
 {% endblock %}
 
 {% block page_form_url %}
-  {% if reply_to %}
+  {% if comment %}
+    {% locale_url sign_up_edit_comment slug=page.project.slug comment_id=comment.id %}
+  {% else %}{% if reply_to %}
     {% locale_url sign_up_reply slug=page.project.slug comment_id=reply_to.id %}
   {% else %}
     {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
-  {% endif %}
+  {% endif %}{% endif %}
 {% endblock %}
 
 {% block form_extra_attributes %}
@@ -47,26 +56,30 @@
 {% block extra_fields %}
   {% if not reply_to %}
     <h2>{{ _('Profile') }}</h2>
-    <p class="hint">{{ _('First update your profile information, which will be included with your answer.') }}</p>
+    {% if not comment %}<p class="hint">{{ _('First update your profile information, which will be included with your answer.') }}</p>{% endif %}
     {% include "users/_profile_edit_image.html" %}
     {% include "users/_profile_edit.html" %}
     <h2>{{ _('Questions') }}</h2>
-    <p class="hint">{{ _('Then answer the sign-up questions listed below.') }}</p>
+    {% if not comment %}<p class="hint">{{ _('Then answer the sign-up questions listed below.') }}</p>{% endif %}
     {% include "projects/sign_up_initial_content.html" %}
   {% endif %}
 {%endblock%}
 
 {% block page_form_buttons %}
-  {% if reply_to %}
+  {% if comment %}
+    <a class="button" href="{{ comment.get_absolute_url }}">
+  {% else %}{% if reply_to %}
     <a class="button" href="{{ reply_to.get_absolute_url }}">
   {% else %}
     <a class="button" href="{{ page.get_absolute_url }}">
-  {% endif %}
+  {% endif %}{% endif %}
     {{ _('Cancel') }}
   </a>
-  {% if reply_to %}
+  {% if comment %}
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+  {% else %}{% if reply_to %}
     <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
   {% else %}
     <button type="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
-  {% endif %}
+  {% endif %}{% endif %}
 {% endblock %}
