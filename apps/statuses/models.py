@@ -8,6 +8,8 @@ from django.utils.timesince import timesince
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, get_language, ugettext
 
 from activity.models import Activity
 from drumbeat.models import ModelBase
@@ -39,20 +41,29 @@ class Status(ModelBase):
         if not self.project:
             return
         project = self.project
-        subject = render_to_string("statuses/emails/wall_updated_subject.txt", {
-            'status': self,
-            'project': project,
-        }).strip()
-        body = render_to_string("statuses/emails/wall_updated.txt", {
-            'status': self,
-            'project': project,
-            'domain': Site.objects.get_current().domain,
-        }).strip()
+        ulang = get_language()
+        for pl in settings.SUPPORTED_LANGUAGES:
+            activate(pl)
+            subject[pl] = render_to_string(
+                "statuses/emails/wall_updated_subject.txt", {
+                'status': self,
+                'project': project,
+                }).strip()
+            body[pl] = render_to_string("statuses/emails/wall_updated.txt", {
+                'status': self,
+                'project': project,
+                'domain': Site.objects.get_current().domain,
+                }).strip()
+        activate(ulang)
         for participation in project.participants():
             if self.author != participation.user and (self.important or not participation.no_wall_updates):
-                SendUserEmail.apply_async((participation.user, subject, body))
+                pl = participation.user.preflang or settings.LANGUAGE_CODE
+                SendUserEmail.apply_async(
+                    (participation.user, subject[pl], body[pl]))
         if self.author != project.created_by:
-            SendUserEmail.apply_async((project.created_by, subject, body))
+            pl = project.created_by.preflang
+            SendUserEmail.apply_async(
+                (project.created_by, subject[pl], body[pl]))
 
 
 ###########
