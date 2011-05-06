@@ -196,7 +196,7 @@ class PageComment(ModelBase):
         for username in recipients:
             if recipients[username] != self.author:
                 pl = recipients[username].user.preflang or settings.LANGUAGE_CODE
-                SendUserEmail.apply_async((recipients[username], 
+                SendUserEmail.apply_async((recipients[username],
                     subject[pl], body[pl]))
 
 
