@@ -79,7 +79,7 @@ Create a ``settings_local.py`` based on the template provided in the checkout. E
  
 Next, sync the database and run migrations. ::
 
-   python manage.py syncdb --noinput --all
+   python manage.py syncdb --noinput --migrate
 
 Finally, start the development server to take it for a spin. ::
 
@@ -93,10 +93,6 @@ To recreate the test database before running the tests. ::
 
    FORCE_DB=True python manage.py test
 
-After updating a database model you will have to make a migration for the change, then apply it. ::
+After updating a database model you will have to make a migration for the change. See the documentation for more information: https://github.com/p2pu/lernanta/blob/master/docs/migrations.txt  
 
-   python manage.py schemamigration <appname> --auto
-   python manage.py migrate <appname>
- 
-    
 Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki
