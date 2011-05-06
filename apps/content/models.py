@@ -167,15 +167,17 @@ class PageComment(ModelBase):
         project = self.page.project
         is_answer = not self.reply_to
         ulang = get_language()
-        for pl in settings.SUPPORTED_LANGUAGES:
-            activate(pl)
-            subject[pl] = render_to_string(
+        subject = {}
+        body = {}
+        for l in settings.SUPPORTED_LANGUAGES:
+            activate(l[0])
+            subject[l[0]] = render_to_string(
                 "content/emails/sign_up_updated_subject.txt", {
                 'comment': self,
                 'is_answer': is_answer,
                 'project': project,
                 }).strip()
-            body[pl] = render_to_string(
+            body[l[0]] = render_to_string(
                 "content/emails/sign_up_updated.txt", {
                 'comment': self,
                 'is_answer': is_answer,
@@ -204,15 +206,17 @@ def send_content_notification(instance, is_comment):
     if not is_comment and not instance.listed:
         return
     ulang = get_language()
-    for pl in settings.SUPPORTED_LANGUAGES:
-        activate(pl)
-        subject = render_to_string(
+    subject = {}
+    body = {}
+    for l in settings.SUPPORTED_LANGUAGES:
+        activate(l[0])
+        subject[l[0]] = render_to_string(
             "content/emails/content_update_subject.txt", {
             'instance': instance,
             'is_comment': is_comment,
             'project': project,
             }).strip()
-        body = render_to_string(
+        body[l[0]] = render_to_string(
             "content/emails/content_update.txt", {
             'instance': instance,
             'is_comment': is_comment,
