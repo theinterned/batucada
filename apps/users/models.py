@@ -103,8 +103,8 @@ class UserProfile(ModelBase):
     discard_welcome = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
-    preflang = models.CharField(verbose_name = 'preferred language', 
-        max_length = 16, choices = settings.SUPPORTED_LANGUAGES, 
+    preflang = models.CharField(verbose_name = 'preferred language',
+        max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
         default = settings.LANGUAGE_CODE)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
