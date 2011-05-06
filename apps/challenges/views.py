@@ -19,6 +19,7 @@ from commonware.decorators import xframe_sameorigin
 
 from challenges.models import Challenge, Submission, Judge, VoterDetails
 from challenges.forms import (ChallengeForm, ChallengeImageForm,
+                              ChallengeContactForm,
                               SubmissionSummaryForm, SubmissionForm,
                               SubmissionDescriptionForm,
                               JudgeForm, VoterDetailsForm)
@@ -208,6 +209,28 @@ def show_challenge_full(request, slug):
 
 
 @login_required
+@challenge_owner_required
+def contact_entrants(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    if request.method == 'POST':
+        form = ChallengeContactForm(request.POST)
+        if form.is_valid():
+            form.save(sender=request.user)
+            messages.info(request, _('Message sent successfully.'))
+            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+                'slug': challenge.slug,
+            }))
+    else:
+        form = ChallengeContactForm()
+        form.fields['challenge'].initial = challenge.pk
+
+    return render_to_response('challenges/contact_entrants.html', {
+        'form': form,
+        'challenge': challenge,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
 def create_submission(request, slug):
     challenge = get_object_or_404(Challenge, slug=slug)
     if not challenge.is_active():
@@ -251,6 +274,9 @@ def create_submission(request, slug):
 @submission_owner_required
 def edit_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
+    if not challenge.is_active():
+        return HttpResponseForbidden()
+
     submission = get_object_or_404(Submission, pk=submission_id)
 
     if request.method == 'POST':
@@ -282,6 +308,8 @@ def edit_submission(request, slug, submission_id):
 @submission_owner_required
 def edit_submission_description(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
+    if not challenge.is_active():
+        return HttpResponseForbidden()
     submission = get_object_or_404(Submission, pk=submission_id)
 
     if request.method == 'POST':
