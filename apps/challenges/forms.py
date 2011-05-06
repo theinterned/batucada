@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from challenges.models import (Challenge, Submission, Judge,
                                VoterTaxonomy, VoterDetails)
+from messages.models import Message
+from users.models import UserProfile
 
 log = logging.getLogger(__name__)
 
@@ -33,6 +35,36 @@ class ChallengeImageForm(forms.ModelForm):
                 _("Image exceeds max image size: %(max)dk",
                   dict(max=max_size)))
         return self.cleaned_data['image']
+
+
+class ChallengeContactForm(forms.Form):
+    challenge = forms.IntegerField(required=True, widget=forms.HiddenInput())
+    subject = forms.CharField(label=_(u'Subject'))
+    body = forms.CharField(
+        label=_(u'Body'),
+        widget=forms.Textarea(attrs={'rows': '12', 'cols': '55'}),
+    )
+
+    def save(self, sender):
+        challenge = self.cleaned_data['challenge']
+        try:
+            challenge = Challenge.objects.get(id=int(challenge))
+        except Challenge.DoesNotExist:
+            raise forms.ValidationError(_(u'Not a valid challenge'))
+        recipients = UserProfile.objects.filter(submissions__challenge=challenge).distinct()
+        subject = self.cleaned_data['subject']
+        body = self.cleaned_data['body']
+        message_list = []
+        for r in recipients:
+            msg = Message(
+                sender=sender,
+                recipient=r.user,
+                subject=subject,
+                body=body,
+            )
+            msg.save()
+            message_list.append(msg)
+        return message_list
 
 
 class SubmissionSummaryForm(forms.ModelForm):

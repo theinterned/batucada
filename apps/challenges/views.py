@@ -19,6 +19,7 @@ from commonware.decorators import xframe_sameorigin
 
 from challenges.models import Challenge, Submission, Judge, VoterDetails
 from challenges.forms import (ChallengeForm, ChallengeImageForm,
+                              ChallengeContactForm,
                               SubmissionSummaryForm, SubmissionForm,
                               SubmissionDescriptionForm,
                               JudgeForm, VoterDetailsForm)
@@ -205,6 +206,28 @@ def show_challenge_full(request, slug):
 
     return render_to_response('challenges/challenge_full.html', context,
                               context_instance=RequestContext(request))
+
+
+@login_required
+@challenge_owner_required
+def contact_entrants(request, slug):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    if request.method == 'POST':
+        form = ChallengeContactForm(request.POST)
+        if form.is_valid():
+            form.save(sender=request.user)
+            messages.info(request, _('Message sent successfully.'))
+            return HttpResponseRedirect(reverse('challenges_show', kwargs={
+                'slug': challenge.slug,
+            }))
+    else:
+        form = ChallengeContactForm()
+        form.fields['challenge'].initial = challenge.pk
+
+    return render_to_response('challenges/contact_entrants.html', {
+        'form': form,
+        'challenge': challenge,
+    }, context_instance=RequestContext(request))
 
 
 @login_required
