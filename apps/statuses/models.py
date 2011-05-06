@@ -42,14 +42,16 @@ class Status(ModelBase):
             return
         project = self.project
         ulang = get_language()
-        for pl in settings.SUPPORTED_LANGUAGES:
-            activate(pl)
-            subject[pl] = render_to_string(
+        subject = {}
+        body = {}
+        for l in settings.SUPPORTED_LANGUAGES:
+            activate(l[0])
+            subject[l[0]] = render_to_string(
                 "statuses/emails/wall_updated_subject.txt", {
                 'status': self,
                 'project': project,
                 }).strip()
-            body[pl] = render_to_string("statuses/emails/wall_updated.txt", {
+            body[l[0]] = render_to_string("statuses/emails/wall_updated.txt", {
                 'status': self,
                 'project': project,
                 'domain': Site.objects.get_current().domain,
