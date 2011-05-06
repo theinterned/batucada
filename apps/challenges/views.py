@@ -216,19 +216,19 @@ def create_submission(request, slug):
     user = request.user.get_profile()
 
     if request.method == 'POST':
+        truncate_title = lambda s: truncatewords(s, 10)[:90]
         post_data = request.POST.copy()
-        post_data['title'] = truncatewords(post_data['summary'], 10)
+        post_data['title'] = truncate_title(post_data['summary'])
         form = SubmissionForm(post_data)
         if form.is_valid():
             submission = form.save(commit=False)
-            submission.title = truncatewords(submission.summary, 10)
+            submission.title = truncate_title(submission.summary)
             submission.created_by = user
             submission.save()
 
             submission.challenge.add(challenge)
 
             messages.success(request, _('Your submission has been created'))
-
             return HttpResponseRedirect(reverse('submission_edit', kwargs={
                 'slug': challenge.slug,
                 'submission_id': submission.pk,
