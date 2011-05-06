@@ -274,6 +274,9 @@ def create_submission(request, slug):
 @submission_owner_required
 def edit_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
+    if not challenge.is_active():
+        return HttpResponseForbidden()
+
     submission = get_object_or_404(Submission, pk=submission_id)
 
     if request.method == 'POST':
@@ -305,6 +308,8 @@ def edit_submission(request, slug, submission_id):
 @submission_owner_required
 def edit_submission_description(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
+    if not challenge.is_active():
+        return HttpResponseForbidden()
     submission = get_object_or_404(Submission, pk=submission_id)
 
     if request.method == 'POST':
