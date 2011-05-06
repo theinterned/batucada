@@ -5,15 +5,19 @@ import bleach
 from markdown import markdown
 
 from django.contrib import admin
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, m2m_changed
 from django.template.defaultfilters import slugify
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext as _
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 
 from projects.models import Project
+from users.tasks import SendUserEmail
 
 import caching.base
 
@@ -179,3 +183,33 @@ def submission_markdown_handler(sender, **kwargs):
             markdown(submission.description),
             tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
 pre_save.connect(submission_markdown_handler, sender=Submission)
+
+
+def submission_thanks_handler(sender, **kwargs):
+    submission = kwargs.get('instance', None)
+    if not isinstance(submission, Submission):
+        return
+
+    challenges = submission.challenge.all()
+    if challenges:
+        challenge = challenges[0]
+    else:
+        return
+    user = submission.created_by
+
+    share_url = reverse('submission_edit_share', kwargs={
+        'slug': challenge.slug,
+        'submission_id': submission.pk
+    })
+    project_url = reverse('projects_show', kwargs={
+        'slug': challenge.project.slug,
+    })
+    subject = _('Thank you for your entry!')
+    body = render_to_string('challenges/emails/submission_thanks.txt', {
+        'share_url': share_url,
+        'project_url': project_url
+    })
+
+    SendUserEmail.apply_async((user, subject, body))
+m2m_changed.connect(submission_thanks_handler,
+                    sender=Submission.challenge.through)
