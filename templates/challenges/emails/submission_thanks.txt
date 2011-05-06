@@ -1,0 +1,9 @@
+Thanks for entering in the Knight-Mozilla Innovation Challenge!  We really appreciate it.  To help promote your entry and build the MoJo community, please
+
+* Share your entry on your social networks http://www.drumbeat.org{{ share_url }}
+* Follow the MoJo project http://www.drumbeat.org{{ project_url }}
+* Join the community group and share your entry there to get the conversation going.
+
+Cheers,
+
+The Knight-Mozilla Team

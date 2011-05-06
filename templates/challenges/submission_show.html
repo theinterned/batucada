@@ -15,7 +15,7 @@
   </nav>
 
   <div id="project-actions">
-    {% if user.get_profile == submission.created_by %}
+    {% if user.get_profile == submission.created_by and challenge.is_active%}
     <a class="button" href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.id%}">{{ _('Edit Submission') }}</a>
     {% endif %}
   </div>
@@ -51,7 +51,14 @@
   <div id="comments">
     <h1>{{ _('Comments') }}</h1><br />
     
-    {% render_comment_list for submission %}
+    {% get_comment_list for submission as comment_list %}
+    <dl id="comments">
+    {% for comment in comment_list %}
+      <dt id="c{{ comment.pk }}">{{ comment.submit_date }} - {{ comment.user }}</dt>
+      <dd>{{ comment.comment|linebreaks }}</dd>
+    {% endfor %}
+    </dl>
+
 
     {% if user.is_authenticated %}
     {% get_comment_form for submission as form %}
