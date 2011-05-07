@@ -127,11 +127,18 @@ class Submission(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.now())
 
-    @models.permalink
-    def get_absolute_url(self):
+    def get_challenge(self):
         challenges = self.challenge.all()
         if challenges:
-            slug = challenges[0].slug
+            return challenges[0]
+        else:
+            return None
+
+    @models.permalink
+    def get_absolute_url(self):
+        challenge = self.get_challenge()
+        if challenge:
+            slug = challenge.slug
         else:
             slug = 'foo'  # TODO - Figure out what to do if no challenges exist
         return ('submission_show', (), {
@@ -190,10 +197,8 @@ def submission_thanks_handler(sender, **kwargs):
     if not isinstance(submission, Submission):
         return
 
-    challenges = submission.challenge.all()
-    if challenges:
-        challenge = challenges[0]
-    else:
+    challenge = submission.get_challenge()
+    if not challenge:
         return
     user = submission.created_by
 
