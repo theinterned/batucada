@@ -44,7 +44,8 @@ class ProjectManager(caching.base.CachingManager):
                 target_project__under_development=False,
                 target_project__testing_sandbox=False).order_by('-id__count')
             if school:
-                rels = rels.filter(target_project__school=school)
+                rels = rels.filter(target_project__school=school).exclude(
+                    target_project__id__in=school.declined.values('id'))
             if limit:
                 rels = rels[:limit]
             popular = [r['target_project'] for r in rels]
@@ -60,7 +61,8 @@ class ProjectManager(caching.base.CachingManager):
                 remote_object__isnull=False).filter(target_project__under_development=False,
                 target_project__testing_sandbox=False).order_by('-created_on__max')
             if school:
-                activities = activities.filter(target_project__school=school)
+                activities = activities.filter(target_project__school=school).exclude(
+                    target_project__id__in=school.declined.values('id'))
             if limit:
                 activities = activities[:limit]
             active = [a['target_project'] for a in activities]

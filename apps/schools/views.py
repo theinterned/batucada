@@ -101,3 +101,56 @@ def edit_featured_delete(request, slug, project_slug):
     return http.HttpResponseRedirect(reverse('schools_edit_featured', kwargs={
         'slug': school.slug,
     }))
+
+
+@login_required
+@school_organizer_required
+def edit_declined(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolAddDeclinedForm(school, request.POST)
+        if form.is_valid():
+            project = form.cleaned_data['project']
+            school.declined.add(project)
+            school.save()
+            messages.success(request, _('The study group was declined for this school.'))
+            return http.HttpResponseRedirect(
+                reverse('schools_edit_declined', kwargs=dict(slug=school.slug)))
+        else:
+            messages.error(request, _("There was an error marking the study group as declined for this school."))
+    else:
+        form = school_forms.SchoolAddDeclinedForm(school)
+    return render_to_response('schools/school_edit_declined.html', {
+        'school': school,
+        'form': form,
+        'declined': school.declined.all(),
+        'declined_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+def matching_non_declined(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if len(request.GET['term']) == 0:
+        raise CommandException(_("Invalid request"))
+
+    school_projects = Project.objects.filter(school=school)
+    non_declined = school_projects.exclude(id__in=school.declined.values('id'))
+    matching_projects = non_declined.filter(slug__icontains = request.GET['term'])
+    json = simplejson.dumps([project.slug for project in matching_projects])
+
+    return HttpResponse(json, mimetype="application/x-javascript")
+
+
+@login_required
+@school_organizer_required
+def edit_declined_delete(request, slug, project_slug):
+    school = get_object_or_404(School, slug=slug)
+    project = get_object_or_404(Project, slug=project_slug)
+    if request.method == 'POST':
+        school.declined.remove(project)
+        messages.success(request, _(
+            "The study group stopped being declined for this school."))
+    return http.HttpResponseRedirect(reverse('schools_edit_declined', kwargs={
+        'slug': school.slug,
+    }))
+

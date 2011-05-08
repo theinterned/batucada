@@ -25,7 +25,7 @@
       <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
     {% endif %}
     <ul id="project-stats">
-      {% if project.school %}
+      {% if school %}
         <li><a href="{{ project.school.get_absolute_url }}">{{ project.school.name }}</a></li>
       {% endif %}
       {% if project.under_development%}

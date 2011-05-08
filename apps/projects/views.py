@@ -134,6 +134,10 @@ def edit(request, slug):
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
+        school = project.school
+        if school and school.declined.filter(id=project.id).exists():
+            msg = _('The study group membership to %s was declined by the school organizers.')
+            messages.error(request, msg % school.name)
         form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/project_edit_summary.html', {

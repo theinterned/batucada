@@ -35,3 +35,23 @@ class SchoolAddFeaturedForm(forms.Form):
         if self.school.featured.filter(slug=slug).exists():
             raise forms.ValidationError(_('The %s study group is already featured for this school.') % slug)
         return project
+
+
+class SchoolAddDeclinedForm(forms.Form):
+    project = forms.CharField()
+
+    def __init__(self, school, *args, **kwargs):
+        super(SchoolAddDeclinedForm, self).__init__(*args, **kwargs)
+        self.school = school
+
+    def clean_project(self):
+        slug = self.cleaned_data['project']
+        try:
+            project = Project.objects.get(slug=slug)
+        except Project.DoesNotExist:
+            raise forms.ValidationError(_('There is no study group with that short name: %s.') % slug)
+        if project.school != self.school:
+            raise forms.ValidationError(_('The %s study group is not part of this school.') % slug)
+        if self.school.featured.filter(slug=slug).exists():
+            raise forms.ValidationError(_('The %s study group was already declined for this school.') % slug)
+        return project
