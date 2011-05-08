@@ -55,11 +55,9 @@ def create_project_status(request, project_id):
     if request.method != 'POST' or 'status' not in request.POST:
         return HttpResponseRedirect(reverse('dashboard_index'))
     project = get_object_or_404(Project, id=project_id)
-    profile = request.user.get_profile()
-    if profile != project.created_by and not profile.user.is_superuser \
-            and not project.participants().filter(user=profile).exists():
+    if not project.is_participating(request.user):
         return HttpResponseRedirect(reverse('dashboard_index'))
-    if profile == project.created_by or profile.user.is_superuser:
+    if project.is_organizing(request.user):
         form = ImportantStatusForm(data=request.POST)
     else:
         form = StatusForm(data=request.POST)
@@ -69,7 +67,7 @@ def create_project_status(request, project_id):
         status.project = project
         status.save()
         log.debug("Saved status by user (%d) to study group (%d): %s" % (
-        profile.id, project.id, status))
+        status.author.id, project.id, status))
     else:
         log.debug("form error: %s" % (str(form.errors)))
         messages.error(request, _('There was an error posting '

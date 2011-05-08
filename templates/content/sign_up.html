@@ -18,7 +18,7 @@
       <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
     </nav>
       <div id="project-actions">
-        {% if user.is_authenticated and not project.signup_closed %}
+        {% if can_post_answer %}
           <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Answer') }}</a>
         {% endif %}
       </div>
@@ -33,7 +33,7 @@
 {{ page.content|youtube|slideshare|safe }}
 {% if first_level_comments %}
 <br>
-<h1>{{_('Answers')}}</h1>
+<h1>{{ _('Answers') }}</h1>
 <br>
 <ul id="posts">
 {% for comment in first_level_comments %}
@@ -44,7 +44,7 @@
     {% if user.get_profile == comment.author %}
       <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=comment.id %}">{{ _('Edit') }}</a>
     {% else %}
-      <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{_('Report Abuse')}}</a>
+      <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{ _('Report Abuse') }}</a>
     {% endif %}
   {% endif %}
   <a href="{{ comment.author.get_absolute_url }}">
@@ -61,11 +61,17 @@
 	    <p><strong>{{ _('Location:') }}</strong> {{ comment.author.location }}</p>
 	    <h3>{{ _('Answer:') }}</h3>
       {{ comment.content|youtube|slideshare|safe }}
-      {% if not comment.participation and user.id == project.created_by.id and comment.author.id != user.id %}
-        <form method="post" action="{% locale_url sign_up_accept slug=project.slug comment_id=comment.id %}">
-          {% csrf_token %}
-          <button>{{ _('Accept') }}</button>
-        </form>
+      {% if organizing %}
+        {% if not comment.is_participating %}
+          <form method="post" action="{% locale_url sign_up_add_participant slug=project.slug comment_id=comment.id %}">
+            {% csrf_token %}
+            <button>{{ _('Add Participant') }}</button>
+          </form>
+          <form method="post" action="{% locale_url sign_up_add_organizer slug=project.slug comment_id=comment.id %}">
+            {% csrf_token %}
+            <button>{{ _('Add Organizer') }}</button>
+          </form>
+        {% endif %}
       {% endif %}
     </div>
   </div>
@@ -78,7 +84,7 @@
       {% if user.get_profile == reply.author %}
         <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=reply.id %}">{{ _('Edit') }}</a>  
       {% else %}
-        <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{_('Report Abuse')}}</a>
+        <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{ _('Report Abuse') }}</a>
       {% endif %}
     {% endif %}
     <a href="{{ reply.author.get_absolute_url }}">
@@ -88,11 +94,11 @@
       <div class="post-details">
         <a href="{{ reply.author.get_absolute_url }}">{{ reply.author.display_name }}</a>
         &nbsp;
-        <a href="{{ reply.get_absolute_url }}">{{reply.created_on}}</a>
+        <a href="{{ reply.get_absolute_url }}">{{ reply.created_on }}</a>
         <br> {{ _('In Reply To:') }} &nbsp;
         <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author.display_name }}</a>
         &nbsp;
-        <a href="{{ reply.reply_to.get_absolute_url }}">{{reply.reply_to.created_on}}</a>
+        <a href="{{ reply.reply_to.get_absolute_url }}">{{ reply.reply_to.created_on }}</a>
       </div>
       <div class="post-body">
         {{ reply.content|youtube|slideshare|safe }}

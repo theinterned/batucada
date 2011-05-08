@@ -10,7 +10,7 @@ from drumbeat import messages
 from projects.models import Project
 
 from l10n.urlresolvers import reverse
-from schools.decorators import organizer_required
+from schools.decorators import school_organizer_required
 from schools.models import School
 from schools import forms as school_forms
 
@@ -31,7 +31,7 @@ def home(request, slug):
                           context_instance=RequestContext(request))
 
 @login_required
-@organizer_required
+@school_organizer_required
 def edit(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
@@ -52,7 +52,7 @@ def edit(request, slug):
 
 
 @login_required
-@organizer_required
+@school_organizer_required
 def edit_featured(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
@@ -90,7 +90,7 @@ def matching_non_featured(request, slug):
 
 
 @login_required
-@organizer_required
+@school_organizer_required
 def edit_featured_delete(request, slug, project_slug):
     school = get_object_or_404(School, slug=slug)
     project = get_object_or_404(Project, slug=project_slug)

@@ -1416,30 +1416,29 @@ header {}
 			font-style: italic;
 		}
 
-		.modal .participant, .modal .featured_group {
+		.modal .featured_group {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 0;
 			vertical-align: middle;
 			padding-right: 35px;
 		}
-	    .modal .link {
+	    .modal .link, .modal .participants .field {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 30px;
 			vertical-align: middle;
 		}
-		.modal .link.url{
+		.modal .link.url {
 			width: 178px;
 			padding: 0;
 		}
 		
-		.modal .link.subscribe{
+		.modal .link.subscribe, .modal .participants .field.organizer {
             width: 100px;
             padding: 0;
             top: -10px;
         }
- 
         
 		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text] {
 			width: 154px;
@@ -1492,7 +1491,7 @@ header {}
 		    width: 90px; 
 		}
 		
-		.modal .links table .subscription {
+		.modal .links table .subscription, .modal .participants table .organizer {
 		    width: 50px
 		}
 		
@@ -1500,11 +1499,11 @@ header {}
             width: 200px
         }
         
-        .modal .links table .actions form {
+        .modal .links table .actions form, .modal .participants table .actions form {
             float: left;
         }
         
-        .modal .links table .actions button {            
+        .modal .links table .actions button {
             width: 50px; 
         }
 		.modal .links table .url a {
@@ -1513,13 +1512,13 @@ header {}
 			overflow: hidden;
 			word-wrap: break-word;
 		}
-		.modal .links .subscription .yes{
+		.modal .links .subscription .yes, .modal .participants .organizer .yes {
 			display: block;
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
 		}
 		
-		.modal .links .subscription .no{
+		.modal .links .subscription .no, .modal .participants .organizer .no {
             display: block;
             text-indent: -9999px;
             background: url(/media/images/delete-x.png) 50% 50% no-repeat;

@@ -38,6 +38,7 @@ class Page(ModelBase):
     collaborative = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
     index = models.IntegerField()
+    deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.title
@@ -82,16 +83,11 @@ class Page(ModelBase):
     def can_edit(self, user):
         if not self.editable:
             return False
-        if user.is_authenticated():
-            profile = user.get_profile()
-            if self.collaborative:
-                is_participating = self.project.participants().filter(user__pk=profile.pk).exists()
-                return (profile == self.project.created_by or is_participating)
-            else:
-                return (profile == self.project.created_by)
-        else:
-            return False
-
+        if self.project.is_organizing(user):
+            return True
+        if self.collaborative:
+            return self.project.is_participanting(user)
+        return False
 
 
 class PageVersion(ModelBase):
@@ -101,6 +97,7 @@ class PageVersion(ModelBase):
     author = models.ForeignKey('users.UserProfile', related_name='page_versions')
     date = models.DateTimeField()
     page = models.ForeignKey('content.Page', related_name='page_versions')
+    deleted = models.BooleanField(default=False)
 
     @models.permalink
     def get_absolute_url(self):
@@ -122,15 +119,18 @@ class PageComment(ModelBase):
         auto_now_add=True, default=datetime.datetime.now)
     reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='replies')
     abs_reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='all_replies')
+    deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
         return _('Comment to %s') % self.page.title
 
+    @models.permalink
     def get_absolute_url(self):
-        return reverse('page_show', kwargs={
-            'slug': self.project.slug,
+        return ('comment_show', (), {
+            'slug': self.page.project.slug,
             'page_slug': self.page.slug,
-        }) + '#%s' % self.id
+            'comment_id': self.id,
+        })
 
     @property
     def title(self):
@@ -149,6 +149,9 @@ class PageComment(ModelBase):
     @property
     def project(self):
         return self.page.project
+
+    def visible_replies(self):
+        return self.all_replies.filter(deleted=False)
 
     def can_edit(self, user):
         if user.is_authenticated():
@@ -174,7 +177,9 @@ class PageComment(ModelBase):
             'project': project,
             'domain': Site.objects.get_current().domain,
         }).strip()
-        recipients = {project.created_by.username: project.created_by}
+        recipients = {}
+        for organizer in project.organizers():
+            recipients[organizer.user.username] = organizer.user
         if self.reply_to:
             comment = self
             while comment.reply_to:
@@ -204,8 +209,6 @@ def send_content_notification(instance, is_comment):
     for participation in project.participants():
         if instance.author != participation.user and not participation.no_updates:
             SendUserEmail.apply_async((participation.user, subject, body))
-    if instance.author != project.created_by:
-        SendUserEmail.apply_async((project.created_by, subject, body))
 
 
 ###########

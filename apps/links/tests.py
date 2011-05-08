@@ -4,13 +4,13 @@ import feedparser
 from StringIO import StringIO
 
 from django_push.subscriber.models import Subscription
+from django.contrib.auth.models import User
 
 from links import utils, tasks
 from links.models import Link
 
 from test_utils import TestCase
 from activity.models import Activity
-from users.models import UserProfile
 
 
 def mock_open(r):
@@ -29,11 +29,11 @@ class TestLinkParsing(TestCase):
         for f in os.listdir(fixture_dir):
             self.fixtures[f] = file(os.path.join(fixture_dir, f)).read()
 
-        self.user = UserProfile(username='testuser',
-                                email='test@mozillafoundation.org')
+        django_user = User(username='testuser',
+                           email='test@mozillafoundation.org')
+        self.user = create_profile(django_user)
         self.user.set_password('testpassword')
         self.user.save()
-        self.user.create_django_user()
 
     def test_feed_parser(self):
         """Perform a straightforward test of the feed url parser."""
