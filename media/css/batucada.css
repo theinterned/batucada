@@ -1416,7 +1416,7 @@ header {}
 			font-style: italic;
 		}
 
-		.modal .featured_group {
+		.modal .featured_group, .modal .declined_group {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 0;
@@ -1440,7 +1440,8 @@ header {}
             top: -10px;
         }
         
-		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text] {
+		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text],
+        .modal .declined_groups input[type=text] {
 			width: 154px;
 		}
 		
@@ -1448,16 +1449,18 @@ header {}
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, , .modal .participants .add-participant, .modal .featured_groups .add-featured {
+		.modal .links .add-link, , .modal .participants .add-participant, .modal .featured_groups .add-featured,
+        .modal .declined_groups .add-declined {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button {
+		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button,
+        .modal .declined_groups .add-declined button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
-		#editing table, .modal .links table, .modal .participants table, .featured_groups table {
+		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1470,7 +1473,7 @@ header {}
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
-          .modal .featured_groups th, .modal .featured_groups td {
+        .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1483,7 +1486,7 @@ header {}
 			
 			/*width: 25%;*/
 		}
-		.modal .links table .name, .modal .participants table .name, .featured_groups table .name {
+		.modal .links table .name, .modal .participants table .name, .featured_groups table .name, .declined_groups table .name {
 			width: 185px;
 		}
 		
