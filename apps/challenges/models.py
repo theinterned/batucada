@@ -229,11 +229,13 @@ def submission_activity_handler(sender, **kwargs):
     challenge = submission.get_challenge()
     if not challenge:
         return
-    url = 'http://www.drumbeat.org%s' % submission.get_absolute_url()
-    message = "%s: %s - %s " % (_('Posted'), submission.title, url)
+
+    msg = '<a href="%s">%s</a>: %s | <a href="%s">Read more</a>' % (
+        challenge.get_absolute_url(), challenge.title, submission.title,
+        submission.get_absolute_url())
     status = Status(author=submission.created_by,
                     project=challenge.project,
-                    status=message)
+                    status=msg)
     status.save()
 
 m2m_changed.connect(submission_activity_handler,
