@@ -62,7 +62,7 @@ RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
 
 # Use dummy caching for development.
 CACHE_BACKEND = 'dummy://'
-CACHE_PREFIX = 'batucada'
+CACHE_PREFIX = 'lernanta'
 CACHE_COUNT_TIMEOUT = 60
 
 # Execute celery tasks locally, so you don't have to be running an MQ
