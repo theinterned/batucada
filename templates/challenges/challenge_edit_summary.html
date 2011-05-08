@@ -59,6 +59,12 @@
       <span class="hint block"></span>
       {{ form.allow_voting.errors }}
     </div>
+
+    <div class="field{% if form.entrants_can_edit.errors %} error{% endif %}">
+      <label for="id_entrants_can_edit">{{ form.entrants_can_edit }} {{ _('Allow entrants to edit their submissions?') }}</label>
+      <span class="hint block"></span>
+      {{ form.entrants_can_edit.errors }}
+    </div>
     
     <div class="field{% if form.resources.errors %} error{% endif %}">
       <label for="id_name">{{ _('Resources and Support') }}</label>
