@@ -77,6 +77,7 @@ class Challenge(ModelBase):
 
     is_open = models.BooleanField()
     allow_voting = models.BooleanField(default=False)
+    entrants_can_edit = models.BooleanField(default=True)
 
     objects = ChallengeManager()
 
