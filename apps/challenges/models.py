@@ -17,6 +17,7 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 
 from projects.models import Project
+from statuses.models import Status
 from users.tasks import SendUserEmail
 
 import caching.base
@@ -217,4 +218,22 @@ def submission_thanks_handler(sender, **kwargs):
 
     SendUserEmail.apply_async((user, subject, body))
 m2m_changed.connect(submission_thanks_handler,
+                    sender=Submission.challenge.through)
+
+
+def submission_activity_handler(sender, **kwargs):
+    submission = kwargs.get('instance', None)
+    if not isinstance(submission, Submission):
+        return
+    challenge = submission.get_challenge()
+    if not challenge:
+        return
+    url = 'http://www.drumbeat.org%s' % submission.get_absolute_url()
+    message = "%s: %s - %s " % (_('Posted'), submission.title, url)
+    status = Status(author=submission.created_by,
+                    project=challenge.project,
+                    status=message)
+    status.save()
+
+m2m_changed.connect(submission_activity_handler,
                     sender=Submission.challenge.through)
