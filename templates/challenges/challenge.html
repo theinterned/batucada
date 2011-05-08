@@ -69,6 +69,10 @@
   {% else %}
   <p>Want to participate? You should <a href="{% locale_url users_login %}">sign in</a>.</p>
   {% endif %}
+  {% else %}
+
+  This challenge is currently closed to new entries.
+
   {% endif %}
   
   {% if submissions.object_list %}
