@@ -208,16 +208,17 @@ def submission_thanks_handler(sender, **kwargs):
         'slug': challenge.slug,
         'submission_id': submission.pk
     })
-    project_url = reverse('projects_show', kwargs={
-        'slug': challenge.project.slug,
+    submission_url = reverse('submission_show', kwargs={
+        'slug': challenge.slug,
+        'submission_id': submission.pk
     })
-    subject = _('Thank you for your entry!')
+    subj = _('Thanks for entering in the Knight-Mozilla Innovation Challenge!')
     body = render_to_string('challenges/emails/submission_thanks.txt', {
         'share_url': share_url,
-        'project_url': project_url
+        'submission_url': submission_url,
     })
 
-    SendUserEmail.apply_async((user, subject, body))
+    SendUserEmail.apply_async((user, subj, body))
 m2m_changed.connect(submission_thanks_handler,
                     sender=Submission.challenge.through)
 
