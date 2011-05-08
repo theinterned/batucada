@@ -51,8 +51,6 @@ class Status(ModelBase):
         for participation in project.participants():
             if self.author != participation.user and (self.important or not participation.no_wall_updates):
                 SendUserEmail.apply_async((participation.user, subject, body))
-        if self.author != project.created_by:
-            SendUserEmail.apply_async((project.created_by, subject, body))
 
 
 ###########

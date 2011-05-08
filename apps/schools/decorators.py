@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from schools.models import School
 
 
-def organizer_required(func):
+def school_organizer_required(func):
     """
     Return a 403 response if they're not school organizers.
     """

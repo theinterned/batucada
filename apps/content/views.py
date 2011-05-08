@@ -12,7 +12,7 @@ from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from users.forms import ProfileEditForm, ProfileImageForm
 from drumbeat import messages
-from projects.decorators import participation_required, ownership_required
+from projects.decorators import participation_required, organizer_required
 from projects.models import Project, Participation
 from relationships.models import Relationship
 
@@ -23,13 +23,33 @@ from links.models import Link
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    first_level_comments = page.comments.filter(reply_to__isnull=True)
+    can_edit = page.can_edit(request.user)
+    if page.deleted:
+        messages.error(request, _('This page was deleted.'))
+        if can_edit:
+            return HttpResponseRedirect(reverse('page_history', kwargs={'slug':page.project, 'page_slug':page.slug}))
+        else:
+            return HttpResponseRedirect(page.project.get_absolute_url())
+    first_level_comments = page.comments.filter(reply_to__isnull=True, deleted=False)
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
-        'can_edit': page.can_edit(request.user),
+        'can_edit': can_edit,
         'first_level_comments': first_level_comments,
     }, context_instance=RequestContext(request))
+
+def show_comment(request, slug, page_slug, comment_id):
+    comment = get_object_or_404(PageComment, page__project__slug=slug, page__slug=page_slug, id=comment_id)
+    page_url = comment.page.get_absolute_url()
+    if comment.deleted:
+        if page_slug == 'sign-up' and not comment.reply_to:
+            msg = _('This answer was deleted.')
+        else:
+            msg = _('This comment was deleted.')
+        messages.error(request, msg)
+        return HttpResponseRedirect(page_url)
+    else:
+        return HttpResponseRedirect(page_url + '#%s' % comment.id)
 
 
 @login_required
@@ -38,8 +58,7 @@ def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if not page.editable:
         return HttpResponseForbidden()
-    user = request.user.get_profile()
-    if request.user.is_superuser or user == page.project.created_by:
+    if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
     elif page.collaborative:
         form_cls = PageForm if page.listed else NotListedPageForm
@@ -53,7 +72,7 @@ def edit_page(request, slug, page_slug):
         if form.is_valid():
             old_version.save()
             page = form.save(commit=False)
-            page.author = user
+            page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
             page.save()
             messages.success(request, _('%s updated!') % page.title)
@@ -77,8 +96,7 @@ def edit_page(request, slug, page_slug):
 @participation_required
 def create_page(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    user = request.user.get_profile()
-    if request.user.is_superuser or user == project.created_by:
+    if project.is_organizing(request.user):
         form_cls = OwnersPageForm
     else:
         form_cls = PageForm
@@ -87,7 +105,7 @@ def create_page(request, slug):
         if form.is_valid():
             page = form.save(commit=False)
             page.project = project
-            page.author = user
+            page.author = request.user.get_profile()
             page.save()
             messages.success(request, _('Task created!'))
             return HttpResponseRedirect(reverse('page_show', kwargs={
@@ -204,8 +222,7 @@ def restore_version(request, slug, page_slug, version_id):
     page = version.page
     if not page.editable:
         return HttpResponseForbidden()
-    user = request.user.get_profile()
-    if request.user.is_superuser or user == page.project.created_by:
+    if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
     elif page.collaborative:
         form_cls = PageForm if page.listed else NotListedPageForm
@@ -219,7 +236,7 @@ def restore_version(request, slug, page_slug, version_id):
         if form.is_valid():
             old_version.save()
             page = form.save(commit=False)
-            page.author = user
+            page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
             page.save()
             messages.success(request, _('%s restored!') % page.title)
@@ -246,21 +263,33 @@ def sign_up(request, slug):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
     if request.user.is_authenticated():
-        profile = request.user.get_profile()
-        first_level_comments = page.comments.filter(reply_to__isnull=True)
-        if profile != project.created_by:
-            participants = project.participants()
-            if participants.filter(user=profile).exists():
-                approved = Q(author__in=participants.values('user_id')) | Q(author=project.created_by)
-                first_level_comments = first_level_comments.filter(approved)
+        is_organizing = project.is_organizing(request.user)
+        is_participating = project.is_participating(request.user)
+        first_level_comments = page.comments.filter(reply_to__isnull=True, deleted=False)
+        can_post_answer = False
+        if not is_organizing:
+            if is_participating:
+                participants = project.participants()
+                first_level_comments = first_level_comments.filter(author__in=participants.values('user_id'))
             else:
+                profile = request.user.get_profile()
                 first_level_comments = first_level_comments.filter(author=profile)
+                can_post_answer = not first_level_comments.exists()
     else:
         first_level_comments = []
+        is_organizing = is_participating = can_post_answer = False
+    if project.signup_closed:
+        can_post_answer = False
+    if is_organizing:
+        for comment in first_level_comments:
+             comment.is_participating = project.participants().filter(user=comment.author)
     return render_to_response('content/sign_up.html', {
         'page': page,
         'project': project,
+        'organizing': is_organizing,
+        'participating': is_participating,
         'first_level_comments': first_level_comments,
+        'can_post_answer': can_post_answer,
     }, context_instance=RequestContext(request))
 
 
@@ -268,6 +297,8 @@ def sign_up(request, slug):
 def comment_sign_up(request, slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
+    is_organizing = project.is_organizing(request.user)
+    is_participating = project.is_participating(request.user)
     user = request.user.get_profile()
     reply_to = abs_reply_to = None
     if comment_id:
@@ -275,16 +306,18 @@ def comment_sign_up(request, slug, comment_id=None):
         abs_reply_to = reply_to
         while abs_reply_to.reply_to:
             abs_reply_to = abs_reply_to.reply_to
-    elif project.signup_closed:
-        return HttpResponseForbidden()
-
-    if user != project.created_by:
-        participants = project.participants()
-        author = abs_reply_to.author if abs_reply_to else user
-        if participants.filter(user=user).exists():
-            if author != project.created_by and not participants.filter(user=author).exists():
+        if not is_organizing:
+            if is_participating:
+                if not project.is_participating(abs_reply_to.author):
+                    return HttpResponseForbidden()
+            elif abs_reply_to.author != user:
                 return HttpResponseForbidden()
-        elif author != user:
+    elif project.signup_closed or is_organizing or is_participating:
+        return HttpResponseForbidden()
+    else:
+        answers = page.comments.filter(reply_to__isnull=True, deleted=False,
+            author=user)
+        if answers.exists():
             return HttpResponseForbidden()
 
     if request.method == 'POST':
@@ -377,29 +410,16 @@ def edit_comment_sign_up(request, slug, comment_id):
 
 
 @login_required
-@ownership_required
-def accept_sign_up(request, slug, comment_id):
+@organizer_required
+def accept_sign_up(request, slug, comment_id, as_organizer=False):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
-    user = request.user.get_profile()
     answer = page.comments.get(pk=comment_id)
-    if answer.reply_to or answer.author == project.created_by or request.method != 'POST':
+    organizing = project.is_organizing(answer.author.user)
+    participating = project.is_participating(answer.author.user)
+    if answer.reply_to or organizing or participating or request.method != 'POST':
         return HttpResponseForbidden()
-    try:
-        participation = answer.participation
-        return HttpResponseForbidden()
-    except Participation.DoesNotExist:
-        pass
-    try:
-        participation = project.participants().get(user=answer.author)
-        if participation.sign_up:
-            participation.left_on = datetime.datetime.now()
-            participation.save()
-            raise Participation.DoesNotExist
-        else:
-            participation.sign_up = answer
-    except Participation.DoesNotExist:
-        participation = Participation(project= project, user=answer.author, sign_up=answer)
+    participation = Participation(project=project, user=answer.author, organizing=as_organizer)
     participation.save()
     new_rel = Relationship(source=answer.author, target_project=project)
     try:
@@ -408,11 +428,14 @@ def accept_sign_up(request, slug, comment_id):
         pass
     accept_content = detail_description_content = render_to_string(
             "content/accept_sign_up_comment.html",
-            {})
+            {'as_organizer': as_organizer})
     accept_comment = PageComment(content=accept_content, author=user,
         page=page, reply_to=answer, abs_reply_to=answer)
     accept_comment.save()
-    messages.success(request, _('Participant added!'))
+    if as_organizer:
+        messages.success(request, _('Organizer added!'))
+    else:
+        messages.success(request, _('Participant added!'))
     return HttpResponseRedirect(answer.get_absolute_url())
 
 

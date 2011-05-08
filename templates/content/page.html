@@ -70,7 +70,7 @@
     </div>
   </div>
 </li>
-{% for reply in comment.all_replies.all %}
+{% for reply in comment.visible_replies %}
   <li class="post-container post-replies">
     <a name="{{ reply.id }}"></a>
     {% if user.is_authenticated %}

@@ -290,23 +290,32 @@ def confirm_resend(request, username):
 
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, username=username)
-    following = profile.following()
-    projects_following = profile.following(model=Project)
-    for project in projects_following:
-        if project.created_by == profile:
+    projects = profile.following(model=Project)
+    projects_organizing = []
+    projects_participating = []
+    projects_following = []
+    for project in projects:
+        if project.is_organizing(request.user):
             project.relation_text = _('(organizing)')
-        elif project.participants().filter(user=profile).exists():
+            projects_organizing.append(project)
+        elif project.is_participating(request.user):
             project.relation_text = _('(participating)')
+            projects_participating.append(project)
         else:
             project.relation_text = _('(following)')
+            projects_following.append(project)
+    following = profile.following()
     followers = profile.followers()
     links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
     return render_to_response('users/profile.html', {
         'profile': profile,
+        'projects': projects,
+        'projects_following': projects_following,
+        'projects_participating': projects_participating,
+        'projects_organizing': projects_organizing,
         'following': following,
         'followers': followers,
-        'projects_following': projects_following,
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
         'links': links,
