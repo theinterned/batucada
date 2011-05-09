@@ -33,6 +33,7 @@ class School(ModelBase):
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
+    text_color = models.CharField(max_length=7, default='#5A6579')
     
 
     def __unicode__(self):
