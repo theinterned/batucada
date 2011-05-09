@@ -243,6 +243,14 @@ var batucada = {
             }
         }
     },
+    school_edit: {
+        onload: function() {
+            var $inputs = $('input[type=file]');
+            if ($inputs) {
+                attachFileUploadHandler($inputs);
+            }
+        }
+    },
     sign_up_task: {
         onload: function() {
             var $inputs = $('input[type=file]');
