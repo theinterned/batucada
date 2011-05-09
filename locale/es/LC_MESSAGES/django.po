@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-08 23:24-0500\n"
+"POT-Creation-Date: 2011-05-08 23:36-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -200,101 +200,117 @@ msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgid "This task was deleted."
 msgstr "Esta tarea fue eliminada."
 
-#: apps/content/views.py:47
+#: apps/content/views.py:47 templates/content/sign_up.html:44
 msgid "This answer was deleted."
 msgstr "Esta respuesta fue eliminada."
 
-#: apps/content/views.py:49
+#: apps/content/views.py:49 templates/content/page.html:51
 msgid "This comment was deleted."
 msgstr "Este comentario fue eliminado."
 
-#: apps/content/views.py:79
+#: apps/content/views.py:83
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizada!"
 
-#: apps/content/views.py:86 apps/content/views.py:277
+#: apps/content/views.py:90 apps/content/views.py:307
 #, python-format
 msgid "There was a problem saving %s."
 msgstr "Ocurrió un problema al guardar %s."
 
-#: apps/content/views.py:110
+#: apps/content/views.py:114
 msgid "Task created!"
 msgstr "Tarea creada!"
 
-#: apps/content/views.py:117
+#: apps/content/views.py:121
 msgid "There was a problem creating the task."
 msgstr "Ocurrió problema creando la tarea."
 
-#: apps/content/views.py:142
+#: apps/content/views.py:146
 #, python-format
 msgid "%s deleted!"
 msgstr "¡%s eliminada!"
 
-#: apps/content/views.py:175
+#: apps/content/views.py:179
 msgid "Comment posted!"
 msgstr "¡Comentario publicado!"
 
-#: apps/content/views.py:182
+#: apps/content/views.py:186
 msgid "There was a problem posting the comment. Comments cannot be empty."
 msgstr ""
 "Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:203 apps/content/views.py:416
+#: apps/content/views.py:207 apps/content/views.py:448
 msgid "Comment updated!"
 msgstr "¡Comentario actualizado!"
 
-#: apps/content/views.py:207
+#: apps/content/views.py:211
 msgid "There was a problem saving the comment."
 msgstr "Ocurrió un problema al guardar el comentario."
 
-#: apps/content/views.py:270
+#: apps/content/views.py:232
+msgid "Answer deleted!"
+msgstr "¡Respuesta eliminada!"
+
+#: apps/content/views.py:232
+msgid "Answer restored!"
+msgstr "¡Respuesta restaurada!"
+
+#: apps/content/views.py:234
+msgid "Comment deleted!"
+msgstr "¡Comentario eliminado!"
+
+#: apps/content/views.py:234
+msgid "Comment restored!"
+msgstr "¡Comentario restaurado!"
+
+#: apps/content/views.py:300
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
-#: apps/content/views.py:369
+#: apps/content/views.py:401
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:369
+#: apps/content/views.py:401
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:376
+#: apps/content/views.py:408
 msgid "There was a problem posting your reply. Reply cannot be empty. "
 msgstr ""
 "Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:377
+#: apps/content/views.py:409
 msgid "There was a problem submitting your answer. Answer cannot be empty. "
 msgstr ""
 "Ocurrió un problema al enviar su respuesta. La respuesta no puede estar "
 "vacía."
 
-#: apps/content/views.py:416
+#: apps/content/views.py:448
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/content/views.py:420
+#: apps/content/views.py:452
 msgid "There was a problem updating your comment. Comments cannot be empty. "
 msgstr ""
 "Ocurrió un problema al actualizar el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:421
+#: apps/content/views.py:453
 msgid "There was a problem updating your answer. Answers cannot be empty. "
 msgstr ""
 "Ocurrió un problema al actualizar su respuesta. La respuesta no puede estar "
 "vacía."
 
-#: apps/content/views.py:464
+#: apps/content/views.py:496
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/content/views.py:466
+#: apps/content/views.py:498
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
@@ -310,7 +326,8 @@ msgstr "(participando)"
 msgid "(following)"
 msgstr "(siguiendo)"
 
-#: apps/drumbeat/views.py:39
+#: apps/drumbeat/views.py:33
+#, python-format
 msgid ""
 "\n"
 "        User %(display_name)s has reported the following content as "
@@ -390,36 +407,36 @@ msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
 
-#: apps/projects/forms.py:76
+#: apps/projects/forms.py:75
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:79
+#: apps/projects/forms.py:78
 #, python-format
 msgid "User %s is organizing the study group."
 msgstr "El usuario %s está organizando el grupo de estudio."
 
-#: apps/projects/forms.py:81
+#: apps/projects/forms.py:80
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/forms.py:92 templates/drumbeatmail/base.html:17
+#: apps/projects/forms.py:91 templates/drumbeatmail/base.html:17
 #: templates/messages/inbox.html:12
 #: templates/projects/contact_organizers.html:12
 msgid "Subject"
 msgstr "Asunto"
 
-#: apps/projects/forms.py:94
+#: apps/projects/forms.py:93
 msgid "Body"
 msgstr "Cuerpo"
 
-#: apps/projects/forms.py:103
+#: apps/projects/forms.py:102
 msgid "That study group does not exist."
 msgstr "Ese grupo de estudio no existe."
 
-#: apps/projects/forms.py:107
+#: apps/projects/forms.py:106
 #, python-format
 msgid ""
 "You received this because you are an organizer in %(project)s: http://"
@@ -831,10 +848,11 @@ msgstr "BETA"
 #: templates/content/comment_page.html:12
 #: templates/content/comment_sign_up.html:12
 #: templates/content/confirm_delete_page.html:12
-#: templates/content/create_page.html:11 templates/content/edit_page.html:12
-#: templates/content/history_page.html:14 templates/content/page.html:14
-#: templates/content/restore_version.html:12 templates/content/sign_up.html:14
-#: templates/content/version_page.html:14
+#: templates/content/create_page.html:11
+#: templates/content/delete_restore_comment.html:12
+#: templates/content/edit_page.html:12 templates/content/history_page.html:14
+#: templates/content/page.html:14 templates/content/restore_version.html:12
+#: templates/content/sign_up.html:14 templates/content/version_page.html:14
 #: templates/dashboard/dashboard.html:44 templates/projects/gallery.html:4
 #: templates/projects/gallery.html.py:10 templates/projects/project.html:14
 #: templates/projects/project_edit.html:10 templates/users/profile.html:102
@@ -945,8 +963,8 @@ msgid " study group."
 msgstr "."
 
 #: templates/activity/_activity_resource.html:6 templates/content/page.html:37
-#: templates/content/page.html.py:57 templates/content/page.html:84
-#: templates/content/sign_up.html:47 templates/content/sign_up.html.py:87
+#: templates/content/page.html.py:68 templates/content/page.html:97
+#: templates/content/sign_up.html:59 templates/content/sign_up.html.py:102
 #: templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
@@ -1081,7 +1099,9 @@ msgstr "Reglas"
 #: templates/content/comment_page.html:58
 #: templates/content/comment_sign_up.html:76
 #: templates/content/confirm_delete_page.html:32
-#: templates/content/create_page.html:32 templates/content/edit_page.html:38
+#: templates/content/create_page.html:32
+#: templates/content/delete_restore_comment.html:62
+#: templates/content/edit_page.html:38
 #: templates/content/restore_version.html:36
 #: templates/dashboard/dashboard.html:78
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
@@ -1178,7 +1198,10 @@ msgstr "Acciones"
 #: templates/challenges/challenge_judges.html:55
 #: templates/content/confirm_delete_page.html:24
 #: templates/content/confirm_delete_page.html:34
-#: templates/content/page.html:23
+#: templates/content/delete_restore_comment.html:67
+#: templates/content/page.html:23 templates/content/page.html.py:65
+#: templates/content/page.html:94 templates/content/sign_up.html:56
+#: templates/content/sign_up.html.py:99
 #: templates/preferences/settings_delete.html:15
 #: templates/projects/project_edit_links.html:39
 #: templates/projects/project_edit_participants.html:56
@@ -1331,9 +1354,9 @@ msgstr "Respuesta al Comentario"
 msgid "Edit Answer"
 msgstr "Editar Respuesta"
 
-#: templates/content/comment_sign_up.html:34 templates/content/page.html:52
-#: templates/content/page.html.py:79 templates/content/sign_up.html:43
-#: templates/content/sign_up.html.py:83 templates/drumbeatmail/inbox.html:48
+#: templates/content/comment_sign_up.html:34 templates/content/page.html:62
+#: templates/content/page.html.py:91 templates/content/sign_up.html:54
+#: templates/content/sign_up.html.py:97 templates/drumbeatmail/inbox.html:48
 #: templates/drumbeatmail/inbox.html:95 templates/drumbeatmail/reply.html:4
 #: templates/drumbeatmail/reply.html:6
 msgid "Reply"
@@ -1391,9 +1414,48 @@ msgstr ""
 "preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
 "una empresa en la que todos trabajen durante un mes."
 
+#: templates/content/delete_restore_comment.html:28
+msgid "Restore Answer:"
+msgstr "Restaurar Respuesta"
+
+#: templates/content/delete_restore_comment.html:30
+msgid "Delete Answer:"
+msgstr "Eliminar Respuesta:"
+
+#: templates/content/delete_restore_comment.html:34
+msgid "Restore Comment:"
+msgstr "Restaurar Comentario"
+
+#: templates/content/delete_restore_comment.html:36
+msgid "Delete Comment:"
+msgstr "Eliminar Comentario"
+
+#: templates/content/delete_restore_comment.html:49
+msgid "Are you sure you want to restore this answer?"
+msgstr "¿Está seguro que desea restaurar esta tarea?"
+
+#: templates/content/delete_restore_comment.html:51
+msgid "Are you sure you want to delete this answer?"
+msgstr "¿Está seguro que desea eliminar esta respuesta?"
+
+#: templates/content/delete_restore_comment.html:55
+msgid "Are you sure you want to restore this comment?"
+msgstr "¿Está seguro que desea restaurar este comentario?"
+
+#: templates/content/delete_restore_comment.html:57
+msgid "Are you sure you want to delete this comment?"
+msgstr "¿Está seguro que desea eliminar este comentario?"
+
+#: templates/content/delete_restore_comment.html:65
+#: templates/content/page.html:53 templates/content/restore_version.html:27
+#: templates/content/restore_version.html:38 templates/content/sign_up.html:46
+#: templates/content/version_page.html:26
+msgid "Restore"
+msgstr "Restaurar"
+
 #: templates/content/edit_page.html:23 templates/content/page.html:22
-#: templates/content/page.html.py:55 templates/content/page.html:82
-#: templates/content/sign_up.html:45 templates/content/sign_up.html.py:85
+#: templates/content/page.html.py:66 templates/content/page.html:95
+#: templates/content/sign_up.html:57 templates/content/sign_up.html.py:100
 #: templates/projects/project_edit.html:15
 #: templates/projects/project_edit_links.html:35
 #: templates/projects/sidebar.html:25 templates/schools/school_edit.html:14
@@ -1425,15 +1487,9 @@ msgstr "Ver Historial"
 msgid "Post Comment"
 msgstr "Publicar Comentario"
 
-#: templates/content/page.html:95 templates/content/sign_up.html:98
+#: templates/content/page.html:108 templates/content/sign_up.html:113
 msgid "In Reply To:"
 msgstr "En Respuesta A:"
-
-#: templates/content/restore_version.html:27
-#: templates/content/restore_version.html:38
-#: templates/content/version_page.html:26
-msgid "Restore"
-msgstr "Restaurar"
 
 #: templates/content/sign_up.html:22
 msgid "Post Answer"
@@ -1443,27 +1499,31 @@ msgstr "Publicar Respuesta"
 msgid "Answers"
 msgstr "Respuestas"
 
-#: templates/content/sign_up.html:60
+#: templates/content/sign_up.html:37
+msgid "Pending Answers:"
+msgstr "Respuesta Pendiente:"
+
+#: templates/content/sign_up.html:72
 #: templates/content/emails/sign_up_updated.txt:8
 msgid "Bio:"
 msgstr "Biografía:"
 
-#: templates/content/sign_up.html:61
+#: templates/content/sign_up.html:73
 #: templates/content/emails/sign_up_updated.txt:10
 #: templates/users/profile.html:62
 msgid "Location:"
 msgstr "Ubicación:"
 
-#: templates/content/sign_up.html:62
+#: templates/content/sign_up.html:74
 #: templates/content/emails/sign_up_updated.txt:12
 msgid "Answer:"
 msgstr "Respuesta:"
 
-#: templates/content/sign_up.html:68
+#: templates/content/sign_up.html:80
 msgid "Add Participant"
 msgstr "Añadir Participante"
 
-#: templates/content/sign_up.html:72
+#: templates/content/sign_up.html:84
 #: templates/projects/project_edit_participants.html:52
 msgid "Add Organizer"
 msgstr "Añadir Organizador"
@@ -2845,6 +2905,3 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
-
-#~ msgid "Accept"
-#~ msgstr "Aceptar"
