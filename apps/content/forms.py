@@ -1,7 +1,6 @@
 from django import forms
 
 from drumbeat.utils import CKEditorWidget
-
 from content.models import Page, PageComment
 
 CKEDITOR_CONFIG_NAME = 'rich'
@@ -63,3 +62,4 @@ class CommentForm(forms.ModelForm):
             # Adding error message here but it doesn't show because of ckeditor? It is also in views.py
             self._errors['id_content'] = forms.util.ErrorList("Comments cannot be empty")
         return data
+

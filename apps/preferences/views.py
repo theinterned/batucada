@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 @login_required
 def settings(request):
     profile = request.user.get_profile()
-    participations = profile.participations.filter(left_on__isnull=True)
+    participations = profile.participations.filter(left_on__isnull=True, organizing=False)
     if request.method == 'POST':
         for key in AccountPreferences.preferences:
             if key in request.POST and request.POST[key] == 'on':

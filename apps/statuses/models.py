@@ -62,10 +62,6 @@ class Status(ModelBase):
                 pl = participation.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
                     (participation.user, subject[pl], body[pl]))
-        if self.author != project.created_by:
-            pl = project.created_by.preflang
-            SendUserEmail.apply_async(
-                (project.created_by, subject[pl], body[pl]))
 
 
 ###########

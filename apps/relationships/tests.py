@@ -59,15 +59,13 @@ class RelationshipsTests(TestCase):
             name='test project',
             short_description='for testing',
             long_description='for testing relationships',
-            created_by=self.user_one,
         )
         project.save()
-
-        # creator will automatically be following the project
-        relationships = Relationship.objects.all()
-        self.assertEqual(relationships[0].source, self.user_one)
-        self.assertEqual(relationships[0].target_project, project)
-
+        relationship = Relationship(
+            source=self.user_one,
+            target_project=project,
+        )
+        relationship.save()
         relationship = Relationship(
             source=self.user_one,
             target_project=project,

@@ -34,36 +34,26 @@ def determine_image_upload_path(instance, filename):
     }
 
 
-def determine_media_upload_path(instance, filename):
-    if instance.is_video():
-        fmt = "videos/projects/%(partition)d/%(filename)s"
-    else:
-        fmt = "images/projects/%(partition)d/%(filename)s"
-    return fmt % {
-        'partition': get_partition_id(instance.project.pk),
-        'filename': safe_filename(filename),
-    }
-
-
 class ProjectManager(caching.base.CachingManager):
 
     def get_popular(self, limit=0, school=None):
-        popular = cache.get('projects_popular')
+        popular = cache.get('projectspopular')
         if not popular:
             rels = Relationship.objects.values('target_project').annotate(
                 Count('id')).exclude(target_project__isnull=True).filter(
                 target_project__under_development=False,
                 target_project__testing_sandbox=False).order_by('-id__count')
             if school:
-                rels = rels.filter(target_project__school=school)
+                rels = rels.filter(target_project__school=school).exclude(
+                    target_project__id__in=school.declined.values('id'))
             if limit:
                 rels = rels[:limit]
             popular = [r['target_project'] for r in rels]
-            cache.set('projects_popular', popular, 3000)
+            cache.set('projectspopular', popular, 3000)
         return Project.objects.filter(id__in=popular)
 
     def get_active(self, limit=0, school=None):
-        active = cache.get('projects_active')
+        active = cache.get('projectsactive')
         if not active:
             activities = Activity.objects.values('target_project').annotate(
                 Max('created_on')).exclude(target_project__isnull=True,
@@ -71,11 +61,12 @@ class ProjectManager(caching.base.CachingManager):
                 remote_object__isnull=False).filter(target_project__under_development=False,
                 target_project__testing_sandbox=False).order_by('-created_on__max')
             if school:
-                activities = activities.filter(target_project__school=school)
+                activities = activities.filter(target_project__school=school).exclude(
+                    target_project__id__in=school.declined.values('id'))
             if limit:
                 activities = activities[:limit]
             active = [a['target_project'] for a in activities]
-            cache.set('projects_active', active, 3000)
+            cache.set('projectsactive', active, 3000)
         return Project.objects.filter(id__in=active)
 
 
@@ -100,8 +91,6 @@ class Project(ModelBase):
                               storage=storage.ImageStorage(), blank=True)
 
     slug = models.SlugField(unique=True, max_length=110)
-    created_by = models.ForeignKey('users.UserProfile',
-                                   related_name='projects')
     featured = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
@@ -116,23 +105,40 @@ class Project(ModelBase):
         verbose_name = _('study group')
 
     def followers(self):
-        """Return a list of users following this project."""
-        relationships = Relationship.objects.select_related(
-            'source', 'created_by').filter(target_project=self)
-        return [rel.source for rel in relationships]
+        return Relationship.objects.filter(target_project=self)
 
     def non_participant_followers(self):
-        from users.models import UserProfile
-        followers_ids = Relationship.objects.select_related(
-            'source', 'created_by').filter(target_project=self).values('source_id')
-        followers = UserProfile.objects.filter(id__in=followers_ids)
-        non_participants = followers.exclude(pk=self.created_by.pk)
-        non_participants = non_participants.exclude(id__in=self.participants().values('user_id'))
-        return non_participants
+        return self.followers().exclude(
+            source__id__in=self.participants().values('user_id'))
 
     def participants(self):
         """Return a list of users participating in this project."""
-        return Participation.objects.filter(project=self, left_on__isnull=True)
+        return Participation.objects.filter(project=self,
+            left_on__isnull=True)
+
+    def non_organizer_participants(self):
+        return self.participants().filter(organizing=False)
+
+    def organizers(self):
+        return self.participants().filter(organizing=True)
+
+    def is_organizing(self, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            is_organizer = self.organizers().filter(user=profile).exists()
+            is_superuser = user.is_superuser
+            return is_organizer or is_superuser
+        else:
+            return False
+
+    def is_participating(self, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            is_organizer_or_participant = self.participants().filter(user=profile).exists()
+            is_superuser = user.is_superuser
+            return is_organizer_or_participant or is_superuser
+        else:
+            return False
 
     def activities(self):
         activities = Activity.objects.filter(
@@ -166,39 +172,10 @@ class Project(ModelBase):
         super(Project, self).save()
 
 
-class ProjectMedia(ModelBase):
-    video_mimetypes = (
-        'video/ogg',
-        'video/webm',
-        'video/mp4',
-        'application/ogg',
-        'audio/ogg',
-    )
-    image_mimetypes = (
-        'image/png',
-        'image/jpg',
-        'image/jpeg',
-        'image/gif',
-    )
-    accepted_mimetypes = video_mimetypes + image_mimetypes
-    project_file = models.FileField(upload_to=determine_media_upload_path)
-    project = models.ForeignKey(Project)
-    mime_type = models.CharField(max_length=80, null=True)
-    thumbnail = models.ImageField(upload_to=determine_image_upload_path,
-                                  null=True, blank=True,
-                                  storage=storage.ImageStorage())
-
-    def thumbnail_or_default(self):
-        """Return project media's thumbnail or a default."""
-        return self.thumbnail or 'images/file-default.png'
-
-    def is_video(self):
-        return self.mime_type in self.video_mimetypes
-
-
 class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile', related_name='participations')
     project = models.ForeignKey('projects.Project', related_name='participations')
+    organizing = models.BooleanField(default=False)
     joined_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     left_on = models.DateTimeField(blank=True, null=True)
@@ -207,8 +184,7 @@ class Participation(ModelBase):
     no_wall_updates = models.BooleanField(default=False)
     # for new pages or comments.
     no_updates = models.BooleanField(default=False)
-    # Sign-Up answer.
-    sign_up = models.OneToOneField('content.PageComment', related_name='participation', null=True, blank=True)
+
 
 ###########
 # Signals #
@@ -221,56 +197,5 @@ def clean_html(sender, **kwargs):
         if instance.long_description:
             instance.long_description = bleach.clean(instance.long_description,
                 tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+pre_save.connect(clean_html, sender=Project)
 
-pre_save.connect(clean_html, sender=Project) 
-
-def project_creation_handler(sender, **kwargs):
-    project = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
-
-    if not created or not isinstance(project, Project):
-        return
-
-    Relationship(source=project.created_by,
-                 target_project=project).save()
-
-    try:
-        from activity.models import Activity
-        act = Activity(actor=project.created_by,
-                       verb='http://activitystrea.ms/schema/1.0/post',
-                       project=project,
-                       target_project=project)
-        act.save()
-    except ImportError:
-        return
-post_save.connect(project_creation_handler, sender=Project)
-
-
-def projectmedia_thumbnail_generator(sender, **kwargs):
-    media = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
-
-    if not created or not isinstance(media, ProjectMedia):
-        return
-
-    ThumbnailGenerator.apply_async(args=(media,))
-post_save.connect(projectmedia_thumbnail_generator, sender=ProjectMedia)
-
-
-def projectmedia_scrubber(sender, **kwargs):
-    media = kwargs.get('instance', None)
-    if not isinstance(media, ProjectMedia):
-        return
-    media_root = getattr(settings, 'MEDIA_ROOT', None)
-    if not media_root:
-        return
-    path = lambda f: os.path.join(media_root, f)
-    files = []
-    if media.project_file:
-        files.append(path(media.project_file.name))
-    if media.thumbnail:
-        files.append(path(media.thumbnail.name))
-    for f in files:
-        if os.path.exists(f):
-            os.unlink(f)
-post_delete.connect(projectmedia_scrubber, sender=ProjectMedia)

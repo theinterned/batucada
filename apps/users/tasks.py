@@ -7,4 +7,7 @@ class SendUserEmail(Task):
         log = self.get_logger(**kwargs)
         log.debug("Sending email to user %d with subject %s" % (
             profile.user.id, subject,))
-        profile.user.email_user(subject, body)
+        try:
+            profile.user.email_user(subject, body)
+        except Exception, ex:
+            log.debug("Error sending email: %s" % ex)

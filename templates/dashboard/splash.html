@@ -36,7 +36,17 @@
           {% endwith %}
         </ul>
       </section>
-    	{% endif %}
+        {% endif %}
+
+      <section id="blog_feed">
+        <h1><a href="http://blogs.p2pu.org/" title="{{ _('P2PU Blog') }}">{{ _('P2PU Blog') }}</a> <a class="feed-link" href="{{ feed_url }}" title="{{ _('Subscribe to the Peer 2 Peer University blog') }}"> {{ _('feed') }}</a></h1>
+          {% for entry in feed_entries %}
+            <article>
+              <h1><a href="{{ entry.link }}">{{ entry.title }}</a></h1>
+                <p>{{ entry.body|truncatewords:50 }}</p>
+            </article>
+          {% endfor %}
+      </section>
   </div>  
 </section>
 {% endblock %}
