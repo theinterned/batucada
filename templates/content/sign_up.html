@@ -6,6 +6,10 @@
 
 {% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
 
+{% block links %}
+{% if project.school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.school.slug %}?v=1">{% endif %}
+{% endblock %}
+
 {% block bodyid %}page{% endblock %}
 
 {% block breadcrumbs %}
