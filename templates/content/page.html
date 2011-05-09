@@ -20,6 +20,7 @@
       <div id="project-actions">
         {% if can_edit %}
           <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit') }}</a>
+          <a class="button" href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>
         {% endif %}
         <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
         {% if can_edit %}

@@ -19,7 +19,7 @@ def sidebar(context):
     followers_count = project.non_participant_followers().count()
     organizers_count = project.organizers().count()
     update_count = project.activities().count()
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True).order_by('index')
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
     links = project.link_set.all().order_by('index')
     school = project.school
     if school and school.declined.filter(id=project.id).exists():

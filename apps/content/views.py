@@ -25,7 +25,7 @@ def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     can_edit = page.can_edit(request.user)
     if page.deleted:
-        messages.error(request, _('This page was deleted.'))
+        messages.error(request, _('This task was deleted.'))
         if can_edit:
             return HttpResponseRedirect(reverse('page_history', kwargs={'slug':page.project, 'page_slug':page.slug}))
         else:
@@ -39,7 +39,8 @@ def show_page(request, slug, page_slug):
     }, context_instance=RequestContext(request))
 
 def show_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, page__project__slug=slug, page__slug=page_slug, id=comment_id)
+    comment = get_object_or_404(PageComment, page__project__slug=slug, page__slug=page_slug,
+        id=comment_id)
     page_url = comment.page.get_absolute_url()
     if comment.deleted:
         if page_slug == 'sign-up' and not comment.reply_to:
@@ -56,7 +57,7 @@ def show_comment(request, slug, page_slug, comment_id):
 @participation_required
 def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if not page.editable:
+    if not page.editable or page.deleted:
         return HttpResponseForbidden()
     if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
@@ -91,7 +92,6 @@ def edit_page(request, slug, page_slug):
         'project': page.project,
     }, context_instance=RequestContext(request))
 
-
 @login_required
 @participation_required
 def create_page(request, slug):
@@ -121,6 +121,33 @@ def create_page(request, slug):
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@participation_required
+def delete_page(request, slug, page_slug):
+    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    if page.deleted or not page.editable or not page.listed:
+        return HttpResponseForbidden()
+    if not page.project.is_organizing(request.user) and not page.collaborative:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        old_version = PageVersion(title=page.title, content=page.content,
+            author=page.author, date=page.last_update, page=page)
+        old_version.save()
+        page.author = request.user.get_profile()
+        page.last_update = datetime.datetime.now()
+        page.deleted = True
+        page.save()
+        messages.success(request, _('%s deleted!') % page.title)
+        return HttpResponseRedirect(reverse('page_history',
+            kwargs={'slug':page.project, 'page_slug':page.slug}))
+    else:
+        return render_to_response('content/confirm_delete_page.html', {
+            'page': page,
+            'project': page.project,
+        }, context_instance=RequestContext(request))
+
 
 
 @login_required
@@ -202,7 +229,7 @@ def history_page(request, slug, page_slug):
 
 def version_page(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
-        page__slug=page_slug, id=version_id)
+        page__slug=page_slug, id=version_id, deleted=False)
     page = version.page
     if not page.editable:
         return HttpResponseForbidden()
@@ -220,7 +247,7 @@ def restore_version(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id)
     page = version.page
-    if not page.editable:
+    if not page.editable or version.deleted:
         return HttpResponseForbidden()
     if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
@@ -231,11 +258,12 @@ def restore_version(request, slug, page_slug, version_id):
         return HttpResponseForbidden()
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
-            author=page.author, date=page.last_update, page=page)
+            author=page.author, date=page.last_update, page=page, deleted=page.deleted)
         form = form_cls(request.POST, instance=page)
         if form.is_valid():
             old_version.save()
             page = form.save(commit=False)
+            page.deleted = False
             page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
             page.save()
@@ -468,7 +496,7 @@ def page_index_down(request, slug, counter):
         counter = int(counter)
     except ValueError:
         raise Http404
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True).order_by('index')
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
     if counter < 0 or content_pages.count() - 1 <= counter:
         raise Http404
     next_page = content_pages[counter + 1]
