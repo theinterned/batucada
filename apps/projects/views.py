@@ -228,11 +228,13 @@ def edit_links_edit(request, slug, link):
     if link.project != project:
         return http.HttpResponseForbidden()
     if form.is_valid():
-        index = link.index
-        link.delete()
-        link = Link(user = profile, project = project, name=form.cleaned_data['name'],
-            url=form.cleaned_data['url'], subscribe=form.cleaned_data['subscribe'],
-            index=index)
+        if link.subscription:
+            tasks.UnsubscribeFromFeed.apply_async(args=(link,))
+            link.subscription = None
+            link.save()
+        link = form.save(commit=False)
+        link.user = profile
+        link.project = project
         link.save()
         messages.success(request, _('Link updated.'))
         return http.HttpResponseRedirect(
