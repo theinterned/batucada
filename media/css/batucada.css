@@ -1416,32 +1416,32 @@ header {}
 			font-style: italic;
 		}
 
-		.modal .participant, .modal .featured_group {
+		.modal .featured_group, .modal .declined_group {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 0;
 			vertical-align: middle;
 			padding-right: 35px;
 		}
-	    .modal .link {
+	    .modal .link, .modal .participants .field {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 30px;
 			vertical-align: middle;
 		}
-		.modal .link.url{
+		.modal .link.url {
 			width: 178px;
 			padding: 0;
 		}
 		
-		.modal .link.subscribe{
+		.modal .link.subscribe, .modal .participants .field.organizer {
             width: 100px;
             padding: 0;
             top: -10px;
         }
- 
         
-		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text] {
+		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text],
+        .modal .declined_groups input[type=text] {
 			width: 154px;
 		}
 		
@@ -1449,16 +1449,18 @@ header {}
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, , .modal .participants .add-participant, .modal .featured_groups .add-featured {
+		.modal .links .add-link, , .modal .participants .add-participant, .modal .featured_groups .add-featured,
+        .modal .declined_groups .add-declined {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button {
+		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button,
+        .modal .declined_groups .add-declined button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
-		#editing table, .modal .links table, .modal .participants table, .featured_groups table {
+		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1471,7 +1473,7 @@ header {}
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
-          .modal .featured_groups th, .modal .featured_groups td {
+        .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1484,7 +1486,7 @@ header {}
 			
 			/*width: 25%;*/
 		}
-		.modal .links table .name, .modal .participants table .name, .featured_groups table .name {
+		.modal .links table .name, .modal .participants table .name, .featured_groups table .name, .declined_groups table .name {
 			width: 185px;
 		}
 		
@@ -1492,7 +1494,7 @@ header {}
 		    width: 90px; 
 		}
 		
-		.modal .links table .subscription {
+		.modal .links table .subscription, .modal .participants table .organizer {
 		    width: 50px
 		}
 		
@@ -1500,11 +1502,11 @@ header {}
             width: 200px
         }
         
-        .modal .links table .actions form {
+        .modal .links table .actions form, .modal .participants table .actions form {
             float: left;
         }
         
-        .modal .links table .actions button {            
+        .modal .links table .actions button {
             width: 50px; 
         }
 		.modal .links table .url a {
@@ -1513,13 +1515,13 @@ header {}
 			overflow: hidden;
 			word-wrap: break-word;
 		}
-		.modal .links .subscription .yes{
+		.modal .links .subscription .yes, .modal .participants .organizer .yes {
 			display: block;
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
 		}
 		
-		.modal .links .subscription .no{
+		.modal .links .subscription .no, .modal .participants .organizer .no {
             display: block;
             text-indent: -9999px;
             background: url(/media/images/delete-x.png) 50% 50% no-repeat;
@@ -1787,8 +1789,8 @@ header {}
 	right: 81px; bottom: -105px;
 	}
 #splash #main{
-        width: 980px;
-        padding: 36px 10px 0 10px;
+    width: 980px;
+    padding: 36px 10px 0 10px;
 	margin: 0;
 	float: none;
 	border-top: 1px solid #fff;
@@ -1799,7 +1801,7 @@ header {}
 #splash #main aside {
 	display: block;
 	margin-left: 680px;
-	}	
+	}
 #splash #main aside > section > h1{
 	position: relative;
 	padding-bottom: 5px;
@@ -1808,37 +1810,48 @@ header {}
 	font-size: 16px;
 	line-height: 18px;
 	font-weight: normal;
-        width: 300px;
+    width: 295px;
 	border-bottom: 1px solid #dbdbdb;
 	}
+
 #splash #featured_project ul {
 	background: url(/media/images/splash-featured-project-bg.png) 50% -5px no-repeat;
 	height: 349px;
 	}
+
 #splash #featured_project li {
 	display: block;
 	margin: 0 auto 18px;
 	}	
-#splash #main aside #planet_drumbeat p{
+
+#splash #main aside #blog_feed {
+    padding-right: 30px;
+    }
+
+#splash #main aside #planet_drumbeat p, #splash #main #blog_feed p {
 	color: #777;
 	font-size: 12px;
 	line-height: 1.5;
 	}
-#splash #main aside #planet_drumbeat > h1 a.feed-link {
+
+#splash #main aside #planet_drumbeat > h1 a.feed-link, #splash #main #blog_feed > h1 a.feed-link {
 	display: block;
-	width: 16px; height: 16px;
+	width: 16px; 
+	height: 16px;
 	position: absolute;
 	top: 2px; right: 0;
 	text-indent: -9999px;
 	background: url(/media/images/feed-icon-16x16.png) 0 0 no-repeat;
-	}		
-#splash #main aside #planet_drumbeat article h1{
+	}
+
+#splash #main aside #planet_drumbeat article h1, #splash #main #blog_feed article h1 {
 	font-size: 12px;
 	line-height: 1.5;
 	}
-#splash #main aside #planet_drumbeat > h1 a:hover{
+
+#splash #main aside #planet_drumbeat > h1 a:hover, #splash #main #blog_feed > h1 a:hover {
 	opacity: 0.7;
-}
+    }
 /* SIGNIN / SIGNUP */
 .signin{}
 .signin #breadcrumbs {

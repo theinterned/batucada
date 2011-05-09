@@ -212,7 +212,7 @@ PUSH_HUB = 'http://pubsubhubbub.appspot.com/'
 SOUTH_TESTS_MIGRATE = False
 
 # Feed to show contents of on the splash page
-SPLASH_PAGE_FEED = 'http://planet.drumbeat.org/atom.xml'
+SPLASH_PAGE_FEED = 'http://blogs.p2pu.org/feed/'
 
 # Ckeditor
 CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"

@@ -32,7 +32,6 @@ class ProjectTests(TestCase):
             name='My Cool Project',
             short_description='This project is awesome',
             long_description='No really, its good',
-            created_by=self.user,
         )
         project.save()
         self.assertEqual('my-cool-project', project.slug)
@@ -40,7 +39,6 @@ class ProjectTests(TestCase):
             name='My Cool  Project',
             short_description='This project is awesome',
             long_description='This is all very familiar',
-            created_by=self.user,
         )
         project2.save()
         self.assertEqual('my-cool-project-2', project2.slug)

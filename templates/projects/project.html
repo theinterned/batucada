@@ -16,7 +16,7 @@
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
     </nav>
 
-    {% if user.get_profile == project.created_by %}
+    {% if organizing %}
       <div id="project-actions">
         <!--<a class="button" href="{% locale_url challenges_create project_id=project.pk %}">{{ _('Create Challenge') }}</a>-->
       </div>
@@ -54,7 +54,7 @@
   </div> <!-- /.challenges -->
   {% endif %}
 
-  {% if can_post_wall %}  
+  {% if participating %}  
   <div id="create-post">
     <div class="post-container">
       <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
@@ -62,7 +62,7 @@
 	<input id="fake-message-input" type="text" value="{{ _('Post a message to this study group') }}">
 	<textarea name="status"></textarea>
 
-        {% if user.get_profile == project.created_by %}
+        {% if organizing %}
             <div id="important-message" class="field{% if form.important.errors %} error{% endif %}">
                 {{ form.important }} {{ _('Important message (bypass notification preferences of all the participants).') }}
                 {{ form.important.errors }}

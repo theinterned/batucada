@@ -67,25 +67,32 @@ def dashboard(request):
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
-    projects_following = profile.following(model=Project)
-    for project in projects_following:
-        if project.created_by == profile:
+    projects = profile.following(model=Project)
+    projects_organizing = []
+    projects_participating = []
+    projects_following = []
+    for project in projects:
+        if project.is_organizing(request.user):
             project.relation_text = _('(organizing)')
-        elif project.participants().filter(user=profile).exists():
+            projects_organizing.append(project)
+        elif project.is_participating(request.user):
             project.relation_text = _('(participating)')
+            projects_participating.append(project)
         else:
             project.relation_text = _('(following)')
+            projects_following.append(project)
     users_following = profile.following()
     users_followers = profile.followers()
     activities = Activity.objects.dashboard(request.user.get_profile())
-    user_projects = Project.objects.filter(created_by=profile)
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
+        'projects': projects,
+        'projects_following': projects_following,
+        'projects_participating': projects_participating,
+        'projects_organizing': projects_organizing,
         'users_following': users_following,
         'users_followers': users_followers,
-        'projects_following': projects_following,
         'activities': activities,
-        'projects': user_projects,
         'show_welcome': show_welcome,
     }, context_instance=RequestContext(request))
 

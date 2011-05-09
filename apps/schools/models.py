@@ -20,6 +20,7 @@ class School(ModelBase):
     description = models.TextField()
     organizers = models.ManyToManyField('users.UserProfile', null=True, blank=True)
     featured = models.ManyToManyField('projects.Project', related_name='school_featured', null=True, blank=True)
+    declined = models.ManyToManyField('projects.Project', related_name='school_declined', null=True, blank=True)
     
 
     def __unicode__(self):

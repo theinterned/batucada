@@ -28,11 +28,19 @@
 <h1>{{ _('History') }} {{ page.title }}</h1>
 <hr />
 <ul>
-  <li>{{ _('(current)') }} &nbsp; <a href="{{ page.get_absolute_url }}">{{ page.last_update }}</a>
+  {% if page.deleted %}
+    <li>{{ _('deleted') }} &nbsp; {{ page.last_update }}
+  {% else %}
+    <li>{{ _('(current)') }} &nbsp; <a href="{{ page.get_absolute_url }}">{{ page.last_update }}</a>
+  {% endif %}
     &nbsp;
     <a href="{{ page.author.get_absolute_url }}">{{ page.author.display_name }}</a></li>
   {% for version in versions %}
-    <li><a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
+    {% if version.deleted %}
+      <li>{{ _('deleted') }} &nbsp; {{ version.date }}
+    {% else %}
+      <li><a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
+    {% endif %}
     &nbsp;
     <a href="{{ version.author.get_absolute_url }}">{{ version.author.display_name }}</a></li>
   {% endfor %}

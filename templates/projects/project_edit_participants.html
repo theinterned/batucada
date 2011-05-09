@@ -9,10 +9,15 @@
 <form action="{% locale_url projects_edit_participants slug=project.slug %}" method="post">
   {% csrf_token %}
   <p>
-    <div class="field participant user{% if form.user.errors %} error{% endif %}">
+    <div class="field user{% if form.user.errors %} error{% endif %}">
       <label for="id_user">{{ _('Username') }}</label>
       {{ form.user }}
       {{ form.user.errors }}
+    </div>
+    <div class="field organizer{% if form.organizer.errors %} error{% endif %}">
+      <label for="id_organizer">{{ _('Organizer') }}</label>
+      {{ form.organizer }}
+      {{ form.organizer.errors }}
     </div>
   </p>
   <p class="buttons add-participant">
@@ -25,6 +30,7 @@
 <thead>
   <tr>
     <th>{{ _('Name') }}</th>
+    <th>{{ _('Organizer') }}</th>
     <th>{{ _('Actions') }}</th>
   </tr>
 </thead>
@@ -32,11 +38,24 @@
   {% for participation in participations %}
     <tr>
       <td class="name"><a href="{{ participation.user.get_absolute_url }}">{{ participation.user.display_name }}</a></td>
+      <td class="organizer">
+        {% if participation.organizing %}
+          <span class="yes" title="{{_('Organizing.') }}">{{ _('yes') }}</span>
+        {% else %}
+          <span class="no" title="{{_('Participating.') }}">{{ _('no') }}</span>
+        {% endif %}
+      </td>
       <td class="actions">
+        {% if not participation.organizing %}
+        <form action="{% locale_url projects_edit_participants_make_organizer slug=project.slug username=participation.user.username %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="{{ _('Add Organizer') }}">{{ _('Add Organizer') }}</button>
+        </form>
         <form action="{% locale_url projects_edit_participants_delete slug=project.slug username=participation.user.username %}" method="post">
           {% csrf_token %}
-          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+          <button class="delete" type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
         </form>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

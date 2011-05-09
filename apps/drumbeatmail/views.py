@@ -183,9 +183,13 @@ def reply(request, message):
             messages.error(request, _('There was an error sending your message'
                                       '. Please try again.'))
     else:
+        if not message.subject.startswith('Re: '):
+            subject = 'Re: %s' % (message.subject,)
+        else:
+            subject = message.subject
         form = forms.ComposeForm(initial={
             'recipient': message.sender.get_profile().username,
-            'subject': 'Re: %s' % (message.subject,),
+            'subject': subject,
         })
     return render_to_response('drumbeatmail/reply.html', {
         'form': form,

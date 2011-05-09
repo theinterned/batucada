@@ -37,26 +37,9 @@ class TestDrumbeatMail(test_utils.TestCase):
         settings.RECAPTCHA_PUBLIC_KEY = self.old_recaptcha_pubkey
         settings.RECAPTCHA_PRIVATE_KEY = self.old_recaptcha_privkey
 
-    def test_messaging_user_following(self):
+    def test_messaging_user(self):
         print "From test: %s" % (self.user.user,)
         print "From test: %s" % (self.user_two.user,)
-        Relationship(source=self.user_two, target_user=self.user).save()
-        form = ComposeForm(data={
-            'recipient': self.user_two,
-            'subject': 'Foo',
-            'body': 'Bar',
-        }, sender=self.user)
-        self.assertTrue(form.is_bound)
-        self.assertTrue(form.is_valid())
-
-    def test_messaging_user_following_project(self):
-        project = Project(
-            name='test project',
-            short_description='abcd',
-            long_description='edfgh',
-            created_by=self.user)
-        project.save()
-        Relationship(source=self.user_two, target_project=project).save()
         form = ComposeForm(data={
             'recipient': self.user_two,
             'subject': 'Foo',

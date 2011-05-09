@@ -21,11 +21,11 @@
     <div id="project-summary">
       {{ project.long_description|safe }}
     </div>
-    {% if user.get_profile == project.created_by %}
+    {% if organizing %}
       <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
     {% endif %}
     <ul id="project-stats">
-      {% if project.school %}
+      {% if school %}
         <li><a href="{{ project.school.get_absolute_url }}">{{ project.school.name }}</a></li>
       {% endif %}
       {% if project.under_development%}
@@ -49,6 +49,10 @@
 	<div class="value">{{ update_count }}</div>
       </li>
       <li>
+	<div class="label">{{ _('Organizers') }}</div>
+	<div class="value">{{ organizers_count }}</div>
+      </li>
+      <li>
 	<div class="label">{{ _('Participants') }}</div>
 	<div class="value">{{ participants_count }}</div>
       </li>
@@ -57,7 +61,7 @@
 	<div class="value">{{ followers_count }}</div>
       </li>
     </ul> <!-- /#project-stats -->
-    {% if user.is_authenticated and user.get_profile != project.created_by %}
+    {% if user.is_authenticated and not organizing %}
     <p class="supplemental_actions">
       <a class="report abuse action" href="{% locale_url drumbeat_abuse  model="project" app_label="projects" pk=project.id %}">{{_('Report Abuse')}}</a>
     </p>
@@ -72,16 +76,18 @@
 <section id="people" class="panel">
   <h2>{{ _('People') }}</h2>
   <br>
-   <a href="{{ project.created_by.get_absolute_url }}" title="{{ project.created_by.display_name }} (organizer)"><img class="member-picture" src="{{ project.created_by.image_or_default }}" height="26" width="26" alt="{{ project.created_by.display_name }} (organizer)"></a>
-  {% for participant in project.participants %}
+  {% for organizer in project.organizers %}
+   <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user.display_name }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="26" width="26" alt="{{ organizer.user.display_name }} (organizer)"></a>
+  {% endfor %}
+  {% for participant in project.non_organizer_participants %}
    <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user.display_name }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user.display_name }} (participant)"></a>
   {% endfor %}
-  {% for non_participant_follower in project.non_participant_followers %}
-   <a href="{{ non_participant_follower.get_absolute_url }}" title="{{ non_participant_follower.display_name }} (follower)">
-   <img class="member-picture" src="{{ non_participant_follower.image_or_default }}" height="26" width="26" alt="{{ non_participant_follower.display_name }} (follower)"></a>
+  {% for follower in project.non_participant_followers %}
+   <a href="{{ follower.get_absolute_url }}" title="{{ follower.display_name }} (follower)">
+   <img class="member-picture" src="{{ follower.image_or_default }}" height="26" width="26" alt="{{ follower.display_name }} (follower)"></a>
   {% endfor %}
   <br><br>
-  {% if user.is_authenticated and user.get_profile != project.created_by and not participating %}
+  {% if user.is_authenticated and not organizing and not participating %}
     {% if following %}
       <form method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
         {% csrf_token %}
@@ -100,10 +106,10 @@
       <br><br>
     {% endif %}
   {% endif %}
-  {% if user.get_profile == project.created_by %}
+  {% if organizing %}
     <a class="button" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
   {% else %}{% if user.is_authenticated %}
-    <a class="button" href="{% locale_url drumbeatmail_compose_to username=project.created_by.username %}">{{ _('Contact Organizer')}}</a>
+    <a class="button" href="{% locale_url projects_contact_organizers slug=project.slug %}">{{ _('Contact Organizer')}}</a>
   {% endif %}{% endif %}
 </section>
 
@@ -124,7 +130,7 @@
 	<li>	
 	    <a class="taskLink" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
 	    
-            {% if user.get_profile == project.created_by or participating %}
+            {% if participating %}
 	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url page_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
 	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url page_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
             {% endif %}
@@ -137,7 +143,7 @@
     {{ _('No tasks have been added.') }}
         <br>
   {% endif %}
-  {% if user.get_profile == project.created_by or participating %}
+  {% if participating %}
     <br>
     <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
   {% endif %}
@@ -153,7 +159,7 @@
         {% for link in links %}
           <li><a class="externalLink" href="{{ link.url }}">{{ link.name }}</a>
           
-            {% if user.get_profile == project.created_by or participating %}
+            {% if participating %}
                 {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
                 {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
             {% endif %}
@@ -166,7 +172,7 @@
     {{ _('No external links have been added.') }}
     <br>
   {% endif %}
-  {% if user.get_profile == project.created_by %}
+  {% if organizing %}
     <br>
     <a class="button" href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Edit Links') }}</a>
   {% endif %}
