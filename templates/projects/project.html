@@ -5,6 +5,7 @@
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block links %}
+{% if project.school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.school.slug %}?v=1">{% endif %}
 <link rel="alternate" type="application/atom+xml" href="{% locale_url activity_project_feed project=project.slug %}" />
 {% endblock %}
 

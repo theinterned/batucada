@@ -12,7 +12,7 @@ class SchoolForm(forms.ModelForm):
 
     class Meta:
         model = School
-        fields = ('name', 'description')
+        fields = ('name', 'description', 'text_color')
 	widgets = {
 		'description': CKEditorWidget(config_name='rich'),
 	}

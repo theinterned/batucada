@@ -34,6 +34,11 @@ def home(request, slug):
     return render_to_response('schools/home.html', context,
                           context_instance=RequestContext(request))
 
+def school_css(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    return render_to_response('schools/school.css', {'school': school},
+        context_instance=RequestContext(request), mimetype='text/css')
+
 @login_required
 @school_organizer_required
 def edit(request, slug):

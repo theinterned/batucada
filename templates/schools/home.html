@@ -6,6 +6,8 @@
 
 {% block title %}{{ school.name }}{% endblock %}
 
+{% block links %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endblock %}
+
 {% block bodyid %}school_home{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
 
@@ -47,7 +49,7 @@
       {% endfor %}
     </section>
   </div>
-  <h1><b>{{ school.name }}</b></h1>
+  <h1 class="school_header"><b>{{ school.name }}</b></h1>
   {{ school.description|youtube|slideshare|safe }}
   <br><br><br><br><br>
   {% project_list school %}
