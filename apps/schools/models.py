@@ -7,9 +7,18 @@ from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 
 from drumbeat.models import ModelBase
+from drumbeat.utils import get_partition_id, safe_filename
+from drumbeat import storage
 
 
 log = logging.getLogger(__name__)
+
+
+def determine_image_upload_path(instance, filename):
+    return "images/schools/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.pk),
+        'filename': safe_filename(filename),
+    }
 
 
 class School(ModelBase):
@@ -21,6 +30,9 @@ class School(ModelBase):
     organizers = models.ManyToManyField('users.UserProfile', null=True, blank=True)
     featured = models.ManyToManyField('projects.Project', related_name='school_featured', null=True, blank=True)
     declined = models.ManyToManyField('projects.Project', related_name='school_declined', null=True, blank=True)
+
+    image = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage(), blank=True)
     
 
     def __unicode__(self):

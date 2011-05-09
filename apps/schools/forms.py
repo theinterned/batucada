@@ -18,6 +18,20 @@ class SchoolForm(forms.ModelForm):
 	}
 
 
+class SchoolImageForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('image',)
+
+    def clean_image(self):
+        if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
+            max_size = settings.MAX_IMAGE_SIZE / 1024
+            raise forms.ValidationError(
+                _("Image exceeds max image size: %(max)dk") % dict(max=max_size))
+        return self.cleaned_data['image']
+
+
 class ProjectAddOrganizerForm(forms.Form):
     user = forms.CharField()
 
