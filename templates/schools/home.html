@@ -28,8 +28,25 @@
 {% endblock %}
 
 {% block body %}
-
 <div id="main">
+  <div id="sidebar">
+    <figure class="school_img">
+      <a href="{{ school.get_absolute_url }}">
+        {% if school.image %}
+  	      <img src="{{ MEDIA_URL }}{{ school.image }}" width="236" height="65" alt="project image"/>
+        {% else %}
+          <img src="/media/images/school-missing.png" width="236" height="65" alt="project image"/>
+        {% endif %}
+      </a>
+    </figure>
+    <section id="people" class="panel">
+      <h2>{{ _('School Organizers') }}</h2>
+      <br>
+      {% for organizer in school.organizers.all %}
+        <a href="{{ organizer.get_absolute_url }}" title="{{ organizer.display_name }} (school organizer)"><img class="member-picture" src="{{ organizer.image_or_default }}" height="26" width="26" alt="{{ organizer.display_name }} (school organizer)"></a>
+      {% endfor %}
+    </section>
+  </div>
   <h1><b>{{ school.name }}</b></h1>
   {{ school.description|youtube|slideshare|safe }}
   <br><br><br><br><br>
