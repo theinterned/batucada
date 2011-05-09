@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-09 07:54-0500\n"
+"POT-Creation-Date: 2011-05-09 08:14-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -315,15 +315,15 @@ msgstr "¡Organizador añadido!"
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/dashboard/views.py:81 apps/users/views.py:300
+#: apps/dashboard/views.py:76 apps/users/views.py:300 l/dashboard-views.py:81
 msgid "(organizing)"
 msgstr "(organizando)"
 
-#: apps/dashboard/views.py:84 apps/users/views.py:303
+#: apps/dashboard/views.py:79 apps/users/views.py:303 l/dashboard-views.py:84
 msgid "(participating)"
 msgstr "(participando)"
 
-#: apps/dashboard/views.py:87 apps/users/views.py:306
+#: apps/dashboard/views.py:82 apps/users/views.py:306 l/dashboard-views.py:87
 msgid "(following)"
 msgstr "(siguiendo)"
 
