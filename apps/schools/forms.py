@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 
 from drumbeat.utils import CKEditorWidget
 from projects.models import Project
+from users.models import UserProfile
 
 from schools.models import School
 
@@ -15,6 +16,38 @@ class SchoolForm(forms.ModelForm):
 	widgets = {
 		'description': CKEditorWidget(config_name='rich'),
 	}
+
+
+class SchoolImageForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('image',)
+
+    def clean_image(self):
+        if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
+            max_size = settings.MAX_IMAGE_SIZE / 1024
+            raise forms.ValidationError(
+                _("Image exceeds max image size: %(max)dk") % dict(max=max_size))
+        return self.cleaned_data['image']
+
+
+class ProjectAddOrganizerForm(forms.Form):
+    user = forms.CharField()
+
+    def __init__(self, school, *args, **kwargs):
+        super(ProjectAddOrganizerForm, self).__init__(*args, **kwargs)
+        self.school = school
+
+    def clean_user(self):
+        username = self.cleaned_data['user']
+        try:
+            user = UserProfile.objects.get(username=username)
+        except UserProfile.DoesNotExist:
+            raise forms.ValidationError(_('There is no user with username: %s.') % username)
+        if self.school.organizers.filter(id=user.id).exists():
+            raise forms.ValidationError(_('User %s is organizing the school.') % username)
+        return user
 
 
 class SchoolAddFeaturedForm(forms.Form):
