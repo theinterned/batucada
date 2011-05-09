@@ -337,7 +337,10 @@ def sign_up(request, slug):
         is_organizing = is_participating = can_post_answer = False
     if project.signup_closed:
         can_post_answer = False
-    pending_answers_count = first_level_comments.filter(deleted=False).count()
+    if first_level_comments:
+        pending_answers_count = first_level_comments.filter(deleted=False).count()
+    else:
+        pending_answers_count = 0
     if is_organizing:
         for comment in first_level_comments:
              comment.is_participating = project.participants().filter(user=comment.author)
