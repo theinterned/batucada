@@ -1434,7 +1434,7 @@ header {}
 			vertical-align: middle;
 			padding-right: 35px;
 		}
-	    .modal .link, .modal .participants .field {
+	    .modal .link, .modal .participants .field, .modal .organizers .field {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 30px;
@@ -1452,7 +1452,7 @@ header {}
         }
         
 		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text],
-        .modal .declined_groups input[type=text] {
+        .modal .declined_groups input[type=text], .modal .organizers input[type=text] {
 			width: 154px;
 		}
 		
@@ -1460,18 +1460,19 @@ header {}
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, , .modal .participants .add-participant, .modal .featured_groups .add-featured,
-        .modal .declined_groups .add-declined {
+		.modal .links .add-link, .modal .participants .add-participant, .modal .featured_groups .add-featured,
+        .modal .declined_groups .add-declined, .modal .organizers .add-organizer {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
 		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button,
-        .modal .declined_groups .add-declined button {
+        .modal .declined_groups .add-declined button, .modal .organizers .add-organizer button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
-		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table {
+		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table,
+        .modal .organizers table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1484,7 +1485,8 @@ header {}
 		    -webkit-box-shadow: #ddd 0 1px 4px inset;
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
-        .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td {
+        .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td,
+        .modal .organizers th, .modal .organizers td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1497,7 +1499,8 @@ header {}
 			
 			/*width: 25%;*/
 		}
-		.modal .links table .name, .modal .participants table .name, .featured_groups table .name, .declined_groups table .name {
+		.modal .links table .name, .modal .participants table .name, .featured_groups table .name, .declined_groups table .name,
+        .modal .organizers table .name {
 			width: 185px;
 		}
 		
@@ -1505,7 +1508,7 @@ header {}
 		    width: 90px; 
 		}
 		
-		.modal .links table .subscription, .modal .participants table .organizer {
+		.modal .links table .subscription, .modal .participants table .organizer, .modal .organizers table .organizer {
 		    width: 50px
 		}
 		
@@ -1526,7 +1529,7 @@ header {}
 			overflow: hidden;
 			word-wrap: break-word;
 		}
-		.modal .links .subscription .yes, .modal .participants .organizer .yes {
+		.modal .links .subscription .yes, .modal .participants .organizer .yes, .modal .organizers .organizer .yes {
 			display: block;
 			text-indent: -9999px;
 			background: url(/media/images/check.png) 50% 50% no-repeat;
