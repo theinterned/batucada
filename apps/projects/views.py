@@ -143,6 +143,7 @@ def edit(request, slug):
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
+        'summary_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -185,6 +186,7 @@ def edit_image(request, slug):
     return render_to_response('projects/project_edit_image.html', {
         'project': project,
         'form': form,
+        'image_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -212,6 +214,7 @@ def edit_links(request, slug):
         'project': project,
         'form': form,
         'links': links,
+        'links_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -239,6 +242,7 @@ def edit_links_edit(request, slug, link):
         'project': project,
         'form': form,
         'link': link,
+        'links_tab': True,
     }, context_instance=RequestContext(request))
 
     
@@ -282,6 +286,7 @@ def edit_participants(request, slug):
         'project': project,
         'form': form,
         'participations': project.participants(),
+        'participants_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -346,6 +351,7 @@ def edit_status(request, slug):
     return render_to_response('projects/project_edit_status.html', {
         'form': form,
         'project': project,
+        'status_tab': True,
     }, context_instance=RequestContext(request))
 
 

@@ -4,12 +4,16 @@ from django.utils.translation import ugettext as _
 from django import http
 from django.utils import simplejson
 from django.http import HttpResponseRedirect, HttpResponse
+from django.views.decorators.http import require_http_methods
+
+from commonware.decorators import xframe_sameorigin
 
 from users.decorators import login_required
 from drumbeat import messages
 from projects.models import Project
-
+from users.models import UserProfile
 from l10n.urlresolvers import reverse
+
 from schools.decorators import school_organizer_required
 from schools.models import School
 from schools import forms as school_forms
@@ -49,6 +53,87 @@ def edit(request, slug):
         'school': school,
         'summary_tab': True,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@xframe_sameorigin
+@school_organizer_required
+@require_http_methods(['POST'])
+def edit_image_async(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    form = school_forms.SchoolImageForm(request.POST, request.FILES,
+                                          instance=school)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.image.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
+
+
+@login_required
+@school_organizer_required
+def edit_image(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolImageForm(request.POST, request.FILES,
+                                              instance=school)
+        if form.is_valid():
+            messages.success(request, _('Image updated'))
+            form.save()
+            return http.HttpResponseRedirect(reverse('school_home', kwargs={
+                'slug': school.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was an error uploading your image'))
+    else:
+        form = school_forms.SchoolImageForm(instance=school)
+    return render_to_response('schools/school_edit_image.html', {
+        'school': school,
+        'form': form,
+        'image_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+
+@login_required
+@school_organizer_required
+def edit_organizers(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.ProjectAddOrganizerForm(school, request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            school.organizers.add(user)
+            school.save()
+            messages.success(request, _('School organizer added.'))
+            return http.HttpResponseRedirect(
+                reverse('schools_edit_organizers', kwargs=dict(slug=school.slug)))
+        else:
+            messages.error(request, _('There was an error adding the school organizer.'))
+    else:
+        form = school_forms.ProjectAddOrganizerForm(school)
+    return render_to_response('schools/school_edit_organizers.html', {
+        'school': school,
+        'form': form,
+        'organizers_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+def matching_non_organizers(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if len(request.GET['term']) == 0:
+        raise CommandException(_("Invalid request"))
+
+    non_organizers = UserProfile.objects.exclude(id__in=school.organizers.values('user_id'))
+    matching_users = non_organizers.filter(username__icontains = request.GET['term'])
+    json = simplejson.dumps([user.username for user in matching_users])
+
+    return HttpResponse(json, mimetype="application/x-javascript")
+
 
 
 @login_required
