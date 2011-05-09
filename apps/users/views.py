@@ -303,9 +303,8 @@ def profile_view(request, username):
 
 
 @login_required(profile_required=False)
+@require_http_methods(['POST'])
 def profile_create(request):
-    if request.method != 'POST':
-        return http.HttpResponseRedirect(reverse('dashboard_index'))
     try:
         request.user.get_profile()
         return http.HttpResponseRedirect(reverse('dashboard_index'))
