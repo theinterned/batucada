@@ -34,54 +34,69 @@
 {% if first_level_comments %}
 <br>
 <h1>{{ _('Answers') }}</h1>
+{% if organizing %}<p>{{_('Pending Answers:')}} {{ pending_answers_count }}</p>{% endif %}
 <br>
 <ul id="posts">
 {% for comment in first_level_comments %}
-<li class="post-container">
-  <a name="{{ comment.id }}"></a>
-  {% if user.is_authenticated %}
-    <a class="action reply-to" href="{% locale_url sign_up_reply slug=project.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
-    {% if user.get_profile == comment.author %}
-      <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=comment.id %}">{{ _('Edit') }}</a>
-    {% else %}
-      <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{ _('Report Abuse') }}</a>
+  {% if comment.deleted %}
+    {% if comment.has_visible_childs %}
+      <li class="post-container deleted">
+        {{ _('This answer was deleted.') }}
+        {% if user.get_profile == comment.author %}
+          <a class="action restore" href="{% locale_url comment_restore slug=project.slug page_slug=comment.page.slug comment_id=comment.id %}">{{ _('Restore') }}</a>
+        {% endif %}
+      <li>
     {% endif %}
-  {% endif %}
-  <a href="{{ comment.author.get_absolute_url }}">
-    <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
-  </a>
-  <div class="post-contents">
-    <div class="post-details">
-      <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
-      &nbsp;
-      <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
-    </div>
-    <div class="post-body">
-	    <p><strong>{{ _('Bio:') }}</strong> {{ comment.author.bio|safe }}</p>
-	    <p><strong>{{ _('Location:') }}</strong> {{ comment.author.location }}</p>
-	    <h3>{{ _('Answer:') }}</h3>
-      {{ comment.content|youtube|slideshare|safe }}
-      {% if organizing %}
-        {% if not comment.is_participating %}
-          <form method="post" action="{% locale_url sign_up_add_participant slug=project.slug comment_id=comment.id %}">
-            {% csrf_token %}
-            <button>{{ _('Add Participant') }}</button>
-          </form>
-          <form method="post" action="{% locale_url sign_up_add_organizer slug=project.slug comment_id=comment.id %}">
-            {% csrf_token %}
-            <button>{{ _('Add Organizer') }}</button>
-          </form>
+  {% else %}
+    <li class="post-container">
+      <a name="{{ comment.id }}"></a>
+      {% if user.is_authenticated %}
+        <a class="action reply-to" href="{% locale_url sign_up_reply slug=project.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
+        {% if user.get_profile == comment.author %}
+          <a class="action delete" href="{% locale_url comment_delete slug=project.slug page_slug=comment.page.slug comment_id=comment.id %}">{{ _('Delete') }}</a>
+          <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=comment.id %}">{{ _('Edit') }}</a>
+        {% else %}
+          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{ _('Report Abuse') }}</a>
         {% endif %}
       {% endif %}
-    </div>
-  </div>
-</li>
+      <a href="{{ comment.author.get_absolute_url }}">
+        <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
+      </a>
+      <div class="post-contents">
+        <div class="post-details">
+          <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
+          &nbsp;
+          <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
+        </div>
+        <div class="post-body">
+	        <p><strong>{{ _('Bio:') }}</strong> {{ comment.author.bio|safe }}</p>
+	        <p><strong>{{ _('Location:') }}</strong> {{ comment.author.location }}</p>
+	        <h3>{{ _('Answer:') }}</h3>
+          {{ comment.content|youtube|slideshare|safe }}
+          {% if organizing %}
+            {% if not comment.is_participating %}
+              <form method="post" action="{% locale_url sign_up_add_participant slug=project.slug comment_id=comment.id %}">
+                {% csrf_token %}
+                <button>{{ _('Add Participant') }}</button>
+              </form>
+              <form method="post" action="{% locale_url sign_up_add_organizer slug=project.slug comment_id=comment.id %}">
+                {% csrf_token %}
+                <button>{{ _('Add Organizer') }}</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </li>
+  {% endif %}
 {% for reply in comment.all_replies.all %}
+  {% if not reply.deleted %}
   <li class="post-container post-replies">
     <a name="{{ reply.id }}"></a>
     {% if user.is_authenticated %}
       <a class="action reply-to" href="{% locale_url sign_up_reply slug=project.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
       {% if user.get_profile == reply.author %}
+        <a class="action delete" href="{% locale_url comment_delete slug=project.slug page_slug=reply.page.slug comment_id=reply.id %}">{{ _('Delete') }}</a>
         <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=reply.id %}">{{ _('Edit') }}</a>  
       {% else %}
         <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{ _('Report Abuse') }}</a>
@@ -104,7 +119,8 @@
         {{ reply.content|youtube|slideshare|safe }}
       </div>
     </div>
-</li>
+  </li>
+  {%endif%}
 {% endfor %}
 {% endfor %}
 </ul>
