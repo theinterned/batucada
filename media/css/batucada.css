@@ -1038,6 +1038,11 @@ header {}
       width: 630px;
     }
 
+   #main .post-container.deleted {
+     min-height: 10px;
+     color: #a00;
+     padding-left: 20px;
+   }
 
     .tags li,
     #main .post-tags li, #main .post-char-count {
@@ -1211,6 +1216,12 @@ header {}
     }
     #posts .reply-to{
 		background: url("/media/images/reply.icon.png") 0 0 no-repeat;
+	}
+    #posts .delete {
+		background: url("/media/images/delete-x.png") 0 0 no-repeat;
+	}
+    #posts .restore{
+		background: url("/media/images/restore.icon.png") 0 0 no-repeat;
 	}
     #posts .edit{
 		background: url("/media/images/edit.icon.png") 0 0 no-repeat;

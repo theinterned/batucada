@@ -30,7 +30,7 @@ def show_page(request, slug, page_slug):
             return HttpResponseRedirect(reverse('page_history', kwargs={'slug':page.project, 'page_slug':page.slug}))
         else:
             return HttpResponseRedirect(page.project.get_absolute_url())
-    first_level_comments = page.comments.filter(reply_to__isnull=True, deleted=False)
+    first_level_comments = page.comments.filter(reply_to__isnull=True)
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
@@ -48,7 +48,11 @@ def show_comment(request, slug, page_slug, comment_id):
         else:
             msg = _('This comment was deleted.')
         messages.error(request, msg)
-        return HttpResponseRedirect(page_url)
+        if comment.can_edit(request.user):
+            return HttpResponseRedirect(reverse('comment_restore', kwargs={'slug': comment.page.project.slug,
+                'page_slug': comment.page.slug, 'comment_id': comment.id}))
+        else:
+            return HttpResponseRedirect(page_url)
     else:
         return HttpResponseRedirect(page_url + '#%s' % comment.id)
 
@@ -215,6 +219,32 @@ def edit_comment(request, slug, page_slug, comment_id):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+def delete_restore_comment(request, slug, page_slug, comment_id):
+    comment = get_object_or_404(PageComment, id=comment_id, page__slug=page_slug, page__project__slug=slug)
+    print comment.can_edit(request.user)
+    if not comment.can_edit(request.user):
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        comment.deleted = not comment.deleted
+        comment.save()
+        if comment.page.slug == 'sign-up' and not comment.reply_to:
+            msg = _('Answer deleted!') if comment.deleted else _('Answer restored!')
+        else:
+            msg = _('Comment deleted!') if comment.deleted else _('Comment restored!')
+        messages.success(request, msg)
+        if comment.deleted:
+            return HttpResponseRedirect(comment.page.get_absolute_url())
+        else:
+            return HttpResponseRedirect(comment.get_absolute_url())
+    else:
+        return render_to_response('content/delete_restore_comment.html', {
+            'comment': comment,
+            'page': comment.page,
+            'project': comment.page.project,
+        }, context_instance=RequestContext(request))
+
+
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if not page.editable:
@@ -293,7 +323,7 @@ def sign_up(request, slug):
     if request.user.is_authenticated():
         is_organizing = project.is_organizing(request.user)
         is_participating = project.is_participating(request.user)
-        first_level_comments = page.comments.filter(reply_to__isnull=True, deleted=False)
+        first_level_comments = page.comments.filter(reply_to__isnull=True)
         can_post_answer = False
         if not is_organizing:
             if is_participating:
@@ -302,12 +332,13 @@ def sign_up(request, slug):
             else:
                 profile = request.user.get_profile()
                 first_level_comments = first_level_comments.filter(author=profile)
-                can_post_answer = not first_level_comments.exists()
+                can_post_answer = not first_level_comments.filter(deleted=False).exists()
     else:
         first_level_comments = []
         is_organizing = is_participating = can_post_answer = False
     if project.signup_closed:
         can_post_answer = False
+    pending_answers_count = first_level_comments.filter(deleted=False).count()
     if is_organizing:
         for comment in first_level_comments:
              comment.is_participating = project.participants().filter(user=comment.author)
@@ -318,6 +349,7 @@ def sign_up(request, slug):
         'participating': is_participating,
         'first_level_comments': first_level_comments,
         'can_post_answer': can_post_answer,
+        'pending_answers_count': pending_answers_count,
     }, context_instance=RequestContext(request))
 
 
