@@ -222,7 +222,6 @@ def edit_comment(request, slug, page_slug, comment_id):
 @login_required
 def delete_restore_comment(request, slug, page_slug, comment_id):
     comment = get_object_or_404(PageComment, id=comment_id, page__slug=page_slug, page__project__slug=slug)
-    print comment.can_edit(request.user)
     if not comment.can_edit(request.user):
         return HttpResponseForbidden()
     if request.method == 'POST':
