@@ -315,8 +315,10 @@ def profile_create(request):
     if form.is_valid():
         profile = form.save(commit=False)
         profile.user = request.user
+        profile.user.email = profile.email
         profile.confirmation_code = profile.generate_confirmation_code()
         profile.save()
+        profile.user.save()
         path = reverse('users_confirm_registration', kwargs={
             'username': profile.username,
             'token': profile.confirmation_code,
