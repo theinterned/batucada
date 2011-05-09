@@ -78,6 +78,8 @@
         <button type="submit">{{ _('Post') }}</button>
       </p>
     </form>  
+    {% else %}
+    You must <a href="{% locale_url users_login %}">login</a> to leave comments.
     {% endif %}
   </div>
 </section>
