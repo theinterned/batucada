@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-08 23:36-0500\n"
+"POT-Creation-Date: 2011-05-09 06:29-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,7 +100,7 @@ msgid " ago"
 msgstr " atrás"
 
 #: apps/challenges/forms.py:33 apps/projects/forms.py:48
-#: apps/users/forms.py:167
+#: apps/schools/forms.py:31 apps/users/forms.py:167
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
@@ -129,7 +129,8 @@ msgstr "Ocurrió un error al subir la imagen."
 msgid "Challenge image updated"
 msgstr "Imagen del reto actualizada"
 
-#: apps/challenges/views.py:138 apps/projects/views.py:182
+#: apps/challenges/views.py:138 apps/projects/views.py:183
+#: apps/schools/views.py:91
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
@@ -361,7 +362,7 @@ msgid "New Message from %(display_name)s"
 msgstr "Nuevo mensaje de %(display_name)s"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:361
+#: apps/projects/views.py:367
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -407,7 +408,7 @@ msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
 
-#: apps/projects/forms.py:75
+#: apps/projects/forms.py:75 apps/schools/forms.py:47
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
@@ -475,49 +476,49 @@ msgid "The study group membership to %s was declined by the school organizers."
 msgstr ""
 "La membresia del grupo de estudio a %s fue rechazada por los organizadores."
 
-#: apps/projects/views.py:175
+#: apps/projects/views.py:176 apps/schools/views.py:84
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:203
+#: apps/projects/views.py:205
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:207
+#: apps/projects/views.py:209
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:232
+#: apps/projects/views.py:235
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:254
+#: apps/projects/views.py:258
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:274
+#: apps/projects/views.py:278
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:278
+#: apps/projects/views.py:282
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:291 apps/schools/views.py:82
-#: apps/schools/views.py:134
+#: apps/projects/views.py:296 apps/schools/views.py:129
+#: apps/schools/views.py:167 apps/schools/views.py:219
 msgid "Invalid request"
 msgstr "Solicitud inválida"
 
-#: apps/projects/views.py:309
+#: apps/projects/views.py:314
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:323
+#: apps/projects/views.py:328
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:343
+#: apps/projects/views.py:348
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
@@ -543,55 +544,69 @@ msgstr "Ya está siguiendo a este grupo de estudio"
 msgid "You are already following this user"
 msgstr "Ya está siguiendo a este usuario"
 
-#: apps/schools/forms.py:32 apps/schools/forms.py:52
+# python-format
+#: apps/schools/forms.py:49
+#, python-format
+msgid "User %s is organizing the school."
+msgstr "El usuario %s está organizando la escuela."
+
+#: apps/schools/forms.py:65 apps/schools/forms.py:85
 #, python-format
 msgid "There is no study group with that short name: %s."
 msgstr "No hay un grupo de estudio con ese nombre corto: %s."
 
-#: apps/schools/forms.py:34 apps/schools/forms.py:54
+#: apps/schools/forms.py:67 apps/schools/forms.py:87
 #, python-format
 msgid "The %s study group is not part of this school."
 msgstr "El grupo de estudio %s no es parte de esta escuela."
 
-#: apps/schools/forms.py:36
+#: apps/schools/forms.py:69
 #, python-format
 msgid "The %s study group is already featured for this school."
 msgstr "El grupo de estudio %s ya está asociado a esta escuela."
 
-#: apps/schools/forms.py:56
+#: apps/schools/forms.py:89
 #, python-format
 msgid "The %s study group was already declined for this school."
 msgstr "El grupo de estudio %s ya fue rechazado para esta escuela."
 
-#: apps/schools/views.py:41
+#: apps/schools/views.py:45
 msgid "School updated!"
 msgstr "¡Escuela actualizada!"
 
-#: apps/schools/views.py:64
+#: apps/schools/views.py:112
+msgid "School organizer added."
+msgstr "¡Organizador de escuela añadido!"
+
+#: apps/schools/views.py:116
+msgid "There was an error adding the school organizer."
+msgstr "Ocurrió un error al añadir el organizador de escuela."
+
+#: apps/schools/views.py:149
 msgid "The study group is now featured for this school."
 msgstr "El grupo de estudio ahora está asociada a esta escuela."
 
-#: apps/schools/views.py:68
+#: apps/schools/views.py:153
 msgid "There was an error marking the study group as featured for this school."
 msgstr ""
 "Ocurrió un problema al marcar el grupo de estudio como asociado a esta "
 "escuela."
 
-#: apps/schools/views.py:100
+#: apps/schools/views.py:185
 msgid "The study group stopped being featured for this school."
 msgstr "El grupo de estudio dejo de estar asociado a esta escuela."
 
-#: apps/schools/views.py:116
+#: apps/schools/views.py:201
 msgid "The study group was declined for this school."
 msgstr "El grupo de estudio fue rechazado para esta escuela."
 
-#: apps/schools/views.py:120
+#: apps/schools/views.py:205
 msgid "There was an error marking the study group as declined for this school."
 msgstr ""
 "Ocurrió un problema al marcar el grupo de estudio como rechazada para esta "
 "escuela."
 
-#: apps/schools/views.py:152
+#: apps/schools/views.py:237
 msgid "The study group stopped being declined for this school."
 msgstr "El grupo de estudio dejo de estar rechazado para esta escuela."
 
@@ -1041,6 +1056,7 @@ msgstr "JPG, GIF o PNG solamente. Tamaño máximo 700k."
 
 #: templates/challenges/challenge_edit_image.html:18
 #: templates/projects/project_edit_image.html:25
+#: templates/schools/school_edit_image.html:24
 #: templates/users/profile_edit_image.html:22
 msgid "Upload"
 msgstr "Subir"
@@ -1116,6 +1132,7 @@ msgstr "Reglas"
 #: templates/projects/project_edit_status.html:52
 #: templates/projects/project_edit_summary.html:35
 #: templates/projects/project_edit_summary.html:38
+#: templates/schools/school_edit_image.html:23
 #: templates/schools/school_edit_summary.html:22
 #: templates/users/profile_edit_main.html:11
 msgid "Cancel"
@@ -1159,6 +1176,7 @@ msgstr "Jueces"
 
 #: templates/challenges/challenge_judges.html:28
 #: templates/projects/project_edit_participants.html:13
+#: templates/schools/school_edit_organizers.html:13
 #: templates/users/profile_form_base.html:19
 msgid "Username"
 msgstr "Nombre de Usuario"
@@ -1168,6 +1186,7 @@ msgstr "Nombre de Usuario"
 #: templates/projects/project_edit_participants.html:24
 #: templates/schools/school_edit_declined.html:19
 #: templates/schools/school_edit_featured.html:19
+#: templates/schools/school_edit_organizers.html:19
 #: templates/users/profile_edit_links.html:28
 msgid "Add"
 msgstr "Añadir"
@@ -1179,6 +1198,7 @@ msgstr "Añadir"
 #: templates/projects/project_edit_summary.html:10
 #: templates/schools/school_edit_declined.html:27
 #: templates/schools/school_edit_featured.html:27
+#: templates/schools/school_edit_organizers.html:27
 #: templates/schools/school_edit_summary.html:10
 #: templates/users/profile_edit_links.html:13
 #: templates/users/profile_edit_links.html:35
@@ -2081,7 +2101,7 @@ msgid "Participants"
 msgstr "Participantes"
 
 #: templates/projects/_project_list.html:5
-#: templates/schools/school_edit.html:29
+#: templates/schools/school_edit.html:31
 #: templates/schools/school_edit_featured.html:7
 msgid "Featured Study Groups"
 msgstr "Grupos de Estudio Destacados"
@@ -2223,6 +2243,7 @@ msgstr ""
 "listados"
 
 #: templates/projects/project_edit_image.html:17
+#: templates/schools/school_edit_image.html:16
 msgid "Upload an image file from your computer:"
 msgstr "Subir una imagen de su computadora:"
 
@@ -2261,6 +2282,7 @@ msgstr "Suscrito."
 
 #: templates/projects/project_edit_links.html:27
 #: templates/projects/project_edit_participants.html:43
+#: templates/schools/school_edit_organizers.html:36
 #: templates/users/profile_edit_links.html:48
 msgid "yes"
 msgstr "si"
@@ -2550,11 +2572,20 @@ msgstr "Escuelas"
 msgid "Edit School"
 msgstr "Editar Escuela"
 
+#: templates/schools/home.html:43 templates/schools/school_edit.html:30
+#: templates/schools/school_edit_organizers.html:7
+msgid "School Organizers"
+msgstr "Organizadores de Escuela"
+
 #: templates/schools/school_edit.html:24
 msgid "View School"
 msgstr "Ver Escuela"
 
-#: templates/schools/school_edit.html:30
+#: templates/schools/school_edit.html:29
+msgid "Logo &amp; Colors"
+msgstr "Logo &amp; Colores "
+
+#: templates/schools/school_edit.html:32
 #: templates/schools/school_edit_declined.html:7
 msgid "Declined Study Groups"
 msgstr "Grupos de Estudio Rechazados"
@@ -2571,6 +2602,34 @@ msgstr "Grupos de Estudio"
 #: templates/schools/school_edit_featured.html:8
 msgid "View, add and remove featured study groups to this school."
 msgstr "Ver, añadir y remover grupos de estudio asociados a esta escuela."
+
+#: templates/schools/school_edit_image.html:12
+msgid "Replace School Logo"
+msgstr "Remplazar Logo de la Escuela"
+
+#: templates/schools/school_edit_image.html:14
+msgid "Upload a School Logo"
+msgstr "Subir un Logo de la Escuela"
+
+#: templates/schools/school_edit_image.html:19
+msgid ""
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"236x65 pixels"
+msgstr ""
+"Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
+"Dimensiones: 236x65 pixels"
+
+#: templates/schools/school_edit_organizers.html:8
+msgid "View, add and remove organizers of your school."
+msgstr "Ver, añadir y remover organizadores de su escuela."
+
+#: templates/schools/school_edit_organizers.html:28
+msgid "School Organizer"
+msgstr "Organizador de Escuela"
+
+#: templates/schools/school_edit_organizers.html:36
+msgid "Organizing this school."
+msgstr "Organizando esta escuela."
 
 #: templates/schools/school_edit_summary.html:11
 msgid ""
