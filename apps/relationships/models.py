@@ -63,10 +63,10 @@ def follow_handler(sender, **kwargs):
         return
     activity = Activity(actor=rel.source,
                         verb='http://activitystrea.ms/schema/1.0/follow')
-    ulang = get_language()
+    receipts = []
+    ulang=get_language()
     subject = {}
     body = {}
-    receipts = []
     if rel.target_user:
         activity.target_user = rel.target_user
         for l in settings.SUPPORTED_LANGUAGES:
@@ -85,7 +85,7 @@ def follow_handler(sender, **kwargs):
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
             subject[l[0]] = ugettext('%(display_name)s is following %(project)s on P2PU!') % {
-            'display_name': rel.source.display_name, 'project': rel.target_project }
+                'display_name': rel.source.display_name, 'project': rel.target_project }
         for organizer in rel.target_project.organizers():
             if organizer.user != rel.source:
                 preferences = AccountPreferences.objects.filter(user=organizer.user)
@@ -103,6 +103,7 @@ def follow_handler(sender, **kwargs):
             'project': rel.target_project,
             'domain': Site.objects.get_current().domain,
             })
+    activate(ulang)
     for user in receipts:
         pl = user.preflang or settings.LANGUAGE_CODE
         SendUserEmail.apply_async((user, subject[pl], body[pl]))

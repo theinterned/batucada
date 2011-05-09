@@ -33,8 +33,8 @@ def report_abuse(request, model, app_label, pk):
         except NoReverseMatch:
             url = request.build_absolute_uri(reverse('dashboard_index'))
         try:
-            profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
             ulang = get_language()
+            profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
             activate(profile.preflang or settings.LANGUAGE_CODE)
             body = _("""
         User %(display_name)s has reported the following content as objectionable:
