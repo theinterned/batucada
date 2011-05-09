@@ -83,8 +83,8 @@
    <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user.display_name }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user.display_name }} (participant)"></a>
   {% endfor %}
   {% for follower in project.non_participant_followers %}
-   <a href="{{ follower.get_absolute_url }}" title="{{ follower.display_name }} (follower)">
-   <img class="member-picture" src="{{ follower.image_or_default }}" height="26" width="26" alt="{{ follower.display_name }} (follower)"></a>
+   <a href="{{ follower.source.get_absolute_url }}" title="{{ follower.source.display_name }} (follower)">
+   <img class="member-picture" src="{{ follower.source.image_or_default }}" height="26" width="26" alt="{{ follower.source.display_name }} (follower)"></a>
   {% endfor %}
   <br><br>
   {% if user.is_authenticated and not organizing and not participating %}
