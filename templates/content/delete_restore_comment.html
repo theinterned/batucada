@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
+
+{% block bodyid %}delete_restore_comment{% endblock %}
+
+
+{% block breadcrumbs %}
+  <div class="container">
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
+    </nav>
+  </div> <!-- /.container -->
+{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    {% if comment.page.slug == 'sign-up' and not comment.reply_to %}
+      {% if comment.deleted %}
+        <h1>{{ _('Restore Answer:') }} {{ comment.author }} {{ comment.created_on }}</h1>
+      {% else %}
+        <h1>{{ _('Delete Answer:') }} {{ comment.author }} {{ comment.created_on }}</h1>
+      {% endif %}
+    {% else %}
+      {% if comment.deleted %}
+        <h1>{{ _('Restore Comment:') }} {{ comment.author }} {{ comment.created_on }}</h1>
+      {% else %}
+        <h1>{{ _('Delete Comment:') }} {{ comment.author }} {{ comment.created_on }}</h1>
+      {% endif %}
+    {% endif %}
+    <br />
+    <fieldset>
+    {% if comment.deleted %}
+      <form action="{% locale_url comment_restore slug=page.project.slug page_slug=page.slug comment_id=comment.id %}" method="post">
+    {% else %}
+      <form action="{% locale_url comment_delete slug=page.project.slug page_slug=page.slug comment_id=comment.id %}" method="post">
+    {% endif %}
+      {% csrf_token %}
+      {% if comment.page.slug == 'sign-up' and not comment.reply_to %}
+        {% if comment.deleted %}
+          <span class="hint block">{{ _('Are you sure you want to restore this answer?') }}</span>
+        {% else %}
+          <span class="hint block">{{ _('Are you sure you want to delete this answer?') }}</span>
+        {% endif %}
+      {% else %}
+        {% if comment.deleted %}
+          <span class="hint block">{{ _('Are you sure you want to restore this comment?') }}</span>
+        {% else %}
+          <span class="hint block">{{ _('Are you sure you want to delete this comment?') }}</span>
+        {% endif %}
+      {% endif %}
+      <p class="content_buttons">
+        <a class="button" href="{% if comment.deleted %}{{ page.get_absolute_url }}{% else %}{{ comment.get_absolute_url }}{%endif%}">
+          {{ _('Cancel') }}
+        </a>
+        {% if comment.deleted %}
+          <button type="submit" value="{{ _('Restore') }}">{{ _('Restore') }}</button>
+        {% else %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        {% endif %}
+      </p>
+    </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

@@ -86,7 +86,7 @@ class Page(ModelBase):
         if self.project.is_organizing(user):
             return True
         if self.collaborative:
-            return self.project.is_participanting(user)
+            return self.project.is_participating(user)
         return False
 
 
@@ -150,8 +150,8 @@ class PageComment(ModelBase):
     def project(self):
         return self.page.project
 
-    def visible_replies(self):
-        return self.all_replies.filter(deleted=False)
+    def has_visible_childs(self):
+        return self.all_replies.filter(deleted=False).exists()
 
     def can_edit(self, user):
         if user.is_authenticated():
