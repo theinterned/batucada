@@ -1589,7 +1589,8 @@ header {}
 		}
 		.modal .member-picture,
 		.modal .project.picture,
-		.modal .project.media {
+		.modal .project.media,
+        .modal .school.picture {
 			display: block;
 			margin: 0 auto;
 			max-width: 209px;
@@ -1598,7 +1599,7 @@ header {}
 			border-color: #C6C6C6;
 			margin-bottom: 0;
 		}
-		.project.edit.image .modal .picture-preview {
+		.project.edit.image .modal .picture-preview, .school.edit.image .modal .picture-preview {
 		    margin-left: 17px;
 		    margin-top: 0px;
 		}
