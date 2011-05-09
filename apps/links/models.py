@@ -25,11 +25,6 @@ class Link(models.Model):
     index = models.IntegerField(null=True, default=0, blank=True)
 
     def save(self):
-        if self.subscription:
-            tasks.UnsubscribeFromFeed.apply_async(args=(self,))
-        if self.subscribe:
-            tasks.SubscribeToFeed.apply_async(args=(self,))
-
         if not self.index:
             if self.project:
                 max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
