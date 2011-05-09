@@ -227,13 +227,14 @@ def edit_links_edit(request, slug, link):
     project = get_object_or_404(Project, slug=slug)
     if link.project != project:
         return http.HttpResponseForbidden()
-    if form.is_valid(): 
-        link = form.save(commit=False)
-        link.user = profile
-        link.project = project
+    if form.is_valid():
+        index = link.index
+        link.delete()
+        link = Link(user = profile, project = project, name=form.cleaned_data['name'],
+            url=form.cleaned_data['url'], subscribe=form.cleaned_data['subscribe'],
+            index=index)
         link.save()
         messages.success(request, _('Link updated.'))
-        tasks.SubscribeToFeed.apply_async(args=(link,))
         return http.HttpResponseRedirect(
             reverse('projects_edit_links', kwargs=dict(slug=project.slug)))
     else:
