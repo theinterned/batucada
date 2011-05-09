@@ -30,14 +30,14 @@ def report_abuse(request, model, app_label, pk):
             url = request.build_absolute_uri(instance.get_absolute_url())
         except NoReverseMatch:
             url = request.build_absolute_uri(reverse('dashboard_index'))
-        body = """
-        User %s has reported the following content as objectionable:
+        body = _("""
+        User %(display_name)s has reported the following content as objectionable:
 
-        %s
+        %(url)s
         
-        (model: %s, app_label: %s, pk: %s)
-        """ % (request.user.get_profile().display_name, url, model, app_label, pk)
-        subject = "Abuse Report"
+        (model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)
+        """ % (request.user.get_profile().display_name, url, model, app_label, pk))
+        subject = _("Abuse Report")
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
             SendUserEmail.apply_async(args=(profile, subject, body))
