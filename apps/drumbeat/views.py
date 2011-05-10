@@ -4,6 +4,7 @@ from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import NoReverseMatch
+from django.utils.translation import ugettext_lazy as _
 
 from l10n.urlresolvers import reverse
 from users.models import UserProfile
