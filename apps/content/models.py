@@ -195,9 +195,8 @@ class PageComment(ModelBase):
                 recipients[comment.author.username] = comment.author
         for username in recipients:
             if recipients[username] != self.author:
-                pl = recipients[username].user.preflang or settings.LANGUAGE_CODE
-                SendUserEmail.apply_async((recipients[username],
-                    subject[pl], body[pl]))
+                pl = recipients[username].preflang or settings.LANGUAGE_CODE
+                SendUserEmail.apply_async((recipients[username], subject[pl], body[pl]))
 
 
 def send_content_notification(instance, is_comment):
