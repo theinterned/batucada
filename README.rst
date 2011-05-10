@@ -81,7 +81,7 @@ Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput --migrate
 
-Finally, start the development server to take it for a spin. ::
+Finally, start the development server to take it for a spin. You can register a new account and look in the terminal window where the server is running to find the activation link (If you get 404 error for that url, remove the "=": http://www.flickr.com/photos/digifoo/5593967846/). ::
 
    python manage.py runserver 
 
