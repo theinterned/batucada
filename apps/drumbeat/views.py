@@ -10,6 +10,10 @@ from users.models import UserProfile
 from users.tasks import SendUserEmail
 from drumbeat.forms import AbuseForm
 
+import logging
+import sys
+
+log = logging.getLogger(__name__)
 
 def server_error(request):
     """Make MEDIA_URL available to the 500 template."""
@@ -36,12 +40,14 @@ def report_abuse(request, model, app_label, pk):
         %(url)s
         
         (model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)
-        """ % (request.user.get_profile().display_name, url, model, app_label, pk))
+        """ % dict(display_name = request.user.get_profile().display_name, 
+            url = url, model = model, app_label = app_label, pk = pk))
         subject = _("Abuse Report")
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
             SendUserEmail.apply_async(args=(profile, subject, body))
         except:
+            log.debug("Error sending abuse report: %s" % sys.exc_info()[0])
             pass
         return render_to_response('drumbeat/report_received.html', {},
                                   context_instance=RequestContext(request))
