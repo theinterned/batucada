@@ -64,10 +64,13 @@ class UserActivityFeed(Feed):
         return self._request.build_absolute_uri(item.actor.get_absolute_url())
 
     def title(self, user):
-        return user.name
+        return user and user.name or _('Public Activity')
 
     def subtitle(self, user):
-        return _('Activity feed for %s' % (user.name,))
+        if user:
+            return _('Activity feed for %s' % (user.name,))
+        else:
+            return _('Public Activity')
 
     def link(self, user):
         return reverse('users_profile_view',
@@ -127,9 +130,14 @@ class DashboardFeed(UserActivityFeed):
 
     def get_object(self, request):
         self._request = request
-        return request.user.get_profile()
+        if request.user.is_authenticated():
+            return request.user.get_profile()
+        else:
+            return None
 
     def items(self, user):
+        if user is None:
+            return Activity.objects.public()
         user_ids = [u.pk for u in user.following()]
         project_ids = [p.pk for p in user.following(model=Project)]
         return Activity.objects.select_related(
