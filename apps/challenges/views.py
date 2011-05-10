@@ -285,9 +285,10 @@ def edit_submission(request, slug, submission_id):
             form.save()
             messages.success(request, _('Your submission has been edited.'))
 
-            return HttpResponseRedirect(reverse('submission_show', kwargs={
-                'slug': challenge.slug,
-                'submission_id': submission.pk,
+            return HttpResponseRedirect(reverse('submission_edit_description',
+                kwargs={
+                    'slug': challenge.slug,
+                    'submission_id': submission.pk,
             }))
         else:
             messages.error(request, _('Unable to update your submission'))
@@ -318,9 +319,10 @@ def edit_submission_description(request, slug, submission_id):
             form.save()
             messages.success(request, _('Your submission has been edited.'))
 
-            return HttpResponseRedirect(reverse('submission_show', kwargs={
-                'slug': challenge.slug,
-                'submission_id': submission.pk
+            return HttpResponseRedirect(reverse('submission_edit_share',
+                kwargs={
+                    'slug': challenge.slug,
+                    'submission_id': submission.pk
             }))
         else:
             messages.error(request, _('Unable to update your submission'))
