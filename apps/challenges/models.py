@@ -63,6 +63,9 @@ class Challenge(ModelBase):
     resources = models.TextField()
     rules = models.TextField()
 
+    sidebar = models.TextField(null=True, blank=True)
+    above_fold = models.TextField(null=True, blank=True)
+
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()
 
