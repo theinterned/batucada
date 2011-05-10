@@ -27,10 +27,24 @@
     </div>
 
     <div class="field{% if form.guidelines.errors %} error{% endif %}">
-      <label for="id_name">{{ _('How does it work? (Submission guidelines)') }}</label>
+      <label for="id_guidelines">{{ _('How does it work? (Submission guidelines)') }}</label>
       <span class="hint block"></span>
       {{ form.guidelines }}
       {{ form.guidelines.errors }}
+    </div>
+
+    <div class="field{% if form.sidebar.errors %} error{% endif %}">
+      <label for="id_sidebar">{{ _('Sidebar text') }}</label>
+      <span class="hint block">{{ _('Text to populate the left sidebar on a challenge landing page') }}</span>
+      {{ form.sidebar }}
+      {{ form.sidebar.errors }}
+    </div>
+
+    <div class="field{% if form.above_fold.errors %} error{% endif %}">
+      <label for="id_above_fold">{{ _('Above the fold text.') }}</label>
+      <span class="hint block"></span>
+      {{ form.above_fold }}
+      {{ form.above_fold.errors }}
     </div>
     
     <div class="field{% if form.description.errors %} error{% endif %}">

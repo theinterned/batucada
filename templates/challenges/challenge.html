@@ -3,6 +3,16 @@
 
 {% block title %}{{ challenge.title }}{% endblock %}
 
+{% block links %}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8">
+{% endblock %}
+
+{% block script %}
+  <script src="{{ MEDIA_URL }}js/libs/video.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+    VideoJS.setupAllWhenReady();
+  </script>
+{% endblock %}
 
 {% block breadcrumbs %}
 
@@ -41,6 +51,10 @@
 {% include "challenges/_challenge_sidebar.html" %}
 <div id="main">
   <h1>{{ challenge.title }}</h1><br />
+
+  {% if challenge.above_fold %}
+    {{ challenge.above_fold|safe }}
+  {% endif %}
 
   {% if challenge.is_active %}
   <p>{{ remaining.days }} days to respond to this challenge</p>
