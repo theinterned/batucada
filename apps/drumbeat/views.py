@@ -13,7 +13,7 @@ from users.tasks import SendUserEmail
 from drumbeat.forms import AbuseForm
 
 import logging
-import sys 
+import sys
 
 log = logging.getLogger(__name__)
 
@@ -41,13 +41,13 @@ def report_abuse(request, model, app_label, pk):
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
             activate(profile.preflang or settings.LANGUAGE_CODE)
             body = _("""
-User %(display_name)s has reported the following content as objectionable:
+        User %(display_name)s has reported the following content as objectionable:
 
-%(url)s
-
-(model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)
-           """ % dict(display_name=request.user.get_profile().display_name, 
-               url=url, model=model, app_label=app_label, pk=pk))
+        %(url)s
+        
+        (model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)
+        """ % dict(display_name = request.user.get_profile().display_name, 
+                url = url, model = model, app_label = app_label, pk = pk))
             subject = _("Abuse Report")
             SendUserEmail.apply_async(args=(profile, subject, body))
         except:
