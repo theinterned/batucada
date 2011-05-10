@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 05:47-0500\n"
+"POT-Creation-Date: 2011-05-10 06:09-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -315,15 +315,15 @@ msgstr "¡Organizador añadido!"
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/dashboard/views.py:76 apps/users/views.py:300 l/dashboard-views.py:81
+#: apps/dashboard/views.py:76 apps/users/views.py:300
 msgid "(organizing)"
 msgstr "(organizando)"
 
-#: apps/dashboard/views.py:79 apps/users/views.py:303 l/dashboard-views.py:84
+#: apps/dashboard/views.py:79 apps/users/views.py:303
 msgid "(participating)"
 msgstr "(participando)"
 
-#: apps/dashboard/views.py:82 apps/users/views.py:306 l/dashboard-views.py:87
+#: apps/dashboard/views.py:82 apps/users/views.py:306
 msgid "(following)"
 msgstr "(siguiendo)"
 
@@ -348,7 +348,7 @@ msgstr ""
 "        (model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)\n"
 "        "
 
-#: apps/drumbeat/views.py:46 l/views.py:51
+#: apps/drumbeat/views.py:46
 msgid "Abuse Report"
 msgstr "Reporte de Abuso"
 
@@ -719,26 +719,6 @@ msgstr "Enlace actualizado"
 #: apps/users/views.py:485
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
-
-#: l/views.py:43
-#, python-format
-msgid ""
-"\n"
-"User %(display_name)s has reported the following content as objectionable:\n"
-"\n"
-"%(url)s\n"
-"\n"
-"(model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)\n"
-"           "
-msgstr ""
-"\n"
-"El usuario %(display_name)s ha reportado el siguiente contenido como "
-"objetable:\n"
-"\n"
-"%(url)s\n"
-"\n"
-"(model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)\n"
-"        "
 
 #: templates/404.html:6
 msgid "Page not found"
@@ -2991,6 +2971,25 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid ""
+#~ "\n"
+#~ "User %(display_name)s has reported the following content as "
+#~ "objectionable:\n"
+#~ "\n"
+#~ "%(url)s\n"
+#~ "\n"
+#~ "(model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)\n"
+#~ "           "
+#~ msgstr ""
+#~ "\n"
+#~ "El usuario %(display_name)s ha reportado el siguiente contenido como "
+#~ "objetable:\n"
+#~ "\n"
+#~ "%(url)s\n"
+#~ "\n"
+#~ "(model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)\n"
+#~ "        "
 
 #~ msgid "Logo &amp; Colors"
 #~ msgstr "Logo &amp; Colores "
