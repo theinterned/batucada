@@ -85,12 +85,12 @@ SESSION_COOKIE_PATH = '/; HttpOnly'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'l10n.middleware.LocaleURLRewriter',
+    'django.middleware.common.CommonMiddleware',
     'commonware.middleware.HidePasswordOnException',
     'commonware.middleware.FrameOptionsHeader',
     'jogging.middleware.LoggingMiddleware',
