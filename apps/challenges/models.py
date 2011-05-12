@@ -50,6 +50,13 @@ class ChallengeManager(caching.base.CachingManager):
             q = q.filter(project__id=project_id)
         return q
 
+    def upcoming(self, project_id=0):
+        q = Challenge.objects.filter(
+            end_date__gte=datetime.now())
+        if project_id:
+            q = q.filter(project__id=project_id)
+        return q
+
 
 class Challenge(ModelBase):
     """ Inovation (design) Challenges """
@@ -62,6 +69,9 @@ class Challenge(ModelBase):
     important_dates = models.TextField()
     resources = models.TextField()
     rules = models.TextField()
+
+    sidebar = models.TextField(null=True, blank=True)
+    above_fold = models.TextField(null=True, blank=True)
 
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()

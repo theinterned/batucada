@@ -43,7 +43,7 @@ def show(request, slug):
     files = project.projectmedia_set.all()
     followers_count = Relationship.objects.filter(
         target_project=project).count()
-    challenges = Challenge.objects.active(project_id=project.id)
+    challenges = Challenge.objects.upcoming(project_id=project.id)
 
     context = {
         'project': project,

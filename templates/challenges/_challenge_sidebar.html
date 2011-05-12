@@ -26,14 +26,19 @@
     </dl>
   </section>
 
-  <a id="project-description-link" href="{% locale_url challenges_show_full slug=challenge.slug %}">View Full Details</a>  
 
   {% if challenge.image %}
   <img src="{{ challenge.image.url }}" alt="{{ challenge }} image" width="300"/>  
   {% endif %}
 
   <div class="challenge_brief">
+  {% if challenge.sidebar %}
+    {{ challenge.sidebar|safe }}
+  {% else %}
     {{ challenge.brief|safe }}
+  {% endif %} 
   </div>
 
+
+  <a id="project-description-link" href="{% locale_url challenges_show_full slug=challenge.slug %}">View Full Details</a>  
 </div><!-- /#sidebar -->
