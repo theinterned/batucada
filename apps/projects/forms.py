@@ -1,4 +1,3 @@
-import datetime
 import logging
 
 from django import forms
@@ -6,8 +5,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
+from users import tasks
 from links.models import Link
-from messages.models import Message
 from projects.models import Project, ProjectMedia
 
 log = logging.getLogger(__name__)
@@ -112,18 +111,7 @@ class ProjectContactUsersForm(forms.Form):
         recipients = project.followers()
         subject = self.cleaned_data['subject']
         body = self.cleaned_data['body']
-        message_list = []
-        for r in recipients:
-            msg = Message(
-                sender=sender,
-                recipient=r.user,
-                subject=subject,
-                body=body,
-            )
-            if parent_msg is not None:
-                msg.parent_msg = parent_msg
-                parent_msg.replied_at = datetime.datetime.now()
-                parent_msg.save()
-            msg.save()
-            message_list.append(msg)
-        return message_list
+        messages = [(sender, r.user, subject, body, parent_msg)
+                    for r in recipients]
+        tasks.SendUsersEmail.apply_async(args=(self, messages))
+        return messages
