@@ -101,19 +101,21 @@
 
   {% if submissions.paginator.num_pages > 1 %}
   <div class="pagination">
-    <span class="step-links">
       {% if submissions.has_previous %}
-      <a href="?page={{ submissions.previous_page_number }}">previous</a>
-      {% endif %}
+      <a href="?page={{ submissions.previous_page_number }}" class="btn">← prev</a>
+      {% else % }
+	  <span class="btn">← prev</span>
+	  {% endif %}
       
-      <span class="current">
+      <em>
         Page {{ submissions.number }} of {{ submissions.paginator.num_pages }}
-      </span>
+      </em>
       
       {% if submissions.has_next %}
-      <a href="?page={{ submissions.next_page_number }}">next</a>
+      <a href="?page={{ submissions.next_page_number }}" class="btn">next →</a>
+	  {% else %}
+	  <span class="btn">next →</span>
       {% endif %}
-    </span>
   </div>
   {% endif %}
 </div>
