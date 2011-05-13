@@ -99,20 +99,18 @@
   {% endfor %}
   </ul>
   {% if projects|length > 0 %}
-  <h3>{{ _('Study Groups') }} <span class="projects count">{{ projects_following|length}}</span></h3>
-  <ul>
-  {% for project in projects_following %}
-    <li>
-      <a href="{{ project.get_absolute_url }}" title="{{project.name}} {{project.relation_text}}">
-        {% if project.image %}
-        <img src="{{ MEDIA_URL }}{{ project.image }}" width="42" height="26" alt="project image"/>
-        {% else %}
-        <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
-        {% endif %}
-      </a>
-    </li>
-  {% endfor %}
-  </ul>
+    <h3>{{ _('Study Groups') }} <span class="projects count">{{ projects|length}}</span></h3>
+    <ul class="following">
+      {% for project in projects_organizing %}
+        {% include "dashboard/_project_image.html"%}
+      {% endfor %}
+      {% for project in projects_participating %}
+        <li>{% include "dashboard/_project_image.html"%}</li>
+      {% endfor %}
+      {% for project in projects_following %}
+        <li>{% include "dashboard/_project_image.html"%}</li>
+      {% endfor %}
+    </ul>
   {% endif %}
 </div> <!-- /#member_relationships-->
 {% if links %}
