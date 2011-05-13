@@ -2,6 +2,7 @@ import logging
 
 from django import http
 from django.conf import settings
+from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404
@@ -239,6 +240,22 @@ def edit_links_delete(request, slug, link):
         messages.success(request, _('The link was deleted'))
     return http.HttpResponseRedirect(
         reverse('projects_edit_links', kwargs=dict(slug=slug)))
+
+
+def list_all(request, page=1):
+    projects = Project.objects.all()
+    paginator = Paginator(projects, 16)
+    current_page = paginator.page(page)
+    projects = current_page.object_list
+    for project in projects:
+        project.followers_count = Relationship.objects.filter(
+            target_project=project).count()
+    return render_to_response('projects/directory.html', {
+        'page': page,
+        'next_page': int(page) + 1,
+        'num_pages': paginator.num_pages,
+        'projects': projects,
+    }, context_instance=RequestContext(request))
 
 
 def list(request):
