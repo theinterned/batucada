@@ -32,6 +32,8 @@ Using ``virtualenvwrapper`` is also recommended (see the `installation instructi
 
 .. _installation instructions: http://www.doughellmann.com/docs/virtualenvwrapper/
 
+virtualenvwrapper is sometimes installed to /usr/local/bin/ so if you set things up and are informed of missing file errors change the location accordingly.
+
 Now create a virtual environment for ``batucada`` and install its dependencies: ::
 
    cd batucada
@@ -41,6 +43,10 @@ Now create a virtual environment for ``batucada`` and install its dependencies: 
    pip install -r requirements/dev.txt
 
 There's a chance that packages listed in ``requirements/compiled.txt`` won't install cleanly if your system is missing some key development libraries. For example, lxml requires ``libxsml2-dev`` and ``libxslt-dev``. These should be available from your system's package manager.
+
+Problems have also been experienced with using Xcode4. If you're pip installs fail try giving things a kick by running the following and try it again: ::
+
+    ARCHFLAGS="-arch i386 -arch x86_64"
    
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
@@ -49,6 +55,12 @@ To be extra sure you're working from a clean slate, you might find it helps to d
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
    cp settings_local.dist.py settings_local.py
+
+If you have yet to get a local version of mysql running you will want to do so now. 
+
+In order to run the migrations and syncd command you need to have an empty database set up. Default name is 'batucada', if you didn't change anything in local_settings.py then you can simply run, from an mysql command line: ::
+
+    CREATE DATABASE 'batucada';
 
 Now sync the database and run migrations. ::
 
