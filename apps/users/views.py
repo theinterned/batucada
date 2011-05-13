@@ -317,10 +317,10 @@ def profile_view(request, username):
     projects_participating = []
     projects_following = []
     for project in projects:
-        if project.is_organizing(request.user):
+        if project.organizers().filter(user=profile).exists():
             project.relation_text = _('(organizing)')
             projects_organizing.append(project)
-        elif project.is_participating(request.user):
+        elif project.participants().filter(user=profile).exists():
             project.relation_text = _('(participating)')
             projects_participating.append(project)
         else:
