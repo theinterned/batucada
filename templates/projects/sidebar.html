@@ -2,7 +2,7 @@
 
 <div id="sidebar">
   <section id="project"class="panel">
-    <h1 id="project-name" class="school_header">{{ project.name }}</h1>
+    <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
     <br>
     <figure class="project_img">
       <a href="{{ project.get_absolute_url }}">
@@ -82,7 +82,7 @@
   </section>
 
 <section id="people" class="panel">
-  <h2>{{ _('People') }}</h2>
+  <h2 {% if school %}class="school_header"{% endif %}>{{ _('People') }}</h2>
   <br>
   {% for organizer in project.organizers %}
    <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user.display_name }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="26" width="26" alt="{{ organizer.user.display_name }} (organizer)"></a>
@@ -129,7 +129,7 @@
 
 
   <a name="tasks"></a>
-  <h2>{{ _('Tasks') }}</h2>
+  <h2 {% if school %}class="school_header"{% endif %}>{{ _('Tasks') }}</h2>
   <br>
   {% if content_pages %}
     <nav id="content-pages">
@@ -159,7 +159,7 @@
 
 
 <section id="external-links" class="panel">
-<h2>{{ _('External Links') }}</h2>
+<h2 {% if school %}class="school_header"{% endif %}>{{ _('External Links') }}</h2>
   <br>
   {% if links %}
     <nav id="project-links">

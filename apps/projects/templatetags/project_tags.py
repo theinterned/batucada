@@ -12,9 +12,9 @@ def sidebar(context):
     project = context['project']
     is_participating = is_following = is_organizing = False
     if user.is_authenticated():
-        is_participating = project.is_participating(user)
+        is_participating = project.participants().filter(user=user).exists()
         is_following = user.get_profile().is_following(project)
-        is_organizing = project.is_organizing(user)
+        is_organizing = project.organizers().filter(user=user).exists()
     participants_count = project.non_organizer_participants().count()
     followers_count = project.non_participant_followers().count()
     organizers_count = project.organizers().count()

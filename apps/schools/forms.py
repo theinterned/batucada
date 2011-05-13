@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from drumbeat.utils import CKEditorWidget
 from projects.models import Project

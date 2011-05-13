@@ -43,26 +43,4 @@ class ProjectTests(TestCase):
         project2.save()
         self.assertEqual('my-cool-project-2', project2.slug)
 
-    def test_activity_firing(self):
-        """Test that when a project is created, an activity is created."""
-        activities = Activity.objects.all()
-        self.assertEqual(0, len(activities))
-        project = Project(
-            name='My Cool Project',
-            short_description='This project is awesome',
-            long_description='Yawn',
-            created_by=self.user,
-        )
-        project.save()
-        # expect 2 activities, a create and a follow
-        activities = Activity.objects.all()
-        self.assertEqual(2, len(activities))
-        for activity in activities:
-            self.assertEqual(self.user, activity.actor.user.get_profile())
-            self.assertEqual(project, activity.project)
-            self.assertTrue(activity.verb in (
-                'http://activitystrea.ms/schema/1.0/post',
-                'http://activitystrea.ms/schema/1.0/follow',
-           ))
-
 

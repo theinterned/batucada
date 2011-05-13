@@ -57,7 +57,7 @@ def update_feeds():
         if not body:
             log.warn("Parsing feed failed - no body found")
             continue
-        cleaned_body = smart_str(bleach.clean(body, tags=(), strip=True))
+        cleaned_body = smart_str(bleach.clean(body, tags=(), strip=True, strip_comments=True))
         try:
             checksum = hashlib.md5(cleaned_body).hexdigest()
             exists = FeedEntry.objects.filter(checksum=checksum)
@@ -71,6 +71,8 @@ def update_feeds():
                         "%Y-%m-%d %H:%M:%S", parsed['updated']))
                 entry.save()
                 ids.append(entry.id)
+            else:
+                ids.append(exists[0].id)
         except:
             log.warn("Encountered an error creating FeedEntry. Skipping.")
             continue

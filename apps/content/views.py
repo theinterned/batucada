@@ -30,7 +30,8 @@ def show_page(request, slug, page_slug):
     if page.deleted:
         messages.error(request, _('This task was deleted.'))
         if can_edit:
-            return HttpResponseRedirect(reverse('page_history', kwargs={'slug':page.project, 'page_slug':page.slug}))
+            return HttpResponseRedirect(reverse('page_history', kwargs={'slug':page.project.slug,
+                'page_slug':page.slug}))
         else:
             return HttpResponseRedirect(page.project.get_absolute_url())
     first_level_comments = page.comments.filter(reply_to__isnull=True)
@@ -148,7 +149,7 @@ def delete_page(request, slug, page_slug):
         page.save()
         messages.success(request, _('%s deleted!') % page.title)
         return HttpResponseRedirect(reverse('page_history',
-            kwargs={'slug':page.project, 'page_slug':page.slug}))
+            kwargs={'slug':page.project.slug, 'page_slug':page.slug}))
     else:
         return render_to_response('content/confirm_delete_page.html', {
             'page': page,
@@ -323,8 +324,9 @@ def sign_up(request, slug):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
     if request.user.is_authenticated():
-        is_organizing = project.is_organizing(request.user)
-        is_participating = project.is_participating(request.user)
+        profile = request.user.get_profile()
+        is_organizing = project.organizers().filter(user=profile).exists()
+        is_participating = project.participants().filter(user=profile).exists()
         first_level_comments = page.comments.filter(reply_to__isnull=True)
         can_post_answer = False
         if not is_organizing:
@@ -332,7 +334,6 @@ def sign_up(request, slug):
                 participants = project.participants()
                 first_level_comments = first_level_comments.filter(author__in=participants.values('user_id'))
             else:
-                profile = request.user.get_profile()
                 first_level_comments = first_level_comments.filter(author=profile)
                 can_post_answer = not first_level_comments.filter(deleted=False).exists()
     else:
@@ -340,10 +341,11 @@ def sign_up(request, slug):
         is_organizing = is_participating = can_post_answer = False
     if project.signup_closed:
         can_post_answer = False
+    pending_answers_count = 0
     if first_level_comments:
-        pending_answers_count = first_level_comments.filter(deleted=False).count()
-    else:
-        pending_answers_count = 0
+        for answer in first_level_comments.filter(deleted=False):
+            if not project.participants().filter(user=answer.author).exists():
+                pending_answers_count += 1
     if is_organizing:
         for comment in first_level_comments:
              comment.is_participating = project.participants().filter(user=comment.author)
@@ -362,9 +364,9 @@ def sign_up(request, slug):
 def comment_sign_up(request, slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
-    is_organizing = project.is_organizing(request.user)
-    is_participating = project.is_participating(request.user)
     user = request.user.get_profile()
+    is_organizing = project.organizers().filter(user=user).exists()
+    is_participating = project.participants().filter(user=user).exists()
     reply_to = abs_reply_to = None
     if comment_id:
         reply_to = page.comments.get(pk=comment_id)
@@ -373,7 +375,7 @@ def comment_sign_up(request, slug, comment_id=None):
             abs_reply_to = abs_reply_to.reply_to
         if not is_organizing:
             if is_participating:
-                if not project.is_participating(abs_reply_to.author):
+                if not project.is_participating(abs_reply_to.author.user):
                     return HttpResponseForbidden(_("You can't see this page"))
             elif abs_reply_to.author != user:
                 return HttpResponseForbidden(_("You can't see this page"))
@@ -480,8 +482,8 @@ def accept_sign_up(request, slug, comment_id, as_organizer=False):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
     answer = page.comments.get(pk=comment_id)
-    organizing = project.is_organizing(answer.author.user)
-    participating = project.is_participating(answer.author.user)
+    organizing = project.organizers().filter(user=answer.author.user).exists()
+    participating = project.participants().filter(user=answer.author.user).exists()
     if answer.reply_to or organizing or participating or request.method != 'POST':
         return HttpResponseForbidden(_("You can't see this page"))
     participation = Participation(project=project, user=answer.author, organizing=as_organizer)

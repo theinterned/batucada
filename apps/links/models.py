@@ -24,14 +24,14 @@ class Link(models.Model):
     subscription = models.ForeignKey(Subscription, null=True)
     index = models.IntegerField(null=True, default=0, blank=True)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.index:
             if self.project:
                 max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
             else:
                 max_index = Link.objects.filter(user=self.user, project__isnull=True).aggregate(Max('index'))['index__max']
             self.index = max_index + 1 if max_index else 1
-        super(Link, self).save()
+        super(Link, self).save(*args, **kwargs)
 
 def link_create_handler(sender, **kwargs):
     """Check for a feed and subscribe to it if it exists."""

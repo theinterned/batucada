@@ -144,6 +144,7 @@ class TestLogins(TestCase):
                 'password': 'foobar123',
                 'password_confirm': 'foobar123',
                 'email': 'foobar123@example.com',
+                'preflang': 'en'
             })
             self.assertContains(response, 'Please choose another')
         ok = self.client.post(path, {
@@ -151,6 +152,7 @@ class TestLogins(TestCase):
             'password': 'foobar123',
             'password_confirm': 'foobar123',
             'email': 'foobar123@example.com',
+            'preflang': 'en',
         })
         self.assertEqual(302, ok.status_code)
 

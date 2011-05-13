@@ -11,7 +11,7 @@ from links.models import Link
 
 from test_utils import TestCase
 from activity.models import Activity
-
+from users.models import create_profile
 
 def mock_open(r):
     return urllib2.HTTPError('request', 204, 'no-op', {}, StringIO(''))
