@@ -101,10 +101,10 @@ class ProjectContactOrganizersForm(forms.Form):
         except Project.DoesNotExist:
             raise forms.ValidationError(_(u'That study group does not exist.'))
         recipients = project.organizers()
-        subject = "[p2pu-%s] " % project.slug + self.cleaned_data['subject']
+        subject = "[%s] " % project.name[:20] + self.cleaned_data['subject']
         body = self.cleaned_data['body']
-        body = '%s\n\n%s' % (self.cleaned_data['body'], _('You received this because you are an organizer ' 
-               'in %(project)s: http://%(domain)s%(url)s') % {'project':project.name, 
+        body = '%s\n\n%s' % (self.cleaned_data['body'], _('You received this message through the Contact Organizer form ' 
+               'at %(project)s: http://%(domain)s%(url)s') % {'project':project.name,  
                'domain':Site.objects.get_current().domain, 'url':project.get_absolute_url()})
                        
         message_list = []

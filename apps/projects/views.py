@@ -271,7 +271,8 @@ def edit_participants(request, slug):
         form = project_forms.ProjectAddParticipantForm(project, request.POST)
         if form.is_valid():
             user = form.cleaned_data['user']
-            participation = Participation(project=project, user=user)
+            organizing = form.cleaned_data['organizer']
+            participation = Participation(project=project, user=user, organizing=organizing)
             participation.save()
             new_rel = Relationship(source=user, target_project=project)
             try:
@@ -288,7 +289,7 @@ def edit_participants(request, slug):
     return render_to_response('projects/project_edit_participants.html', {
         'project': project,
         'form': form,
-        'participations': project.participants(),
+        'participations': project.participants().order_by('joined_on'),
         'participants_tab': True,
     }, context_instance=RequestContext(request))
 
