@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block title %}{{ _('Projects') }}{% endblock %}
+{% block bodyid %}project_directory{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url projects_directory %}">{{ _('All Projects') }}</a>
+  </nav>
+  {% if user.is_authenticated %}
+    <div id="project-actions">
+      <a id="create-project" class="button" href="{% locale_url projects_create %}">Create a project</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block body %}
+<h1>{{ _('All <b>Projects</b>') }}</h1>
+<section>
+<ul class="project-list">
+  {% for project in projects %}
+    <li>{% include "projects/_project_card.html" %}</li>
+  {% endfor %}
+</ul>
+</section>
+<p>
+  Page {{ page }} of {{ num_pages }}. <a href="{% locale_url projects_directory page=next_page %}">More</a>
+</p>
+{% endblock %}
