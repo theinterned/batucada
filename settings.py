@@ -99,7 +99,6 @@ MIDDLEWARE_CLASSES = (
     'maintenancemode.middleware.MaintenanceModeMiddleware',
     'commonware.middleware.HidePasswordOnException',
     'commonware.middleware.FrameOptionsHeader',
-    'jogging.middleware.LoggingMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
 )
@@ -119,7 +118,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.comments',
     'south',
-    'jogging',
     'wellknown',
     'users',
     'l10n',
@@ -180,9 +178,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 MAX_IMAGE_SIZE = 1024 * 700
 MAX_UPLOAD_SIZE = 1024 * 1024 * 50
 MAX_PROJECT_FILES = 6
-
-GLOBAL_LOG_LEVEL = logging.DEBUG
-GLOBAL_LOG_HANDLERS = [logging.FileHandler(path('lernanta.log'))]
 
 CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 CACHE_PREFIX = 'lernanta'
@@ -286,4 +281,36 @@ DEFAULT_PROFILE_IMAGE = 'http://new.p2pu.org/media/images/member-missing.png'
 # it doesn't end in a slash, an HTTP redirect is issued to the same URL with a slash appended.
 APPEND_SLASH = True
 
+# Django logging configuration.
+# The default logging configuration. This sends an email to
+# the site admins on every HTTP 500 error. All other log
+# records are sent to the bit bucket.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'class' : 'logging.handlers.RotatingFileHandler',
+            'filename': 'lernanta.log',
+            'maxBytes': 1024*1024*5, # 5 MB
+            'backupCount': 5,
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    }
+}
 
