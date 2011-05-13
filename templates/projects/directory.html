@@ -24,11 +24,17 @@
     <li>{% include "projects/_project_card.html" %}</li>
   {% endfor %}
 </ul>
+<div class="pagination">
 {% if page.has_previous %}
-<a href="{% locale_url projects_directory page=prev_page %}">{{ _('Previous') }}</a>
+<a class="btn" href="{% locale_url projects_directory page=prev_page %}">← {{ _('previous') }}</a>
+{% else %}
+<span class="btn">← {{ _('previous') }}</span>
 {% endif %}
 {% if page.has_next %}
-<a href="{% locale_url projects_directory page=next_page %}">{{ _('Next') }}</a>
+<a class="btn" href="{% locale_url projects_directory page=next_page %}">{{ _('next') }} →</a>
+{% else %}
+<span class="btn">{{_('next')}} →</span>
 {% endif %}
+</div>
 </section>
 {% endblock %}
