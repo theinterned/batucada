@@ -34,6 +34,8 @@ urlpatterns = patterns('',
       name='challenges_show'),
   url(r'^(?P<slug>[\w-]+)/full$', 'challenges.views.show_challenge_full',
       name='challenges_show_full'),
+  url(r'^(?P<slug>[\w-]+)/contact$', 'challenges.views.contact_entrants',
+      name='challenges_contact_entrants'),
 
   # Submissions
   url(r'^(?P<slug>[\w-]+)/submission/create/$',

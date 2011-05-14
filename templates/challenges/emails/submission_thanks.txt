@@ -1,0 +1,17 @@
+Thanks for entering in the Knight-Mozilla Innovation Challenge! We really appreciate it.
+
+Here's a link to your submission: 
+http://www.drumbeat.org{{ submission_url }}
+
+Remember, you can edit and amend your entry until community voting begins in early June. Just log in, visit your submission, and click the "edit submission" button.
+
+To promote your entry and help us build the MoJo community, please:  
+
+* Share your entry on your social networks.   
+* Share your entry with the MoJo community list for feedback and support:
+https://lists.mozilla.org/listinfo/community-mojo
+
+We'll let you know when community voting begins. To stay up-to-date, don't forget to follow @knightmozilla on Twitter ( http://twitter.com/knightmozilla ). Good luck!
+
+Cheers,  
+The MoJo Team

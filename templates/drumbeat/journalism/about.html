@@ -16,15 +16,32 @@
 {% block body %}    
     <div class="banner">   
       <div class="container">
-        <h1>Knight Mozilla News Technology Partnership (MoJo)</h1>
+        <a href="{% locale_url drumbeat_journalism %}""><h1>Knight-Mozilla News Technology Partnership (MoJo)</h1></a>
         <h2>Web developers and designers around the world collaborating to invent the future of news.</h2>
-        <a class="button selected" href="{% locale_url drumbeat_journalism_about %}"><span>About Mojo</span></a>
+        <a class="button" href="{% locale_url drumbeat_journalism %}"><span>Home</span></a>
+       <a class="button selected" href="{% locale_url drumbeat_journalism_about %}"><span>About MoJo</span></a>
+        <a class="button" href="{% locale_url drumbeat_journalism_process %}"><span>The Process</span></a>
         <a class="button" href="{% locale_url drumbeat_journalism_participate %}"><span>Get Involved</span></a>
-        <a class="button" href="https://wiki.mozilla.org/Drumbeat/MoJo"><span>Mojo Wiki</span></a>
+        <a class="button" href="https://wiki.mozilla.org/Drumbeat/MoJo"><span>MoJo Wiki</span></a>
       </div>
     </div>
     
-    <div class="homepagevideo video-js-box">
+ 
+    <div class="content">
+      <div class="container">
+        <div class="homepagelogos">
+          NEWS PARTNERS
+          <a class="logo-aljazeera" href="http://english.aljazeera.net"><span>Aljazeera</span></a>
+          <a class="logo-bbc" href="http://www.bbc.co.uk"><span>BBC</span></a>
+          <a class="logo-boston" href="http://www.boston.com"><span>Boston.com</span></a>
+          <a class="logo-guardian" href="http://www.guardian.co.uk"><span>thguardian</span></a>
+          <a class="logo-zeit" href="http://www.zeit.de"><span>Zeit Online</span></a>
+        </div>
+        <p class="intro">
+Driving news innovation.        </p>
+
+<div class="videoinline">
+ <div class="video-js-box">
       <video class="video-js" poster="http://videos.mozilla.org/serv/webmademovies/mojoposter.jpg" controls="controls" id="video-element" height="270" width="480">
         <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.webm" type="video/webm"> 
         <source src="http://videos.mozilla.org/serv/webmademovies/knightmozilla.mp4" type="video/mp4">
@@ -40,108 +57,29 @@
           <a href="http://vimeo.com/21949993">Knight Mozilla Journalism Partnership</a> from <a href="http://vimeo.com/youraface">Graham Wheeler</a> on <a href="http://vimeo.com">Vimeo</a>.
         </p> 
       </video>
+      </div>
     </div>
-    
-    <div class="content">
-      <div class="container">
-        <div class="homepagelogos">
-          NEWS PARTNERS
-          <a class="logo-aljazeera" href="http://english.aljazeera.net"><span>Aljazeera</span></a>
-          <a class="logo-bbc" href="http://www.bbc.co.uk"><span>BBC</span></a>
-          <a class="logo-boston" href="http://www.boston.com"><span>Boston.com</span></a>
-          <a class="logo-guardian" href="http://www.guardian.co.uk"><span>thguardian</span></a>
-          <a class="logo-zeit" href="http://www.zeit.de"><span>Zeit Online</span></a>
-        </div>
-        <p class="intro">
-          The Knight-Mozilla News Technology Partnership is a three-year initiative of the Knight Foundation and Mozilla to harness open-web innovation for journalism. 
-        </p>
-        <p>
-          Through a series of <a href="https://drumbeat.org/en-US/projects/mojo/">innovation challenges</a> and community events, we will identity 15 fellows that will be embedded in leading newsrooms around the world. These fellows will create new tools, ideas, and news  experiences that benefit both readers and newsmakers&#8212;all using open technologies.
-        </p>
+        <p>For the next three years, we'll drive news innovation through the Knight-Mozilla News Technology Partnership—"MoJo."</p>
+        
+        <p>Information is a core community need. People need good, timely information to thrive in a democracy and act in their own best interest. And journalism, as an institution, must be strengthened.</p>        
+        
+        <p>Journalism and the open web are built on common values. Like the web, the future of journalism lies in universal access and participation.</p>  
+
+        <p>We intend to advance the best values of both journalism and the open web by continuous innovation. Working together, technologists and journalists can accomplish great things.</p>
         <h5>What are we doing?</h5>
         <ul>
           <li>Generating great ideas: through innovation challenges, open conversations and fellowships.</li>
           <li>Training people: on taking ideas from concept to code.</li>
           <li>Making software: demos and reference implementations of the best ideas and experiments for news. All built using open web technologies.</li>
-          <li>Thought leadership: through fellows, community & news partnerships.</li>
+          <li>Thought leadership: through 15 embedded news fellows with community & news partners.</li>
         </ul>
-        <p class="intro">
-          Journalism and the open web are built on common values. And, like the web, the future of  journalism lies in universal access and participation.  
         <p>
-          News should be universally accessible across phones, tablets, and  computers. It should be multilingual. It should be rich with audio,  video, and elegant data visualization. It should enlighten, inform, and  entertain people, and it should make them part of the story.  
-        </p>
-        <p>
-          For the next three years, we'll imagine and build stuff to advance the state of the art in web-based journalism. All of that work will be open source, and available for others to use and build upon.  
+          News should be universally accessible across phones, tablets, and  computers. It should be multilingual. It should be rich with audio,  video, and elegant data visualization. It should enlighten, inform, and  entertain people, and it should make them part of the story. All of that work will be open source, and available for others to use and build upon.  
         </p>
         <p>
           <a href="{% locale_url drumbeat_journalism_participate %}">Join us!</a>
         </p>
         
-        <div class="rule"></div>
-        
-        <div class="homepagestep">
-          <img src="{{ MEDIA_URL }}images/mojo/step1.png" width="182" height="115" alt="Step 1">
-          <h5>Design Challenges</h5>
-          <p>
-            An open innovation cycle, where new ideas are proposed by the news hacker community
-          </p>
-          <span class="viewmore js-tooltip">Read More</span>
-          <div style="display: none">
-            <p>
-              In 2011 and 2012, Knight and Mozilla will pose a series of news technology challenges for designers, developers and "news hackers" around the world. We'll kick off in Spring 2011 with:
-            </p>
-            <ul>
-              <li><a href="https://drumbeat.org/challenges/unlocking-video/">Unlocking video: How can new Web video tools transform news storytelling?</a> (now!)</li>
-              <li>Beyond Comment Threads: How can we reinvent online news discussions? (May 9th)</li>
-              <li>Blow our minds: What's the next killer app for news? (May 23rd)</li>
-            </ul>
-            <p>
-              Entries can take any form&#8212;written briefs, blog posts, videos, slidecasts, early demos or visual mock-ups&#8212;whatever it takes to get your idea across.  We'll take votes on the proposals, and they'll be considered by a  reviewer panel that includes news tech gurus and industry leaders. 
-            </p>
-            <p>  
-              What are we looking for? Ideas and software that:
-            </p>
-            <ul>
-              <li>Are highly innovative and have potential for broad adoption in the news community.</li>
-              <li>Produce re-usable, open-source technology that benefits the Web as a whole.</li>
-              <li>Are useful to real-world media organizations, or born out of long-established newsroom experience.</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="homepagestep">
-          <img src="{{ MEDIA_URL }}images/mojo/step2.png" width="182" height="115" alt="Step 2">
-          <h5>Learning and Hacking</h5>
-          <p>
-            Participants learn and work with the best, making their ideas real
-          </p>
-          <span class="viewmore js-tooltip">Read More</span>
-          <div style="display: none">
-            <p>
-              60 of the best design challenge participants will be invited to take part in the Knight-Mozilla Learning Lab. 
-            </p>
-            <p>
-              Together participants will further refine, combine, and develop their ideas from the challenge. We'll then gather the strongest participants and ideas for high-energy hackfests that begin building working prototypes.
-            </p>
-          </div>
-        </div>
-        
-        <div class="homepagestep">
-          <img src="{{ MEDIA_URL }}images/mojo/step3.png" width="182" height="115" alt="Step 3">
-          <h5>Fellows and Leadership</h5>
-          <p>
-              Fellows are embedded in newsrooms around the world, driving open web innovation
-          </p>
-          <span class="viewmore js-tooltip">Read More</span>
-          <div style="display: none">
-            <p>
-              The most promising participants will be embedded as Knight-Mozilla Fellows in newsrooms to directly apply what they've learned and built. 
-            </p>
-            <p>
-              Knight-Mozilla Fellowships are paid, one-year positions inside newsrooms at Al Jazeera English, the BBC, Boston.com, the Guardian, Zeit Online or other leading news organizations. We'll place 5 fellows in 2011, and 10 more in 2012.
-            </p>
-          </div>
-        </div>
         
       </div>
     </div>
@@ -176,7 +114,6 @@
       <div class="column-33 last">
         <h5>FAQs</h5>
         <ul>
-          <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#What_is_MoJo.3F">What is Mojo</a></li>
           <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#Why_is_Mozilla_interested_in_media_and_journalism.3F.E2.80.A8">Why is Mozilla interested in media and journalism?</a></li>
           <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#Who_is_eligible_for_a_Knight-Mozilla_fellowship.3F_How_do_I_apply_for_a_Knight-Mozilla_fellowship.3F.E2.80.A8.E2.80.A8">Who is eligible for a Knight-Mozilla fellowship? How do I apply for a Knight-Mozilla fellowship?</a></li>
           <li><a href="https://wiki.mozilla.org/Drumbeat/MoJo/FAQ#What_do_you_mean_by_.22the_open_web.22_and_.22open_technology.3F.E2.80.A8">What do you mean by "the open web" and "open technology?"</a></li>

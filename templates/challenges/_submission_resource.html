@@ -20,14 +20,14 @@
     </div>
     {% endif %}
 
-    <h2 class="title"><a href="{% locale_url  submission_show slug=challenge.slug submission_id=submission.pk %}">{{ submission.title }} </a></h2>
+    <h1 class="title"><a href="{% locale_url  submission_show slug=challenge.slug submission_id=submission.pk %}">{{ submission.title }} </a></h1>
     <div class="post-details">
       <a class="member-name" href="{{ submission.created_by.get_absolute_url }}">{{ submission.created_by.name }}</a>
       <a href="{% locale_url  submission_show slug=challenge.slug submission_id=submission.pk %}">{{ submission.created_on|timesince }} {{ _(' ago') }}</a>
     </div>
 
     <div class="post-body">
-      {{ submission.summary }}
+      {{ submission.summary }} | <a href="{% locale_url  submission_show slug=challenge.slug submission_id=submission.pk %}">Read more...</a>
     </div>
   </div>
 </li> <!-- /li.post-container -->
