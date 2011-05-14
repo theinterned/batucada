@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block body %}
+<h2>{{ _('Send Message Challenge entrants') }}</h2>
+<form action="{% locale_url challenges_contact_entrants slug=challenge.slug %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" value="{{ _('Send') }}" >{{ _('Send') }}</button>
+</form>
+{% endblock %}

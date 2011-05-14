@@ -109,7 +109,8 @@ def show(request, slug):
     else:
         form = None
     # TODO: See how we can modify and use challenges.
-    challenges = Challenge.objects.active(project_id=project.id)
+    challenges = Challenge.objects.upcoming(project_id=project.id)
+    
     context = {
         'project': project,
         'activities': project.activities()[0:10],

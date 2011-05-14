@@ -5,15 +5,20 @@ import bleach
 from markdown import markdown
 
 from django.contrib import admin
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, m2m_changed
 from django.template.defaultfilters import slugify
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext as _
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 
 from projects.models import Project
+from statuses.models import Status
+from users.tasks import SendUserEmail
 
 import caching.base
 
@@ -45,6 +50,13 @@ class ChallengeManager(caching.base.CachingManager):
             q = q.filter(project__id=project_id)
         return q
 
+    def upcoming(self, project_id=0):
+        q = Challenge.objects.filter(
+            end_date__gte=datetime.now())
+        if project_id:
+            q = q.filter(project__id=project_id)
+        return q
+
 
 class Challenge(ModelBase):
     """ Inovation (design) Challenges """
@@ -57,6 +69,9 @@ class Challenge(ModelBase):
     important_dates = models.TextField()
     resources = models.TextField()
     rules = models.TextField()
+
+    sidebar = models.TextField(null=True, blank=True)
+    above_fold = models.TextField(null=True, blank=True)
 
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField()
@@ -72,6 +87,7 @@ class Challenge(ModelBase):
 
     is_open = models.BooleanField()
     allow_voting = models.BooleanField(default=False)
+    entrants_can_edit = models.BooleanField(default=True)
 
     objects = ChallengeManager()
 
@@ -123,11 +139,18 @@ class Submission(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.now())
 
-    @models.permalink
-    def get_absolute_url(self):
+    def get_challenge(self):
         challenges = self.challenge.all()
         if challenges:
-            slug = challenges[0].slug
+            return challenges[0]
+        else:
+            return None
+
+    @models.permalink
+    def get_absolute_url(self):
+        challenge = self.get_challenge()
+        if challenge:
+            slug = challenge.slug
         else:
             slug = 'foo'  # TODO - Figure out what to do if no challenges exist
         return ('submission_show', (), {
@@ -179,3 +202,52 @@ def submission_markdown_handler(sender, **kwargs):
             markdown(submission.description),
             tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
 pre_save.connect(submission_markdown_handler, sender=Submission)
+
+
+def submission_thanks_handler(sender, **kwargs):
+    submission = kwargs.get('instance', None)
+    if not isinstance(submission, Submission):
+        return
+
+    challenge = submission.get_challenge()
+    if not challenge:
+        return
+    user = submission.created_by
+
+    share_url = reverse('submission_edit_share', kwargs={
+        'slug': challenge.slug,
+        'submission_id': submission.pk
+    })
+    submission_url = reverse('submission_show', kwargs={
+        'slug': challenge.slug,
+        'submission_id': submission.pk
+    })
+    subj = _('Thanks for entering in the Knight-Mozilla Innovation Challenge!')
+    body = render_to_string('challenges/emails/submission_thanks.txt', {
+        'share_url': share_url,
+        'submission_url': submission_url,
+    })
+
+    SendUserEmail.apply_async((user, subj, body))
+m2m_changed.connect(submission_thanks_handler,
+                    sender=Submission.challenge.through)
+
+
+def submission_activity_handler(sender, **kwargs):
+    submission = kwargs.get('instance', None)
+    if not isinstance(submission, Submission):
+        return
+    challenge = submission.get_challenge()
+    if not challenge:
+        return
+
+    msg = '<a href="%s">%s</a>: %s | <a href="%s">Read more</a>' % (
+        challenge.get_absolute_url(), challenge.title, submission.title,
+        submission.get_absolute_url())
+    status = Status(author=submission.created_by,
+                    project=challenge.project,
+                    status=msg)
+    status.save()
+
+m2m_changed.connect(submission_activity_handler,
+                    sender=Submission.challenge.through)

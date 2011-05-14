@@ -39,7 +39,7 @@
     <p class="buttons">    
       {% if submission %}
       <a class="button" href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}">{{ _('Cancel') }}</a>
-      <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>            
+      <button type="submit" value="continue">{{ _('Continue') }}</button>            
       {% else %}
       <a class="button" href="{% locale_url challenges_show slug=challenge.slug %}">{{ _('Cancel') }}</a>
       <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>

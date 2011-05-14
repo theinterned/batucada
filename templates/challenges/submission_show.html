@@ -15,7 +15,7 @@
   </nav>
 
   <div id="project-actions">
-    {% if challenge.is_active %}
+    {% if user.get_profile == submission.created_by and challenge.entrants_can_edit %}
     <a class="button" href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.id%}">{{ _('Edit Submission') }}</a>
     {% endif %}
   </div>
@@ -30,27 +30,37 @@
 <div id="main">
 <section class="submission">
   <article>
-    <h1 id="challenge-title">{{ submission.title }}</h1>
+    <h1 id="challenge-title">{{ submission.title }}</h1><br />
     <div class="post-details">
       <a class="member-name" href="{{ submission.created_by.get_absolute_url }}">{{ submission.created_by.name }}</a>
       <span>{{ submission.created_on|timesince }} {{ _(' ago') }}</span>
     </div>
-    <h2>{{ _('Summary') }}</h2>
+<br />
+<h2>{{ _('Summary') }}</h2>
     <div class="summary">
       {{ submission.summary }}
     </div>
+    <br />
     <h2>{{ _('Description') }}</h2>
     <div class="details">
       {{ submission.description_html|safe }}
     </div>
+    <br />
   </article>
   
   <div id="comments">
-    <h1>{{ _('Comments') }}</h1>
-    {% render_comment_list for submission %}
+    <h1>{{ _('Comments') }}</h1><br />
+    
+    {% get_comment_list for submission as comment_list %}
+    <dl id="comments">
+    {% for comment in comment_list %}
+      <dt id="c{{ comment.pk }}">{{ comment.submit_date }} - {{ comment.user }}</dt>
+      <dd>{{ comment.comment|linebreaks }}</dd>
+    {% endfor %}
+    </dl>
+
 
     {% if user.is_authenticated %}
-    <h2>{{ _('Post a comment') }}</h2>
     {% get_comment_form for submission as form %}
     <form action="{% comment_form_target %}" method="post">
       {% csrf_token %}
@@ -59,7 +69,7 @@
         {{ hidden }}
       {% endfor %}
       <div class="field{% if form.comment.errors %} error{% endif %}">
-        <label for="id_comment">{{ _('Comment') }}</label>
+        <label for="id_comment">{{ _('Leave a comment.') }}</label>
         <span class="hint block"></span>
         {{ form.comment }}
         {{ form.comment.errors }}
@@ -68,6 +78,8 @@
         <button type="submit">{{ _('Post') }}</button>
       </p>
     </form>  
+    {% else %}
+    You must <a href="{% locale_url users_login %}">login</a> to leave comments.
     {% endif %}
   </div>
 </section>
