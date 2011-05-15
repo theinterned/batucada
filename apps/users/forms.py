@@ -62,9 +62,7 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
 
 
 class OpenIDForm(forms.Form):
-    openid_identifier = forms.URLField(
-        widget=forms.TextInput(attrs={
-            'placeholder': _('enter any OpenID URL')}))
+    openid_identifier = forms.URLField()
 
 
 def validate_user_identity(form, data):
