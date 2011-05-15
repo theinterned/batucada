@@ -53,7 +53,6 @@ class TestLogins(TestCase):
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
-            from django.conf import settings
             expected = "%s?next=/%s/%s" % (settings.LOGIN_URL, self.locale, path)
             self.assertRedirects(response, expected, status_code=302,
                                  target_status_code=301)
