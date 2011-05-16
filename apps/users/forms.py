@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import forms as auth_forms
 from django.utils.translation import ugettext as _
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 
 from drumbeat.utils import CKEditorWidget
 
@@ -175,3 +175,16 @@ class ProfileLinksForm(forms.ModelForm):
     class Meta:
         model = Link
         exclude = ('project', 'user', 'subscription')
+
+
+class PasswordResetForm(DjangoPasswordResetForm):
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        self.users_cache = User.objects.filter(
+                                email__iexact=email,
+                                is_active=True
+                            )
+        if len(self.users_cache) == 0 and not drupal.migrate(email):
+            raise forms.ValidationError(_("That e-mail address doesn't have an associated user account. Are you sure you've registered?"))
+        return email

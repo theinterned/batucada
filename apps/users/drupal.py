@@ -1,3 +1,5 @@
+import logging
+
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import check_password as django_check_password
@@ -44,14 +46,21 @@ def get_user_data(drupal_user):
     return username, drupal_user.mail, full_name
 
 
-def migrate(username):
-    drupal_user = get_user(username)
-    username, email, full_name = get_user_data(drupal_user)
-    django_user = User(username=username[:30], email=email)
-    from users.models import create_profile
-    profile = create_profile(django_user, username=username)
-    profile.password = drupal_user.password
-    profile.save()
+def migrate(login):
+    """Migrates a drupal user given an username or email address."""
+    drupal_user = get_user(login)
+    if drupal_user:
+        username, email, full_name = get_user_data(drupal_user)
+        django_user = User(username=username[:30], email=email)
+        from users.models import create_profile
+        try:
+            profile = create_profile(django_user, username=username)
+            profile.password = drupal_user.password
+            profile.save()
+            return profile
+        except IntegrityError, ex:
+            log.error('migration of %s failed: %s' % (login, ex))
+    return None
 
 
 class Users(models.Model):
