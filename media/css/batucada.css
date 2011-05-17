@@ -2049,45 +2049,7 @@ footer #newsletter a{
 	background: url(/media/images/reply.icon.png) 0 2px no-repeat;
 	padding-left: 25px;
 	}
-footer nav {
-	float: right;
-	}
-footer nav ul,
-footer nav li {
-	display: inline-block;
-	}
-footer nav li a {
-	display: block;
-	line-height: 27px;	
-	}	
-footer nav #supporting_links a {
-	padding: 0 24px 0 0;
-	color: #919191;
-	}
-footer nav #supporting_links a:hover{
-	color: #036;
-	}
-footer nav #social a {
-	width: 32px;
-	height: 32px;
-	vertical-align: middle;
-	text-indent: -9999px;
-	}
-footer nav #social #statusnet a {
-	background: url(/media/images/statusnet.png) 0 0 no-repeat;
-	}
-footer nav #social #twitter a {
-	background: url(/media/images/twitter.png) 0 0 no-repeat;
-	}
-footer nav #social #facebook a {
-	background: url(/media/images/facebook.png) 0 0 no-repeat;
-	}
-footer nav #social #flickr a {
-	background: url(/media/images/flickr.png) 0 0 no-repeat;
-	}
-footer nav #social a:hover {
-	opacity: 0.8;
-	}
+
 
 footer #legal {
 	padding-top: 18px;
