@@ -1,28 +1,43 @@
 {% load l10n_tags %}
-<footer>
-<!-- TODO: Add our own links
-<div class="container">
-  <div id="newsletter">
-    <p><a href="http://www.mozilla.org/drumbeat/newsletter/" title="{{ _('Drumbeat Newsletter') }}">{{ _('Sign up for the Drumbeat Newsletter') }}</a></p>
-  </div>
-  <nav >
-    <ul id="supporting_links">
-      <li><a href="https://wiki.mozilla.org/Drumbeat" title="{{ _('Drumbeat Wiki') }}">{{ _('Drumbeat Wiki') }}</a></li>
-      <li><a href="http://www.mozilla.org/" title="{{ _('Home of the Mozilla Project') }}">{{ _('Mozilla.org') }}</a></li>
-      <li><a href="http://www.mozilla.org/about/policies/privacy-policy.html" title="{{ _('Mozilla Privacy Policy') }}">{{ _('Privacy Policy') }}</a></li>
-    </ul>
-    <ul id="social">
-      <li id="statusnet"><a href="http://mozilla.status.net/group/drumbeat" title="{{ _('Mozilla Drumbeat (drumbeat) on Status.net') }}">{{ _('Status.net') }}</a></li>
-      <li id="twitter"><a href="http://twitter.com/mozilladrumbeat" title="{{ _('Mozilla Drumbeat (mozilladrumbeat) on Twitter') }}">{{ _('Twitter') }}</a></li>
-      <li id="facebook"><a href="http://www.facebook.com/mozilladrumbeat" title="{{ _('Mozilla Drumbeat | Facebook') }}">{{ _('Facebook') }}</a></li>
-      <li id="flickr"><a href="http://www.flickr.com/photos/tags/mozilla+drumbeat/" title="{{ _('Flickr: \'mozilla drumbeat\'') }}">{{ _('Flickr') }}</a></li>
-    </ul>
-  </nav>
-</div>-->
-<div id="legal" class="container">
-	<p>{{ _('Except where otherwise noted, all content on p2pu.org is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" title="Creative Commons">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.') }}</p>
-	<p>{{ _('<a href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones">We\'re in Beta</a>. If you run into any problems, please <a href="http://p2pu.lighthouseapp.com/projects/71002">let us know!</a> Want to <a href="http://wiki.p2pu.org/w/page/12427308/FrontPage">learn more about P2PU and get involved?</a>') }}</p>
-	<p><a href="http://www.p2pu.org">{{ _('Looking for the current P2PU website?') }}</a></p>
-</div>
-</footer>
+ <footer role="main">
+      <div role="container">
+        <nav>
+          <ul role="about-us">
+            <li>About Us</li>
+            <li><a>What is P2PU</a></li>
+            <!-- <li><a href="">Team &amp; Advisors</a></li> -->
+            <li><a href="http://p2pu.org/general/supporters">Supporters</a></li>
+            <li><a href="http://p2pu.org/values">Values</a></li>
+            <li><a href="http://blogs.p2pu.org/">Blog</a></li>
+            <li><a href="http://groups.google.com/group/p2pu-announce">Announcements</a></li>
+            <li><a href="http://p2pu.org/get-involved">Get Involved</a></li>
+            <li><a href="http://www.p2pu.org">{{ _('Old P2PU Site') }}</li></a>
+          </ul>
 
+          <ul role="contact-us">
+            <li>Contact Us</li>
+            <li><a href="http://p2pu.org/contact-us">Contact Form</a></li>
+            <li><a href="http://www.facebook.com/P2PUniversity">Facebook</a></li>
+            <li><a href="http://twitter.com/p2pu">Twitter</a></li>
+            <li><a href="http://qa.p2pu.org/">FAQ</a></li>
+            <li><a href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/">Found a Bug?</a></li>
+          </ul>
+
+          <ul role="license-info">
+            <li>License Info</li>
+            <li><a href="http://creativecommons.org/licenses/by-sa/3.0/">License</a></li>
+            <li><a href="http://p2pu.org/privacy">Privacy Guidelines</a></li>
+            <li><a href="http://p2pu.org/terms-of-use">Terms of Use</a></li>
+          </ul>
+        
+          <ul role="cc">
+            <li>Creative Commons BY SA</li>
+            <li role="icons"><a>CC BY SA</a></li>
+          </ul>
+        </nav>
+               
+      </div>
+      <br style="clear: both;">
+    </footer>
+  </div> <!--! end of #container -->
+ 
