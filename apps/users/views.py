@@ -27,6 +27,7 @@ from users.models import UserProfile, create_profile
 from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from users import drupal
+from projects import drupal as projects_drupal
 from links.models import Link
 from projects.models import Project
 from drumbeat import messages
@@ -330,6 +331,7 @@ def profile_view(request, username):
     followers = profile.followers()
     links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
+    past_drupal_courses = projects_drupal.get_past_courses(profile.username)
     return render_to_response('users/profile.html', {
         'profile': profile,
         'projects': projects,
@@ -342,6 +344,7 @@ def profile_view(request, username):
         'interests': profile.tags.filter(category='interest'),
         'links': links,
         'activities': activities,
+        'past_drupal_courses': past_drupal_courses,
     }, context_instance=RequestContext(request))
 
 

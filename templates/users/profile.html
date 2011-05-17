@@ -112,6 +112,18 @@
       {% endfor %}
     </ul>
   {% endif %}
+  {% if past_drupal_courses|length > 0 %}
+    <h3>{{ _('Past Involvement') }} <span class="projects count">{{ past_drupal_courses|length}}</span></h3>
+    <ul class="following">
+    {% for course in past_drupal_courses %}
+      <li>
+        <a href="{{ course.url }}" title="{{ course.name }} {% if course.is_organizing %}(organizing){% else%}(participating){% endif %}">
+          <img src="{{ course.image_url }}" width="42" height="26" alt="project image" class="project picture"/>
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
 </div> <!-- /#member_relationships-->
 {% if links %}
 <div id="member_links" class="panel">
