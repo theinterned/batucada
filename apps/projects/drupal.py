@@ -5,7 +5,7 @@ from django.conf import settings
 
 from users.drupal import get_user
 
-DRUPAL_DB = 'drupal_users'
+DRUPAL_DB = 'drupal_db'
 COURSE_TYPE = 'course'
 COMPLETE_STATUS = '30_complete'
 FILE_PATH_PREFIX = 'sites/$NSITE.dev.p2pu.org/files/'
