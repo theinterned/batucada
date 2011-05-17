@@ -313,38 +313,28 @@ def confirm_resend(request, username):
 
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, username=username)
-    projects = profile.following(model=Project)
-    projects_organizing = []
-    projects_participating = []
-    projects_following = []
-    for project in projects:
-        if project.organizers().filter(user=profile).exists():
-            project.relation_text = _('(organizing)')
-            projects_organizing.append(project)
-        elif project.participants().filter(user=profile).exists():
-            project.relation_text = _('(participating)')
-            projects_participating.append(project)
-        else:
-            project.relation_text = _('(following)')
-            projects_following.append(project)
+    current_projects = profile.get_current_projects()
     following = profile.following()
     followers = profile.followers()
     links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
+    old_participations = Pleft_on__isnull=True
+    past_projects = profile.get_past_projects()
+    print past_projects
     past_drupal_courses = projects_drupal.get_past_courses(profile.username)
+    past_involvement_count = len(past_projects) + len(past_drupal_courses)
     return render_to_response('users/profile.html', {
         'profile': profile,
-        'projects': projects,
-        'projects_following': projects_following,
-        'projects_participating': projects_participating,
-        'projects_organizing': projects_organizing,
+        'current_projects': current_projects,
         'following': following,
         'followers': followers,
         'skills': profile.tags.filter(category='skill'),
         'interests': profile.tags.filter(category='interest'),
         'links': links,
         'activities': activities,
+        'past_projects': past_projects,
         'past_drupal_courses': past_drupal_courses,
+        'past_involvement_count': past_involvement_count,
     }, context_instance=RequestContext(request))
 
 

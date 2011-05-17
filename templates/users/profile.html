@@ -98,26 +98,33 @@
     <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.display_name }}"><img class="member-picture" src="{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.display_name }}"></a></li>
   {% endfor %}
   </ul>
-  {% if projects|length > 0 %}
-    <h3>{{ _('Study Groups') }} <span class="projects count">{{ projects|length}}</span></h3>
+  {% if current_projects.count > 0 %}
+    <h3>{{ _('Study Groups') }} <span class="projects count">{{ current_projects.count }}</span></h3>
     <ul class="following">
-      {% for project in projects_organizing %}
+      {% for project in current_projects.organizing %}
         {% include "dashboard/_project_image.html"%}
       {% endfor %}
-      {% for project in projects_participating %}
+      {% for project in current_projects.participating %}
         <li>{% include "dashboard/_project_image.html"%}</li>
       {% endfor %}
-      {% for project in projects_following %}
+      {% for project in current_projects.following %}
         <li>{% include "dashboard/_project_image.html"%}</li>
       {% endfor %}
     </ul>
   {% endif %}
-  {% if past_drupal_courses|length > 0 %}
-    <h3>{{ _('Past Involvement') }} <span class="projects count">{{ past_drupal_courses|length}}</span></h3>
+  {% if past_involvement_count > 0 %}
+    <h3>{{ _('Past Involvement') }} <span class="projects count">{{ past_involvement_count}}</span></h3>
     <ul class="following">
+    {% for project in past_projects %}
+       <li>
+        <a href="{{ project.url }}" title="{{ project.name }} {% if project.organizer %}(organizer){% else%}(participant){% endif %}">
+          <img src="{{ project.image_url }}" width="42" height="26" alt="project image" class="project picture"/>
+        </a>
+      </li>
+    {% endfor %}
     {% for course in past_drupal_courses %}
       <li>
-        <a href="{{ course.url }}" title="{{ course.name }} {% if course.is_organizing %}(organizing){% else%}(participating){% endif %}">
+        <a href="{{ course.url }}" title="{{ course.name }} {% if course.organizer %}(organizer){% else%}(participant){% endif %}" target="_blank">
           <img src="{{ course.image_url }}" width="42" height="26" alt="project image" class="project picture"/>
         </a>
       </li>
@@ -131,8 +138,8 @@
     {% for link in links %}
     <li><a class="externalLink" href="{{ link.url }}" title="{{ link.name }}">{{ link.name }}</a>
       {% if user == profile.user %}
-        {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up counter=forloop.counter0 %}">(UP)</a>{% endif %}
-        {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
+        {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up counter=forloop.counter0 %}">{{ _('(UP)') }}</a>{% endif %}
+        {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down counter=forloop.counter0 %}">{{ _('(DOWN)') }}</a>{% endif %}
       {% endif %}
     
     </li>

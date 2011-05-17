@@ -1,9 +1,5 @@
 <li>
   <a href="{{ project.get_absolute_url }}" title="{{ project.name }} {{ project.relation_text }}">
-    {% if project.image %}
-    <img src="{{ MEDIA_URL }}{{ project.image }}" width="42" height="26" alt="project image" class="project picture"/>
-    {% else %}
-    <img src="/media/images/project-missing.png" width="42" height="26" alt="project image" class="project picture"/>
-    {% endif %}
+    <img src="{{ project.get_image_url }}" width="42" height="26" alt="project image" class="project picture"/>
   </a>
 </li>

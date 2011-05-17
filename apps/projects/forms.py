@@ -17,6 +17,16 @@ from projects.models import Project, Participation
 log = logging.getLogger(__name__)
 
 
+class CreateProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('name', 'short_description', 'long_description', 'school', 'not_listed')
+	widgets = {
+		'long_description': CKEditorWidget(config_name='reduced'),
+	}
+
+
 class ProjectForm(forms.ModelForm):
 
     class Meta:
@@ -56,7 +66,7 @@ class ProjectStatusForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('start_date', 'end_date', 'under_development', 'testing_sandbox', 'signup_closed')
+        fields = ('start_date', 'end_date', 'under_development', 'not_listed', 'signup_closed', 'archived')
 
 
 class ProjectAddParticipantForm(forms.Form):

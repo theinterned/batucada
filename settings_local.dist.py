@@ -80,6 +80,6 @@ MAINTENANCE_MODE = False
 NO_PROFILE_URLS = ('/media/', '/admin-media/',)
 
 # Drupal urls
-DRUPAL_FILES_URL = 'http://p2pu.org/sites/p2pu.org/files/'
-DRUPAL_NODES_URL = 'http://p2pu.org/node/'
+DRUPAL_FILES_URL = 'http://old.p2pu.org/sites/p2pu.org/files/'
+DRUPAL_NODES_URL = 'http://old.p2pu.org/node/'
 

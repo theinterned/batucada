@@ -46,7 +46,7 @@ def project_list(request):
 def create(request):
     user = request.user.get_profile()
     if request.method == 'POST':
-        form = project_forms.ProjectForm(request.POST)
+        form = project_forms.CreateProjectForm(request.POST)
         if form.is_valid():
             project = form.save()
             act = Activity(actor=user,
@@ -88,11 +88,11 @@ def create(request):
         if 'school' in request.GET:
             try:
                 school = School.objects.get(slug=request.GET['school'])
-                form = project_forms.ProjectForm(initial={'school': school})
+                form = project_forms.CreateProjectForm(initial={'school': school})
             except School.DoesNotExist:
                 return http.HttpResponseRedirect(reverse('projects_create'))
         else:
-            form = project_forms.ProjectForm()
+            form = project_forms.CreateProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
     }, context_instance=RequestContext(request))

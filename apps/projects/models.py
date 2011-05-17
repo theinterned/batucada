@@ -42,7 +42,8 @@ class ProjectManager(caching.base.CachingManager):
             rels = Relationship.objects.values('target_project').annotate(
                 Count('id')).exclude(target_project__isnull=True).filter(
                 target_project__under_development=False,
-                target_project__testing_sandbox=False).order_by('-id__count')
+                target_project__not_listed=False,
+                target_project__archived=False).order_by('-id__count')
             if school:
                 rels = rels.filter(target_project__school=school).exclude(
                     target_project__id__in=school.declined.values('id'))
@@ -59,7 +60,8 @@ class ProjectManager(caching.base.CachingManager):
                 Max('created_on')).exclude(target_project__isnull=True,
                 verb='http://activitystrea.ms/schema/1.0/follow',
                 remote_object__isnull=False).filter(target_project__under_development=False,
-                target_project__testing_sandbox=False).order_by('-created_on__max')
+                target_project__not_listed=False,
+                target_project__archived=False).order_by('-created_on__max')
             if school:
                 activities = activities.filter(target_project__school=school).exclude(
                     target_project__id__in=school.declined.values('id'))
@@ -96,8 +98,9 @@ class Project(ModelBase):
         auto_now_add=True, default=datetime.datetime.now)
 
     under_development = models.BooleanField(default=True)
-    testing_sandbox = models.BooleanField(default=False)
+    not_listed = models.BooleanField(default=False)
     signup_closed = models.BooleanField(default=True)
+    archived = models.BooleanField(default=False)
 
     objects = ProjectManager()
 
@@ -170,6 +173,10 @@ class Project(ModelBase):
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(Project, self).save()
+
+    def get_image_url(self):
+        image_path = self.image if self.image else 'images/project-missing.png'
+        return settings.MEDIA_URL + image_path
 
 
 class Participation(ModelBase):

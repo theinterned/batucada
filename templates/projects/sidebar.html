@@ -36,11 +36,14 @@
           </a>
       </li>
       {% endif %}
+      {% if project.archived %}
+      <li class="beta-development">{{ _('Archived') }}</li>
+      {% endif %}
       {% if project.under_development%}
       <li class="beta-development">{{ _('Under Development') }}</li>
       {% endif %}
       {% if project.testing_sandbox %}
-      <li class="beta-development">{{ _('Testing Sandbox') }}</li>
+      <li class="beta-development">{{ _('Not Listed') }}</li>
       {% endif %}
       <!-- This line is here so the {{ _('DATE_FORMAT') }} gets configured for different locales -->
       {% if project.start_date or project.end_date %}
