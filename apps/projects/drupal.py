@@ -14,7 +14,6 @@ PROJECT_MISSING_IMG = '/images/project-missing.png'
 
 def get_past_courses(username):
     drupal_user = get_user(username)
-    past_organized_courses = []
     past_courses = []
     if drupal_user:
         og_uids = OgUid.objects.using(DRUPAL_DB).filter(uid=drupal_user.uid)
@@ -27,14 +26,11 @@ def get_past_courses(username):
                 data = {
                     'name': course.title,
                     'url': url,
-                    'is_organizing': og_uid.is_admin,
+                    'organizer': og_uid.is_admin,
                     'image_url': image_url,
                 }
-                if og_uid.is_admin:
-                    past_organized_courses.append(data)
-                else:
-                    past_courses.append(data)
-    return past_organized_courses + past_courses
+                past_courses.append(data)
+    return past_courses
 
 
 def get_image_url(fid):

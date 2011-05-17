@@ -66,3 +66,13 @@
 </section>
 {% endif %}
 
+{% if archived %}
+<section id="archived_projects">
+  <h1><span>{{ _('Archived Study Groups') }}</span></h1>
+  <ul class="project-list">
+    {% for project in archived %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

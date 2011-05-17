@@ -24,11 +24,18 @@
     {{ form.signup_closed.errors }}
   </p>
   <p>
-    <label for="id_testing_sandbox">
-    {{ form.testing_sandbox }}
-    {{ _('Testing Sandbox.') }}
+    <label for="id_not_listed">
+    {{ form.not_listed }}
+    {{ _('Not Listed.') }}
     </label>
-    {{ form.testing_sandbox.errors }}
+    {{ form.not_listed.errors }}
+  </p>
+  <p>
+    <label for="id_archived">
+    {{ form.archived }}
+    {{ _('Archived.') }}
+    </label>
+    {{ form.archived.errors }}
   </p>
   <p class="hint">{{ _('Optionally, provide the period of time in which you expect the study group to be active. These dates are optional and will be displayed on the group\'s home page.') }}</p>
   <p>

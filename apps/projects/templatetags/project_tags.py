@@ -42,26 +42,30 @@ register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
 
 def project_list(school=None, limit=8):
-    listed = Project.objects.filter(under_development=False, testing_sandbox=False)
+    listed = Project.objects.filter(under_development=False, not_listed=False,
+        archived=False)
     if school:
-        featured = school.featured.filter(under_development=False,
-            testing_sandbox=False)
+        featured = school.featured.filter(under_development=False, not_listed=False,
+        archived=False)
     else:
         featured = listed.filter(featured=True)
     active = Project.objects.get_active(limit=limit, school=school)
     popular = Project.objects.get_popular(limit=limit, school=school)
     new = listed.order_by('-created_on')
     open_signup = listed.filter(signup_closed=False)
-    under_development = Project.objects.filter(under_development=True,
-        testing_sandbox=False)
+    under_development = Project.objects.filter(under_development=True, not_listed=False,
+        archived=False)
+    archived = Project.objects.filter(not_listed=False, archived=True).order_by('-created_on')
     if school:
         featured = featured.filter(school=school).exclude(id__in=school.declined.values('id'))
         new = new.filter(school=school).exclude(id__in=school.declined.values('id'))
         open_signup = open_signup.filter(school=school).exclude(id__in=school.declined.values('id'))
         under_development = under_development.filter(school=school).exclude(
             id__in=school.declined.values('id'))
+        archived = archived.filter(school=school).exclude(id__in=school.declined.values('id'))
     if limit:
         new = new[:limit]
+        archived = archived[:limit]
     return {'featured': featured, 'active': active, 'popular': popular,
            'new': new, 'open_signup': open_signup, 'under_development': under_development}
 

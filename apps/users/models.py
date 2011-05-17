@@ -25,7 +25,7 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
-from projects.models import Project
+from projects.models import Project, Participation
 from users import tasks 
 
 import caching.base
@@ -126,7 +126,8 @@ class UserProfile(ModelBase):
             relationships = Relationship.objects.select_related(
                 'target_project').filter(source=self).exclude(
                 target_project__isnull=True)
-            return [rel.target_project for rel in relationships]
+            return [rel.target_project for rel in relationships
+                    if not rel.target_project.archived]
         relationships = Relationship.objects.select_related(
             'target_user').filter(source=self).exclude(
             target_user__isnull=True)
@@ -141,6 +142,48 @@ class UserProfile(ModelBase):
     def is_following(self, model):
         """Determine whether this user is following ```model```."""
         return model in self.following(model=model)
+
+    def get_current_projects(self):
+        projects = self.following(model=Project)
+        projects_organizing = []
+        projects_participating = []
+        projects_following = []
+        for project in projects:
+            if project.organizers().filter(user=self).exists():
+                project.relation_text = _('(organizing)')
+                projects_organizing.append(project)
+            elif project.participants().filter(user=self).exists():
+                project.relation_text = _('(participating)')
+                projects_participating.append(project)
+            else:
+                project.relation_text = _('(following)')
+                projects_following.append(project)
+        data = {
+            'organizing': projects_organizing,
+            'participating': projects_participating,
+            'following': projects_following,
+            'count': len(projects),
+        }
+        return data
+
+
+    def get_past_projects(self):
+        participations = Participation.objects.filter(user=self)
+        current = participations.filter(project__archived=False, left_on__isnull=True)
+        participations = participations.exclude(project__id__in=current.values('project_id'))
+        past_projects = {}
+        for p in participations:
+            if p.project.slug in past_projects:
+                past_projects[p.project.slug]['organizer'] |= p.organizing
+            else:
+                past_projects[p.project.slug] = {
+                    'name': p.project.name,
+                    'url': p.project.get_absolute_url(),
+                    'organizer': p.organizing,
+                    'image_url': p.project.get_image_url(),
+                }
+        return past_projects.values()   
+
 
     @models.permalink
     def get_absolute_url(self):

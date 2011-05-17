@@ -68,29 +68,13 @@ def dashboard(request):
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
-    projects = profile.following(model=Project)
-    projects_organizing = []
-    projects_participating = []
-    projects_following = []
-    for project in projects:
-        if project.organizers().filter(user=profile).exists():
-            project.relation_text = _('(organizing)')
-            projects_organizing.append(project)
-        elif project.participants().filter(user=profile).exists():
-            project.relation_text = _('(participating)')
-            projects_participating.append(project)
-        else:
-            project.relation_text = _('(following)')
-            projects_following.append(project)
+    current_projects = profile.get_current_projects()
     users_following = profile.following()
     users_followers = profile.followers()
     activities = Activity.objects.dashboard(request.user.get_profile())
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
-        'projects': projects,
-        'projects_following': projects_following,
-        'projects_participating': projects_participating,
-        'projects_organizing': projects_organizing,
+        'current_projects': current_projects,
         'users_following': users_following,
         'users_followers': users_followers,
         'activities': activities,
