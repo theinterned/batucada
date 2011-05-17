@@ -25,17 +25,29 @@ DATABASES = {
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     },
 
-    # Uncomment the following lines to enable drupal user support.
-#    'drupal_users': {
-#        'NAME': 'drupal_user_data',
-#        'TEST_NAME': 'drupal_user_data',
+    # Uncomment the following lines to enable integration with the old drupal site.
+#    'drupal_db': {
+#        'NAME': 'drupal_db',
+#        'TEST_NAME': 'drupal_db',
 #        'ENGINE': 'django.db.backends.mysql',
 #        'USER': 'drupal_db_user',
 #        'PASSWORD': '',
 #        'HOST': '', # An empty string means localhost.
 #        'PORT': '', # An empty string means the default port.
 #        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-#    }
+#    },
+
+    # Uncomment the following lines to enable integration with the badges pilot.
+#    'badges_db': {
+#        'NAME': 'badges_db',
+#        'TEST_NAME': 'badges_db',
+#        'ENGINE': 'django.db.backends.mysql',
+#        'USER': 'badges_db_user',
+#        'PASSWORD': '',
+#        'HOST': '', # An empty string means localhost.
+#        'PORT': '', # An empty string means the default port.
+#        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+#    },
 
 }
 
@@ -82,4 +94,7 @@ NO_PROFILE_URLS = ('/media/', '/admin-media/',)
 # Drupal urls
 DRUPAL_FILES_URL = 'http://old.p2pu.org/sites/p2pu.org/files/'
 DRUPAL_NODES_URL = 'http://old.p2pu.org/node/'
+
+# Badges pilot url
+BADGE_URL = 'http://badges.p2pu.org/badges/%(badge_id)s/%(badge_tag)s?user_filter=%(username)s#badge_data'
 

@@ -131,6 +131,18 @@
     {% endfor %}
     </ul>
   {% endif %}
+  {% if pilot_badges|length > 0 %}
+    <h3>{{ _('Badges') }} <span class="projects count">{{ pilot_badges|length }}</span></h3>
+    <ul class="users following">
+    {% for badge in pilot_badges %}
+      <li>
+        <a href="{{ badge.url }}" title="{{ badge.name }} {% if badge.count > 1 %}(x{{ badge.count }}){% endif %}" target="_blank">
+          <img src="{{ badge.image_url }}" width="42" height="42" alt="badge image" class="member-picture"/>
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
 </div> <!-- /#member_relationships-->
 {% if links %}
 <div id="member_links" class="panel">

@@ -6,7 +6,7 @@ from django.contrib.auth.models import check_password as django_check_password
 from django.contrib.auth.models import get_hexdigest as django_get_hexdigest
 from django.contrib.auth.models import User
 
-DRUPAL_DB = 'drupal_users'
+DRUPAL_DB = 'drupal_db'
 
 
 def get_user(username):

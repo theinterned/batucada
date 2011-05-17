@@ -26,7 +26,7 @@ from users import forms
 from users.models import UserProfile, create_profile
 from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
-from users import drupal
+from users import drupal, badges
 from projects import drupal as projects_drupal
 from links.models import Link
 from projects.models import Project
@@ -320,9 +320,9 @@ def profile_view(request, username):
     activities = Activity.objects.for_user(profile)
     old_participations = Pleft_on__isnull=True
     past_projects = profile.get_past_projects()
-    print past_projects
     past_drupal_courses = projects_drupal.get_past_courses(profile.username)
     past_involvement_count = len(past_projects) + len(past_drupal_courses)
+    pilot_badges = badges.get_awarded_badges(profile.username)
     return render_to_response('users/profile.html', {
         'profile': profile,
         'current_projects': current_projects,
@@ -335,6 +335,7 @@ def profile_view(request, username):
         'past_projects': past_projects,
         'past_drupal_courses': past_drupal_courses,
         'past_involvement_count': past_involvement_count,
+        'pilot_badges': pilot_badges,
     }, context_instance=RequestContext(request))
 
 
