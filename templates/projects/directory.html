@@ -20,12 +20,21 @@
 <h1>{{ _('All <b>Projects</b>') }}</h1>
 <section>
 <ul class="project-list">
-  {% for project in projects %}
+  {% for project in page.object_list %}
     <li>{% include "projects/_project_card.html" %}</li>
   {% endfor %}
 </ul>
+<div class="pagination">
+{% if page.has_previous %}
+<a class="btn" href="{% locale_url projects_directory page=prev_page %}">← {{ _('previous') }}</a>
+{% else %}
+<span class="btn">← {{ _('previous') }}</span>
+{% endif %}
+{% if page.has_next %}
+<a class="btn" href="{% locale_url projects_directory page=next_page %}">{{ _('next') }} →</a>
+{% else %}
+<span class="btn">{{_('next')}} →</span>
+{% endif %}
+</div>
 </section>
-<p>
-  Page {{ page }} of {{ num_pages }}. <a href="{% locale_url projects_directory page=next_page %}">More</a>
-</p>
 {% endblock %}
