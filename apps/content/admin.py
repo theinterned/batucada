@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.utils.translation import ugettext as _
 
 from content.models import Page, PageVersion, PageComment
 
