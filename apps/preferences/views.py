@@ -26,8 +26,8 @@ def settings(request):
                 AccountPreferences.objects.filter(
                     user=profile, key=key).delete()
             else:
-                AccountPreferences(
-                    user=profile, key=key, value=1).save()
+                AccountPreferences.objects.get_or_create(
+                    user=profile, key=key, value=1)
         for participation in participations:
             key = 'no_updates_%s' % participation.project.slug
             if key in request.POST and request.POST[key] == 'on':
