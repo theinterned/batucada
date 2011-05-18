@@ -11,7 +11,7 @@ from django.utils.encoding import smart_str
 from celery.schedules import crontab
 from celery.decorators import periodic_task
 
-from dashboard.models import FeedEntry
+from feeds.models import FeedEntry
 
 log = logging.getLogger(__name__)
 
@@ -50,9 +50,8 @@ def parse_entry(entry):
     }
 
 
-def get_splash_page_feed_entries():
+def get_feed_entries(feed_url):
     """Grab the 4 most recent feed entries from the splash page feed URL."""
-    feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
     log.debug('Fetching feed from URL %s' % (feed_url,))
     if not feed_url:
         log.warn('No feed url defined. Cannot update splash page feed.')
@@ -63,10 +62,9 @@ def get_splash_page_feed_entries():
     return entries
 
 
-@periodic_task(run_every=crontab(minute=0, hour=0))
-def update_feeds():
+def parse_feed(feed_url, page):
     ids = []
-    entries = get_splash_page_feed_entries()
+    entries = get_feed_entries(feed_url)
 
     for entry in entries:
         parsed = parse_entry(entry)
@@ -90,6 +88,7 @@ def update_feeds():
                     title=parsed['title'].encode('utf-8'),
                     link=parsed['link'].encode('utf-8'),
                     body=cleaned_body,
+                    page=page,
                     checksum=checksum,
                     created_on=time.strftime(
                         "%Y-%m-%d %H:%M:%S", parsed['updated']))
@@ -98,5 +97,19 @@ def update_feeds():
         except:
             log.warn("Encountered an error creating FeedEntry. Skipping.")
             continue
+    return ids
 
-    FeedEntry.objects.exclude(id__in=ids).delete()
+
+@periodic_task(run_every=crontab(minute=0, hour=0))
+def update_feeds():
+    ids = []
+    feeds = getattr(settings, 'FEED_URLS', None)
+    if not feeds:
+        log.debug("No feeds defined, aborting")
+        return
+    for page, feed_url in feeds.iteritems():
+        parsed = parse_feed(feed_url, page)
+        if parsed:
+            ids.extend(parsed)
+    if ids:
+        FeedEntry.objects.exclude(id__in=ids).delete()
