@@ -17,12 +17,28 @@ log = logging.getLogger(__name__)
 
 
 def parse_entry(entry):
+    """
+    Given a feed entry, return a dictionary with 'title', 'content', 'link',
+    'updated'.
+    """
     title = getattr(entry, 'title', None)
+    if not title:
+        log.debug("Feed entry has no title element.")
+        return None
     content = getattr(entry, 'content', None)
+    # some feed entries have a summary but no content
+    if not content:
+        content = getattr(entry, 'summary', None)
+    if  not content:
+        log.debug("Feed entry has no content or summary element.")
+        return None
     link = getattr(entry, 'link', None)
+    if not link:
+        log.debug("Feed entry has no link element.")
+        return None
     updated = getattr(entry, 'updated_parsed', None)
-    if not (title and content and link and updated):
-        log.debug("No title or no content or no link or no updated")
+    if not updated:
+        log.debug("Feed entry has no updated element.")
         return None
     if type(content) == type([]):
         content = content[0]
@@ -34,26 +50,34 @@ def parse_entry(entry):
     }
 
 
-@periodic_task(run_every=crontab(minute=0, hour=0))
-def update_feeds():
+def get_splash_page_feed_entries():
+    """Grab the 4 most recent feed entries from the splash page feed URL."""
     feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
-    log.debug("update_feeds called with feed url %s" % (feed_url,))
-
+    log.debug('Fetching feed from URL %s' % (feed_url,))
     if not feed_url:
-        log.warn("No feed url defined. Cannot update splash page feed.")
-        return
-
+        log.warn('No feed url defined. Cannot update splash page feed.')
+        return []
     data = urllib2.urlopen(feed_url).read()
     feed = feedparser.parse(data)
     entries = feed.entries[0:4]
+    return entries
 
+
+@periodic_task(run_every=crontab(minute=0, hour=0))
+def update_feeds():
     ids = []
+    entries = get_splash_page_feed_entries()
+
     for entry in entries:
         parsed = parse_entry(entry)
         if not parsed:
             log.warn("Parsing feed failed. continuing")
             continue
-        body = getattr(parsed['content'], 'value', None)
+        if isinstance(parsed['content'], feedparser.FeedParserDict):
+            if 'value' in parsed['content'].keys():
+                body = parsed['content']['value']
+        else:
+            body = parsed['content']
         if not body:
             log.warn("Parsing feed failed - no body found")
             continue
