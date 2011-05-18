@@ -291,28 +291,6 @@ header {}
     #masthead a:hover {
       text-decoration: none;
     }
-    #logo {
-      background-position: 0 -38px;
-      background-image: url("/media/images/logo.png");
-      height: 120px;
-      width: 150px;
-      margin-right: 20px;
-      position: absolute;
-      z-index: 2;
-    }
-
-    #beta-tag {
-        position: absolute;
-        margin-top: 90px;
-        margin-left: 90px; 
-        font-size: 21px; 
-        color: #f08c00; 
-        z-index: 5;
-    }
-    
-    a#beta-tag:hover {
-        color: #36cdc4;
-    }
 
     #language-nav {
       background-color: #ffffff;
@@ -1772,7 +1750,7 @@ header {}
   font-weight: normal;
   line-height: 65px;
   text-transform: uppercase;
-  padding-left: 10px;
+  padding-left: 13px;
   width: 690px;
   height: 200px;
   overflow: visible;
@@ -1793,7 +1771,7 @@ header {}
   color: #ffec40;
 }
 #splash #content header p{
-  margin-left: 7px;
+  margin-left: 13px;
   font-size: 20px;
   width: 640px;
   line-height: 30px;
@@ -2025,46 +2003,6 @@ body#signup .modal button[type=submit] {
 .signin.openid #other_submit {
 	width: 36px;
 	vertical-align: top;
-	}	
-/* FOOTER */
-footer{
-    clear: both;
-	padding-top: 27px;
-}
-footer .container {
-	border-top: 1px solid #d5d6d8;
-	padding: 9px 0 7px;
-	border-radius: 10px;
-    border: solid 1px #EEE;
-	}
-footer #newsletter {
-	float: left;
-	}
-footer #newsletter p{
-	margin: 0;
-	line-height: 27px;
-	font-size: 14px;
-	}
-footer #newsletter a{
-	background: url(/media/images/reply.icon.png) 0 2px no-repeat;
-	padding-left: 25px;
-	}
-
-
-footer #legal {
-	padding-top: 18px;
-	color: #b9b9b9;
-	font-size: 11px;
-	text-align: center;
-	background: #fff;
-	font-weight: bold;
-	}
-footer #legal a {
-	color: #b9b9b9;
-	text-decoration: underline;
-	}
-footer #legal a:hover {
-	color: #036;
 	}	
 
 #availability.warning {
