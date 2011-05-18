@@ -1151,6 +1151,23 @@ header {}
         margin: 10px 0;
       }
 
+	/* [Bugzilla - 656893] Styling pagination*/
+	.pagination {
+		text-alin: center;
+		margin: 1em;
+	}
+	.pagination .btn {
+		border: 1px solid #C6C6C6;
+		padding: 0.2em 6px;
+		display: inline-block;
+	}
+	.pagination span.btn {
+		color: #C6C6C6;
+	}
+	.pagination em {
+		font-style: normal;
+		margin: 0 12px;
+	}
 	#profile_edit {}
 		.modal{
 			position: relative;
