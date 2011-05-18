@@ -1,7 +1,50 @@
 /*
+ * Header
+*/
+
+#main-nav {
+    padding: 3px 3px 3px 159px;
+}
+
+#logo {
+    background-position: 13px 51px;
+    width: 155px; 
+    background-image: url("/media/images/logo.png");
+    height: 120px;
+    margin-right: 20px;
+    position: absolute;
+    z-index: 2;
+}
+
+#beta-tag {
+    color: #F08C00;
+    font-size: 18px;
+    margin-left: 108px;
+    margin-top: 95px;
+    position: absolute;
+    z-index: 5;
+}
+
+a#beta-tag:hover {
+    color: #36cdc4;
+}
+
+footer {
+    clear: both;
+    padding-top: 11px;
+}
+
+#user-nav {
+    margin-top: 51px;
+}
+
+#breadcrumbs nav {
+    padding-left: 3px;
+}
+
+/*
  * Footer CSS: Brian Brennan 
  * brian@nyhacker.org 
- *
  */
  
 footer[role="main"] ul {
@@ -10,7 +53,7 @@ footer[role="main"] ul {
   float: left;
 }
 footer[role="main"] ul:first-child {
-  margin-left: 30px;
+  margin-left: 13px;
 }
 footer[role="main"] ul > li:first-child {
   font-weight: normal;
