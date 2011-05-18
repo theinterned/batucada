@@ -4,7 +4,6 @@ import bleach
 
 from markdown import markdown
 
-from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_save, m2m_changed
@@ -120,7 +119,6 @@ class Challenge(ModelBase):
                 self.slug = slug + str(count)
                 count += 1
         super(Challenge, self).save()
-admin.site.register(Challenge)
 
 
 class Submission(ModelBase):
@@ -161,16 +159,12 @@ class Submission(ModelBase):
     def __unicode__(self):
         return u"%s - %s" % (self.title, self.summary)
 
-admin.site.register(Submission)
-
 
 class VoterTaxonomy(ModelBase):
     description = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.description
-
-admin.site.register(VoterTaxonomy)
 
 
 class VoterDetails(ModelBase):
@@ -186,9 +180,6 @@ class Judge(ModelBase):
 
     class Meta:
         unique_together = (('challenge', 'user'),)
-
-
-admin.site.register(Judge)
 
 
 ### Signals

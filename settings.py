@@ -127,7 +127,6 @@ INSTALLED_APPS = (
     'projects',
     'statuses',
     'messages',
-    'drumbeat',
     'taggit',
     'preferences',
     'drumbeatmail',
@@ -140,7 +139,8 @@ INSTALLED_APPS = (
     'ckeditor',
     'content',
     'schools',
-    'voting'
+    'voting',
+    'drumbeat',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

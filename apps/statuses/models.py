@@ -27,6 +27,9 @@ class Status(ModelBase):
         auto_now_add=True, default=datetime.datetime.now)
     important = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = _('statuses')
+
     def __unicode__(self):
         return self.status
 
