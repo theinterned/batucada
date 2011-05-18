@@ -106,6 +106,9 @@ class Activity(ModelBase):
 
     objects = ActivityManager()
 
+    class Meta:
+        verbose_name_plural = _('activities')
+
     @models.permalink
     def get_absolute_url(self):
         return ('activity_index', (), {
