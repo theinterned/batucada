@@ -9,3 +9,5 @@ settings_local.py
 sample_data.py
 sql/
 celery-schedule
+*.komodoproject
+*.DS_Store
