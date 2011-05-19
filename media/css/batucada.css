@@ -1760,6 +1760,49 @@ header {}
 #splash #main aside #planet_drumbeat > h1 a:hover{
 	opacity: 0.7;
 	}
+/*
+[Bugzilla-654138]
+Adding in a panel for MoJo advertising
+*/
+#mojo {
+	-webkit-transform: rotate(1.3deg);
+	-moz-transform: rotate(1.3deg);
+	-ms-transform: rotate(1.3deg);
+	-o-transform: rotate(1.3deg);
+	transform: rotate(1.3deg);
+	background: #FCFCFC;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin-bottom: 2em;
+}
+.no-boxshadow #mojo {
+	border: 1px solid #DBDBDB;
+}
+#mojo .content {
+	-webkit-transform: rotate(-1.3deg);
+	-moz-transform: rotate(-1.3deg);
+	-ms-transform: rotate(-1.3deg);
+	-o-transform: rotate(-1.3deg);
+	transform: rotatre(-1.3deg)
+	background: #FFF;
+	 -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px #888;
+	padding: 20px;
+	width: 85%;
+}
+.no-csstransforms #mojo .content {
+	width: auto;
+}
+#mojo h1 {
+	background: transparent url(/media/images/mojo/benefit5.jpg) no-repeat left bottom;
+	padding-bottom: 120px;
+	margin-bottom: 1em;
+	font-size: 16px;
+}
+#mojo .cta {
+	display: block;
+	font-weight: bold;
+}
 /* SIGNIN / SIGNUP */
 .signin{}
 .signin #breadcrumbs {

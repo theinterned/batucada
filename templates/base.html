@@ -74,7 +74,7 @@
 	{% if user.is_authenticated %}
 	  <ul>
 	    <li id="user" class="menu">
-	      <a href="#" id="user-link" class="top-level">
+	      <a href="{{ user.get_profile.get_absolute_url }}" id="user-link" class="top-level">
 		{# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
 		{% if user.get_profile %}
 		<img id="user-picture" src="{{ MEDIA_URL }}{{ user.get_profile.image_or_default }}" height="19" width="19">
@@ -92,7 +92,7 @@
 	    </li> <!-- /#user -->
 	    <li class="separator ir"></li>
 	    <li id="inbox" class="menu">
-	      <a href="#" id="inbox-link" class="top-level">
+	      <a href="{% locale_url drumbeatmail_inbox %}" id="inbox-link" class="top-level">
 		{{ _('Inbox') }}
 		{% if messages_inbox_count > 0 %}
 		  <span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>
