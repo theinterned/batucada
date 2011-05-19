@@ -402,13 +402,19 @@ $(document).ready(function() {
     if (ns && ns[bodyId] && (typeof ns[bodyId].onload == 'function')) {
         ns[bodyId].onload();
     }
-    
     // attach handlers for elements that appear on most pages
-    $('#user-nav').find('li.menu').bind('click', function(event) {
-        $(this).toggleClass('open');
+    $('#user-nav').find('a.top-level').bind('click', function(event) {
+		var target = $(this).parent();
+		// close any previously open tab
+		target.parent().find('li.open').removeClass('open');
+        target.toggleClass('open');
+		// return false to ensure that we don't get '#' appear in the URL
+		return false;
     });
-
-    // wire up any RTEs with wmd
+	/*
+	TODO - would be nice to add in a timer to rollout to hide the menu automagically
+    */
+	// wire up any RTEs with wmd
     initWMD();
 
     // modals using jQueryUI dialog

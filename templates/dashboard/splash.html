@@ -29,21 +29,21 @@
   <div class="container">
     <h1>{{ _('Recent Activity') }}</h1>
     <ul id="posts">
-      {% for activity in activities %}
+	{% for activity in activities %}
         {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
     <aside>
-    	{% if featured_project %}
-      <section id="featured_project" class="card-list">
-        <h1>{{ _('Featured Project') }}</h1>
-	      <ul class="project-list">
-          {% with featured_project as project %}
-            <li>{% include "projects/_project_card.html" %}</li>
-          {% endwith %}
-        </ul>
-      </section>
-    	{% endif %}
+		<div id="mojo">
+			<section>
+				<div class="content">
+					<h1>Change how the web reports the news</h1>
+					<p>Mozilla and the Knight Foundation have jouned forces to bring the web and journalism together worldwide to invent the future of news.</p>
+					<p>You can read about our past challenges and see what we're looking to acheive. We're also looking for ideas on what you think might be HTML5's kills web app.</p>
+					<a class="cta" href="/journalism/">MoJo (Mozilla + Journalism)</a>
+				</div>
+			</section>
+		</div>
       <section id="planet_drumbeat">
         <h1><a href="http://planet.drumbeat.org/" title="{{ _('Planet Drumbeat') }}">{{ _('Planet Drumbeat') }}</a> <a class="feed-link" href="{{ feed_url }}" title="{{ _('Subscribe to the Planet Drumbeat feed') }}"> {{ _('feed') }}</a></h1>
 	{% for entry in feed_entries %}
