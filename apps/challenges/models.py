@@ -7,7 +7,7 @@ from markdown import markdown
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models.signals import pre_save, m2m_changed
+from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
@@ -139,12 +139,47 @@ class Submission(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.now())
 
+    is_published = models.BooleanField(default=1)
+
     def get_challenge(self):
         challenges = self.challenge.all()
         if challenges:
             return challenges[0]
         else:
             return None
+
+    def publish(self):
+        self.is_published = True
+        self.save()
+
+        challenge = self.get_challenge()
+
+        # Create activity
+        msg = '<a href="%s">%s</a>: %s | <a href="%s">Read more</a>' % (
+            challenge.get_absolute_url(), challenge.title, self.title,
+            self.get_absolute_url())
+        status = Status(author=self.created_by,
+                        project=challenge.project,
+                        status=msg)
+        status.save()
+
+        # Send thanks email
+        user = self.created_by
+        share_url = reverse('submission_edit_share', kwargs={
+            'slug': challenge.slug,
+            'submission_id': self.pk
+        })
+        submission_url = reverse('submission_show', kwargs={
+            'slug': challenge.slug,
+            'submission_id': self.pk
+        })
+        subj = _('Thanks for entering in the Knight-Mozilla Innovation Challenge!')
+        body = render_to_string('challenges/emails/submission_thanks.txt', {
+            'share_url': share_url,
+            'submission_url': submission_url,
+        })
+
+        SendUserEmail.apply_async((user, subj, body))
 
     @models.permalink
     def get_absolute_url(self):
@@ -202,52 +237,3 @@ def submission_markdown_handler(sender, **kwargs):
             markdown(submission.description),
             tags=TAGS, attributes=ALLOWED_ATTRIBUTES)
 pre_save.connect(submission_markdown_handler, sender=Submission)
-
-
-def submission_thanks_handler(sender, **kwargs):
-    submission = kwargs.get('instance', None)
-    if not isinstance(submission, Submission):
-        return
-
-    challenge = submission.get_challenge()
-    if not challenge:
-        return
-    user = submission.created_by
-
-    share_url = reverse('submission_edit_share', kwargs={
-        'slug': challenge.slug,
-        'submission_id': submission.pk
-    })
-    submission_url = reverse('submission_show', kwargs={
-        'slug': challenge.slug,
-        'submission_id': submission.pk
-    })
-    subj = _('Thanks for entering in the Knight-Mozilla Innovation Challenge!')
-    body = render_to_string('challenges/emails/submission_thanks.txt', {
-        'share_url': share_url,
-        'submission_url': submission_url,
-    })
-
-    SendUserEmail.apply_async((user, subj, body))
-m2m_changed.connect(submission_thanks_handler,
-                    sender=Submission.challenge.through)
-
-
-def submission_activity_handler(sender, **kwargs):
-    submission = kwargs.get('instance', None)
-    if not isinstance(submission, Submission):
-        return
-    challenge = submission.get_challenge()
-    if not challenge:
-        return
-
-    msg = '<a href="%s">%s</a>: %s | <a href="%s">Read more</a>' % (
-        challenge.get_absolute_url(), challenge.title, submission.title,
-        submission.get_absolute_url())
-    status = Status(author=submission.created_by,
-                    project=challenge.project,
-                    status=msg)
-    status.save()
-
-m2m_changed.connect(submission_activity_handler,
-                    sender=Submission.challenge.through)
