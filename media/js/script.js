@@ -403,7 +403,7 @@ $(document).ready(function() {
         ns[bodyId].onload();
     }
     // attach handlers for elements that appear on most pages
-    $('#user-nav').find('a.top-level').bind('click', function(event) {
+    $('#user-nav').find('a.trigger').bind('click', function(event) {
 		var target = $(this).parent();
 		// close any previously open tab
 		target.parent().find('li.open').removeClass('open');
