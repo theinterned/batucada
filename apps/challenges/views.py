@@ -359,6 +359,32 @@ def edit_submission_share(request, slug, submission_id):
                               ctx, context_instance=RequestContext(request))
 
 
+@login_required
+@submission_owner_required
+def delete_submission(request, slug, submission_id):
+    challenge = get_object_or_404(Challenge, slug=slug)
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    if request.method == 'POST':
+        post_data = request.POST.copy()
+        if post_data['confirm']:
+            submission.delete()
+            messages.success(request, _('Your submission has been deleted'))
+
+            return HttpResponseRedirect(reverse('challenges_show',
+                kwargs={'slug': challenge.slug}))
+        else:
+            messages.error(request, _('Unable to delete submission'))
+
+    context = {
+        'challenge': challenge,
+        'submission': submission
+    }
+
+    return render_to_response('challenges/delete_confirm.html', context,
+                              context_instance=RequestContext(request))
+
+
 def show_submission(request, slug, submission_id):
     challenge = get_object_or_404(Challenge, slug=slug)
     submission = get_object_or_404(Submission, pk=submission_id)
