@@ -4,7 +4,7 @@ from pages.models import Page
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'slug', 'content')
-    list_filter = list_display[6:]
-
+    list_display = ('id', 'title', 'slug')
+    search_fields = ('id', 'title', 'slug', 'content')
+    
 admin.site.register(Page, PageAdmin)

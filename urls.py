@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     (r'^pubsub/',        include('django_push.subscriber.urls')),
     (r'^ckeditor/',      include('ckeditor.urls')),
     (r'^challenges/',    include('challenges.urls')),
-    (r'',                include('pages.urls')),
+    (r'^pages/',         include('pages.urls')),
     (r'',                include('users.urls')),
 )
 
