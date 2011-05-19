@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block body %}
-<section class="modal{% if project %} nav{% endif %}">
+<section class="modal nav">
   <article>
     <h1>
       {% if project %}
@@ -30,17 +30,24 @@
       {% else %}
       {{ _('Create Study Group') }}
       {% endif %}</h1>
-    {% if project %}
     <nav id="project-edit-nav" class="tabs">
       <ul>
+    {% if project %}
 	<li class="summary {% if summary_tab %}active{% endif %}"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Summary') }}</a></li>
 	<li class="image {% if image_tab %}active{% endif %}"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Image') }}</a></li>
 	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{{ _('Status &amp; Dates') }}</a></li>
 	<li class="participants {% if participants_tab %}active{% endif %}"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
 	<li class="links {% if links_tab %}active{% endif %}"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
+    {% else %}
+    <li class="new {% if new_tab %}active{% endif %}"><a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
+       {{ _('Create from Scratch') }}</a></li>
+    <li class="clone {% if clone_tab %}active{% endif %}"><a href="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif%}">
+       {{ _('Clone Existing') }}</a></li>
+    <li class="import {% if import_tab %}active{% endif %}"><a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
+        {{ _('Import from Old Site') }}</a></li>
+    {% endif %}
       </ul>
     </nav>
-    {% endif %}
     
       {% block form %}{% endblock %}
     
