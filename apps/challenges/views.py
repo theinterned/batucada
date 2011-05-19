@@ -155,7 +155,7 @@ def show_challenge(request, slug):
     qn = connection.ops.quote_name
     ctype = ContentType.objects.get_for_model(Submission)
 
-    submission_set = challenge.submission_set.extra(select={'score': """
+    submission_set = challenge.submission_set.filter(is_published=True).extra(select={'score': """
         SELECT SUM(vote)
         FROM %s
         WHERE content_type_id = %s
@@ -247,6 +247,7 @@ def create_submission(request, slug):
             submission = form.save(commit=False)
             submission.title = truncate_title(submission.summary)
             submission.created_by = user
+            submission.is_published = False
             submission.save()
 
             submission.challenge.add(challenge)
@@ -282,8 +283,11 @@ def edit_submission(request, slug, submission_id):
     if request.method == 'POST':
         form = SubmissionForm(request.POST, instance=submission)
         if form.is_valid():
-            form.save()
+            submission = form.save()
             messages.success(request, _('Your submission has been edited.'))
+
+            if 'publish' in request.POST:
+                submission.publish()
 
             return HttpResponseRedirect(reverse('submission_edit_description',
                 kwargs={
@@ -316,8 +320,11 @@ def edit_submission_description(request, slug, submission_id):
     if request.method == 'POST':
         form = SubmissionDescriptionForm(request.POST, instance=submission)
         if form.is_valid():
-            form.save()
+            submission = form.save()
             messages.success(request, _('Your submission has been edited.'))
+
+            if 'publish' in request.POST:
+                submission.publish()
 
             return HttpResponseRedirect(reverse('submission_edit_share',
                 kwargs={
