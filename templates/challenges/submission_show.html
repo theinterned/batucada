@@ -17,6 +17,7 @@
   <div id="project-actions">
     {% if user.get_profile == submission.created_by and challenge.entrants_can_edit %}
     <a class="button" href="{% locale_url submission_edit slug=challenge.slug submission_id=submission.id%}">{{ _('Edit Submission') }}</a>
+    <a class="button" href="{% locale_url submission_delete slug=challenge.slug submission_id=submission.id%}">{{ _('Delete Submission') }}</a>
     {% endif %}
   </div>
 </div>
