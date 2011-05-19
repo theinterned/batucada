@@ -15,7 +15,13 @@ def messages(request):
         return {}
 
 
-def login_with_redirect_url(request):
+def redirect_urls(request):
     path = urlquote(request.get_full_path())
-    url = '%s?%s=%s' % (reverse('users_login'), REDIRECT_FIELD_NAME, path)
-    return {'login_with_redirect_url': url}
+    login_url = '%s?%s=%s' % (
+        reverse('users_login'), REDIRECT_FIELD_NAME, path)
+    register_url = '%s?%s=%s' % (
+        reverse('users_register'), REDIRECT_FIELD_NAME, path)
+    return {
+        'login_with_redirect_url': login_url,
+        'register_with_redirect_url': register_url,
+    }

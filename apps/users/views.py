@@ -178,6 +178,11 @@ def logout(request):
 @anonymous_only
 def register(request):
     """Present user registration form and handle registrations."""
+
+    if REDIRECT_FIELD_NAME in request.GET:
+        request = _clean_redirect_url(request)
+        request.session[REDIRECT_FIELD_NAME] = request.GET[REDIRECT_FIELD_NAME]
+
     if request.method == 'POST':
         form = forms.RegisterForm(data=request.POST)
 
