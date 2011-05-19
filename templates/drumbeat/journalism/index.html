@@ -47,29 +47,17 @@ Earn a trip to a Berlin hackfest, where we'll help take your idea from napkin sk
 The best discussions around the web can be pretty isolated. And in many comment threads, the loudest voices drown out everyone else. How do we improve the signal-to-noise ratio in public news commentary?</p>
             <a class="button-white" href="{% locale_url challenges_show slug="beyond-comment-threads" %}"><span>Submit Your Idea</span></a>
           </div>
-          
-          <h3>Popular ideas for Challenge #3</h3>
+          {% if recent_submissions %}
+          <h3>Recent Submissions for Challenge #2</h3>
           <ul class="popularideas">
+            {% for submission in recent_submissions %}
             <li>
-              <div class="score">
-                <span>96</span>
-                <a class="active" href="#">Like</a>
-              </div>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies risus quis metus malesuada imperdiet. In vehicula tincidunt massa, et tristique ligula commodo et. Nam porttitor lacinia varius. Nullam nibh metus, eleifend quis volutpat quis, tristique in diam. Suspendisse ut neque justo. <a href="###">View More</a>
-              </p>
+              <p>{{ submission.summary }} | <a href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}">Read more...</a></p>
             </li>
-            <li>
-              <div class="score">
-                <span>96</span>
-                <a href="#">Like</a>
-              </div>
-              <p>
-                Donec ultricies risus quis metus malesuada imperdiet. In vehicula tincidunt massa, et tristique ligula commodo et. Nam porttitor lacinia varius. Nullam nibh metus, eleifend quis volutpat quis, tristique in diam. Suspendisse ut neque justo. <a href="###">View More</a>
-              </p>
-            </li>
+            {% endfor %}
           </ul>
-          <a class="viewallideas" href="{% locale_url challenges_show slug="unlocking-video" %}">View All Challenge #1 Ideas</a>
+          <a class="viewallideas" href="{% locale_url challenges_show slug="beyond-comment-threads" %}">View All Challenge #2 Ideas</a>
+          {% endif %}
         </div>
         <div class="column-right">
           <div class="challengebox">

@@ -55,7 +55,7 @@ def journalism(request):
     try:
         current_challenge = Challenge.objects.get(slug='beyond-comment-threads')
         recent_submissions = Submission.objects.filter(
-            challenge=current_challenge).order_by('-created_on')[0:2]
+            challenge=current_challenge).order_by('-created_on')[0:3]
     except:
         current_challenge = None
         recent_submissions = None
