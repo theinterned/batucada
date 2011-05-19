@@ -13,7 +13,7 @@ class Page(ModelBase):
     """Model for static pages."""
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=110)
+    slug = models.SlugField(max_length=110, unique=True)
     content = models.TextField()
 
     def __unicode__(self):
@@ -21,6 +21,6 @@ class Page(ModelBase):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('page_show', (), {
+        return ('static_page_show', (), {
             'slug': self.slug,
         })

@@ -4,19 +4,19 @@
         <nav>
           <ul role="about-us">
             <li>{{ _('About Us') }}</li>
-            <li><a href="http://p2pu.org/about">{{ _('What is P2PU') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'about' %}">{{ _('What is P2PU') }}</a></li>
             <!-- <li><a href="">{{ _('Team &amp; Advisors') }}</a></li> -->
-            <li><a href="http://p2pu.org/general/supporters">{{ _('Supporters') }}</a></li>
-            <li><a href="http://p2pu.org/values">{{ _('Values') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'supporters' %}">{{ _('Supporters') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'values' %}">{{ _('Values') }}</a></li>
             <li><a href="http://blogs.p2pu.org/">{{ _('Blog') }}</a></li>
             <li><a href="http://groups.google.com/group/p2pu-announce">{{ _('Announcements') }}</a></li>
-            <li><a href="http://p2pu.org/get-involved">{{ _('Get Involved') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'get-involved' %}">{{ _('Get Involved') }}</a></li>
             <li><a href="http://old.p2pu.org">{{ _('Old P2PU Site') }}</li></a>
           </ul>
 
           <ul role="contact-us">
             <li>{{ _('Contact Us') }}</li>
-            <li><a href="http://p2pu.org/contact-us">{{ _('Contact Form') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'contact-us' %}">{{ _('Contact Form') }}</a></li>
             <li><a href="http://www.facebook.com/P2PUniversity">{{ _('Facebook') }}</a></li>
             <li><a href="http://twitter.com/p2pu">{{ _('Twitter') }}</a></li>
             <li><a href="http://qa.p2pu.org/">{{ _('FAQ') }}</a></li>
@@ -25,9 +25,9 @@
 
           <ul role="license-info">
             <li>{{ _('License Info') }}</li>
-            <li><a href="http://creativecommons.org/licenses/by-sa/3.0/">{{ _('License') }}</a></li>
-            <li><a href="http://p2pu.org/privacy">{{ _('Privacy Guidelines') }}</a></li>
-            <li><a href="http://p2pu.org/terms-of-use">{{ _('Terms of Use') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'license' %}">{{ _('License') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'privacy' %}">{{ _('Privacy Guidelines') }}</a></li>
+            <li><a href="{% locale_url static_page_show 'terms-of-use' %}">{{ _('Terms of Use') }}</a></li>
           </ul>
         
           <ul role="cc">
