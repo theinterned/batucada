@@ -44,16 +44,6 @@
 				</div>
 			</section>
 		</div>
-    	{% if featured_project %}
-      <section id="featured_project" class="card-list">
-        <h1>{{ _('Featured Project') }}</h1>
-	      <ul class="project-list">
-          {% with featured_project as project %}
-            <li>{% include "projects/_project_card.html" %}</li>
-          {% endwith %}
-        </ul>
-      </section>
-    	{% endif %}
       <section id="planet_drumbeat">
         <h1><a href="http://planet.drumbeat.org/" title="{{ _('Planet Drumbeat') }}">{{ _('Planet Drumbeat') }}</a> <a class="feed-link" href="{{ feed_url }}" title="{{ _('Subscribe to the Planet Drumbeat feed') }}"> {{ _('feed') }}</a></h1>
 	{% for entry in feed_entries %}
