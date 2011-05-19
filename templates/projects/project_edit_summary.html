@@ -35,7 +35,7 @@
     <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
     {% else %}
-    <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
+    <a class="button" href="{% if school %}{% locale_url school_home slug=school.slug %}{% else %}{% locale_url projects_gallery %}{% endif %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
     {% endif %}
   </p>

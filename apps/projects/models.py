@@ -102,6 +102,9 @@ class Project(ModelBase):
     signup_closed = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)
 
+    clone_of = models.ForeignKey('projects.Project', blank=True, null=True,
+        related_name='derivated_projects')
+
     objects = ProjectManager()
 
     class Meta:

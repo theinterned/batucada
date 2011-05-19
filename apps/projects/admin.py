@@ -4,11 +4,12 @@ from projects.models import Project, Participation
 
 class ProjectAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_on'
-    list_display = ('id', 'name', 'created_on', 'school', 'featured',
+    list_display = ('id', 'name', 'clone_of', 'created_on', 'school', 'featured',
         'under_development', 'not_listed', 'signup_closed', 
         'archived')
-    list_filter = list_display[2:]
-    search_fields = ('id', 'name', 'slug', 'school__name')
+    list_filter = list_display[3:]
+    search_fields = ('id', 'name', 'slug', 'school__name',
+        'clone_of__slug', 'clone_of__name')
 
 class ParticipationAdmin(admin.ModelAdmin):
     date_hierarchy = 'joined_on'

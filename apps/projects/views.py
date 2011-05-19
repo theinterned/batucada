@@ -45,6 +45,7 @@ def project_list(request):
 @login_required
 def create(request):
     user = request.user.get_profile()
+    school = None
     if request.method == 'POST':
         form = project_forms.CreateProjectForm(request.POST)
         if form.is_valid():
@@ -94,7 +95,7 @@ def create(request):
         else:
             form = project_forms.CreateProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
-        'form': form,
+        'form': form, 'new_tab': True, 'school': school,
     }, context_instance=RequestContext(request))
 
 
@@ -121,6 +122,89 @@ def show(request, slug):
     }
     return render_to_response('projects/project.html', context,
                               context_instance=RequestContext(request))
+
+@login_required
+def clone(request):
+    user = request.user.get_profile()
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+        except School.DoesNotExist:
+            return http.HttpResponseRedirect(reverse('projects_clone'))
+    else:
+        school = None
+    if request.method == 'POST':
+        form = project_forms.CloneProjectForm(school, request.POST)
+        if form.is_valid():
+            base_project = form.cleaned_data['project']
+            project = Project(name=base_project.name,
+                short_description=base_project.short_description,
+                long_description=base_project.long_description,
+                school=base_project.school, clone_of=base_project)
+            project.save()
+            act = Activity(actor=user,
+                verb='http://activitystrea.ms/schema/1.0/post',
+                project=project,
+                target_project=project)
+            act.save()
+            participation = Participation(project=project, user=user, organizing=True)
+            participation.save()
+            new_rel = Relationship(source=user, target_project=project)
+            try:
+                new_rel.save()
+            except IntegrityError:
+                pass
+            detailed_description = Page(title=_('Full Description'), slug='full-description',
+                content=base_project.detailed_description.content, listed=False,
+                author_id=user.id, project_id=project.id)
+            detailed_description.save()
+            project.detailed_description_id = detailed_description.id
+            sign_up = Page(title=_('Sign-Up'), slug='sign-up',
+                content=base_project.sign_up.content, listed=False, editable=False,
+                author_id=user.id, project_id=project.id)
+            sign_up.save()
+            project.sign_up_id = sign_up.id
+            project.save()
+            tasks = Page.objects.filter(project=base_project, listed=True,
+                deleted=False).order_by('index')
+            for task in tasks:
+                new_task = Page(title=task.title, content=task.content, author=user,
+                    project=project)
+                new_task.save()
+            links = Link.objects.filter(project=base_project).order_by('index')
+            for link in links:
+                new_link = Link(name=link.name, url=link.url, user=user, project=project)
+                new_link.save()
+            messages.success(request, _('The study group has been cloned.'))
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+        else:
+            messages.error(request,
+                _("There was a problem clonning the study group."))
+    else:
+        form = project_forms.CloneProjectForm(school)
+    return render_to_response('projects/project_clone.html', {
+        'form': form, 'clone_tab': True, 'school': school,
+    }, context_instance=RequestContext(request))
+
+
+def matching_projects(request):
+    if len(request.GET['term']) == 0:
+        raise CommandException(_("Invalid request"))
+
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+            projects = Project.objects.filter(school=school)
+        except School.DoesNotExist:
+            projects = Project.objects.all()
+    else:
+        projects = Project.objects.all()
+    matching_projects = projects.filter(slug__icontains = request.GET['term'])
+    json = simplejson.dumps([project.slug for project in matching_projects])
+
+    return HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required

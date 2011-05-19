@@ -133,3 +133,21 @@ class ProjectContactOrganizersForm(forms.Form):
             message_list.append(msg)
         return message_list
 
+
+class CloneProjectForm(forms.Form):
+    project = forms.CharField()
+
+    def __init__(self, school=None, *args, **kwargs):
+        super(CloneProjectForm, self).__init__(*args, **kwargs)
+        self.school = school
+
+    def clean_project(self):
+        slug = self.cleaned_data['project']
+        try:
+            project = Project.objects.get(slug=slug)
+        except Project.DoesNotExist:
+            raise forms.ValidationError(_('There is no study group with that short name: %s.') % slug)
+        if self.school and project.school != self.school:
+            raise forms.ValidationError(_('The %s study group is not part of this school.') % slug)
+        return project
+
