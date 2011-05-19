@@ -38,9 +38,9 @@
 
     <p class="buttons">    
       <a class="button" href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}">{{ _('Cancel') }}</a>
-      <input class="button" type="submit" name="continue" value="{{ _('Continue') }}"/>
+      <button type="submit" name="continue" value="{{ _('Continue') }}">{{ _('Continue') }}</button>
       {% if not submission.is_published %}
-        <input class="button" type="submit" name="publish" value="{{ _('Publish') }}"/>
+        <button type="submit" name="publish" value="{{ _('Publish') }}">{{ _('Publish') }}</button>
       {% endif %}
     </p>
     
