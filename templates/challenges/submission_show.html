@@ -47,6 +47,13 @@
       {{ submission.description_html|safe }}
     </div>
     <br />
+    {% if submission.bio %}
+    <h2>{{ _('About this entrant') }}</h2>
+    <div class="bio">
+      {{ submission.bio }}
+    </div>
+    <br />
+    {% endif %}
   </article>
   
   <div id="comments">
