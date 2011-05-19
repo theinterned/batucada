@@ -403,11 +403,11 @@ $(document).ready(function() {
         ns[bodyId].onload();
     }
     // attach handlers for elements that appear on most pages
-    $('#user-nav').find('li.menu').bind('click', function(event) {
-		var current = $(this);
+    $('#user-nav').find('a.top-level').bind('click', function(event) {
+		var target = $(this).parent();
 		// close any previously open tab
-		current.parent().find('li.open').removeClass('open');
-        current.toggleClass('open');
+		target.parent().find('li.open').removeClass('open');
+        target.toggleClass('open');
 		// return false to ensure that we don't get '#' appear in the URL
 		return false;
     });
