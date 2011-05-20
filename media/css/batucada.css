@@ -992,7 +992,7 @@ header {}
   border: solid 1px #EEE;
 }
 
-#project_gallery #main, #school_home #main , #user_list #main {
+#project_gallery #main, #school_home #main , #user_list #main, #one-column-page #main {
   width: 970px;
   margin-right: 40px;
   margin-left: 0;
@@ -1780,13 +1780,14 @@ header {}
 	position: absolute;
 	right: 81px; bottom: -105px;
 	}
-#splash #main{
-        width: 980px;
-        padding: 36px 10px 0 10px;
+#splash #main {
+    width: 980px;
+    padding: 36px 10px 0 10px;
 	margin: 0;
 	float: none;
 	border-top: 1px solid #fff;
 	}
+    	
 #splash #main > .container > h1 {	
 	display: none;
 	}
