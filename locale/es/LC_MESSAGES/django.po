@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-16 13:05-0400\n"
+"POT-Creation-Date: 2011-05-19 21:27-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,17 +20,22 @@ msgstr ""
 msgid "Activity feed for %s"
 msgstr "Bitácora de actividades para %s"
 
-#: apps/activity/models.py:131
+#: apps/activity/models.py:110
+#, fuzzy
+msgid "activities"
+msgstr "Actividad"
+
+#: apps/activity/models.py:134
 #, python-format
 msgid "%(actor)s %(verb)s %(target)s"
 msgstr "%(actor)s %(verb)s %(target)s"
 
-#: apps/activity/models.py:143
+#: apps/activity/models.py:146
 #, python-format
 msgid "%(verb)s activity performed by %(actor)s"
 msgstr "La actividad %(verb)s fue realizada por %(actor)s"
 
-#: apps/activity/models.py:153
+#: apps/activity/models.py:156
 #, python-format
 msgid "Activity ID %(self.pk)d. Actor id %(self.actor.pk)d, Verb %(self.verb)s"
 msgstr ""
@@ -107,19 +112,19 @@ msgstr "Usted no creó este reto"
 msgid "You can't decorate submission"
 msgstr "Usted no puede decorar el envío"
 
-#: apps/challenges/forms.py:30 apps/projects/forms.py:48
+#: apps/challenges/forms.py:30 apps/projects/forms.py:58
 #: apps/schools/forms.py:32 apps/users/forms.py:168
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/challenges/forms.py:36 apps/projects/forms.py:91
+#: apps/challenges/forms.py:36 apps/projects/forms.py:101
 #: templates/drumbeatmail/base.html:17 templates/messages/inbox.html:12
 #: templates/projects/contact_organizers.html:12
 msgid "Subject"
 msgstr "Asunto"
 
-#: apps/challenges/forms.py:38 apps/projects/forms.py:93
+#: apps/challenges/forms.py:38 apps/projects/forms.py:103
 msgid "Body"
 msgstr "Cuerpo"
 
@@ -127,7 +132,7 @@ msgstr "Cuerpo"
 msgid "Not a valid challenge"
 msgstr "Reto invalido"
 
-#: apps/challenges/models.py:225
+#: apps/challenges/models.py:216
 msgid "Thanks for entering in the Knight-Mozilla Innovation Challenge!"
 msgstr ""
 
@@ -155,7 +160,7 @@ msgstr "¡Reto actualizado!"
 msgid "Unable to update your challenge."
 msgstr "No fue posible actualizar su reto."
 
-#: apps/challenges/views.py:118 apps/users/views.py:440
+#: apps/challenges/views.py:118 apps/users/views.py:434
 msgid "There was an error uploading your image."
 msgstr "Ocurrió un error al subir la imagen."
 
@@ -163,7 +168,7 @@ msgstr "Ocurrió un error al subir la imagen."
 msgid "Challenge image updated"
 msgstr "Imagen del reto actualizada"
 
-#: apps/challenges/views.py:139 apps/projects/views.py:184
+#: apps/challenges/views.py:139 apps/projects/views.py:268
 #: apps/schools/views.py:96
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
@@ -382,18 +387,6 @@ msgstr "¡Organizador añadido!"
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/dashboard/views.py:77 apps/users/views.py:321
-msgid "(organizing)"
-msgstr "(organizando)"
-
-#: apps/dashboard/views.py:80 apps/users/views.py:324
-msgid "(participating)"
-msgstr "(participando)"
-
-#: apps/dashboard/views.py:83 apps/users/views.py:327
-msgid "(following)"
-msgstr "(siguiendo)"
-
 #: apps/drumbeat/views.py:43
 #, python-format
 msgid ""
@@ -433,7 +426,7 @@ msgid "Can't send email"
 msgstr "No puede enviarse correo"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:372
+#: apps/projects/views.py:456
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -473,8 +466,8 @@ msgstr "Correo actualizado"
 msgid "Password updated"
 msgstr "Contraseña actualizada"
 
-#: apps/preferences/views.py:92 apps/users/views.py:235
-#: apps/users/views.py:376
+#: apps/preferences/views.py:92 apps/users/views.py:236
+#: apps/users/views.py:370
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
@@ -487,26 +480,26 @@ msgstr "Usted no está organizando este grupo de estudio."
 msgid "You are not participating in this study group"
 msgstr "Usted no está participando en este grupo de estudio"
 
-#: apps/projects/forms.py:75 apps/schools/forms.py:48
+#: apps/projects/forms.py:85 apps/schools/forms.py:48
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:78
+#: apps/projects/forms.py:88
 #, python-format
 msgid "User %s is organizing the study group."
 msgstr "El usuario %s está organizando el grupo de estudio."
 
-#: apps/projects/forms.py:80
+#: apps/projects/forms.py:90
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/forms.py:102
+#: apps/projects/forms.py:112
 msgid "That study group does not exist."
 msgstr "Ese grupo de estudio no existe."
 
-#: apps/projects/forms.py:106
+#: apps/projects/forms.py:116
 #, python-format
 msgid ""
 "You received this message through the Contact Organizer form at %(project)s: "
@@ -515,88 +508,112 @@ msgstr ""
 "Usted recibió este mensaje porque es un organizador en %(project)s: http://"
 "%(domain)s%(url)s"
 
-#: apps/projects/models.py:105
+#: apps/projects/forms.py:149 apps/schools/forms.py:66
+#: apps/schools/forms.py:86
+#, python-format
+msgid "There is no study group with that short name: %s."
+msgstr "No hay un grupo de estudio con ese nombre corto: %s."
+
+#: apps/projects/forms.py:151 apps/schools/forms.py:68
+#: apps/schools/forms.py:88
+#, python-format
+msgid "The %s study group is not part of this school."
+msgstr "El grupo de estudio %s no es parte de esta escuela."
+
+#: apps/projects/models.py:111
 msgid "study group"
 msgstr "grupo de estudio"
 
-#: apps/projects/views.py:67 templates/challenges/submission_edit.html:18
+#: apps/projects/views.py:68 apps/projects/views.py:157
+#: templates/challenges/submission_edit.html:18
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:74
+#: apps/projects/views.py:75 apps/projects/views.py:162
 msgid "Sign-Up"
 msgstr "Inscripción"
 
-#: apps/projects/views.py:80
+#: apps/projects/views.py:81
 msgid "The study group has been created."
 msgstr "El grupo de estudio ha sido creado."
 
-#: apps/projects/views.py:86
+#: apps/projects/views.py:87
 msgid "There was a problem creating the study group."
 msgstr "Ocurrió un problema al crear el grupo de estudio."
 
-#: apps/projects/views.py:134
+#: apps/projects/views.py:178
+#, fuzzy
+msgid "The study group has been cloned."
+msgstr "El grupo de estudio ha sido creado."
+
+#: apps/projects/views.py:184
+#, fuzzy
+msgid "There was a problem clonning the study group."
+msgstr "Ocurrió un problema al crear el grupo de estudio."
+
+#: apps/projects/views.py:194 apps/projects/views.py:385
+#: apps/schools/views.py:134 apps/schools/views.py:172
+#: apps/schools/views.py:224
+msgid "Invalid request"
+msgstr "Solicitud inválida"
+
+#: apps/projects/views.py:218
 msgid "Study group updated!"
 msgstr "¡Grupo de estudio actualizado!"
 
-#: apps/projects/views.py:140
+#: apps/projects/views.py:224
 #, python-format
 msgid "The study group membership to %s was declined by the school organizers."
 msgstr ""
 "La membresia del grupo de estudio a %s fue rechazada por los organizadores."
 
-#: apps/projects/views.py:177 apps/schools/views.py:89
+#: apps/projects/views.py:261 apps/schools/views.py:89
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:206
+#: apps/projects/views.py:290
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:210
+#: apps/projects/views.py:294
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:230 apps/projects/views.py:260
-#: apps/users/views.py:506
+#: apps/projects/views.py:314 apps/projects/views.py:344
+#: apps/users/views.py:500
 msgid "You can't edit this link"
 msgstr "Usted no puede editar este enlace"
 
-#: apps/projects/views.py:240
+#: apps/projects/views.py:324
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:262
+#: apps/projects/views.py:346
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:283
+#: apps/projects/views.py:367
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:287
+#: apps/projects/views.py:371
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:301 apps/schools/views.py:134
-#: apps/schools/views.py:172 apps/schools/views.py:224
-msgid "Invalid request"
-msgstr "Solicitud inválida"
-
-#: apps/projects/views.py:316
+#: apps/projects/views.py:400
 msgid "You can't make that person an organizer"
 msgstr "Usted no puede convertir ese usuario en organizador"
 
-#: apps/projects/views.py:319
+#: apps/projects/views.py:403
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:333
+#: apps/projects/views.py:417
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:353
+#: apps/projects/views.py:437
 msgid "There was a problem saving study group's status."
 msgstr "Ocurrió un problema al guardar el estado del grupo de estudio."
 
@@ -635,16 +652,6 @@ msgstr "Usted no esta organizando esta escuela"
 #, python-format
 msgid "User %s is organizing the school."
 msgstr "El usuario %s está organizando la escuela."
-
-#: apps/schools/forms.py:66 apps/schools/forms.py:86
-#, python-format
-msgid "There is no study group with that short name: %s."
-msgstr "No hay un grupo de estudio con ese nombre corto: %s."
-
-#: apps/schools/forms.py:68 apps/schools/forms.py:88
-#, python-format
-msgid "The %s study group is not part of this school."
-msgstr "El grupo de estudio %s no es parte de esta escuela."
 
 #: apps/schools/forms.py:70
 #, python-format
@@ -696,6 +703,11 @@ msgstr ""
 msgid "The study group stopped being declined for this school."
 msgstr "El grupo de estudio dejo de estar rechazado para esta escuela."
 
+#: apps/statuses/models.py:31
+#, fuzzy
+msgid "statuses"
+msgstr "Status.net"
+
 #: apps/statuses/views.py:31 apps/statuses/views.py:73
 msgid "There was an error posting your status update"
 msgstr "Ocurrió un error al publicar su mensaje"
@@ -718,11 +730,23 @@ msgid ""
 "you've registered?"
 msgstr ""
 
+#: apps/users/models.py:153
+msgid "(organizing)"
+msgstr "(organizando)"
+
 #: apps/users/models.py:156
+msgid "(participating)"
+msgstr "(participando)"
+
+#: apps/users/models.py:159
+msgid "(following)"
+msgstr "(siguiendo)"
+
+#: apps/users/models.py:199
 msgid "Complete Registration"
 msgstr "Termine de Crear su Cuenta"
 
-#: apps/users/views.py:40
+#: apps/users/views.py:41
 #, python-format
 msgid ""
 "A link to activate your user account was sent by email to your address %s. "
@@ -731,7 +755,7 @@ msgstr ""
 "Un enlace para activar su cuenta fue enviado por correo a su dirección: %s. "
 "Para poder entrar a su cuenta por primera vez, debe que seguir ese enlace."
 
-#: apps/users/views.py:46
+#: apps/users/views.py:47
 #, python-format
 msgid ""
 "If you did not receive the confirmation email, make sure your email service "
@@ -744,15 +768,15 @@ msgstr ""
 "href=\"%s\">reenviarle el mensaje de confirmación</a> a su dirección de "
 "correo."
 
-#: apps/users/views.py:149
+#: apps/users/views.py:150
 msgid "Incorrect username, email or password."
 msgstr "Contraseña, nombre de usuario, o correo incorrectos."
 
-#: apps/users/views.py:220
+#: apps/users/views.py:221
 msgid "Congratulations! Your user account was successfully created."
 msgstr "¡Felicitaciones! Su cuenta de usuario fue creada exitosamente."
 
-#: apps/users/views.py:228 apps/users/views.py:370
+#: apps/users/views.py:229 apps/users/views.py:364
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
@@ -760,15 +784,15 @@ msgstr ""
 "¡Gracias! Hemos enviado un correo a {0} con instrucciones para que termine "
 "de crear su cuenta."
 
-#: apps/users/views.py:286
+#: apps/users/views.py:287
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, ese no parece un código de confirmación correcto"
 
-#: apps/users/views.py:291
+#: apps/users/views.py:292
 msgid "Success! You have verified your account. You may now sign in."
 msgstr "¡Éxito! Ya verificó su cuenta. Ahora puede entrar."
 
-#: apps/users/views.py:307
+#: apps/users/views.py:308
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
@@ -776,11 +800,11 @@ msgstr ""
 "Se ha enviado un código de confirmación la dirección de correo asociada a su "
 "cuenta"
 
-#: apps/users/views.py:392
+#: apps/users/views.py:386
 msgid "Profile updated"
 msgstr "Perfil actualizado"
 
-#: apps/users/views.py:398
+#: apps/users/views.py:392
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
@@ -788,23 +812,23 @@ msgstr ""
 "Ocurrieron problemas al actualizar su perfil. Por favor corríja la "
 "información e intente nuevamente."
 
-#: apps/users/views.py:435
+#: apps/users/views.py:429
 msgid "Profile image updated"
 msgstr "Imagen actualizada"
 
-#: apps/users/views.py:457
+#: apps/users/views.py:451
 msgid "Profile link added."
 msgstr "Enlace añadido."
 
-#: apps/users/views.py:466
+#: apps/users/views.py:460
 msgid "There was an error saving your link."
 msgstr "Ocurrió un error al guardar el enlace."
 
-#: apps/users/views.py:487
+#: apps/users/views.py:481
 msgid "Profile link updated"
 msgstr "Enlace actualizado"
 
-#: apps/users/views.py:508
+#: apps/users/views.py:502
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
@@ -849,105 +873,97 @@ msgstr ""
 "por las molestias ocasionadas, y esperamos que disfrute las nuevas "
 "funcionalidades."
 
-#: templates/_footer.html:6
-msgid "Drumbeat Newsletter"
-msgstr "Boletín de Drumbeat"
+#: templates/_footer.html:7
+#, fuzzy
+msgid "About Us"
+msgstr "Acerca de P2PU"
 
-#: templates/_footer.html:6
-msgid "Sign up for the Drumbeat Newsletter"
-msgstr "Suscríbase al Boletín de Drumbeat"
+#: templates/_footer.html:8 templates/base.html:53
+msgid "About P2PU"
+msgstr "Acerca de P2PU"
+
+#: templates/_footer.html:9
+msgid "Supporters"
+msgstr ""
 
 #: templates/_footer.html:10
-msgid "Drumbeat Wiki"
-msgstr "Wiki de Drumbeat"
+#, fuzzy
+msgid "Blog"
+msgstr "Blog de P2PU"
 
 #: templates/_footer.html:11
-msgid "Home of the Mozilla Project"
-msgstr "Hogar del Proyecto Mozilla"
-
-#: templates/_footer.html:11
-msgid "Mozilla.org"
-msgstr "Mozilla.org"
+msgid "Announcements"
+msgstr ""
 
 #: templates/_footer.html:12
-msgid "Mozilla Privacy Policy"
-msgstr "Política de Privacidad de Mozilla"
+msgid "Get Involved"
+msgstr ""
 
-#: templates/_footer.html:12
-msgid "Privacy Policy"
-msgstr "Política de Privacidad"
-
-#: templates/_footer.html:15
-msgid "Mozilla Drumbeat (drumbeat) on Status.net"
-msgstr "Drumbeat de Mozilla (drumbeat) en Status.net"
-
-#: templates/_footer.html:15
-msgid "Status.net"
-msgstr "Status.net"
-
-#: templates/_footer.html:16
-msgid "Mozilla Drumbeat (mozilladrumbeat) on Twitter"
-msgstr "Drumbeat de Mozilla (mozilladrumbeat) en Twitter"
-
-#: templates/_footer.html:16
-msgid "Twitter"
-msgstr "Twitter"
+#: templates/_footer.html:13
+msgid "Old P2PU Site"
+msgstr ""
 
 #: templates/_footer.html:17
+#, fuzzy
+msgid "Contact Us"
+msgstr "Contactar Participantes del Reto"
+
+#: templates/_footer.html:18
 msgid "Facebook"
 msgstr "Facebook"
 
-#: templates/_footer.html:18
-msgid "Flickr: 'mozilla drumbeat'"
-msgstr "Flickr: 'mozilla drumbeat'"
+#: templates/_footer.html:19
+msgid "Twitter"
+msgstr "Twitter"
 
-#: templates/_footer.html:18
-msgid "Flickr"
-msgstr "Flickr"
+#: templates/_footer.html:20 templates/base.html:54
+msgid "FAQ"
+msgstr "Preguntas Frecuentes"
 
-#: templates/_footer.html:23
-msgid ""
-"Except where otherwise noted, all content on p2pu.org is licensed under a <a "
-"href=\"http://creativecommons.org/licenses/by-sa/3.0/\" rel=\"license\" "
-"title=\"Creative Commons\">Creative Commons Attribution-ShareAlike 3.0 "
-"Unported License</a>."
+#: templates/_footer.html:21
+msgid "Found a Bug?"
 msgstr ""
-"Excepto donde diga lo contrario, todo el contenido en p2pu.org está cubierto "
-"por una <a href=\"http://creativecommons.org/licenses/by-sa/3.0/deed.es\" "
-"rel=\"license\" title=\"Creative Commons\">Licencia Creative Commons "
-"Atribución-CompartirIgual 3.0 Unported</a>."
-
-#: templates/_footer.html:24
-msgid ""
-"<a href=\"http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones"
-"\">We're in Beta</a>. If you run into any problems, please <a href=\"http://"
-"p2pu.lighthouseapp.com/projects/71002\">let us know!</a> Want to <a href="
-"\"http://wiki.p2pu.org/w/page/12427308/FrontPage\">learn more about P2PU and "
-"get involved?</a>"
-msgstr ""
-"<a href=\"http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones"
-"\">Estamos en Beta</a>. Si encuentra algun problema, por favor <a href="
-"\"http://p2pu.lighthouseapp.com/projects/71002\">¡háganoslo saber!</a> "
-"¿Desea <a href=\"http://wiki.p2pu.org/w/page/12427308/FrontPage\">aprender "
-"más sobre P2PU y contribuir?</a>"
 
 #: templates/_footer.html:25
-msgid "Looking for the current P2PU website?"
-msgstr "¿Busca el sitio web actual de P2PU?"
+#, fuzzy
+msgid "License Info"
+msgstr "Información General"
+
+#: templates/_footer.html:26
+msgid "License"
+msgstr ""
+
+#: templates/_footer.html:27
+#, fuzzy
+msgid "Privacy Guidelines"
+msgstr "políticas de privacidad"
+
+#: templates/_footer.html:28
+#, fuzzy
+msgid "Terms of Use"
+msgstr "términos de uso"
+
+#: templates/_footer.html:32
+msgid "Creative Commons BY SA"
+msgstr ""
+
+#: templates/_footer.html:33
+msgid "CC BY SA"
+msgstr ""
 
 #: templates/base.html:14
 msgid "Learning for everyone, by everyone, about almost anything."
 msgstr "Aprendizaje para todos, por todos y acerca de casi todo."
 
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "css/style-en.css"
 msgstr "css/style-es.css"
 
-#: templates/base.html:43
+#: templates/base.html:44
 msgid "BETA"
 msgstr "BETA"
 
-#: templates/base.html:46 templates/activity/index.html:12
+#: templates/base.html:47 templates/activity/index.html:12
 #: templates/content/comment_page.html:12
 #: templates/content/comment_sign_up.html:12
 #: templates/content/confirm_delete_page.html:12
@@ -956,80 +972,72 @@ msgstr "BETA"
 #: templates/content/edit_page.html:12 templates/content/history_page.html:18
 #: templates/content/page.html:18 templates/content/restore_version.html:12
 #: templates/content/sign_up.html:18 templates/content/version_page.html:18
-#: templates/dashboard/dashboard.html:44 templates/projects/gallery.html:4
+#: templates/dashboard/dashboard.html:45 templates/projects/gallery.html:4
 #: templates/projects/gallery.html.py:10 templates/projects/project.html:15
 #: templates/projects/project_edit.html:10 templates/users/profile.html:102
 msgid "Study Groups"
 msgstr "Grupos de Estudio"
 
-#: templates/base.html:47 templates/mojo.html:67
-#: templates/activity/index.html:16 templates/projects/sidebar.html:85
+#: templates/base.html:48 templates/mojo.html:67
+#: templates/activity/index.html:16 templates/projects/sidebar.html:94
 #: templates/users/profile.html:16 templates/users/profile_edit.html:11
 #: templates/users/user_list.html:5 templates/users/user_list.html.py:11
 msgid "People"
 msgstr "Personas"
 
-#: templates/base.html:50
+#: templates/base.html:51
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/base.html:52
-msgid "About P2PU"
-msgstr "Acerca de P2PU"
-
-#: templates/base.html:53
-msgid "FAQ"
-msgstr "Preguntas Frecuentes"
-
-#: templates/base.html:54
+#: templates/base.html:55
 msgid "P2PU Help Desk"
 msgstr "Escritorio de Ayuda en P2PU"
 
-#: templates/base.html:73 templates/mojo.html:84
+#: templates/base.html:74 templates/mojo.html:84
 #: templates/dashboard/dashboard.html:4
 msgid "Your Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:74 templates/mojo.html:85
+#: templates/base.html:75 templates/mojo.html:85
 msgid "Your Profile"
 msgstr "Mi Perfil"
 
-#: templates/base.html:75 templates/mojo.html:86
+#: templates/base.html:76 templates/mojo.html:86
 #: templates/preferences/settings.html:6
 #: templates/preferences/settings.html:12
 #: templates/preferences/settings.html:20
 msgid "Account Settings"
 msgstr "Preferencias"
 
-#: templates/base.html:81 templates/mojo.html:93
+#: templates/base.html:82 templates/mojo.html:93
 #: templates/drumbeatmail/inbox.html:4 templates/drumbeatmail/inbox.html:9
 #: templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:96 templates/mojo.html:108
+#: templates/base.html:97 templates/mojo.html:108
 msgid "View All Messages"
 msgstr "Ver Todos los Mensajes"
 
-#: templates/base.html:102
+#: templates/base.html:103
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:107
+#: templates/base.html:108
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:150 templates/drumbeatmail/base.html:52
+#: templates/base.html:151 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:169
+#: templates/base.html:170
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
-#: templates/base.html:170
+#: templates/base.html:171
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
@@ -1071,7 +1079,7 @@ msgstr "."
 #: templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
-#: templates/projects/sidebar.html:74 templates/users/profile.html:83
+#: templates/projects/sidebar.html:83 templates/users/profile.html:83
 msgid "Report Abuse"
 msgstr "Reportar Abuso"
 
@@ -1229,17 +1237,16 @@ msgstr "Reglas"
 #: templates/content/delete_restore_comment.html:62
 #: templates/content/edit_page.html:38
 #: templates/content/restore_version.html:36
-#: templates/dashboard/dashboard.html:78
+#: templates/dashboard/dashboard.html:80
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/preferences/settings_delete.html:14
 #: templates/preferences/settings_email.html:16
 #: templates/preferences/settings_notifications.html:43
 #: templates/preferences/settings_password.html:25
 #: templates/projects/contact_organizers.html:34
-#: templates/projects/project.html:81
-#: templates/projects/project_edit_description.html:14
+#: templates/projects/project.html:81 templates/projects/project_clone.html:19
 #: templates/projects/project_edit_image.html:24
-#: templates/projects/project_edit_status.html:52
+#: templates/projects/project_edit_status.html:59
 #: templates/projects/project_edit_summary.html:35
 #: templates/projects/project_edit_summary.html:38
 #: templates/schools/school_edit_image.html:23
@@ -1257,8 +1264,7 @@ msgstr "Cancelar"
 #: templates/preferences/settings_email.html:17
 #: templates/preferences/settings_notifications.html:44
 #: templates/preferences/settings_password.html:26
-#: templates/projects/project_edit_description.html:15
-#: templates/projects/project_edit_status.html:53
+#: templates/projects/project_edit_status.html:60
 #: templates/projects/project_edit_summary.html:36
 #: templates/schools/school_edit_summary.html:29
 #: templates/users/profile_edit_main.html:12
@@ -1269,6 +1275,7 @@ msgstr "Guardar"
 #: templates/challenges/submission_edit_description.html:25
 #: templates/challenges/submission_edit_summary.html:45
 #: templates/content/create_page.html:34
+#: templates/projects/project_clone.html:20
 #: templates/projects/project_edit_summary.html:39
 msgid "Create"
 msgstr "Crear"
@@ -1767,7 +1774,7 @@ msgid "View Profile"
 msgstr "Ver Perfil"
 
 #: templates/dashboard/dashboard.html:32
-#: templates/projects/_project_card.html:31 templates/projects/sidebar.html:68
+#: templates/projects/_project_card.html:31 templates/projects/sidebar.html:77
 #: templates/users/_user_card.html:12 templates/users/profile.html:89
 msgid "Followers"
 msgstr "Seguidores"
@@ -1777,16 +1784,16 @@ msgstr "Seguidores"
 msgid "Following"
 msgstr "Siguiendo"
 
-#: templates/dashboard/dashboard.html:63
+#: templates/dashboard/dashboard.html:65
 #: templates/users/emails/registration_confirm.txt:1
 msgid "Welcome to P2PU!"
 msgstr "¡Bienvenido a P2PU!"
 
-#: templates/dashboard/dashboard.html:64
+#: templates/dashboard/dashboard.html:66
 msgid "To get started, you should "
 msgstr "Para comenzar debería "
 
-#: templates/dashboard/dashboard.html:64
+#: templates/dashboard/dashboard.html:66
 msgid ""
 "update your profile</a>. This is a great way to tell people a bit more about "
 "yourself. Then find "
@@ -1794,26 +1801,31 @@ msgstr ""
 "actualizar su perfil</a>. Esta es una buena forma de decirle a otros un poco "
 "más acerca de usted. Después busque "
 
-#: templates/dashboard/dashboard.html:64
+#: templates/dashboard/dashboard.html:66
 msgid "people</a> and "
 msgstr "personas</a> y "
 
-#: templates/dashboard/dashboard.html:64
+#: templates/dashboard/dashboard.html:66
 msgid ""
 "study groups</a> that interest you and start following them! You can also "
 msgstr ""
 "grupos de estudio</a> que sean de su interés y ¡comience a seguirlos! "
 "También puede "
 
-#: templates/dashboard/dashboard.html:64
-msgid "create a new study group</a>."
+#: templates/dashboard/dashboard.html:66
+#, fuzzy
+msgid "create a new study group</a>. Plus, you can update how often P2PU "
 msgstr "crear un grupo de estudio nuevo</a>."
 
-#: templates/dashboard/dashboard.html:71
+#: templates/dashboard/dashboard.html:66
+msgid "contacts you</a>."
+msgstr ""
+
+#: templates/dashboard/dashboard.html:73
 msgid "Post a message to your followers"
 msgstr "Publicar un mensaje para sus seguidores"
 
-#: templates/dashboard/dashboard.html:80 templates/projects/project.html:83
+#: templates/dashboard/dashboard.html:82 templates/projects/project.html:83
 msgid "Post Update"
 msgstr "Publicar"
 
@@ -2095,6 +2107,11 @@ msgstr "j N Y P"
 msgid "delete"
 msgstr "eliminar"
 
+#: templates/pages/page.html:14
+#, fuzzy
+msgid "P2PU"
+msgstr "en P2PU!"
+
 #: templates/preferences/settings.html:21
 msgid "Return to Dashboard"
 msgstr "Ver Mi Página"
@@ -2200,7 +2217,7 @@ msgstr ""
 "Las contraseñas deben tener al menos 8 caracteres y contener tanto números "
 "como letras."
 
-#: templates/projects/_project_card.html:23 templates/projects/sidebar.html:56
+#: templates/projects/_project_card.html:23 templates/projects/sidebar.html:65
 #: templates/users/_user_card.html:20
 msgid "Updates"
 msgstr "Actualizaciones"
@@ -2208,7 +2225,7 @@ msgstr "Actualizaciones"
 #: templates/projects/_project_card.html:27
 #: templates/projects/project_edit.html:39
 #: templates/projects/project_edit_participants.html:7
-#: templates/projects/sidebar.html:64
+#: templates/projects/sidebar.html:73
 msgid "Participants"
 msgstr "Participantes"
 
@@ -2237,6 +2254,11 @@ msgstr "Nuevos Grupos de Estudio"
 #: templates/projects/_project_list.html:60
 msgid "Study Groups Under Development"
 msgstr "Grupos de Estudio en Desarrollo"
+
+#: templates/projects/_project_list.html:71
+#, fuzzy
+msgid "Archived Study Groups"
+msgstr "Grupos de Estudio Activos"
 
 #: templates/projects/contact_organizers.html:6
 msgid "Contact Organizers of "
@@ -2315,6 +2337,21 @@ msgstr ""
 "Mensaje importante (se salta las preferencias de notificación de todos los "
 "participantes)."
 
+#: templates/projects/project_clone.html:7
+#, fuzzy
+msgid "Clone Study Group"
+msgstr "Crear Grupo de Estudio"
+
+#: templates/projects/project_clone.html:8
+#, fuzzy
+msgid "Create a new study group based on an existing one."
+msgstr "Ese grupo de estudio no existe."
+
+#: templates/projects/project_clone.html:13
+#, fuzzy
+msgid "Existing Study Group"
+msgstr "Editar Grupo de Estudio"
+
 #: templates/projects/project_edit.html:5
 #: templates/projects/project_edit.html:28
 msgid "Edit Study Group"
@@ -2343,6 +2380,18 @@ msgstr "Estado y Fechas"
 #: templates/projects/project_edit_links_base.html:7
 msgid "Links &amp; Content"
 msgstr "Enlaces y Contenido"
+
+#: templates/projects/project_edit.html:43
+msgid "Create from Scratch"
+msgstr ""
+
+#: templates/projects/project_edit.html:45
+msgid "Clone Existing"
+msgstr ""
+
+#: templates/projects/project_edit.html:47
+msgid "Import from Old Site"
+msgstr ""
 
 #: templates/projects/project_edit_image.html:14
 msgid "Upload a Study Group Image"
@@ -2482,10 +2531,15 @@ msgid "Sign-Up Closed."
 msgstr "Inscripción Cerrada."
 
 #: templates/projects/project_edit_status.html:29
-msgid "Testing Sandbox."
-msgstr "Grupo de Estudio de Prueba."
+#, fuzzy
+msgid "Not Listed."
+msgstr "No suscrito."
 
-#: templates/projects/project_edit_status.html:33
+#: templates/projects/project_edit_status.html:36
+msgid "Archived."
+msgstr ""
+
+#: templates/projects/project_edit_status.html:40
 msgid ""
 "Optionally, provide the period of time in which you expect the study group "
 "to be active. These dates are optional and will be displayed on the group's "
@@ -2495,12 +2549,12 @@ msgstr ""
 "estudio esté activo. Estas fechas son opcionales y aparencerán en la página "
 "del grupo."
 
-#: templates/projects/project_edit_status.html:37
+#: templates/projects/project_edit_status.html:44
 msgid "Active from"
 msgstr "Activo desde el"
 
-#: templates/projects/project_edit_status.html:44
-#: templates/projects/sidebar.html:48
+#: templates/projects/project_edit_status.html:51
+#: templates/projects/sidebar.html:51
 msgid "to"
 msgstr "hasta el"
 
@@ -2545,82 +2599,92 @@ msgstr ""
 "más detallada, pero debe ser breve e ir al grano."
 
 #: templates/projects/sidebar.html:40
+#, fuzzy
+msgid "Archived"
+msgstr "Recibido"
+
+#: templates/projects/sidebar.html:43
 msgid "Under Development"
 msgstr "En Desarrollo"
 
-#: templates/projects/sidebar.html:43
-msgid "Testing Sandbox"
-msgstr "Grupo de Estudio de Prueba"
+#: templates/projects/sidebar.html:46
+#, fuzzy
+msgid "Not Listed"
+msgstr "publicó"
 
-#: templates/projects/sidebar.html:45
+#: templates/projects/sidebar.html:48
 msgid "DATE_FORMAT"
 msgstr "j N Y"
 
-#: templates/projects/sidebar.html:47
+#: templates/projects/sidebar.html:50
 msgid "Runs"
 msgstr "Activo del"
 
-#: templates/projects/sidebar.html:52
+#: templates/projects/sidebar.html:56
+msgid "Based on"
+msgstr ""
+
+#: templates/projects/sidebar.html:61
 msgid "Signup"
 msgstr "Inscripción"
 
-#: templates/projects/sidebar.html:53
+#: templates/projects/sidebar.html:62
 msgid "Closed"
 msgstr "Cerrada"
 
-#: templates/projects/sidebar.html:53
+#: templates/projects/sidebar.html:62
 msgid "Open"
 msgstr "Abierta"
 
-#: templates/projects/sidebar.html:60
+#: templates/projects/sidebar.html:69
 msgid "Organizers"
 msgstr "Organizadores"
 
-#: templates/projects/sidebar.html:79
+#: templates/projects/sidebar.html:88
 msgid "View Full Description"
 msgstr "Ver Descripción Completa"
 
-#: templates/projects/sidebar.html:102 templates/users/profile.html:42
+#: templates/projects/sidebar.html:111 templates/users/profile.html:42
 msgid "Unfollow"
 msgstr "Dejar de Seguir"
 
-#: templates/projects/sidebar.html:108 templates/users/profile.html:47
+#: templates/projects/sidebar.html:117 templates/users/profile.html:47
 msgid "Follow"
 msgstr "Seguir"
 
-#: templates/projects/sidebar.html:113
+#: templates/projects/sidebar.html:122
 msgid "Participate"
 msgstr "Participar"
 
-#: templates/projects/sidebar.html:118
+#: templates/projects/sidebar.html:127
 msgid "Edit Participants"
 msgstr "Editar Participantes"
 
-#: templates/projects/sidebar.html:120
+#: templates/projects/sidebar.html:129
 msgid "Contact Organizer"
 msgstr "Contactar Organizador"
 
-#: templates/projects/sidebar.html:132
+#: templates/projects/sidebar.html:141
 msgid "Tasks"
 msgstr "Tareas"
 
-#: templates/projects/sidebar.html:151
+#: templates/projects/sidebar.html:160
 msgid "No tasks have been added."
 msgstr "Ninguna tarea ha sido añadida."
 
-#: templates/projects/sidebar.html:156
+#: templates/projects/sidebar.html:165
 msgid "New Task"
 msgstr "Nueva Tarea"
 
-#: templates/projects/sidebar.html:162
+#: templates/projects/sidebar.html:171
 msgid "External Links"
 msgstr "Enlaces Externos"
 
-#: templates/projects/sidebar.html:180
+#: templates/projects/sidebar.html:189
 msgid "No external links have been added."
 msgstr "Ningún enlace externo ha sido añadido."
 
-#: templates/projects/sidebar.html:185
+#: templates/projects/sidebar.html:194
 msgid "Edit Links"
 msgstr "Editar Enlaces"
 
@@ -2922,6 +2986,24 @@ msgstr "Ver más en "
 msgid "See more about "
 msgstr "Ver más sobre "
 
+#: templates/users/profile.html:116
+#, fuzzy
+msgid "Past Involvement"
+msgstr "Publicar Comentario"
+
+#: templates/users/profile.html:135
+#, fuzzy
+msgid "Badges"
+msgstr "Jueces"
+
+#: templates/users/profile.html:153
+msgid "(UP)"
+msgstr ""
+
+#: templates/users/profile.html:154
+msgid "(DOWN)"
+msgstr ""
+
 #: templates/users/profile_edit.html:29
 msgid "General Info"
 msgstr "Información General"
@@ -3092,6 +3174,72 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid "Drumbeat Newsletter"
+#~ msgstr "Boletín de Drumbeat"
+
+#~ msgid "Sign up for the Drumbeat Newsletter"
+#~ msgstr "Suscríbase al Boletín de Drumbeat"
+
+#~ msgid "Drumbeat Wiki"
+#~ msgstr "Wiki de Drumbeat"
+
+#~ msgid "Home of the Mozilla Project"
+#~ msgstr "Hogar del Proyecto Mozilla"
+
+#~ msgid "Mozilla.org"
+#~ msgstr "Mozilla.org"
+
+#~ msgid "Mozilla Privacy Policy"
+#~ msgstr "Política de Privacidad de Mozilla"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Política de Privacidad"
+
+#~ msgid "Mozilla Drumbeat (drumbeat) on Status.net"
+#~ msgstr "Drumbeat de Mozilla (drumbeat) en Status.net"
+
+#~ msgid "Mozilla Drumbeat (mozilladrumbeat) on Twitter"
+#~ msgstr "Drumbeat de Mozilla (mozilladrumbeat) en Twitter"
+
+#~ msgid "Flickr: 'mozilla drumbeat'"
+#~ msgstr "Flickr: 'mozilla drumbeat'"
+
+#~ msgid "Flickr"
+#~ msgstr "Flickr"
+
+#~ msgid ""
+#~ "Except where otherwise noted, all content on p2pu.org is licensed under a "
+#~ "<a href=\"http://creativecommons.org/licenses/by-sa/3.0/\" rel=\"license"
+#~ "\" title=\"Creative Commons\">Creative Commons Attribution-ShareAlike 3.0 "
+#~ "Unported License</a>."
+#~ msgstr ""
+#~ "Excepto donde diga lo contrario, todo el contenido en p2pu.org está "
+#~ "cubierto por una <a href=\"http://creativecommons.org/licenses/by-sa/3.0/"
+#~ "deed.es\" rel=\"license\" title=\"Creative Commons\">Licencia Creative "
+#~ "Commons Atribución-CompartirIgual 3.0 Unported</a>."
+
+#~ msgid ""
+#~ "<a href=\"http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones"
+#~ "\">We're in Beta</a>. If you run into any problems, please <a href="
+#~ "\"http://p2pu.lighthouseapp.com/projects/71002\">let us know!</a> Want to "
+#~ "<a href=\"http://wiki.p2pu.org/w/page/12427308/FrontPage\">learn more "
+#~ "about P2PU and get involved?</a>"
+#~ msgstr ""
+#~ "<a href=\"http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones"
+#~ "\">Estamos en Beta</a>. Si encuentra algun problema, por favor <a href="
+#~ "\"http://p2pu.lighthouseapp.com/projects/71002\">¡háganoslo saber!</a> "
+#~ "¿Desea <a href=\"http://wiki.p2pu.org/w/page/12427308/FrontPage"
+#~ "\">aprender más sobre P2PU y contribuir?</a>"
+
+#~ msgid "Looking for the current P2PU website?"
+#~ msgstr "¿Busca el sitio web actual de P2PU?"
+
+#~ msgid "Testing Sandbox."
+#~ msgstr "Grupo de Estudio de Prueba."
+
+#~ msgid "Testing Sandbox"
+#~ msgstr "Grupo de Estudio de Prueba"
 
 #~ msgid "You can't decorate challenge"
 #~ msgstr "Usted no puede decorar el reto."
