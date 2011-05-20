@@ -13,6 +13,7 @@ log = logging.getLogger(__name__)
 
 DRUPAL_DB = 'drupal_db'
 COURSE_TYPE = 'course'
+DOCUMENT_TYPE = 'document'
 COMPLETE_STATUS = '30_complete'
 FILE_PATH_PREFIX = 'sites/$NSITE.dev.p2pu.org/files/'
 PROJECT_MISSING_IMG = '/images/project-missing.png'
@@ -55,15 +56,17 @@ def get_course(slug, full=False):
         if not full:
             return course
         course['school'] = None
-        term_node = TermNode.objects.using(DRUPAL_DB).get(nid=nid)
-        term_data = TermData.objects.using(DRUPAL_DB).get(tid=term_node.tid)
         try:
+            term_node = TermNode.objects.using(DRUPAL_DB).get(nid=nid)
+            term_data = TermData.objects.using(DRUPAL_DB).get(tid=term_node.tid)
             school = School.objects.get(old_term_name=term_data.name)
             course['school'] = school
-        except School.DoesNotExist:
+        except (School.DoesNotExist, TermNode.DoesNotExist, TermData.DoesNotExist):
             pass
         ct_course = ContentTypeCourse.objects.using(DRUPAL_DB).get(nid=nid)
-        course['short_description'] = ct_course.field_course_short_desc_value
+        course['short_description'] = ''
+        if ct_course.field_course_short_desc_value:
+            course['short_description'] = ct_course.field_course_short_desc_value
         course['long_description'] = ''
         course['detailed_description'] = ''
         if ct_course.field_course_summary_value:
@@ -79,6 +82,13 @@ def get_course(slug, full=False):
             course['detailed_description'] += '<h2>' + _('Sign-Up Task') + '</h2><br>'
             course['detailed_description'] += ct_course.field_course_sign_up_req_value + '<br>'
         course['tasks'] = []
+        tasks = OgAncestry.objects.using(DRUPAL_DB).filter(group_nid=nid)
+        for task in tasks:
+            task_node = Node.objects.using(DRUPAL_DB).get(nid=task.nid)
+            if task_node.type == DOCUMENT_TYPE:
+                ct_document = ContentTypeDocument.objects.using(DRUPAL_DB).filter(
+                    nid=task_node.nid).order_by('-vid')[0]
+                course['tasks'].append((task_node.title, ct_document.field_document_body_value))
         course['links'] = []
     except Exception, ex:
         log.error('Course %s not found on the old site: %s' % (slug, ex))
@@ -206,4 +216,23 @@ class UrlAlias(models.Model):
     language = models.CharField(max_length=36)
     class Meta:
         db_table = u'url_alias'
+
+
+class OgAncestry(models.Model):
+    nid = models.IntegerField(primary_key=True)
+    group_nid = models.IntegerField(primary_key=True)
+    class Meta:
+        db_table = u'og_ancestry'
+
+
+class ContentTypeDocument(models.Model):
+    vid = models.IntegerField(primary_key=True)
+    nid = models.IntegerField()
+    field_document_body_value = models.TextField(blank=True)
+    field_document_body_format = models.IntegerField(null=True, blank=True)
+    field_document_order_value = models.IntegerField(null=True, blank=True)
+    class Meta:
+        db_table = u'content_type_document'
+
+
 
