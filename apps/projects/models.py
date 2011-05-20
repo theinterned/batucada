@@ -78,7 +78,7 @@ class Project(ModelBase):
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
     name = models.CharField(max_length=100)
-    short_description = models.CharField(max_length=125)
+    short_description = models.CharField(max_length=150)
     long_description = models.TextField(validators=[MaxLengthValidator(700)])
     
     start_date = models.DateField(null=True, blank=True)
@@ -104,6 +104,8 @@ class Project(ModelBase):
 
     clone_of = models.ForeignKey('projects.Project', blank=True, null=True,
         related_name='derivated_projects')
+
+    imported_from = models.CharField(max_length=150, blank=True, null=True)
 
     objects = ProjectManager()
 

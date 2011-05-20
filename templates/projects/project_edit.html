@@ -43,7 +43,7 @@
        {{ _('Create from Scratch') }}</a></li>
     <li class="clone {% if clone_tab %}active{% endif %}"><a href="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif%}">
        {{ _('Clone Existing') }}</a></li>
-    <li class="import {% if import_tab %}active{% endif %}"><a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
+    <li class="import {% if import_tab %}active{% endif %}"><a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
         {{ _('Import from Old Site') }}</a></li>
     {% endif %}
       </ul>

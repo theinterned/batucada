@@ -20,6 +20,7 @@ from links import tasks
 from projects import forms as project_forms
 from projects.decorators import organizer_required
 from projects.models import Project, Participation
+from projects import drupal
 
 from l10n.urlresolvers import reverse
 from relationships.models import Relationship
@@ -62,11 +63,11 @@ def create(request):
                 new_rel.save()
             except IntegrityError:
                 pass
-            detail_description_content = render_to_string(
+            detailed_description_content = render_to_string(
                 "projects/detailed_description_initial_content.html",
                 {})
             detailed_description = Page(title=_('Full Description'), slug='full-description',
-                content=detail_description_content, listed=False,
+                content=detailed_description_content, listed=False,
                 author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
@@ -181,7 +182,7 @@ def clone(request):
             }))
         else:
             messages.error(request,
-                _("There was a problem clonning the study group."))
+                _("There was a problem cloning the study group."))
     else:
         form = project_forms.CloneProjectForm(school)
     return render_to_response('projects/project_clone.html', {
@@ -203,6 +204,92 @@ def matching_projects(request):
         projects = Project.objects.all()
     matching_projects = projects.filter(slug__icontains = request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
+
+    return HttpResponse(json, mimetype="application/x-javascript")
+
+
+@login_required
+def import_from_old_site(request):
+    user = request.user.get_profile()
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+        except School.DoesNotExist:
+            return http.HttpResponseRedirect(reverse('projects_clone'))
+    else:
+        school = None
+    if request.method == 'POST':
+        form = project_forms.ImportProjectForm(school, request.POST)
+        if form.is_valid():
+            course = form.cleaned_data['course']
+            project = Project(name=course['name'],
+                short_description= course['short_description'],
+                long_description=course['long_description'],
+                school=course['school'], imported_from=course['slug'])
+            project.save()
+            act = Activity(actor=user,
+                verb='http://activitystrea.ms/schema/1.0/post',
+                project=project,
+                target_project=project)
+            act.save()
+            participation = Participation(project=project, user=user, organizing=True)
+            participation.save()
+            new_rel = Relationship(source=user, target_project=project)
+            try:
+                new_rel.save()
+            except IntegrityError:
+                pass
+            if course['detailed_description']:
+                detailed_description_content = course['detailed_description']
+            else:
+                detailed_description_content = render_to_string(
+                    "projects/detailed_description_initial_content.html",
+                    {})
+            detailed_description = Page(title=_('Full Description'), slug='full-description',
+                content=detailed_description_content, listed=False,
+                author_id=user.id, project_id=project.id)
+            detailed_description.save()
+            project.detailed_description_id = detailed_description.id
+            sign_up_content = render_to_string("projects/sign_up_initial_content.html",
+                {})
+            sign_up = Page(title=_('Sign-Up'), slug='sign-up',
+                content=sign_up_content, listed=False, editable=False,
+                author_id=user.id, project_id=project.id)
+            sign_up.save()
+            project.sign_up_id = sign_up.id
+            project.save()
+            for title, content in course['tasks']:
+                new_task = Page(title=title, content=content, author=user,
+                    project=project)
+                new_task.save()
+            for name, url in course['links']:
+                new_link = Link(name=name, url=url, user=user, project=project)
+                new_link.save()
+            messages.success(request, _('The study group has been imported.'))
+            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+                'slug': project.slug,
+            }))
+        else:
+            messages.error(request,
+                _("There was a problem importing the study group."))
+    else:
+        form = project_forms.ImportProjectForm(school)
+    return render_to_response('projects/project_import.html', {
+        'form': form, 'import_tab': True, 'school': school,
+    }, context_instance=RequestContext(request))
+
+
+def matching_courses(request):
+    if len(request.GET['term']) == 0:
+        raise CommandException(_("Invalid request"))
+    school = None
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+        except School.DoesNotExist:
+            pass
+    matching_nodes = drupal.get_matching_courses(school=school, term=request.GET['term'])
+    json = simplejson.dumps(matching_nodes)
 
     return HttpResponse(json, mimetype="application/x-javascript")
 

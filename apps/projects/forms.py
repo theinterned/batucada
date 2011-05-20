@@ -13,6 +13,7 @@ from links.models import Link
 from users.models import UserProfile
 
 from projects.models import Project, Participation
+from projects import drupal
 
 log = logging.getLogger(__name__)
 
@@ -150,4 +151,21 @@ class CloneProjectForm(forms.Form):
         if self.school and project.school != self.school:
             raise forms.ValidationError(_('The %s study group is not part of this school.') % slug)
         return project
+
+
+class ImportProjectForm(forms.Form):
+    course = forms.CharField()
+
+    def __init__(self, school=None, *args, **kwargs):
+        super(ImportProjectForm, self).__init__(*args, **kwargs)
+        self.school = school
+
+    def clean_course(self):
+        slug = self.cleaned_data['course']
+        course = drupal.get_course(slug, full=True)
+        if not course:
+            raise forms.ValidationError(_('There is no course with this short name on the old p2pu site.'))
+        if self.school and course['school'] != self.school:
+            raise forms.ValidationError(_('The %s course was not part of this school.') % data['name'])
+        return course
 
