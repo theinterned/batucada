@@ -34,7 +34,14 @@ class School(ModelBase):
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
     text_color = models.CharField(max_length=7, default='#5A6579')
-    
+
+    # The term names are used to import school courses from the old site.
+    OLD_TERM_NAME_CHOICES = YEAR_IN_SCHOOL_CHOICES = (
+        ('Math Future', 'School of the Mathematical Future'),
+        ('SoSI', 'School of Social Innovation'),
+        ('Webcraft', 'School of Webcraft'),
+    )
+    old_term_name = models.CharField(max_length=15, blank=True, null=True, choices=OLD_TERM_NAME_CHOICES)
 
     def __unicode__(self):
         return self.name

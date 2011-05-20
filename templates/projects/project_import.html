@@ -1,0 +1,38 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}project import{% endblock %}
+
+{% block form %}
+<fieldset id="project_import" class="project clone tabpane">
+<h2>{{ _('Import from Old Site') }}</h2>
+<p class="hint">{{ _('Create a new study group based on based on a course from the old p2pu site.') }}</p>
+<form action="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif %}" method="post">
+  {% csrf_token %}
+  <p>
+    <div class="field course{% if form.course.errors %} error{% endif %}">
+      <label for="id_course">{{ _('Course') }}</label>
+      {{ form.course }}
+      {{ form.course.errors }}
+    </div>
+  </p>
+  <p class="buttons">
+    <a class="button" href="{% if school %}{% locale_url school_home slug=school.slug %}{% else %}{% locale_url projects_gallery %}{% endif %}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Create') }}">{{ _('Import') }}</button>
+  </p>
+</form>
+</fieldset>
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $('#id_course').autocomplete({
+        source: function( request, response ) {
+                url = "{% url matching_courses %}?term=" + request.term + "{% if school %}&school={{ school.slug }}{% endif %}";
+                $.getJSON(url, function(data) {
+                    response(data);
+                });
+            }
+    });
+  </script>
+{% endblock %}

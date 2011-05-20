@@ -2,6 +2,7 @@ from django import template
 
 from content.models import Page
 from projects.models import Project
+from projects import drupal
 
 
 register = template.Library()
@@ -24,6 +25,7 @@ def sidebar(context):
     school = project.school
     if school and school.declined.filter(id=project.id).exists():
         school = None
+    imported_from = drupal.get_course(project.imported_from) if project.imported_from else None
     context.update({
         'participating': is_participating,
         'participants_count': participants_count,
@@ -35,6 +37,7 @@ def sidebar(context):
         'content_pages': content_pages,
         'links': links,
         'school': school,
+        'imported_from': imported_from,
     })
     return context
 
