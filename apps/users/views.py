@@ -153,7 +153,21 @@ def login_openid_complete(request):
     r = openid_views.login_complete(
         request, render_failure=render_openid_login_failure)
     if isinstance(r, http.HttpResponseRedirect):
-        user = request.user.get_profile()
+        try:
+            user = request.user.get_profile()
+        except UserProfile.DoesNotExist:
+            user = request.user
+            username = ''
+            if user.username[:10] != 'openiduser':
+                username = user.username
+            form = forms.CreateProfileForm(initial={
+                'display_name': ' '.join((user.first_name, user.last_name)),
+                'email': user.email,
+                'username': username,
+            })
+            return render_to_response('dashboard/setup_profile.html', {
+                'form': form,
+            }, context_instance=RequestContext(request))
         if user.confirmation_code:
             logout(request)
             unconfirmed_account_notice(request, user)
