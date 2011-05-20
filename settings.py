@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'schools',
     'voting',
     'drumbeat',
+    'pages',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
