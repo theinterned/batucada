@@ -328,8 +328,9 @@ def profile_view(request, username):
         'current_projects': current_projects,
         'following': following,
         'followers': followers,
-        'skills': profile.tags.filter(category='skill'),
-        'interests': profile.tags.filter(category='interest'),
+        # TODO: enable when addition/edition of tags is implemented.
+        # 'skills': profile.tags.filter(category='skill'),
+        # 'interests': profile.tags.filter(category='interest'),
         'links': links,
         'activities': activities,
         'past_projects': past_projects,

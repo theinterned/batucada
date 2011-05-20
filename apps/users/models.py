@@ -108,7 +108,8 @@ class UserProfile(ModelBase):
         default = settings.LANGUAGE_CODE)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
-    tags = TaggableManager(through=TaggedProfile)
+    # TODO: enable when addition/edition of tags is implemented.
+    # tags = TaggableManager(through=TaggedProfile)
 
     objects = UserProfileManager()
 
