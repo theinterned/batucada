@@ -998,7 +998,7 @@ header {}
   margin-left: 0;
 }
 
-    #main .post-container {
+    #main .post-container, .modal .post-container {
       background: #fff;
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
       border-radius: 6px;
@@ -1013,6 +1013,10 @@ header {}
       behavior: url("/media/css/PIE.htc");
       float: left;
       width: 630px;
+    }
+    .modal .post-container {
+        width: 550px;
+        margin-left: 10px;
     }
 
    #main .post-container.deleted {
