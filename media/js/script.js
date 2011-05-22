@@ -350,13 +350,19 @@ $(document).ready(function() {
                 });
             }
         );
-        //prevent the browser to follow the link
+        // prevent the browser to follow the link
         return false;
     });
     
     $('#id_start_date').datepicker();
     $('#id_end_date').datepicker();
     customizeCKEditor();
+
+    // disable submit button on form submit
+    $('form').submit(function(){
+        $(this).find('input[type=submit]').attr('disabled', 'disabled');
+        $(this).find('button[type=submit]').attr('disabled', 'disabled');
+    });
 });
 
 // Recaptcha
