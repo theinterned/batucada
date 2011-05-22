@@ -45,9 +45,12 @@ def get_slug(nid):
     return alias.dst
 
 def get_course(slug, full=False):
-    alias = UrlAlias.objects.using(DRUPAL_DB).get(dst=slug)
     course = {}
     try:
+        try:
+            alias = UrlAlias.objects.using(DRUPAL_DB).get(dst=slug)
+        except UrlAlias.DoesNotExist:
+            return course
         nid = int(alias.src[len('node/'):])
         node = Node.objects.using(DRUPAL_DB).get(type=COURSE_TYPE, nid=nid)
         course['name'] = node.title
