@@ -1,5 +1,7 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
 
 {% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
 
@@ -31,7 +33,24 @@
   {% else %}{% if comment %}
     <h1>{{ _('Edit Answer') }} {{ comment.author }} {{ comment.created_on }} </h1>
   {% else %}{% if reply_to %}
-    <h1>{{ _('Reply') }} {{ reply_to.author }} {{ reply_to.created_on }} </h1>
+    <h1>{{ _('Reply') }}</h1>
+    <br>
+    <div id="posts"><div class="post-container">
+      <img class="member-picture" width="54" height="54" src="{{ reply_to.author.image_or_default }}">
+      <div class="post-contents">
+        <div class="post-details">
+          {{ reply_to.author.display_name }} &nbsp; {{ reply_to.created_on }}
+        </div>
+        <div class="post-body">
+          {% if not reply_to.reply_to %}
+            <p><strong>{{ _('Bio:') }}</strong> {{ reply_to.author.bio|safe }}</p>
+	        <p><strong>{{ _('Location:') }}</strong> {{ reply_to.author.location }}</p>
+	        <h3>{{ _('Answer:') }}</h3>
+          {% endif %}
+          {{ reply_to.content|youtube|slideshare|safe }}
+       </div>
+    </div></div>
+    <br clear="both">
   {% else %}
     <h1>{{ page.title }} {{ _(': Answer Questions') }}</h1>
   {% endif %}{% endif %}{% endif %}
