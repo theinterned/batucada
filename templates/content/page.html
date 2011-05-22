@@ -40,7 +40,7 @@
 {% if user.is_authenticated %}
     <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse model="page" app_label="content" pk=page.id %}">{{_('Report Abuse')}}</a></p>
 {% endif %}
-<h1>{{ page.title }}</h1>
+<h1 {% if page.collaborative and page.editable %}class="collaborative"{% endif %}>{{ page.title }}</h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
 {% if first_level_comments %}

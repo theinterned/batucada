@@ -1207,6 +1207,10 @@ header {}
     #posts .edit{
 		background: url("/media/images/edit.icon.png") 0 0 no-repeat;
 	}
+    .collaborative {
+        background: url("/media/images/collaborative.png") 0 0 no-repeat;
+        padding-left: 42px;
+    }
 	#posts .report,
 	.supplemental_actions .report {
 		background: url("/media/images/report.icon.png") 0 1px no-repeat;
