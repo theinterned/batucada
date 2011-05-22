@@ -181,10 +181,7 @@ def comment_page(request, slug, page_slug, comment_id=None):
             comment.abs_reply_to = abs_reply_to
             comment.save()
             messages.success(request, _('Comment posted!'))
-            return HttpResponseRedirect(reverse('page_show', kwargs={
-                'slug': slug,
-                'page_slug': page.slug,
-            }))
+            return HttpResponseRedirect(comment.get_absolute_url())
         else:
             messages.error(request,
                            _('There was a problem posting the comment. Comments cannot be empty.'))
@@ -407,10 +404,7 @@ def comment_sign_up(request, slug, comment_id=None):
             comment.save()
             success_msg = _('Reply posted!') if reply_to else _('Answer submitted!')
             messages.success(request, success_msg)
-            return HttpResponseRedirect(reverse('page_show', kwargs={
-                'slug': slug,
-                'page_slug': page.slug,
-            }))
+            return HttpResponseRedirect(comment.get_absolute_url())
         else:
             error_msg = _('There was a problem posting your reply. Reply cannot be empty. ') if reply_to \
                         else _('There was a problem submitting your answer. Answer cannot be empty. ')
