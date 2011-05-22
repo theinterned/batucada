@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-19 23:06-0500\n"
+"POT-Creation-Date: 2011-05-22 08:32-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -479,7 +479,7 @@ msgstr "Usted no está organizando este grupo de estudio."
 msgid "You are not participating in this study group"
 msgstr "Usted no está participando en este grupo de estudio"
 
-#: apps/projects/drupal.py:73
+#: apps/projects/drupal.py:76
 #: templates/challenges/submission_edit_summary.html:19
 #: templates/challenges/submission_show.html:39
 #: templates/projects/project_edit.html:36
@@ -487,15 +487,15 @@ msgstr "Usted no está participando en este grupo de estudio"
 msgid "Summary"
 msgstr "Resumen"
 
-#: apps/projects/drupal.py:76
+#: apps/projects/drupal.py:79
 msgid "Learning Objectives"
 msgstr "Objetivos de Aprendizaje"
 
-#: apps/projects/drupal.py:79
+#: apps/projects/drupal.py:82
 msgid "Prerequisites"
 msgstr "Prerequisitos"
 
-#: apps/projects/drupal.py:82
+#: apps/projects/drupal.py:85
 msgid "Sign-Up Task"
 msgstr "Tarea de Inscripción"
 
@@ -937,47 +937,51 @@ msgstr "Involucrarse"
 msgid "Old P2PU Site"
 msgstr "Antiguo Sitio de P2PU"
 
-#: templates/_footer.html:17
+#: templates/_footer.html:17 templates/base.html:55
 msgid "Contact Us"
-msgstr "Contactenos"
+msgstr "Contáctenos"
 
 #: templates/_footer.html:18
+msgid "Email"
+msgstr "Correo"
+
+#: templates/_footer.html:19
 msgid "Facebook"
 msgstr "Facebook"
 
-#: templates/_footer.html:19
+#: templates/_footer.html:20
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/_footer.html:20 templates/base.html:54
+#: templates/_footer.html:21 templates/base.html:54
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
-#: templates/_footer.html:21
+#: templates/_footer.html:22
 msgid "Found a Bug?"
 msgstr "¿Encontró una falla?"
 
-#: templates/_footer.html:25
+#: templates/_footer.html:26
 msgid "License Info"
 msgstr "Información de Licencia"
 
-#: templates/_footer.html:26
+#: templates/_footer.html:27
 msgid "License"
 msgstr "Licencia"
 
-#: templates/_footer.html:27
+#: templates/_footer.html:28
 msgid "Privacy Guidelines"
 msgstr "Políticas de Privacidad"
 
-#: templates/_footer.html:28
+#: templates/_footer.html:29
 msgid "Terms of Use"
 msgstr "Términos de Uso"
 
-#: templates/_footer.html:32
+#: templates/_footer.html:33
 msgid "Creative Commons BY SA"
 msgstr "Creative Commons REC/BY CI/SA"
 
-#: templates/_footer.html:33
+#: templates/_footer.html:34
 msgid "CC BY SA"
 msgstr "CC REC/BY CI/SA"
 
@@ -1019,55 +1023,55 @@ msgstr "Personas"
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/base.html:55
+#: templates/base.html:56
 msgid "P2PU Help Desk"
 msgstr "Escritorio de Ayuda en P2PU"
 
-#: templates/base.html:74 templates/mojo.html:84
+#: templates/base.html:75 templates/mojo.html:84
 #: templates/dashboard/dashboard.html:4
 msgid "Your Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:75 templates/mojo.html:85
+#: templates/base.html:76 templates/mojo.html:85
 msgid "Your Profile"
 msgstr "Mi Perfil"
 
-#: templates/base.html:76 templates/mojo.html:86
+#: templates/base.html:77 templates/mojo.html:86
 #: templates/preferences/settings.html:6
 #: templates/preferences/settings.html:12
 #: templates/preferences/settings.html:20
 msgid "Account Settings"
 msgstr "Preferencias"
 
-#: templates/base.html:82 templates/mojo.html:93
+#: templates/base.html:83 templates/mojo.html:93
 #: templates/drumbeatmail/inbox.html:4 templates/drumbeatmail/inbox.html:9
 #: templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:97 templates/mojo.html:108
+#: templates/base.html:98 templates/mojo.html:108
 msgid "View All Messages"
 msgstr "Ver Todos los Mensajes"
 
-#: templates/base.html:103
+#: templates/base.html:104
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:108
+#: templates/base.html:109
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:151 templates/drumbeatmail/base.html:52
+#: templates/base.html:152 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:170
+#: templates/base.html:171
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
-#: templates/base.html:171
+#: templates/base.html:172
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
