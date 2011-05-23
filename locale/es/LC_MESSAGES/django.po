@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-22 08:32-0400\n"
+"POT-Creation-Date: 2011-05-22 22:49-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,9 +261,9 @@ msgstr "Este comentario fue eliminado."
 
 #: apps/content/views.py:69 apps/content/views.py:76 apps/content/views.py:139
 #: apps/content/views.py:141 apps/content/views.py:166
-#: apps/content/views.py:206 apps/content/views.py:254
-#: apps/content/views.py:268 apps/content/views.py:284
-#: apps/content/views.py:291
+#: apps/content/views.py:203 apps/content/views.py:251
+#: apps/content/views.py:265 apps/content/views.py:281
+#: apps/content/views.py:288
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
@@ -272,7 +272,7 @@ msgstr "Usted no puede editar esta página"
 msgid "%s updated!"
 msgstr "¡%s actualizada!"
 
-#: apps/content/views.py:94 apps/content/views.py:310
+#: apps/content/views.py:94 apps/content/views.py:307
 #, python-format
 msgid "There was a problem saving %s."
 msgstr "Ocurrió un problema al guardar %s."
@@ -294,95 +294,95 @@ msgstr "¡%s eliminada!"
 msgid "Comment posted!"
 msgstr "¡Comentario publicado!"
 
-#: apps/content/views.py:190
+#: apps/content/views.py:187
 msgid "There was a problem posting the comment. Comments cannot be empty."
 msgstr ""
 "Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:211 apps/content/views.py:455
+#: apps/content/views.py:208 apps/content/views.py:449
 msgid "Comment updated!"
 msgstr "¡Comentario actualizado!"
 
-#: apps/content/views.py:215
+#: apps/content/views.py:212
 msgid "There was a problem saving the comment."
 msgstr "Ocurrió un problema al guardar el comentario."
 
-#: apps/content/views.py:230 apps/content/views.py:438
+#: apps/content/views.py:227 apps/content/views.py:432
 msgid "You can't edit this comment"
 msgstr "Usted no puede editar este comentario"
 
-#: apps/content/views.py:235
+#: apps/content/views.py:232
 msgid "Answer deleted!"
 msgstr "¡Respuesta eliminada!"
 
-#: apps/content/views.py:235
+#: apps/content/views.py:232
 msgid "Answer restored!"
 msgstr "¡Respuesta restaurada!"
 
-#: apps/content/views.py:237
+#: apps/content/views.py:234
 msgid "Comment deleted!"
 msgstr "¡Comentario eliminado!"
 
-#: apps/content/views.py:237
+#: apps/content/views.py:234
 msgid "Comment restored!"
 msgstr "¡Comentario restaurado!"
 
-#: apps/content/views.py:303
+#: apps/content/views.py:300
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
-#: apps/content/views.py:379 apps/content/views.py:381
-#: apps/content/views.py:383 apps/content/views.py:488
+#: apps/content/views.py:376 apps/content/views.py:378
+#: apps/content/views.py:380 apps/content/views.py:482
 msgid "You can't see this page"
 msgstr "Usted no puede ver esta página"
 
-#: apps/content/views.py:388
+#: apps/content/views.py:385
 msgid "There exists already an answer"
 msgstr "Ya hay una respuesta"
 
-#: apps/content/views.py:408
+#: apps/content/views.py:405
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:408
+#: apps/content/views.py:405
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:415
+#: apps/content/views.py:409
 msgid "There was a problem posting your reply. Reply cannot be empty. "
 msgstr ""
 "Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:416
+#: apps/content/views.py:410
 msgid "There was a problem submitting your answer. Answer cannot be empty. "
 msgstr ""
 "Ocurrió un problema al enviar su respuesta. La respuesta no puede estar "
 "vacía."
 
-#: apps/content/views.py:455
+#: apps/content/views.py:449
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/content/views.py:459
+#: apps/content/views.py:453
 msgid "There was a problem updating your comment. Comments cannot be empty. "
 msgstr ""
 "Ocurrió un problema al actualizar el comentario.  Los comentarios no pueden "
 "estar vacíos."
 
-#: apps/content/views.py:460
+#: apps/content/views.py:454
 msgid "There was a problem updating your answer. Answers cannot be empty. "
 msgstr ""
 "Ocurrió un problema al actualizar su respuesta. La respuesta no puede estar "
 "vacía."
 
-#: apps/content/views.py:504
+#: apps/content/views.py:498
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/content/views.py:506
+#: apps/content/views.py:500
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
@@ -479,7 +479,7 @@ msgstr "Usted no está organizando este grupo de estudio."
 msgid "You are not participating in this study group"
 msgstr "Usted no está participando en este grupo de estudio"
 
-#: apps/projects/drupal.py:76
+#: apps/projects/drupal.py:75
 #: templates/challenges/submission_edit_summary.html:19
 #: templates/challenges/submission_show.html:39
 #: templates/projects/project_edit.html:36
@@ -487,15 +487,15 @@ msgstr "Usted no está participando en este grupo de estudio"
 msgid "Summary"
 msgstr "Resumen"
 
-#: apps/projects/drupal.py:79
+#: apps/projects/drupal.py:78
 msgid "Learning Objectives"
 msgstr "Objetivos de Aprendizaje"
 
-#: apps/projects/drupal.py:82
+#: apps/projects/drupal.py:81
 msgid "Prerequisites"
 msgstr "Prerequisitos"
 
-#: apps/projects/drupal.py:85
+#: apps/projects/drupal.py:84
 msgid "Sign-Up Task"
 msgstr "Tarea de Inscripción"
 
@@ -913,7 +913,7 @@ msgstr ""
 msgid "About Us"
 msgstr "Acerca de Nosotros"
 
-#: templates/_footer.html:8 templates/base.html:53
+#: templates/_footer.html:8 templates/base.html:54
 msgid "About P2PU"
 msgstr "Acerca de P2PU"
 
@@ -921,7 +921,7 @@ msgstr "Acerca de P2PU"
 msgid "Supporters"
 msgstr "Patrocinador"
 
-#: templates/_footer.html:10
+#: templates/_footer.html:10 templates/base.html:50
 msgid "Blog"
 msgstr "Blog"
 
@@ -937,7 +937,7 @@ msgstr "Involucrarse"
 msgid "Old P2PU Site"
 msgstr "Antiguo Sitio de P2PU"
 
-#: templates/_footer.html:17 templates/base.html:55
+#: templates/_footer.html:17 templates/base.html:56
 msgid "Contact Us"
 msgstr "Contáctenos"
 
@@ -953,7 +953,7 @@ msgstr "Facebook"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/_footer.html:21 templates/base.html:54
+#: templates/_footer.html:21 templates/base.html:55
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
@@ -998,8 +998,8 @@ msgid "BETA"
 msgstr "BETA"
 
 #: templates/base.html:47 templates/activity/index.html:12
-#: templates/content/comment_page.html:12
-#: templates/content/comment_sign_up.html:12
+#: templates/content/comment_page.html:14
+#: templates/content/comment_sign_up.html:14
 #: templates/content/confirm_delete_page.html:12
 #: templates/content/create_page.html:11
 #: templates/content/delete_restore_comment.html:12
@@ -1019,59 +1019,59 @@ msgstr "Grupos de Estudio"
 msgid "People"
 msgstr "Personas"
 
-#: templates/base.html:51
+#: templates/base.html:52
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "P2PU Help Desk"
 msgstr "Escritorio de Ayuda en P2PU"
 
-#: templates/base.html:75 templates/mojo.html:84
+#: templates/base.html:76 templates/mojo.html:84
 #: templates/dashboard/dashboard.html:4
 msgid "Your Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:76 templates/mojo.html:85
+#: templates/base.html:77 templates/mojo.html:85
 msgid "Your Profile"
 msgstr "Mi Perfil"
 
-#: templates/base.html:77 templates/mojo.html:86
+#: templates/base.html:78 templates/mojo.html:86
 #: templates/preferences/settings.html:6
 #: templates/preferences/settings.html:12
 #: templates/preferences/settings.html:20
 msgid "Account Settings"
 msgstr "Preferencias"
 
-#: templates/base.html:83 templates/mojo.html:93
+#: templates/base.html:84 templates/mojo.html:93
 #: templates/drumbeatmail/inbox.html:4 templates/drumbeatmail/inbox.html:9
 #: templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:98 templates/mojo.html:108
+#: templates/base.html:99 templates/mojo.html:108
 msgid "View All Messages"
 msgstr "Ver Todos los Mensajes"
 
-#: templates/base.html:104
+#: templates/base.html:105
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:109
+#: templates/base.html:110
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:152 templates/drumbeatmail/base.html:52
+#: templates/base.html:153 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:171
+#: templates/base.html:172
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
-#: templates/base.html:172
+#: templates/base.html:173
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
@@ -1265,8 +1265,8 @@ msgstr "Reglas"
 #: templates/challenges/submission_edit_description.html:24
 #: templates/challenges/submission_edit_summary.html:41
 #: templates/challenges/submission_edit_summary.html:44
-#: templates/content/comment_page.html:58
-#: templates/content/comment_sign_up.html:76
+#: templates/content/comment_page.html:71
+#: templates/content/comment_sign_up.html:95
 #: templates/content/confirm_delete_page.html:32
 #: templates/content/create_page.html:32
 #: templates/content/delete_restore_comment.html:62
@@ -1293,8 +1293,8 @@ msgstr "Cancelar"
 
 #: templates/challenges/challenge_edit_summary.html:100
 #: templates/challenges/voter_details.html:20
-#: templates/content/comment_page.html:61
-#: templates/content/comment_sign_up.html:79
+#: templates/content/comment_page.html:74
+#: templates/content/comment_sign_up.html:98
 #: templates/content/edit_page.html:40
 #: templates/dashboard/setup_profile.html:9
 #: templates/preferences/settings_email.html:17
@@ -1478,8 +1478,8 @@ msgid "Leave a comment."
 msgstr "Deje un comentario."
 
 #: templates/challenges/submission_show.html:78
-#: templates/content/comment_page.html:63
-#: templates/content/comment_sign_up.html:81
+#: templates/content/comment_page.html:76
+#: templates/content/comment_sign_up.html:100
 msgid "Post"
 msgstr "Publicar"
 
@@ -1511,24 +1511,24 @@ msgstr "Un buen título es corto y descriptivo."
 msgid "Collaborative work (editable by all the participants)."
 msgstr "Trabajo colaborativo (editable por todos los participantes)."
 
-#: templates/content/comment_page.html:32
-#: templates/content/comment_sign_up.html:30
+#: templates/content/comment_page.html:33
+#: templates/content/comment_sign_up.html:32
 msgid "Edit Comment"
 msgstr "Editar Comentario"
 
-#: templates/content/comment_page.html:34
+#: templates/content/comment_page.html:35
 msgid "Reply Comment"
 msgstr "Respuesta al Comentario"
 
-#: templates/content/comment_page.html:36
+#: templates/content/comment_page.html:49
 msgid "Comment"
 msgstr "Comentario"
 
-#: templates/content/comment_sign_up.html:32
+#: templates/content/comment_sign_up.html:34
 msgid "Edit Answer"
 msgstr "Editar Respuesta"
 
-#: templates/content/comment_sign_up.html:34 templates/content/page.html:66
+#: templates/content/comment_sign_up.html:36 templates/content/page.html:66
 #: templates/content/page.html.py:95 templates/content/sign_up.html:58
 #: templates/content/sign_up.html.py:101 templates/drumbeatmail/inbox.html:48
 #: templates/drumbeatmail/inbox.html:95 templates/drumbeatmail/reply.html:4
@@ -1536,15 +1536,31 @@ msgstr "Editar Respuesta"
 msgid "Reply"
 msgstr "Responder"
 
-#: templates/content/comment_sign_up.html:36
+#: templates/content/comment_sign_up.html:46 templates/content/sign_up.html:76
+#: templates/content/emails/sign_up_updated.txt:8
+msgid "Bio:"
+msgstr "Biografía:"
+
+#: templates/content/comment_sign_up.html:47 templates/content/sign_up.html:77
+#: templates/content/emails/sign_up_updated.txt:10
+#: templates/users/profile.html:62
+msgid "Location:"
+msgstr "Ubicación:"
+
+#: templates/content/comment_sign_up.html:48 templates/content/sign_up.html:78
+#: templates/content/emails/sign_up_updated.txt:12
+msgid "Answer:"
+msgstr "Respuesta:"
+
+#: templates/content/comment_sign_up.html:55
 msgid ": Answer Questions"
 msgstr ": Responder Preguntas"
 
-#: templates/content/comment_sign_up.html:58
+#: templates/content/comment_sign_up.html:77
 msgid "Profile"
 msgstr "Perfil"
 
-#: templates/content/comment_sign_up.html:59
+#: templates/content/comment_sign_up.html:78
 msgid ""
 "First update your profile information, which will be included with your "
 "answer."
@@ -1552,15 +1568,15 @@ msgstr ""
 "Actualice la información de su perfil, la cual será incluida con su "
 "respuesta."
 
-#: templates/content/comment_sign_up.html:62
+#: templates/content/comment_sign_up.html:81
 msgid "Questions"
 msgstr "Preguntas"
 
-#: templates/content/comment_sign_up.html:63
+#: templates/content/comment_sign_up.html:82
 msgid "Then answer the sign-up questions listed below."
 msgstr "Responda las preguntas de inscripción listadas a continuación."
 
-#: templates/content/comment_sign_up.html:83
+#: templates/content/comment_sign_up.html:102
 msgid "Submit"
 msgstr "Enviar"
 
@@ -1676,22 +1692,6 @@ msgstr "Respuestas"
 #: templates/content/sign_up.html:41
 msgid "Pending Answers:"
 msgstr "Respuesta Pendiente:"
-
-#: templates/content/sign_up.html:76
-#: templates/content/emails/sign_up_updated.txt:8
-msgid "Bio:"
-msgstr "Biografía:"
-
-#: templates/content/sign_up.html:77
-#: templates/content/emails/sign_up_updated.txt:10
-#: templates/users/profile.html:62
-msgid "Location:"
-msgstr "Ubicación:"
-
-#: templates/content/sign_up.html:78
-#: templates/content/emails/sign_up_updated.txt:12
-msgid "Answer:"
-msgstr "Respuesta:"
 
 #: templates/content/sign_up.html:84
 msgid "Add Participant"

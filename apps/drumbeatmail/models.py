@@ -30,9 +30,9 @@ def message_sent_handler(sender, **kwargs):
     sender = message.sender.get_profile().display_name
     ulang = get_language()
     activate(user.get_profile().preflang or settings.LANGUAGE_CODE)
-    subject = ugettext('New Message from %(display_name)s' % {
+    subject = ugettext('New Message from %(display_name)s') % {
         'display_name': sender,
-        })
+        }
     body = render_to_string('drumbeatmail/emails/direct_message.txt', {
         'sender': sender,
         'message': message.body,
