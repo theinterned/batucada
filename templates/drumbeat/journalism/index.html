@@ -52,7 +52,7 @@ How would you involve the public in the newsmaking, editing or sharing process? 
           <ul class="popularideas">
             {% for submission in recent_submissions %}
             <li>
-              <p>{{ submission.summary }} | <a href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}">Read more...</a></p>
+              <p>{{ submission.summary }} | <a href="{% locale_url submission_show slug=current_challenge.slug submission_id=submission.pk %}">Read more...</a></p>
             </li>
             {% endfor %}
           </ul>
