@@ -12,7 +12,7 @@
 
     <a href="http://identi.ca/notice/new?status_textarea={{ "#mojo"|urlencode}}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/statusnet.png" class="" alt="share on statusnet" /></a>
   
-    <a href="http://twitter.com/home?status={{ "#mojo"|urlencode }}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/twitter.png" class="" alt="share on statusnet" /></a>
+    <a href="http://twitter.com/intent/tweet?text={{ "#mojo"|urlencode }}+{{ submission.title|urlencode }}+{{ url|urlencode }}"><img src="{{ MEDIA_URL}}images/twitter.png" class="" alt="share on statusnet" /></a>
 
     <a href="http://www.facebook.com/sharer.php?u={{ url|urlencode }}&t={{ submission.title|urlencode }}"><img src="{{ MEDIA_URL}}images/facebook.png" class="" alt="share on statusnet" /></a>
   </p>
