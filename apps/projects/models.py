@@ -180,8 +180,9 @@ class Project(ModelBase):
         super(Project, self).save()
 
     def get_image_url(self):
-        image_path = self.image if self.image else 'images/project-missing.png'
-        return settings.MEDIA_URL + image_path
+        missing = settings.MEDIA_URL + 'images/project-missing.png'
+        image_path = self.image.url if self.image else missing
+        return image_path
 
 
 class Participation(ModelBase):

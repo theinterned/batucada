@@ -15,7 +15,6 @@ DRUPAL_DB = 'drupal_db'
 COURSE_TYPE = 'course'
 DOCUMENT_TYPE = 'document'
 COMPLETE_STATUS = '30_complete'
-FILE_PATH_PREFIX = 'sites/$NSITE.dev.p2pu.org/files/'
 PROJECT_MISSING_IMG = '/images/project-missing.png'
 
 
@@ -116,8 +115,8 @@ def get_matching_courses(school=None, term=None):
 def get_image_url(fid):
     if fid:
         f = Files.objects.using(DRUPAL_DB).get(fid=fid)
-        if f.filepath.startswith(FILE_PATH_PREFIX):
-            return settings.DRUPAL_FILES_URL + f.filepath[len(FILE_PATH_PREFIX):]
+        if f.filepath.startswith(settings.FILE_PATH_PREFIX):
+            return settings.DRUPAL_FILES_URL + f.filepath[len(settings.FILE_PATH_PREFIX):]
     return settings.MEDIA_URL + PROJECT_MISSING_IMG
 
 
