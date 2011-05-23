@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-22 22:49-0400\n"
+"POT-Creation-Date: 2011-05-23 00:47-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2757,7 +2757,7 @@ msgstr "¿Qué espera lograr al participar?"
 #: templates/projects/sign_up_initial_content.html:6
 msgid "Are you interested in helping with the study group organization?"
 msgstr ""
-"¿Esta interesado(a) en ayudar con la organización del grupo de estudio?"
+"¿Está interesado(a) en ayudar con la organización del grupo de estudio?"
 
 #: templates/projects/sign_up_initial_content.html:9
 msgid ""
