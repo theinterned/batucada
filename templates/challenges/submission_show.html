@@ -62,7 +62,7 @@
     {% get_comment_list for submission as comment_list %}
     <dl id="comments">
     {% for comment in comment_list %}
-      <dt id="c{{ comment.pk }}">{{ comment.submit_date }} - {{ comment.user }}</dt>
+      <strong><dt id="c{{ comment.pk }}">{{ comment.submit_date }} - {{ comment.user }}</dt></strong>
       <dd>{{ comment.comment|linebreaks }}</dd>
     {% endfor %}
     </dl>
