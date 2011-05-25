@@ -3,9 +3,9 @@
   <figure>
     <a href="{{ project.get_absolute_url }}">
       {% if project.image %}
-      <img src="/media/{{ project.image }}" width="203" height="128" alt="project image"/>
+      <img src="/media/{{ project.image }}" width="203" height="125" alt="{{ project.name }}"/>
       {% else %}
-      <img src="/media/images/project-missing.png" width="203" height="128" alt="project image"/>
+      <img src="/media/images/project-missing.png" width="203" height="125" alt="{{ project.name }}"/>
       {% endif %}
     </a>
   </figure>

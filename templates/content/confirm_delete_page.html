@@ -8,6 +8,7 @@
 
 {% block breadcrumbs %}
   <div class="container">
+    <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
