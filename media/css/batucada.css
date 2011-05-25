@@ -328,7 +328,7 @@ header {}
       margin-top: 48px;
       padding-left: 150px;
       height: 42px;
-      width: 850px;
+      width: 840px;
       background: #fff;
       z-index: 1;
       border-radius: 10px;
@@ -494,28 +494,43 @@ header {}
           }
     
   #breadcrumbs {
-    height: 31px;
+    height: 44px;
     width: 990px;
     margin: auto auto;
     background: #fff;
     font-size: 11px;
-    line-height: 31px;
+    /*line-height: 31px;*/
+    line-height: 22px;
 	padding-left:10px;
 	border-radius: 10px;
     border: solid 1px #EEE;
   }
-    #breadcrumbs nav{
+
+    #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
+    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs {
+        height: 6em;    
     }
-      #breadcrumbs nav .arrow {
+    
+    #breadcrumbs .container {
+        padding: 13px 3px;
+    }
+    
+    #breadcrumbs nav .arrow {
         color: #7f7f7f;
         display: inline;
         background: url("/media/images/arrow.png") no-repeat left center;
         margin: 0 5px;
-      }
+    }
+
     #project-actions {
-      float: right;
-      position: relative;
-      top: -28px;
+        float: right;
+        position: relative;
+        top: -35px;
+        margin-right: 10px;
+    }
+    
+    #user_profile #project-actions, #project_gallery #project-actions, #school_home #project-actions, #inbox #project-actions {
+        top: -25px;
     }
     
     #project-actions .button {
@@ -523,13 +538,13 @@ header {}
       margin-right: 15px;
     }
 #content {
-  padding-top: 25px;
+  padding-top: 17px;
 }
   #sidebar {
     float: left;
-    width: 260px;
+    width: 245px;
     background: #fff;
-    padding: 6px;
+    padding: 13px;
     border-radius: 10px;
     border: solid 1px #EEE;
   }
@@ -564,7 +579,7 @@ header {}
 		padding-bottom: 5px;
 	}
 	#sidebar .panel:first-child{
-		margin-top: 10px;
+		margin-top: 0px;
 	}
     #project {}
       #project-follow {
@@ -984,7 +999,7 @@ header {}
   
 #main {
   margin-left: 40px;
-  width: 650px;
+  width: 652px;
   float: left;
   background-color: white;
   padding: 15px;

@@ -2,14 +2,12 @@
 
 <div id="sidebar">
   <section id="project"class="panel">
-    <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
-    <br>
     <figure class="project_img">
       <a href="{{ project.get_absolute_url }}">
         {% if project.image %}
-  	<img src="{{ MEDIA_URL }}{{ project.image }}" width="197" height="120" alt="project image"/>
+  	         <img src="{{ MEDIA_URL }}{{ project.image }}" width="243" height="150" alt="project image"/>
         {% else %}
-        <img src="/media/images/project-missing.png" width="197" height="120" alt="project image"/>
+             <img src="/media/images/project-missing.png" width="243" height="150" alt="project image"/>
         {% endif %}
       </a>
     </figure>
