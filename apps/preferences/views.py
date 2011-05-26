@@ -46,11 +46,11 @@ def settings(request):
         return HttpResponseRedirect(reverse('preferences_settings'))
     preferences = AccountPreferences.objects.filter(
         user=request.user.get_profile())
-    prefs = {'domain': Site.objects.get_current().domain, 'participations': participations}
+    prefs = {'domain': Site.objects.get_current().domain, 'participations': participations, 'profile': profile, 'settings_tab': True}
     for preference in preferences:
         log.debug("%s => %s" % (preference.key, preference.value))
         prefs[preference.key] = preference.value
-    return render_to_response('preferences/settings_notifications.html', prefs,
+    return render_to_response('users/settings_notifications.html', prefs,
                               context_instance=RequestContext(request))
 
 @login_required
@@ -69,9 +69,11 @@ def email(request):
     else:
         form = forms.EmailEditForm(profile.username, instance=profile)
 
-    return render_to_response('preferences/settings_email.html', {
+    return render_to_response('users/settings_email.html', {
+        'profile': profile,
         'email': email,
         'form': form,
+        'email_tab': True,
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -94,8 +96,10 @@ def password(request):
     else:
         form = forms.PasswordEditForm(instance=profile)
 
-    return render_to_response('preferences/settings_password.html', {
+    return render_to_response('users/settings_password.html', {
+        'profile': profile,
         'form': form,
+        'password_tab': True,
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -106,5 +110,5 @@ def delete(request):
         profile.user.delete()
         profile.delete()
         return HttpResponseRedirect(reverse('users_logout'))
-    return render_to_response('preferences/settings_delete.html', {
+    return render_to_response('users/settings_delete.html', {
     }, context_instance=RequestContext(request))

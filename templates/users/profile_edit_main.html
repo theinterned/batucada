@@ -6,7 +6,7 @@
 <fieldset id="profile_edit_info" class="profile edit info tabpane">
 <form action="{% locale_url users_profile_edit %}" method="post">
   {% csrf_token %}
-{% include "users/_profile_edit.html" %}
+  {% include "users/_profile_edit.html" %}
   <p class="buttons">
   <a class="button" href="{{ profile.get_absolute_url }}">{{ _('Cancel') }}</a>
   <button type="submit" >{{ _('Save') }}</button>

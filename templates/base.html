@@ -70,40 +70,19 @@
 		{% else %}
 		<img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19">
 		{% endif %}
-		<span id="user-name">{{ user.get_profile.username|slice:":15" }}</span>
+		My P2PU
+		{% if messages_inbox_count > 0 %}
+          <span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>
+        {% endif %}
 	      </a>
 	      <ul id="user-actions">
-		<li><a href="{% locale_url dashboard_index %}">{{ _('Your Dashboard') }}</a></li>
-		<li><a href="{{ user.get_profile.get_absolute_url }}">{{ _('Your Profile') }}</a></li>
-		<li><a href="{% locale_url preferences_settings %}">{{ _('Account Settings') }}</a></li>
+			<li><a href="{% locale_url dashboard_index %}">{{ _('Dashboard') }}</a></li>
+			<li><a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a></li>
+			<li><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></li>
+			<li><a href="{% locale_url drumbeatmail_inbox %}">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>
+			<li><a href="{% locale_url users_logout %}">{{ _('Logout') }}</a></li>
 	      </ul>
 	    </li> <!-- /#user -->
-	    <li class="separator ir"></li>
-	    <li id="inbox" class="menu">
-	      <a href="#" id="inbox-link" class="top-level">
-		{{ _('Inbox') }}
-		{% if messages_inbox_count > 0 %}
-		  <span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>
-		{% endif %}
-	      </a>
-	      <ul id="inbox-messages">
-		{% for message in preview_messages %}
-		  <li class="message">
-		    <a href="{% locale_url drumbeatmail_inbox %}#message{{message.id}}">
-		      <span class="from">{{ message.sender.get_profile.display_name }}:</span>
-		      <span class="snippet">{{ message.body|truncatewords_html:10 }}</span>
-		    </a>
-		  </li>
-		{% endfor %}
-		<li id="view-all">
-		  <a href="{% locale_url drumbeatmail_inbox %}">{{ _('View All Messages') }}</a>
-		</li>
-	      </ul> <!-- /#inbox-messages -->
-	    </li> <!-- /#inbox -->
-	    <li class="separator ir"></li>
-	    <li id="logout">
-	      <a class="top-level" href="{% locale_url users_logout %}">{{ _('Logout') }}</a>
-	    </li>
 	  </ul>
 	  {% else %} {# user not logged in #}
 	  <ul id="login">
