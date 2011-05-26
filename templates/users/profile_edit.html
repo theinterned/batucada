@@ -25,11 +25,15 @@
       <a class="pester back_link" href="{{ profile.get_absolute_url }}">({{ _('View Profile') }})</a>
     </h1>
     <nav id="profile-edit-nav" class="tabs">
-      <ul>
-	<li class="info"><a href="{% locale_url users_profile_edit %}">{{ _('General Info') }}</a></li>
-	<li class="image"><a href="{% locale_url users_profile_edit_image %}">{{ _('Profile Image') }}</a></li>
-	<li class="links"><a href="{% locale_url users_profile_edit_links %}">{{ _('Links') }}</a></li>
-      </ul>
+	    <ul>
+		<li class="info {% if general_tab %}active{% endif %}"><a href="{% locale_url users_profile_edit %}">{{ _('General Info') }}</a></li>
+		<li class="image {% if image_tab %}active{% endif %}"><a href="{% locale_url users_profile_edit_image %}">{{ _('Profile Image') }}</a></li>
+		<li class="links {% if link_tab %}active{% endif %}"><a href="{% locale_url users_profile_edit_links %}">{{ _('Links') }}</a></li>
+		<li class="notifications {% if settings_tab %}active{% endif %}"><a href="{% locale_url preferences_settings %}">{{ _('Notifications') }}</a></li>
+	    <li class="email {% if email_tab %}active{% endif %}"><a href="{% locale_url preferences_email %}">{{ _('Update Email') }}</a></li>
+	    <li class="password {% if password_tab %}active{% endif %}"><a href="{% locale_url preferences_password %}">{{ _('Update Password') }}</a></li>
+	    <!--<li class="delete"><a href="{% locale_url preferences_delete %}">{{ _('Delete Account') }}</a></li>-->
+	    </ul>
     </nav>
 
       {% block form %}{% endblock %}

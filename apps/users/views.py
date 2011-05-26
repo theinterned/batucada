@@ -399,6 +399,7 @@ def profile_edit(request):
     return render_to_response('users/profile_edit_main.html', {
         'profile': profile,
         'profile_form': form,
+        'general_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -440,6 +441,7 @@ def profile_edit_image(request):
     return render_to_response('users/profile_edit_image.html', {
         'profile': profile,
         'profile_image_form': form,
+        'image_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -468,6 +470,7 @@ def profile_edit_links(request):
         'profile': profile,
         'form': form,
         'links': links,
+        'link_tab': True,
     }, context_instance=RequestContext(request))
     
 @login_required
@@ -490,6 +493,7 @@ def profile_edit_links_edit(request, link_id):
         'profile': profile,
         'form': form,
         'link': link,
+        'link_tab': True,
     }, context_instance=RequestContext(request))
 
 @login_required
