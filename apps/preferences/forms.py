@@ -15,8 +15,7 @@ class EmailEditForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        exclude = ('confirmation_code', 'password', 'username',
-                   'created_on', 'user', 'image', 'featured', 'preflang')
+        fields = ('email',)
 
     def clean(self):
         super(EmailEditForm, self).clean()
@@ -47,8 +46,7 @@ class PasswordEditForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        exclude = ('confirmation_code', 'username', 'email',
-                   'created_on', 'user', 'image', 'featured', 'preflang')
+        fields = ('password',)
         widgets = {
             'password': forms.PasswordInput(attrs={'render_value': 'False'}),
         }

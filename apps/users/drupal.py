@@ -5,6 +5,11 @@ from django.conf import settings
 from django.contrib.auth.models import check_password as django_check_password
 from django.contrib.auth.models import get_hexdigest as django_get_hexdigest
 from django.contrib.auth.models import User
+from django.db.utils import IntegrityError
+
+
+log = logging.getLogger(__name__)
+
 
 DRUPAL_DB = 'drupal_db'
 

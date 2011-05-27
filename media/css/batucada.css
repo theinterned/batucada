@@ -305,7 +305,7 @@ header {}
       position: absolute;
       z-index: 3;
       font-size: 12px;
-      margin-left: 865px;
+      margin-left: 825px;
       padding-top: 5px;
       padding-right: 7px;
       padding-bottom: 5px;
@@ -598,20 +598,23 @@ header {}
         clear:both;
       }
 
-      #project-stats .label{
+      #project-stats .label, #people .label {
 	float:left;
       }
-      #project-stats .value{
+      #project-stats .value, #people .value {
 	float:right;
       }
 
-#project-stats .beta-development{
+#project-stats .beta-development {
 	text-align:center;
 	background-color:red;
 	color:white;
 }
 
-
+#people .pending {
+    background-color:red;
+    color:white;
+} 
         
       #project-summary,
       #sidebar #project-description { 

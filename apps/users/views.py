@@ -316,7 +316,7 @@ def profile_view(request, username):
     current_projects = profile.get_current_projects()
     following = profile.following()
     followers = profile.followers()
-    links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True).order_by('index')
+    links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
     old_participations = Pleft_on__isnull=True
     past_projects = profile.get_past_projects()
@@ -353,6 +353,9 @@ def profile_create(request):
     if form.is_valid():
         profile = form.save(commit=False)
         profile.user = request.user
+        profile.id = profile.user.id
+        profile.user.email = profile.email
+        profile.user.save()
         profile.confirmation_code = profile.generate_confirmation_code()
         profile.save()
         path = reverse('users_confirm_registration', kwargs={
@@ -377,7 +380,7 @@ def profile_create(request):
 
 @login_required
 def profile_edit(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
+    profile = request.user.get_profile()
     if request.method == 'POST':
         form = forms.ProfileEditForm(request.POST, request.FILES,
                                      instance=profile)
@@ -415,6 +418,7 @@ def profile_edit_image_async(request):
         return http.HttpResponse(simplejson.dumps({
             'filename': instance.image.name,
         }))
+    log.error('Error uploading image:%s' % form.errors)
     return http.HttpResponse(simplejson.dumps({
         'error': 'There was an error uploading your image.',
     }))
@@ -422,7 +426,7 @@ def profile_edit_image_async(request):
 
 @login_required
 def profile_edit_image(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
+    profile = request.user.get_profile()
 
     if request.method == 'POST':
         form = forms.ProfileImageForm(request.POST, request.FILES,
@@ -464,7 +468,7 @@ def profile_edit_links(request):
                                       'your link.'))
     else:
         form = forms.ProfileLinksForm()
-    links = Link.objects.select_related('subscription').filter(user=profile)
+    links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True)
 
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,

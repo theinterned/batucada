@@ -40,7 +40,7 @@
       {% if project.under_development%}
       <li class="beta-development">{{ _('Under Development') }}</li>
       {% endif %}
-      {% if project.testing_sandbox %}
+      {% if project.not_listed %}
       <li class="beta-development">{{ _('Not Listed') }}</li>
       {% endif %}
       <!-- This line is here so the {{ _('DATE_FORMAT') }} gets configured for different locales -->
@@ -109,6 +109,15 @@
   {% endfor %}
   <br><br>
   {% if user.is_authenticated and not organizing and not participating %}
+    {% if pending_signup %}
+        {% if project.signup_closed %}
+          <div class="label pending">{{ _('Closed Sign-up') }}</div>
+        {% else %}
+          <div class="label pending">{{ _('Sign-up in Progress') }}</div>
+        {% endif %} 
+        <div class="value"><a href={{ pending_signup.get_absolute_url }}>{{ _('Your Answer') }}</a></div>
+        <br><br>
+    {% endif %}
     {% if following %}
       <form method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
         {% csrf_token %}
@@ -122,7 +131,7 @@
       </form>
       <br>
     {% endif %}
-    {% if not project.signup_closed %}
+    {% if not project.signup_closed and not pending_signup %}
       <a class="button" href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a>
       <br><br>
     {% endif %}

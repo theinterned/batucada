@@ -11,7 +11,7 @@
     <fieldset>
         <form action="{% locale_url users_login %}" method="post">
         {% csrf_token %}
-        <p>{{ _('You can login directly with your credentials from the old P2PU website.') }}</p>
+        <p>{{ _('You can login directly with your username and password from the old P2PU website.') }}</p>
         <div class="field{% if form.username.errors %} error{% endif %}">
           <label for="id_username">{{ _('Username or Email') }}</label>
           {{ form.username }}
