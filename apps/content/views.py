@@ -34,7 +34,7 @@ def show_page(request, slug, page_slug):
                 'page_slug':page.slug}))
         else:
             return HttpResponseRedirect(page.project.get_absolute_url())
-    first_level_comments = page.comments.filter(reply_to__isnull=True)
+    first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
@@ -324,7 +324,7 @@ def sign_up(request, slug):
         profile = request.user.get_profile()
         is_organizing = project.organizers().filter(user=profile).exists()
         is_participating = project.participants().filter(user=profile).exists()
-        first_level_comments = page.comments.filter(reply_to__isnull=True)
+        first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
         can_post_answer = False
         if not is_organizing:
             if is_participating:
@@ -344,6 +344,7 @@ def sign_up(request, slug):
             if not project.participants().filter(user=answer.author).exists():
                 pending_answers_count += 1
     if is_organizing:
+        first_level_comments = first_level_comments.order_by('created_on')
         for comment in first_level_comments:
              comment.is_participating = project.participants().filter(user=comment.author)
     return render_to_response('content/sign_up.html', {

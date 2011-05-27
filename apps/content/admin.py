@@ -7,7 +7,7 @@ class PageAdmin(admin.ModelAdmin):
     date_hierarchy = 'last_update'
     list_display = ('id', 'title', 'author', 'project', 'index', 'last_update',
         'listed', 'collaborative', 'editable', 'deleted')
-    list_filter = list_display[3:]
+    list_filter = list_display[5:]
     search_fields = ('id', 'title', 'slug', 'project__slug', 'project__name',
         'author__username', 'author__full_name')
 

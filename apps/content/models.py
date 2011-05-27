@@ -151,7 +151,10 @@ class PageComment(ModelBase):
         return self.page.project
 
     def has_visible_childs(self):
-        return self.all_replies.filter(deleted=False).exists()
+        return self.visible_replies().exists()
+
+    def visible_replies(self):
+        return self.all_replies.filter(deleted=False).order_by('created_on')
 
     def can_edit(self, user):
         if user.is_authenticated():

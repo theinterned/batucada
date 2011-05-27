@@ -66,13 +66,10 @@ class OpenIDForm(forms.Form):
 
 
 def validate_user_identity(form, data):
-    drupal_user_msg = _('You can login directly with your credentials from the old P2PU website.')
-    log.error("%s %s" % (type(data), repr(data)))
-    if 'username' in data:
-        log.error("Validate user identity: %s" % repr(data['username']))
-    if 'username' in data and drupal.get_user(data['username']):
+    drupal_user_msg = _('You can login directly with your username and password from the old P2PU website.')
+    if 'username' in data and data['username'] and drupal.get_user(data['username']):
         form._errors['username'] = forms.util.ErrorList([drupal_user_msg])
-    if 'email' in data and drupal.get_user(data['email']):
+    if 'email' in data and data['email'] and drupal.get_user(data['email']):
         form._errors['email'] = forms.util.ErrorList([drupal_user_msg])
 
 
@@ -97,6 +94,8 @@ class CreateProfileForm(forms.ModelForm):
         super(CreateProfileForm, self).clean()
         data = self.cleaned_data
         validate_user_identity(self, data)
+        if 'full_name' in data:
+            data['full_name'] = data['full_name'].strip()
         return data
 
 
@@ -134,6 +133,20 @@ class RegisterForm(forms.ModelForm):
             self._errors['password'] = forms.util.ErrorList([message])
         return password
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if UserProfile.objects.filter(username=username).exists():
+            raise forms.ValidationError(_('User profile with this Username already exists.'))
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not email or not email.strip():
+            raise forms.ValidationError(_('This field is required.'))
+        if UserProfile.objects.filter(email=email).exists():
+            raise forms.ValidationError(_('User profile with this Email already exists.'))
+        return email
+
     def clean(self):
         super(RegisterForm, self).clean()
         data = self.cleaned_data
@@ -142,26 +155,35 @@ class RegisterForm(forms.ModelForm):
             if data['password'] != data['password_confirm']:
                 self._errors['password_confirm'] = forms.util.ErrorList([
                     _('Passwords do not match.')])
+        if 'full_name' in data:
+            data['full_name'] = data['full_name'].strip()
         return data
 
 class ProfileEditForm(forms.ModelForm): 
 
     class Meta:
         model = UserProfile
-        exclude = ('confirmation_code', 'password', 'username', 'email',
-                   'created_on', 'user', 'image', 'featured')
+        fields = ('full_name', 'location', 'bio', 'preflang',)
         widgets = {
             'bio': CKEditorWidget(config_name='reduced'),
         }
+
+    def clean(self):
+        super(ProfileEditForm, self).clean()
+        data = self.cleaned_data
+        if 'full_name' in data:
+            data['full_name'] = data['full_name'].strip()
+        return data
 
 class ProfileImageForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        exclude = ('confirmation_code', 'password', 'username',
-                   'email', 'created_on', 'user', 'featured')
+        fields = ('image',)
 
     def clean_image(self):
+        if self.cleaned_data['image'] is False:
+            return self.cleaned_data['image']
         if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
             max_size = settings.MAX_IMAGE_SIZE / 1024
             raise forms.ValidationError(
@@ -174,7 +196,7 @@ class ProfileLinksForm(forms.ModelForm):
 
     class Meta:
         model = Link
-        exclude = ('project', 'user', 'subscription')
+        fields = ('name', 'url', 'subscribe',)
 
 
 class PasswordResetForm(DjangoPasswordResetForm):
@@ -187,4 +209,14 @@ class PasswordResetForm(DjangoPasswordResetForm):
                             )
         if len(self.users_cache) == 0 and not drupal.migrate(email):
             raise forms.ValidationError(_("That e-mail address doesn't have an associated user account. Are you sure you've registered?"))
+        profile = None
+        for user in self.users_cache:
+            try:
+                profile = user.get_profile()
+            except UserProfile.DoesNotExist:
+                user.delete()
+        if not profile:
+            msg = _("It seams that you did not finished the registration proccess during your last visit to the site.")
+            msg += _("Please register a new account.")
+            raise forms.ValidationError(msg)
         return email

@@ -153,5 +153,6 @@ class Activity(ModelBase):
         })
 
     def __unicode__(self):
-        return _("Activity ID %(self.pk)d. Actor id %(self.actor.pk)d, Verb %(self.verb)s") % (
-            self.pk, self.actor.pk, self.verb)
+        return _("Activity ID %(id)d. Actor id %(actor)d, Verb %(verb)s") % {
+            'id': self.pk, 'actor': self.actor.pk, 'verb': self.verb}
+

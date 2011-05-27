@@ -16,7 +16,7 @@
   <p class="hint">{{ _('This image is shown in search results and on the listing page.') }}</p>
   <p class="hint">{{ _('Upload an image file from your computer:') }}</p>  
   <div class="field{% if form.image.errors %} error{% endif %}">
-    {{ form.image }}
+    <input type="file" name="image" id="id_image" />
     <small class="hint block">{{ _('File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 243x150 pixels') }}</small>
     {{ form.image.errors }}
   </div>

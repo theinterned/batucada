@@ -170,7 +170,7 @@ AUTHENTICATION_BACKENDS = (
     'users.backends.CustomUserBackend',
     'django_openid_auth.auth.OpenIDBackend',
     'users.backends.DrupalUserBackend',
-    'users.backends.DrupalOpenIDBackend',
+#    'users.backends.DrupalOpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -299,13 +299,22 @@ LOGGING = {
             'filename': path('lernanta.log'),
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
-        }
+        },
+        'null': {
+            'level':'DEBUG',
+            'class':'django.utils.log.NullHandler',
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
-            'propagate': True,
+            'propagate': False,
+        },
+        'caching': {
+            'handlers':['null'],
+            'propagate': False,
+            'level':'DEBUG',
         },
         '': {
             'handlers': ['file'],

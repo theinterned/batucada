@@ -94,8 +94,7 @@
       </div>
     </li>
   {% endif %}
-{% for reply in comment.all_replies.all %}
-  {% if not reply.deleted %}
+{% for reply in comment.visible_replies %}
   <li class="post-container post-replies">
     <a name="{{ reply.id }}"></a>
     {% if user.is_authenticated %}
@@ -125,7 +124,6 @@
       </div>
     </div>
   </li>
-  {%endif%}
 {% endfor %}
 {% endfor %}
 </ul>

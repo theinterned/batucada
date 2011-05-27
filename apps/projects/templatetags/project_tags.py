@@ -12,10 +12,18 @@ def sidebar(context):
     user = context['user']
     project = context['project']
     is_participating = is_following = is_organizing = False
+    pending_signup = None
     if user.is_authenticated():
         is_participating = project.participants().filter(user=user).exists()
-        is_following = user.get_profile().is_following(project)
+        profile = user.get_profile()
+        is_following = profile.is_following(project)
         is_organizing = project.organizers().filter(user=user).exists()
+        if not is_participating and not is_organizing:
+            signup = Page.objects.get(slug='sign-up', project=project)
+            answers = signup.comments.filter(reply_to__isnull=True, deleted=False,
+                author=profile)
+            if answers.exists():
+                pending_signup = answers[0]
     participants_count = project.non_organizer_participants().count()
     followers_count = project.non_participant_followers().count()
     organizers_count = project.organizers().count()
@@ -38,6 +46,7 @@ def sidebar(context):
         'links': links,
         'school': school,
         'imported_from': imported_from,
+        'pending_signup': pending_signup,
     })
     return context
 
