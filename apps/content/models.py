@@ -20,6 +20,7 @@ from l10n.urlresolvers import reverse
 from drumbeat.models import ModelBase
 from activity.models import Activity
 from users.tasks import SendUserEmail
+from activity import schema
 
 log = logging.getLogger(__name__)
 
@@ -35,6 +36,7 @@ class Page(ModelBase):
     last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     project = models.ForeignKey('projects.Project', related_name='pages')
     listed = models.BooleanField(default=True)
+    publish = models.BooleanField(default=True)
     collaborative = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
     index = models.IntegerField()
@@ -251,7 +253,7 @@ pre_save.connect(clean_html, sender=PageComment)
 def fire_activity(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
-
+    
     is_page = isinstance(instance, Page)
     is_comment = isinstance(instance, PageComment)
     if created and (is_page or is_comment):
@@ -265,6 +267,18 @@ def fire_activity(sender, **kwargs):
         activity = Activity(
             actor=instance.author,
             verb='http://activitystrea.ms/schema/1.0/post',
+            target_object=instance,
+        )
+        activity.target_project = instance.project
+        activity.save()
+    elif not created and is_page and instance.publish:
+        if instance.deleted:
+            verb = 'http://activitystrea.ms/schema/1.0/delete'
+        else:
+            verb = 'http://activitystrea.ms/schema/1.0/update'
+        activity = Activity(
+            actor=instance.author,
+            verb=verb,
             target_object=instance,
         )
         activity.target_project = instance.project
