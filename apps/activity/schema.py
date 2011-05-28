@@ -16,6 +16,7 @@ verbs = {
     'rsvp-yes': 'http://activitystrea.ms/schema/1.0/rsvp-yes',
     'rsvp-no': 'http://activitystrea.ms/schema/1.0/rsvp-no',
     'rsvp-maybe': 'http://activitystrea.ms/schema/1.0/rsvp-maybe',
+    'delete': 'http://activitystrea.ms/schema/1.0/delete',
 }
 
 verbs_by_uri = {}
@@ -37,6 +38,7 @@ past_tense = {
     'rsvp-yes': _('is attending'),
     'rsvp-no': _('is not attending'),
     'rsvp-maybe': _('might be attending'),
+    'delete': _('deleted'),
 }
 
 # a list of base object types defined in the activity schema

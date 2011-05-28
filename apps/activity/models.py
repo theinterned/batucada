@@ -4,6 +4,7 @@ from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.utils.safestring import mark_safe
 
 from drumbeat.models import ModelBase, ManagerBase
 from activity import schema
@@ -145,6 +146,18 @@ class Activity(ModelBase):
         friendly_verb = schema.verbs_by_uri[self.verb]
         return ugettext('%(verb)s activity performed by %(actor)s') % dict(verb=friendly_verb,
                                                    actor=self.actor.display_name)
+
+    def friendly_verb(self):
+        if self.verb == schema.verbs['post']:
+            if self.project_id:
+                return mark_safe(ugettext('created'))
+            else:
+                if self.object_type == 'http://activitystrea.ms/schema/1.0/comment':
+                    return mark_safe(ugettext('posted comment'))
+                else:
+                    return mark_safe(ugettext('added'))
+        else:
+            return schema.past_tense[schema.verbs_by_uri[self.verb]]
 
     def html_representation(self):
         return render_to_string('activity/_activity_body.html', {

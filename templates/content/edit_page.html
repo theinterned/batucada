@@ -34,7 +34,12 @@
   {% endif %}
 {% endblock %}
 
+
 {% block page_form_buttons %}
+    <div class="field{% if form.publish.errors %} error{% endif %}">
+    {{ form.publish }} {{ _('Post that this has changed on the group\'s wall.') }}
+    {{ form.publish.errors }}
+  </div>
   <a class="button" href="{{ page.get_absolute_url }}">
     {{ _('Cancel') }}
   </a>
