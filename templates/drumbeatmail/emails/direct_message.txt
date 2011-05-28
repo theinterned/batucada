@@ -7,4 +7,4 @@
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
 
-{{ _('Manage your subscriptions:') }} http://{{domain}}/account/settings/
+{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/

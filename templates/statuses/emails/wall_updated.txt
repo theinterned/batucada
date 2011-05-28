@@ -16,5 +16,5 @@
 {% if status.important %}
 {{ _('This message was marked as important by the study group organizer. Important messages will always bypass participants\'s notification preferences.') }}
 {% else %}
-{{ _('Manage your subscriptions:') }} http://{{domain}}/account/settings/
+{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/
 {% endif %}
