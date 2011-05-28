@@ -36,7 +36,7 @@ class Page(ModelBase):
     last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     project = models.ForeignKey('projects.Project', related_name='pages')
     listed = models.BooleanField(default=True)
-    publish = models.BooleanField(default=True)
+    publish = models.BooleanField(default=False)
     collaborative = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
     index = models.IntegerField()

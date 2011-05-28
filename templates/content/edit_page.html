@@ -37,7 +37,7 @@
 
 {% block page_form_buttons %}
     <div class="field{% if form.publish.errors %} error{% endif %}">
-    {{ form.publish }} {{ _('Publish edit status to the group\'s wall.') }}
+    {{ form.publish }} {{ _('Post that this has changed on the group\'s wall.') }}
     {{ form.publish.errors }}
   </div>
   <a class="button" href="{{ page.get_absolute_url }}">
