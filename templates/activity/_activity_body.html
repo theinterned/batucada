@@ -10,15 +10,7 @@
 
 
 {% if activity|should_show_verb %}
-  {% if activity.verb == 'http://activitystrea.ms/schema/1.0/post' and activity.project %}
-    {{ _('created') }}
-  {% else %}
-    {% if activity.target_object %}
-      {{ activity.target_object.friendly_verb }}
-    {% else %}
-      {{ activity|friendly_verb }}
-    {% endif %}
-  {% endif %}
+    {{ activity.friendly_verb }}
 {% endif %}
 
 {% endspaceless %} {% spaceless %}
