@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-28 02:09-0400\n"
+"POT-Creation-Date: 2011-05-29 13:47-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1238,7 +1238,7 @@ msgstr "JPG, GIF o PNG solamente. Tamaño máximo 700k."
 #: templates/challenges/challenge_edit_image.html:18
 #: templates/projects/project_edit_image.html:25
 #: templates/schools/school_edit_image.html:24
-#: templates/users/profile_edit_image.html:22
+#: templates/users/profile_edit_main.html:15
 msgid "Upload"
 msgstr "Subir"
 
@@ -1328,7 +1328,7 @@ msgstr "Reglas"
 #: templates/projects/project_import.html:19
 #: templates/schools/school_edit_image.html:23
 #: templates/schools/school_edit_summary.html:28
-#: templates/users/profile_edit_main.html:11
+#: templates/users/profile_edit_main.html:25
 #: templates/users/settings_email.html:18
 #: templates/users/settings_notifications.html:45
 #: templates/users/settings_password.html:27
@@ -1344,7 +1344,7 @@ msgstr "Cancelar"
 #: templates/projects/project_edit_status.html:60
 #: templates/projects/project_edit_summary.html:36
 #: templates/schools/school_edit_summary.html:29
-#: templates/users/profile_edit_main.html:12
+#: templates/users/profile_edit_main.html:26
 #: templates/users/settings_email.html:19
 #: templates/users/settings_notifications.html:46
 #: templates/users/settings_password.html:28
@@ -1504,7 +1504,6 @@ msgstr ""
 "idea (por ejemplo: \"video, html5, transcripciones, editorial\")"
 
 #: templates/challenges/submission_edit_summary.html:33
-#: templates/users/_profile_edit.html:17
 msgid "Bio"
 msgstr "Biografía"
 
@@ -2328,7 +2327,6 @@ msgid "View Study Group"
 msgstr "Ver Grupo de Estudio"
 
 #: templates/projects/project_edit.html:40
-#: templates/users/_profile_edit_image.html:1
 msgid "Image"
 msgstr "Imagen"
 
@@ -2885,7 +2883,31 @@ msgstr "Ubicación"
 msgid "Preferred Language"
 msgstr "Idioma Preferido"
 
-#: templates/users/_profile_edit_image.html:9
+#: templates/users/_profile_edit.html:17
+#, fuzzy
+msgid "About Me"
+msgstr "Acerca de"
+
+#: templates/users/_profile_edit_image.html:1
+#, fuzzy
+msgid "Current Profile Image"
+msgstr "Imagen del Perfil"
+
+#: templates/users/_profile_edit_image.html:3
+msgid ""
+"Upload an image file from your computer to replace your current profile "
+"image:"
+msgstr ""
+"Suba una imagen de su computadora para remplazar la imagen actual de su "
+"perfil:"
+
+#: templates/users/_profile_edit_image.html:5
+msgid ""
+"Personalize your profile image by uploading an image file from your computer:"
+msgstr ""
+"Personalice la imagen de su perfil subiendo una imagen de su computadora:"
+
+#: templates/users/_profile_edit_image.html:13
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
 "pixels"
@@ -2990,48 +3012,32 @@ msgid "(DOWN)"
 msgstr "(ABAJO)"
 
 #: templates/users/profile_edit.html:29
-msgid "General Info"
-msgstr "Información General"
+#: templates/users/profile_edit_main.html:8
+#, fuzzy
+msgid "Basic Information"
+msgstr "Formato básico"
 
 #: templates/users/profile_edit.html:30
-msgid "Profile Image"
-msgstr "Imagen del Perfil"
-
-#: templates/users/profile_edit.html:31
 #: templates/users/profile_edit_links.html:8
 #: templates/users/profile_edit_links_edit.html:8
 msgid "Links"
 msgstr "Enlaces"
 
-#: templates/users/profile_edit.html:32
+#: templates/users/profile_edit.html:31
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: templates/users/profile_edit.html:33
+#: templates/users/profile_edit.html:32
 msgid "Update Email"
 msgstr "Actualizar Correo"
 
-#: templates/users/profile_edit.html:34
+#: templates/users/profile_edit.html:33
 msgid "Update Password"
 msgstr "Actualizar Contraseña"
 
-#: templates/users/profile_edit.html:35
+#: templates/users/profile_edit.html:34
 msgid "Delete Account"
 msgstr "Eliminar Cuenta"
-
-#: templates/users/profile_edit_image.html:14
-msgid ""
-"Upload an image file from your computer to replace your current profile "
-"image:"
-msgstr ""
-"Suba una imagen de su computadora para remplazar la imagen actual de su "
-"perfil:"
-
-#: templates/users/profile_edit_image.html:17
-msgid ""
-"Personalize your profile image by uploading an image file from your computer:"
-msgstr ""
-"Personalice la imagen de su perfil subiendo una imagen de su computadora:"
 
 #: templates/users/profile_edit_links.html:9
 msgid ""
@@ -3235,3 +3241,6 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:7
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid "General Info"
+#~ msgstr "Información General"
