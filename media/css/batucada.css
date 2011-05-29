@@ -195,7 +195,7 @@ input[type=submit]:active,
 /* FORMS */
 form .field {
 	position: relative;
-	margin-bottom: 1.4em;
+	margin-bottom: 1.1em;
 	}
 label {
 	display: block;
@@ -507,7 +507,7 @@ header {}
   }
 
     #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
-    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs {
+    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs {
         height: 6em;    
     }
     
@@ -1579,10 +1579,11 @@ header {}
 
 		.modal .picture-preview {
 			float: left;
-			width: 211px;
+			/*width: 115px;*/
 			/*min-height: 120px;*/
 			padding: 18px;
 			margin-top: 1px;
+			margin-right: 15px;
 			background-color: #F9F9F9;
 		    border: #C6C6C6 1px solid;
 			border-radius: 5px;
@@ -1603,14 +1604,18 @@ header {}
 			border-color: #C6C6C6;
 			margin-bottom: 0;
 		}
+		.modal .member-picture {
+		  max-width: 97px;
+		  max-height: 97px;
+		}
 		.project.edit.image .modal .picture-preview, .school.edit.image .modal .picture-preview {
 		    margin-left: 17px;
 		    margin-top: 0px;
 		}
 		.modal .image form {
-			width: 249px;
+			/*width: 249px;*/
 			display: inline-block;
-			float: left;
+			/*float: left;*/
 		}
 		.modal .description textarea {
 			height: 35.5em;
