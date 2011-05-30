@@ -148,6 +148,15 @@ class Project(ModelBase):
         else:
             return False
 
+    def pending_applicants_count(self):
+        pending_answers_count = 0
+        page = self.sign_up
+        first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
+        for answer in first_level_comments.filter(deleted=False):
+            if not self.participants().filter(user=answer.author).exists():
+                pending_answers_count += 1
+        return pending_answers_count
+
     def activities(self):
         activities = Activity.objects.filter(
             Q(project=self) | Q(target_project=self),

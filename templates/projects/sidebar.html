@@ -81,6 +81,14 @@
 	<div class="label">{{ _('Followers') }}</div>
 	<div class="value">{{ followers_count }}</div>
       </li>
+    {% if organizing %}
+    <li>
+		<div class="label">Pending Applicants</div>
+		<div class="value">
+		<a href="{{ project.sign_up.get_absolute_url }}">{{ pending_applicants_count }}</a>
+		</div>
+    </li>
+    {% endif %}
     </ul> <!-- /#project-stats -->
     {% if user.is_authenticated and not organizing %}
     <p class="supplemental_actions">

@@ -28,6 +28,7 @@ def sidebar(context):
     followers_count = project.non_participant_followers().count()
     organizers_count = project.organizers().count()
     update_count = project.activities().count()
+    pending_applicants_count = project.pending_applicants_count()
     content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
     links = project.link_set.all().order_by('index')
     school = project.school
@@ -42,6 +43,7 @@ def sidebar(context):
         'organizing': is_organizing,
         'organizers_count': organizers_count,
         'update_count': update_count,
+        'pending_applicants_count': pending_applicants_count,
         'content_pages': content_pages,
         'links': links,
         'school': school,
