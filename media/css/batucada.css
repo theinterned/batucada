@@ -409,6 +409,7 @@ header {}
           -moz-box-shadow: #000 -1px -1px 1px;
           -webkit-box-shadow: #000 -1px -1px 1px;
           behavior: url("/media/css/PIE.htc");
+          margin-right: 5px;
         }
 
         #user-name {
@@ -431,6 +432,17 @@ header {}
         margin: 0 5px 0 3px;
         background: url("/media/images/separator.bg.png") no-repeat left center;
         height: 37px;
+      }
+      
+      .dropdown {
+        background: url("/media/images/arrow-down.png") no-repeat scroll transparent;
+        display: inline-block;
+        height: 7px;
+        width: 7px;
+        margin-left: 1px;
+        margin-top: 8px;
+        vertical-align: top;
+        
       }
       
       .menu ul {
