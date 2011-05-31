@@ -18,12 +18,33 @@
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
     </nav>
 
+    <div id="project-actions">
     {% if organizing %}
-      <div id="project-actions">
         <!--<a class="button" href="{% locale_url challenges_create project_id=project.pk %}">{{ _('Create Challenge') }}</a>-->
-      </div>
     {% endif %}
 
+  {% if user.is_authenticated %}
+    {% if not organizing and not participating %}
+	    {% if following %}
+	      <form id="unfollow_button" method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
+	        {% csrf_token %}
+	        <button>{{ _('Unfollow') }}</button>
+	      </form>
+	    {% else %}
+	      <form id="follow_button" method="post" action="{% locale_url relationships_follow object_type='course' slug=project.slug %}">
+	        {% csrf_token %}
+	        <button>{{ _('Follow') }}</button>
+	      </form>
+	    {% endif %}
+	    {% if not project.signup_closed and not pending_signup %}
+	      <p id="participate_button"><a href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a></p>
+	    {% endif %}
+	  {% endif %}
+	{% else %}
+          <p id="participate_button"><a href="{{ login_with_redirect_url }}">{{ _('Participate')}}</a></p>	   
+	{% endif %}
+   </div>
+    
   </div> <!-- /.container -->
 {% endblock %}
 

@@ -124,6 +124,15 @@ class Project(ModelBase):
         return Participation.objects.filter(project=self,
             left_on__isnull=True)
 
+    def pending_applicants(self):
+        page = self.sign_up
+        users = []
+        first_level_comments = page.comments.filter(reply_to__isnull=True)
+        for answer in first_level_comments.filter(deleted=False):
+            if not self.participants().filter(user=answer.author).exists():
+                users.append(answer.author)
+        return users
+
     def non_organizer_participants(self):
         return self.participants().filter(organizing=False)
 
@@ -139,6 +148,14 @@ class Project(ModelBase):
         else:
             return False
 
+    def is_following(self, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            is_following = self.followers().filter(source=profile).exists()
+            return is_following
+        else:
+            return False
+
     def is_participating(self, user):
         if user.is_authenticated():
             profile = user.get_profile()
@@ -148,14 +165,11 @@ class Project(ModelBase):
         else:
             return False
 
-    def pending_applicants_count(self):
-        pending_answers_count = 0
-        page = self.sign_up
-        first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
-        for answer in first_level_comments.filter(deleted=False):
-            if not self.participants().filter(user=answer.author).exists():
-                pending_answers_count += 1
-        return pending_answers_count
+    def is_pending_signup(self, user):
+        for applicant in self.pending_applicants():
+            if applicant == user:
+                return True
+        return False
 
     def activities(self):
         activities = Activity.objects.filter(

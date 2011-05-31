@@ -104,6 +104,11 @@ def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
+    is_following = project.is_following(request.user)
+    if request.user.is_authenticated():
+        is_pending_signup = project.is_pending_signup(request.user.get_profile())
+    else:
+        is_pending_signup = False
     if is_organizing:
         form = statuses_forms.ImportantStatusForm()
     elif is_participating:
@@ -117,6 +122,8 @@ def show(request, slug):
         'project': project,
         'activities': project.activities()[0:10],
         'participating': is_participating,
+        'following': is_following,
+        'pending_signup': is_pending_signup,
         'organizing': is_organizing,
         'challenges': challenges,
         'form': form,
