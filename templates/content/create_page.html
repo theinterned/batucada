@@ -12,6 +12,8 @@
       <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+      <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
+      <span class="arrow">&rsaquo;</span>
     </nav>
   </div> <!-- /.container -->
 {% endblock %}

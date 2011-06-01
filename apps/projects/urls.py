@@ -20,6 +20,8 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/contact_organizers/$',
       'projects.views.contact_organizers',
       name='projects_contact_organizers'),
+  url(r'^(?P<slug>[\w-]+)/tasks/$', 'projects.views.task_list',
+      name='projects_task_list'),
 
   # Project Content URLs
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),

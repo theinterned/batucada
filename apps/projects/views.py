@@ -105,6 +105,9 @@ def show(request, slug):
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
     is_following = project.is_following(request.user)
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
+    content_pages_for_header = content_pages[0:3]
+    content_pages_count = len(content_pages)
     if request.user.is_authenticated():
         is_pending_signup = project.is_pending_signup(request.user.get_profile())
     else:
@@ -126,6 +129,8 @@ def show(request, slug):
         'pending_signup': is_pending_signup,
         'organizing': is_organizing,
         'challenges': challenges,
+        'content_pages_for_header': content_pages_for_header,
+        'content_pages_count': content_pages_count,
         'form': form,
     }
     return render_to_response('projects/project.html', context,
@@ -557,3 +562,13 @@ def contact_organizers(request, slug):
         'project': project,
     }, context_instance=RequestContext(request))
 
+def task_list(request, slug):
+        project = get_object_or_404(Project, slug=slug)
+        tasks = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
+        
+        context = {
+        'project': project,
+        'tasks': tasks,
+        }
+        return render_to_response('projects/project_task_list.html', context,
+                              context_instance=RequestContext(request))
