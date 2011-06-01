@@ -11,7 +11,9 @@ from django.db.models import Count, Q, Max
 from django.db.models.signals import pre_save, post_save, post_delete 
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext as ugettext
+from django.utils.translation import ugettext as ugettex, get_language, activate
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -19,6 +21,7 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from content.models import Page
 from activity.models import Activity
+from users.tasks import SendUserEmail
 
 from projects.tasks import ThumbnailGenerator
 
@@ -200,6 +203,7 @@ class Project(ModelBase):
                     break
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
+        self.send_creation_notification()
         super(Project, self).save()
 
     def get_image_url(self):
@@ -207,6 +211,29 @@ class Project(ModelBase):
         image_path = self.image.url if self.image else missing
         return image_path
 
+    def send_creation_notification(self):
+        """Send notification when a new project is created."""
+        project = self
+        ulang = get_language()
+        subject = {}
+        body = {}
+        for l in settings.SUPPORTED_LANGUAGES:
+            activate(l[0])
+            subject[l[0]] = render_to_string(
+                "projects/emails/project_created_subject.txt", {
+                'project': project,
+                }).strip()
+            body[l[0]] = render_to_string(
+                "projects/emails/project_created.txt", {
+                'project': project,
+                'domain': Site.objects.get_current().domain,
+                }).strip()
+        activate(ulang)
+        for organizer in project.organizers():
+            if not organizer.no_updates:
+                ol = organizer.user.preflang or settings.LANGUAGE_CODE
+                SendUserEmail.apply_async(
+                        (organizer.user, subject[ol], body[ol]))
 
 class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile', related_name='participations')
@@ -233,5 +260,7 @@ def clean_html(sender, **kwargs):
         if instance.long_description:
             instance.long_description = bleach.clean(instance.long_description,
                 tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+            
+
 pre_save.connect(clean_html, sender=Project)
 
