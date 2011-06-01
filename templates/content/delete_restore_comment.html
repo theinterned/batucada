@@ -1,26 +1,18 @@
-{% extends "base.html" %}
+{% extends "projects/base.html" %}
 {% load l10n_tags %}
 
-{% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
+{% block project_title %}{{ page.title }}{% endblock %}
 
 {% block bodyid %}delete_restore_comment{% endblock %}
 
 
-{% block breadcrumbs %}
-  <div class="container">
-    <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
-    </nav>
-  </div> <!-- /.container -->
+{% block project_breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
 {% endblock %}
 
 {% block body %}

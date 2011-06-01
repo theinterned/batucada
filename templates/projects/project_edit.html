@@ -3,11 +3,21 @@
 {% load l10n_tags %}
 
 {% block title %}{% if project %}{{ _('Edit Study Group') }}{% else %}{{ _('Create Study Group') }}{% endif %}{% endblock %}
+
 {% block bodyid %}{% if project %}project_edit{% else %}project_create{% endif %}{% endblock %}
+
+{% block links %}
+  {% if project %}
+    {% if project.school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.school.slug %}?v=1">{% endif %}
+  {% endif %}
+{% endblock %}
+
 {% block breadcrumbs %}
   <div class="container">
     {% if project %}
-        <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
+      <h1 id="project-name">
+        <a href="{{ project.get_absolute_url }}" {% if project.accepted_school %}class="school_header"{% endif %}>{{ project.name }}</a>
+      </h1>
     {% endif %}
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>

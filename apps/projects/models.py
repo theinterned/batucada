@@ -235,6 +235,12 @@ class Project(ModelBase):
                 SendUserEmail.apply_async(
                         (organizer.user, subject[ol], body[ol]))
 
+    def accepted_school(self):
+        school = self.school
+        if school and school.declined.filter(id=self.id).exists():
+            school = None
+        return school
+
 class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile', related_name='participations')
     project = models.ForeignKey('projects.Project', related_name='participations')
