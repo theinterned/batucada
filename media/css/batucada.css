@@ -378,7 +378,7 @@ header {}
       float: right;
     }
 
-    #search-box input {
+    .search-box input {
       background: #bec8d9 url('/media/images/icon.loupe.png') no-repeat 100px center;
       border: 0;
       color: #fff;
