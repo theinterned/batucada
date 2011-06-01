@@ -77,6 +77,8 @@ class DrupalOpenIDBackend(OpenIDBackend):
         if openid_response.status != SUCCESS:
             return None
 
+        log.debug("Attempting to authenticate drupal user %s" % (openid_response.identity_url,))
+
         try:
             user_openid = UserOpenID.objects.get(
                 claimed_id__exact=openid_response.identity_url)
