@@ -1,21 +1,13 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
 
-{% block title %}{{ project.name }} | {{ _('Create Task') }}{% endblock %}
+{% block project_title %}{{ _('Create Task') }}{% endblock %}
 
 {% block bodyid %}create_page{% endblock %}
 
-{% block breadcrumbs %}
-  <div class="container">
-    <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
-      <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
-      <span class="arrow">&rsaquo;</span>
-    </nav>
-  </div> <!-- /.container -->
+{% block project_breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
 {% endblock %}
 
 {% block page_form_title %}

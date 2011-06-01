@@ -31,9 +31,7 @@ def sidebar(context):
     pending_applicants_count = len(project.pending_applicants())
     content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
     links = project.link_set.all().order_by('index')
-    school = project.school
-    if school and school.declined.filter(id=project.id).exists():
-        school = None
+    school = project.accepted_school()
     imported_from = drupal.get_course(project.imported_from) if project.imported_from else None
     context.update({
         'participating': is_participating,

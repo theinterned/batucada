@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ project.name }} | {% block project_title %}{% endblock %}{% endblock %}
+
+{% block links %}
+{% if project.school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.school.slug %}?v=1">{% endif %}
+{% block project_links %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="container">
+    <h1 id="project-name"><a href="{{ project.get_absolute_url }}" {% if project.accepted_school %}class="school_header"{% endif %}>{{ project.name }}</a></h1>
+    <nav>
+      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+      <span class="arrow">&rsaquo;</span>
+      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+      {% block project_breadcrumbs %}{% endblock %}
+    </nav>
+      <div id="project-actions">
+        {% block project_actions %}{% endblock %}
+      </div>
+  </div> <!-- /.container -->
+{% endblock %}

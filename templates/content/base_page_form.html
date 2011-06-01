@@ -1,5 +1,7 @@
-{% extends "base.html" %}
+{% extends "projects/base.html" %}
 {% load l10n_tags %}
+
+{% block project_title %}{% if page %}{{ page.title }}{% endif %}{% endblock %}
 
 {% block body %}
 <section class="modal">

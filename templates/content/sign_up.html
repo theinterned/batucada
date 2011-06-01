@@ -1,39 +1,28 @@
-{% extends "base.html" %}
+{% extends "projects/base.html" %}
 {% load l10n_tags %}
 {% load youtube %}
 {% load slideshare %}
 {% load project_tags %}
 
-{% block title %}{{ project.name }} | {{ page.title }}{% endblock %}
-
-{% block links %}
-{% if project.school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.school.slug %}?v=1">{% endif %}
-{% endblock %}
+{% block project_title %}{{ page.title }}{% endblock %}
 
 {% block bodyid %}page{% endblock %}
 
-{% block breadcrumbs %}
-  <div class="container">
-    <h1 id="project-name" {% if school %}class="school_header"{% endif %}>{{ project.name }}</h1>
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-    </nav>
-      <div id="project-actions">
-        {% if can_post_answer %}
-          <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Answer') }}</a>
-        {% endif %}
-      </div>
-  </div> <!-- /.container -->
+{% block project_breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+{% endblock %}
+
+{% block project_actions %}
+  {% if can_post_answer %}
+    <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Answer') }}</a>
+  {% endif %}
 {% endblock %}
 
 {% block body %}
 {% sidebar %}
 <div id="main" class="content_page">
-<h1>{{ page.title }}</h1>
+<h1 {% if project.accepted_school %}class="school_header"{% endif %}>{{ page.title }}</h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
 {% if first_level_comments %}
