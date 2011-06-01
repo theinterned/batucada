@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-31 21:20-0400\n"
+"POT-Creation-Date: 2011-05-31 22:56-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -555,7 +555,7 @@ msgstr "No hay un curso con ese nombre corto en el antiguo sitio de p2pu."
 msgid "The %s course was not part of this school."
 msgstr "El curso %s no era parte de esta escuela."
 
-#: apps/projects/models.py:113
+#: apps/projects/models.py:116
 msgid "study group"
 msgstr "grupo de estudio"
 
@@ -1775,6 +1775,7 @@ msgstr " publicó un comentario en "
 #: templates/content/emails/content_update_subject.txt:1
 #: templates/content/emails/sign_up_updated.txt:2
 #: templates/content/emails/sign_up_updated.txt:4
+#: templates/projects/emails/project_created.txt:3
 msgid "."
 msgstr "."
 
@@ -1819,6 +1820,7 @@ msgstr "El Equipo de P2PU"
 
 #: templates/content/emails/content_update.txt:13
 #: templates/drumbeatmail/emails/direct_message.txt:10
+#: templates/projects/emails/project_created.txt:20
 #: templates/relationships/emails/new_follower.txt:9
 #: templates/statuses/emails/wall_updated.txt:19
 msgid "Manage your subscriptions:"
@@ -2762,6 +2764,51 @@ msgid ""
 msgstr ""
 "Todos los participantes podrán ver sus respuestas cuando sea aceptado en el "
 "grupo de estudio."
+
+#: templates/projects/emails/project_created.txt:1
+msgid "Hello!"
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:3
+msgid "Welcome to P2PU! We are excited to help you develop and promote"
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:5
+#, fuzzy
+msgid "Important first steps:"
+msgstr "Fechas Importantes"
+
+#: templates/projects/emails/project_created.txt:7
+msgid ""
+"* Provide a meaningful description, title and image for your group. (If the "
+"image isn't yours, make sure it's licensed for reuse!)"
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:9
+msgid ""
+"* Update your profile with information about yourself and a picture (can be "
+"anything)."
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:11
+msgid ""
+"* Join the Help Desk to receive support during the development process: "
+"http://new.p2pu.org/en/groups/p2pu-help-desk"
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:13
+msgid "You can also ask general questions at: http://qa.p2pu.org"
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:15
+msgid ""
+"P2PU has a large community of learners and people willing to help along the "
+"way! All questions, ideas and challenges are most welcome."
+msgstr ""
+
+#: templates/projects/emails/project_created.txt:17
+msgid "Look forward to working with you,"
+msgstr ""
 
 #: templates/relationships/emails/new_follower.txt:1
 msgid "is now following "
