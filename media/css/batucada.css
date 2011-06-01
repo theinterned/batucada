@@ -377,6 +377,19 @@ header {}
       z-index: 2;
       float: right;
     }
+
+    #search-box input {
+      background: #bec8d9 url('/media/images/icon.loupe.png') no-repeat 100px center;
+      border: 0;
+      color: #fff;
+      height: 44px;
+      width: 88px;
+      line-height: 42px;
+      padding: 0 24px 0;
+      font-size: 17px;
+      margin-top: -7px;
+    }
+
       #user-nav a, #main-nav a {
         color: #444;
         font-size: 17px;
@@ -2791,3 +2804,5 @@ footer[role="main"] ul[role="cc"] li[role="icons"] a {
   overflow: hidden;
   text-indent: -999em;
 }
+
+

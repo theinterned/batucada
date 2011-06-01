@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^ckeditor/',      include('ckeditor.urls')),
     (r'^challenges/',    include('challenges.urls')),
     (r'^pages/',         include('pages.urls')),
+    (r'^search/',      include('search.urls')),
     (r'',                include('users.urls')),
 )
 
