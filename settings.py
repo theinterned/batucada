@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'south',
     'wellknown',
     'users',
+    'search',
     'l10n',
     'dashboard',
     'relationships',

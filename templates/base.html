@@ -63,6 +63,11 @@
 	<nav id="user-nav">
 	{% if user.is_authenticated %}
 	  <ul>
+        <li>
+          <form id="search-box" action="{% locale_url search %}" method="get">
+            <input type='text' placeholder='Search' name="q">
+          </form>
+        </li>
 	    <li id="user" class="menu">
 	      <a href="#" id="user-link" class="top-level">
 		{# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
