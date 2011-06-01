@@ -64,7 +64,7 @@
 	{% if user.is_authenticated %}
 	  <ul>
         <li>
-          <form id="search-box" action="{% locale_url search %}" method="get">
+          <form class="search-box" action="{% locale_url search %}" method="get">
             <input type='text' placeholder='Search' name="q">
           </form>
         </li>
@@ -93,6 +93,11 @@
 	  </ul>
 	  {% else %} {# user not logged in #}
 	  <ul id="login">
+        <li>
+          <form class="search-box" action="{% locale_url search %}" method="get">
+            <input type='text' placeholder='Search' name="q">
+          </form>
+        </li>
 	    <li><a class="top-level" href="{{ login_with_redirect_url }}">{{ _('Login') }}</a></li>
 	  </ul>
 	  {% endif %}
