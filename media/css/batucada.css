@@ -198,7 +198,7 @@ input[type=submit]:active,
     background: #36cdc4;
     text-shadow: none;
     padding: 7px;
-    font: bold 16px serif;
+    font: bold 14px "Arvo", "MuseoSlab 500", "Georgia";
     text-transform: uppercase;
     -moz-border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px;
@@ -361,13 +361,13 @@ header {}
       font-size: 17px;
       position: absolute;
       margin-top: 48px;
-      padding-left: 150px;
       height: 42px;
       width: 840px;
       background: #fff;
       z-index: 1;
       border-radius: 10px;
       border: solid 1px #EEE;
+      padding: 3px 3px 3px 159px;
     }
 
     #user-nav {
@@ -1222,7 +1222,7 @@ header {}
     
     #posts {
       list-style: none;
-      margin: 0;
+      margin: 13px 0;
       padding: 0;
     }
     #posts .clear{
@@ -2600,7 +2600,7 @@ div.voting div.score {
     margin: 0;
 }
 
-#challenge_header ul {
+#challenge_header ul, #task_header {
     padding: 0;
     margin: 0;
 }
@@ -2619,6 +2619,67 @@ div.voting div.score {
     height: 120px;
 }
 
+#task_header, #activity_header {
+    border-top: 1px solid #BEBEBE;
+    margin-top: 13px;
+    margin-bottom: 5px;
+}
+
+#task_header ul {
+    margin: 13px 0 5px 2px;
+    padding-bottom: 17px;
+}
+#task_header li {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 11px;
+    width: 630px;
+    padding: 8px 13px 8px 0;
+    background-color: #f8fcff;
+    display: inline-block;
+}
+#task_header li.odd {
+    background-color: #f3f8fe;
+}
+
+#task_header li a {
+    color: #5a6579;
+    padding-left: 13px;
+}
+
+#task_header li .action-buttons a {
+    color: #2084ca;
+    float: right;
+    text-decoration: underline;
+}
+
+#task_header li .action-buttons a:hover {
+    color: #003366;
+}
+
+#task_header .taskNumber {
+    background-color: #DEEEFB;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 7px 11px;
+    color: #5a6579;
+    text-shadow: none;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px;
+}
+
+#more_task_link {
+    text-align: right;
+    font-size: 14px;
+    padding-right: 13px;
+    font-weight: bold;
+}
+
+#task-count {
+    float: left;
+    color: #bbb;
+    font-weight: normal;
+}
 .notice {
     text-align: center;
     margin-left: auto;
@@ -2636,3 +2697,97 @@ div.voting div.score {
     font-size: 1.2em;
 }
 
+#main h2 {
+    font-style: italic;
+    text-align: center;
+    margin-top: -0.55em;
+    font-size: 21px;
+}
+
+#main h2 span {
+    background-color: #fff;
+    padding: 0px 21px;
+}
+
+/*
+ * Header
+*/
+
+
+#logo {
+    background-position: 13px 51px;
+    width: 155px; 
+    background-image: url("/media/images/logo.png");
+    height: 120px;
+    margin-right: 20px;
+    position: absolute;
+    z-index: 2;
+}
+
+#beta-tag {
+    color: #F08C00;
+    font-size: 18px;
+    margin-left: 108px;
+    margin-top: 95px;
+    position: absolute;
+    z-index: 5;
+}
+
+a#beta-tag:hover {
+    color: #36cdc4;
+}
+
+footer {
+    clear: both;
+    padding-top: 11px;
+}
+
+#user-nav {
+    margin-top: 51px;
+}
+
+/*
+ * Footer CSS: Brian Brennan 
+ * brian@nyhacker.org 
+ */
+ 
+footer[role="main"] ul {
+  margin-left: 104px;
+  padding-bottom: 50px;
+  float: left;
+}
+footer[role="main"] ul:first-child {
+  margin-left: 13px;
+}
+footer[role="main"] ul > li:first-child {
+  font-weight: normal;
+  font-size: 17px;
+  background: #fff !important;
+  line-height: 40px;
+  padding: 0 8px;
+}
+footer[role="main"] ul li {
+  margin: 0 0 8px;
+}
+footer[role="main"] ul li a {
+  font-size: 15px;
+  padding: 0 8px;
+}
+footer[role="main"] ul[role="about-us"] > li a {
+  background: #cef200;
+}
+footer[role="main"] ul[role="contact-us"] > li a {
+  background: #4cebe2;
+}
+footer[role="main"] ul[role="license-info"] > li a {
+  background: #ffde00;
+}
+footer[role="main"] ul[role="cc"] li[role="icons"] a {
+  display: block;
+  background: url('/media/images/cc-icons.png') no-repeat;
+  height: 65px;
+  width: 147px;
+  margin: 20px auto;
+  overflow: hidden;
+  text-indent: -999em;
+}
