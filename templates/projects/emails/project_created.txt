@@ -1,0 +1,20 @@
+{{ _('Hello!') }}
+
+{{ _('Welcome to P2PU! We are excited to help you develop and promote') }} {{ project.name }}{{ _('.') }}
+
+{{ _('Important first steps:') }}
+
+{{ _('* Provide a meaningful description, title and image for your group. (If the image isn\'t yours, make sure it\'s licensed for reuse!)') }}
+
+{{ _('* Update your profile with information about yourself and a picture (can be anything).') }}
+
+{{ _('* Join the Help Desk to receive support during the development process: http://new.p2pu.org/en/groups/p2pu-help-desk') }}
+
+{{ _('You can also ask general questions at: http://qa.p2pu.org') }}
+
+{{ _('P2PU has a large community of learners and people willing to help along the way! All questions, ideas and challenges are most welcome.') }}
+
+{{ _('Look forward to working with you,') }}
+Alison [http://new.p2pu.org/en/alison/]
+
+{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/
