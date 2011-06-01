@@ -12,6 +12,9 @@ log = logging.getLogger(__name__)
 
 
 DRUPAL_DB = 'drupal_db'
+GOOGLE_OPENID = 'www.google.com/accounts/o8/id'
+PREFIXES = ('', 'https://', 'http://',)
+SUFIXES = ('', '/',)
 
 
 def get_user(username):
@@ -29,11 +32,30 @@ def get_user(username):
         return None
 
 
+def normalize(url):
+    normalized = url
+    for prefix in PREFIXES[1:]:
+        if normalized.startswith(prefix):
+            normalized = normalized[len(prefix):]
+    for sufix in SUFIXES[1:]:
+        if normalized.endswith(sufix):
+            normalized = normalized[:-len(sufix)]
+    return normalized
+
+
 def get_openid_user(identity_url):
     if not DRUPAL_DB in settings.DATABASES:
         return None
+    if GOOGLE_OPENID in identity_url:
+        return None
+    urls = [identity_url]
+    normalized = normalize(identity_url)
+    for prefix in PREFIXES:
+        for sufix in SUFIXES:
+            urls.append(prefix + normalized + sufix)
+    log.debug('Searching for similar openid urls: %s' %urls)
     try:
-        authmap = Authmap.objects.using(DRUPAL_DB).get(authname=identity_url)
+        authmap = Authmap.objects.using(DRUPAL_DB).get(authname__in=urls)
         return Users.objects.using(DRUPAL_DB).get(uid=authmap.uid)
     except Authmap.DoesNotExist, Users.DoesNotExist:
         return None

@@ -64,6 +64,13 @@ class SetPasswordForm(auth_forms.SetPasswordForm):
 class OpenIDForm(forms.Form):
     openid_identifier = forms.URLField()
 
+    def clean_openid_identifier(self):
+        msg = _('Please visit http://qa.p2pu.org to know what to do if you can\'t login with your google openid.')
+        openid = self.cleaned_data['openid_identifier']
+        if drupal.GOOGLE_OPENID in openid:
+            raise forms.ValidationError(msg)
+        return openid
+
 
 def validate_user_identity(form, data):
     drupal_user_msg = _('You can login directly with your username and password from the old P2PU website.')

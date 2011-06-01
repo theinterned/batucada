@@ -168,10 +168,10 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 AUTHENTICATION_BACKENDS = (
+    'users.backends.DrupalUserBackend',
+    'users.backends.DrupalOpenIDBackend',
     'users.backends.CustomUserBackend',
     'django_openid_auth.auth.OpenIDBackend',
-    'users.backends.DrupalUserBackend',
-#    'users.backends.DrupalOpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

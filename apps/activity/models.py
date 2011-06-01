@@ -42,6 +42,8 @@ class ActivityManager(ManagerBase):
             INNER JOIN users_userprofile u ON u.id = a.actor_id
             WHERE u.full_name IS NOT NULL
                 AND a.parent_id IS NULL
+                AND a.remote_object_id IS NULL
+                AND status_id IS NULL
                 AND u.image IS NOT NULL
                 AND u.image != ''
                 AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
