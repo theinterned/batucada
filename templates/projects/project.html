@@ -61,7 +61,7 @@
   <h2><span>{{ _('Tasks') }}</span></h2>
   <ul>
     {% for page in content_pages_for_header %}
-    <li class="{% cycle 'even' 'odd' %}">
+    <li class="{% cycle 'odd' 'even' %}">
         <span class="taskNumber">{{forloop.counter}}</span> <a class="taskLink" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
         <span class="action-buttons"><a href="{{ page.get_absolute_url }}">{{ _('View') }}</a></span>
     </li>
