@@ -26,8 +26,8 @@ class SubmissionsFeed(Feed):
         return get_object_or_404(Challenge, slug=challenge)
 
     def items(self, challenge):
-        return Submission.objects.filter(challenge=challenge).order_by(
-            '-created_on')
+        return Submission.objects.filter(challenge=challenge).filter(
+            is_published=True).order_by('-created_on')
 
     def link(self, challenge):
         return reverse('challenges_submissions_feed',

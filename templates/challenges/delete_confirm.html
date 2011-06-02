@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block title %}{{ _('Delete Submission?') }}{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>
+      {{ _('Confirm Delete') }}
+    </h1>
+    <fieldset>
+      <form method="post" id="delete_submission" action="{% locale_url submission_delete slug=challenge.slug submission_id=submission.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="confirm" value="1" />
+        <p>{{ _('Are you sure you want to delete the entry: ') }} <em>{{ submission.title }}</em>? {{ _('This action can not be undone.') }}</p>
+
+        <p class="buttons">
+          <a class="button" href="{% locale_url submission_show slug=challenge.slug submission_id=submission.pk %}">{{ _('Cancel') }}</a>
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>          
+      </p>
+      </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

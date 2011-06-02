@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block title %}{{ _('Projects') }}{% endblock %}
+{% block bodyid %}project_directory{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
+{% block breadcrumbs %}
+<div class="container">
+  <nav>
+    <a href="{% locale_url projects_directory %}">{{ _('Full List') }}</a>
+  </nav>
+  {% if user.is_authenticated %}
+    <div id="project-actions">
+      <a id="create-project" class="button" href="{% locale_url projects_create %}">Create</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block body %}
+<h1>{{ _('Full List') }}</h1>
+<section>
+<br>
+<ul class="project-list">
+  {% for project in page.object_list %}
+    <li>{% include "projects/_project_card.html" %}</li>
+  {% endfor %}
+</ul>
+<div class="pagination">
+{% if page.has_previous %}
+<a class="btn" href="{% locale_url projects_directory page=prev_page %}">← {{ _('previous') }}</a>
+{% else %}
+<span class="btn">← {{ _('previous') }}</span>
+{% endif %}
+{% if page.has_next %}
+<a class="btn" href="{% locale_url projects_directory page=next_page %}">{{ _('next') }} →</a>
+{% else %}
+<span class="btn">{{_('next')}} →</span>
+{% endif %}
+</div>
+</section>
+{% endblock %}

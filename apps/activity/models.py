@@ -44,8 +44,6 @@ class ActivityManager(ManagerBase):
                 AND a.parent_id IS NULL
                 AND a.remote_object_id IS NULL
                 AND status_id IS NULL
-                AND u.image IS NOT NULL
-                AND u.image != ''
                 AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
             GROUP BY a.id, a.actor_id, a.created_on
             ORDER BY a.created_on DESC LIMIT 10;

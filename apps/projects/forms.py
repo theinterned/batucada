@@ -11,9 +11,11 @@ from messages.models import Message
 from drumbeat.utils import CKEditorWidget
 from links.models import Link
 from users.models import UserProfile
+from users import tasks
 
 from projects.models import Project, Participation
 from projects import drupal
+
 
 log = logging.getLogger(__name__)
 
@@ -113,26 +115,13 @@ class ProjectContactOrganizersForm(forms.Form):
             raise forms.ValidationError(_(u'That study group does not exist.'))
         recipients = project.organizers()
         subject = "[%s] " % project.name[:20] + self.cleaned_data['subject']
-        body = self.cleaned_data['body']
         body = '%s\n\n%s' % (self.cleaned_data['body'], _('You received this message through the Contact Organizer form ' 
                'at %(project)s: http://%(domain)s%(url)s') % {'project':project.name,  
                'domain':Site.objects.get_current().domain, 'url':project.get_absolute_url()})
-                       
-        message_list = []
-        for r in recipients:
-            msg = Message(
-                sender=sender,
-                recipient=r.user.user,
-                subject=subject,
-                body=body,
-            )
-            if parent_msg is not None:
-                msg.parent_msg = parent_msg
-                parent_msg.replied_at = datetime.datetime.now()
-                parent_msg.save()
-            msg.save()
-            message_list.append(msg)
-        return message_list
+        messages = [(sender, r.user.user, subject, body, parent_msg)
+            for r in recipients]
+        tasks.SendUsersEmail.apply_async(args=(self, messages))
+        return messages
 
 
 class CloneProjectForm(forms.Form):

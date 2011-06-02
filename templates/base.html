@@ -69,7 +69,7 @@
           </form>
         </li>
 	    <li id="user" class="menu">
-	      <a href="#" id="user-link" class="top-level">
+	      <a href="{{ user.get_profile.get_absolute_url }}" id="user-link" class="top-level trigger">
 		{# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
 		{% if user.get_profile %}
 		<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="19" width="19">

@@ -10,8 +10,13 @@ settings_local.py
 sample_data.py
 sql/
 celery-schedule
+<<<<<<< HEAD
 lernanta.log
 .project
 .pydevproject
 SRC
 .settings/
+=======
+*.komodoproject
+*.DS_Store
+>>>>>>> batucada/master

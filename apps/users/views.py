@@ -178,14 +178,26 @@ def login_openid_complete(request):
     if isinstance(r, http.HttpResponseRedirect):
         try:
             user = request.user.get_profile()
-            if user.confirmation_code:
-                logout(request)
-                unconfirmed_account_notice(request, user)
-                return render_to_response('users/login_openid.html', {
-                    'form': forms.OpenIDForm(),
-                }, context_instance=RequestContext(request))
         except UserProfile.DoesNotExist:
-            pass
+            user = request.user
+            username = ''
+            if user.username[:10] != 'openiduser':
+                username = user.username
+            form = forms.CreateProfileForm(initial={
+                'display_name': ' '.join((user.first_name, user.last_name)),
+                'email': user.email,
+                'username': username,
+            })
+            return render_to_response('dashboard/setup_profile.html', {
+                'form': form,
+            }, context_instance=RequestContext(request))
+        if user.confirmation_code:
+            logout(request)
+            unconfirmed_account_notice(request, user)
+            return render_to_response('users/login_openid.html', {
+                'form': forms.OpenIDForm(),
+            }, context_instance=RequestContext(request))
+
         redirect_url = _get_redirect_url(request)
         if redirect_url:
             return http.HttpResponseRedirect(redirect_url)
@@ -203,6 +215,11 @@ def logout(request):
 @anonymous_only
 def register(request):
     """Present user registration form and handle registrations."""
+
+    if REDIRECT_FIELD_NAME in request.GET:
+        request = _clean_redirect_url(request)
+        request.session[REDIRECT_FIELD_NAME] = request.GET[REDIRECT_FIELD_NAME]
+
     if request.method == 'POST':
         form = forms.RegisterForm(data=request.POST)
 
@@ -341,9 +358,8 @@ def profile_view(request, username):
 
 
 @login_required(profile_required=False)
+@require_http_methods(['POST'])
 def profile_create(request):
-    if request.method != 'POST':
-        return http.HttpResponseRedirect(reverse('dashboard_index'))
     try:
         request.user.get_profile()
         return http.HttpResponseRedirect(reverse('dashboard_index'))

@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'content',
     'schools',
     'voting',
+    'feeds',
     'drumbeat',
     'pages',
 )
@@ -154,7 +155,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'drumbeat.context_processors.django_conf',
     'messages.context_processors.inbox',
     'users.context_processors.messages',
-    'users.context_processors.login_with_redirect_url',
+    'users.context_processors.redirect_urls',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
@@ -208,8 +209,9 @@ PUSH_CREDENTIALS = 'links.utils.hub_credentials'
 PUSH_HUB = 'http://pubsubhubbub.appspot.com/'
 SOUTH_TESTS_MIGRATE = False
 
-# Feed to show contents of on the splash page
-SPLASH_PAGE_FEED = 'http://blogs.p2pu.org/feed/'
+FEED_URLS = {
+    'splash': 'http://blogs.p2pu.org/feed/',
+}
 
 # Ckeditor
 CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
@@ -324,4 +326,5 @@ LOGGING = {
         }
     }
 }
+
 
