@@ -3,6 +3,7 @@ import datetime
 
 from django import http
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -41,6 +42,26 @@ log = logging.getLogger(__name__)
 def project_list(request):
     return render_to_response('projects/gallery.html', {},
                               context_instance=RequestContext(request))
+
+def list_all(request, page=1):
+    projects = Project.objects.filter(not_listed=False)
+    paginator = Paginator(projects, 16)
+    try:
+        current_page = paginator.page(page)
+    except EmptyPage:
+        raise http.Http404
+    projects = current_page.object_list
+    for project in projects:
+        project.followers_count = Relationship.objects.filter(
+            target_project=project).count()
+    return render_to_response('projects/directory.html', {
+        'paginator': paginator,
+        'page_num': page,
+        'next_page': int(page) + 1,
+        'prev_page': int(page) - 1,
+        'num_pages': paginator.num_pages,
+        'page': current_page,
+    }, context_instance=RequestContext(request))
 
 
 @login_required
@@ -561,6 +582,7 @@ def contact_organizers(request, slug):
         'form': form,
         'project': project,
     }, context_instance=RequestContext(request))
+
 
 def task_list(request, slug):
         project = get_object_or_404(Project, slug=slug)

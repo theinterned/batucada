@@ -90,7 +90,7 @@ def get_course(slug, full=False):
             if task_node.type == DOCUMENT_TYPE:
                 ct_document = ContentTypeDocument.objects.using(DRUPAL_DB).filter(
                     nid=task_node.nid).order_by('-vid')[0]
-                course['tasks'].append((task_node.title, ct_document.field_document_body_value))
+                course['tasks'].append((task_node.title[:100], ct_document.field_document_body_value or ''))
         course['links'] = []
     except Exception, ex:
         log.error('Course %s not found on the old site: %s' % (slug, ex))
