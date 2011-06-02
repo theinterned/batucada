@@ -12,7 +12,7 @@
   <div class="container">
     <h1 id="project-name"><a href="{{ project.get_absolute_url }}" {% if project.accepted_school %}class="school_header"{% endif %}>{{ project.name }}</a></h1>
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       {% block project_breadcrumbs %}{% endblock %}

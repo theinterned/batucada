@@ -2,7 +2,7 @@
 {% load l10n_tags %}
 
 
-{% block form_hint %}{{ _('Add links to websites associated with this study group such as a blog, homepage, twitter profile, github repository etc. These links will appear on the study group page.') }}{% endblock %}
+{% block form_hint %}{{ _('Add links to websites associated with this ') }} {{ project.kind|lower }} {{ _(' such as a blog, homepage, twitter profile, github repository etc.') }}{% endblock %}
 {% block form_url %}{% locale_url projects_edit_links slug=project.slug %}{% endblock %}
 {% block button_text %}{{ _('Add') }}{% endblock %}
 

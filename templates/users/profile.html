@@ -99,7 +99,7 @@
   {% endfor %}
   </ul>
   {% if current_projects.count > 0 %}
-    <h3>{{ _('Study Groups') }} <span class="projects count">{{ current_projects.count }}</span></h3>
+    <h3>{{ _('Learning') }} <span class="projects count">{{ current_projects.count }}</span></h3>
     <ul class="following">
       {% for project in current_projects.organizing %}
         {% include "dashboard/_project_image.html"%}

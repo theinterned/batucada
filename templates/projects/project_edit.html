@@ -2,7 +2,7 @@
 
 {% load l10n_tags %}
 
-{% block title %}{% if project %}{{ _('Edit Study Group') }}{% else %}{{ _('Create Study Group') }}{% endif %}{% endblock %}
+{% block title %}{% if project %}{{ _('Edit') }}{% else %}{{ _('Create') }}{% endif %}{% endblock %}
 
 {% block bodyid %}{% if project %}project_edit{% else %}project_create{% endif %}{% endblock %}
 
@@ -20,14 +20,14 @@
       </h1>
     {% endif %}
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
       <span class="arrow">&rsaquo;</span>
       {% if project %}
       <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
       <span class="arrow">&rsaquo;</span>
       <a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
       {% else %}
-      <a href="{% locale_url projects_create %}">{{ _('New') }}</a>
+      <a href="{% locale_url projects_create %}">{{ _('Create') }}</a>
       {% endif %}
     </nav>
   </div> <!-- /.container -->
@@ -38,10 +38,10 @@
   <article>
     <h1>
       {% if project %}
-      {{ _('Edit Study Group') }}
-      <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View Study Group') }})</a>
+      {{ _('Edit') }}
+      <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View') }})</a>
       {% else %}
-      {{ _('Create Study Group') }}
+      {{ _('Create') }}
       {% endif %}</h1>
     <nav id="project-edit-nav" class="tabs">
       <ul>

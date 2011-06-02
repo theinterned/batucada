@@ -4,7 +4,7 @@
 
 {{ _('Important first steps:') }}
 
-{{ _('* Provide a meaningful description, title and image for your group. (If the image isn\'t yours, make sure it\'s licensed for reuse!)') }}
+{{ _('* Provide a meaningful description, title and image for your ') }} {{ project.kind|lower }}{{ _('. (If the image isn\'t yours, make sure it\'s licensed for reuse!)') }}
 
 {{ _('* Update your profile with information about yourself and a picture (can be anything).') }}
 

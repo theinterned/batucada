@@ -21,7 +21,7 @@
     <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
   {% else %}
     {% if activity.project %}
-      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a>{{ _(' study group.') }}
+      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a> {{ activity.project.kind|lower}}.
     {% else %}
       {{ activity|get_link_name }} 
       <a href="{{ activity|get_link }}">

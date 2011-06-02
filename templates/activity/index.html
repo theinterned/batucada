@@ -9,7 +9,7 @@
     <div class="container">
     <nav>
       {% if activity.target_project %}
-        <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+        <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
         <span class="arrow">&rsaquo;</span>
         <a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project.name }}</a>
       {% else %}

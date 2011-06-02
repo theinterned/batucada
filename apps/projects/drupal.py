@@ -55,6 +55,7 @@ def get_course(slug, full=False):
         course['name'] = node.title
         course['slug'] = slug
         course['url'] = settings.DRUPAL_URL + slug
+        course['kind'] = 'course'
         if not full:
             return course
         course['school'] = None

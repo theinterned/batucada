@@ -1,8 +1,8 @@
-<p><strong>{{ _('Please fill out the study group\'s full description.') }}</strong> {{ _('In this page you could:') }}</p>
+<p><strong>{{ _('Please fill out the ') }} {{ project.kind|lower }} {{_('\'s full description.') }}</strong> {{ _('In this page you could:') }}</p>
 
 <ul>
-	<li>{{ _('Describe the purpose of the study group and the learning goals for the tasks within.') }}</li>
-	<li>{{ _('Describe your role in this study group. What made you interested in this topic? What do you hope to achieve by organizing the group? Are you an expert, enthusiastic or a novice?') }}</li>
-	<li>{{ _('Include any prerequisite knowledge or skills needed to participate in the study group, the intended start date, estimated pace, commitment, amount of work, and the length of time the study group can expect to work together (a few days, a few weeks, or forever).') }}</li>
-	<li>{{ _('Provided any other information that could be useful for people interested in joining the study group. In what ways can participants expect to contribute to the creation of tasks and assessing each others\' contributions? What will the final task comprise?') }}</li>
+	<li>{{ _('Describe the purpose of the ') }} {{ project.kind|lower }}{{ _(' and the learning goals for the tasks within.') }}</li>
+	<li>{{ _('Describe your role in this ') }} {{ project.kind|lower }}{{ _('. What made you interested in this topic? What do you hope to achieve by organizing this ') }} {{ project.kind|lower }}{{ _('? Are you an expert, enthusiastic or a novice?') }}</li>
+	<li>{{ _('Include any prerequisite knowledge or skills needed to participate in the ') }} {{ project.kind|lower }}{{ _(', the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).') }}</li>
+	<li>{{ _('Provided any other information that could be useful for people interested in joining the ') }} {{ project.kind|lower }}{{ _('. In what ways can participants expect to contribute to the creation of tasks and assessing each others\' contributions? What will the final task comprise?') }}</li>
 <ul>

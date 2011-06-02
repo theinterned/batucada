@@ -63,11 +63,11 @@ class SchoolAddFeaturedForm(forms.Form):
         try:
             project = Project.objects.get(slug=slug)
         except Project.DoesNotExist:
-            raise forms.ValidationError(_('There is no study group with that short name: %s.') % slug)
+            raise forms.ValidationError(_('There is no study group, course, ... with that short name: %s.') % slug)
         if project.school != self.school:
-            raise forms.ValidationError(_('The %s study group is not part of this school.') % slug)
+            raise forms.ValidationError(_('The %(slug)s %(kind)s is not part of this school.') % {'slug': slug, 'kind': project.kind.lower()})
         if self.school.featured.filter(slug=slug).exists():
-            raise forms.ValidationError(_('The %s study group is already featured for this school.') % slug)
+            raise forms.ValidationError(_('The %(slug)s %(kind)s is already featured for this school.') % {'slug': slug, 'kind': project.kind.lower()})
         return project
 
 
@@ -83,9 +83,9 @@ class SchoolAddDeclinedForm(forms.Form):
         try:
             project = Project.objects.get(slug=slug)
         except Project.DoesNotExist:
-            raise forms.ValidationError(_('There is no study group with that short name: %s.') % slug)
+            raise forms.ValidationError(_('There is no study group, course, ... with that short name: %s.') % slug)
         if project.school != self.school:
-            raise forms.ValidationError(_('The %s study group is not part of this school.') % slug)
+            raise forms.ValidationError(_('The %(slug)s %(kind)s is not part of this school.') % {'slug': slug, 'kind': project.kind.lower()})
         if self.school.featured.filter(slug=slug).exists():
-            raise forms.ValidationError(_('The %s study group was already declined for this school.') % slug)
+            raise forms.ValidationError(_('The %(slug)s %(kind)s was already declined for this school.') % {'slug': slug, 'kind': project.kind.lower()})
         return project

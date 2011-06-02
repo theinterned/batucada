@@ -24,7 +24,7 @@ class CreateProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'short_description', 'long_description', 'school', 'not_listed')
+        fields = ('name', 'kind', 'short_description', 'long_description', 'school', 'not_listed')
 	widgets = {
 		'long_description': CKEditorWidget(config_name='reduced'),
 	}
@@ -34,7 +34,7 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'short_description', 'long_description', 'school')
+        fields = ('name', 'kind', 'short_description', 'long_description', 'school')
 	widgets = {
 		'long_description': CKEditorWidget(config_name='reduced'),
 	}
@@ -88,7 +88,7 @@ class ProjectAddParticipantForm(forms.Form):
             raise forms.ValidationError(_('There is no user with username: %s.') % username)
         # do not use is_organizing or is_participating here, so superusers can join the study groups.
         if self.project.organizers().filter(user=user).exists():
-            raise forms.ValidationError(_('User %s is organizing the study group.') % username)
+            raise forms.ValidationError(_('User %s is already an organizer.') % username)
         if self.project.non_organizer_participants().filter(user=user).exists():
             raise forms.ValidationError(_('User %s is already a participant.') % username)
         return user
@@ -97,8 +97,7 @@ class ProjectAddParticipantForm(forms.Form):
 class ProjectContactOrganizersForm(forms.Form):
     """
     A modified version of ``messages.forms.ComposeForm`` that enables
-    authenticated users to send a message to all of the organizers of a study
-    group.
+    authenticated users to send a message to all of the organizers.
     """
     project = forms.IntegerField(required=True, widget=forms.HiddenInput())
     subject = forms.CharField(label=_(u'Subject'))
@@ -112,7 +111,7 @@ class ProjectContactOrganizersForm(forms.Form):
         try:
             project = Project.objects.get(id=int(project))
         except Project.DoesNotExist:
-            raise forms.ValidationError(_(u'That study group does not exist.'))
+            raise forms.ValidationError(_(u'That study group, course, ... does not exist.'))
         recipients = project.organizers()
         subject = "[%s] " % project.name[:20] + self.cleaned_data['subject']
         body = '%s\n\n%s' % (self.cleaned_data['body'], _('You received this message through the Contact Organizer form ' 
@@ -136,9 +135,9 @@ class CloneProjectForm(forms.Form):
         try:
             project = Project.objects.get(slug=slug)
         except Project.DoesNotExist:
-            raise forms.ValidationError(_('There is no study group with that short name: %s.') % slug)
+            raise forms.ValidationError(_('There is no study group, course, ... with that short name: %s.') % slug)
         if self.school and project.school != self.school:
-            raise forms.ValidationError(_('The %s study group is not part of this school.') % slug)
+            raise forms.ValidationError(_('The %(slug)s %(kind)s is not part of this school.') % {'slug': slug, 'kind': project.kind})
         return project
 
 

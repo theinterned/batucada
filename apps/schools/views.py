@@ -151,11 +151,11 @@ def edit_featured(request, slug):
             project = form.cleaned_data['project']
             school.featured.add(project)
             school.save()
-            messages.success(request, _('The study group is now featured for this school.'))
+            messages.success(request, _('The %s is now featured for this school.' % project.kind.lower()))
             return http.HttpResponseRedirect(
                 reverse('schools_edit_featured', kwargs=dict(slug=school.slug)))
         else:
-            messages.error(request, _("There was an error marking the study group as featured for this school."))
+            messages.error(request, _("There was an error marking %s as featured for this school.") % slug)
     else:
         form = school_forms.SchoolAddFeaturedForm(school)
     return render_to_response('schools/school_edit_featured.html', {
@@ -187,7 +187,7 @@ def edit_featured_delete(request, slug, project_slug):
     if request.method == 'POST':
         school.featured.remove(project)
         messages.success(request, _(
-            "The study group stopped being featured for this school."))
+            "The %s stopped being featured for this school.") % project.kind.lower())
     return http.HttpResponseRedirect(reverse('schools_edit_featured', kwargs={
         'slug': school.slug,
     }))
@@ -203,11 +203,11 @@ def edit_declined(request, slug):
             project = form.cleaned_data['project']
             school.declined.add(project)
             school.save()
-            messages.success(request, _('The study group was declined for this school.'))
+            messages.success(request, _('The %s was declined for this school.') % project.kind.lower())
             return http.HttpResponseRedirect(
                 reverse('schools_edit_declined', kwargs=dict(slug=school.slug)))
         else:
-            messages.error(request, _("There was an error marking the study group as declined for this school."))
+            messages.error(request, _("There was an error marking %s as declined for this school.") % slug)
     else:
         form = school_forms.SchoolAddDeclinedForm(school)
     return render_to_response('schools/school_edit_declined.html', {
@@ -239,7 +239,7 @@ def edit_declined_delete(request, slug, project_slug):
     if request.method == 'POST':
         school.declined.remove(project)
         messages.success(request, _(
-            "The study group stopped being declined for this school."))
+            "The %s stopped being declined for this school.") % project.kind.lower())
     return http.HttpResponseRedirect(reverse('schools_edit_declined', kwargs={
         'slug': school.slug,
     }))

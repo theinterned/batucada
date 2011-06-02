@@ -30,7 +30,7 @@ class OwnersPageForm(forms.ModelForm):
 
     class Meta:
         model = Page
-        fields = ('title', 'content', 'collaborative', 'publish')
+        fields = ('title', 'content', 'collaborative', 'minor_update')
         widgets = {
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
@@ -40,7 +40,7 @@ class OwnersNotListedPageForm(forms.ModelForm):
 
     class Meta:
         model = Page
-        fields = ('content', 'collaborative', 'publish')
+        fields = ('content', 'collaborative', 'minor_update')
         widgets = {
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
