@@ -2727,7 +2727,7 @@ div.voting div.score {
     font-size: 1.2em;
 }
 
-#project_landing h2 {
+#project_landing #main h2 {
     font-style: italic;
     text-align: center;
     margin-top: -0.55em;
