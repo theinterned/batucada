@@ -207,7 +207,7 @@ class PageComment(ModelBase):
 def send_content_notification(instance, is_comment):
     """Send notification when a new page or comment is posted."""
     project = instance.project
-    if not is_comment and not instance.listed:
+    if project.not_listed or not is_comment and not instance.listed:
         return
     ulang = get_language()
     subject = {}
@@ -256,7 +256,9 @@ pre_save.connect(clean_html, sender=PageComment)
 def fire_activity(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
-    
+    project = instance.project
+    if project.not_listed:
+        return
     is_page = isinstance(instance, Page)
     is_comment = isinstance(instance, PageComment)
     if created and (is_page or is_comment):
