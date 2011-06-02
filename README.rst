@@ -20,7 +20,7 @@ Interested in getting involved in Lernanta code development? Check out the devel
 [2] http://wiki.p2pu.org
 
 
-Setting up a local development environment
+Setting up a local development environment in Ubuntu
 ------------
 
 You will need to set up `git and your SSH keys`_ 
@@ -65,10 +65,6 @@ Once installed, create your virtual environment for ``lernanta`` and install the
    pip install -r requirements/prod.txt
    pip install -r requirements/dev.txt
 
-Problems have also been experienced with using Xcode4. If your pip installs fail try giving things a kick by running the following and try it again: ::
-
-    ARCHFLAGS="-arch i386 -arch x86_64"
-   
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
     sh/rmpyc
@@ -79,10 +75,10 @@ If the mysql database doesn't exist yet, create it. You will use the database na
 
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
+   cp settings_local.dist.py settings_local.py
+
 If you have yet to get a local version of mysql running you will want to do so now. 
 
-   cp settings_local.dist.py settings_local.py
- 
 Next, sync the database and run migrations. ::
 
    python manage.py syncdb --noinput --migrate
