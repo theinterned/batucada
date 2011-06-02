@@ -24,14 +24,14 @@
       <p>
         <label for="id_no_email_new_project_follower">
           <input type="checkbox" id="id_no_email_new_project_follower" name="no_email_new_project_follower" {% if not no_email_new_project_follower %}checked="checked"{% endif %} />
-          {{ _('Someone starts following one of the study groups that I am organizing.') }}
+          {{ _('Someone starts following one of the study groups, courses, ... that I am organizing.') }}
         </label>
       </p>
       {% for participation in participations %}
       <p>
         <label for="id_no_wall_updates_{{ participation.project.slug }}">
           <input type="checkbox" id="id_no_wall_updates_{{ participation.project.slug}}" name="no_wall_updates_{{ participation.project.slug }}" {% if not participation.no_wall_updates %}checked="checked"{% endif %} />
-          {{ _('The wall of ') }} {{participation.project.name }} {{ _(' is updated (organizers can bypass this setting for important updates).') }}
+          {{ _('The wall of ') }} {{participation.project.name }} {{ _(' is updated (this setting does not include important updates for which notifications can not be turn off).') }}
         </label>
       </p>
       <p>

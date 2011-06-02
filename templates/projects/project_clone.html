@@ -4,13 +4,13 @@
 
 {% block form %}
 <fieldset id="project_clone" class="project clone tabpane">
-<h2>{{ _('Clone Study Group') }}</h2>
-<p class="hint">{{ _('Create a new study group based on an existing one.') }}</p>
+<h2>{{ _('Clone Existing') }}</h2>
+<p class="hint">{{ _('Create a new study group, course ... based on an existing one.') }}</p>
 <form action="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif %}" method="post">
   {% csrf_token %}
   <p>
     <div class="field project{% if form.project.errors %} error{% endif %}">
-      <label for="id_project">{{ _('Existing Study Group') }}</label>
+      <label for="id_project">{{ _('Short Name') }}</label>
       {{ form.project }}
       {{ form.project.errors }}
     </div>

@@ -82,6 +82,7 @@ class Project(ModelBase):
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
     name = models.CharField(max_length=100)
+    kind = models.CharField(max_length=30, default='study group')
     short_description = models.CharField(max_length=150)
     long_description = models.TextField(validators=[MaxLengthValidator(700)])
     
@@ -114,7 +115,7 @@ class Project(ModelBase):
     objects = ProjectManager()
 
     class Meta:
-        verbose_name = _('study group')
+        verbose_name = _('group')
 
     def followers(self):
         return Relationship.objects.filter(target_project=self)
@@ -254,6 +255,7 @@ class Project(ModelBase):
             school = None
         return school
 
+
 class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile', related_name='participations')
     project = models.ForeignKey('projects.Project', related_name='participations')
@@ -265,7 +267,7 @@ class Participation(ModelBase):
     # it with the contact participant form.
     no_wall_updates = models.BooleanField(default=False)
     # for new pages or comments.
-    no_updates = models.BooleanField(default=False)
+    no_updates = models.BooleanField(default=False) 
 
 
 ###########

@@ -4,13 +4,13 @@
 
 {% block form %}
 <fieldset id="school_edit_declined" class="school edit declined_groups tabpane">
-<h2>{{ _('Declined Study Groups') }}</h2>
-<p class="hint">{{ _('View, add and remove declined study groups to this school.') }}</p>
+<h2>{{ _('Declined') }}</h2>
+<p class="hint">{{ _('View, add and remove declined study groups, courses, ... to this school.') }}</p>
 <form action="{% locale_url schools_edit_declined slug=school.slug %}" method="post">
   {% csrf_token %}
   <p>
     <div class="field declined_group project{% if form.project.errors %} error{% endif %}">
-      <label for="id_project">{{ _('Study Group') }}</label>
+      <label for="id_project">{{ _('Short Name') }}</label>
       {{ form.project }}
       {{ form.project.errors }}
     </div>

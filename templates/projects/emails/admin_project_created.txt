@@ -1,5 +1,5 @@
 Hello admins!
 
-There is a new study group: {{ project.name }}: http://new.p2pu.org{{ project.get_absolute_url }}
+There is a new {{ project.kind|lower }}: {{ project.name }}: http://new.p2pu.org{{ project.get_absolute_url }}
 
 School picked: {% if project.school %}{{ project.school.name }}{% else %}None{% endif %}

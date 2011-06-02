@@ -62,6 +62,10 @@
       </li>
       {% endif %}
       <li>
+        <div class="label">{{ _('Kind') }}</div>
+	    <div class="value">{{ project.kind|title }}</div>
+      </li>
+      <li>
         <div class="label">{{ _('Signup') }}</div>
 	    <div class="value"><a href="{{ project.sign_up.get_absolute_url }}">{% if project.signup_closed %}{{ _('Closed') }}{% else %}{{ _('Open') }}{% endif %}</a></div>
       </li>

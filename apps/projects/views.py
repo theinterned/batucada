@@ -100,13 +100,13 @@ def create(request):
             sign_up.save()
             project.sign_up_id = sign_up.id
             project.create()
-            messages.success(request, _('The study group has been created.'))
+            messages.success(request, _('The %s has been created.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
         else:
             messages.error(request,
-                _("There was a problem creating the study group."))
+                _("There was a problem creating the %s.") % project.kind.lower())
     else:
         if 'school' in request.GET:
             try:
@@ -119,6 +119,16 @@ def create(request):
     return render_to_response('projects/project_edit_summary.html', {
         'form': form, 'new_tab': True, 'school': school,
     }, context_instance=RequestContext(request))
+
+
+def matching_kinds(request):
+    if len(request.GET['term']) == 0:
+        matching_kinds = Project.objects.values_list('kind').distinct()
+    else:
+        matching_kinds = Project.objects.filter(kind__icontains=request.GET['term']).values_list('kind').distinct()
+    json = simplejson.dumps([kind[0] for kind in matching_kinds])
+
+    return HttpResponse(json, mimetype="application/x-javascript")
 
 
 def show(request, slug):
@@ -171,7 +181,7 @@ def clone(request):
         form = project_forms.CloneProjectForm(school, request.POST)
         if form.is_valid():
             base_project = form.cleaned_data['project']
-            project = Project(name=base_project.name,
+            project = Project(name=base_project.name, kind=base_project.kind,
                 short_description=base_project.short_description,
                 long_description=base_project.long_description,
                 school=base_project.school, clone_of=base_project)
@@ -209,13 +219,13 @@ def clone(request):
             for link in links:
                 new_link = Link(name=link.name, url=link.url, user=user, project=project)
                 new_link.save()
-            messages.success(request, _('The study group has been cloned.'))
+            messages.success(request, _('The %s has been cloned.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
         else:
             messages.error(request,
-                _("There was a problem cloning the study group."))
+                _("There was a problem cloning the %s.") % project.kind.lower())
     else:
         form = project_forms.CloneProjectForm(school)
     return render_to_response('projects/project_clone.html', {
@@ -255,7 +265,7 @@ def import_from_old_site(request):
         form = project_forms.ImportProjectForm(school, request.POST)
         if form.is_valid():
             course = form.cleaned_data['course']
-            project = Project(name=course['name'],
+            project = Project(name=course['name'], kind=course['kind'],
                 short_description= course['short_description'],
                 long_description=course['long_description'],
                 school=course['school'], imported_from=course['slug'])
@@ -298,13 +308,13 @@ def import_from_old_site(request):
             for name, url in course['links']:
                 new_link = Link(name=name, url=url, user=user, project=project)
                 new_link.save()
-            messages.success(request, _('The study group has been imported.'))
+            messages.success(request, _('The %s has been imported.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
         else:
             messages.error(request,
-                _("There was a problem importing the study group."))
+                _("There was a problem importing the %s.") % project.kind.lower())
     else:
         form = project_forms.ImportProjectForm(school)
     return render_to_response('projects/project_import.html', {
@@ -335,13 +345,13 @@ def edit(request, slug):
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            messages.success(request, _('Study group updated!'))
+            messages.success(request, _('%s updated!') % project.kind.capitalize())
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
         school = project.school
         if school and school.declined.filter(id=project.id).exists():
-            msg = _('The study group membership to %s was declined by the school organizers.')
+            msg = _('The %s membership to %s was declined by the school organizers.') % project.kind.lower()
             messages.error(request, msg % school.name)
         form = project_forms.ProjectForm(instance=project)
 
@@ -554,7 +564,7 @@ def edit_status(request, slug):
             }))
         else:
             messages.error(request,
-                           _('There was a problem saving study group\'s status.'))
+                           _('There was a problem saving the %s\'s status.') % project.kind.lower())
     else:
         form = project_forms.ProjectStatusForm(instance=project)
     return render_to_response('projects/project_edit_status.html', {

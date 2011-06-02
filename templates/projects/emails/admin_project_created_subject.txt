@@ -1,1 +1,1 @@
-[P2PU] New Study Group: {{ project.name }}
+{{ _('[P2PU] New ') }} {{ project.kind|title }}: {{ project.name }}

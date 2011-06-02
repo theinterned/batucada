@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load project_tags %}
-{% block title %}{{ _('Study Groups') }}{% endblock %}
+{% block title %}{{ _('Learn') }}{% endblock %}
 {% block bodyid %}project_gallery{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
 {% block breadcrumbs %}
   <div class="container">
     <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Study Groups') }}</a>
+      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
     </nav>
     {% if user.is_authenticated %}
     <div id="project-actions">
-      <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create a Study Group') }}</a>
+      <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
     </div>
     {% endif %}
   </div> <!-- /.container -->
@@ -19,7 +19,7 @@
 
 {% block body %}
 <div id="main">
-<h1>{{ _('Browse <b>Study Groups</b>') }}</h1>
+<h1>{{ _('Browse') }}</h1>
 <br><br>
 {% project_list %}
 </div>

@@ -36,7 +36,7 @@ class Page(ModelBase):
     last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     project = models.ForeignKey('projects.Project', related_name='pages')
     listed = models.BooleanField(default=True)
-    publish = models.BooleanField(default=False)
+    minor_update = models.BooleanField(default=True)
     collaborative = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
     index = models.IntegerField()
@@ -100,6 +100,7 @@ class PageVersion(ModelBase):
     date = models.DateTimeField()
     page = models.ForeignKey('content.Page', related_name='page_versions')
     deleted = models.BooleanField(default=False)
+    minor_update = models.BooleanField(default=True)
 
     @models.permalink
     def get_absolute_url(self):
@@ -276,7 +277,7 @@ def fire_activity(sender, **kwargs):
         )
         activity.target_project = instance.project
         activity.save()
-    elif not created and is_page and instance.publish:
+    elif not created and is_page and not instance.minor_update:
         if instance.deleted:
             verb = 'http://activitystrea.ms/schema/1.0/delete'
         else:

@@ -29,9 +29,9 @@
 
 
 {% block page_form_buttons %}
-    <div class="field{% if form.publish.errors %} error{% endif %}">
-    {{ form.publish }} {{ _('Post that this has changed on the group\'s wall.') }}
-    {{ form.publish.errors }}
+  <div class="field{% if form.minor_update.errors %} error{% endif %}">
+    {{ form.minor_update }} {{ _('Minor update (not posted to the wall).') }}
+    {{ form.minor_update.errors }}
   </div>
   <a class="button" href="{{ page.get_absolute_url }}">
     {{ _('Cancel') }}
