@@ -2727,18 +2727,28 @@ div.voting div.score {
     font-size: 1.2em;
 }
 
-#main h2 {
+#project_landing h2 {
     font-style: italic;
     text-align: center;
     margin-top: -0.55em;
     font-size: 21px;
 }
 
-#main h2 span {
+#project_landing h2 span {
     background-color: #fff;
     padding: 0px 21px;
 }
 
+.license-properties, #deed-conditions {
+    margin-bottom: 1em;
+}
+
+#terms ol {
+    margin-bottom: 1em;
+}
+#attachments td {
+    padding-right: 1em;
+}
 /*
  * Header
 */

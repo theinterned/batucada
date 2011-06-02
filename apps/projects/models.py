@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext as ugettex, get_language, activate
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
+from django.core.mail import send_mail
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -191,6 +192,10 @@ class Project(ModelBase):
             'slug': self.slug,
         })
 
+    def create(self):
+        self.save()
+        self.send_creation_notification()
+
     def save(self):
         """Make sure each project has a unique slug."""
         count = 1
@@ -203,7 +208,6 @@ class Project(ModelBase):
                     break
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
-        self.send_creation_notification()
         super(Project, self).save()
 
     def get_image_url(self):
@@ -234,6 +238,15 @@ class Project(ModelBase):
                 ol = organizer.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
                         (organizer.user, subject[ol], body[ol]))
+        admin_subject = render_to_string(
+            "projects/emails/admin_project_created_subject.txt", {
+            'project': project,
+            }).strip()
+        admin_body = render_to_string(
+            "projects/emails/admin_project_created.txt", {
+            'project': project,
+            }).strip()
+        send_mail(admin_subject, admin_body, 'admin@p2pu.org', ['admin@p2pu.org'], fail_silently=True)
 
     def accepted_school(self):
         school = self.school
