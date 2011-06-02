@@ -78,7 +78,7 @@ def create(request):
                 author_id=user.id, project_id=project.id)
             sign_up.save()
             project.sign_up_id = sign_up.id
-            project.save()
+            project.create()
             messages.success(request, _('The study group has been created.'))
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,

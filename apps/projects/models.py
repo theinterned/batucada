@@ -191,6 +191,10 @@ class Project(ModelBase):
             'slug': self.slug,
         })
 
+    def create(self):
+        self.save()
+        self.send_creation_notification()
+
     def save(self):
         """Make sure each project has a unique slug."""
         count = 1
@@ -203,7 +207,6 @@ class Project(ModelBase):
                     break
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
-        self.send_creation_notification()
         super(Project, self).save()
 
     def get_image_url(self):
