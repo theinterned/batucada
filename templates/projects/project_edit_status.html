@@ -37,7 +37,7 @@
     </label>
     {{ form.archived.errors }}
   </p>
-  <p class="hint">{{ _('Optionally, provide the period of time in which you expect the ') {{ project.kind|lower }} {{ _(' to be active. These dates are optional and will be displayed on the home page.') }}</p>
+  <p class="hint">{{ _('Optionally, provide the period of time in which you expect the ') }} {{ project.kind|lower }} {{ _(' to be active. These dates are optional and will be displayed on the home page.') }}</p>
   <p>
       <span class="field start_date {% if form.start_date.errors %} error{% endif %} "> 
         <label for="id_start_date">
