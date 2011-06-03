@@ -15,6 +15,12 @@ class Page(ModelBase):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=110, unique=True)
     content = models.TextField()
+    language = models.CharField(verbose_name = 'language',
+        max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
+        default = settings.LANGUAGE_CODE)
+    updated = models.DateTimeField(auto_now=True)
+    # NULL if its original page otherwise points to page in original language
+    original = models.ForeignKey('self', null=True)
 
     def __unicode__(self):
         return self.title
