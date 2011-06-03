@@ -78,8 +78,10 @@ def project_list(school=None, limit=8):
     if limit:
         new = new[:limit]
         archived = archived[:limit]
+        under_development = under_development[:limit]
     return {'featured': featured, 'active': active, 'popular': popular,
-           'new': new, 'open_signup': open_signup, 'under_development': under_development}
+           'new': new, 'open_signup': open_signup, 'under_development': under_development,
+           'school': school}
 
 register.inclusion_tag('projects/_project_list.html')(project_list)
 

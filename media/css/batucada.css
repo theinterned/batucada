@@ -589,7 +589,7 @@ header {}
         margin-right: 10px;
     }
     
-    #user_profile #project-actions, #project_gallery #project-actions, #school_home #project-actions, #inbox #project-actions {
+    #user_profile #project-actions, #project_gallery #project-actions, #project_directory #project-actions, #school_home #project-actions, #inbox #project-actions {
         top: -25px;
     }
     
