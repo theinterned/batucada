@@ -321,7 +321,7 @@ form .small {
  
 header {}
   #masthead {
-    height: 130px;
+    height: 110px;
   }
     #masthead a:hover {
       text-decoration: none;
@@ -340,13 +340,14 @@ header {}
       position: absolute;
       z-index: 3;
       font-size: 12px;
-      margin-left: 825px;
+      margin-left: 635px;
       padding-top: 5px;
       padding-right: 7px;
       padding-bottom: 5px;
       padding-left: 26px;
       border-radius: 10px;
       border: solid 1px #EEE;
+      margin-top: 5px;
     }
 
     #language-nav a {
@@ -373,22 +374,26 @@ header {}
     #user-nav {
       height: 37px;
       position: relative;
-      margin-top: 48px;
       z-index: 2;
       float: right;
+      margin-top: 14px;
+      margin-left: 825px;
+    }
+    
+    #search-form {
+        float: right;
+        margin-top: 5px;
     }
 
-    .search-box input {
-      background: #bec8d9 url('/media/images/icon.loupe.png') no-repeat 100px center;
+    #search-form input {
+      background: #fafafa url('/media/images/icon.loupe.png') no-repeat 187px center;
       border: 0;
-      color: #fff;
-      height: 44px;
-      width: 88px;
-      line-height: 42px;
-      padding: 0 24px 0;
-      font-size: 17px;
-      margin-top: -7px;
+      color: #5A6579;
+      height: 28px;
+      width: 181px;
+      padding: 0 17px;
     }
+
 
       #user-nav a, #main-nav a {
         color: #444;
@@ -2727,7 +2732,7 @@ div.voting div.score {
     font-size: 1.2em;
 }
 
-#project_landing h2 {
+#project_landing #main h2 {
     font-style: italic;
     text-align: center;
     margin-top: -0.55em;
@@ -2767,8 +2772,8 @@ div.voting div.score {
 #beta-tag {
     color: #F08C00;
     font-size: 18px;
-    margin-left: 108px;
-    margin-top: 95px;
+    margin-left: 105px;
+    margin-top: 29px;
     position: absolute;
     z-index: 5;
 }
@@ -2780,10 +2785,6 @@ a#beta-tag:hover {
 footer {
     clear: both;
     padding-top: 11px;
-}
-
-#user-nav {
-    margin-top: 51px;
 }
 
 /*
