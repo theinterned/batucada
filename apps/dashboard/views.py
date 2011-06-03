@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate, get_language
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator, EmptyPage
 
 from l10n.urlresolvers import reverse
 from activity.models import Activity
@@ -52,7 +53,7 @@ def hide_welcome(request):
 
 
 @login_required(profile_required=False)
-def dashboard(request):
+def dashboard(request, page=1):
     """Personalized dashboard for authenticated users."""
     try:
         profile = request.user.get_profile()
@@ -73,21 +74,33 @@ def dashboard(request):
     users_following = profile.following()
     users_followers = profile.followers()
     activities = Activity.objects.dashboard(request.user.get_profile())
+    
+    paginator = Paginator(activities, 25)
+    try:
+        current_page = paginator.page(page)
+    except EmptyPage:
+        raise http.Http404
+
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
         'current_projects': current_projects,
         'users_following': users_following,
         'users_followers': users_followers,
-        'activities': activities,
         'show_welcome': show_welcome,
+        'paginator': paginator,
+        'page_num': page,
+        'next_page': int(page) + 1,
+        'prev_page': int(page) - 1,
+        'num_pages': paginator.num_pages,
+        'page': current_page,
     }, context_instance=RequestContext(request))
 
 
-def index(request):
+def index(request, page=1):
     """
     Direct user to personalized dashboard or generic splash page, depending
     on whether they are logged in authenticated or not.
     """
     if request.user.is_authenticated():
-        return dashboard(request)
+        return dashboard(request, page=page)
     return splash(request)

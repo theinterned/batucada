@@ -11,6 +11,7 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 MANAGERS = ADMINS
+ADMIN_PROJECT_CREATE_EMAIL = 'admin@p2pu.org'
 
 
 DATABASES = {

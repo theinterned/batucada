@@ -77,4 +77,4 @@
 </section>
 {% endif %}
 
-<a href="{% locale_url projects_directory %}">{{ _('View All') }}</a>
+<a href="{% locale_url projects_directory %}{% if school%}?school={{ school.slug }}{% endif %}">{{ _('View All') }}</a>
