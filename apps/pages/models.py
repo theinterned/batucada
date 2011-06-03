@@ -19,7 +19,9 @@ class Page(ModelBase):
         max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
         default = settings.LANGUAGE_CODE)
     updated = models.DateTimeField(auto_now=True)
-    # NULL if its original page otherwise points to page in original language
+
+    # A page is original iff this field is NULL
+    # If a page has this field poiting to another page p, p must be original
     original = models.ForeignKey('self', null=True)
 
     def __unicode__(self):
