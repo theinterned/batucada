@@ -93,12 +93,12 @@
   </ul>
   <div class="pagination">
     {% if page.has_previous %}
-      <a class="btn" href="{% locale_url dashboard_index page=prev_page %}{% if school%}?school={{ school.slug }}{% endif %}">← {{ _('previous') }}</a>
+      <a class="btn" href="{% locale_url dashboard_index page=prev_page %}">← {{ _('previous') }}</a>
     {% else %}
       <span class="btn">← {{ _('previous') }}</span>
     {% endif %}
     {% if page.has_next %}
-      <a class="btn" href="{% locale_url dashboard_index page=next_page %}{% if school%}?school={{ school.slug }}{% endif %}">{{ _('next') }} →</a>
+      <a class="btn" href="{% locale_url dashboard_index page=next_page %}">{{ _('next') }} →</a>
     {% else %}
       <span class="btn">{{_('next')}} →</span>
     {% endif %}

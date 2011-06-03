@@ -116,18 +116,18 @@
 
 
     <ul id="posts">
-      {% for activity in page.object_list %}
+      {% for activity in pagination_page.object_list %}
 	  {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
     <div class="pagination">
-      {% if page.has_previous %}
-        <a class="btn" href="{% locale_url projects_show slug=project.slug page=prev_page %}{% if school%}?school={{ school.slug }}{% endif %}">← {{ _('previous') }}</a>
+      {% if pagination_page.has_previous %}
+        <a class="btn" href="{% locale_url projects_show slug=project.slug page=prev_page %}">← {{ _('previous') }}</a>
       {% else %}
         <span class="btn">← {{ _('previous') }}</span>
       {% endif %}
       {% if page.has_next %}
-        <a class="btn" href="{% locale_url projects_show slug=project.slug page=next_page %}{% if school%}?school={{ school.slug }}{% endif %}">{{ _('next') }} →</a>
+        <a class="btn" href="{% locale_url projects_show slug=project.slug page=next_page %}">{{ _('next') }} →</a>
       {% else %}
         <span class="btn">{{_('next')}} →</span>
       {% endif %}
