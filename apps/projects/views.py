@@ -44,8 +44,17 @@ def project_list(request):
                               context_instance=RequestContext(request))
 
 def list_all(request, page=1):
-    projects = Project.objects.filter(not_listed=False)
-    paginator = Paginator(projects, 16)
+    school = None
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+            form = project_forms.CreateProjectForm(initial={'school': school})
+        except School.DoesNotExist:
+            return http.HttpResponseRedirect(reverse('projects_directory'))
+    projects = Project.objects.filter(not_listed=False).order_by('name')
+    if school:
+        projects = projects.filter(school=school).exclude(id__in=school.declined.values('id'))
+    paginator = Paginator(projects, 24)
     try:
         current_page = paginator.page(page)
     except EmptyPage:
@@ -61,6 +70,7 @@ def list_all(request, page=1):
         'prev_page': int(page) - 1,
         'num_pages': paginator.num_pages,
         'page': current_page,
+        'school': school,
     }, context_instance=RequestContext(request))
 
 
