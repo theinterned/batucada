@@ -60,6 +60,7 @@ DEBUG_TOOLBAR_CONFIG = {
 INSTALLED_APPS += (
     'debug_toolbar',
     'django_nose',
+    'django.contrib.admindocs',
 )
 
 MIDDLEWARE_CLASSES += (
