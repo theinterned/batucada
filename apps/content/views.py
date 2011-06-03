@@ -7,6 +7,7 @@ from django.utils.translation import ugettext as _
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.db import IntegrityError
+from django.core.paginator import Paginator, EmptyPage
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -24,7 +25,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-def show_page(request, slug, page_slug):
+def show_page(request, slug, page_slug, pagination_page=1):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     can_edit = page.can_edit(request.user)
     if page.deleted:
@@ -35,11 +36,24 @@ def show_page(request, slug, page_slug):
         else:
             return HttpResponseRedirect(page.project.get_absolute_url())
     first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
+    
+    paginator = Paginator(first_level_comments, 5)
+    try:
+        current_page = paginator.page(pagination_page)
+    except EmptyPage:
+        raise http.Http404
+
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
         'can_edit': can_edit,
         'first_level_comments': first_level_comments,
+        'paginator': paginator,
+        'page_num': pagination_page,
+        'next_page': int(pagination_page) + 1,
+        'prev_page': int(pagination_page) - 1,
+        'num_pages': paginator.num_pages,
+        'pagination_page': current_page,
     }, context_instance=RequestContext(request))
 
 def show_comment(request, slug, page_slug, comment_id):
