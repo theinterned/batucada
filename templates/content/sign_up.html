@@ -31,7 +31,7 @@
 {% if organizing %}<p>{{_('Pending Answers:')}} {{ pending_answers_count }}</p>{% endif %}
 <br>
 <ul id="posts">
-{% for comment in first_level_comments %}
+{% for comment in pagination_page.object_list %}
   {% if comment.deleted %}
     {% if comment.has_visible_childs %}
       <li class="post-container deleted">
@@ -116,6 +116,18 @@
 {% endfor %}
 {% endfor %}
 </ul>
+<div class="pagination">
+  {% if pagination_page.has_previous %}
+    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=prev_page %}">← {{ _('previous') }}</a>
+  {% else %}
+    <span class="btn">← {{ _('previous') }}</span>
+  {% endif %}
+  {% if pagination_page.has_next %}
+    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=next_page %}">{{ _('next') }} →</a>
+  {% else %}
+    <span class="btn">{{_('next')}} →</span>
+  {% endif %}
+</div>
 {% endif %}
 </div>
 {% endblock %}
