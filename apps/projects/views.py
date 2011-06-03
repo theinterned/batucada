@@ -44,8 +44,17 @@ def project_list(request):
                               context_instance=RequestContext(request))
 
 def list_all(request, page=1):
-    projects = Project.objects.filter(not_listed=False)
-    paginator = Paginator(projects, 16)
+    school = None
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+            form = project_forms.CreateProjectForm(initial={'school': school})
+        except School.DoesNotExist:
+            return http.HttpResponseRedirect(reverse('projects_directory'))
+    projects = Project.objects.filter(not_listed=False).order_by('name')
+    if school:
+        projects = projects.filter(school=school).exclude(id__in=school.declined.values('id'))
+    paginator = Paginator(projects, 24)
     try:
         current_page = paginator.page(page)
     except EmptyPage:
@@ -61,6 +70,7 @@ def list_all(request, page=1):
         'prev_page': int(page) - 1,
         'num_pages': paginator.num_pages,
         'page': current_page,
+        'school': school,
     }, context_instance=RequestContext(request))
 
 
@@ -131,7 +141,7 @@ def matching_kinds(request):
     return HttpResponse(json, mimetype="application/x-javascript")
 
 
-def show(request, slug):
+def show(request, slug, page=1):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
@@ -151,10 +161,16 @@ def show(request, slug):
         form = None
     # TODO: See how we can modify and use challenges.
     challenges = Challenge.objects.upcoming(project_id=project.id)
+
+    activities = project.activities()
+    paginator = Paginator(activities, 10)
+    try:
+        current_page = paginator.page(page)
+    except EmptyPage:
+        raise http.Http404
     
     context = {
         'project': project,
-        'activities': project.activities()[0:10],
         'participating': is_participating,
         'following': is_following,
         'pending_signup': is_pending_signup,
@@ -163,6 +179,12 @@ def show(request, slug):
         'content_pages_for_header': content_pages_for_header,
         'content_pages_count': content_pages_count,
         'form': form,
+        'paginator': paginator,
+        'page_num': page,
+        'next_page': int(page) + 1,
+        'prev_page': int(page) - 1,
+        'num_pages': paginator.num_pages,
+        'page': current_page,
     }
     return render_to_response('projects/project.html', context,
                               context_instance=RequestContext(request))
