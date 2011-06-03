@@ -222,6 +222,7 @@ class Project(ModelBase):
         ulang = get_language()
         subject = {}
         body = {}
+        domain = Site.objects.get_current().domain
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
             subject[l[0]] = render_to_string(
@@ -231,7 +232,7 @@ class Project(ModelBase):
             body[l[0]] = render_to_string(
                 "projects/emails/project_created.txt", {
                 'project': project,
-                'domain': Site.objects.get_current().domain,
+                'domain': domain,
                 }).strip()
         activate(ulang)
         for organizer in project.organizers():
@@ -246,8 +247,10 @@ class Project(ModelBase):
         admin_body = render_to_string(
             "projects/emails/admin_project_created.txt", {
             'project': project,
+            'domain': domain,
             }).strip()
-        send_mail(admin_subject, admin_body, 'admin@p2pu.org', ['admin@p2pu.org'], fail_silently=True)
+        admin_email = settings.ADMIN_PROJECT_CREATE_EMAIL
+        send_mail(admin_subject, admin_body, admin_email, [admin_email], fail_silently=True)
 
     def accepted_school(self):
         school = self.school

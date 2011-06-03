@@ -23,6 +23,7 @@
       {% if is_organizer %}
         <a id="edit-school" class="button" href="{% locale_url schools_edit slug=school.slug %}">{{ _('Edit School') }}</a>
       {% endif %}
+      <a class="button" href="{% locale_url projects_directory %}?school={{ school.slug }}">{{ _('View All') }}</a>
       <a id="create-project" class="button" href="{% locale_url projects_create %}?school={{ school.slug }}">{{ _('Create') }}</a>
     </div>
     {% endif %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load l10n_tags %}
 {% load truncate_chars %}
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
@@ -19,7 +20,7 @@
 
 <div id="sidebar">
 <div class="vcard panel">
-  <img class="member-picture" src="{{ user.get_profile.image_or_default }}" height="40" width="40" {{ _('alt="') }}{{ user.username}}{{ _('\'s profile picture"') }}>
+    <img class="member-picture" src="{{ user.get_profile.image_or_default }}" height="40" width="40" 'alt="{% blocktrans with user=user.username%}{{ user }}'s profile picture{% endblocktrans %}">
   <div class="member-details">
     <h2 class="member-name">
       <span class="fn">{{ user.get_profile.display_name }}</span>
@@ -87,10 +88,22 @@
   </div> <!-- /#create-post -->
 
   <ul id="posts">
-    {% for activity in activities %}
+    {% for activity in page.object_list %}
       {% include "activity/_activity_resource.html" %}
     {% endfor %}
   </ul>
+  <div class="pagination">
+    {% if page.has_previous %}
+      <a class="btn" href="{% locale_url dashboard_index page=prev_page %}">← {{ _('previous') }}</a>
+    {% else %}
+      <span class="btn">← {{ _('previous') }}</span>
+    {% endif %}
+    {% if page.has_next %}
+      <a class="btn" href="{% locale_url dashboard_index page=next_page %}">{{ _('next') }} →</a>
+    {% else %}
+      <span class="btn">{{_('next')}} →</span>
+    {% endif %}
+  </div>
 
 </div> <!-- /#main -->
 

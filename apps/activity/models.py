@@ -73,7 +73,7 @@ class ActivityManager(ManagerBase):
             models.Q(actor=user),
         ).exclude(parent__isnull=False).exclude(
             models.Q(status__in_reply_to__isnull=False),
-        ).order_by('-created_on')[0:25]
+        ).order_by('-created_on')
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
