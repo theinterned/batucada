@@ -10,8 +10,29 @@
              <img src="/media/images/project-missing.png" width="243" height="150" alt="project image"/>
         {% endif %}
       </a>
+    <div id="project-actions">
+    {% if user.is_authenticated %}
+      {% if not organizing and not participating %}
+        {% if following %}
+          <form id="unfollow_button" method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
+            {% csrf_token %}
+            <button>{{ _('Unfollow') }}</button>
+          </form>
+        {% else %}
+          <form id="follow_button" method="post" action="{% locale_url relationships_follow object_type='course' slug=project.slug %}">
+            {% csrf_token %}
+            <button>{{ _('Follow') }}</button>
+          </form>
+        {% endif %}
+        {% if not project.signup_closed and not pending_signup %}
+          <p id="participate_button"><a href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a></p>
+        {% endif %}
+      {% endif %}
+    {% else %}
+          <p id="participate_button"><a href="{{ login_with_redirect_url }}">{{ _('Participate')}}</a></p>     
+    {% endif %}
+    </div>
     </figure>
-    <br>
     <div id="project-description">
         {{ project.short_description|safe }}
     </div> 
@@ -130,23 +151,6 @@
         <div class="value"><a href={{ pending_signup.get_absolute_url }}>{{ _('Your Answer') }}</a></div>
         <br><br>
     {% endif %}
-    {% if following %}
-      <form method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
-        {% csrf_token %}
-        <button>{{ _('Unfollow') }}</button>
-      </form>
-      <br>
-    {% else %}
-      <form method="post" action="{% locale_url relationships_follow object_type='course' slug=project.slug %}">
-        {% csrf_token %}
-        <button>{{ _('Follow') }}</button>
-      </form>
-      <br>
-    {% endif %}
-    {% if not project.signup_closed and not pending_signup %}
-      <a class="button" href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a>
-      <br><br>
-    {% endif %}
   {% endif %}
   {% if organizing %}
     <a class="button" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
@@ -155,12 +159,7 @@
   {% endif %}{% endif %}
 </section>
 
-
-
 <section id="course-content" class="panel">
-
-
-
 
   <a name="tasks"></a>
   <h2 {% if school %}class="school_header"{% endif %}>{{ _('Tasks') }}</h2>
