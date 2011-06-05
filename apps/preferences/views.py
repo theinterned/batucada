@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
+from django.contrib.sessions.models import Session
 
 from l10n.urlresolvers import reverse
 from drumbeat import messages
@@ -104,11 +105,25 @@ def password(request):
 
 @login_required
 def delete(request):
-    return HttpResponseRedirect(reverse('preferences_settings'))
+    profile = request.user.get_profile()
+    current_projects = profile.get_current_projects()
+    pending_projects = []
+    for project in current_projects['organizing']:
+        if not project.archived and project.organizers().count() == 1:
+            pending_projects.append(project)
     if request.method == 'POST':
-        profile = request.user.get_profile()
-        profile.user.delete()
-        profile.delete()
+        if pending_projects:
+            messages.error(request, _('You are the only organizer of %s active study groups, courses, ...') % len(pending_projects))
+            return HttpResponseRedirect(reverse('preferences_delete'))
+        profile.deleted = True
+        profile.user.is_active = False
+        profile.save()
+        profile.user.save()
+        # logout the user.
+        for s in Session.objects.all():
+            if s.get_decoded().get('_auth_user_id') == profile.user.id:
+                s.delete()
         return HttpResponseRedirect(reverse('users_logout'))
-    return render_to_response('users/settings_delete.html', {
-    }, context_instance=RequestContext(request))
+    return render_to_response('users/settings_delete.html', {'pending_projects': pending_projects},
+        context_instance=RequestContext(request))
+
