@@ -1590,7 +1590,7 @@ header {}
 			margin-bottom: 5px;
 		}
 		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table,
-        .modal .organizers table {
+        .modal .organizers table, .modal .openids table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1604,7 +1604,7 @@ header {}
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
         .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td,
-        .modal .organizers th, .modal .organizers td {
+        .modal .organizers th, .modal .organizers td, .modal .openids th, .modal .openids td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
