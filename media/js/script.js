@@ -233,6 +233,7 @@ var batucada = {
             if ($inputs) {
                 attachFileUploadHandler($inputs);
             }
+            openidHandlers();
         }
     },
     project_edit: {
