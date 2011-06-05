@@ -81,7 +81,7 @@ def project_list(school=None, limit=8):
         under_development = under_development[:limit]
     return {'featured': featured, 'active': active, 'popular': popular,
            'new': new, 'open_signup': open_signup, 'under_development': under_development,
-           'school': school}
+           'archived': archived, 'school': school}
 
 register.inclusion_tag('projects/_project_list.html')(project_list)
 

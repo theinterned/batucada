@@ -9,6 +9,8 @@ class SendUserEmail(Task):
     """Send an email to a specific user specified by ``profile``."""
 
     def run(self, profile, subject, body, **kwargs):
+        if profile.deleted:
+            return
         log = self.get_logger(**kwargs)
         log.debug("Sending email to user %d with subject %s" % (
             profile.user.id, subject,))
