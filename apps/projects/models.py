@@ -177,7 +177,7 @@ class Project(ModelBase):
         return False
 
     def activities(self):
-        activities = Activity.objects.filter(
+        activities = Activity.objects.filter(deleted=False).filter(
             Q(project=self) | Q(target_project=self),
         ).exclude(
             verb='http://activitystrea.ms/schema/1.0/follow'
