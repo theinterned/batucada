@@ -327,15 +327,11 @@ $(document).ready(function() {
         ns[bodyId].onload();
     }
     // attach handlers for elements that appear on most pages
-    $('#user-nav').find('a.trigger').bind('click', function(event) {
-		var target = $(this).parent();
-		// close any previously open tab
-		target.parent().find('li.open').removeClass('open');
-        target.toggleClass('open');
-		// return false to ensure that we don't get '#' appear in the URL
-		return false;
+     $('#main-nav').find('li.menu').bind('click', function(event) {
+        $(this).toggleClass('open');
     });
-    $('#main-nav').find('li.menu').bind('click', function(event) {
+
+    $('#user-nav').find('li.menu').bind('click', function(event) {
         $(this).toggleClass('open');
     });
 
