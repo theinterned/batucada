@@ -197,8 +197,8 @@ input[type=submit]:active,
     color: #fff;
     background: #36cdc4;
     text-shadow: none;
-    padding: 7px;
-    font: bold 14px "Arvo", "MuseoSlab 500", "Georgia";
+    padding: 5px;
+    font: bold 12px "Arvo", "MuseoSlab 500", "Georgia";
     text-transform: uppercase;
     -moz-border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px;
@@ -216,12 +216,11 @@ input[type=submit]:active,
 
 #participate_button {
     float: left;
-    margin: 8px 0 0 15px;
 }
 
 #participate_button a {
     background: #f08c00;
-    padding: 8px;
+    padding: 7px;
     border-color: #BFBFBF #A0A0A0 #A0A0A0 #BFBFBF;
     border-style: solid;
     border-width: 1px;
@@ -587,30 +586,54 @@ header {}
         margin: 0 5px;
     }
 
-    #project-actions {
+    #breadcrumbs #project-actions {
         float: right;
         position: relative;
-        top: -35px;
+        top: -47px;
         margin-right: 10px;
     }
     
-    #user_profile #project-actions, #project_gallery #project-actions, #project_directory #project-actions, #school_home #project-actions, #inbox #project-actions {
+    #user_profile #breadcrumbs #project-actions, #project_gallery #breadcrumbs #project-actions, #project_directory #breadcrumbs #project-actions, 
+    #school_home #breadcrumbs #project-actions, #inbox #breadcrumbs #project-actions {
         top: -25px;
     }
     
-    #project-actions .button {
+    #breadcrumbs #project-actions .button {
       float: left;
       margin-right: 15px;
     }
     
-    #project_landing #project-actions {
-    top: -44px;
-    margin-right: 35px;
+    #project_landing #breadcrumbs #project-actions {
+      top: -44px;
+      margin-right: 35px;
     }
     
-    #project_landing #project-actions form {
+    #sidebar #project-actions {
+      padding: 0 10px 0 10px;
+      position: relative;
+      width: 223px;
+      top: -50px;
+    }
+
+    #sidebar #project-actions form { 
         float: left;
     }
+
+    #sidebar #project-actions #participate_button { 
+        float: right;
+        margin: 5px 0 0 0;
+    }
+    
+    #sidebar #project-action #participate_button a, #sidebar #project-actions button {
+        -webkit-box-shadow:0 0 15px #ffffff; 
+        -moz-box-shadow: 0 0 15px #ffffff; 
+        box-shadow:0 0 15px #ffffff; 
+    }
+    
+    #sidebar .project_img {
+        margin-bottom: 0;
+    }
+
 #content {
   padding-top: 17px;
 }
@@ -704,6 +727,7 @@ header {}
 	  #sidebar #project-description {
         font-weight: bold;
         font-size: 100%;
+        clear: both;
       }
       
       #project-icons img {
@@ -984,7 +1008,7 @@ header {}
 		-webkit-border-radius:3px;
 		background: #fff;		
 	}
-	.card-list .card img, .project_img img{
+	.card-list .card img, .project_img img {
 		margin-bottom: 0.5em;
 		box-shadow: white 1px 1px 1px;
 		-moz-box-shadow: white 1px 1px 1px;
