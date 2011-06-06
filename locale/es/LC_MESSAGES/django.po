@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-05 21:33-0400\n"
+"POT-Creation-Date: 2011-06-05 22:16-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,13 +152,13 @@ msgstr "Usted no puede decorar el envío"
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/challenges/forms.py:36 apps/projects/forms.py:103
+#: apps/challenges/forms.py:36 apps/projects/forms.py:105
 #: templates/drumbeatmail/base.html:17 templates/messages/inbox.html:12
 #: templates/projects/contact_organizers.html:12
 msgid "Subject"
 msgstr "Asunto"
 
-#: apps/challenges/forms.py:38 apps/projects/forms.py:105
+#: apps/challenges/forms.py:38 apps/projects/forms.py:107
 msgid "Body"
 msgstr "Cuerpo"
 
@@ -544,25 +544,30 @@ msgid "Sign-Up Task"
 msgstr "Tarea de Inscripción"
 
 #: apps/projects/forms.py:88 apps/schools/forms.py:48
+#, fuzzy
+msgid "That user account was deleted."
+msgstr "Esta cuenta de usuario fue borrada."
+
+#: apps/projects/forms.py:90 apps/schools/forms.py:50
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:91
+#: apps/projects/forms.py:93
 #, python-format
 msgid "User %s is already an organizer."
 msgstr "El usuario %s ya es un organizador."
 
-#: apps/projects/forms.py:93
+#: apps/projects/forms.py:95
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/forms.py:114
+#: apps/projects/forms.py:116
 msgid "That study group, course, ... does not exist."
 msgstr "Ese grupo de estudio, curso, ... no existe."
 
-#: apps/projects/forms.py:117
+#: apps/projects/forms.py:119
 #, python-format
 msgid ""
 "You received this message through the Contact Organizer form at %(project)s: "
@@ -571,23 +576,23 @@ msgstr ""
 "Usted recibió este mensaje porque es un organizador en %(project)s: http://"
 "%(domain)s%(url)s"
 
-#: apps/projects/forms.py:138 apps/schools/forms.py:66
-#: apps/schools/forms.py:86
+#: apps/projects/forms.py:140 apps/schools/forms.py:68
+#: apps/schools/forms.py:88
 #, python-format
 msgid "There is no study group, course, ... with that short name: %s."
 msgstr "No hay un grupo de estudio, curso, ... con ese nombre corto: %s."
 
-#: apps/projects/forms.py:140 apps/schools/forms.py:68
-#: apps/schools/forms.py:88
+#: apps/projects/forms.py:142 apps/schools/forms.py:70
+#: apps/schools/forms.py:90
 #, python-format
 msgid "The %(slug)s %(kind)s is not part of this school."
 msgstr "El %(kind)s %(slug)s no es parte de esta escuela."
 
-#: apps/projects/forms.py:155
+#: apps/projects/forms.py:157
 msgid "There is no course with this short name on the old p2pu site."
 msgstr "No hay un curso con ese nombre corto en el antiguo sitio de p2pu."
 
-#: apps/projects/forms.py:157
+#: apps/projects/forms.py:159
 #, python-format
 msgid "The %s course was not part of this school."
 msgstr "El curso %s no era parte de esta escuela."
@@ -735,17 +740,17 @@ msgid "You are not school organizer"
 msgstr "Usted no esta organizando esta escuela"
 
 # python-format
-#: apps/schools/forms.py:50
+#: apps/schools/forms.py:52
 #, python-format
 msgid "User %s is organizing the school."
 msgstr "El usuario %s está organizando la escuela."
 
-#: apps/schools/forms.py:70
+#: apps/schools/forms.py:72
 #, python-format
 msgid "The %(slug)s %(kind)s is already featured for this school."
 msgstr "El %(kind)s %(slug)s ya está asociado a esta escuela."
 
-#: apps/schools/forms.py:90
+#: apps/schools/forms.py:92
 #, python-format
 msgid "The %(slug)s %(kind)s was already declined for this school."
 msgstr "El %(kind)s %(slug)s ya fue rechazado para esta escuela."
@@ -1279,7 +1284,7 @@ msgstr "Reportar Abuso"
 #: templates/content/page.html:89 templates/content/sign_up.html:50
 #: templates/content/sign_up.html.py:92
 #: templates/projects/project_edit_links.html:39
-#: templates/projects/project_edit_participants.html:56
+#: templates/projects/project_edit_participants.html:54
 #: templates/schools/school_edit_declined.html:38
 #: templates/schools/school_edit_featured.html:38
 #: templates/users/profile_edit_links.html:60
@@ -1522,7 +1527,7 @@ msgid "Judges"
 msgstr "Jueces"
 
 #: templates/challenges/challenge_judges.html:28
-#: templates/projects/project_edit_participants.html:13
+#: templates/projects/project_edit_participants.html:12
 #: templates/schools/school_edit_organizers.html:13
 #: templates/users/profile_form_base.html:19
 msgid "Username"
@@ -1530,7 +1535,7 @@ msgstr "Nombre de usuario"
 
 #: templates/challenges/challenge_judges.html:36
 #: templates/projects/project_edit_links.html:7
-#: templates/projects/project_edit_participants.html:24
+#: templates/projects/project_edit_participants.html:22
 #: templates/schools/school_edit_declined.html:19
 #: templates/schools/school_edit_featured.html:19
 #: templates/schools/school_edit_organizers.html:19
@@ -1541,7 +1546,7 @@ msgstr "Añadir"
 #: templates/challenges/challenge_judges.html:44
 #: templates/projects/project_edit_links.html:14
 #: templates/projects/project_edit_links_base.html:13
-#: templates/projects/project_edit_participants.html:32
+#: templates/projects/project_edit_participants.html:30
 #: templates/projects/project_edit_summary.html:10
 #: templates/schools/school_edit_declined.html:27
 #: templates/schools/school_edit_featured.html:27
@@ -1555,7 +1560,7 @@ msgstr "Nombre"
 
 #: templates/challenges/challenge_judges.html:45
 #: templates/projects/project_edit_links.html:17
-#: templates/projects/project_edit_participants.html:34
+#: templates/projects/project_edit_participants.html:32
 #: templates/schools/school_edit_declined.html:28
 #: templates/schools/school_edit_featured.html:28
 #: templates/users/profile_edit_links.html:38
@@ -1759,11 +1764,13 @@ msgstr "Responder"
 
 #: templates/content/comment_sign_up.html:39 templates/content/sign_up.html:66
 #: templates/content/emails/sign_up_updated.txt:8
+#: templates/relationships/emails/new_follower.txt:3
 msgid "Bio:"
 msgstr "Biografía:"
 
 #: templates/content/comment_sign_up.html:40 templates/content/sign_up.html:67
 #: templates/content/emails/sign_up_updated.txt:10
+#: templates/relationships/emails/new_follower.txt:5
 #: templates/users/profile.html:62
 msgid "Location:"
 msgstr "Ubicación:"
@@ -1930,7 +1937,7 @@ msgid "Add Participant"
 msgstr "Añadir Participante"
 
 #: templates/content/sign_up.html:78
-#: templates/projects/project_edit_participants.html:52
+#: templates/projects/project_edit_participants.html:50
 msgid "Add Organizer"
 msgstr "Añadir Organizador"
 
@@ -1974,7 +1981,7 @@ msgstr "Ver tarea en:"
 #: templates/content/emails/content_update.txt:10
 #: templates/content/emails/sign_up_updated.txt:20
 #: templates/drumbeatmail/emails/direct_message.txt:7
-#: templates/relationships/emails/new_follower.txt:6
+#: templates/relationships/emails/new_follower.txt:10
 #: templates/statuses/emails/wall_updated.txt:13
 #: templates/users/emails/forgot_password.txt:10
 #: templates/users/emails/registration_confirm.txt:9
@@ -1984,7 +1991,7 @@ msgstr "Sinceramente,"
 #: templates/content/emails/content_update.txt:11
 #: templates/content/emails/sign_up_updated.txt:21
 #: templates/drumbeatmail/emails/direct_message.txt:8
-#: templates/relationships/emails/new_follower.txt:7
+#: templates/relationships/emails/new_follower.txt:11
 #: templates/statuses/emails/wall_updated.txt:14
 #: templates/users/emails/forgot_password.txt:11
 #: templates/users/emails/registration_confirm.txt:10
@@ -1994,7 +2001,7 @@ msgstr "El Equipo de P2PU"
 #: templates/content/emails/content_update.txt:13
 #: templates/drumbeatmail/emails/direct_message.txt:10
 #: templates/projects/emails/project_created.txt:21
-#: templates/relationships/emails/new_follower.txt:9
+#: templates/relationships/emails/new_follower.txt:13
 #: templates/statuses/emails/wall_updated.txt:19
 msgid "Manage your subscriptions:"
 msgstr "Configure sus notificaciones:"
@@ -2620,7 +2627,7 @@ msgid "Subscribed."
 msgstr "Suscrito."
 
 #: templates/projects/project_edit_links.html:27
-#: templates/projects/project_edit_participants.html:43
+#: templates/projects/project_edit_participants.html:41
 #: templates/schools/school_edit_organizers.html:36
 #: templates/users/profile_edit_links.html:48
 msgid "yes"
@@ -2642,7 +2649,7 @@ msgid "Not subscribed."
 msgstr "No suscrito."
 
 #: templates/projects/project_edit_links.html:31
-#: templates/projects/project_edit_participants.html:45
+#: templates/projects/project_edit_participants.html:43
 #: templates/users/profile_edit_links.html:52
 msgid "no"
 msgstr "no"
@@ -2673,16 +2680,16 @@ msgstr "Actualizar"
 msgid "View, add and remove participants."
 msgstr "Ver, añadir y remover participantes."
 
-#: templates/projects/project_edit_participants.html:18
-#: templates/projects/project_edit_participants.html:33
+#: templates/projects/project_edit_participants.html:17
+#: templates/projects/project_edit_participants.html:31
 msgid "Organizer"
 msgstr "Organizador"
 
-#: templates/projects/project_edit_participants.html:43
+#: templates/projects/project_edit_participants.html:41
 msgid "Organizing."
 msgstr "Organizando."
 
-#: templates/projects/project_edit_participants.html:45
+#: templates/projects/project_edit_participants.html:43
 msgid "Participating."
 msgstr "Participando."
 
@@ -2992,7 +2999,7 @@ msgstr "su actividad"
 msgid "on P2PU!"
 msgstr "en P2PU!"
 
-#: templates/relationships/emails/new_follower.txt:3
+#: templates/relationships/emails/new_follower.txt:7
 msgid "You can see their profile here:"
 msgstr "Puede ver su perfil aquí:"
 
