@@ -1,5 +1,9 @@
 {{ user.display_name }} {{ _('is now following ') }}{% if project %}{{ project }}{% else %}{{ _('you') }}{% endif %} {{ _('on P2PU!') }}
 
+{{ _('Bio:') }} {{ user.bio|striptags|safe }}
+
+{{ _('Location:') }} {{ user.location }}
+
 {{ _('You can see their profile here:') }}
 http://{{ domain }}{{ user.get_absolute_url }}
 
