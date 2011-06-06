@@ -1582,13 +1582,13 @@ header {}
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, .modal .participants .add-participant, .modal .featured_groups .add-featured,
+		.modal .links .add-link, .modal .featured_groups .add-featured,
         .modal .declined_groups .add-declined, .modal .organizers .add-organizer {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button,
+		.modal .links .add-link button, .modal .featured_groups .add-featured button,
         .modal .declined_groups .add-declined button, .modal .organizers .add-organizer button {
 			margin-top: 17px;
 			margin-bottom: 5px;
@@ -2371,6 +2371,9 @@ div.warning h2 {
 	}
 .edit.links .errorlist {
 	top:  5em;
+	}	
+.edit.participants .errorlist {
+    left: 22em;
 	}	
 .edit.image .errorlist:before, .edit.links .errorlist:before {
 	background-image: url(/media/images/modal-error-arrow-up.png);

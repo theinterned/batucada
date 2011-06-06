@@ -133,7 +133,7 @@ def matching_non_organizers(request, slug):
     if len(request.GET['term']) == 0:
         raise CommandException(_("Invalid request"))
 
-    non_organizers = UserProfile.objects.exclude(deleted=True, id__in=school.organizers.values('user_id'))
+    non_organizers = UserProfile.objects.filter(deleted=False).exclude(id__in=school.organizers.values('user_id'))
     matching_users = non_organizers.filter(username__icontains = request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 
