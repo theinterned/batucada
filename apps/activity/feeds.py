@@ -69,7 +69,11 @@ class UserActivityFeed(Feed):
 
     def subtitle(self, user):
         if user:
-            return _('Activity feed for %s' % (user.display_name,))
+            try:
+                name = user.display_name
+            except AttributeError:
+                name = user.name
+            return _('Activity feed for %s' % (name,))
         else:
             return _('Public Activity')
 

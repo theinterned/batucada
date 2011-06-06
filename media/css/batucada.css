@@ -379,12 +379,12 @@ header {}
       margin-left: 825px;
     }
     
-    #search-form {
+    #cse-search-box {
         float: right;
         margin-top: 5px;
     }
 
-    #search-form input {
+    #cse-search-box input {
       background: #fafafa url('/media/images/icon.loupe.png') no-repeat 187px center;
       border: 0;
       color: #5A6579;
@@ -393,6 +393,13 @@ header {}
       padding: 0 17px;
     }
 
+    #search #main {
+        width: 980px;
+        padding: 0 0 0 30px;
+        margin: 0;
+        float: none;
+        border-top: 1px solid #fff;
+        }
 
       #user-nav a, #main-nav a {
         color: #444;
@@ -1930,7 +1937,7 @@ header {}
 	position: absolute;
 	right: 81px; bottom: -105px;
 	}
-#splash #main{
+#splash #main {
         width: 980px;
         padding: 36px 10px 0 10px;
 	margin: 0;
