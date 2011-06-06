@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-05 22:16-0400\n"
+"POT-Creation-Date: 2011-06-06 13:42-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/activity/feeds.py:68 apps/activity/feeds.py:74
+#: apps/activity/feeds.py:68 apps/activity/feeds.py:78
 msgid "Public Activity"
 msgstr "Actividad Pública"
 
-#: apps/activity/feeds.py:72
+#: apps/activity/feeds.py:76
 #, python-format
 msgid "Activity feed for %s"
 msgstr "Bitácora de actividades para %s"
@@ -1016,6 +1016,10 @@ msgid "Page not found"
 msgstr "Página no encontrada"
 
 #: templates/404.html:8
+msgid "Maybe the page you are looking for is on the old p2pu site: "
+msgstr "Tal vez la página que está buscando está en el antiguo sitio de p2pu: "
+
+#: templates/404.html:9
 msgid ""
 "If you think it should be here, please let us know by <a href=\"http://p2pu."
 "lighthouseapp.com/projects/71002\">filing a bug report</a>."
@@ -1056,7 +1060,7 @@ msgstr ""
 msgid "About Us"
 msgstr "Acerca de Nosotros"
 
-#: templates/_footer.html:8 templates/base.html:60
+#: templates/_footer.html:8 templates/base.html:67
 msgid "About P2PU"
 msgstr "Acerca de P2PU"
 
@@ -1064,7 +1068,7 @@ msgstr "Acerca de P2PU"
 msgid "Supporters"
 msgstr "Patrocinadores"
 
-#: templates/_footer.html:10 templates/base.html:56
+#: templates/_footer.html:10 templates/base.html:63
 msgid "Blog"
 msgstr "Blog"
 
@@ -1084,7 +1088,7 @@ msgstr "Wiki"
 msgid "Old P2PU Site"
 msgstr "Antiguo Sitio de P2PU"
 
-#: templates/_footer.html:18 templates/base.html:62
+#: templates/_footer.html:18 templates/base.html:69
 msgid "Contact Us"
 msgstr "Contáctenos"
 
@@ -1100,7 +1104,7 @@ msgstr "Facebook"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/_footer.html:22 templates/base.html:61
+#: templates/_footer.html:22 templates/base.html:68
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
@@ -1144,15 +1148,11 @@ msgstr "css/style-es.css"
 msgid "(more)"
 msgstr "(más)"
 
-#: templates/base.html:46
-msgid "Search..."
-msgstr "Buscar..."
-
-#: templates/base.html:50
+#: templates/base.html:57
 msgid "BETA"
 msgstr "BETA"
 
-#: templates/base.html:53 templates/activity/delete_restore.html:12
+#: templates/base.html:60 templates/activity/delete_restore.html:12
 #: templates/activity/index.html:12 templates/projects/base.html:15
 #: templates/projects/directory.html:3 templates/projects/directory.html:9
 #: templates/projects/gallery.html:4 templates/projects/gallery.html.py:10
@@ -1160,7 +1160,7 @@ msgstr "BETA"
 msgid "Learn"
 msgstr "Aprender"
 
-#: templates/base.html:54 templates/mojo.html:67
+#: templates/base.html:61 templates/mojo.html:67
 #: templates/activity/delete_restore.html:16 templates/activity/index.html:16
 #: templates/projects/sidebar.html:131 templates/users/profile.html:16
 #: templates/users/profile_edit.html:11 templates/users/user_list.html:5
@@ -1168,58 +1168,58 @@ msgstr "Aprender"
 msgid "People"
 msgstr "Personas"
 
-#: templates/base.html:58
+#: templates/base.html:65
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/base.html:63
+#: templates/base.html:70
 msgid "P2PU Help Desk"
 msgstr "Escritorio de Ayuda en P2PU"
 
-#: templates/base.html:79
+#: templates/base.html:86
 msgid "My P2PU"
 msgstr "Mi P2PU"
 
-#: templates/base.html:86 templates/dashboard/dashboard.html:14
+#: templates/base.html:93 templates/dashboard/dashboard.html:14
 msgid "Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:87 templates/dashboard/dashboard.html:28
+#: templates/base.html:94 templates/dashboard/dashboard.html:28
 #: templates/users/profile_edit.html:25
 msgid "View Profile"
 msgstr "Ver Perfil"
 
-#: templates/base.html:88 templates/users/profile.html:22
+#: templates/base.html:95 templates/users/profile.html:22
 #: templates/users/profile_edit.html:5 templates/users/profile_edit.html:15
 #: templates/users/profile_edit.html:24
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
-#: templates/base.html:89 templates/mojo.html:93
+#: templates/base.html:96 templates/mojo.html:93
 #: templates/drumbeatmail/inbox.html:4 templates/drumbeatmail/inbox.html:9
 #: templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:90
+#: templates/base.html:97
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:96
+#: templates/base.html:103
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:139 templates/drumbeatmail/base.html:52
+#: templates/base.html:146 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:158
+#: templates/base.html:165
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
-#: templates/base.html:159
+#: templates/base.html:166
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
