@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-05 20:13-0400\n"
+"POT-Creation-Date: 2011-06-05 21:33-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -510,7 +510,8 @@ msgstr ""
 #, python-format
 msgid "You are the only organizer of %s active study groups, courses, ..."
 msgstr ""
-"Usted es el único organizador de %s grupos de estudio, cursos, ... aún activos."
+"Usted es el único organizador de %s grupos de estudio, cursos, ... aún "
+"activos."
 
 #: apps/projects/decorators.py:19
 #, python-format
@@ -1334,7 +1335,7 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/projects/contact_organizers.html:34
 #: templates/projects/project.html:87 templates/projects/project_clone.html:19
 #: templates/projects/project_edit_image.html:24
-#: templates/projects/project_edit_status.html:59
+#: templates/projects/project_edit_status.html:60
 #: templates/projects/project_edit_summary.html:41
 #: templates/projects/project_edit_summary.html:44
 #: templates/projects/project_import.html:19
@@ -1491,7 +1492,7 @@ msgstr "Reglas"
 #: templates/content/comment_sign_up.html:91
 #: templates/content/edit_page.html:39
 #: templates/dashboard/setup_profile.html:9
-#: templates/projects/project_edit_status.html:60
+#: templates/projects/project_edit_status.html:61
 #: templates/projects/project_edit_summary.html:42
 #: templates/schools/school_edit_summary.html:29
 #: templates/users/profile_edit_main.html:26
@@ -2529,8 +2530,12 @@ msgid "Clone Existing"
 msgstr "Clonar Existente"
 
 #: templates/projects/project_clone.html:8
-msgid "Create a new study group, course ... based on an existing one."
-msgstr "Crear un nuevo grupo de estudio, curso ...  con base en uno existente."
+msgid ""
+"Create a new study group, course ... based on an existing one. Note that if "
+"you start typing the matching suggestions will be displayed."
+msgstr ""
+"Crear un nuevo grupo de estudio, curso ...  basado en uno existente. Note "
+"que si comienza a teclear va a poder ver la lista de sugerencias que machean."
 
 #: templates/projects/project_clone.html:13
 #: templates/schools/school_edit_declined.html:13
@@ -2547,7 +2552,7 @@ msgid "Image"
 msgstr "Imagen"
 
 #: templates/projects/project_edit.html:52
-#: templates/projects/project_edit_status.html:8
+#: templates/projects/project_edit_status.html:9
 msgid "Status &amp; Dates"
 msgstr "Estado y Fechas"
 
@@ -2681,7 +2686,7 @@ msgstr "Organizando."
 msgid "Participating."
 msgstr "Participando."
 
-#: templates/projects/project_edit_status.html:11
+#: templates/projects/project_edit_status.html:12
 #, python-format
 msgid ""
 "Configure your %(kind)s's status, such that it appears in the appropriate "
@@ -2690,23 +2695,23 @@ msgstr ""
 "Configure el estado de su %(kind)s, de forma que aparezca en las listas "
 "apropiadas."
 
-#: templates/projects/project_edit_status.html:15
+#: templates/projects/project_edit_status.html:16
 msgid "Under Development."
 msgstr "En Desarrollo."
 
-#: templates/projects/project_edit_status.html:22
+#: templates/projects/project_edit_status.html:23
 msgid "Sign-Up Closed."
 msgstr "Inscripción Cerrada."
 
-#: templates/projects/project_edit_status.html:29
+#: templates/projects/project_edit_status.html:30
 msgid "Not Listed."
 msgstr "No Listado."
 
-#: templates/projects/project_edit_status.html:36
+#: templates/projects/project_edit_status.html:37
 msgid "Archived."
 msgstr "Archivado."
 
-#: templates/projects/project_edit_status.html:40
+#: templates/projects/project_edit_status.html:41
 #, python-format
 msgid ""
 "Optionally, provide the period of time in which you expect the %(kind)s to "
@@ -2716,11 +2721,11 @@ msgstr ""
 "esté activo. Estas fechas son opcionales y aparencerán en la página del "
 "grupo."
 
-#: templates/projects/project_edit_status.html:44
+#: templates/projects/project_edit_status.html:45
 msgid "Active from"
 msgstr "Activo desde el"
 
-#: templates/projects/project_edit_status.html:51
+#: templates/projects/project_edit_status.html:52
 #: templates/projects/sidebar.html:70
 msgid "to"
 msgstr "hasta el"
@@ -2780,8 +2785,12 @@ msgstr ""
 "Puede ser más detallada, pero debe ser breve e ir al grano."
 
 #: templates/projects/project_import.html:8
-msgid "Import a course from the old p2pu site."
-msgstr "Importar un curso del antiguo sitio de p2pu."
+msgid ""
+"Import a course from the old p2pu site. Note that if you start typing the "
+"matching suggestions will be displayed."
+msgstr ""
+"Importar un curso del antiguo sitio web de p2pu. Note que si comienza a "
+"teclear va a poder ver la lista de sugerencias que machean."
 
 #: templates/projects/project_import.html:13
 msgid "Course"
@@ -2951,7 +2960,9 @@ msgstr ""
 
 #: templates/projects/emails/project_created.txt:12
 msgid "* Join the Help Desk to receive support during the development process:"
-msgstr "* Visite el Escritorio de Ayuda para recibir soporte durante el proceso de desarrollo:"
+msgstr ""
+"* Visite el Escritorio de Ayuda para recibir soporte durante el proceso de "
+"desarrollo:"
 
 #: templates/projects/emails/project_created.txt:14
 msgid "You can also ask general questions at: http://qa.p2pu.org"
@@ -3328,8 +3339,9 @@ msgstr ""
 msgid ""
 "Add openid urls to login to your account. If you do not have any openids you "
 "can access your account with username and password."
-msgstr "Adicione openids para entrar a su cuenta. Si usted no tiene ningun openid podrá "
-"entrar a su cuenta usando nombre de usuario y contraseña."
+msgstr ""
+"Adicione openids para entrar a su cuenta. Si usted no tiene ningun openid "
+"podrá entrar a su cuenta usando nombre de usuario y contraseña."
 
 #: templates/users/profile_edit_openids.html:19
 #: templates/users/register.html:13 templates/users/signin.html:35
@@ -3429,15 +3441,17 @@ msgstr "Eliminar Cuenta de Usuario"
 msgid ""
 "Are you sure you would like to delete your account? Be aware that you will "
 "not be able to login again to this account after you delete it."
-msgstr "¿Está seguro de que desea borrar su cuenta de usuario? Note que usted no podrá "
-"volver a entrar con esta cuenta luego de que sea borrada."
+msgstr ""
+"¿Está seguro de que desea borrar su cuenta de usuario? Note que usted no "
+"podrá volver a entrar con esta cuenta luego de que sea borrada."
 
 #: templates/users/settings_delete.html:13
 msgid ""
 "You are currently the only organizer of the following non-archived study "
 "groups, courses ..."
-msgstr "Usted es actualmente el único organizador de los siguientes "
-"grupos de estudio, cursos, ... que no han sido archivados."
+msgstr ""
+"Usted es actualmente el único organizador de los siguientes grupos de "
+"estudio, cursos, ... que no han sido archivados."
 
 #: templates/users/settings_email.html:6
 msgid "Email address"
