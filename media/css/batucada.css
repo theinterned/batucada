@@ -197,8 +197,8 @@ input[type=submit]:active,
     color: #fff;
     background: #36cdc4;
     text-shadow: none;
-    padding: 7px;
-    font: bold 14px "Arvo", "MuseoSlab 500", "Georgia";
+    padding: 5px;
+    font: bold 12px "Arvo", "MuseoSlab 500", "Georgia";
     text-transform: uppercase;
     -moz-border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px;
@@ -216,12 +216,11 @@ input[type=submit]:active,
 
 #participate_button {
     float: left;
-    margin: 8px 0 0 15px;
 }
 
 #participate_button a {
     background: #f08c00;
-    padding: 8px;
+    padding: 7px;
     border-color: #BFBFBF #A0A0A0 #A0A0A0 #BFBFBF;
     border-style: solid;
     border-width: 1px;
@@ -380,12 +379,12 @@ header {}
       margin-left: 825px;
     }
     
-    #search-form {
+    #cse-search-box {
         float: right;
         margin-top: 5px;
     }
 
-    #search-form input {
+    #cse-search-box input {
       background: #fafafa url('/media/images/icon.loupe.png') no-repeat 187px center;
       border: 0;
       color: #5A6579;
@@ -394,6 +393,13 @@ header {}
       padding: 0 17px;
     }
 
+    #search #main {
+        width: 980px;
+        padding: 0 0 0 30px;
+        margin: 0;
+        float: none;
+        border-top: 1px solid #fff;
+        }
 
       #user-nav a, #main-nav a {
         color: #444;
@@ -401,6 +407,12 @@ header {}
         display: block;
         padding: 10px 12px;
       }
+	  #user-nav a.sub-level, #main-nav a.sub-level{
+	    color: #444;
+        font-size: 14px;
+        display: block;
+        padding: 10px 12px;
+	  }
       
       #user-nav a.top-level, #main-nav a.top-level {
         display: block;
@@ -484,7 +496,6 @@ header {}
         background: #36cdc4;
       }
         .menu.open a {
-          border-bottom: 1px solid #20699d;
           border-top: 1px solid #76bae9;
           display: block;
           background: #28c0b7;
@@ -512,7 +523,6 @@ header {}
             color: #fff;
           }
           #user-actions, #school-menu-items, #help-menu-items {
-            border-top: 1px solid #76bae9;
             min-width: 146px;
             color: #fff;
           }
@@ -587,30 +597,54 @@ header {}
         margin: 0 5px;
     }
 
-    #project-actions {
+    #breadcrumbs #project-actions {
         float: right;
         position: relative;
-        top: -35px;
+        top: -47px;
         margin-right: 10px;
     }
     
-    #user_profile #project-actions, #project_gallery #project-actions, #project_directory #project-actions, #school_home #project-actions, #inbox #project-actions {
+    #user_profile #breadcrumbs #project-actions, #project_gallery #breadcrumbs #project-actions, #project_directory #breadcrumbs #project-actions, 
+    #school_home #breadcrumbs #project-actions, #inbox #breadcrumbs #project-actions {
         top: -25px;
     }
     
-    #project-actions .button {
+    #breadcrumbs #project-actions .button {
       float: left;
       margin-right: 15px;
     }
     
-    #project_landing #project-actions {
-    top: -44px;
-    margin-right: 35px;
+    #project_landing #breadcrumbs #project-actions {
+      top: -44px;
+      margin-right: 35px;
     }
     
-    #project_landing #project-actions form {
+    #sidebar #project-actions {
+      padding: 0 10px 0 10px;
+      position: relative;
+      width: 223px;
+      top: -50px;
+    }
+
+    #sidebar #project-actions form { 
         float: left;
     }
+
+    #sidebar #project-actions #participate_button { 
+        float: right;
+        margin: 5px 0 0 0;
+    }
+    
+    #sidebar #project-action #participate_button a, #sidebar #project-actions button {
+        -webkit-box-shadow:0 0 15px #ffffff; 
+        -moz-box-shadow: 0 0 15px #ffffff; 
+        box-shadow:0 0 15px #ffffff; 
+    }
+    
+    #sidebar .project_img {
+        margin-bottom: 0;
+    }
+
 #content {
   padding-top: 17px;
 }
@@ -704,6 +738,7 @@ header {}
 	  #sidebar #project-description {
         font-weight: bold;
         font-size: 100%;
+        clear: both;
       }
       
       #project-icons img {
@@ -984,7 +1019,7 @@ header {}
 		-webkit-border-radius:3px;
 		background: #fff;		
 	}
-	.card-list .card img, .project_img img{
+	.card-list .card img, .project_img img {
 		margin-bottom: 0.5em;
 		box-shadow: white 1px 1px 1px;
 		-moz-box-shadow: white 1px 1px 1px;
@@ -1554,19 +1589,19 @@ header {}
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, .modal .participants .add-participant, .modal .featured_groups .add-featured,
+		.modal .links .add-link, .modal .featured_groups .add-featured,
         .modal .declined_groups .add-declined, .modal .organizers .add-organizer {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button,
+		.modal .links .add-link button, .modal .featured_groups .add-featured button,
         .modal .declined_groups .add-declined button, .modal .organizers .add-organizer button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
 		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table,
-        .modal .organizers table {
+        .modal .organizers table, .modal .openids table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1580,7 +1615,7 @@ header {}
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
         .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td,
-        .modal .organizers th, .modal .organizers td {
+        .modal .organizers th, .modal .organizers td, .modal .openids th, .modal .openids td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1902,7 +1937,7 @@ header {}
 	position: absolute;
 	right: 81px; bottom: -105px;
 	}
-#splash #main{
+#splash #main {
         width: 980px;
         padding: 36px 10px 0 10px;
 	margin: 0;
@@ -2343,6 +2378,9 @@ div.warning h2 {
 	}
 .edit.links .errorlist {
 	top:  5em;
+	}	
+.edit.participants .errorlist {
+    left: 22em;
 	}	
 .edit.image .errorlist:before, .edit.links .errorlist:before {
 	background-image: url(/media/images/modal-error-arrow-up.png);

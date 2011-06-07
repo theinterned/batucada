@@ -5,7 +5,7 @@
 {% block form %}
 <fieldset id="project_clone" class="project clone tabpane">
 <h2>{{ _('Clone Existing') }}</h2>
-<p class="hint">{{ _('Create a new study group, course ... based on an existing one.') }}</p>
+<p class="hint">{{ _('Create a new study group, course ... based on an existing one. Note that if you start typing the matching suggestions will be displayed.') }}</p>
 <form action="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif %}" method="post">
   {% csrf_token %}
   <p>

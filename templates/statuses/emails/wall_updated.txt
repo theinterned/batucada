@@ -8,7 +8,7 @@
 
 {{ status.status|striptags|safe }}
 
-{{ _('See message at:') }} http://{{domain}}{{ activity.get_absolute_url }}
+{{ _('See message at:') }} http://{{domain}}{{ status.get_absolute_url }}
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}

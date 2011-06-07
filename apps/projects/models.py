@@ -82,7 +82,7 @@ class Project(ModelBase):
     generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
 
     name = models.CharField(max_length=100)
-    kind = models.CharField(max_length=30, default='study group')
+    kind = models.CharField(max_length=30, default=_('Study Group'))
     short_description = models.CharField(max_length=150)
     long_description = models.TextField(validators=[MaxLengthValidator(700)])
     
@@ -118,7 +118,7 @@ class Project(ModelBase):
         verbose_name = _('group')
 
     def followers(self):
-        return Relationship.objects.filter(target_project=self)
+        return Relationship.objects.filter(target_project=self, source__deleted=False)
 
     def non_participant_followers(self):
         return self.followers().exclude(
@@ -127,14 +127,14 @@ class Project(ModelBase):
     def participants(self):
         """Return a list of users participating in this project."""
         return Participation.objects.filter(project=self,
-            left_on__isnull=True)
+            left_on__isnull=True, user__deleted=False)
 
     def pending_applicants(self):
         page = self.sign_up
         users = []
         first_level_comments = page.comments.filter(reply_to__isnull=True)
         for answer in first_level_comments.filter(deleted=False):
-            if not self.participants().filter(user=answer.author).exists():
+            if not self.participants().filter(user=answer.author).exists() and not answer.author.deleted:
                 users.append(answer.author)
         return users
 
@@ -177,7 +177,7 @@ class Project(ModelBase):
         return False
 
     def activities(self):
-        activities = Activity.objects.filter(
+        activities = Activity.objects.filter(deleted=False).filter(
             Q(project=self) | Q(target_project=self),
         ).exclude(
             verb='http://activitystrea.ms/schema/1.0/follow'

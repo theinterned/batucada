@@ -42,9 +42,16 @@
           <a href="https://github.com/p2pu/lernanta/wiki/Translating-Lernanta" target="_blank">{{ _('(more)') }}</a>
         </nav>
         
-        <form id="search-form" action="{% locale_url search %}" method="get">
-          <input type='text' class="placeholder" placeholder='{{ _('Search...') }}' name="q">
+        <form action="http://new.p2pu.org/search" id="cse-search-box">
+          <div>
+            <input type="hidden" name="cx" value="013528701088014865040:0q9njevslw0" />
+            <input type="hidden" name="cof" value="FORID:9" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" name="q" size="31" />
+          </div>
         </form>
+
+        <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
         
 		<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
 		<a id="beta-tag" href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones" target="_blank">{{ _('BETA') }}</a>
@@ -57,10 +64,10 @@
 	        <li id="help" class="menu">
 	          <a href="#" id="help-link" class="top-level"><span>{{ _('Help') }}</span></a>
 	          <ul id="help-menu-items">
-	            <li><a href="{% locale_url static_page_show 'about' %}">{{ _('About P2PU') }}</a></li>
-	            <li><a href="http://qa.p2pu.org" target="_blank">{{ _('FAQ') }}</a></li>
-	            <li><a href="{% locale_url static_page_show 'contact-us' %}">{{ _('Contact Us') }}</a></li>
-	            <li><a href="http://new.p2pu.org/en/groups/p2pu-help-desk/">{{ _('P2PU Help Desk') }}</a></li>
+	            <li><a href="{% locale_url static_page_show 'about' %}" class="sub-level">{{ _('About P2PU') }}</a></li>
+	            <li><a href="http://qa.p2pu.org" target="_blank" class="sub-level">{{ _('FAQ') }}</a></li>
+	            <li><a href="{% locale_url static_page_show 'contact-us' %}" class="sub-level">{{ _('Contact Us') }}</a></li>
+	            <li><a href="http://new.p2pu.org/en/groups/p2pu-help-desk/" class="sub-level">{{ _('P2PU Help Desk') }}</a></li>
 	          </ul>
 	        </li>
 		  </ul>
@@ -69,25 +76,25 @@
 		{% if user.is_authenticated %}
 		  <ul>
 		    <li id="user" class="menu">
-		      <a href="{{ user.get_profile.get_absolute_url }}" id="user-link" class="top-level trigger">
+		      <a href="#" id="user-link" class="top-level">
 			{# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
 			{% if user.get_profile %}
 			<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="19" width="19" alt="{{ activity.actor.display_name }}">
 			{% else %}
 			<img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19" alt="{{ activity.actor.display_name }}">
 			{% endif %}
-			{{ _('My P2PU') }}
+			<span>{{ _('My P2PU') }}</span>
 			{% if messages_inbox_count > 0 %}
 	          <span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>
 	        {% endif %}
 	          <span class="dropdown">&nbsp;</span>
 		      </a>
 		      <ul id="user-actions">
-				<li><a href="{% locale_url dashboard_index %}">{{ _('Dashboard') }}</a></li>
-				<li><a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a></li>
-				<li><a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a></li>
-				<li><a href="{% locale_url drumbeatmail_inbox %}">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>
-				<li><a href="{% locale_url users_logout %}">{{ _('Logout') }}</a></li>
+				<li><a href="{% locale_url dashboard_index %}" class="sub-level">{{ _('Dashboard') }}</a></li>
+				<li><a href="{{ user.get_profile.get_absolute_url }}" class="sub-level">{{ _('View Profile') }}</a></li>
+				<li><a href="{% locale_url users_profile_edit %}" class="sub-level">{{ _('Edit Profile') }}</a></li>
+				<li><a href="{% locale_url drumbeatmail_inbox %}" class="sub-level">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>
+				<li><a href="{% locale_url users_logout %}"class="sub-level">{{ _('Logout') }}</a></li>
 		      </ul>
 		    </li> <!-- /#user -->
 		  </ul>
@@ -158,5 +165,23 @@
   <script src="{{ MEDIA_URL }}js/libs/{{ _('jquery.ui.datepicker-en.js') }}"></script>
   <!-- end concatenated and minified scripts-->
   
+
+
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-5757664-8']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script> 
+
+
 </body>
 </html>
