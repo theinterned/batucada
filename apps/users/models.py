@@ -76,7 +76,7 @@ class UserProfileManager(caching.base.CachingManager):
 
     def get_popular(self, limit=0):
         users = Relationship.objects.values('target_user_id').annotate(
-            models.Count('id')).filter(target_user__featured=False).order_by(
+            models.Count('id')).filter(target_user__featured=False, target_user__deleted=False).order_by(
             '-id__count')[:limit]
         user_ids = [u['target_user_id'] for u in users]
         return UserProfile.objects.filter(id__in=user_ids)
@@ -106,6 +106,7 @@ class UserProfile(ModelBase):
     preflang = models.CharField(verbose_name = 'preferred language',
         max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
         default = settings.LANGUAGE_CODE)
+    deleted = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
     # TODO: enable when addition/edition of tags is implemented.
@@ -130,14 +131,14 @@ class UserProfile(ModelBase):
             return [rel.target_project for rel in relationships
                     if not rel.target_project.archived]
         relationships = Relationship.objects.select_related(
-            'target_user').filter(source=self).exclude(
+            'target_user').filter(source=self, target_user__deleted=False).exclude(
             target_user__isnull=True)
         return [rel.target_user for rel in relationships]
 
     def followers(self):
         """Return a list of this users followers."""
         relationships = Relationship.objects.select_related(
-            'source').filter(target_user=self)
+            'source').filter(target_user=self, source__deleted=False)
         return [rel.source for rel in relationships]
 
     def is_following(self, model):
@@ -188,8 +189,9 @@ class UserProfile(ModelBase):
 
     @models.permalink
     def get_absolute_url(self):
+        username = 'people' if self.deleted else self.username
         return ('users_profile_view', (), {
-            'username': self.username,
+            'username': username,
         })
 
     def email_confirmation_code(self, url):
@@ -203,12 +205,13 @@ class UserProfile(ModelBase):
 
     def image_or_default(self):
         """Return user profile image or a default."""
-        gravatarUrl = self.gravatar(54) 
         avatar = '%s%s' % (settings.MEDIA_URL, '/images/member-missing.png')
-        if self.image:
-        	avatar =  '%s%s' % (settings.MEDIA_URL, self.image)
-        elif gravatarUrl:
-        	avatar = gravatarUrl
+        if not self.deleted:
+            gravatarUrl = self.gravatar(54)
+            if self.image:
+        	    avatar =  '%s%s' % (settings.MEDIA_URL, self.image)
+            elif gravatarUrl:
+        	    avatar = gravatarUrl
         return mark_safe(avatar)
 
     def gravatar(self, size=54):
@@ -245,6 +248,8 @@ class UserProfile(ModelBase):
 
     @property
     def display_name(self):
+        if self.deleted:
+            return _('Anonym')
         return self.full_name or self.username
 
 

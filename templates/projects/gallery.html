@@ -9,12 +9,12 @@
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
     </nav>
-    {% if user.is_authenticated %}
     <div id="project-actions">
       <a class="button" href="{% locale_url projects_directory %}">{{ _('View All') }}</a>
-      <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+      {% if user.is_authenticated %}
+        <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+      {% endif %}
     </div>
-    {% endif %}
   </div> <!-- /.container -->
 {% endblock %}
 

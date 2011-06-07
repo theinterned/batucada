@@ -13,7 +13,7 @@ class UserField(forms.Field):
         if not value:
             return ''
         try:
-            profile = UserProfile.objects.get(
+            profile = UserProfile.objects.filter(deleted=False).get(
                 Q(username=value) |
                 Q(email=value),
             )

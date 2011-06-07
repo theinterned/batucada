@@ -16,8 +16,10 @@ from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
 from django.forms import ValidationError
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 from django_openid_auth import views as openid_views
+from django_openid_auth.models import UserOpenID
 from commonware.decorators import xframe_sameorigin
 
 from l10n.urlresolvers import reverse
@@ -284,8 +286,8 @@ def register_openid_complete(request):
 
 def user_list(request):
     """Display a list of users on the site. Featured, new and active."""
-    featured = UserProfile.objects.filter(featured=True)
-    new = UserProfile.objects.all().order_by('-created_on')[:20]
+    featured = UserProfile.objects.filter(deleted=False, featured=True)
+    new = UserProfile.objects.filter(deleted=False).order_by('-created_on')[:20]
     popular = UserProfile.objects.get_popular(limit=20)
     return render_to_response('users/user_list.html', {
         'featured': featured,
@@ -330,6 +332,9 @@ def confirm_resend(request, username):
 
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, username=username)
+    if profile.deleted:
+        messages.error(request, _('This user account was deleted.'))
+        return http.HttpResponseRedirect(reverse('users_user_list'))
     current_projects = profile.get_current_projects()
     following = profile.following()
     followers = profile.followers()
@@ -421,6 +426,70 @@ def profile_edit(request):
         'general_tab': True,
     }, context_instance=RequestContext(request))
 
+@login_required
+def profile_edit_openids(request):
+    if request.method == 'POST':
+        return openid_views.login_begin(
+            request,
+            template_name='users/profile_edit_openids.html',
+            form_class=forms.OpenIDForm,
+            login_complete_view='users_profile_edit_openids_complete')
+    else:
+        form = forms.OpenIDForm()
+    openids = UserOpenID.objects.filter(user=request.user)
+    return render_to_response('users/profile_edit_openids.html', {
+        'form': form,
+        'openids': openids,
+        'openids_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@csrf_exempt
+def profile_edit_openids_complete(request):
+    openid_response = openid_views.parse_openid_response(request)
+
+    if openid_response:
+        if openid_response.status == openid_views.SUCCESS:
+            try:
+                user_openid = UserOpenID.objects.get(
+                    claimed_id__exact=openid_response.identity_url)
+            except UserOpenID.DoesNotExist:
+                user_openid = UserOpenID(user=request.user,
+                claimed_id=openid_response.identity_url,
+                display_id=openid_response.endpoint.getDisplayIdentifier())
+                user_openid.save()
+                messages.info(request,
+                    _('The identity %s has been saved.') % openid_response.identity_url)
+            else:
+                if user_openid.user == request.user:
+                    messages.error(request,
+                        _('The identity %s has already been claimed by you.') % openid_response.identity_url)
+                else:
+                    messages.error(request,
+                        _('The identity %s has already been claimed by another user.') % openid_response.identity_url)
+        elif openid_response.status == openid_views.FAILURE:
+            messages.error(request, _('OpenID authentication failed: %s') %
+                openid_response.message)
+        elif openid_response.status == openid_views.CANCEL:
+            return messages.error(request, _('Authentication cancelled.'))
+        else:
+            return messages.error(_('Unknown OpenID response type: %r') % openid_response.status)
+    else:
+        return messages.error(_('This is an OpenID relying party endpoint.'))
+    return http.HttpResponseRedirect(reverse('users_profile_edit_openids'))
+
+
+@login_required
+def profile_edit_openids_delete(request, openid_pk):
+    if request.method == 'POST':
+        openid = get_object_or_404(UserOpenID, pk=openid_pk)
+        if openid.user != request.user:
+            return http.HttpResponseForbidden(_("You can't edit this openid"))
+        openid.delete()
+        messages.success(request, _('The openid was deleted.'))
+    return http.HttpResponseRedirect(reverse('users_profile_edit_openids'))
+
 
 @login_required
 @xframe_sameorigin
@@ -492,7 +561,8 @@ def profile_edit_links(request):
         'links': links,
         'link_tab': True,
     }, context_instance=RequestContext(request))
-    
+
+
 @login_required
 def profile_edit_links_edit(request, link_id):
     link = get_object_or_404(Link, id=link_id)
