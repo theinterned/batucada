@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-06 23:11-0400\n"
+"POT-Creation-Date: 2011-06-06 23:15-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2106,7 +2106,7 @@ msgstr "Econtrar Tema Existente"
 
 #: templates/dashboard/splash.html:14
 msgid "Create New Topic"
-msgstr "Creara Nuevo Tema"
+msgstr "Crear Nuevo Tema"
 
 #: templates/dashboard/splash.html:17
 msgid ""
