@@ -536,7 +536,7 @@ def matching_non_participants(request, slug):
     if len(request.GET['term']) == 0:
         raise CommandException(_("Invalid request"))
 
-    non_participants = UserProfile.objects.exclude(id__in=project.participants().values('user_id'))
+    non_participants = UserProfile.objects.filter(deleted=False).exclude(id__in=project.participants().values('user_id'))
     matching_users = non_participants.filter(username__icontains = request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 

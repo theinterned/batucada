@@ -400,6 +400,12 @@ header {}
         display: block;
         padding: 10px 12px;
       }
+	  #user-nav a.sub-level, #main-nav a.sub-level{
+	    color: #444;
+        font-size: 14px;
+        display: block;
+        padding: 10px 12px;
+	  }
       
       #user-nav a.top-level, #main-nav a.top-level {
         display: block;
@@ -483,7 +489,6 @@ header {}
         background: #36cdc4;
       }
         .menu.open a {
-          border-bottom: 1px solid #20699d;
           border-top: 1px solid #76bae9;
           display: block;
           background: #28c0b7;
@@ -511,7 +516,6 @@ header {}
             color: #fff;
           }
           #user-actions, #school-menu-items, #help-menu-items {
-            border-top: 1px solid #76bae9;
             min-width: 146px;
             color: #fff;
           }
@@ -1578,19 +1582,19 @@ header {}
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
-		.modal .links .add-link, .modal .participants .add-participant, .modal .featured_groups .add-featured,
+		.modal .links .add-link, .modal .featured_groups .add-featured,
         .modal .declined_groups .add-declined, .modal .organizers .add-organizer {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
-		.modal .links .add-link button, .modal .participants .add-participant button, .modal .featured_groups .add-featured button,
+		.modal .links .add-link button, .modal .featured_groups .add-featured button,
         .modal .declined_groups .add-declined button, .modal .organizers .add-organizer button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
 		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table,
-        .modal .organizers table {
+        .modal .organizers table, .modal .openids table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1604,7 +1608,7 @@ header {}
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
         .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td,
-        .modal .organizers th, .modal .organizers td {
+        .modal .organizers th, .modal .organizers td, .modal .openids th, .modal .openids td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -2367,6 +2371,9 @@ div.warning h2 {
 	}
 .edit.links .errorlist {
 	top:  5em;
+	}	
+.edit.participants .errorlist {
+    left: 22em;
 	}	
 .edit.image .errorlist:before, .edit.links .errorlist:before {
 	background-image: url(/media/images/modal-error-arrow-up.png);

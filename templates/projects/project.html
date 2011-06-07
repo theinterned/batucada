@@ -95,7 +95,7 @@
 
 
     <ul id="posts">
-      {% for activity in pagination_page.object_list %}
+      {% for activity in page.object_list %}
 	  {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
