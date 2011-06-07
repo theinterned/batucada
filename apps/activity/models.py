@@ -137,7 +137,7 @@ class Activity(ModelBase):
                 actor=self.actor.display_name, verb=schema.past_tense['follow'],
                 target=name)
         if self.status:
-            return self.status.status
+            return self.status.status[:50]
         elif self.remote_object:
             return self.remote_object.title
 

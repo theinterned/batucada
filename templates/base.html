@@ -42,9 +42,16 @@
           <a href="https://github.com/p2pu/lernanta/wiki/Translating-Lernanta" target="_blank">{{ _('(more)') }}</a>
         </nav>
         
-        <form id="search-form" action="{% locale_url search %}" method="get">
-          <input type='text' class="placeholder" placeholder='{{ _('Search...') }}' name="q">
+        <form action="http://new.p2pu.org/search" id="cse-search-box">
+          <div>
+            <input type="hidden" name="cx" value="013528701088014865040:0q9njevslw0" />
+            <input type="hidden" name="cof" value="FORID:9" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" name="q" size="31" />
+          </div>
         </form>
+
+        <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
         
 		<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
 		<a id="beta-tag" href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones" target="_blank">{{ _('BETA') }}</a>
@@ -159,5 +166,23 @@
   <script src="{{ MEDIA_URL }}js/libs/{{ _('jquery.ui.datepicker-en.js') }}"></script>
   <!-- end concatenated and minified scripts-->
   
+
+
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-5757664-8']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script> 
+
+
 </body>
 </html>
