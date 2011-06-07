@@ -68,7 +68,9 @@ def check_password(drupal_user, password):
 
 
 def get_user_data(drupal_user):
-    full_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
+    full_name = ''
+    if Realname.objects.using(DRUPAL_DB).filter(uid=drupal_user.uid).exists():
+        full_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
     username = drupal_user.name.replace('@', '-')
     return username, drupal_user.mail, full_name
 
