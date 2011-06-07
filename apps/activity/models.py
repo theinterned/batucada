@@ -48,7 +48,7 @@ class ActivityManager(ManagerBase):
             GROUP BY a.id, a.actor_id, a.created_on
             ORDER BY a.created_on DESC LIMIT 10;
         """)
-        return Activity.objects.filter(
+        return Activity.objects.filter(deleted=False,
             id__in=activity_ids).order_by('-created_on')
 
     def dashboard(self, user):
@@ -59,7 +59,7 @@ class ActivityManager(ManagerBase):
         users_following = user.following()
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
-        return Activity.objects.select_related(
+        return Activity.objects.filter(deleted=False).select_related(
             'actor', 'status', 'project', 'remote_object',
             'remote_object__link', 'target_project').filter(
             models.Q(actor__exact=user) |
@@ -77,7 +77,7 @@ class ActivityManager(ManagerBase):
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
-        return Activity.objects.select_related(
+        return Activity.objects.filter(deleted=False).select_related(
             'actor', 'status', 'project').filter(
             actor=user,
         ).exclude(
@@ -104,6 +104,7 @@ class Activity(ModelBase):
     remote_object = models.ForeignKey(RemoteObject, null=True)
     parent = models.ForeignKey('self', null=True, related_name='comments')
     created_on = models.DateTimeField(auto_now_add=True)
+    deleted = models.BooleanField(default=False)
 
     objects = ActivityManager()
 
@@ -136,7 +137,7 @@ class Activity(ModelBase):
                 actor=self.actor.display_name, verb=schema.past_tense['follow'],
                 target=name)
         if self.status:
-            return self.status.status
+            return self.status.status[:50]
         elif self.remote_object:
             return self.remote_object.title
 
@@ -168,4 +169,13 @@ class Activity(ModelBase):
     def __unicode__(self):
         return _("Activity ID %(id)d. Actor id %(actor)d, Verb %(verb)s") % {
             'id': self.pk, 'actor': self.actor.pk, 'verb': self.verb}
+
+    def can_edit(self, user):
+        if not self.status:
+            return False
+        if user.is_authenticated():
+            profile = user.get_profile()
+            return (profile == self.actor)
+        else:
+            return False
 

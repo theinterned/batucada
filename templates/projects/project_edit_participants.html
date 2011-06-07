@@ -8,7 +8,6 @@
 <p class="hint">{{ _('View, add and remove participants.') }}</p>
 <form action="{% locale_url projects_edit_participants slug=project.slug %}" method="post">
   {% csrf_token %}
-  <p>
     <div class="field user{% if form.user.errors %} error{% endif %}">
       <label for="id_user">{{ _('Username') }}</label>
       {{ form.user }}
@@ -19,7 +18,6 @@
       {{ form.organizer }}
       {{ form.organizer.errors }}
     </div>
-  </p>
   <p class="buttons add-participant">
     <button type="submit">{{ _('Add') }}</button>
   </p>

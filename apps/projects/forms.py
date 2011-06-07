@@ -84,6 +84,8 @@ class ProjectAddParticipantForm(forms.Form):
         username = self.cleaned_data['user']
         try:
             user = UserProfile.objects.get(username=username)
+            if user.deleted:
+                raise forms.ValidationError(_('That user account was deleted.'))
         except UserProfile.DoesNotExist:
             raise forms.ValidationError(_('There is no user with username: %s.') % username)
         # do not use is_organizing or is_participating here, so superusers can join the study groups.

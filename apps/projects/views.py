@@ -373,8 +373,8 @@ def edit(request, slug):
     else:
         school = project.school
         if school and school.declined.filter(id=project.id).exists():
-            msg = _('The %s membership to %s was declined by the school organizers.') % project.kind.lower()
-            messages.error(request, msg % school.name)
+            msg = _('The %(kind)s membership to %(school)s was declined by the school organizers.') % dict(kind = project.kind.lower(), school = school.name)
+            messages.error(request, msg)
         form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/project_edit_summary.html', {
@@ -536,7 +536,7 @@ def matching_non_participants(request, slug):
     if len(request.GET['term']) == 0:
         raise CommandException(_("Invalid request"))
 
-    non_participants = UserProfile.objects.exclude(id__in=project.participants().values('user_id'))
+    non_participants = UserProfile.objects.filter(deleted=False).exclude(id__in=project.participants().values('user_id'))
     matching_users = non_participants.filter(username__icontains = request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 
