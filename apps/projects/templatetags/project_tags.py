@@ -57,8 +57,7 @@ def project_list(school=None, limit=8):
     listed = Project.objects.filter(under_development=False, not_listed=False,
         archived=False)
     if school:
-        featured = school.featured.filter(under_development=False, not_listed=False,
-        archived=False)
+        featured = school.featured.filter(not_listed=False, archived=False)
     else:
         featured = listed.filter(featured=True)
     active = Project.objects.get_active(limit=limit, school=school)
