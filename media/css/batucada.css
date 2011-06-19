@@ -582,7 +582,8 @@ header {}
   }
 
     #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
-    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs {
+    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs,
+    #sign_up_comment #breadcrumbs {
         height: 6em;    
     }
     
@@ -1312,6 +1313,18 @@ header {}
 	    margin-left: 30px;
 	    width: 575px;
 	}
+
+    #comment .post-replies, #sign_up_comment .post-replies {
+       margin-left: 30px;
+	   width: 530px;
+    }
+
+    #create_page .preview, #edit_page .preview {
+       padding: 10px;
+       border-radius: 10px;
+       border: solid 1px #EEE;
+    }
+
     #posts .action:hover,
     .supplemental_actions .action:hover {
       color: #777;
@@ -2334,11 +2347,12 @@ div.warning h2 {
 
 .signin .errorlist {
 	right: -154px;
-	}	
+}
 
-#comment .errorlist {
-	right: -160px;
-	top: 100px;
+#edit_page .errorlist, #create_page .errorlist,
+#sign_up_comment .errorlist, #comment .errorlist {
+	right: -170px;
+	top: 50px;
 }
 
 .start_date .errorlist, 
@@ -2870,5 +2884,4 @@ footer[role="main"] ul[role="cc"] li[role="icons"] a {
   overflow: hidden;
   text-indent: -999em;
 }
-
 
