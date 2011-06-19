@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 09:33-0400\n"
+"POT-Creation-Date: 2011-06-19 18:06-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,6 +267,11 @@ msgstr "Sus detalles fueron guardados."
 msgid "Unable to save details"
 msgstr "No fue posible guardar sus detalles"
 
+#: apps/content/forms.py:22 apps/content/forms.py:38 apps/content/forms.py:54
+#: apps/content/forms.py:70 apps/content/forms.py:86 apps/users/forms.py:151
+msgid "This field is required."
+msgstr "Este campo es requerido."
+
 #: apps/content/models.py:82
 #, python-format
 msgid " <a href=\"%(page_url)s\">%(page_title)s</a>."
@@ -282,142 +287,106 @@ msgstr "Comentario para %s"
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 
-#: apps/content/views.py:32
+#: apps/content/views.py:34
 msgid "This task was deleted."
 msgstr "Esta tarea fue eliminada."
 
-#: apps/content/views.py:65 templates/content/sign_up.html:38
+#: apps/content/views.py:67 templates/content/sign_up.html:38
 msgid "This answer was deleted."
 msgstr "Esta respuesta fue eliminada."
 
-#: apps/content/views.py:67 templates/content/page.html:47
+#: apps/content/views.py:69 templates/content/page.html:47
 msgid "This comment was deleted."
 msgstr "Este comentario fue eliminado."
 
-#: apps/content/views.py:83 apps/content/views.py:90 apps/content/views.py:153
-#: apps/content/views.py:155 apps/content/views.py:180
-#: apps/content/views.py:217 apps/content/views.py:265
-#: apps/content/views.py:279 apps/content/views.py:295
-#: apps/content/views.py:302
+#: apps/content/views.py:85 apps/content/views.py:92 apps/content/views.py:171
+#: apps/content/views.py:173 apps/content/views.py:198
+#: apps/content/views.py:245 apps/content/views.py:302
+#: apps/content/views.py:316 apps/content/views.py:332
+#: apps/content/views.py:339
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:101 apps/projects/views.py:371
+#: apps/content/views.py:110 apps/projects/views.py:371
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
 
-#: apps/content/views.py:108 apps/content/views.py:321
-#, python-format
-msgid "There was a problem saving %s."
-msgstr "Ocurrió un problema al guardar %s."
+#: apps/content/views.py:116 apps/content/views.py:155
+#: apps/content/views.py:226 apps/content/views.py:261
+#: apps/content/views.py:364 apps/content/views.py:490
+#: apps/content/views.py:547
+msgid "Please correct errors bellow."
+msgstr "Por favor corrija los errores mostrados a continuación."
 
-#: apps/content/views.py:132
+#: apps/content/views.py:149
 msgid "Task created!"
 msgstr "Tarea creada!"
 
-#: apps/content/views.py:139
-msgid "There was a problem creating the task."
-msgstr "Ocurrió problema creando la tarea."
-
-#: apps/content/views.py:164
+#: apps/content/views.py:182
 #, python-format
 msgid "%s deleted!"
 msgstr "¡%s eliminada!"
 
-#: apps/content/views.py:197
+#: apps/content/views.py:223
 msgid "Comment posted!"
 msgstr "¡Comentario publicado!"
 
-#: apps/content/views.py:201
-msgid "There was a problem posting the comment. Comments cannot be empty."
-msgstr ""
-"Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
-"estar vacíos."
-
-#: apps/content/views.py:222 apps/content/views.py:474
+#: apps/content/views.py:258 apps/content/views.py:543
 msgid "Comment updated!"
 msgstr "¡Comentario actualizado!"
 
-#: apps/content/views.py:226
-msgid "There was a problem saving the comment."
-msgstr "Ocurrió un problema al guardar el comentario."
-
-#: apps/content/views.py:241 apps/content/views.py:457
+#: apps/content/views.py:278 apps/content/views.py:513
 msgid "You can't edit this comment"
 msgstr "Usted no puede editar este comentario"
 
-#: apps/content/views.py:246
+#: apps/content/views.py:283
 msgid "Answer deleted!"
 msgstr "¡Respuesta eliminada!"
 
-#: apps/content/views.py:246
+#: apps/content/views.py:283
 msgid "Answer restored!"
 msgstr "¡Respuesta restaurada!"
 
-#: apps/content/views.py:248
+#: apps/content/views.py:285
 msgid "Comment deleted!"
 msgstr "¡Comentario eliminado!"
 
-#: apps/content/views.py:248
+#: apps/content/views.py:285
 msgid "Comment restored!"
 msgstr "¡Comentario restaurado!"
 
-#: apps/content/views.py:314
+#: apps/content/views.py:358
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
-#: apps/content/views.py:401 apps/content/views.py:403
-#: apps/content/views.py:405 apps/content/views.py:507
+#: apps/content/views.py:445 apps/content/views.py:447
+#: apps/content/views.py:449 apps/content/views.py:574
 msgid "You can't see this page"
 msgstr "Usted no puede ver esta página"
 
-#: apps/content/views.py:410
+#: apps/content/views.py:454
 msgid "There exists already an answer"
 msgstr "Ya hay una respuesta"
 
-#: apps/content/views.py:430
+#: apps/content/views.py:486
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:430
+#: apps/content/views.py:486
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:434
-msgid "There was a problem posting your reply. Reply cannot be empty. "
-msgstr ""
-"Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
-"estar vacíos."
-
-#: apps/content/views.py:435
-msgid "There was a problem submitting your answer. Answer cannot be empty. "
-msgstr ""
-"Ocurrió un problema al enviar su respuesta. La respuesta no puede estar "
-"vacía."
-
-#: apps/content/views.py:474
+#: apps/content/views.py:543
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/content/views.py:478
-msgid "There was a problem updating your comment. Comments cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar el comentario.  Los comentarios no pueden "
-"estar vacíos."
-
-#: apps/content/views.py:479
-msgid "There was a problem updating your answer. Answers cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar su respuesta. La respuesta no puede estar "
-"vacía."
-
-#: apps/content/views.py:523
+#: apps/content/views.py:590
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/content/views.py:525
+#: apps/content/views.py:592
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
@@ -484,7 +453,7 @@ msgstr ""
 msgid "That password is too common. Please choose another."
 msgstr "Esa contraseña es muy común. Por favor elija otra."
 
-#: apps/preferences/forms.py:66 apps/users/forms.py:164
+#: apps/preferences/forms.py:66 apps/users/forms.py:163
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
@@ -824,15 +793,11 @@ msgid ""
 msgstr ""
 "Puede entrar directamente con su nombre de usuario y contraseña de p2pu.org."
 
-#: apps/users/forms.py:146
+#: apps/users/forms.py:145
 msgid "User profile with this Username already exists."
 msgstr "Ya existe un perfil con este nombre de usuario."
 
-#: apps/users/forms.py:152
-msgid "This field is required."
-msgstr "Este campo es requerido."
-
-#: apps/users/forms.py:154
+#: apps/users/forms.py:153
 msgid "User profile with this Email already exists."
 msgstr "Ya existe un perfil de usuario con este correo."
 
@@ -1332,13 +1297,13 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/challenges/delete_confirm.html:20
 #: templates/challenges/submission_edit_description.html:20
 #: templates/challenges/submission_edit_summary.html:40
-#: templates/content/comment_page.html:64
-#: templates/content/comment_sign_up.html:88
+#: templates/content/comment_page.html:89
+#: templates/content/comment_sign_up.html:118
 #: templates/content/confirm_delete_page.html:27
-#: templates/content/create_page.html:27
+#: templates/content/create_page.html:37
 #: templates/content/delete_restore_comment.html:57
-#: templates/content/edit_page.html:37
-#: templates/content/restore_version.html:29
+#: templates/content/edit_page.html:46
+#: templates/content/restore_version.html:39
 #: templates/dashboard/dashboard.html:81
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
@@ -1360,8 +1325,8 @@ msgstr "Cancelar"
 
 #: templates/activity/delete_restore.html:50
 #: templates/content/delete_restore_comment.html:60
-#: templates/content/page.html:49 templates/content/restore_version.html:20
-#: templates/content/restore_version.html:31 templates/content/sign_up.html:40
+#: templates/content/page.html:49 templates/content/restore_version.html:22
+#: templates/content/restore_version.html:41 templates/content/sign_up.html:40
 #: templates/content/version_page.html:24
 msgid "Restore"
 msgstr "Restaurar"
@@ -1434,7 +1399,7 @@ msgid "Upload"
 msgstr "Subir"
 
 #: templates/challenges/challenge_edit_summary.html:9
-#: templates/content/base_page_form.html:17
+#: templates/content/base_page_form.html:24
 msgid "Title"
 msgstr "Título"
 
@@ -1497,9 +1462,9 @@ msgstr "Reglas"
 
 #: templates/challenges/challenge_edit_summary.html:100
 #: templates/challenges/voter_details.html:20
-#: templates/content/comment_page.html:67
-#: templates/content/comment_sign_up.html:91
-#: templates/content/edit_page.html:39
+#: templates/content/comment_page.html:92
+#: templates/content/comment_sign_up.html:121
+#: templates/content/edit_page.html:48
 #: templates/dashboard/setup_profile.html:9
 #: templates/projects/project_edit_status.html:61
 #: templates/projects/project_edit_summary.html:42
@@ -1512,7 +1477,7 @@ msgid "Save"
 msgstr "Guardar"
 
 #: templates/challenges/challenge_edit_summary.html:103
-#: templates/content/create_page.html:29 templates/projects/directory.html:19
+#: templates/content/create_page.html:39 templates/projects/directory.html:19
 #: templates/projects/gallery.html:15 templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:31
 #: templates/projects/project_edit.html:45
@@ -1696,8 +1661,8 @@ msgid "Leave a comment."
 msgstr "Deje un comentario."
 
 #: templates/challenges/submission_show.html:86
-#: templates/content/comment_page.html:69
-#: templates/content/comment_sign_up.html:93
+#: templates/content/comment_page.html:94
+#: templates/content/comment_sign_up.html:123
 msgid "Post"
 msgstr "Publicar"
 
@@ -1721,21 +1686,25 @@ msgstr "¡Bienvenido a bordo! Ahora usted es un organizador."
 msgid "Welcome aboard! You are a participant now."
 msgstr "¡Bienvenido a bordo! Ahora usted es un participante."
 
-#: templates/content/base_page_form.html:18
+#: templates/content/base_page_form.html:25
 msgid "A good title is short and descriptive."
 msgstr "Un buen título es corto y descriptivo."
 
-#: templates/content/base_page_form.html:29
+#: templates/content/base_page_form.html:36
 msgid "Collaborative work (editable by all the participants)."
 msgstr "Trabajo colaborativo (editable por todos los participantes)."
+
+#: templates/content/base_page_form.html:42
+msgid "Preview"
+msgstr "Vista Previa"
 
 #: templates/content/comment_page.html:11
 #: templates/content/comment_sign_up.html:11
 #: templates/content/confirm_delete_page.html:11
-#: templates/content/create_page.html:10
+#: templates/content/create_page.html:12
 #: templates/content/delete_restore_comment.html:11
-#: templates/content/edit_page.html:10 templates/content/history_page.html:13
-#: templates/content/page.html:13 templates/content/restore_version.html:9
+#: templates/content/edit_page.html:12 templates/content/history_page.html:13
+#: templates/content/page.html:13 templates/content/restore_version.html:11
 #: templates/content/version_page.html:13
 #: templates/projects/project_task_list.html:9
 msgid "Task List"
@@ -1750,15 +1719,24 @@ msgstr "Editar Comentario"
 msgid "Reply Comment"
 msgstr "Respuesta al Comentario"
 
-#: templates/content/comment_page.html:42
+#: templates/content/comment_page.html:30
 msgid "Comment"
 msgstr "Comentario"
 
-#: templates/content/comment_page.html:71
-#: templates/content/comment_sign_up.html:97
-#: templates/content/create_page.html:30 templates/content/edit_page.html:40
-msgid "Preview"
-msgstr "Vista Previa"
+#: templates/content/comment_page.html:40
+#: templates/content/comment_page.html:57
+#: templates/content/comment_sign_up.html:41
+#: templates/content/comment_sign_up.html:63 templates/content/page.html:103
+#: templates/content/sign_up.html:106
+msgid "In Reply To:"
+msgstr "En Respuesta A:"
+
+#: templates/content/comment_page.html:55
+#: templates/content/comment_sign_up.html:61
+#: templates/content/create_page.html:21 templates/content/edit_page.html:34
+#: templates/content/restore_version.html:31
+msgid "[Preview]"
+msgstr "[Vista Previa]"
 
 #: templates/content/comment_sign_up.html:27
 msgid "Edit Answer"
@@ -1772,33 +1750,36 @@ msgstr "Editar Respuesta"
 msgid "Reply"
 msgstr "Responder"
 
-#: templates/content/comment_sign_up.html:39 templates/content/sign_up.html:66
+#: templates/content/comment_sign_up.html:31
+msgid ": Answer Questions"
+msgstr ": Responder Preguntas"
+
+#: templates/content/comment_sign_up.html:47
+#: templates/content/comment_sign_up.html:69 templates/content/sign_up.html:66
 #: templates/content/emails/sign_up_updated.txt:8
 #: templates/relationships/emails/new_follower.txt:3
 msgid "Bio:"
 msgstr "Biografía:"
 
-#: templates/content/comment_sign_up.html:40 templates/content/sign_up.html:67
+#: templates/content/comment_sign_up.html:48
+#: templates/content/comment_sign_up.html:70 templates/content/sign_up.html:67
 #: templates/content/emails/sign_up_updated.txt:10
 #: templates/relationships/emails/new_follower.txt:5
 #: templates/users/profile.html:63
 msgid "Location:"
 msgstr "Ubicación:"
 
-#: templates/content/comment_sign_up.html:41 templates/content/sign_up.html:68
+#: templates/content/comment_sign_up.html:49
+#: templates/content/comment_sign_up.html:71 templates/content/sign_up.html:68
 #: templates/content/emails/sign_up_updated.txt:12
 msgid "Answer:"
 msgstr "Respuesta:"
 
-#: templates/content/comment_sign_up.html:48
-msgid ": Answer Questions"
-msgstr ": Responder Preguntas"
-
-#: templates/content/comment_sign_up.html:70
+#: templates/content/comment_sign_up.html:100
 msgid "Profile"
 msgstr "Perfil"
 
-#: templates/content/comment_sign_up.html:71
+#: templates/content/comment_sign_up.html:101
 msgid ""
 "First update your profile information, which will be included with your "
 "answer."
@@ -1806,15 +1787,15 @@ msgstr ""
 "Actualice la información de su perfil, la cual será incluida con su "
 "respuesta."
 
-#: templates/content/comment_sign_up.html:74
+#: templates/content/comment_sign_up.html:104
 msgid "Questions"
 msgstr "Preguntas"
 
-#: templates/content/comment_sign_up.html:75
+#: templates/content/comment_sign_up.html:105
 msgid "Then answer the sign-up questions listed below."
 msgstr "Responda las preguntas de inscripción listadas a continuación."
 
-#: templates/content/comment_sign_up.html:95
+#: templates/content/comment_sign_up.html:125
 msgid "Submit"
 msgstr "Enviar"
 
@@ -1822,11 +1803,11 @@ msgstr "Enviar"
 msgid "Are you sure you want to delete this task?"
 msgstr "¿Está seguro que desea eliminar esta tarea?"
 
-#: templates/content/create_page.html:4 templates/content/create_page.html:14
+#: templates/content/create_page.html:6 templates/content/create_page.html:16
 msgid "Create Task"
 msgstr "Crear Tarea"
 
-#: templates/content/create_page.html:18 templates/content/edit_page.html:26
+#: templates/content/create_page.html:28 templates/content/edit_page.html:28
 msgid ""
 "Constructing a good task is crucial to the peer learning process. Tasks "
 "should have a clear goal in mind and should be sequential throughout the "
@@ -1874,7 +1855,7 @@ msgstr "¿Está seguro que desea restaurar este comentario?"
 msgid "Are you sure you want to delete this comment?"
 msgstr "¿Está seguro que desea eliminar este comentario?"
 
-#: templates/content/edit_page.html:17 templates/content/page.html:20
+#: templates/content/edit_page.html:19 templates/content/page.html:20
 #: templates/content/page.html.py:62 templates/content/page.html:90
 #: templates/content/sign_up.html:51 templates/content/sign_up.html.py:93
 #: templates/projects/project_edit.html:6
@@ -1886,13 +1867,13 @@ msgstr "¿Está seguro que desea eliminar este comentario?"
 msgid "Edit"
 msgstr "Editar"
 
-#: templates/content/edit_page.html:33
+#: templates/content/edit_page.html:42
 msgid "Minor update (not posted to the wall)."
 msgstr "Actualización menor (no se publica en el muro)."
 
 #: templates/content/history_page.html:17
 #: templates/content/history_page.html:23
-#: templates/content/restore_version.html:13
+#: templates/content/restore_version.html:15
 #: templates/content/version_page.html:17
 msgid "History"
 msgstr "Historial"
@@ -1908,10 +1889,6 @@ msgstr "Ver Historial"
 #: templates/content/page.html:25
 msgid "Post Comment"
 msgstr "Publicar Comentario"
-
-#: templates/content/page.html:103 templates/content/sign_up.html:106
-msgid "In Reply To:"
-msgstr "En Respuesta A:"
 
 #: templates/content/page.html:119 templates/content/page.html.py:121
 #: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
