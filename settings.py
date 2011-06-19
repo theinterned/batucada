@@ -90,6 +90,8 @@ SESSION_COOKIE_PATH = '/; HttpOnly'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 MIDDLEWARE_CLASSES = (
+    'drumbeat.middleware.NotFoundMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -117,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.comments',
+    'django.contrib.redirects',
     'south',
     'wellknown',
     'users',
@@ -219,7 +222,7 @@ CKEDITOR_UPLOAD_PATH = path("uploads")
 CKEDITOR_CONFIGS = {
     'rich': {
         'toolbar': [
-            ['Source'],
+            ['Source', ],  # Using 'Preview' here doesn't use the CSS
             ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
             ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'SyntaxHighlighting', 'Blockquote'],
