@@ -394,12 +394,16 @@ header {}
     }
 
     #search #main {
-        width: 980px;
+        width: 969px;
         padding: 0 0 0 30px;
         margin: 0;
         float: none;
         border-top: 1px solid #fff;
         }
+
+    #cse-search-results iframe {
+       width: 950px;
+    }
 
       #user-nav a, #main-nav a {
         color: #444;
