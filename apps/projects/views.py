@@ -5,7 +5,7 @@ from django import http
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
@@ -13,6 +13,7 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 from django.utils import simplejson
 from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
 
@@ -115,8 +116,8 @@ def create(request):
                 'slug': project.slug,
             }))
         else:
-            messages.error(request,
-                _("There was a problem creating the %s.") % project.kind.lower())
+            msg = _("There was a problem creating the study group, course, ...")
+            messages.error(request, msg)
     else:
         if 'school' in request.GET:
             try:
@@ -336,7 +337,7 @@ def import_from_old_site(request):
             }))
         else:
             messages.error(request,
-                _("There was a problem importing the %s.") % project.kind.lower())
+                _("There was a problem importing the study group, course, ..."))
     else:
         form = project_forms.ImportProjectForm(school)
     return render_to_response('projects/project_import.html', {

@@ -1,5 +1,7 @@
 from django import forms
 from django.core import urlresolvers
+from django.conf import settings
+
 from drumbeat.utils import slug_validator
 from django.utils.translation import ugettext_lazy as _
 
@@ -18,4 +20,6 @@ class UsernameField(forms.Field):
                         _('Please choose another username.'))
         except urlresolvers.Resolver404:
             pass
+        if value in settings.INVALID_USERNAMES:
+            raise forms.ValidationError(_('Please choose another username.'))
         return value

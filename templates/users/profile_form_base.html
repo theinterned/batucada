@@ -19,7 +19,7 @@
           <label for="id_username">{{ _('Username') }}</label>
           {{ form.username }}
           {{ form.username.errors }}
-          <small class="hint">{{ _('Your public profile:') }} http://new.p2pu.org/<b>{{ _('username') }}</b></small>
+          <small class="hint">{{ _('Your public profile:') }} http://{{ domain }}/<b>{{ _('username') }}</b></small>
           <small class="hint" id="availability"></small>          
         </div>
         {% block password_fields %}{% endblock %}
@@ -56,7 +56,7 @@
           </p>
         {% endif %}
         <p>
-          {{ _('By creating an account on new.p2pu.org, you accept our') }} <a href="{% locale_url static_page_show 'privacy' %}">{{ _('privacy guidelines') }}</a> , <a href="{% locale_url static_page_show 'license' %}">{{ _('license provisions') }}</a> {{ _('and') }} <a href="{% locale_url static_page_show 'terms-of-use' %}">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
+          {{ _('By creating an account on') }} {{ domain }}{{ _(', you accept our') }} <a href="{% locale_url static_page_show 'privacy' %}">{{ _('privacy guidelines') }}</a> , <a href="{% locale_url static_page_show 'license' %}">{{ _('license provisions') }}</a> {{ _('and') }} <a href="{% locale_url static_page_show 'terms-of-use' %}">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
         </p>
         <p class="submit">
           <button type="submit">{% block button_label %}{% endblock %}</button>
