@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.utils.translation import ugettext as _
+from django.contrib.sites.models import Site
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -23,6 +24,7 @@ def index(request, activity_id):
             return HttpResponseRedirect(activity.actor.get_absolute_url())
     return render_to_response('activity/index.html', {
         'activity': activity,
+        'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
 
 

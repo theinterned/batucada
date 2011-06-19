@@ -134,3 +134,26 @@ class Authmap(models.Model):
     class Meta:
         db_table = u'authmap'
 
+
+class ContentTypeProfile(models.Model):
+    vid = models.IntegerField(primary_key=True)
+    nid = models.IntegerField()
+    field_profile_country_value = models.TextField(blank=True)
+    field_profile_city_value = models.TextField(blank=True)
+    field_profile_aboutme_value = models.TextField(blank=True)
+    field_profile_aboutme_format = models.IntegerField(null=True, blank=True)
+    field_profile_firstname_value = models.TextField(blank=True)
+    field_profile_lastname_value = models.TextField(blank=True)
+    field_profile_facebook_url = models.CharField(max_length=765, blank=True)
+    field_profile_facebook_title = models.CharField(max_length=765, blank=True)
+    field_profile_facebook_attributes = models.TextField(blank=True)
+    field_profile_twitter_url = models.CharField(max_length=765, blank=True)
+    field_profile_twitter_title = models.CharField(max_length=765, blank=True)
+    field_profile_twitter_attributes = models.TextField(blank=True)
+    field_profile_gender_value = models.TextField(blank=True)
+    field_profile_education_value = models.TextField(blank=True)
+    field_profile_email_subs_value = models.IntegerField(null=True, blank=True)
+    class Meta:
+        db_table = u'content_type_profile'
+
+
