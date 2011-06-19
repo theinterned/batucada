@@ -248,7 +248,7 @@ def clone(request):
             }))
         else:
             messages.error(request,
-                _("There was a problem cloning the %s.") % project.kind.lower())
+                _("There was a problem cloning the study group, course, ..."))
     else:
         form = project_forms.CloneProjectForm(school)
     return render_to_response('projects/project_clone.html', {
