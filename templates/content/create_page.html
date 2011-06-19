@@ -1,5 +1,7 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
 
 {% block project_title %}{{ _('Create Task') }}{% endblock %}
 
@@ -12,6 +14,14 @@
 
 {% block page_form_title %}
   <h1>{{ _('Create Task') }}</h1>
+{% endblock %}
+
+{% block content_preview %}
+  <h1 class="{% if page.collaborative and page.editable %}collaborative{% endif %} {% if project.accepted_school %}school_header{% endif %}">
+    {{ _('[Preview]') }} {{ page.title }}
+  </h2>
+  <hr />
+  {{ page.content|youtube|slideshare|safe }}
 {% endblock %}
 
 {% block extra_fields %}
@@ -27,9 +37,4 @@
     {{ _('Cancel') }}
   </a>
   <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
-  <button type="button" id="previewButton" onclick="javascript:showPreview()" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
-  <p> 
-  <div id="preview">
-  </div>
-  </p>
 {% endblock %}

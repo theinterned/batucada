@@ -115,7 +115,7 @@ class PageComment(ModelBase):
     """Placeholder model for comments."""
     object_type = 'http://activitystrea.ms/schema/1.0/comment'
 
-    content = models.TextField(blank=False)
+    content = models.TextField()
     author = models.ForeignKey('users.UserProfile', related_name='comments')
     page = models.ForeignKey('content.Page', related_name='comments')
     created_on = models.DateTimeField(
