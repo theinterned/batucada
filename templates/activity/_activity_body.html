@@ -1,5 +1,6 @@
 {% load activity_tags %}
 {% load l10n_tags %}
+{% load no_follow %}
 {% spaceless %}
 
 {% if activity|should_show_verb and show_actor %}
@@ -31,7 +32,7 @@
   {% endif %}
 {% else %}
   {% if activity.status %}
-    {{ activity.status|safe }}
+    {{ activity.status|safe|nofollow|safe }}
   {% else %}
     {% if activity.target_object %}
       {{ activity.target_object.representation }}

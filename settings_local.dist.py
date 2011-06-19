@@ -93,10 +93,15 @@ MAINTENANCE_MODE = False
 NO_PROFILE_URLS = ('/media/', '/admin-media/',)
 
 # Drupal urls
-DRUPAL_URL = 'http://old.p2pu.org/'
-DRUPAL_FILES_URL = DRUPAL_URL + 'sites/p2pu.org/files/'
-FILE_PATH_PREFIX = 'sites/p2pu.org/files/'
+DRUPAL_URL = 'http://archive.p2pu.org/'
+DRUPAL_FILES_URL = DRUPAL_URL + 'sites/archive.p2pu.org/files/'
+FILE_PATH_PREFIX = 'sites/archive.p2pu.org/files/'
 
 # Badges pilot url
 BADGE_URL = 'http://badges.p2pu.org/badges/%(badge_id)s/%(badge_tag)s?user_filter=%(username)s#badge_data'
+
+INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved', 'math-future',
+    'license', 'contact-us', 'values', 'privacy', 'terms-of-use', 'news', 'create-draft-course',
+    'create-draft-course-panel', 'supporters', 'about-p2pu',)
+
 

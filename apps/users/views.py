@@ -17,6 +17,7 @@ from django.views.decorators.http import require_http_methods
 from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sites.models import Site
 
 from django_openid_auth import views as openid_views
 from django_openid_auth.models import UserOpenID
@@ -258,6 +259,7 @@ def register(request):
         form = forms.RegisterForm()
     return render_to_response('users/register.html', {
         'form': form,
+        'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
 
 
@@ -359,6 +361,7 @@ def profile_view(request, username):
         'past_drupal_courses': past_drupal_courses,
         'past_involvement_count': past_involvement_count,
         'pilot_badges': pilot_badges,
+        'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
 
 
@@ -396,6 +399,7 @@ def profile_create(request):
                                       'correct them and resubmit.'))
     return render_to_response('dashboard/setup_profile.html', {
         'form': form,
+        'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
 
 
