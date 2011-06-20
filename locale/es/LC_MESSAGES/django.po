@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 18:06-0400\n"
+"POT-Creation-Date: 2011-06-19 21:28-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -700,7 +700,7 @@ msgstr "Ya está siguiendo a este usuario"
 msgid "You can't unfollow"
 msgstr "Usted no puede dejar de seguir"
 
-#: apps/schools/decorators.py:18
+#: apps/schools/decorators.py:19
 msgid "You are not school organizer"
 msgstr "Usted no esta organizando esta escuela"
 
@@ -1143,7 +1143,7 @@ msgstr "Haga una Pregunta"
 
 #: templates/base.html:68
 msgid "Handbook"
-msgstr "Facebook"
+msgstr "Manual"
 
 #: templates/base.html:84
 msgid "My P2PU"
