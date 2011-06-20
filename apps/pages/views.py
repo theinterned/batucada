@@ -19,17 +19,10 @@ def show_page(request, slug):
     or in its original language if there is not translation.
     """
     curlang = get_language()
-    page = get_object_or_404(Page, slug=slug)
-    if page.language != curlang:
-        if page.original != None:
-            page = get_object_or_404(Page, pk=page.original.id)
-        assert(page.original == None)
-        if page.language != curlang:
-            translations = Page.objects.filter(original = page.id)
-            for tpage in translations:
-                if tpage.language == curlang:
-                    page = tpage
-                    break
+    try:
+        page = Page.objects.get(slug=slug, language=curlang)
+    except Page.DoesNotExist:
+        page = get_object_or_404(Page, slug=slug, language='en')
     return render_to_response(
         'pages/page.html', {'page': page, }, 
         context_instance=RequestContext(request)
