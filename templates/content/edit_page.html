@@ -1,5 +1,7 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
 
 
 {% block bodyid %}edit_page{% endblock %}
@@ -27,6 +29,13 @@
   {% endif %}
 {% endblock %}
 
+{% block content_preview %}
+  <h1 class="{% if page.collaborative and page.editable %}collaborative{% endif %} {% if project.accepted_school %}school_header{% endif %}">
+    {{ _('[Preview]') }} {{ page.title }}
+  </h2>
+  <hr />
+  {{ page.content|youtube|slideshare|safe }}
+{% endblock %}
 
 {% block page_form_buttons %}
   <div class="field{% if form.minor_update.errors %} error{% endif %}">

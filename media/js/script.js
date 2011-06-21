@@ -1,3 +1,4 @@
+
 var createPostTextArea = function() {
     var counter = $('#create-post').find('div.post-char-count');
     $('#create-post').find('textarea').bind('keyup', function() {
@@ -363,6 +364,7 @@ $(document).ready(function() {
     $('form').submit(function(){
         $(this).find('input[type=submit]').attr('disabled', 'disabled');
         $(this).find('button[type=submit]').attr('disabled', 'disabled');
+        $(this).find('#previewButton').removeAttr('disabled');
     });
 });
 
