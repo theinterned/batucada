@@ -8,7 +8,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <!--[if IE]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
 
   <title>P2PU (beta) | {% block title %}{% endblock %}</title>
   <meta name="description" content="{{ _('Learning for everyone, by everyone, about almost anything.') }}">
@@ -51,7 +51,7 @@
           </div>
         </form>
 
-        <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
+        <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
         
 		<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
 		<a id="beta-tag" href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones" target="_blank">{{ _('BETA') }}</a>
@@ -94,7 +94,7 @@
 				<li><a href="{{ user.get_profile.get_absolute_url }}" class="sub-level">{{ _('View Profile') }}</a></li>
 				<li><a href="{% locale_url users_profile_edit %}" class="sub-level">{{ _('Edit Profile') }}</a></li>
 				<li><a href="{% locale_url drumbeatmail_inbox %}" class="sub-level">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>
-				<li><a href="{% locale_url users_logout %}"class="sub-level">{{ _('Logout') }}</a></li>
+				<li><a href="{% locale_url users_logout %}" class="sub-level">{{ _('Logout') }}</a></li>
 		      </ul>
 		    </li> <!-- /#user -->
 		  </ul>
