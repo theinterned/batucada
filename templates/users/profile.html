@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load truncate_chars %}
+{% load no_follow %}
 
 {% block title %}{{ profile.username }}{% endblock %}
 
@@ -54,7 +55,7 @@
   </div> 
   
   <div class="member-bio">
-	  {{ profile.bio|safe }}
+	  {{ profile.bio|nofollow|safe }}
 	</div>
 	
 	{% if profile.location %}

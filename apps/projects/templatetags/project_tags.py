@@ -1,3 +1,5 @@
+import datetime
+
 from django import template
 
 from content.models import Page
@@ -57,13 +59,13 @@ def project_list(school=None, limit=8):
     listed = Project.objects.filter(under_development=False, not_listed=False,
         archived=False)
     if school:
-        featured = school.featured.filter(under_development=False, not_listed=False,
-        archived=False)
+        featured = school.featured.filter(not_listed=False, archived=False)
     else:
         featured = listed.filter(featured=True)
     active = Project.objects.get_active(limit=limit, school=school)
     popular = Project.objects.get_popular(limit=limit, school=school)
-    new = listed.order_by('-created_on')
+    one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
+    new = listed.filter(created_on__gte=one_week).order_by('-created_on')
     open_signup = listed.filter(signup_closed=False)
     under_development = Project.objects.filter(under_development=True, not_listed=False,
         archived=False)

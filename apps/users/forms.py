@@ -85,8 +85,7 @@ class CreateProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('username', 'full_name',
-                  'bio', 'image', 'newsletter', 'email')
+        fields = ('username', 'full_name', 'newsletter', 'email')
         widgets = {
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),
         }
@@ -181,6 +180,7 @@ class ProfileEditForm(forms.ModelForm):
         if 'full_name' in data:
             data['full_name'] = data['full_name'].strip()
         return data
+
 
 class ProfileImageForm(forms.ModelForm):
 

@@ -1,4 +1,5 @@
 import datetime
+import bleach
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
@@ -8,6 +9,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.db import IntegrityError
 from django.core.paginator import Paginator, EmptyPage
+from django.conf import settings
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -88,30 +90,37 @@ def edit_page(request, slug, page_slug):
     else:
         # Restrict permissions for non-collaborative pages.
         return HttpResponseForbidden(_("You can't edit this page"))
+    preview = False
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page)
         form = form_cls(request.POST, instance=page)
         if form.is_valid():
-            old_version.save()
             page = form.save(commit=False)
             page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
-            page.save()
-            messages.success(request, _('%s updated!') % page.title)
-            return HttpResponseRedirect(reverse('page_show', kwargs={
-                'slug': slug,
-                'page_slug': page_slug,
-            }))
+            if 'show_preview' in request.POST:
+                preview = True
+                page.content = bleach.clean(page.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+            else:
+              old_version.save()
+              page.save()
+              messages.success(request, _('%s updated!') % page.title)
+              return HttpResponseRedirect(reverse('page_show', kwargs={
+                  'slug': slug,
+                  'page_slug': page_slug,
+              }))
         else:
-            messages.error(request,
-                           _('There was a problem saving %s.' % page.title))
+            messages.error(request, _('Please correct errors bellow.'))
     else:
         form = form_cls(instance=page)
     return render_to_response('content/edit_page.html', {
         'form': form,
         'page': page,
         'project': page.project,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -122,26 +131,35 @@ def create_page(request, slug):
         form_cls = OwnersPageForm
     else:
         form_cls = PageForm
+    preview = False
+    page = None
     if request.method == 'POST':
         form = form_cls(request.POST)
         if form.is_valid():
             page = form.save(commit=False)
             page.project = project
             page.author = request.user.get_profile()
-            page.save()
-            messages.success(request, _('Task created!'))
-            return HttpResponseRedirect(reverse('page_show', kwargs={
-                'slug': slug,
-                'page_slug': page.slug,
-            }))
+            if 'show_preview' in request.POST:
+                preview = True
+                page.content = bleach.clean(page.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+            else:
+                page.save()
+                messages.success(request, _('Task created!'))
+                return HttpResponseRedirect(reverse('page_show', kwargs={
+                    'slug': slug,
+                    'page_slug': page.slug,
+                }))
         else:
-            messages.error(request,
-                           _('There was a problem creating the task.'))
+            messages.error(request, _('Please correct errors bellow.'))
     else:
         form = form_cls()
     return render_to_response('content/create_page.html', {
         'form': form,
         'project': project,
+        'page': page,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 
@@ -185,6 +203,8 @@ def comment_page(request, slug, page_slug, comment_id=None):
         abs_reply_to = reply_to
         while abs_reply_to.reply_to:
             abs_reply_to = abs_reply_to.reply_to
+    preview = False
+    comment = None
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -193,12 +213,17 @@ def comment_page(request, slug, page_slug, comment_id=None):
             comment.author = user
             comment.reply_to = reply_to
             comment.abs_reply_to = abs_reply_to
-            comment.save()
-            messages.success(request, _('Comment posted!'))
-            return HttpResponseRedirect(comment.get_absolute_url())
+            if 'show_preview' in request.POST:
+                preview = True
+                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+            else:
+                comment.save()
+                messages.success(request, _('Comment posted!'))
+                return HttpResponseRedirect(comment.get_absolute_url())
         else:
-            messages.error(request,
-                           _('There was a problem posting the comment. Comments cannot be empty.'))
+            messages.error(request, _('Please correct errors bellow.'))
     else:
         form = CommentForm()
     return render_to_response('content/comment_page.html', {
@@ -206,6 +231,9 @@ def comment_page(request, slug, page_slug, comment_id=None):
         'project': page.project,
         'page': page,
         'reply_to': reply_to,
+        'comment': comment,
+        'create': True,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 
@@ -215,15 +243,22 @@ def edit_comment(request, slug, page_slug, comment_id):
     comment = get_object_or_404(PageComment, id=comment_id, page__slug=page_slug, page__project__slug=slug)
     if not comment.can_edit(request.user):
         return HttpResponseForbidden(_("You can't edit this page"))
+    preview = False
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
-            form.save()
-            messages.success(request, _('Comment updated!'))
-            return HttpResponseRedirect(comment.get_absolute_url())
+            comment = form.save(commit=False)
+            if 'show_preview' in request.POST:
+                preview = True
+                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+            else:
+                comment.save()
+                messages.success(request, _('Comment updated!'))
+                return HttpResponseRedirect(comment.get_absolute_url())
         else:
-            messages.error(request,
-                           _('There was a problem saving the comment.'))
+            messages.error(request, _('Please correct errors bellow.'))
     else:
         form = CommentForm(instance=comment)
     return render_to_response('content/comment_page.html', {
@@ -231,6 +266,8 @@ def edit_comment(request, slug, page_slug, comment_id):
         'comment': comment,
         'page': comment.page,
         'project': comment.page.project,
+        'reply_to': comment.reply_to,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 
@@ -300,25 +337,31 @@ def restore_version(request, slug, page_slug, version_id):
     else:
         # Restrict permissions for non-collaborative pages.
         return HttpResponseForbidden(_("You can't edit this page"))
+    preview = False
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page, deleted=page.deleted)
         form = form_cls(request.POST, instance=page)
         if form.is_valid():
-            old_version.save()
             page = form.save(commit=False)
             page.deleted = False
             page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
-            page.save()
-            messages.success(request, _('%s restored!') % page.title)
-            return HttpResponseRedirect(reverse('page_show', kwargs={
-                'slug': slug,
-                'page_slug': page_slug,
-            }))
+            if 'show_preview' in request.POST:
+                preview = True
+                page.content = bleach.clean(page.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+            else:
+              old_version.save()
+              page.save()
+              messages.success(request, _('%s restored!') % page.title)
+              return HttpResponseRedirect(reverse('page_show', kwargs={
+                  'slug': slug,
+                  'page_slug': page_slug,
+              }))
         else:
-            messages.error(request,
-                           _('There was a problem saving %s.' % page.title))
+            messages.error(request, _('Please correct errors bellow.'))
     else:
         page.title = version.title
         page.content = version.content
@@ -328,6 +371,7 @@ def restore_version(request, slug, page_slug, version_id):
         'page': page,
         'version': version,
         'project': page.project,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 
@@ -386,9 +430,9 @@ def sign_up(request, slug, pagination_page=1):
 def comment_sign_up(request, slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
     project = page.project
-    user = request.user.get_profile()
-    is_organizing = project.organizers().filter(user=user).exists()
-    is_participating = project.participants().filter(user=user).exists()
+    profile = request.user.get_profile()
+    is_organizing = project.organizers().filter(user=profile).exists()
+    is_participating = project.participants().filter(user=profile).exists()
     reply_to = abs_reply_to = None
     if comment_id:
         reply_to = page.comments.get(pk=comment_id)
@@ -399,54 +443,66 @@ def comment_sign_up(request, slug, comment_id=None):
             if is_participating:
                 if not project.is_participating(abs_reply_to.author.user):
                     return HttpResponseForbidden(_("You can't see this page"))
-            elif abs_reply_to.author != user:
+            elif abs_reply_to.author != profile:
                 return HttpResponseForbidden(_("You can't see this page"))
     elif project.signup_closed or is_organizing or is_participating:
         return HttpResponseForbidden(_("You can't see this page"))
     else:
         answers = page.comments.filter(reply_to__isnull=True, deleted=False,
-            author=user)
+            author=profile)
         if answers.exists():
             return HttpResponseForbidden(_("There exists already an answer"))
-
+    preview = False
+    comment = None
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        profile_form = ProfileEditForm(request.POST, instance=user)
+        profile_form = ProfileEditForm(request.POST, instance=profile)
         profile_image_form = ProfileImageForm()
         if form.is_valid() and (reply_to or profile_form.is_valid()):
             if not reply_to:
-                profile_form.save()
-                new_rel = Relationship(source=user, target_project=project)
-                try:
-                    new_rel.save()
-                except IntegrityError:
-                    pass
+                profile = profile_form.save()
             comment = form.save(commit=False)
             comment.page = page
-            comment.author = user
+            comment.author = profile
             comment.reply_to = reply_to
             comment.abs_reply_to = abs_reply_to
-            comment.save()
-            success_msg = _('Reply posted!') if reply_to else _('Answer submitted!')
-            messages.success(request, success_msg)
-            return HttpResponseRedirect(comment.get_absolute_url())
+            if 'show_preview' in request.POST:
+                preview = True
+                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+                if not reply_to:
+                    profile.bio = bleach.clean(profile.bio, tags=settings.REDUCED_ALLOWED_TAGS,
+                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+            else:
+                if not reply_to:
+                    profile.save()
+                    new_rel = Relationship(source=profile, target_project=project)
+                    try:
+                        new_rel.save()
+                    except IntegrityError:
+                        pass
+                comment.save()
+                success_msg = _('Reply posted!') if reply_to else _('Answer submitted!')
+                messages.success(request, success_msg)
+                return HttpResponseRedirect(comment.get_absolute_url())
         else:
-            error_msg = _('There was a problem posting your reply. Reply cannot be empty. ') if reply_to \
-                        else _('There was a problem submitting your answer. Answer cannot be empty. ')
-            
-            messages.error(request, error_msg)
+            messages.error(request, _('Please correct errors bellow.'))
     else:
-        profile_form = ProfileEditForm(instance=user)
+        profile_form = ProfileEditForm(instance=profile)
         profile_image_form = ProfileImageForm()
         form = CommentForm()
     return render_to_response('content/comment_sign_up.html', {
         'profile_image_form': profile_image_form,
         'profile_form': profile_form,
-        'profile': user,
+        'profile': profile,
         'form': form,
         'project': project,
         'page': page,
         'reply_to': reply_to,
+        'comment': comment,
+        'create': True,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 
@@ -462,23 +518,33 @@ def edit_comment_sign_up(request, slug, comment_id):
         abs_reply_to = reply_to = None
     else:
         reply_to = comment.reply_to
-
+    preview = False
+    profile = comment.author
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
-        profile_form = ProfileEditForm(request.POST, instance=comment.author)
+        profile_form = ProfileEditForm(request.POST, instance=profile)
         profile_image_form = ProfileImageForm()
         if form.is_valid() and (reply_to or profile_form.is_valid()):
             if not reply_to:
-                profile_form.save()
-            form.save()
-            success_msg = _('Comment updated!') if reply_to else _('Answer updated!')
-            messages.success(request, success_msg)
-            return HttpResponseRedirect(comment.get_absolute_url())
+                profile = profile_form.save(commit=False)
+            comment = form.save(commit=False)
+            if 'show_preview' in request.POST:
+                preview = True
+                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
+                if not reply_to:
+                    profile.bio = bleach.clean(profile.bio, tags=settings.REDUCED_ALLOWED_TAGS,
+                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+            else:
+                if not reply_to:
+                    profile.save()
+                comment.save()
+                success_msg = _('Comment updated!') if reply_to else _('Answer updated!')
+                messages.success(request, success_msg)
+                return HttpResponseRedirect(comment.get_absolute_url())
         else:
-            error_msg = _('There was a problem updating your comment. Comments cannot be empty. ') if reply_to \
-                        else _('There was a problem updating your answer. Answers cannot be empty. ')
-            
-            messages.error(request, error_msg)
+            messages.error(request, _('Please correct errors bellow.'))
     else:
         profile_form = ProfileEditForm(instance=comment.author)
         profile_image_form = ProfileImageForm()
@@ -486,12 +552,13 @@ def edit_comment_sign_up(request, slug, comment_id):
     return render_to_response('content/comment_sign_up.html', {
         'profile_image_form': profile_image_form,
         'profile_form': profile_form,
-        'profile': comment.author,
+        'profile': profile,
         'form': form,
         'project': comment.page.project,
         'page': comment.page,
         'reply_to': reply_to,
         'comment': comment,
+        'preview': preview,
     }, context_instance=RequestContext(request))
 
 

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext as _
 
 from drumbeat.utils import CKEditorWidget
 from content.models import Page, PageComment
@@ -15,6 +16,12 @@ class PageForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
+    def clean_content(self):
+        data = self.cleaned_data['content']
+        if data.strip() == "<br />":
+            raise forms.ValidationError(_("This field is required."))
+        return data
+
 
 class NotListedPageForm(forms.ModelForm):
 
@@ -24,6 +31,12 @@ class NotListedPageForm(forms.ModelForm):
         widgets = {
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
+
+    def clean_content(self): 
+        data = self.cleaned_data['content']
+        if data.strip() == "<br />":
+            raise forms.ValidationError(_("This field is required."))
+        return data
 
 
 class OwnersPageForm(forms.ModelForm):
@@ -35,6 +48,12 @@ class OwnersPageForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
+    def clean_content(self): 
+        data = self.cleaned_data['content']
+        if data.strip() == "<br />":
+            raise forms.ValidationError(_("This field is required."))
+        return data
+
 
 class OwnersNotListedPageForm(forms.ModelForm):
 
@@ -45,6 +64,12 @@ class OwnersNotListedPageForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
+    def clean_content(self): 
+        data = self.cleaned_data['content']
+        if data.strip() == "<br />":
+            raise forms.ValidationError(_("This field is required."))
+        return data
+
 
 class CommentForm(forms.ModelForm):
 
@@ -54,12 +79,11 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
-        
-         
-    def clean(self): 
-        data = self.cleaned_data 
-        if 'content' in data and self.cleaned_data['content'].strip() == "<br />":
-            # Adding error message here but it doesn't show because of ckeditor? It is also in views.py
-            self._errors['id_content'] = forms.util.ErrorList("Comments cannot be empty")
+
+    def clean_content(self): 
+        data = self.cleaned_data['content']
+        if data.strip() == "<br />":
+            raise forms.ValidationError(_("This field is required."))
         return data
+
 

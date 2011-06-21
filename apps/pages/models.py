@@ -13,8 +13,15 @@ class Page(ModelBase):
     """Model for static pages."""
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=110, unique=True)
+    slug = models.SlugField(max_length=110)
     content = models.TextField()
+    language = models.CharField(verbose_name = 'language',
+        max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
+        default = settings.LANGUAGE_CODE)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = (("slug", "language"),)
 
     def __unicode__(self):
         return self.title
@@ -24,3 +31,4 @@ class Page(ModelBase):
         return ('static_page_show', (), {
             'slug': self.slug,
         })
+

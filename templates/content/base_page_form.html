@@ -4,6 +4,7 @@
 {% block project_title %}{% if page %}{{ page.title }}{% endif %}{% endblock %}
 
 {% block body %}
+
 <section class="modal">
   <article>
     {% block page_form_title %}{% endblock %}
@@ -11,6 +12,12 @@
     <fieldset>
     <form action="{% block page_form_url %}{% endblock %}" method="post" {% block form_extra_attributes %}{% endblock %}>
       {% csrf_token %}
+      {% if preview %}
+        <div class="preview">
+          {% block content_preview %}{% endblock %}
+        </div>
+        <br />
+      {% endif %}
       {% block extra_fields %}{%endblock%}
       {% if form.title %}
         <div class="field{% if form.title.errors %} error{% endif %}">
@@ -32,6 +39,7 @@
       {% endif %}
       <p class="content_buttons">
         {% block page_form_buttons %}{% endblock %}
+        <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
       </p>
     </form>
     </fieldset>

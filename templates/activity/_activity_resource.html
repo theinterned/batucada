@@ -31,7 +31,7 @@
       {% if activity.remote_object %}
         <a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
       {% else %}
-        new.p2pu.org
+        <a href="http://{{ domain }}">{{ domain }}</a>
       {% endif %}
     </div>
 

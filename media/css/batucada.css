@@ -394,12 +394,16 @@ header {}
     }
 
     #search #main {
-        width: 980px;
+        width: 969px;
         padding: 0 0 0 30px;
         margin: 0;
         float: none;
         border-top: 1px solid #fff;
         }
+
+    #cse-search-results iframe {
+       width: 950px;
+    }
 
       #user-nav a, #main-nav a {
         color: #444;
@@ -582,7 +586,8 @@ header {}
   }
 
     #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
-    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs {
+    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs,
+    #sign_up_comment #breadcrumbs {
         height: 6em;    
     }
     
@@ -1312,6 +1317,18 @@ header {}
 	    margin-left: 30px;
 	    width: 575px;
 	}
+
+    #comment .post-replies, #sign_up_comment .post-replies {
+       margin-left: 30px;
+	   width: 530px;
+    }
+
+    #create_page .preview, #edit_page .preview {
+       padding: 10px;
+       border-radius: 10px;
+       border: solid 1px #EEE;
+    }
+
     #posts .action:hover,
     .supplemental_actions .action:hover {
       color: #777;
@@ -1866,10 +1883,10 @@ header {}
 }
 #intro-links a {
   display: block;
-  font-size: 47px;
+  font-size: 40px;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 17px 40px 20px;
+  padding: 17px 33px 20px;
   line-height: 47px;
   width: 215px;
 }
@@ -1884,7 +1901,7 @@ header {}
 }
 #intro-links a.big-run-course {
   margin-left: 7px;
-  padding-left: 33px;
+  padding-left: 70px;
   background: url("../images/bg.run-a-course.png") no-repeat;
   color: #5a6579;
   height: 138px;
@@ -2334,11 +2351,12 @@ div.warning h2 {
 
 .signin .errorlist {
 	right: -154px;
-	}	
+}
 
-#comment .errorlist {
-	right: -160px;
-	top: 100px;
+#edit_page .errorlist, #create_page .errorlist,
+#sign_up_comment .errorlist, #comment .errorlist {
+	right: -170px;
+	top: 50px;
 }
 
 .start_date .errorlist, 
@@ -2870,5 +2888,4 @@ footer[class="main"] ul[class="cc"] li[class="icons"] a {
   overflow: hidden;
   text-indent: -999em;
 }
-
 

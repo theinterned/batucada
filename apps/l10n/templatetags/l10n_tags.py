@@ -1,7 +1,11 @@
+import logging
+
 from django import template
 from django.utils.encoding import smart_str
 
 from l10n.urlresolvers import reverse
+
+log = logging.getLogger(__name__)
 
 register = template.Library()
 

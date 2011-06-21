@@ -3,11 +3,12 @@ import random
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate, get_language
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.sites.models import Site
 
 from l10n.urlresolvers import reverse
 from activity.models import Activity
@@ -37,6 +38,7 @@ def splash(request):
         'featured_project': project,
         'feed_entries': feed_entries,
         'feed_url': feed_url,
+        'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
 
 
@@ -79,7 +81,7 @@ def dashboard(request, page=1):
     try:
         current_page = paginator.page(page)
     except EmptyPage:
-        raise http.Http404
+        raise Http404
 
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
@@ -93,6 +95,7 @@ def dashboard(request, page=1):
         'prev_page': int(page) - 1,
         'num_pages': paginator.num_pages,
         'page': current_page,
+        'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
 
 

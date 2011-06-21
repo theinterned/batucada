@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-06 23:15-0400\n"
+"POT-Creation-Date: 2011-06-19 21:28-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,19 +116,19 @@ msgstr "puede que asista a"
 msgid "deleted"
 msgstr "eliminado"
 
-#: apps/activity/views.py:16
+#: apps/activity/views.py:17
 msgid "This message was deleted."
 msgstr "Este mensaje fue borrado."
 
-#: apps/activity/views.py:33
+#: apps/activity/views.py:35
 msgid "You can't edit this message"
 msgstr "Usted no puede editar este mensaje"
 
-#: apps/activity/views.py:37
+#: apps/activity/views.py:39
 msgid "Message deleted!"
 msgstr "¡Mensaje eliminado!"
 
-#: apps/activity/views.py:37
+#: apps/activity/views.py:39
 msgid "Message restored!"
 msgstr "¡Mensaje restaurado!"
 
@@ -194,7 +194,7 @@ msgstr "¡Reto actualizado!"
 msgid "Unable to update your challenge."
 msgstr "No fue posible actualizar su reto."
 
-#: apps/challenges/views.py:118 apps/users/views.py:525
+#: apps/challenges/views.py:118 apps/users/views.py:529
 msgid "There was an error uploading your image."
 msgstr "Ocurrió un error al subir la imagen."
 
@@ -202,7 +202,7 @@ msgstr "Ocurrió un error al subir la imagen."
 msgid "Challenge image updated"
 msgstr "Imagen del reto actualizada"
 
-#: apps/challenges/views.py:139 apps/projects/views.py:420
+#: apps/challenges/views.py:139 apps/projects/views.py:421
 #: apps/schools/views.py:96
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
@@ -267,6 +267,11 @@ msgstr "Sus detalles fueron guardados."
 msgid "Unable to save details"
 msgstr "No fue posible guardar sus detalles"
 
+#: apps/content/forms.py:22 apps/content/forms.py:38 apps/content/forms.py:54
+#: apps/content/forms.py:70 apps/content/forms.py:86 apps/users/forms.py:151
+msgid "This field is required."
+msgstr "Este campo es requerido."
+
 #: apps/content/models.py:82
 #, python-format
 msgid " <a href=\"%(page_url)s\">%(page_title)s</a>."
@@ -282,142 +287,106 @@ msgstr "Comentario para %s"
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 
-#: apps/content/views.py:32
+#: apps/content/views.py:34
 msgid "This task was deleted."
 msgstr "Esta tarea fue eliminada."
 
-#: apps/content/views.py:65 templates/content/sign_up.html:38
+#: apps/content/views.py:67 templates/content/sign_up.html:38
 msgid "This answer was deleted."
 msgstr "Esta respuesta fue eliminada."
 
-#: apps/content/views.py:67 templates/content/page.html:47
+#: apps/content/views.py:69 templates/content/page.html:47
 msgid "This comment was deleted."
 msgstr "Este comentario fue eliminado."
 
-#: apps/content/views.py:83 apps/content/views.py:90 apps/content/views.py:153
-#: apps/content/views.py:155 apps/content/views.py:180
-#: apps/content/views.py:217 apps/content/views.py:265
-#: apps/content/views.py:279 apps/content/views.py:295
-#: apps/content/views.py:302
+#: apps/content/views.py:85 apps/content/views.py:92 apps/content/views.py:171
+#: apps/content/views.py:173 apps/content/views.py:198
+#: apps/content/views.py:245 apps/content/views.py:302
+#: apps/content/views.py:316 apps/content/views.py:332
+#: apps/content/views.py:339
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:101 apps/projects/views.py:370
+#: apps/content/views.py:110 apps/projects/views.py:371
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
 
-#: apps/content/views.py:108 apps/content/views.py:321
-#, python-format
-msgid "There was a problem saving %s."
-msgstr "Ocurrió un problema al guardar %s."
+#: apps/content/views.py:116 apps/content/views.py:155
+#: apps/content/views.py:226 apps/content/views.py:261
+#: apps/content/views.py:364 apps/content/views.py:490
+#: apps/content/views.py:547
+msgid "Please correct errors bellow."
+msgstr "Por favor corrija los errores mostrados a continuación."
 
-#: apps/content/views.py:132
+#: apps/content/views.py:149
 msgid "Task created!"
 msgstr "Tarea creada!"
 
-#: apps/content/views.py:139
-msgid "There was a problem creating the task."
-msgstr "Ocurrió problema creando la tarea."
-
-#: apps/content/views.py:164
+#: apps/content/views.py:182
 #, python-format
 msgid "%s deleted!"
 msgstr "¡%s eliminada!"
 
-#: apps/content/views.py:197
+#: apps/content/views.py:223
 msgid "Comment posted!"
 msgstr "¡Comentario publicado!"
 
-#: apps/content/views.py:201
-msgid "There was a problem posting the comment. Comments cannot be empty."
-msgstr ""
-"Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
-"estar vacíos."
-
-#: apps/content/views.py:222 apps/content/views.py:474
+#: apps/content/views.py:258 apps/content/views.py:543
 msgid "Comment updated!"
 msgstr "¡Comentario actualizado!"
 
-#: apps/content/views.py:226
-msgid "There was a problem saving the comment."
-msgstr "Ocurrió un problema al guardar el comentario."
-
-#: apps/content/views.py:241 apps/content/views.py:457
+#: apps/content/views.py:278 apps/content/views.py:513
 msgid "You can't edit this comment"
 msgstr "Usted no puede editar este comentario"
 
-#: apps/content/views.py:246
+#: apps/content/views.py:283
 msgid "Answer deleted!"
 msgstr "¡Respuesta eliminada!"
 
-#: apps/content/views.py:246
+#: apps/content/views.py:283
 msgid "Answer restored!"
 msgstr "¡Respuesta restaurada!"
 
-#: apps/content/views.py:248
+#: apps/content/views.py:285
 msgid "Comment deleted!"
 msgstr "¡Comentario eliminado!"
 
-#: apps/content/views.py:248
+#: apps/content/views.py:285
 msgid "Comment restored!"
 msgstr "¡Comentario restaurado!"
 
-#: apps/content/views.py:314
+#: apps/content/views.py:358
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
-#: apps/content/views.py:401 apps/content/views.py:403
-#: apps/content/views.py:405 apps/content/views.py:507
+#: apps/content/views.py:445 apps/content/views.py:447
+#: apps/content/views.py:449 apps/content/views.py:574
 msgid "You can't see this page"
 msgstr "Usted no puede ver esta página"
 
-#: apps/content/views.py:410
+#: apps/content/views.py:454
 msgid "There exists already an answer"
 msgstr "Ya hay una respuesta"
 
-#: apps/content/views.py:430
+#: apps/content/views.py:486
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:430
+#: apps/content/views.py:486
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:434
-msgid "There was a problem posting your reply. Reply cannot be empty. "
-msgstr ""
-"Ocurrió un problema publicando el comentario.  Los comentarios no pueden "
-"estar vacíos."
-
-#: apps/content/views.py:435
-msgid "There was a problem submitting your answer. Answer cannot be empty. "
-msgstr ""
-"Ocurrió un problema al enviar su respuesta. La respuesta no puede estar "
-"vacía."
-
-#: apps/content/views.py:474
+#: apps/content/views.py:543
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/content/views.py:478
-msgid "There was a problem updating your comment. Comments cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar el comentario.  Los comentarios no pueden "
-"estar vacíos."
-
-#: apps/content/views.py:479
-msgid "There was a problem updating your answer. Answers cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar su respuesta. La respuesta no puede estar "
-"vacía."
-
-#: apps/content/views.py:523
+#: apps/content/views.py:590
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/content/views.py:525
+#: apps/content/views.py:592
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
@@ -460,7 +429,7 @@ msgid "Can't send email"
 msgstr "No puede enviarse correo"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:608
+#: apps/projects/views.py:609
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -484,7 +453,7 @@ msgstr ""
 msgid "That password is too common. Please choose another."
 msgstr "Esa contraseña es muy común. Por favor elija otra."
 
-#: apps/preferences/forms.py:66 apps/users/forms.py:164
+#: apps/preferences/forms.py:66 apps/users/forms.py:163
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
@@ -500,8 +469,8 @@ msgstr "Correo actualizado"
 msgid "Password updated"
 msgstr "Contraseña actualizada"
 
-#: apps/preferences/views.py:95 apps/users/views.py:255
-#: apps/users/views.py:395
+#: apps/preferences/views.py:95 apps/users/views.py:256
+#: apps/users/views.py:398
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
@@ -544,9 +513,8 @@ msgid "Sign-Up Task"
 msgstr "Tarea de Inscripción"
 
 #: apps/projects/forms.py:88 apps/schools/forms.py:48
-#, fuzzy
 msgid "That user account was deleted."
-msgstr "Esta cuenta de usuario fue borrada."
+msgstr "Esa cuenta de usuario fue borrada."
 
 #: apps/projects/forms.py:90 apps/schools/forms.py:50
 #, python-format
@@ -605,106 +573,103 @@ msgstr "Grupo de Estudio"
 msgid "group"
 msgstr "grupo"
 
-#: apps/projects/views.py:100 apps/projects/views.py:223
-#: apps/projects/views.py:313 templates/challenges/submission_edit.html:18
+#: apps/projects/views.py:101 apps/projects/views.py:224
+#: apps/projects/views.py:314 templates/challenges/submission_edit.html:18
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:107 apps/projects/views.py:228
-#: apps/projects/views.py:320
+#: apps/projects/views.py:108 apps/projects/views.py:229
+#: apps/projects/views.py:321
 msgid "Sign-Up"
 msgstr "Inscripción"
 
-#: apps/projects/views.py:113
+#: apps/projects/views.py:114
 #, python-format
 msgid "The %s has been created."
 msgstr "El %s ha sido creado."
 
 #: apps/projects/views.py:119
-#, python-format
-msgid "There was a problem creating the %s."
-msgstr "Ocurrió un problema creando el %s."
+msgid "There was a problem creating the study group, course, ..."
+msgstr "Ocurrió un problema al crear el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:244
+#: apps/projects/views.py:245
 #, python-format
 msgid "The %s has been cloned."
 msgstr "El %s ha sido clonado."
 
-#: apps/projects/views.py:250
-#, python-format
-msgid "There was a problem cloning the %s."
-msgstr "Ocurrió un problema al clonar el %s."
+#: apps/projects/views.py:251
+msgid "There was a problem cloning the study group, course, ..."
+msgstr "Ocurrió un problema al clonar el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:260 apps/projects/views.py:349
-#: apps/projects/views.py:537 apps/schools/views.py:134
+#: apps/projects/views.py:261 apps/projects/views.py:350
+#: apps/projects/views.py:538 apps/schools/views.py:134
 #: apps/schools/views.py:172 apps/schools/views.py:224
 msgid "Invalid request"
 msgstr "Solicitud inválida"
 
-#: apps/projects/views.py:333
+#: apps/projects/views.py:334
 #, python-format
 msgid "The %s has been imported."
 msgstr "El %s ha sido importado."
 
-#: apps/projects/views.py:339
-#, python-format
-msgid "There was a problem importing the %s."
-msgstr "Ocurrió un problema al importar el %s."
+#: apps/projects/views.py:340
+msgid "There was a problem importing the study group, course, ..."
+msgstr "Ocurrió un problema al importar el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:376
+#: apps/projects/views.py:377
 #, python-format
 msgid ""
 "The %(kind)s membership to %(school)s was declined by the school organizers."
 msgstr ""
 "La membresia del %(kind)s a %(school)s fue rechazada por los organizadores."
 
-#: apps/projects/views.py:413 apps/schools/views.py:89
+#: apps/projects/views.py:414 apps/schools/views.py:89
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:442
+#: apps/projects/views.py:443
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:446
+#: apps/projects/views.py:447
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:466 apps/projects/views.py:496
-#: apps/users/views.py:595
+#: apps/projects/views.py:467 apps/projects/views.py:497
+#: apps/users/views.py:599
 msgid "You can't edit this link"
 msgstr "Usted no puede editar este enlace"
 
-#: apps/projects/views.py:476
+#: apps/projects/views.py:477
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:498
+#: apps/projects/views.py:499
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:519
+#: apps/projects/views.py:520
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:523
+#: apps/projects/views.py:524
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:552
+#: apps/projects/views.py:553
 msgid "You can't make that person an organizer"
 msgstr "Usted no puede convertir ese usuario en organizador"
 
-#: apps/projects/views.py:555
+#: apps/projects/views.py:556
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:569
+#: apps/projects/views.py:570
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:589
+#: apps/projects/views.py:590
 #, python-format
 msgid "There was a problem saving the %s's status."
 msgstr "Ocurrió un problema al guardar el estado del %s."
@@ -735,7 +700,7 @@ msgstr "Ya está siguiendo a este usuario"
 msgid "You can't unfollow"
 msgstr "Usted no puede dejar de seguir"
 
-#: apps/schools/decorators.py:18
+#: apps/schools/decorators.py:19
 msgid "You are not school organizer"
 msgstr "Usted no esta organizando esta escuela"
 
@@ -809,7 +774,7 @@ msgstr "Ocurrió un error al publicar su mensaje"
 msgid "You are already logged into an account."
 msgstr "Usted ya entró a su cuenta."
 
-#: apps/users/fields.py:18
+#: apps/users/fields.py:20 apps/users/fields.py:24
 msgid "Please choose another username."
 msgstr "Por favor elija otro nombre de usuario."
 
@@ -828,15 +793,11 @@ msgid ""
 msgstr ""
 "Puede entrar directamente con su nombre de usuario y contraseña de p2pu.org."
 
-#: apps/users/forms.py:146
+#: apps/users/forms.py:145
 msgid "User profile with this Username already exists."
 msgstr "Ya existe un perfil con este nombre de usuario."
 
-#: apps/users/forms.py:152
-msgid "This field is required."
-msgstr "Este campo es requerido."
-
-#: apps/users/forms.py:154
+#: apps/users/forms.py:153
 msgid "User profile with this Email already exists."
 msgstr "Ya existe un perfil de usuario con este correo."
 
@@ -880,7 +841,7 @@ msgstr "Termine de Crear su Cuenta"
 msgid "Anonym"
 msgstr "Anónimo"
 
-#: apps/users/views.py:43
+#: apps/users/views.py:44
 #, python-format
 msgid ""
 "A link to activate your user account was sent by email to your address %s. "
@@ -889,7 +850,7 @@ msgstr ""
 "Un enlace para activar su cuenta fue enviado por correo a su dirección: %s. "
 "Para poder entrar a su cuenta por primera vez, debe que seguir ese enlace."
 
-#: apps/users/views.py:49
+#: apps/users/views.py:50
 #, python-format
 msgid ""
 "If you did not receive the confirmation email, make sure your email service "
@@ -902,15 +863,15 @@ msgstr ""
 "href=\"%s\">reenviarle el mensaje de confirmación</a> a su dirección de "
 "correo."
 
-#: apps/users/views.py:152
+#: apps/users/views.py:153
 msgid "Incorrect username, email or password."
 msgstr "Contraseña, nombre de usuario, o correo incorrectos."
 
-#: apps/users/views.py:240
+#: apps/users/views.py:241
 msgid "Congratulations! Your user account was successfully created."
 msgstr "¡Felicitaciones! Su cuenta de usuario fue creada exitosamente."
 
-#: apps/users/views.py:248 apps/users/views.py:389
+#: apps/users/views.py:249 apps/users/views.py:392
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
@@ -918,15 +879,15 @@ msgstr ""
 "¡Gracias! Hemos enviado un correo a {0} con instrucciones para que termine "
 "de crear su cuenta."
 
-#: apps/users/views.py:306
+#: apps/users/views.py:308
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, ese no parece un código de confirmación correcto"
 
-#: apps/users/views.py:311
+#: apps/users/views.py:313
 msgid "Success! You have verified your account. You may now sign in."
 msgstr "¡Éxito! Ya verificó su cuenta. Ahora puede entrar."
 
-#: apps/users/views.py:327
+#: apps/users/views.py:329
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
@@ -934,15 +895,15 @@ msgstr ""
 "Se ha enviado un código de confirmación la dirección de correo asociada a su "
 "cuenta"
 
-#: apps/users/views.py:336
+#: apps/users/views.py:338
 msgid "This user account was deleted."
 msgstr "Esta cuenta de usuario fue borrada."
 
-#: apps/users/views.py:411
+#: apps/users/views.py:415
 msgid "Profile updated"
 msgstr "Perfil actualizado"
 
-#: apps/users/views.py:417
+#: apps/users/views.py:421
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
@@ -950,64 +911,64 @@ msgstr ""
 "Ocurrieron problemas al actualizar su perfil. Por favor corríja la "
 "información e intente nuevamente."
 
-#: apps/users/views.py:463
+#: apps/users/views.py:467
 #, python-format
 msgid "The identity %s has been saved."
 msgstr "La identidad %s ha sido salvada."
 
-#: apps/users/views.py:467
+#: apps/users/views.py:471
 #, python-format
 msgid "The identity %s has already been claimed by you."
 msgstr "La identidad %s ya ha sido reservada por usted."
 
-#: apps/users/views.py:470
+#: apps/users/views.py:474
 #, python-format
 msgid "The identity %s has already been claimed by another user."
 msgstr "Otro usuario ya reservó la identidad %s."
 
-#: apps/users/views.py:472
+#: apps/users/views.py:476
 #, python-format
 msgid "OpenID authentication failed: %s"
 msgstr "Fallo en la autentificación con OpenID: %s"
 
-#: apps/users/views.py:475
+#: apps/users/views.py:479
 msgid "Authentication cancelled."
 msgstr "Autentificación cancelada."
 
-#: apps/users/views.py:477
+#: apps/users/views.py:481
 #, python-format
 msgid "Unknown OpenID response type: %r"
 msgstr "Tipo de respuesta OpenID desconocido: %r"
 
-#: apps/users/views.py:479
+#: apps/users/views.py:483
 msgid "This is an OpenID relying party endpoint."
 msgstr "Esta url debe ser accedida por un proveedor de OpenID."
 
-#: apps/users/views.py:488
+#: apps/users/views.py:492
 msgid "You can't edit this openid"
 msgstr "Usted no puede editar este openid"
 
-#: apps/users/views.py:490
+#: apps/users/views.py:494
 msgid "The openid was deleted."
 msgstr "El openid fue removido."
 
-#: apps/users/views.py:520
+#: apps/users/views.py:524
 msgid "Profile image updated"
 msgstr "Imagen actualizada"
 
-#: apps/users/views.py:543
+#: apps/users/views.py:547
 msgid "Profile link added."
 msgstr "Enlace añadido."
 
-#: apps/users/views.py:552
+#: apps/users/views.py:556
 msgid "There was an error saving your link."
 msgstr "Ocurrió un error al guardar el enlace."
 
-#: apps/users/views.py:575
+#: apps/users/views.py:579
 msgid "Profile link updated"
 msgstr "Enlace actualizado"
 
-#: apps/users/views.py:597
+#: apps/users/views.py:601
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
@@ -1016,17 +977,21 @@ msgid "Page not found"
 msgstr "Página no encontrada"
 
 #: templates/404.html:8
-msgid "Maybe the page you are looking for is on the old p2pu site: "
-msgstr "Tal vez la página que está buscando está en el antiguo sitio de p2pu: "
+msgid ""
+"Oops. That links doesn't seem to work. Maybe the page you are looking for is "
+"on the old p2pu site? Try "
+msgstr ""
+"Oh! Ese enlace no parece funcionar. ¿Tal vez la página que está buscando  "
+"está en el antiguo sitio de p2pu? Intente visitar "
 
 #: templates/404.html:9
 msgid ""
-"If you think it should be here, please let us know by <a href=\"http://p2pu."
-"lighthouseapp.com/projects/71002\">filing a bug report</a>."
+"If you think this is an error, please let us know by <a href=\"http://p2pu."
+"lighthouseapp.com/projects/71002\" target=\"_blank\">filling a bug report</"
+"a>."
 msgstr ""
-"Si usted piensa que la página debería estar aquí, por favor haganoslo saber "
-"<a href=\"http://p2pu.lighthouseapp.com/projects/71002\">reportando el "
-"problema</a>."
+"Si usted piensa que esto es un error, por favor háganoslo saber <a href="
+"\"http://p2pu.lighthouseapp.com/projects/71002\">reportando el problema</a>."
 
 #: templates/500.html:6
 msgid "Internal server error"
@@ -1060,7 +1025,7 @@ msgstr ""
 msgid "About Us"
 msgstr "Acerca de Nosotros"
 
-#: templates/_footer.html:8 templates/base.html:67
+#: templates/_footer.html:8 templates/base.html:66
 msgid "About P2PU"
 msgstr "Acerca de P2PU"
 
@@ -1068,7 +1033,7 @@ msgstr "Acerca de P2PU"
 msgid "Supporters"
 msgstr "Patrocinadores"
 
-#: templates/_footer.html:10 templates/base.html:63
+#: templates/_footer.html:10 templates/base.html:62
 msgid "Blog"
 msgstr "Blog"
 
@@ -1088,7 +1053,7 @@ msgstr "Wiki"
 msgid "Old P2PU Site"
 msgstr "Antiguo Sitio de P2PU"
 
-#: templates/_footer.html:18 templates/base.html:69
+#: templates/_footer.html:18
 msgid "Contact Us"
 msgstr "Contáctenos"
 
@@ -1104,7 +1069,7 @@ msgstr "Facebook"
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/_footer.html:22 templates/base.html:68
+#: templates/_footer.html:22
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
@@ -1140,19 +1105,19 @@ msgstr "CC REC/BY CI/SA"
 msgid "Learning for everyone, by everyone, about almost anything."
 msgstr "Aprendizaje para todos, por todos y acerca de casi todo."
 
-#: templates/base.html:27
+#: templates/base.html:26
 msgid "css/style-en.css"
 msgstr "css/style-es.css"
 
-#: templates/base.html:42
+#: templates/base.html:41
 msgid "(more)"
 msgstr "(más)"
 
-#: templates/base.html:57
+#: templates/base.html:56
 msgid "BETA"
 msgstr "BETA"
 
-#: templates/base.html:60 templates/activity/delete_restore.html:12
+#: templates/base.html:59 templates/activity/delete_restore.html:12
 #: templates/activity/index.html:12 templates/projects/base.html:15
 #: templates/projects/directory.html:3 templates/projects/directory.html:9
 #: templates/projects/gallery.html:4 templates/projects/gallery.html.py:10
@@ -1160,66 +1125,70 @@ msgstr "BETA"
 msgid "Learn"
 msgstr "Aprender"
 
-#: templates/base.html:61 templates/mojo.html:67
+#: templates/base.html:60 templates/mojo.html:67
 #: templates/activity/delete_restore.html:16 templates/activity/index.html:16
-#: templates/projects/sidebar.html:131 templates/users/profile.html:16
+#: templates/projects/sidebar.html:131 templates/users/profile.html:17
 #: templates/users/profile_edit.html:11 templates/users/user_list.html:5
 #: templates/users/user_list.html.py:11
 msgid "People"
 msgstr "Personas"
 
-#: templates/base.html:65
+#: templates/base.html:64
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/base.html:70
-msgid "P2PU Help Desk"
-msgstr "Escritorio de Ayuda en P2PU"
+#: templates/base.html:67
+msgid "Ask a Question"
+msgstr "Haga una Pregunta"
 
-#: templates/base.html:86
+#: templates/base.html:68
+msgid "Handbook"
+msgstr "Manual"
+
+#: templates/base.html:84
 msgid "My P2PU"
 msgstr "Mi P2PU"
 
-#: templates/base.html:93 templates/dashboard/dashboard.html:14
+#: templates/base.html:91 templates/dashboard/dashboard.html:14
 msgid "Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:94 templates/dashboard/dashboard.html:28
+#: templates/base.html:92 templates/dashboard/dashboard.html:28
 #: templates/users/profile_edit.html:25
 msgid "View Profile"
 msgstr "Ver Perfil"
 
-#: templates/base.html:95 templates/users/profile.html:22
+#: templates/base.html:93 templates/users/profile.html:23
 #: templates/users/profile_edit.html:5 templates/users/profile_edit.html:15
 #: templates/users/profile_edit.html:24
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
-#: templates/base.html:96 templates/mojo.html:93
+#: templates/base.html:94 templates/mojo.html:93
 #: templates/drumbeatmail/inbox.html:4 templates/drumbeatmail/inbox.html:9
 #: templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
-#: templates/base.html:97
+#: templates/base.html:95
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/base.html:103
+#: templates/base.html:101
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:146 templates/drumbeatmail/base.html:52
+#: templates/base.html:144 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:165
+#: templates/base.html:163
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
-#: templates/base.html:166
+#: templates/base.html:164
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
@@ -1269,7 +1238,7 @@ msgstr "Inscribir"
 #: templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
-#: templates/projects/sidebar.html:120 templates/users/profile.html:83
+#: templates/projects/sidebar.html:120 templates/users/profile.html:84
 msgid "Report Abuse"
 msgstr "Reportar Abuso"
 
@@ -1328,13 +1297,13 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/challenges/delete_confirm.html:20
 #: templates/challenges/submission_edit_description.html:20
 #: templates/challenges/submission_edit_summary.html:40
-#: templates/content/comment_page.html:64
-#: templates/content/comment_sign_up.html:88
+#: templates/content/comment_page.html:89
+#: templates/content/comment_sign_up.html:118
 #: templates/content/confirm_delete_page.html:27
-#: templates/content/create_page.html:27
+#: templates/content/create_page.html:37
 #: templates/content/delete_restore_comment.html:57
-#: templates/content/edit_page.html:37
-#: templates/content/restore_version.html:29
+#: templates/content/edit_page.html:46
+#: templates/content/restore_version.html:39
 #: templates/dashboard/dashboard.html:81
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
@@ -1356,8 +1325,8 @@ msgstr "Cancelar"
 
 #: templates/activity/delete_restore.html:50
 #: templates/content/delete_restore_comment.html:60
-#: templates/content/page.html:49 templates/content/restore_version.html:20
-#: templates/content/restore_version.html:31 templates/content/sign_up.html:40
+#: templates/content/page.html:49 templates/content/restore_version.html:22
+#: templates/content/restore_version.html:41 templates/content/sign_up.html:40
 #: templates/content/version_page.html:24
 msgid "Restore"
 msgstr "Restaurar"
@@ -1430,7 +1399,7 @@ msgid "Upload"
 msgstr "Subir"
 
 #: templates/challenges/challenge_edit_summary.html:9
-#: templates/content/base_page_form.html:17
+#: templates/content/base_page_form.html:24
 msgid "Title"
 msgstr "Título"
 
@@ -1493,9 +1462,9 @@ msgstr "Reglas"
 
 #: templates/challenges/challenge_edit_summary.html:100
 #: templates/challenges/voter_details.html:20
-#: templates/content/comment_page.html:67
-#: templates/content/comment_sign_up.html:91
-#: templates/content/edit_page.html:39
+#: templates/content/comment_page.html:92
+#: templates/content/comment_sign_up.html:121
+#: templates/content/edit_page.html:48
 #: templates/dashboard/setup_profile.html:9
 #: templates/projects/project_edit_status.html:61
 #: templates/projects/project_edit_summary.html:42
@@ -1508,7 +1477,7 @@ msgid "Save"
 msgstr "Guardar"
 
 #: templates/challenges/challenge_edit_summary.html:103
-#: templates/content/create_page.html:29 templates/projects/directory.html:19
+#: templates/content/create_page.html:39 templates/projects/directory.html:19
 #: templates/projects/gallery.html:15 templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:31
 #: templates/projects/project_edit.html:45
@@ -1692,8 +1661,8 @@ msgid "Leave a comment."
 msgstr "Deje un comentario."
 
 #: templates/challenges/submission_show.html:86
-#: templates/content/comment_page.html:69
-#: templates/content/comment_sign_up.html:93
+#: templates/content/comment_page.html:94
+#: templates/content/comment_sign_up.html:123
 msgid "Post"
 msgstr "Publicar"
 
@@ -1717,21 +1686,25 @@ msgstr "¡Bienvenido a bordo! Ahora usted es un organizador."
 msgid "Welcome aboard! You are a participant now."
 msgstr "¡Bienvenido a bordo! Ahora usted es un participante."
 
-#: templates/content/base_page_form.html:18
+#: templates/content/base_page_form.html:25
 msgid "A good title is short and descriptive."
 msgstr "Un buen título es corto y descriptivo."
 
-#: templates/content/base_page_form.html:29
+#: templates/content/base_page_form.html:36
 msgid "Collaborative work (editable by all the participants)."
 msgstr "Trabajo colaborativo (editable por todos los participantes)."
+
+#: templates/content/base_page_form.html:42
+msgid "Preview"
+msgstr "Vista Previa"
 
 #: templates/content/comment_page.html:11
 #: templates/content/comment_sign_up.html:11
 #: templates/content/confirm_delete_page.html:11
-#: templates/content/create_page.html:10
+#: templates/content/create_page.html:12
 #: templates/content/delete_restore_comment.html:11
-#: templates/content/edit_page.html:10 templates/content/history_page.html:13
-#: templates/content/page.html:13 templates/content/restore_version.html:9
+#: templates/content/edit_page.html:12 templates/content/history_page.html:13
+#: templates/content/page.html:13 templates/content/restore_version.html:11
 #: templates/content/version_page.html:13
 #: templates/projects/project_task_list.html:9
 msgid "Task List"
@@ -1746,9 +1719,24 @@ msgstr "Editar Comentario"
 msgid "Reply Comment"
 msgstr "Respuesta al Comentario"
 
-#: templates/content/comment_page.html:42
+#: templates/content/comment_page.html:30
 msgid "Comment"
 msgstr "Comentario"
+
+#: templates/content/comment_page.html:40
+#: templates/content/comment_page.html:57
+#: templates/content/comment_sign_up.html:41
+#: templates/content/comment_sign_up.html:63 templates/content/page.html:103
+#: templates/content/sign_up.html:106
+msgid "In Reply To:"
+msgstr "En Respuesta A:"
+
+#: templates/content/comment_page.html:55
+#: templates/content/comment_sign_up.html:61
+#: templates/content/create_page.html:21 templates/content/edit_page.html:34
+#: templates/content/restore_version.html:31
+msgid "[Preview]"
+msgstr "[Vista Previa]"
 
 #: templates/content/comment_sign_up.html:27
 msgid "Edit Answer"
@@ -1762,33 +1750,36 @@ msgstr "Editar Respuesta"
 msgid "Reply"
 msgstr "Responder"
 
-#: templates/content/comment_sign_up.html:39 templates/content/sign_up.html:66
+#: templates/content/comment_sign_up.html:31
+msgid ": Answer Questions"
+msgstr ": Responder Preguntas"
+
+#: templates/content/comment_sign_up.html:47
+#: templates/content/comment_sign_up.html:69 templates/content/sign_up.html:66
 #: templates/content/emails/sign_up_updated.txt:8
 #: templates/relationships/emails/new_follower.txt:3
 msgid "Bio:"
 msgstr "Biografía:"
 
-#: templates/content/comment_sign_up.html:40 templates/content/sign_up.html:67
+#: templates/content/comment_sign_up.html:48
+#: templates/content/comment_sign_up.html:70 templates/content/sign_up.html:67
 #: templates/content/emails/sign_up_updated.txt:10
 #: templates/relationships/emails/new_follower.txt:5
-#: templates/users/profile.html:62
+#: templates/users/profile.html:63
 msgid "Location:"
 msgstr "Ubicación:"
 
-#: templates/content/comment_sign_up.html:41 templates/content/sign_up.html:68
+#: templates/content/comment_sign_up.html:49
+#: templates/content/comment_sign_up.html:71 templates/content/sign_up.html:68
 #: templates/content/emails/sign_up_updated.txt:12
 msgid "Answer:"
 msgstr "Respuesta:"
 
-#: templates/content/comment_sign_up.html:48
-msgid ": Answer Questions"
-msgstr ": Responder Preguntas"
-
-#: templates/content/comment_sign_up.html:70
+#: templates/content/comment_sign_up.html:100
 msgid "Profile"
 msgstr "Perfil"
 
-#: templates/content/comment_sign_up.html:71
+#: templates/content/comment_sign_up.html:101
 msgid ""
 "First update your profile information, which will be included with your "
 "answer."
@@ -1796,15 +1787,15 @@ msgstr ""
 "Actualice la información de su perfil, la cual será incluida con su "
 "respuesta."
 
-#: templates/content/comment_sign_up.html:74
+#: templates/content/comment_sign_up.html:104
 msgid "Questions"
 msgstr "Preguntas"
 
-#: templates/content/comment_sign_up.html:75
+#: templates/content/comment_sign_up.html:105
 msgid "Then answer the sign-up questions listed below."
 msgstr "Responda las preguntas de inscripción listadas a continuación."
 
-#: templates/content/comment_sign_up.html:95
+#: templates/content/comment_sign_up.html:125
 msgid "Submit"
 msgstr "Enviar"
 
@@ -1812,11 +1803,11 @@ msgstr "Enviar"
 msgid "Are you sure you want to delete this task?"
 msgstr "¿Está seguro que desea eliminar esta tarea?"
 
-#: templates/content/create_page.html:4 templates/content/create_page.html:14
+#: templates/content/create_page.html:6 templates/content/create_page.html:16
 msgid "Create Task"
 msgstr "Crear Tarea"
 
-#: templates/content/create_page.html:18 templates/content/edit_page.html:26
+#: templates/content/create_page.html:28 templates/content/edit_page.html:28
 msgid ""
 "Constructing a good task is crucial to the peer learning process. Tasks "
 "should have a clear goal in mind and should be sequential throughout the "
@@ -1864,7 +1855,7 @@ msgstr "¿Está seguro que desea restaurar este comentario?"
 msgid "Are you sure you want to delete this comment?"
 msgstr "¿Está seguro que desea eliminar este comentario?"
 
-#: templates/content/edit_page.html:17 templates/content/page.html:20
+#: templates/content/edit_page.html:19 templates/content/page.html:20
 #: templates/content/page.html.py:62 templates/content/page.html:90
 #: templates/content/sign_up.html:51 templates/content/sign_up.html.py:93
 #: templates/projects/project_edit.html:6
@@ -1876,13 +1867,13 @@ msgstr "¿Está seguro que desea eliminar este comentario?"
 msgid "Edit"
 msgstr "Editar"
 
-#: templates/content/edit_page.html:33
+#: templates/content/edit_page.html:42
 msgid "Minor update (not posted to the wall)."
 msgstr "Actualización menor (no se publica en el muro)."
 
 #: templates/content/history_page.html:17
 #: templates/content/history_page.html:23
-#: templates/content/restore_version.html:13
+#: templates/content/restore_version.html:15
 #: templates/content/version_page.html:17
 msgid "History"
 msgstr "Historial"
@@ -1898,10 +1889,6 @@ msgstr "Ver Historial"
 #: templates/content/page.html:25
 msgid "Post Comment"
 msgstr "Publicar Comentario"
-
-#: templates/content/page.html:103 templates/content/sign_up.html:106
-msgid "In Reply To:"
-msgstr "En Respuesta A:"
 
 #: templates/content/page.html:119 templates/content/page.html.py:121
 #: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
@@ -2034,16 +2021,16 @@ msgstr "imagén del perfil de %(user)s"
 #: templates/dashboard/dashboard.html:33
 #: templates/projects/_project_card.html:31
 #: templates/projects/sidebar.html:106 templates/users/_user_card.html:12
-#: templates/users/profile.html:89
+#: templates/users/profile.html:90
 msgid "Followers"
 msgstr "Seguidores"
 
 #: templates/dashboard/dashboard.html:39 templates/users/_user_card.html:16
-#: templates/users/profile.html:95
+#: templates/users/profile.html:96
 msgid "Following"
 msgstr "Siguiendo"
 
-#: templates/dashboard/dashboard.html:46 templates/users/profile.html:102
+#: templates/dashboard/dashboard.html:46 templates/users/profile.html:103
 msgid "Learning"
 msgstr "Aprendiendo"
 
@@ -2101,12 +2088,12 @@ msgid "Learning for everyone, by everyone, about almost anything"
 msgstr "Aprendizaje para todos, por todos y acerca de casi todo"
 
 #: templates/dashboard/splash.html:13
-msgid "Find Existing Topic"
-msgstr "Econtrar Tema Existente"
+msgid "Browse Groups & Courses"
+msgstr "Busque Grupos y Cursos"
 
 #: templates/dashboard/splash.html:14
-msgid "Create New Topic"
-msgstr "Crear Nuevo Tema"
+msgid "Start Your Own"
+msgstr "Inicie el Suyo Propio"
 
 #: templates/dashboard/splash.html:17
 msgid ""
@@ -2812,11 +2799,11 @@ msgstr "Importar"
 msgid "No tasks have been added."
 msgstr "Ninguna tarea ha sido añadida."
 
-#: templates/projects/sidebar.html:19 templates/users/profile.html:42
+#: templates/projects/sidebar.html:19 templates/users/profile.html:43
 msgid "Unfollow"
 msgstr "Dejar de Seguir"
 
-#: templates/projects/sidebar.html:24 templates/users/profile.html:47
+#: templates/projects/sidebar.html:24 templates/users/profile.html:48
 msgid "Follow"
 msgstr "Seguir"
 
@@ -2855,6 +2842,10 @@ msgstr "Abierta"
 #: templates/projects/sidebar.html:98
 msgid "Organizers"
 msgstr "Organizadores"
+
+#: templates/projects/sidebar.html:111
+msgid "Pending Applicants"
+msgstr "Aspirantes Pendientes:"
 
 #: templates/projects/sidebar.html:125
 msgid "View Full Description"
@@ -3268,27 +3259,27 @@ msgstr "Entrar con OpenID"
 msgid "create an account"
 msgstr "crear una cuenta"
 
-#: templates/users/profile.html:50
+#: templates/users/profile.html:51
 msgid "Private Message"
 msgstr "Mensaje Privado"
 
-#: templates/users/profile.html:70 templates/users/profile.html.py:77
+#: templates/users/profile.html:71 templates/users/profile.html.py:78
 msgid "See more about "
 msgstr "Ver más sobre "
 
-#: templates/users/profile.html:116
+#: templates/users/profile.html:117
 msgid "Past Involvement"
 msgstr "Participación Anterior"
 
-#: templates/users/profile.html:135
+#: templates/users/profile.html:136
 msgid "Badges"
 msgstr "Insignias"
 
-#: templates/users/profile.html:153
+#: templates/users/profile.html:154
 msgid "(UP)"
 msgstr "(ARRIBA)"
 
-#: templates/users/profile.html:154
+#: templates/users/profile.html:155
 msgid "(DOWN)"
 msgstr "(ABAJO)"
 
@@ -3381,8 +3372,12 @@ msgid "Please sign me up for the P2PU newsletter."
 msgstr "Por favor suscríbame al boletín de P2PU."
 
 #: templates/users/profile_form_base.html:59
-msgid "By creating an account on new.p2pu.org, you accept our"
-msgstr "Al crear una cuenta en new.p2pu.org, usted acepta nuestras "
+msgid "By creating an account on"
+msgstr "Al crear una cuenta en"
+
+#: templates/users/profile_form_base.html:59
+msgid ", you accept our"
+msgstr ", usted acepta nuestras"
 
 #: templates/users/profile_form_base.html:59
 msgid "privacy guidelines"

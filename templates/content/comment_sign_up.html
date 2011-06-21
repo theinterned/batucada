@@ -3,7 +3,7 @@
 {% load youtube %}
 {% load slideshare %}
 
-{% block bodyid %}sign_up_task{% endblock %}
+{% block bodyid %}sign_up_comment{% endblock %}
 
 
 {% block project_breadcrumbs %}
@@ -11,7 +11,7 @@
   <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
   <span class="arrow">&rsaquo;</span>
   <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-  {% if comment %}
+  {% if not create %}
     <span class="arrow">&rsaquo;</span>
     <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
   {% else %}{% if reply_to %}
@@ -21,36 +21,66 @@
 {% endblock %}
 
 {% block page_form_title %}
-  {% if comment and reply_to %}
+  {% if not create and reply_to %}
     <h1>{{ _('Edit Comment') }} {{ comment.author }} {{ comment.created_on }} </h1>
   {% else %}{% if comment %}
     <h1>{{ _('Edit Answer') }} {{ comment.author }} {{ comment.created_on }} </h1>
   {% else %}{% if reply_to %}
     <h1>{{ _('Reply') }}</h1>
-    <br>
-    <div id="posts"><div class="post-container">
-      <img class="member-picture" width="54" height="54" src="{{ reply_to.author.image_or_default }}">
-      <div class="post-contents">
-        <div class="post-details">
-          {{ reply_to.author.display_name }} &nbsp; {{ reply_to.created_on }}
-        </div>
-        <div class="post-body">
-          {% if not reply_to.reply_to %}
-            <p><strong>{{ _('Bio:') }}</strong> {{ reply_to.author.bio|safe }}</p>
-	        <p><strong>{{ _('Location:') }}</strong> {{ reply_to.author.location }}</p>
-	        <h3>{{ _('Answer:') }}</h3>
-          {% endif %}
-          {{ reply_to.content|youtube|slideshare|safe }}
-       </div>
-    </div></div>
-    <br clear="both">
   {% else %}
     <h1>{{ page.title }} {{ _(': Answer Questions') }}</h1>
   {% endif %}{% endif %}{% endif %}
+  <div id="posts">
+    {% if reply_to %}
+      <div class="post-container">
+        <img class="member-picture" width="54" height="54" src="{{ reply_to.author.image_or_default }}">
+        <div class="post-contents">
+          <div class="post-details">
+            {{ reply_to.author.display_name }} &nbsp; {{ reply_to.created_on }}
+            {% if reply_to.reply_to %}
+              <br> {{ _('In Reply To:') }} &nbsp;
+              {{ reply_to.reply_to.author.display_name }} &nbsp; {{ reply_to.reply_to.created_on }}
+            {% endif %}
+          </div>
+          <div class="post-body">
+            {% if not reply_to.reply_to %}
+              <p><strong>{{ _('Bio:') }}</strong> {{ reply_to.author.bio|safe }}</p>
+	          <p><strong>{{ _('Location:') }}</strong> {{ reply_to.author.location }}</p>
+	          <h3>{{ _('Answer:') }}</h3>
+            {% endif %}
+            {{ reply_to.content|youtube|slideshare|safe }}
+         </div>
+        </div>
+      </div>  
+    {% endif %}
+    {% if preview %}
+      <div class="post-container {% if reply_to %}post-replies{% endif %}">
+        <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
+        <div class="post-contents">
+          <div class="post-details">
+            {{ _('[Preview]') }} {{ comment.author.display_name }} &nbsp; {{ comment.created_on }}
+            {% if reply_to %}
+              <br> {{ _('In Reply To:') }} &nbsp;
+              {{ reply_to.author.display_name }} &nbsp; {{ reply_to.created_on }}
+            {% endif %}
+          </div>
+          <div class="post-body">
+            {% if not reply_to %}
+              <p><strong>{{ _('Bio:') }}</strong> {{ comment.author.bio|safe }}</p>
+	          <p><strong>{{ _('Location:') }}</strong> {{ comment.author.location }}</p>
+	          <h3>{{ _('Answer:') }}</h3>
+            {% endif %}
+            {{ comment.content|youtube|slideshare|safe }}
+         </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  <br clear="both">
 {% endblock %}
 
 {% block page_form_url %}
-  {% if comment %}
+  {% if not create %}
     {% locale_url sign_up_edit_comment slug=page.project.slug comment_id=comment.id %}
   {% else %}{% if reply_to %}
     {% locale_url sign_up_reply slug=page.project.slug comment_id=reply_to.id %}
@@ -68,17 +98,17 @@
 {% block extra_fields %}
   {% if not reply_to %}
     <h2>{{ _('Profile') }}</h2>
-    {% if not comment %}<p class="hint">{{ _('First update your profile information, which will be included with your answer.') }}</p>{% endif %}
+    {% if create %}<p class="hint">{{ _('First update your profile information, which will be included with your answer.') }}</p>{% endif %}
     {% include "users/_profile_edit_image.html" %}
     {% include "users/_profile_edit.html" %}
     <h2>{{ _('Questions') }}</h2>
-    {% if not comment %}<p class="hint">{{ _('Then answer the sign-up questions listed below.') }}</p>{% endif %}
+    {% if create %}<p class="hint">{{ _('Then answer the sign-up questions listed below.') }}</p>{% endif %}
     {% include "projects/sign_up_initial_content.html" %}
   {% endif %}
 {%endblock%}
 
 {% block page_form_buttons %}
-  {% if comment %}
+  {% if not create %}
     <a class="button" href="{{ comment.get_absolute_url }}">
   {% else %}{% if reply_to %}
     <a class="button" href="{{ reply_to.get_absolute_url }}">
@@ -87,7 +117,7 @@
   {% endif %}{% endif %}
     {{ _('Cancel') }}
   </a>
-  {% if comment %}
+  {% if not create %}
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
   {% else %}{% if reply_to %}
     <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
