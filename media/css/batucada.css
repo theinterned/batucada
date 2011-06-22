@@ -2760,7 +2760,7 @@ footer[role="main"] ul {
   float: left;
 }
 footer[role="main"] ul:first-child {
-  margin-left: 13px;
+  margin-left: 0px;
 }
 footer[role="main"] ul > li:first-child {
   font-weight: normal;
@@ -2785,13 +2785,47 @@ footer[role="main"] ul[role="contact-us"] > li a {
 footer[role="main"] ul[role="license-info"] > li a {
   background-color: #ffde00;
 }
+
+footer[role="main"] ul[role="cc"] {
+   line-height: 30px;
+   font-size: 15px;
+}
 footer[role="main"] ul[role="cc"] li[role="icons"] a {
   display: block;
   background: url('/media/images/cc-icons.png') no-repeat;
   height: 65px;
   width: 147px;
-  margin: 20px auto;
+  margin: 0px auto;
   overflow: hidden;
   text-indent: -999em;
+}
+
+footer[role="main"] ul[role="supporters"] {
+   margin-left: 10px;
+   margin-top: -65px;
+   text-align: center;
+   width: 370px;
+   line-height: 30px;
+   font-size: 15px;
+}
+
+footer[role="main"] ul[role="supporters"] li[role="hewlett"] a {
+  display: block;
+  background: url('/media/images/hewlett-logo-white.png') no-repeat;
+  height: 53px;
+  width: 139px;
+  overflow: hidden;
+  text-indent: -999em;
+}
+
+footer[role="main"] ul[role="supporters"] li[role="shuttleworth"] a {
+  display: block;
+  background: url('/media/images/shuttleworth-funded-small.png') no-repeat;
+  height: 63px;
+  width: 250px;
+  overflow: hidden;
+  text-indent: -999em;
+  margin-top: -61px;
+  margin-left: 160px;
 }
 

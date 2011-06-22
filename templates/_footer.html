@@ -6,7 +6,6 @@
           <ul role="about-us">
             <li>{{ _('About Us') }}</li>
             <li><a href="{% locale_url static_page_show 'about' %}">{{ _('About P2PU') }}</a></li>
-            <li><a href="{% locale_url static_page_show 'supporters' %}">{{ _('Supporters') }}</a></li>
             <li><a href="http://blogs.p2pu.org/" target="_blank">{{ _('Blog') }}</a></li>
             <li><a href="http://groups.google.com/group/p2pu-announce" target="_blank">{{ _('Announcements') }}</a></li>
             <li><a href="{% locale_url static_page_show 'get-involved' %}">{{ _('Get Involved') }}</a></li>
@@ -33,6 +32,11 @@
           <ul role="cc">
             <li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" target="_blank">{{ _('Creative Commons BY SA') }}</a></li>
             <li role="icons"><a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" target="_blank">{{ _('CC BY SA') }}</a></li>
+          </ul>
+          <ul role="supporters">
+            <li><a href="{% locale_url static_page_show 'supporters' %}">{{ _('Supporters') }}</a></li>
+            <li role="hewlett"><a href="http://www.hewlett.org/" target="_blank">{{ _('The Hewlett Foundation') }}</a></li>
+            <li role="shuttleworth"><a href="http://www.shuttleworthfoundation.org/" target="_blank">{{ _('The Shuttleworth Foundation') }}</a></li>
           </ul>
         </nav>
                
