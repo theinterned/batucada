@@ -2821,8 +2821,8 @@ footer[role="main"] ul[role="supporters"] li[role="hewlett"] a {
 footer[role="main"] ul[role="supporters"] li[role="shuttleworth"] a {
   display: block;
   background: url('/media/images/shuttleworth-funded-small.png') no-repeat;
-  height: 63px;
-  width: 250px;
+  height: 53px;
+  width: 210px;
   overflow: hidden;
   text-indent: -999em;
   margin-top: -61px;
