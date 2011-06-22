@@ -49,7 +49,7 @@ a#beta-tag:hover {
 }
 
 footer[role="main"] ul[role="about-us"] > li a {
-  background-color: {{ school.contact_us_footnote_color }};
+  background-color: {{ school.about_us_footnote_color }};
 }
 footer[role="main"] ul[role="contact-us"] > li a {
   background-color: {{ school.contact_us_footnote_color }};
