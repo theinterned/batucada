@@ -38,11 +38,14 @@ class School(ModelBase):
                               storage=storage.ImageStorage(), blank=True)
     site_logo = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
-    headers_color = models.CharField(max_length=7, default='#5A6579')
-    headers_color_light = models.CharField(max_length=7, default='#F08C00')
-    background_color = models.CharField(max_length=7, default='#FFFFFF')
-    menu_color = models.CharField(max_length=7, default='#36CDC4')
-    menu_color_light = models.CharField(max_length=7, default='#4BD2C9')
+    headers_color = models.CharField(max_length=7, default='#5a6579')
+    headers_color_light = models.CharField(max_length=7, default='#f08c00')
+    background_color = models.CharField(max_length=7, default='#ffffff')
+    menu_color = models.CharField(max_length=7, default='#36cdc4')
+    menu_color_light = models.CharField(max_length=7, default='#4bd2c9')
+    about_us_footnote_color = models.CharField(max_length=7, default='#cef200')
+    contact_us_footnote_color = models.CharField(max_length=7, default='#4cebe2')
+    license_info_footnote_color = models.CharField(max_length=7, default='#ffde00')
     sidebar_width = models.CharField(max_length=5, default='245px')
     
 

@@ -1502,7 +1502,8 @@ header {}
 
         .modal .school #headers_colorpicker, .modal .school #headers_light_colorpicker,
         .modal .school #background_colorpicker, .modal .school #menu_colorpicker,
-        .modal .school #menu_light_colorpicker {
+        .modal .school #menu_light_colorpicker, .modal .school #about_us_footnote_colorpicker,
+        .modal .school #contact_us_footnote_colorpicker, .modal .school #license_info_footnote_colorpicker {
             float: left;
             padding-right: 10px;
         }
@@ -2776,13 +2777,13 @@ footer[role="main"] ul li a {
   padding: 0 8px;
 }
 footer[role="main"] ul[role="about-us"] > li a {
-  background: #cef200;
+  background-color: #cef200;
 }
 footer[role="main"] ul[role="contact-us"] > li a {
-  background: #4cebe2;
+  background-color: #4cebe2;
 }
 footer[role="main"] ul[role="license-info"] > li a {
-  background: #ffde00;
+  background-color: #ffde00;
 }
 footer[role="main"] ul[role="cc"] li[role="icons"] a {
   display: block;
