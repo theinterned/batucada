@@ -1,0 +1,5 @@
+{% for school in schools %}
+.card-list .card.background-{{ school.slug }} {
+    background-color: {{ school.background_color }};
+}
+{% endfor %}

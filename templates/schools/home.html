@@ -36,10 +36,10 @@
     <br>
     <figure class="school_img">
       <a href="{{ school.get_absolute_url }}">
-        {% if school.image %}
-  	      <img src="{{ MEDIA_URL }}{{ school.image }}" width="236" height="65" alt="project image"/>
+        {% if school.logo %}
+  	      <img src="{{ MEDIA_URL }}{{ school.logo }}" alt="project image"/>
         {% else %}
-          <img src="/media/images/school-missing.png" width="236" height="65" alt="project image"/>
+          <img src="/media/images/school-missing.png" alt="project image"/>
         {% endif %}
       </a>
     </figure>

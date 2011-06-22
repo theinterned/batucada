@@ -2,6 +2,8 @@
 {% load l10n_tags %}
 {% block bodyclasses %}project import{% endblock %}
 
+{% block links %}{% if school %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endif %}{% endblock %}
+
 {% block form %}
 <fieldset id="project_import" class="project clone tabpane">
 <h2>{{ _('Import from Old Site') }}</h2>

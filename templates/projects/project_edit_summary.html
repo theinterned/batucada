@@ -2,9 +2,11 @@
 {% load l10n_tags %}
 {% block bodyclasses %}project edit summary{% endblock %}
 
+{% block links %}{% if school %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endif %}{% endblock %}
+
 {% block form %}
 <fieldset id="project_edit_summary" class="project edit summary tabpane">
-<form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% endif %}" method="post">
+<form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif %}{% endif %}" method="post">
   {% csrf_token %}
   <div class="field{% if form.name.errors %} error{% endif %}">
     <label for="id_name">{{ _('Name') }}</label>

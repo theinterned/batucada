@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 21:28-0400\n"
+"POT-Creation-Date: 2011-06-22 00:57-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,7 +147,8 @@ msgid "You can't decorate submission"
 msgstr "Usted no puede decorar el envío"
 
 #: apps/challenges/forms.py:30 apps/projects/forms.py:61
-#: apps/schools/forms.py:32 apps/users/forms.py:197
+#: apps/schools/forms.py:40 apps/schools/forms.py:54 apps/schools/forms.py:68
+#: apps/schools/forms.py:82 apps/users/forms.py:197
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
@@ -203,7 +204,8 @@ msgid "Challenge image updated"
 msgstr "Imagen del reto actualizada"
 
 #: apps/challenges/views.py:139 apps/projects/views.py:421
-#: apps/schools/views.py:96
+#: apps/schools/views.py:122 apps/schools/views.py:165
+#: apps/schools/views.py:208 apps/schools/views.py:251
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
@@ -496,7 +498,7 @@ msgstr "Usted no está participando en este %s"
 #: templates/challenges/submission_edit_summary.html:19
 #: templates/challenges/submission_show.html:40
 #: templates/projects/project_edit.html:50
-#: templates/schools/school_edit.html:28
+#: templates/schools/school_edit.html:31
 msgid "Summary"
 msgstr "Resumen"
 
@@ -512,11 +514,11 @@ msgstr "Prerequisitos"
 msgid "Sign-Up Task"
 msgstr "Tarea de Inscripción"
 
-#: apps/projects/forms.py:88 apps/schools/forms.py:48
+#: apps/projects/forms.py:88 apps/schools/forms.py:98
 msgid "That user account was deleted."
 msgstr "Esa cuenta de usuario fue borrada."
 
-#: apps/projects/forms.py:90 apps/schools/forms.py:50
+#: apps/projects/forms.py:90 apps/schools/forms.py:100
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
@@ -544,14 +546,14 @@ msgstr ""
 "Usted recibió este mensaje porque es un organizador en %(project)s: http://"
 "%(domain)s%(url)s"
 
-#: apps/projects/forms.py:140 apps/schools/forms.py:68
-#: apps/schools/forms.py:88
+#: apps/projects/forms.py:140 apps/schools/forms.py:118
+#: apps/schools/forms.py:138
 #, python-format
 msgid "There is no study group, course, ... with that short name: %s."
 msgstr "No hay un grupo de estudio, curso, ... con ese nombre corto: %s."
 
-#: apps/projects/forms.py:142 apps/schools/forms.py:70
-#: apps/schools/forms.py:90
+#: apps/projects/forms.py:142 apps/schools/forms.py:120
+#: apps/schools/forms.py:140
 #, python-format
 msgid "The %(slug)s %(kind)s is not part of this school."
 msgstr "El %(kind)s %(slug)s no es parte de esta escuela."
@@ -602,8 +604,8 @@ msgid "There was a problem cloning the study group, course, ..."
 msgstr "Ocurrió un problema al clonar el grupo de estudio, curso, ..."
 
 #: apps/projects/views.py:261 apps/projects/views.py:350
-#: apps/projects/views.py:538 apps/schools/views.py:134
-#: apps/schools/views.py:172 apps/schools/views.py:224
+#: apps/projects/views.py:538 apps/schools/views.py:288
+#: apps/schools/views.py:326 apps/schools/views.py:378
 msgid "Invalid request"
 msgstr "Solicitud inválida"
 
@@ -623,7 +625,9 @@ msgid ""
 msgstr ""
 "La membresia del %(kind)s a %(school)s fue rechazada por los organizadores."
 
-#: apps/projects/views.py:414 apps/schools/views.py:89
+#: apps/projects/views.py:414 apps/schools/views.py:115
+#: apps/schools/views.py:158 apps/schools/views.py:201
+#: apps/schools/views.py:244
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
@@ -705,59 +709,63 @@ msgid "You are not school organizer"
 msgstr "Usted no esta organizando esta escuela"
 
 # python-format
-#: apps/schools/forms.py:52
+#: apps/schools/forms.py:102
 #, python-format
 msgid "User %s is organizing the school."
 msgstr "El usuario %s está organizando la escuela."
 
-#: apps/schools/forms.py:72
+#: apps/schools/forms.py:122
 #, python-format
 msgid "The %(slug)s %(kind)s is already featured for this school."
 msgstr "El %(kind)s %(slug)s ya está asociado a esta escuela."
 
-#: apps/schools/forms.py:92
+#: apps/schools/forms.py:142
 #, python-format
 msgid "The %(slug)s %(kind)s was already declined for this school."
 msgstr "El %(kind)s %(slug)s ya fue rechazado para esta escuela."
 
-#: apps/schools/views.py:50
+#: apps/schools/views.py:55
 msgid "School updated!"
 msgstr "¡Escuela actualizada!"
 
-#: apps/schools/views.py:117
+#: apps/schools/views.py:76
+msgid "School styles updated!"
+msgstr "¡Estilos actualizados!"
+
+#: apps/schools/views.py:271
 msgid "School organizer added."
 msgstr "¡Organizador de escuela añadido!"
 
-#: apps/schools/views.py:121
+#: apps/schools/views.py:275
 msgid "There was an error adding the school organizer."
 msgstr "Ocurrió un error al añadir el organizador de escuela."
 
-#: apps/schools/views.py:154
+#: apps/schools/views.py:308
 #, python-format
 msgid "The %s is now featured for this school."
 msgstr "El %s ahora está asociada a esta escuela."
 
-#: apps/schools/views.py:158
+#: apps/schools/views.py:312
 #, python-format
 msgid "There was an error marking %s as featured for this school."
 msgstr "Ocurrió un problema al marcar el %s como asociado a esta escuela."
 
-#: apps/schools/views.py:190
+#: apps/schools/views.py:344
 #, python-format
 msgid "The %s stopped being featured for this school."
 msgstr "El %s dejo de estar asociado a esta escuela."
 
-#: apps/schools/views.py:206
+#: apps/schools/views.py:360
 #, python-format
 msgid "The %s was declined for this school."
 msgstr "El %s fue rechazado para esta escuela."
 
-#: apps/schools/views.py:210
+#: apps/schools/views.py:364
 #, python-format
 msgid "There was an error marking %s as declined for this school."
 msgstr "Ocurrió un problema al marcar el %s como rechazado para esta escuela."
 
-#: apps/schools/views.py:242
+#: apps/schools/views.py:396
 #, python-format
 msgid "The %s stopped being declined for this school."
 msgstr "El %s dejo de ser rechazado para esta escuela."
@@ -1118,15 +1126,15 @@ msgid "BETA"
 msgstr "BETA"
 
 #: templates/base.html:59 templates/activity/delete_restore.html:12
-#: templates/activity/index.html:12 templates/projects/base.html:15
-#: templates/projects/directory.html:3 templates/projects/directory.html:9
-#: templates/projects/gallery.html:4 templates/projects/gallery.html.py:10
+#: templates/activity/index.html:16 templates/projects/base.html:15
+#: templates/projects/directory.html:3 templates/projects/directory.html:12
+#: templates/projects/gallery.html:4 templates/projects/gallery.html.py:13
 #: templates/projects/project_edit.html:24
 msgid "Learn"
 msgstr "Aprender"
 
 #: templates/base.html:60 templates/mojo.html:67
-#: templates/activity/delete_restore.html:16 templates/activity/index.html:16
+#: templates/activity/delete_restore.html:16 templates/activity/index.html:20
 #: templates/projects/sidebar.html:131 templates/users/profile.html:17
 #: templates/users/profile_edit.html:11 templates/users/user_list.html:5
 #: templates/users/user_list.html.py:11
@@ -1185,12 +1193,12 @@ msgid "en"
 msgstr "es"
 
 #: templates/base.html:163
-msgid "js/script-en.js"
-msgstr "js/script-es.js"
-
-#: templates/base.html:164
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
+
+#: templates/base.html:165
+msgid "js/script-en.js"
+msgstr "js/script-es.js"
 
 #: templates/mojo.html:66 templates/challenges/challenge.html:27
 #: templates/challenges/challenge_full.html:10
@@ -1307,14 +1315,18 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/dashboard/dashboard.html:81
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
-#: templates/projects/project.html:87 templates/projects/project_clone.html:19
+#: templates/projects/project.html:87 templates/projects/project_clone.html:21
 #: templates/projects/project_edit_image.html:24
 #: templates/projects/project_edit_status.html:60
-#: templates/projects/project_edit_summary.html:41
-#: templates/projects/project_edit_summary.html:44
-#: templates/projects/project_import.html:19
-#: templates/schools/school_edit_image.html:23
-#: templates/schools/school_edit_summary.html:28
+#: templates/projects/project_edit_summary.html:43
+#: templates/projects/project_edit_summary.html:46
+#: templates/projects/project_import.html:21
+#: templates/schools/school_edit_background.html:23
+#: templates/schools/school_edit_groups_icon.html:23
+#: templates/schools/school_edit_logo.html:23
+#: templates/schools/school_edit_site_logo.html:23
+#: templates/schools/school_edit_styles.html:52
+#: templates/schools/school_edit_summary.html:22
 #: templates/users/profile_edit_main.html:25
 #: templates/users/settings_delete.html:25
 #: templates/users/settings_email.html:18
@@ -1393,7 +1405,10 @@ msgstr "JPG, GIF o PNG solamente. Tamaño máximo 700k."
 
 #: templates/challenges/challenge_edit_image.html:18
 #: templates/projects/project_edit_image.html:25
-#: templates/schools/school_edit_image.html:24
+#: templates/schools/school_edit_background.html:24
+#: templates/schools/school_edit_groups_icon.html:24
+#: templates/schools/school_edit_logo.html:24
+#: templates/schools/school_edit_site_logo.html:24
 #: templates/users/profile_edit_main.html:15
 msgid "Upload"
 msgstr "Subir"
@@ -1467,8 +1482,9 @@ msgstr "Reglas"
 #: templates/content/edit_page.html:48
 #: templates/dashboard/setup_profile.html:9
 #: templates/projects/project_edit_status.html:61
-#: templates/projects/project_edit_summary.html:42
-#: templates/schools/school_edit_summary.html:29
+#: templates/projects/project_edit_summary.html:44
+#: templates/schools/school_edit_styles.html:53
+#: templates/schools/school_edit_summary.html:23
 #: templates/users/profile_edit_main.html:26
 #: templates/users/settings_email.html:19
 #: templates/users/settings_notifications.html:46
@@ -1477,12 +1493,12 @@ msgid "Save"
 msgstr "Guardar"
 
 #: templates/challenges/challenge_edit_summary.html:103
-#: templates/content/create_page.html:39 templates/projects/directory.html:19
-#: templates/projects/gallery.html:15 templates/projects/project_edit.html:6
+#: templates/content/create_page.html:39 templates/projects/directory.html:22
+#: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:31
 #: templates/projects/project_edit.html:45
-#: templates/projects/project_edit_summary.html:45
-#: templates/projects/project_import.html:20 templates/schools/home.html:27
+#: templates/projects/project_edit_summary.html:47
+#: templates/projects/project_import.html:22 templates/schools/home.html:27
 msgid "Create"
 msgstr "Crear"
 
@@ -1516,7 +1532,7 @@ msgstr "Añadir"
 #: templates/projects/project_edit_links.html:14
 #: templates/projects/project_edit_links_base.html:13
 #: templates/projects/project_edit_participants.html:30
-#: templates/projects/project_edit_summary.html:10
+#: templates/projects/project_edit_summary.html:12
 #: templates/schools/school_edit_declined.html:27
 #: templates/schools/school_edit_featured.html:27
 #: templates/schools/school_edit_organizers.html:27
@@ -1591,7 +1607,7 @@ msgstr "Compartir Respuesta"
 
 #: templates/challenges/submission_edit_description.html:12
 #: templates/challenges/submission_show.html:45
-#: templates/schools/school_edit_summary.html:22
+#: templates/schools/school_edit_summary.html:16
 msgid "Description"
 msgstr "Descripción"
 
@@ -1862,7 +1878,7 @@ msgstr "¿Está seguro que desea eliminar este comentario?"
 #: templates/projects/project_edit.html:29
 #: templates/projects/project_edit.html:42
 #: templates/projects/project_edit_links.html:35
-#: templates/projects/sidebar.html:44 templates/schools/school_edit.html:14
+#: templates/projects/sidebar.html:44 templates/schools/school_edit.html:17
 #: templates/users/profile_edit_links.html:56
 msgid "Edit"
 msgstr "Editar"
@@ -1893,7 +1909,7 @@ msgstr "Publicar Comentario"
 #: templates/content/page.html:119 templates/content/page.html.py:121
 #: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
 #: templates/dashboard/dashboard.html:97 templates/dashboard/dashboard.html:99
-#: templates/projects/directory.html:38 templates/projects/directory.html:40
+#: templates/projects/directory.html:41 templates/projects/directory.html:43
 #: templates/projects/project.html:104 templates/projects/project.html:106
 msgid "previous"
 msgstr "anterior"
@@ -1901,8 +1917,8 @@ msgstr "anterior"
 #: templates/content/page.html:124 templates/content/page.html.py:126
 #: templates/content/sign_up.html:126 templates/content/sign_up.html.py:128
 #: templates/dashboard/dashboard.html:102
-#: templates/dashboard/dashboard.html:104 templates/projects/directory.html:43
-#: templates/projects/directory.html:45 templates/projects/project.html:109
+#: templates/dashboard/dashboard.html:104 templates/projects/directory.html:46
+#: templates/projects/directory.html:48 templates/projects/project.html:109
 #: templates/projects/project.html:111
 msgid "next"
 msgstr "siguiente"
@@ -2118,7 +2134,7 @@ msgstr ""
 "retroalimentación constructiva."
 
 #: templates/dashboard/splash.html:32 templates/projects/_project_list.html:5
-#: templates/schools/school_edit.html:31
+#: templates/schools/school_edit.html:38
 #: templates/schools/school_edit_featured.html:7
 #: templates/users/user_list.html:21
 msgid "Featured"
@@ -2399,7 +2415,7 @@ msgid "Archived"
 msgstr "Archivado"
 
 #: templates/projects/_project_list.html:80
-#: templates/projects/directory.html:20 templates/projects/gallery.html:13
+#: templates/projects/directory.html:23 templates/projects/gallery.html:16
 #: templates/schools/home.html:25
 msgid "View All"
 msgstr "Ver Todos"
@@ -2463,11 +2479,11 @@ msgstr ""
 "creación de tareas y en valorar las contribuciones de otros?¿En que "
 "consistirá la tarea final?"
 
-#: templates/projects/directory.html:15 templates/projects/directory.html:29
+#: templates/projects/directory.html:18 templates/projects/directory.html:32
 msgid "All"
 msgstr "Todos"
 
-#: templates/projects/directory.html:27 templates/projects/gallery.html:23
+#: templates/projects/directory.html:30 templates/projects/gallery.html:26
 msgid "Browse"
 msgstr "Examinar"
 
@@ -2518,12 +2534,12 @@ msgstr ""
 "Mensaje importante (los participantes no pueden desactivar notificación de "
 "mensajes importantes)."
 
-#: templates/projects/project_clone.html:7
+#: templates/projects/project_clone.html:9
 #: templates/projects/project_edit.html:59
 msgid "Clone Existing"
 msgstr "Clonar Existente"
 
-#: templates/projects/project_clone.html:8
+#: templates/projects/project_clone.html:10
 msgid ""
 "Create a new study group, course ... based on an existing one. Note that if "
 "you start typing the matching suggestions will be displayed."
@@ -2531,13 +2547,13 @@ msgstr ""
 "Crear un nuevo grupo de estudio, curso ...  basado en uno existente. Note "
 "que si comienza a teclear va a poder ver la lista de sugerencias que machean."
 
-#: templates/projects/project_clone.html:13
+#: templates/projects/project_clone.html:15
 #: templates/schools/school_edit_declined.html:13
 #: templates/schools/school_edit_featured.html:13
 msgid "Short Name"
 msgstr "Nombre Corto"
 
-#: templates/projects/project_clone.html:20
+#: templates/projects/project_clone.html:22
 msgid "Clone"
 msgstr "Clonar"
 
@@ -2560,7 +2576,7 @@ msgid "Create from Scratch"
 msgstr "Crear desde Ceros"
 
 #: templates/projects/project_edit.html:61
-#: templates/projects/project_import.html:7
+#: templates/projects/project_import.html:9
 msgid "Import from Old Site"
 msgstr "Importa del Sitio Anterior"
 
@@ -2575,7 +2591,10 @@ msgstr ""
 "listados"
 
 #: templates/projects/project_edit_image.html:17
-#: templates/schools/school_edit_image.html:16
+#: templates/schools/school_edit_background.html:16
+#: templates/schools/school_edit_groups_icon.html:16
+#: templates/schools/school_edit_logo.html:16
+#: templates/schools/school_edit_site_logo.html:16
 msgid "Upload an image file from your computer:"
 msgstr "Subir una imagen de su computador:"
 
@@ -2724,7 +2743,7 @@ msgstr "Activo desde el"
 msgid "to"
 msgstr "hasta el"
 
-#: templates/projects/project_edit_summary.html:11
+#: templates/projects/project_edit_summary.html:13
 msgid ""
 "A good name is short and descriptive. People should know what your study "
 "group, course, ... is about without reading the description."
@@ -2732,12 +2751,12 @@ msgstr ""
 "Un buen nombre es corto y descriptivo. La gente debería saber sobre que es "
 "su grupo de estudio, curso, ... sin leer la descripción."
 
-#: templates/projects/project_edit_summary.html:16
+#: templates/projects/project_edit_summary.html:18
 #: templates/projects/sidebar.html:86
 msgid "Kind"
 msgstr "Clase"
 
-#: templates/projects/project_edit_summary.html:17
+#: templates/projects/project_edit_summary.html:19
 msgid ""
 "Select if you are creating a study group, course, seminar, workshop, working "
 "group, ..."
@@ -2745,32 +2764,32 @@ msgstr ""
 "Indique lo que esta creando, un grupo de estudio, curso, seminario, taller, "
 "grupo de trabajo, ..."
 
-#: templates/projects/project_edit_summary.html:22
+#: templates/projects/project_edit_summary.html:24
 msgid "One sentence description"
 msgstr "Descripción de una línea"
 
-#: templates/projects/project_edit_summary.html:23
+#: templates/projects/project_edit_summary.html:25
 msgid "This description will be used on search results and listing pages."
 msgstr ""
 "Esta descripción se usará en resultados de búsquedas y en páginas con "
 "listados."
 
-#: templates/projects/project_edit_summary.html:28
+#: templates/projects/project_edit_summary.html:30
 msgid "School"
 msgstr "Escuela"
 
-#: templates/projects/project_edit_summary.html:29
+#: templates/projects/project_edit_summary.html:31
 msgid ""
 "Optionally, the study group, course, ... may belong to a particular school."
 msgstr ""
 "Opcionalmente, el grupo de estudio, curso, ... puede pertenecer a una "
 "escuela en particular."
 
-#: templates/projects/project_edit_summary.html:34
+#: templates/projects/project_edit_summary.html:36
 msgid "One paragraph description"
 msgstr "Un párrafo de descripción"
 
-#: templates/projects/project_edit_summary.html:35
+#: templates/projects/project_edit_summary.html:37
 msgid ""
 "This description is shown on home page of the study group, course, ... It "
 "can go into a bit more detail, but it should be brief and to the point."
@@ -2778,7 +2797,7 @@ msgstr ""
 "Esta descripción se muestra en la página del grupo de estudio, curso, ...  "
 "Puede ser más detallada, pero debe ser breve e ir al grano."
 
-#: templates/projects/project_import.html:8
+#: templates/projects/project_import.html:10
 msgid ""
 "Import a course from the old p2pu site. Note that if you start typing the "
 "matching suggestions will be displayed."
@@ -2786,11 +2805,11 @@ msgstr ""
 "Importar un curso del antiguo sitio web de p2pu. Note que si comienza a "
 "teclear va a poder ver la lista de sugerencias que machean."
 
-#: templates/projects/project_import.html:13
+#: templates/projects/project_import.html:15
 msgid "Course"
 msgstr "Curso"
 
-#: templates/projects/project_import.html:20
+#: templates/projects/project_import.html:22
 msgid "Import"
 msgstr "Importar"
 
@@ -2995,32 +3014,64 @@ msgid "You can see their profile here:"
 msgstr "Puede ver su perfil aquí:"
 
 #: templates/schools/home.html:17 templates/schools/menu.html:4
-#: templates/schools/school_edit.html:10
+#: templates/schools/school_edit.html:13
 msgid "Schools"
 msgstr "Escuelas"
 
 #: templates/schools/home.html:23 templates/schools/school_edit.html:5
-#: templates/schools/school_edit.html:23
+#: templates/schools/school_edit.html:26
 msgid "Edit School"
 msgstr "Editar Escuela"
 
-#: templates/schools/home.html:48 templates/schools/school_edit.html:30
+#: templates/schools/home.html:48 templates/schools/school_edit.html:37
 #: templates/schools/school_edit_organizers.html:7
 msgid "School Organizers"
 msgstr "Organizadores de Escuela"
 
-#: templates/schools/school_edit.html:24
+#: templates/schools/school_edit.html:27
 msgid "View School"
 msgstr "Ver Escuela"
 
-#: templates/schools/school_edit.html:29
+#: templates/schools/school_edit.html:32
+msgid "Styles"
+msgstr "Estilos"
+
+#: templates/schools/school_edit.html:33
 msgid "Logo"
 msgstr "Logo"
 
-#: templates/schools/school_edit.html:32
+#: templates/schools/school_edit.html:34
+msgid "Groups Icon"
+msgstr "Ícono de los Grupos"
+
+#: templates/schools/school_edit.html:35
+msgid "Background"
+msgstr "Fondo"
+
+#: templates/schools/school_edit.html:36
+msgid "Site Logo"
+msgstr "Logo del Sitio"
+
+#: templates/schools/school_edit.html:39
 #: templates/schools/school_edit_declined.html:7
 msgid "Declined"
 msgstr "Rechazado"
+
+#: templates/schools/school_edit_background.html:12
+msgid "Replace School Background Image"
+msgstr "Remplazar Imagen de Fondo de la Escuela"
+
+#: templates/schools/school_edit_background.html:14
+msgid "Upload a School Background Image"
+msgstr "Subir Imagen de Fondo de la Escuela"
+
+#: templates/schools/school_edit_background.html:19
+msgid ""
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 20x60 "
+"pixels"
+msgstr ""
+"Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
+"Dimensiones: 20x60 pixels"
 
 #: templates/schools/school_edit_declined.html:8
 msgid ""
@@ -3036,21 +3087,37 @@ msgstr ""
 "Ver, añadir y retirar grupos de estudio, cursos, ... asociados a esta "
 "escuela."
 
-#: templates/schools/school_edit_image.html:12
+#: templates/schools/school_edit_groups_icon.html:12
+msgid "Replace School Groups Icon"
+msgstr "Remplazar Ícono de los Grupos de la Escuela"
+
+#: templates/schools/school_edit_groups_icon.html:14
+msgid "Upload a School Groups Icon"
+msgstr "Subir Ícono de los Grupos de la Escuela"
+
+#: templates/schools/school_edit_groups_icon.html:19
+msgid ""
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"118x32 pixels"
+msgstr ""
+"Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
+"Dimensiones: 118x32 pixels"
+
+#: templates/schools/school_edit_logo.html:12
 msgid "Replace School Logo"
 msgstr "Remplazar Logo de la Escuela"
 
-#: templates/schools/school_edit_image.html:14
+#: templates/schools/school_edit_logo.html:14
 msgid "Upload a School Logo"
 msgstr "Subir un Logo de la Escuela"
 
-#: templates/schools/school_edit_image.html:19
+#: templates/schools/school_edit_logo.html:19
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
-"236x65 pixels"
+"Variable"
 msgstr ""
 "Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
-"Dimensiones: 236x65 pixels"
+"Dimensiones: Variable"
 
 #: templates/schools/school_edit_organizers.html:8
 msgid "View, add and remove organizers of your school."
@@ -3064,6 +3131,85 @@ msgstr "Organizador de Escuela"
 msgid "Organizing this school."
 msgstr "Organizando esta escuela."
 
+#: templates/schools/school_edit_site_logo.html:12
+msgid "Replace School Site Logo"
+msgstr "Remplazar Logo del Sitio"
+
+#: templates/schools/school_edit_site_logo.html:14
+msgid "Upload a School Site Logo"
+msgstr "Subir Logo del Sitio"
+
+#: templates/schools/school_edit_site_logo.html:19
+msgid ""
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"141x44 pixels"
+msgstr ""
+"Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
+"Dimensiones: 141x44 pixels"
+
+#: templates/schools/school_edit_styles.html:11
+msgid "Headers Color"
+msgstr "Color de las Cabeceras"
+
+#: templates/schools/school_edit_styles.html:12
+msgid ""
+"This color will be used for the headers of pages associated with this school."
+msgstr ""
+"Este color será usado para los encabezados de páginas asociadas con esta "
+"escuela."
+
+#: templates/schools/school_edit_styles.html:18
+msgid "Lighter Headers Color"
+msgstr "Color de las Cabeceras (Claro)"
+
+#: templates/schools/school_edit_styles.html:19
+msgid "Lighter variant of the headers color."
+msgstr "Variante más clara del color de las cabeceras."
+
+#: templates/schools/school_edit_styles.html:25
+msgid "Background Color"
+msgstr "Color de Fondo"
+
+#: templates/schools/school_edit_styles.html:26
+msgid ""
+"This color will be used as background for the non-striped sections of the "
+"pages associated with this school."
+msgstr ""
+"Este color será usado como fondo de las secciones no rayadas en las páginas "
+"asociadas con esta escuela."
+
+#: templates/schools/school_edit_styles.html:32
+msgid "Menus Color"
+msgstr "Color de los Menús"
+
+#: templates/schools/school_edit_styles.html:33
+msgid ""
+"This color will be used as background for the menus of the pages associated "
+"with this school."
+msgstr ""
+"Este color será usado como fondo de los menús en las páginas asociadas con "
+"esta escuela."
+
+#: templates/schools/school_edit_styles.html:39
+msgid "Lighter Menus Color"
+msgstr "Color de los Menús (Claro)"
+
+#: templates/schools/school_edit_styles.html:40
+msgid "Lighter variant of the menus color."
+msgstr "Variante más clara del color de los menús."
+
+#: templates/schools/school_edit_styles.html:46
+msgid "Sidebar Width"
+msgstr "Ancho de la Barra Lateral"
+
+#: templates/schools/school_edit_styles.html:47
+msgid ""
+"You should update this value so the school logo fits nicelly on the school "
+"home page sidebar."
+msgstr ""
+"Debe actualizar este valor para que el logo de la escuela se vea bien en la "
+"barra lateral de la página principal de la escuela."
+
 #: templates/schools/school_edit_summary.html:11
 msgid ""
 "A good name is short and descriptive. People should know what your school is "
@@ -3072,19 +3218,7 @@ msgstr ""
 "Un buen nombre es corto y descriptivo. La gente debería saber sobre que es "
 "su escuela sin leer la descripción."
 
-#: templates/schools/school_edit_summary.html:16
-msgid "Text Color"
-msgstr "Color del Texto"
-
 #: templates/schools/school_edit_summary.html:17
-msgid ""
-"This color will be used for the headings of pages associated with this "
-"school."
-msgstr ""
-"Este color será usado para los encabezados de páginas asociadas con esta "
-"escuela."
-
-#: templates/schools/school_edit_summary.html:23
 msgid "This description is shown on the school page."
 msgstr "Esta descripción se usará en la página de la escuela."
 

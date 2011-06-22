@@ -44,13 +44,13 @@
       <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
     {% endif %}
     <ul id="project-stats">
-      {% if school %}
+      {% if project.accepted_school %}
         <li>
-          <a href="{{ school.get_absolute_url }}" title="{{ school.name }}">
-            {% if school.image %}
-  	          <img src="{{ MEDIA_URL }}{{ school.image }}" width="118" height="32" alt="{{ school.name }}"/>
+          <a href="{{ project.accepted_school.get_absolute_url }}" title="{{ project.accepted_school.name }}">
+            {% if project.accepted_school.groups_icon %}
+  	          <img src="{{ MEDIA_URL }}{{ project.accepted_school.groups_icon }}" width="118" height="32" alt="{{ project.accepted_school.name }}"/>
             {% else %}
-              <img src="/media/images/school-missing.png" width="118" height="32" alt="{{ school.name }}"/>
+              <img src="/media/images/school-missing.png" width="118" height="32" alt="{{ project.accepted_school.name }}"/>
             {% endif %}
           </a>
       </li>
@@ -128,7 +128,7 @@
   </section>
 
 <section id="people" class="panel">
-  <h2 {% if school %}class="school_header"{% endif %}>{{ _('People') }}</h2>
+  <h2 class="school_header">{{ _('People') }}</h2>
   <br>
   {% for organizer in project.organizers %}
    <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user.display_name }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="26" width="26" alt="{{ organizer.user.display_name }} (organizer)"></a>
@@ -162,7 +162,7 @@
 <section id="course-content" class="panel">
 
   <a name="tasks"></a>
-  <h2 {% if school %}class="school_header"{% endif %}>{{ _('Tasks') }}</h2>
+  <h2 class="school_header">{{ _('Tasks') }}</h2>
   <br>
   {% if content_pages %}
     <nav id="content-pages">
@@ -192,7 +192,7 @@
 
 
 <section id="external-links" class="panel">
-<h2 {% if school %}class="school_header"{% endif %}>{{ _('External Links') }}</h2>
+<h2 class="school_header">{{ _('External Links') }}</h2>
   <br>
   {% if links %}
     <nav id="project-links">

@@ -358,6 +358,11 @@ $(document).ready(function() {
     
     $('#id_start_date').datepicker();
     $('#id_end_date').datepicker();
+    $.farbtastic('#headers_colorpicker', { callback: '#id_headers_color', width: 100, heigth: 100 });
+    $.farbtastic('#headers_light_colorpicker', { callback: '#id_headers_color_light', width: 100, heigth: 100 });
+    $.farbtastic('#background_colorpicker', { callback: '#id_background_color', width: 100, heigth: 100 });
+    $.farbtastic('#menu_colorpicker', { callback: '#id_menu_color', width: 100, heigth: 100 });
+    $.farbtastic('#menu_light_colorpicker', { callback: '#id_menu_color_light', width: 100, heigth: 100 });
     customizeCKEditor();
 
     // disable submit button on form submit
