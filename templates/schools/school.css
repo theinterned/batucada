@@ -48,4 +48,13 @@ a#beta-tag:hover {
     border-top: 1px solid {{ school.menu_color }};
 }
 
+footer[role="main"] ul[role="about-us"] > li a {
+  background-color: {{ school.contact_us_footnote_color }};
+}
+footer[role="main"] ul[role="contact-us"] > li a {
+  background-color: {{ school.contact_us_footnote_color }};
+}
+footer[role="main"] ul[role="license-info"] > li a {
+  background-color: {{ school.license_info_footnote_color }};
+}
 

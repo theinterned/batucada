@@ -24,7 +24,9 @@ class SchoolStylesForm(forms.ModelForm):
     class Meta:
         model = School
         fields = ('headers_color', 'headers_color_light', 'background_color',
-            'menu_color', 'menu_color_light', 'sidebar_width')
+            'menu_color', 'menu_color_light', 'sidebar_width',
+            'about_us_footnote_color', 'contact_us_footnote_color',
+            'license_info_footnote_color')
 
 
 class SchoolLogoForm(forms.ModelForm):
