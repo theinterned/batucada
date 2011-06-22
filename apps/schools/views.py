@@ -39,6 +39,11 @@ def school_css(request, slug):
     return render_to_response('schools/school.css', {'school': school},
         context_instance=RequestContext(request), mimetype='text/css')
 
+def multiple_school_css(request):
+    schools = School.objects.all()
+    return render_to_response('schools/multiple_school.css', {'schools': schools},
+        context_instance=RequestContext(request), mimetype='text/css')
+
 @login_required
 @school_organizer_required
 def edit(request, slug):
@@ -61,17 +66,38 @@ def edit(request, slug):
 
 
 @login_required
+@school_organizer_required
+def edit_styles(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolStylesForm(request.POST, instance=school)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('School styles updated!'))
+            return http.HttpResponseRedirect(
+                reverse('schools_edit_styles', kwargs=dict(slug=school.slug)))
+    else:
+        form = school_forms.SchoolStylesForm(instance=school)
+
+    return render_to_response('schools/school_edit_styles.html', {
+        'form': form,
+        'school': school,
+        'styles_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
 @xframe_sameorigin
 @school_organizer_required
 @require_http_methods(['POST'])
-def edit_image_async(request, slug):
+def edit_logo_async(request, slug):
     school = get_object_or_404(School, slug=slug)
-    form = school_forms.SchoolImageForm(request.POST, request.FILES,
+    form = school_forms.SchoolLogoForm(request.POST, request.FILES,
                                           instance=school)
     if form.is_valid():
         instance = form.save()
         return http.HttpResponse(simplejson.dumps({
-            'filename': instance.image.name,
+            'filename': instance.logo.name,
         }))
     return http.HttpResponse(simplejson.dumps({
         'error': 'There was an error uploading your image.',
@@ -80,28 +106,156 @@ def edit_image_async(request, slug):
 
 @login_required
 @school_organizer_required
-def edit_image(request, slug):
+def edit_logo(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
-        form = school_forms.SchoolImageForm(request.POST, request.FILES,
+        form = school_forms.SchoolLogoForm(request.POST, request.FILES,
                                               instance=school)
         if form.is_valid():
             messages.success(request, _('Image updated'))
             form.save()
-            return http.HttpResponseRedirect(reverse('school_home', kwargs={
+            return http.HttpResponseRedirect(reverse('school_edit_logo', kwargs={
                 'slug': school.slug,
             }))
         else:
             messages.error(request,
                            _('There was an error uploading your image'))
     else:
-        form = school_forms.SchoolImageForm(instance=school)
-    return render_to_response('schools/school_edit_image.html', {
+        form = school_forms.SchoolLogoForm(instance=school)
+    return render_to_response('schools/school_edit_logo.html', {
         'school': school,
         'form': form,
-        'image_tab': True,
+        'logo_tab': True,
     }, context_instance=RequestContext(request))
 
+
+@login_required
+@xframe_sameorigin
+@school_organizer_required
+@require_http_methods(['POST'])
+def edit_groups_icon_async(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    form = school_forms.SchoolGroupsIconForm(request.POST, request.FILES,
+                                          instance=school)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.groups_icon.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
+
+
+@login_required
+@school_organizer_required
+def edit_groups_icon(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolGroupsIconForm(request.POST, request.FILES,
+                                              instance=school)
+        if form.is_valid():
+            messages.success(request, _('Image updated'))
+            form.save()
+            return http.HttpResponseRedirect(reverse('school_edit_groups_icon', kwargs={
+                'slug': school.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was an error uploading your image'))
+    else:
+        form = school_forms.SchoolGroupsIconForm(instance=school)
+    return render_to_response('schools/school_edit_groups_icon.html', {
+        'school': school,
+        'form': form,
+        'groups_icon_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@xframe_sameorigin
+@school_organizer_required
+@require_http_methods(['POST'])
+def edit_background_async(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    form = school_forms.SchoolBackgroundForm(request.POST, request.FILES,
+                                          instance=school)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.background.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
+
+
+@login_required
+@school_organizer_required
+def edit_background(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolBackgroundForm(request.POST, request.FILES,
+                                              instance=school)
+        if form.is_valid():
+            messages.success(request, _('Image updated'))
+            form.save()
+            return http.HttpResponseRedirect(reverse('school_edit_background', kwargs={
+                'slug': school.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was an error uploading your image'))
+    else:
+        form = school_forms.SchoolBackgroundForm(instance=school)
+    return render_to_response('schools/school_edit_background.html', {
+        'school': school,
+        'form': form,
+        'background_tab': True,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@xframe_sameorigin
+@school_organizer_required
+@require_http_methods(['POST'])
+def edit_site_logo_async(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    form = school_forms.SchoolSiteLogoForm(request.POST, request.FILES,
+                                          instance=school)
+    if form.is_valid():
+        instance = form.save()
+        return http.HttpResponse(simplejson.dumps({
+            'filename': instance.site_logo.name,
+        }))
+    return http.HttpResponse(simplejson.dumps({
+        'error': 'There was an error uploading your image.',
+    }))
+
+
+@login_required
+@school_organizer_required
+def edit_site_logo(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolSiteLogoForm(request.POST, request.FILES,
+                                              instance=school)
+        if form.is_valid():
+            messages.success(request, _('Image updated'))
+            form.save()
+            return http.HttpResponseRedirect(reverse('school_edit_site_logo', kwargs={
+                'slug': school.slug,
+            }))
+        else:
+            messages.error(request,
+                           _('There was an error uploading your image'))
+    else:
+        form = school_forms.SchoolSiteLogoForm(instance=school)
+    return render_to_response('schools/school_edit_site_logo.html', {
+        'school': school,
+        'form': form,
+        'site_logo_tab': True,
+    }, context_instance=RequestContext(request))
 
 
 @login_required

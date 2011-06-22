@@ -30,10 +30,21 @@ class School(ModelBase):
     organizers = models.ManyToManyField('users.UserProfile', null=True, blank=True)
     featured = models.ManyToManyField('projects.Project', related_name='school_featured', null=True, blank=True)
     declined = models.ManyToManyField('projects.Project', related_name='school_declined', null=True, blank=True)
-
-    image = models.ImageField(upload_to=determine_image_upload_path, null=True,
+    logo = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
-    text_color = models.CharField(max_length=7, default='#5A6579')
+    groups_icon = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage(), blank=True)
+    background = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage(), blank=True)
+    site_logo = models.ImageField(upload_to=determine_image_upload_path, null=True,
+                              storage=storage.ImageStorage(), blank=True)
+    headers_color = models.CharField(max_length=7, default='#5A6579')
+    headers_color_light = models.CharField(max_length=7, default='#F08C00')
+    background_color = models.CharField(max_length=7, default='#FFFFFF')
+    menu_color = models.CharField(max_length=7, default='#36CDC4')
+    menu_color_light = models.CharField(max_length=7, default='#4BD2C9')
+    sidebar_width = models.CharField(max_length=5, default='245px')
+    
 
     # The term names are used to import school courses from the old site.
     OLD_TERM_NAME_CHOICES = YEAR_IN_SCHOOL_CHOICES = (

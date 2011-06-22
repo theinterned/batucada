@@ -13,24 +13,74 @@ class SchoolForm(forms.ModelForm):
 
     class Meta:
         model = School
-        fields = ('name', 'description', 'text_color')
+        fields = ('name', 'description',)
 	widgets = {
 		'description': CKEditorWidget(config_name='rich'),
 	}
 
 
-class SchoolImageForm(forms.ModelForm):
+class SchoolStylesForm(forms.ModelForm):
 
     class Meta:
         model = School
-        fields = ('image',)
+        fields = ('headers_color', 'headers_color_light', 'background_color',
+            'menu_color', 'menu_color_light', 'sidebar_width')
 
-    def clean_image(self):
-        if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
+
+class SchoolLogoForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('logo',)
+
+    def clean_logo(self):
+        if self.cleaned_data['logo'].size > settings.MAX_IMAGE_SIZE:
             max_size = settings.MAX_IMAGE_SIZE / 1024
             raise forms.ValidationError(
                 _("Image exceeds max image size: %(max)dk") % dict(max=max_size))
-        return self.cleaned_data['image']
+        return self.cleaned_data['logo']
+
+
+class SchoolGroupsIconForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('groups_icon',)
+
+    def clean_groups_icon(self):
+        if self.cleaned_data['groups_icon'].size > settings.MAX_IMAGE_SIZE:
+            max_size = settings.MAX_IMAGE_SIZE / 1024
+            raise forms.ValidationError(
+                _("Image exceeds max image size: %(max)dk") % dict(max=max_size))
+        return self.cleaned_data['groups_icon']
+
+
+class SchoolBackgroundForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('background',)
+
+    def clean_groups_icon(self):
+        if self.cleaned_data['background'].size > settings.MAX_IMAGE_SIZE:
+            max_size = settings.MAX_IMAGE_SIZE / 1024
+            raise forms.ValidationError(
+                _("Image exceeds max image size: %(max)dk") % dict(max=max_size))
+        return self.cleaned_data['background']
+
+
+class SchoolSiteLogoForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('site_logo',)
+
+    def clean_groups_icon(self):
+        if self.cleaned_data['site_logo'].size > settings.MAX_IMAGE_SIZE:
+            max_size = settings.MAX_IMAGE_SIZE / 1024
+            raise forms.ValidationError(
+                _("Image exceeds max image size: %(max)dk") % dict(max=max_size))
+        return self.cleaned_data['site_logo']
 
 
 class ProjectAddOrganizerForm(forms.Form):

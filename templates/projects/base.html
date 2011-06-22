@@ -4,13 +4,13 @@
 {% block title %}{{ project.name }} | {% block project_title %}{% endblock %}{% endblock %}
 
 {% block links %}
-{% if project.school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.school.slug %}?v=1">{% endif %}
+{% if project.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.accepted_school.slug %}?v=1">{% endif %}
 {% block project_links %}{% endblock %}
 {% endblock %}
 
 {% block breadcrumbs %}
   <div class="container">
-    <h1 id="project-name"><a href="{{ project.get_absolute_url }}" {% if project.accepted_school %}class="school_header"{% endif %}>{{ project.name }}</a></h1>
+    <h1 id="project-name"><a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a></h1>
     <nav>
       <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
       <span class="arrow">&rsaquo;</span>

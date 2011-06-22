@@ -3,6 +3,9 @@
 {% block title %}{{ _('Learn') }}{% endblock %}
 {% block bodyid %}project_directory{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
+
+{% block links %}<link rel="stylesheet" href="{% if school %}{% locale_url schools_css slug=school.slug %}{% else %}{% locale_url multiple_schools_css %}{% endif %}?v=1">{% endblock %}
+
 {% block breadcrumbs %}
 <div class="container">
     <nav>

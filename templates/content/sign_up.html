@@ -22,7 +22,7 @@
 {% block body %}
 {% sidebar %}
 <div id="main" class="content_page">
-<h1 {% if project.accepted_school %}class="school_header"{% endif %}>{{ page.title }}</h1>
+<h1 class="school_header">{{ page.title }}</h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
 {% if first_level_comments %}

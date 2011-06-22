@@ -1,5 +1,5 @@
 {% load l10n_tags %}
-<article class="project card">
+<article class="project card {% if project.accepted_school %}background-{{ project.accepted_school.slug }}{% endif%}">
   <figure>
     <a href="{{ project.get_absolute_url }}">
       {% if project.image %}

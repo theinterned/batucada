@@ -5,6 +5,10 @@
 {% block pageid %}activity{% endblock %}
 
 
+{% block links %}
+{% if activity.target_project.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=activity.target_project.accepted_school.slug %}?v=1">{% endif %}
+{% endblock %}
+
 {% block breadcrumbs %}
     <div class="container">
     <nav>

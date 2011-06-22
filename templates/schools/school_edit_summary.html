@@ -12,12 +12,6 @@
     {{ form.name }}
     {{ form.name.errors }}
   </div>
-  <div class="field{% if form.text_color.errors %} error{% endif %}">
-    <label for="id_text_color">{{ _('Text Color') }}</label>
-    <span class="hint block">{{ _('This color will be used for the headings of pages associated with this school.') }}</span>
-    {{ form.text_color }}
-    {{ form.text_color.errors }}
-  </div>
   <div class="field description{% if form.description.errors %} error{% endif %}">
     <label for="id_description">{{ _('Description') }}</label>
     <span class="hint block">{{ _('This description is shown on the school page.') }}</span>
