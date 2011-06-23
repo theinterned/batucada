@@ -32,7 +32,7 @@ def splash(request):
     activities = Activity.objects.public()
     feed_entries = FeedEntry.objects.filter(
         page='splash').order_by('-created_on')[0:4]
-    feed_url = getattr(settings, 'SPLASH_PAGE_FEED', None)
+    feed_url = settings.FEED_URLS['splash']
     return render_to_response('dashboard/splash.html', {
         'activities': activities,
         'featured_project': project,

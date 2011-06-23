@@ -21,6 +21,7 @@
   <!-- Arvo font from google font api -->
   <link href='http://fonts.googleapis.com/css?family=Arvo:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=1">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/batucada.css?v=1">
   <link rel="stylesheet" href="{{ MEDIA_URL }}{{ _('css/style-en.css') }}?v=1">
@@ -40,18 +41,20 @@
           <a href="/es/">Es</a>
           <a href="https://github.com/p2pu/lernanta/wiki/Translating-Lernanta" target="_blank">{{ _('(more)') }}</a>
         </nav>
-        
-        <form action="http://p2pu.org/search" id="cse-search-box">
-          <div>
-            <input type="hidden" name="cx" value="013528701088014865040:0q9njevslw0" />
-            <input type="hidden" name="cof" value="FORID:9" />
-            <input type="hidden" name="ie" value="UTF-8" />
-            <input type="text" name="q" size="31" />
-          </div>
-        </form>
+    
+        <div id="cse-search-form" style="width: 100%;">Loading</div>
+        <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+        <script type="text/javascript"> 
+          google.load('search', '1', {language : 'en'});
+          google.setOnLoadCallback(function() {
+            var customSearchControl = new google.search.CustomSearchControl('013528701088014865040:0q9njevslw0');
+            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+            var options = new google.search.DrawOptions();
+            options.enableSearchboxOnly("http://p2pu.org/search");    
+            customSearchControl.draw('cse-search-form', options);
+          }, true);
+        </script> 
 
-        <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
-        
 		<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
 		<a id="beta-tag" href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones" target="_blank">{{ _('BETA') }}</a>
 		<nav id="main-nav">

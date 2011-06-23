@@ -375,35 +375,38 @@ header {}
       position: relative;
       z-index: 2;
       float: right;
-      margin-top: 14px;
+      margin-top: 8px;
       margin-left: 825px;
     }
     
-    #cse-search-box {
+    #cse-search-form {
         float: right;
         margin-top: 5px;
+        width: 181px;
     }
 
-    #cse-search-box input {
+    #cse-search-form input {
       background: #fafafa url('/media/images/icon.loupe.png') no-repeat 187px center;
       border: 0;
       color: #5A6579;
       height: 28px;
       width: 181px;
       padding: 0 17px;
+      float: right;
     }
 
-    #search #main {
-        width: 969px;
-        padding: 0 0 0 30px;
-        margin: 0;
-        float: none;
-        border-top: 1px solid #fff;
-        }
-
-    #cse-search-results iframe {
-       width: 950px;
+    #cse-search-form .gsc-search-button, #cse-search-form .gsc-clear-button {
+        display: none;
     }
+
+    #cse .gsc-search-box {
+        display: none;
+    }
+
+    .gsc-control-cse {
+        border-radius: 10px;
+        border: solid 1px #EEE;
+     }
 
       #user-nav a, #main-nav a {
         color: #444;
