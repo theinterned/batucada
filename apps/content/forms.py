@@ -11,7 +11,7 @@ class PageForm(forms.ModelForm):
 
     class Meta:
         model = Page
-        fields = ('title', 'content',)
+        fields = ('title', 'content', 'minor_update',)
         widgets = {
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
@@ -27,7 +27,7 @@ class NotListedPageForm(forms.ModelForm):
 
     class Meta:
         model = Page
-        fields = ('content',)
+        fields = ('content', 'minor_update',)
         widgets = {
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }

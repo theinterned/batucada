@@ -258,8 +258,6 @@ def fire_activity(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     project = instance.project
-    if project.not_listed:
-        return
     is_page = isinstance(instance, Page)
     is_comment = isinstance(instance, PageComment)
     if created and (is_page or is_comment):

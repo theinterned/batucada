@@ -145,12 +145,16 @@ class UserProfile(ModelBase):
         """Determine whether this user is following ```model```."""
         return model in self.following(model=model)
 
-    def get_current_projects(self):
+    def get_current_projects(self, only_public=False):
         projects = self.following(model=Project)
         projects_organizing = []
         projects_participating = []
         projects_following = []
+        count = len(projects)
         for project in projects:
+            if only_public and project.not_listed:
+                count -= 1
+                continue
             if project.organizers().filter(user=self).exists():
                 project.relation_text = _('(organizing)')
                 projects_organizing.append(project)
@@ -164,12 +168,12 @@ class UserProfile(ModelBase):
             'organizing': projects_organizing,
             'participating': projects_participating,
             'following': projects_following,
-            'count': len(projects),
+            'count': count,
         }
         return data
 
 
-    def get_past_projects(self):
+    def get_past_projects(self, only_public=False):
         participations = Participation.objects.filter(user=self)
         current = participations.filter(project__archived=False, left_on__isnull=True)
         participations = participations.exclude(project__id__in=current.values('project_id'))
@@ -177,7 +181,7 @@ class UserProfile(ModelBase):
         for p in participations:
             if p.project.slug in past_projects:
                 past_projects[p.project.slug]['organizer'] |= p.organizing
-            else:
+            elif not only_public or not p.project.not_listed:
                 past_projects[p.project.slug] = {
                     'name': p.project.name,
                     'url': p.project.get_absolute_url(),

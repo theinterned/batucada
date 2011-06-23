@@ -115,7 +115,7 @@ def edit_page(request, slug, page_slug):
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
-        form = form_cls(instance=page)
+        form = form_cls(instance=page, initial={'minor_update': True})
     return render_to_response('content/edit_page.html', {
         'form': form,
         'page': page,

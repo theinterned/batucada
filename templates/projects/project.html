@@ -100,7 +100,7 @@
       {% endfor %}
     </ul>
     <div class="pagination">
-      {% if pagination_page.has_previous %}
+      {% if page.has_previous %}
         <a class="btn" href="{% locale_url projects_show slug=project.slug page=prev_page %}">← {{ _('previous') }}</a>
       {% else %}
         <span class="btn">← {{ _('previous') }}</span>

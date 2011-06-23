@@ -337,13 +337,12 @@ def profile_view(request, username):
     if profile.deleted:
         messages.error(request, _('This user account was deleted.'))
         return http.HttpResponseRedirect(reverse('users_user_list'))
-    current_projects = profile.get_current_projects()
+    current_projects = profile.get_current_projects(only_public=True)
     following = profile.following()
     followers = profile.followers()
     links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
-    old_participations = Pleft_on__isnull=True
-    past_projects = profile.get_past_projects()
+    past_projects = profile.get_past_projects(only_public=True)
     past_drupal_courses = projects_drupal.get_past_courses(profile.username)
     past_involvement_count = len(past_projects) + len(past_drupal_courses)
     pilot_badges = badges.get_awarded_badges(profile.username)

@@ -27,29 +27,12 @@ class ActivityManager(ManagerBase):
     def public(self):
         """Get list of activities to show on splash page."""
 
-        def _query_list(query):
-            cursor = connection.cursor()
-            cursor.execute(query)
-            while True:
-                row = cursor.fetchone()
-                if row is None:
-                    break
-                yield row[0]
-
-        activity_ids = _query_list("""
-            SELECT a.id
-            FROM activity_activity a
-            INNER JOIN users_userprofile u ON u.id = a.actor_id
-            WHERE u.full_name IS NOT NULL
-                AND a.parent_id IS NULL
-                AND a.remote_object_id IS NULL
-                AND status_id IS NULL
-                AND a.verb != 'http://activitystrea.ms/schema/1.0/follow'
-            GROUP BY a.id, a.actor_id, a.created_on
-            ORDER BY a.created_on DESC LIMIT 10;
-        """)
         return Activity.objects.filter(deleted=False,
-            id__in=activity_ids).order_by('-created_on')
+            parent__isnull=True, remote_object__isnull=True, 
+            status__isnull=True).filter(
+                models.Q(target_project__isnull=True) | models.Q(target_project__not_listed=False),
+                models.Q(project__isnull=True) | models.Q(project__not_listed=False)
+            ).exclude(verb='http://activitystrea.ms/schema/1.0/follow').order_by('-created_on')[:10]
 
     def dashboard(self, user):
         """
@@ -79,7 +62,9 @@ class ActivityManager(ManagerBase):
         """Return a list of activities where the actor is user."""
         return Activity.objects.filter(deleted=False).select_related(
             'actor', 'status', 'project').filter(
-            actor=user,
+            actor=user).filter(
+            models.Q(target_project__isnull=True) | models.Q(target_project__not_listed=False),
+            models.Q(project__isnull=True) | models.Q(project__not_listed=False)
         ).exclude(
             models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
             models.Q(target_user__isnull=False),
