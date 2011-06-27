@@ -21,32 +21,34 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'lernanta',
         'PASSWORD': '',
-        'HOST': '', # An empty string means localhost.
-        'PORT': '', # An empty string means the default port.
+        'HOST': '',  # An empty string means localhost.
+        'PORT': '',  # An empty string means the default port.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     },
 
-    # Uncomment the following lines to enable integration with the old drupal site.
+    # Uncomment the following lines to enable integration
+    # with the old drupal site.
 #    'drupal_db': {
 #        'NAME': 'drupal_db',
 #        'TEST_NAME': 'drupal_db',
 #        'ENGINE': 'django.db.backends.mysql',
 #        'USER': 'drupal_db_user',
 #        'PASSWORD': '',
-#        'HOST': '', # An empty string means localhost.
-#        'PORT': '', # An empty string means the default port.
+#        'HOST': '',  # An empty string means localhost.
+#        'PORT': '',  # An empty string means the default port.
 #        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
 #    },
 
-    # Uncomment the following lines to enable integration with the badges pilot.
+    # Uncomment the following lines to enable integration
+    # with the badges pilot.
 #    'badges_db': {
 #        'NAME': 'badges_db',
 #        'TEST_NAME': 'badges_db',
 #        'ENGINE': 'django.db.backends.mysql',
 #        'USER': 'badges_db_user',
 #        'PASSWORD': '',
-#        'HOST': '', # An empty string means localhost.
-#        'PORT': '', # An empty string means the default port.
+#        'HOST': '',  # An empty string means localhost.
+#        'PORT': '',  # An empty string means the default port.
 #        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
 #    },
 
@@ -99,10 +101,10 @@ DRUPAL_FILES_URL = DRUPAL_URL + 'sites/archive.p2pu.org/files/'
 FILE_PATH_PREFIX = 'sites/archive.p2pu.org/files/'
 
 # Badges pilot url
-BADGE_URL = 'http://badges.p2pu.org/badges/%(badge_id)s/%(badge_tag)s?user_filter=%(username)s#badge_data'
+BADGE_URL = ('http://badges.p2pu.org/badges/%(badge_id)s/' +
+    '%(badge_tag)s?user_filter=%(username)s#badge_data')
 
-INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved', 'math-future',
-    'license', 'contact-us', 'values', 'privacy', 'terms-of-use', 'news', 'create-draft-course',
-    'create-draft-course-panel', 'supporters', 'about-p2pu',)
-
-
+INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved',
+    'math-future', 'license', 'contact-us', 'values', 'privacy',
+    'terms-of-use', 'news', 'create-draft-course', 'create-draft-course-panel',
+    'supporters', 'about-p2pu',)

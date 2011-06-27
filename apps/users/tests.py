@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 from l10n.urlresolvers import reverse
 from drumbeat.utils import get_partition_id
-from users.models import UserProfile, create_profile
+from users.models import create_profile
 
 from test_utils import TestCase
 
@@ -27,7 +27,7 @@ class TestLogins(TestCase):
         self.old_recaptcha_pubkey = settings.RECAPTCHA_PUBLIC_KEY
         self.old_recaptcha_privkey = settings.RECAPTCHA_PRIVATE_KEY
         settings.RECAPTCHA_PUBLIC_KEY, settings.RECAPTCHA_PRIVATE_KEY = '', ''
-        
+
     def tearDown(self):
         settings.RECAPTCHA_PUBLIC_KEY = self.old_recaptcha_pubkey
         settings.RECAPTCHA_PRIVATE_KEY = self.old_recaptcha_privkey
@@ -53,7 +53,8 @@ class TestLogins(TestCase):
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
-            expected = "%s?next=/%s/%s" % (settings.LOGIN_URL, self.locale, path)
+            expected = "%s?next=/%s/%s" % (settings.LOGIN_URL,
+                self.locale, path)
             self.assertRedirects(response, expected, status_code=302,
                                  target_status_code=301)
 
@@ -77,7 +78,6 @@ class TestLogins(TestCase):
             'password': 'password',
         })
         self.assertContains(response5, 'id="id_username"')
-
 
     def test_login_redirect_param(self):
         """Test that user is redirected properly after logging in."""

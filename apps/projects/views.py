@@ -2,22 +2,18 @@ import logging
 import datetime
 
 from django import http
-from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
-from django.utils import simplejson
 from django.template.loader import render_to_string
-from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
 
-from links import tasks
+from links import tasks as links_tasks
 
 from projects import forms as project_forms
 from projects.decorators import organizer_required
@@ -30,7 +26,7 @@ from links.models import Link
 from users.models import UserProfile
 from content.models import Page
 from schools.models import School
-from statuses import forms as statuses_forms 
+from statuses import forms as statuses_forms
 from activity.models import Activity
 
 from drumbeat import messages
@@ -44,17 +40,18 @@ def project_list(request):
     return render_to_response('projects/gallery.html', {},
                               context_instance=RequestContext(request))
 
+
 def list_all(request, page=1):
     school = None
     if 'school' in request.GET:
         try:
             school = School.objects.get(slug=request.GET['school'])
-            form = project_forms.CreateProjectForm(initial={'school': school})
         except School.DoesNotExist:
             return http.HttpResponseRedirect(reverse('projects_directory'))
     projects = Project.objects.filter(not_listed=False).order_by('name')
     if school:
-        projects = projects.filter(school=school).exclude(id__in=school.declined.values('id'))
+        projects = projects.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
     paginator = Paginator(projects, 24)
     try:
         current_page = paginator.page(page)
@@ -88,7 +85,8 @@ def create(request):
                 project=project,
                 target_project=project)
             act.save()
-            participation = Participation(project= project, user=user, organizing=True)
+            participation = Participation(project=project, user=user,
+                organizing=True)
             participation.save()
             new_rel = Relationship(source=user, target_project=project)
             try:
@@ -98,31 +96,33 @@ def create(request):
             detailed_description_content = render_to_string(
                 "projects/detailed_description_initial_content.html",
                 {})
-            detailed_description = Page(title=_('Full Description'), slug='full-description',
-                content=detailed_description_content, listed=False,
-                author_id=user.id, project_id=project.id)
+            detailed_description = Page(title=_('Full Description'),
+                slug='full-description', content=detailed_description_content,
+                listed=False, author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
-            sign_up_content = render_to_string("projects/sign_up_initial_content.html",
-                {})
+            sign_up_content = render_to_string(
+                "projects/sign_up_initial_content.html", {})
             sign_up = Page(title=_('Sign-Up'), slug='sign-up',
                 content=sign_up_content, listed=False, editable=False,
                 author_id=user.id, project_id=project.id)
             sign_up.save()
             project.sign_up_id = sign_up.id
             project.create()
-            messages.success(request, _('The %s has been created.') % project.kind.lower())
+            messages.success(request,
+                _('The %s has been created.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
         else:
-            msg = _("There was a problem creating the study group, course, ...")
+            msg = _("Problem creating the study group, course, ...")
             messages.error(request, msg)
     else:
         if 'school' in request.GET:
             try:
                 school = School.objects.get(slug=request.GET['school'])
-                form = project_forms.CreateProjectForm(initial={'school': school})
+                form = project_forms.CreateProjectForm(
+                    initial={'school': school})
             except School.DoesNotExist:
                 return http.HttpResponseRedirect(reverse('projects_create'))
         else:
@@ -136,10 +136,11 @@ def matching_kinds(request):
     if len(request.GET['term']) == 0:
         matching_kinds = Project.objects.values_list('kind').distinct()
     else:
-        matching_kinds = Project.objects.filter(kind__icontains=request.GET['term']).values_list('kind').distinct()
+        matching_kinds = Project.objects.filter(
+            kind__icontains=request.GET['term']).values_list('kind').distinct()
     json = simplejson.dumps([kind[0] for kind in matching_kinds])
 
-    return HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 def show(request, slug, page=1):
@@ -147,17 +148,19 @@ def show(request, slug, page=1):
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
     is_following = project.is_following(request.user)
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
+        deleted=False).order_by('index')
     content_pages_for_header = content_pages[0:3]
     content_pages_count = len(content_pages)
     if request.user.is_authenticated():
-        is_pending_signup = project.is_pending_signup(request.user.get_profile())
+        is_pending_signup = project.is_pending_signup(
+            request.user.get_profile())
     else:
         is_pending_signup = False
     if is_organizing:
         form = statuses_forms.ImportantStatusForm()
     elif is_participating:
-         form = statuses_forms.StatusForm()
+        form = statuses_forms.StatusForm()
     else:
         form = None
     # TODO: See how we can modify and use challenges.
@@ -169,7 +172,7 @@ def show(request, slug, page=1):
         current_page = paginator.page(page)
     except EmptyPage:
         raise http.Http404
-    
+
     context = {
         'project': project,
         'participating': is_participating,
@@ -189,6 +192,7 @@ def show(request, slug, page=1):
     }
     return render_to_response('projects/project.html', context,
                               context_instance=RequestContext(request))
+
 
 @login_required
 def clone(request):
@@ -214,35 +218,39 @@ def clone(request):
                 project=project,
                 target_project=project)
             act.save()
-            participation = Participation(project=project, user=user, organizing=True)
+            participation = Participation(project=project, user=user,
+                organizing=True)
             participation.save()
             new_rel = Relationship(source=user, target_project=project)
             try:
                 new_rel.save()
             except IntegrityError:
                 pass
-            detailed_description = Page(title=_('Full Description'), slug='full-description',
-                content=base_project.detailed_description.content, listed=False,
-                author_id=user.id, project_id=project.id)
+            detailed_description = Page(title=_('Full Description'),
+                slug='full-description',
+                content=base_project.detailed_description.content,
+                listed=False, author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
             sign_up = Page(title=_('Sign-Up'), slug='sign-up',
-                content=base_project.sign_up.content, listed=False, editable=False,
-                author_id=user.id, project_id=project.id)
+                content=base_project.sign_up.content, listed=False,
+                editable=False, author_id=user.id, project_id=project.id)
             sign_up.save()
             project.sign_up_id = sign_up.id
             project.save()
             tasks = Page.objects.filter(project=base_project, listed=True,
                 deleted=False).order_by('index')
             for task in tasks:
-                new_task = Page(title=task.title, content=task.content, author=user,
-                    project=project)
+                new_task = Page(title=task.title, content=task.content,
+                    author=user, project=project)
                 new_task.save()
             links = Link.objects.filter(project=base_project).order_by('index')
             for link in links:
-                new_link = Link(name=link.name, url=link.url, user=user, project=project)
+                new_link = Link(name=link.name, url=link.url, user=user,
+                    project=project)
                 new_link.save()
-            messages.success(request, _('The %s has been cloned.') % project.kind.lower())
+            messages.success(request,
+                _('The %s has been cloned.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
@@ -258,7 +266,7 @@ def clone(request):
 
 def matching_projects(request):
     if len(request.GET['term']) == 0:
-        raise CommandException(_("Invalid request"))
+        raise http.Http404
 
     if 'school' in request.GET:
         try:
@@ -268,10 +276,10 @@ def matching_projects(request):
             projects = Project.objects.all()
     else:
         projects = Project.objects.all()
-    matching_projects = projects.filter(slug__icontains = request.GET['term'])
+    matching_projects = projects.filter(slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
-    return HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required
@@ -289,7 +297,7 @@ def import_from_old_site(request):
         if form.is_valid():
             course = form.cleaned_data['course']
             project = Project(name=course['name'], kind=course['kind'],
-                short_description= course['short_description'],
+                short_description=course['short_description'],
                 long_description=course['long_description'],
                 school=course['school'], imported_from=course['slug'])
             project.save()
@@ -298,7 +306,8 @@ def import_from_old_site(request):
                 project=project,
                 target_project=project)
             act.save()
-            participation = Participation(project=project, user=user, organizing=True)
+            participation = Participation(project=project, user=user,
+                organizing=True)
             participation.save()
             new_rel = Relationship(source=user, target_project=project)
             try:
@@ -311,13 +320,13 @@ def import_from_old_site(request):
                 detailed_description_content = render_to_string(
                     "projects/detailed_description_initial_content.html",
                     {})
-            detailed_description = Page(title=_('Full Description'), slug='full-description',
-                content=detailed_description_content, listed=False,
-                author_id=user.id, project_id=project.id)
+            detailed_description = Page(title=_('Full Description'),
+                slug='full-description', content=detailed_description_content,
+                listed=False, author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
-            sign_up_content = render_to_string("projects/sign_up_initial_content.html",
-                {})
+            sign_up_content = render_to_string(
+                "projects/sign_up_initial_content.html", {})
             sign_up = Page(title=_('Sign-Up'), slug='sign-up',
                 content=sign_up_content, listed=False, editable=False,
                 author_id=user.id, project_id=project.id)
@@ -331,51 +340,55 @@ def import_from_old_site(request):
             for name, url in course['links']:
                 new_link = Link(name=name, url=url, user=user, project=project)
                 new_link.save()
-            messages.success(request, _('The %s has been imported.') % project.kind.lower())
+            messages.success(request,
+                _('The %s has been imported.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
                 'slug': project.slug,
             }))
         else:
-            messages.error(request,
-                _("There was a problem importing the study group, course, ..."))
+            msg = _("Problem importing the study group, course, ...")
+            messages.error(request, msg)
     else:
         form = project_forms.ImportProjectForm(school)
     return render_to_response('projects/project_import.html', {
-        'form': form, 'import_tab': True, 'school': school,
-    }, context_instance=RequestContext(request))
+        'form': form, 'import_tab': True,
+        'school': school}, context_instance=RequestContext(request))
 
 
 def matching_courses(request):
     if len(request.GET['term']) == 0:
-        raise CommandException(_("Invalid request"))
+        raise http.Http404
     school = None
     if 'school' in request.GET:
         try:
             school = School.objects.get(slug=request.GET['school'])
         except School.DoesNotExist:
             pass
-    matching_nodes = drupal.get_matching_courses(school=school, term=request.GET['term'])
+    matching_nodes = drupal.get_matching_courses(school=school,
+        term=request.GET['term'])
     json = simplejson.dumps(matching_nodes)
 
-    return HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required
 @organizer_required
 def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    msg = _('The %(kind)s membership to %(school)s was declined.')
     if request.method == 'POST':
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            messages.success(request, _('%s updated!') % project.kind.capitalize())
+            messages.success(request,
+                _('%s updated!') % project.kind.capitalize())
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
         school = project.school
         if school and school.declined.filter(id=project.id).exists():
-            msg = _('The %(kind)s membership to %(school)s was declined by the school organizers.') % dict(kind = project.kind.lower(), school = school.name)
-            messages.error(request, msg)
+            messages.error(request,
+                msg % dict(kind=project.kind.lower(), school=school.name))
         form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/project_edit_summary.html', {
@@ -428,7 +441,7 @@ def edit_image(request, slug):
     }, context_instance=RequestContext(request))
 
 
-@login_required 
+@login_required
 @organizer_required
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -456,7 +469,7 @@ def edit_links(request, slug):
     }, context_instance=RequestContext(request))
 
 
-@login_required   
+@login_required
 @organizer_required
 def edit_links_edit(request, slug, link):
     link = get_object_or_404(Link, id=link)
@@ -467,7 +480,7 @@ def edit_links_edit(request, slug, link):
         return http.HttpResponseForbidden(_("You can't edit this link"))
     if form.is_valid():
         if link.subscription:
-            tasks.UnsubscribeFromFeed.apply_async(args=(link,))
+            links_tasks.UnsubscribeFromFeed.apply_async(args=(link,))
             link.subscription = None
             link.save()
         link = form.save(commit=False)
@@ -478,7 +491,7 @@ def edit_links_edit(request, slug, link):
         return http.HttpResponseRedirect(
             reverse('projects_edit_links', kwargs=dict(slug=project.slug)))
     else:
-        form = project_forms.ProjectLinksForm(instance=link) 
+        form = project_forms.ProjectLinksForm(instance=link)
     return render_to_response('projects/project_edit_links_edit.html', {
         'project': project,
         'form': form,
@@ -486,7 +499,7 @@ def edit_links_edit(request, slug, link):
         'links_tab': True,
     }, context_instance=RequestContext(request))
 
-    
+
 @login_required
 @organizer_required
 def edit_links_delete(request, slug, link):
@@ -510,7 +523,8 @@ def edit_participants(request, slug):
         if form.is_valid():
             user = form.cleaned_data['user']
             organizing = form.cleaned_data['organizer']
-            participation = Participation(project=project, user=user, organizing=organizing)
+            participation = Participation(project=project, user=user,
+                organizing=organizing)
             participation.save()
             new_rel = Relationship(source=user, target_project=project)
             try:
@@ -518,10 +532,12 @@ def edit_participants(request, slug):
             except IntegrityError:
                 pass
             messages.success(request, _('Participant added.'))
-            return http.HttpResponseRedirect(
-                reverse('projects_edit_participants', kwargs=dict(slug=project.slug)))
+            return http.HttpResponseRedirect(reverse(
+                'projects_edit_participants',
+                kwargs=dict(slug=project.slug)))
         else:
-            messages.error(request, _('There was an error adding the participant.'))
+            messages.error(request,
+                _('There was an error adding the participant.'))
     else:
         form = project_forms.ProjectAddParticipantForm(project)
     return render_to_response('projects/project_edit_participants.html', {
@@ -535,13 +551,15 @@ def edit_participants(request, slug):
 def matching_non_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if len(request.GET['term']) == 0:
-        raise CommandException(_("Invalid request"))
+        raise http.Http404
 
-    non_participants = UserProfile.objects.filter(deleted=False).exclude(id__in=project.participants().values('user_id'))
-    matching_users = non_participants.filter(username__icontains = request.GET['term'])
+    non_participants = UserProfile.objects.filter(deleted=False).exclude(
+        id__in=project.participants().values('user_id'))
+    matching_users = non_participants.filter(
+        username__icontains=request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 
-    return HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required
@@ -550,7 +568,8 @@ def edit_participants_make_organizer(request, slug, username):
     participation = get_object_or_404(Participation,
             project__slug=slug, user__username=username, left_on__isnull=True)
     if participation.organizing or request.method != 'POST':
-        return HttpResponseForbidden(_("You can't make that person an organizer"))
+        return http.HttpResponseForbidden(
+            _("You can't make that person an organizer"))
     participation.organizing = True
     participation.save()
     messages.success(request, _('The participant is now an organizer.'))
@@ -566,11 +585,11 @@ def edit_participants_delete(request, slug, username):
     if request.method == 'POST':
         participation.left_on = datetime.datetime.now()
         participation.save()
-        messages.success(request, _(
-            "The participant %s has been removed." % participation.user.display_name))
-    return http.HttpResponseRedirect(reverse('projects_edit_participants', kwargs={
-        'slug': participation.project.slug,
-    }))
+        msg = _("The participant %s has been removed.")
+        messages.success(request, msg % participation.user.display_name)
+    return http.HttpResponseRedirect(reverse(
+        'projects_edit_participants',
+        kwargs={'slug': participation.project.slug}))
 
 
 @login_required
@@ -586,8 +605,8 @@ def edit_status(request, slug):
                 'slug': project.slug,
             }))
         else:
-            messages.error(request,
-                           _('There was a problem saving the %s\'s status.') % project.kind.lower())
+            msg = _('There was a problem saving the %s\'s status.')
+            messages.error(request, msg % project.kind.lower())
     else:
         form = project_forms.ProjectStatusForm(instance=project)
     return render_to_response('projects/project_edit_status.html', {
@@ -600,7 +619,6 @@ def edit_status(request, slug):
 @login_required
 def contact_organizers(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    user = request.user.get_profile()
     if request.method == 'POST':
         form = project_forms.ProjectContactOrganizersForm(request.POST)
         if form.is_valid():
@@ -618,12 +636,12 @@ def contact_organizers(request, slug):
 
 
 def task_list(request, slug):
-        project = get_object_or_404(Project, slug=slug)
-        tasks = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
-        
-        context = {
+    project = get_object_or_404(Project, slug=slug)
+    tasks = Page.objects.filter(project__pk=project.pk, listed=True,
+        deleted=False).order_by('index')
+    context = {
         'project': project,
         'tasks': tasks,
-        }
-        return render_to_response('projects/project_task_list.html', context,
-                              context_instance=RequestContext(request))
+    }
+    return render_to_response('projects/project_task_list.html', context,
+        context_instance=RequestContext(request))

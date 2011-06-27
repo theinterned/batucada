@@ -47,10 +47,12 @@ class DrupalUserBackend(CustomUserBackend):
                 return None
             except UserProfile.DoesNotExist:
                 if drupal.check_password(drupal_user, password):
-                    username, email, full_name = drupal.get_user_data(drupal_user)
+                    username, email, full_name = drupal.get_user_data(
+                        drupal_user)
                     try:
                         django_user = User(username=username[:30], email=email)
-                        profile = create_profile(django_user, username=username)
+                        profile = create_profile(django_user,
+                            username=username)
                         profile.full_name = full_name
                         profile.set_password(password)
                         profile.save()
@@ -76,13 +78,14 @@ class DrupalOpenIDBackend(OpenIDBackend):
 
         if openid_response.status != SUCCESS:
             return None
-
-        log.debug("Attempting to authenticate drupal user %s" % (openid_response.identity_url,))
+        msg = 'Attempting to authenticate drupal user %s'
+        log.debug(msg % openid_response.identity_url)
 
         try:
-            user_openid = UserOpenID.objects.get(
+            UserOpenID.objects.get(
                 claimed_id__exact=openid_response.identity_url)
-            log.debug("Drupal openid user resgistered already: %s" % (openid_response.identity_url,))
+            msg = 'Drupal openid user resgistered already: %s'
+            log.debug(msg % openid_response.identity_url)
             return None
         except UserOpenID.DoesNotExist:
             drupal_user = drupal.get_openid_user(openid_response.identity_url)
@@ -98,4 +101,3 @@ class DrupalOpenIDBackend(OpenIDBackend):
                 except IntegrityError:
                     return None
         return None
-

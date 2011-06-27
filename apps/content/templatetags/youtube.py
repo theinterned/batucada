@@ -12,13 +12,17 @@ from django import template
 
 register = template.Library()
 
-YOUTUBE_RE = r"\[youtube:http://www.youtube.com/watch\?v=(?P<id>[A-Za-z0-9\-=_]{11})(&.*)?\]"
+YOUTUBE_RE = (r"\[youtube:http://www.youtube.com/watch" +
+    r"\?v=(?P<id>[A-Za-z0-9\-=_]{11})(&.*)?\]")
 YOUTUBE_EMBED = """
-<embed src="http://www.youtube.com/v/%s" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed>
+<embed src="http://www.youtube.com/v/%s" type="application/x-shockwave-flash"
+allowfullscreen="true" width="425" height="344"></embed>
 """
+
 
 def replace(match):
     return YOUTUBE_EMBED % match.group('id')
+
 
 @register.filter
 @stringfilter
@@ -28,5 +32,5 @@ def youtube(html):
     """
     return re.sub(YOUTUBE_RE, replace, html)
 
-youtube.is_safe = True  # Don't escape HTML
-
+# Don't escape HTML
+youtube.is_safe = True

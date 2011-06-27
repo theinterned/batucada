@@ -5,7 +5,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import NoReverseMatch
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language, ugettext
+from django.utils.translation import activate, get_language
+from django.template.loader import render_to_string
 
 from l10n.urlresolvers import reverse
 from challenges.models import Challenge, Submission
@@ -18,6 +19,7 @@ import logging
 import sys
 
 log = logging.getLogger(__name__)
+
 
 def server_error(request):
     """Make MEDIA_URL available to the 500 template."""
@@ -32,7 +34,8 @@ def report_abuse(request, model, app_label, pk):
     if request.method == 'POST':
         # we only use the form for the csrf middleware. skip validation.
         form = AbuseForm(request.POST)
-        content_type_cls = get_object_or_404(ContentType, model=model, app_label=app_label).model_class()
+        content_type_cls = get_object_or_404(ContentType, model=model,
+            app_label=app_label).model_class()
         instance = get_object_or_404(content_type_cls, pk=pk)
         try:
             url = request.build_absolute_uri(instance.get_absolute_url())
@@ -42,14 +45,11 @@ def report_abuse(request, model, app_label, pk):
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
             activate(profile.preflang or settings.LANGUAGE_CODE)
-            body = _("""
-        User %(display_name)s has reported the following content as objectionable:
-
-        %(url)s
-        
-        (model: %(model)s, app_label: %(app_label)s, pk: %(pk)s)
-        """ % dict(display_name = request.user.get_profile().display_name, 
-                url = url, model = model, app_label = app_label, pk = pk))
+            body = render_to_string(
+                "drumbeat/emails/abuse_report.txt", {
+                'user': request.user.get_profile(),
+                'url': url, 'model': model, 'app_label': app_label,
+                'pk': pk}).strip()
             subject = _("Abuse Report")
             SendUserEmail.apply_async(args=(profile, subject, body))
         except:
@@ -76,7 +76,8 @@ def journalism(request):
         feed_url = feed_url['mojo']
     # TODO - automatically determine the current challenge
     try:
-        current_challenge = Challenge.objects.get(slug='beyond-comment-threads')
+        current_challenge = Challenge.objects.get(
+            slug='beyond-comment-threads')
         recent_submissions = Submission.objects.filter(
             challenge=current_challenge).order_by('-created_on')[0:3]
     except:

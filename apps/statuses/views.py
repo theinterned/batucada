@@ -8,7 +8,6 @@ from django.utils.translation import ugettext as _
 from l10n.urlresolvers import reverse
 from statuses.forms import StatusForm, ImportantStatusForm
 from activity.models import Activity
-from statuses.models import Status
 from projects.models import Project
 from users.decorators import login_required
 

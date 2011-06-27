@@ -27,27 +27,32 @@ class School(ModelBase):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
-    organizers = models.ManyToManyField('users.UserProfile', null=True, blank=True)
-    featured = models.ManyToManyField('projects.Project', related_name='school_featured', null=True, blank=True)
-    declined = models.ManyToManyField('projects.Project', related_name='school_declined', null=True, blank=True)
+    organizers = models.ManyToManyField('users.UserProfile',
+        null=True, blank=True)
+    featured = models.ManyToManyField('projects.Project',
+        related_name='school_featured', null=True, blank=True)
+    declined = models.ManyToManyField('projects.Project',
+        related_name='school_declined', null=True, blank=True)
     logo = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
-    groups_icon = models.ImageField(upload_to=determine_image_upload_path, null=True,
-                              storage=storage.ImageStorage(), blank=True)
-    background = models.ImageField(upload_to=determine_image_upload_path, null=True,
-                              storage=storage.ImageStorage(), blank=True)
-    site_logo = models.ImageField(upload_to=determine_image_upload_path, null=True,
-                              storage=storage.ImageStorage(), blank=True)
+    groups_icon = models.ImageField(upload_to=determine_image_upload_path,
+        null=True, storage=storage.ImageStorage(), blank=True)
+    background = models.ImageField(upload_to=determine_image_upload_path,
+        null=True, storage=storage.ImageStorage(), blank=True)
+    site_logo = models.ImageField(upload_to=determine_image_upload_path,
+        null=True, storage=storage.ImageStorage(), blank=True)
     headers_color = models.CharField(max_length=7, default='#5a6579')
     headers_color_light = models.CharField(max_length=7, default='#f08c00')
     background_color = models.CharField(max_length=7, default='#ffffff')
     menu_color = models.CharField(max_length=7, default='#36cdc4')
     menu_color_light = models.CharField(max_length=7, default='#4bd2c9')
-    about_us_footnote_color = models.CharField(max_length=7, default='#cef200')
-    contact_us_footnote_color = models.CharField(max_length=7, default='#4cebe2')
-    license_info_footnote_color = models.CharField(max_length=7, default='#ffde00')
+    about_us_footnote_color = models.CharField(max_length=7,
+        default='#cef200')
+    contact_us_footnote_color = models.CharField(max_length=7,
+        default='#4cebe2')
+    license_info_footnote_color = models.CharField(max_length=7,
+        default='#ffde00')
     sidebar_width = models.CharField(max_length=5, default='245px')
-    
 
     # The term names are used to import school courses from the old site.
     OLD_TERM_NAME_CHOICES = YEAR_IN_SCHOOL_CHOICES = (
@@ -55,7 +60,8 @@ class School(ModelBase):
         ('SoSI', 'School of Social Innovation'),
         ('Webcraft', 'School of Webcraft'),
     )
-    old_term_name = models.CharField(max_length=15, blank=True, null=True, choices=OLD_TERM_NAME_CHOICES)
+    old_term_name = models.CharField(max_length=15, blank=True,
+        null=True, choices=OLD_TERM_NAME_CHOICES)
 
     def __unicode__(self):
         return self.name
@@ -87,9 +93,8 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.description:
             instance.description = bleach.clean(instance.description,
-                tags=settings.RICH_ALLOWED_TAGS, attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                tags=settings.RICH_ALLOWED_TAGS,
+                attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                 styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
 pre_save.connect(clean_html, sender=School)
-
-

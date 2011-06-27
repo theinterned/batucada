@@ -53,16 +53,18 @@ def get_openid_user(identity_url):
     for prefix in PREFIXES:
         for sufix in SUFIXES:
             urls.append(prefix + normalized + sufix)
-    log.debug('Searching for similar openid urls: %s' %urls)
+    log.debug('Searching for similar openid urls: %s' % urls)
     try:
         authmap = Authmap.objects.using(DRUPAL_DB).get(authname__in=urls)
         return Users.objects.using(DRUPAL_DB).get(uid=authmap.uid)
     except Authmap.DoesNotExist, Users.DoesNotExist:
         return None
 
+
 def check_password(drupal_user, password):
     if '$' not in drupal_user.password:
-        return (drupal_user.password == django_get_hexdigest('md5', '', password))
+        encripted_password = django_get_hexdigest('md5', '', password)
+        return (drupal_user.password == encripted_password)
     else:
         return django_check_password(password, drupal_user.password)
 
@@ -70,7 +72,8 @@ def check_password(drupal_user, password):
 def get_user_data(drupal_user):
     full_name = ''
     if Realname.objects.using(DRUPAL_DB).filter(uid=drupal_user.uid).exists():
-        full_name = Realname.objects.using(DRUPAL_DB).get(uid=drupal_user.uid).realname
+        full_name = Realname.objects.using(DRUPAL_DB).get(
+            uid=drupal_user.uid).realname
     username = drupal_user.name.replace('@', '-')
     return username, drupal_user.mail, full_name
 
@@ -122,6 +125,7 @@ class Users(models.Model):
 class Realname(models.Model):
     uid = models.IntegerField(primary_key=True)
     realname = models.CharField(max_length=765)
+
     class Meta:
         db_table = u'realname'
 
@@ -131,6 +135,7 @@ class Authmap(models.Model):
     uid = models.IntegerField()
     authname = models.CharField(max_length=384)
     module = models.CharField(max_length=384)
+
     class Meta:
         db_table = u'authmap'
 
@@ -153,7 +158,6 @@ class ContentTypeProfile(models.Model):
     field_profile_gender_value = models.TextField(blank=True)
     field_profile_education_value = models.TextField(blank=True)
     field_profile_email_subs_value = models.IntegerField(null=True, blank=True)
+
     class Meta:
         db_table = u'content_type_profile'
-
-

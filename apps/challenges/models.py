@@ -171,7 +171,7 @@ class Submission(ModelBase):
             'slug': challenge.slug,
             'submission_id': self.pk
         })
-        subj = _('Thanks for entering in the Knight-Mozilla Innovation Challenge!')
+        subj = _('Thanks for entering in this challenge!')
         body = render_to_string('challenges/emails/submission_thanks.txt', {
             'share_url': share_url,
             'submission_url': submission_url,

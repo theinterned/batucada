@@ -1,5 +1,4 @@
 import datetime
-from markdown import markdown
 import bleach
 
 from django.db import models
@@ -9,11 +8,12 @@ from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language, ugettext
+from django.utils.translation import activate, get_language
 
 from activity.models import Activity
 from drumbeat.models import ModelBase
 from users.tasks import SendUserEmail
+
 
 class Status(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/status'
@@ -40,7 +40,6 @@ class Status(ModelBase):
         return timesince(self.created_on, now)
 
     def send_wall_notification(self):
-        """Send update notifications for messages posted to a study group wall."""
         if not self.project:
             return
         project = self.project
@@ -61,7 +60,8 @@ class Status(ModelBase):
                 }).strip()
         activate(ulang)
         for participation in project.participants():
-            if self.author != participation.user and (self.important or not participation.no_wall_updates):
+            subscribed = (self.important or not participation.no_wall_updates)
+            if self.author != participation.user and subscribed:
                 pl = participation.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
                     (participation.user, subject[pl], body[pl]))
@@ -80,7 +80,9 @@ def status_creation_handler(sender, **kwargs):
         return
 
     # clean html
-    status.status = bleach.clean(status.status, tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+    status.status = bleach.clean(status.status,
+        tags=settings.REDUCED_ALLOWED_TAGS,
+        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
     status.save()
 
     # fire activity

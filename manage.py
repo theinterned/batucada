@@ -13,7 +13,7 @@ try:
     import settings_local as settings
 except ImportError:
     try:
-        import settings 
+        import settings
     except ImportError:
         import sys
         sys.stderr.write(

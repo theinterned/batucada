@@ -3,10 +3,10 @@ from links.models import Link
 
 
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'url', 'project', 'user', 'index', 'subscribe')
+    list_display = ('id', 'name', 'url', 'project', 'user', 'index',
+        'subscribe')
     list_filter = list_display[6:]
     search_fields = ('id', 'name', 'url', 'project__name', 'project__slug',
         'user__username', 'user__full_name', 'index')
 
 admin.site.register(Link, LinkAdmin)
-

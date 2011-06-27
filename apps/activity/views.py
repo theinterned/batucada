@@ -19,7 +19,8 @@ def index(request, activity_id):
             return HttpResponseRedirect(reverse('activity_restore',
                 kwargs={'activity_id': activity.id}))
         elif activity.target_project:
-            return HttpResponseRedirect(activity.target_project.get_absolute_url())
+            return HttpResponseRedirect(
+                activity.target_project.get_absolute_url())
         else:
             return HttpResponseRedirect(activity.actor.get_absolute_url())
     return render_to_response('activity/index.html', {
@@ -36,10 +37,14 @@ def delete_restore(request, activity_id):
     if request.method == 'POST':
         activity.deleted = not activity.deleted
         activity.save()
-        msg = _('Message deleted!') if activity.deleted else _('Message restored!')
+        if activity.deleted:
+            msg = _('Message deleted!')
+        else:
+            msg = _('Message restored!')
         messages.success(request, msg)
         if activity.target_project:
-            return HttpResponseRedirect(activity.target_project.get_absolute_url())
+            return HttpResponseRedirect(
+                activity.target_project.get_absolute_url())
         else:
             return HttpResponseRedirect(reverse('dashboard_index'))
     else:

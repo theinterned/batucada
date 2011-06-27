@@ -13,6 +13,7 @@ from test_utils import TestCase
 from activity.models import Activity
 from users.models import create_profile
 
+
 def mock_open(r):
     return urllib2.HTTPError('request', 204, 'no-op', {}, StringIO(''))
 
@@ -103,7 +104,8 @@ class TestLinkParsing(TestCase):
         html = self.fixtures['buzz_profile.html']
         feed_url = utils.parse_feed_url(html)
         self.assertEqual(
-            'https://www.googleapis.com/buzz/v1/activities/115398213828503499359/@public',
+            'https://www.googleapis.com/buzz/v1/' +
+            'activities/115398213828503499359/@public',
             feed_url)
         atom = self.fixtures['buzz_profile.atom']
         hub_url = utils.parse_hub_url(atom)

@@ -6,8 +6,7 @@ import unicodedata
 
 from django.core.validators import ValidationError, validate_slug
 from django.utils.encoding import smart_unicode
-from django.utils.translation import ugettext as _
-from django.utils.translation import activate, get_language, ugettext
+from django.utils.translation import get_language
 from django.utils.safestring import mark_safe
 from django.forms.util import flatatt
 from django.utils.html import conditional_escape
@@ -76,16 +75,18 @@ class CKEditorWidget(BaseCKEditorWidget):
         self.config = self.config.copy()
 
     def render(self, name, value, attrs={}):
-        if value is None: value = ''
-        
+        if value is None:
+            value = ''
+
         # Not charing locale info between different instance of the form.
         config = self.config.copy()
         config['language'] = get_language()
-        
+
         final_attrs = self.build_attrs(attrs, name=name)
         self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
         self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
         return mark_safe(u'''<textarea%s>%s</textarea>
-        <script type="text/javascript">
-            CKEDITOR.replace("%s", %s);
-        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id'], json_encode(config)))
+            <script type="text/javascript">
+                CKEDITOR.replace("%s", %s);
+            </script>''' % (flatatt(final_attrs), conditional_escape(
+            force_unicode(value)), final_attrs['id'], json_encode(config)))

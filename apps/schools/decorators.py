@@ -15,8 +15,8 @@ def school_organizer_required(func):
         slug = kwargs['slug']
         user = request.user.get_profile()
         school = get_object_or_404(School, slug=slug)
-        if not school.organizers.filter(id=user.id).exists() and not user.user.is_superuser:
+        is_organizer = school.organizers.filter(id=user.id).exists()
+        if not is_organizer and not user.user.is_superuser:
             return HttpResponseForbidden(_("You are not school organizer"))
         return func(*args, **kwargs)
     return decorator
-

@@ -1,10 +1,9 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from users.models import UserProfile, create_profile
+from users.models import create_profile
 from drumbeatmail.forms import ComposeForm
 from relationships.models import Relationship
-from projects.models import Project
 from messages.models import Message
 
 import test_utils
@@ -25,14 +24,14 @@ class TestDrumbeatMail(test_utils.TestCase):
         self.user.save()
 
         django_user_two = User(username='anotheruser',
-                               email='test2@mozillafoundation.org')
+            email='test2@mozillafoundation.org')
         self.user_two = create_profile(django_user_two)
         self.user_two.set_password('testpassword')
         self.user_two.save()
         self.old_recaptcha_pubkey = settings.RECAPTCHA_PUBLIC_KEY
         self.old_recaptcha_privkey = settings.RECAPTCHA_PRIVATE_KEY
         settings.RECAPTCHA_PUBLIC_KEY, settings.RECAPTCHA_PRIVATE_KEY = '', ''
-        
+
     def tearDown(self):
         settings.RECAPTCHA_PUBLIC_KEY = self.old_recaptcha_pubkey
         settings.RECAPTCHA_PRIVATE_KEY = self.old_recaptcha_privkey

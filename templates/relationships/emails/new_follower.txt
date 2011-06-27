@@ -1,3 +1,4 @@
+{% load l10n_tags %}
 {{ user.display_name }} {{ _('is now following ') }}{% if project %}{{ project }}{% else %}{{ _('you') }}{% endif %} {{ _('on P2PU!') }}
 
 {{ _('Bio:') }} {{ user.bio|striptags|safe }}

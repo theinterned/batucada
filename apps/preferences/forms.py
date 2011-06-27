@@ -19,7 +19,7 @@ class EmailEditForm(forms.ModelForm):
 
     def clean(self):
         super(EmailEditForm, self).clean()
-        msg = _('That email address is register at p2pu.org under a different username.')
+        msg = _('That email address is register under a different username.')
         data = self.cleaned_data
         if 'email' in data:
             drupal_user = drupal.get_user(data['email'])
@@ -27,14 +27,17 @@ class EmailEditForm(forms.ModelForm):
                 self._errors['email'] = forms.util.ErrorList([msg])
         return data
 
+
 def check_password_complexity(password):
-    message = _('Password must be at least 8 characters long and contain both numbers and letters.')
+    message = _('Password must be at least 8 characters long ')
+    message += _('and contain both numbers and letters.')
     if len(password) < 8 or not (
         re.search('[A-Za-z]', password) and re.search('[0-9]', password)):
         return message
     if password in blacklisted_passwords:
         return _('That password is too common. Please choose another.')
     return None
+
 
 class PasswordEditForm(forms.ModelForm):
     password = forms.CharField(

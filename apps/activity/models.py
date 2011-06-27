@@ -1,4 +1,4 @@
-from django.db import models, connection
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.template.loader import render_to_string
@@ -28,11 +28,15 @@ class ActivityManager(ManagerBase):
         """Get list of activities to show on splash page."""
 
         return Activity.objects.filter(deleted=False,
-            parent__isnull=True, remote_object__isnull=True, 
+            parent__isnull=True, remote_object__isnull=True,
             status__isnull=True).filter(
-                models.Q(target_project__isnull=True) | models.Q(target_project__not_listed=False),
-                models.Q(project__isnull=True) | models.Q(project__not_listed=False)
-            ).exclude(verb='http://activitystrea.ms/schema/1.0/follow').order_by('-created_on')[:10]
+                models.Q(target_project__isnull=True)
+                | models.Q(target_project__not_listed=False),
+                models.Q(project__isnull=True)
+                | models.Q(project__not_listed=False)
+            ).exclude(
+                verb='http://activitystrea.ms/schema/1.0/follow'
+            ).order_by('-created_on')[:10]
 
     def dashboard(self, user):
         """
@@ -63,8 +67,10 @@ class ActivityManager(ManagerBase):
         return Activity.objects.filter(deleted=False).select_related(
             'actor', 'status', 'project').filter(
             actor=user).filter(
-            models.Q(target_project__isnull=True) | models.Q(target_project__not_listed=False),
-            models.Q(project__isnull=True) | models.Q(project__not_listed=False)
+            models.Q(target_project__isnull=True)
+            | models.Q(target_project__not_listed=False),
+            models.Q(project__isnull=True)
+            | models.Q(project__not_listed=False)
         ).exclude(
             models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
             models.Q(target_user__isnull=False),
@@ -77,10 +83,12 @@ class Activity(ModelBase):
     """Represents a single activity entry."""
     actor = models.ForeignKey('users.UserProfile')
     verb = models.URLField(verify_exists=False)
-    status = models.ForeignKey('statuses.Status', null=True, related_name='activity')
+    status = models.ForeignKey('statuses.Status', null=True,
+        related_name='activity')
     target_content_type = models.ForeignKey(ContentType, null=True)
     target_id = models.PositiveIntegerField(null=True)
-    target_object = generic.GenericForeignKey('target_content_type', 'target_id')
+    target_object = generic.GenericForeignKey('target_content_type',
+        'target_id')
     project = models.ForeignKey('projects.Project', null=True)
     target_user = models.ForeignKey('users.UserProfile', null=True,
                                     related_name='target_user')
@@ -104,14 +112,14 @@ class Activity(ModelBase):
 
     @property
     def object_type(self):
-        obj = (self.status or self.target_user or self.remote_object 
-        or self.target_object or None)
+        obj = (self.status or self.target_user or self.remote_object
+            or self.target_object or None)
         return obj and obj.object_type or None
 
     @property
     def object_url(self):
-        obj = (self.status or self.target_user or self.remote_object 
-        or self.target_object or None)
+        obj = (self.status or self.target_user or self.remote_object
+            or self.target_object or None)
         return obj and obj.get_absolute_url() or None
 
     def textual_representation(self):
@@ -119,8 +127,8 @@ class Activity(ModelBase):
         if target and self.verb == schema.verbs['follow']:
             name = target.display_name if self.target_user else target.name
             return _('%(actor)s %(verb)s %(target)s') % dict(
-                actor=self.actor.display_name, verb=schema.past_tense['follow'],
-                target=name)
+                actor=self.actor.display_name,
+                verb=schema.past_tense['follow'], target=name)
         if self.status:
             return self.status.status[:50]
         elif self.remote_object:
@@ -130,15 +138,16 @@ class Activity(ModelBase):
             return self.target_object.title
 
         friendly_verb = schema.verbs_by_uri[self.verb]
-        return ugettext('%(verb)s activity performed by %(actor)s') % dict(verb=friendly_verb,
-                                                   actor=self.actor.display_name)
+        return ugettext('%(verb)s activity performed by %(actor)s') % dict(
+            verb=friendly_verb, actor=self.actor.display_name)
 
     def friendly_verb(self):
         if self.verb == schema.verbs['post']:
             if self.project_id:
                 return mark_safe(ugettext('created'))
             else:
-                if self.object_type == 'http://activitystrea.ms/schema/1.0/comment':
+                comment_type = 'http://activitystrea.ms/schema/1.0/comment'
+                if self.object_type == comment_type:
                     return mark_safe(ugettext('posted comment'))
                 else:
                     return mark_safe(ugettext('added'))
@@ -163,4 +172,3 @@ class Activity(ModelBase):
             return (profile == self.actor)
         else:
             return False
-

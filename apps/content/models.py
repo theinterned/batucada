@@ -6,7 +6,6 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save, post_save
-from django.template.defaultfilters import truncatewords_html
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
 from django.utils.timesince import timesince
@@ -16,11 +15,9 @@ from django.db.models import Max
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
-from l10n.urlresolvers import reverse
 from drumbeat.models import ModelBase
 from activity.models import Activity
 from users.tasks import SendUserEmail
-from activity import schema
 
 log = logging.getLogger(__name__)
 
@@ -33,7 +30,8 @@ class Page(ModelBase):
     slug = models.SlugField(max_length=110)
     content = models.TextField()
     author = models.ForeignKey('users.UserProfile', related_name='pages')
-    last_update = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    last_update = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now)
     project = models.ForeignKey('projects.Project', related_name='pages')
     listed = models.BooleanField(default=True)
     minor_update = models.BooleanField(default=True)
@@ -59,14 +57,16 @@ class Page(ModelBase):
             slug = slugify(self.title)
             self.slug = slug
             while True:
-                existing = Page.objects.filter(project__slug=self.project.slug, slug=self.slug)
+                existing = Page.objects.filter(
+                    project__slug=self.project.slug, slug=self.slug)
                 if len(existing) == 0:
                     break
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         if not self.index:
             if self.listed:
-                max_index = Page.objects.filter(project=self.project, listed=True).aggregate(Max('index'))['index__max']
+                max_index = Page.objects.filter(project=self.project,
+                    listed=True).aggregate(Max('index'))['index__max']
                 self.index = max_index + 1 if max_index else 1
             else:
                 self.index = 0
@@ -79,7 +79,8 @@ class Page(ModelBase):
         return mark_safe(ugettext('added'))
 
     def representation(self):
-        return mark_safe(ugettext(' <a href="%(page_url)s">%(page_title)s</a>.') % dict(page_url=self.get_absolute_url(),
+        text = ugettext(' <a href="%(page_url)s">%(page_title)s</a>.')
+        return mark_safe(text % dict(page_url=self.get_absolute_url(),
             page_title=escape(self.title)))
 
     def can_edit(self, user):
@@ -96,7 +97,8 @@ class PageVersion(ModelBase):
 
     title = models.CharField(max_length=100)
     content = models.TextField()
-    author = models.ForeignKey('users.UserProfile', related_name='page_versions')
+    author = models.ForeignKey('users.UserProfile',
+        related_name='page_versions')
     date = models.DateTimeField()
     page = models.ForeignKey('content.Page', related_name='page_versions')
     deleted = models.BooleanField(default=False)
@@ -116,12 +118,15 @@ class PageComment(ModelBase):
     object_type = 'http://activitystrea.ms/schema/1.0/comment'
 
     content = models.TextField()
-    author = models.ForeignKey('users.UserProfile', related_name='comments')
+    author = models.ForeignKey('users.UserProfile',
+        related_name='comments')
     page = models.ForeignKey('content.Page', related_name='comments')
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
-    reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='replies')
-    abs_reply_to = models.ForeignKey('content.PageComment', blank=True, null=True, related_name='all_replies')
+    reply_to = models.ForeignKey('content.PageComment', blank=True,
+        null=True, related_name='replies')
+    abs_reply_to = models.ForeignKey('content.PageComment', blank=True,
+        null=True, related_name='all_replies')
     deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -146,8 +151,9 @@ class PageComment(ModelBase):
         return mark_safe(ugettext('posted comment'))
 
     def representation(self):
-        return mark_safe(ugettext(' at <a href="%(comment_url)s">%(page_title)s</a>.') % dict(
-            comment_url=self.get_absolute_url(), page_title=escape(self.page.title)))
+        text = ugettext(' at <a href="%(comment_url)s">%(page_title)s</a>.')
+        return mark_safe(text % dict(comment_url=self.get_absolute_url(),
+            page_title=escape(self.page.title)))
 
     @property
     def project(self):
@@ -202,7 +208,8 @@ class PageComment(ModelBase):
         for username in recipients:
             if recipients[username] != self.author:
                 pl = recipients[username].preflang or settings.LANGUAGE_CODE
-                SendUserEmail.apply_async((recipients[username], subject[pl], body[pl]))
+                SendUserEmail.apply_async((recipients[username],
+                    subject[pl], body[pl]))
 
 
 def send_content_notification(instance, is_comment):
@@ -230,7 +237,8 @@ def send_content_notification(instance, is_comment):
             }).strip()
     activate(ulang)
     for participation in project.participants():
-        if instance.author != participation.user and not participation.no_updates:
+        is_author = (instance.author == participation.user)
+        if not is_author and not participation.no_updates:
             pl = participation.user.preflang or settings.LANGUAGE_CODE
             SendUserEmail.apply_async(
                     (participation.user, subject[pl], body[pl]))
@@ -247,7 +255,8 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.content:
             instance.content = bleach.clean(instance.content,
-                tags=settings.RICH_ALLOWED_TAGS, attributes=settings.RICH_ALLOWED_ATTRIBUTES,
+                tags=settings.RICH_ALLOWED_TAGS,
+                attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                 styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
 pre_save.connect(clean_html, sender=Page)
@@ -257,7 +266,6 @@ pre_save.connect(clean_html, sender=PageComment)
 def fire_activity(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
-    project = instance.project
     is_page = isinstance(instance, Page)
     is_comment = isinstance(instance, PageComment)
     if created and (is_page or is_comment):
@@ -290,4 +298,3 @@ def fire_activity(sender, **kwargs):
 
 post_save.connect(fire_activity, sender=Page)
 post_save.connect(fire_activity, sender=PageComment)
-
