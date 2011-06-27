@@ -32,7 +32,7 @@ class NotListedPageForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
-    def clean_content(self): 
+    def clean_content(self):
         data = self.cleaned_data['content']
         if data.strip() == "<br />":
             raise forms.ValidationError(_("This field is required."))
@@ -48,7 +48,7 @@ class OwnersPageForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
-    def clean_content(self): 
+    def clean_content(self):
         data = self.cleaned_data['content']
         if data.strip() == "<br />":
             raise forms.ValidationError(_("This field is required."))
@@ -64,7 +64,7 @@ class OwnersNotListedPageForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
-    def clean_content(self): 
+    def clean_content(self):
         data = self.cleaned_data['content']
         if data.strip() == "<br />":
             raise forms.ValidationError(_("This field is required."))
@@ -80,10 +80,8 @@ class CommentForm(forms.ModelForm):
             'content': CKEditorWidget(config_name=CKEDITOR_CONFIG_NAME),
         }
 
-    def clean_content(self): 
+    def clean_content(self):
         data = self.cleaned_data['content']
         if data.strip() == "<br />":
             raise forms.ValidationError(_("This field is required."))
         return data
-
-

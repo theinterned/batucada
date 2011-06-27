@@ -22,8 +22,8 @@ def sidebar(context):
         is_organizing = project.organizers().filter(user=user).exists()
         if not is_participating and not is_organizing:
             signup = Page.objects.get(slug='sign-up', project=project)
-            answers = signup.comments.filter(reply_to__isnull=True, deleted=False,
-                author=profile)
+            answers = signup.comments.filter(reply_to__isnull=True,
+                deleted=False, author=profile)
             if answers.exists():
                 pending_signup = answers[0]
     participants_count = project.non_organizer_participants().count()
@@ -31,10 +31,13 @@ def sidebar(context):
     organizers_count = project.organizers().count()
     update_count = project.activities().count()
     pending_applicants_count = len(project.pending_applicants())
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
+    content_pages = Page.objects.filter(project__pk=project.pk,
+        listed=True, deleted=False).order_by('index')
     links = project.link_set.all().order_by('index')
     school = project.accepted_school()
-    imported_from = drupal.get_course(project.imported_from) if project.imported_from else None
+    imported_from = None
+    if project.imported_from:
+        imported_from = drupal.get_course(project.imported_from)
     context.update({
         'participating': is_participating,
         'participants_count': participants_count,
@@ -67,26 +70,28 @@ def project_list(school=None, limit=8):
     one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
     new = listed.filter(created_on__gte=one_week).order_by('-created_on')
     open_signup = listed.filter(signup_closed=False)
-    under_development = Project.objects.filter(under_development=True, not_listed=False,
-        archived=False)
-    archived = Project.objects.filter(not_listed=False, archived=True).order_by('-created_on')
+    under_development = Project.objects.filter(under_development=True,
+        not_listed=False, archived=False)
+    archived = Project.objects.filter(not_listed=False,
+        archived=True).order_by('-created_on')
     if school:
-        featured = featured.filter(school=school).exclude(id__in=school.declined.values('id'))
-        new = new.filter(school=school).exclude(id__in=school.declined.values('id'))
-        open_signup = open_signup.filter(school=school).exclude(id__in=school.declined.values('id'))
+        featured = featured.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
+        new = new.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
+        open_signup = open_signup.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
         under_development = under_development.filter(school=school).exclude(
             id__in=school.declined.values('id'))
-        archived = archived.filter(school=school).exclude(id__in=school.declined.values('id'))
+        archived = archived.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
     if limit:
         new = new[:limit]
         archived = archived[:limit]
         under_development = under_development[:limit]
     return {'featured': featured, 'active': active, 'popular': popular,
-           'new': new, 'open_signup': open_signup, 'under_development': under_development,
-           'archived': archived, 'school': school}
+        'new': new, 'open_signup': open_signup,
+        'under_development': under_development,
+        'archived': archived, 'school': school}
 
 register.inclusion_tag('projects/_project_list.html')(project_list)
-
-
-
-

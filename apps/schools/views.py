@@ -3,7 +3,6 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django import http
 from django.utils import simplejson
-from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.http import require_http_methods
 
 from commonware.decorators import xframe_sameorigin
@@ -34,15 +33,19 @@ def home(request, slug):
     return render_to_response('schools/home.html', context,
                           context_instance=RequestContext(request))
 
+
 def school_css(request, slug):
     school = get_object_or_404(School, slug=slug)
     return render_to_response('schools/school.css', {'school': school},
         context_instance=RequestContext(request), mimetype='text/css')
 
+
 def multiple_school_css(request):
     schools = School.objects.all()
-    return render_to_response('schools/multiple_school.css', {'schools': schools},
-        context_instance=RequestContext(request), mimetype='text/css')
+    return render_to_response('schools/multiple_school.css',
+        {'schools': schools}, context_instance=RequestContext(request),
+        mimetype='text/css')
+
 
 @login_required
 @school_organizer_required
@@ -114,9 +117,8 @@ def edit_logo(request, slug):
         if form.is_valid():
             messages.success(request, _('Image updated'))
             form.save()
-            return http.HttpResponseRedirect(reverse('school_edit_logo', kwargs={
-                'slug': school.slug,
-            }))
+            return http.HttpResponseRedirect(reverse('school_edit_logo',
+                kwargs={'slug': school.slug}))
         else:
             messages.error(request,
                            _('There was an error uploading your image'))
@@ -157,9 +159,8 @@ def edit_groups_icon(request, slug):
         if form.is_valid():
             messages.success(request, _('Image updated'))
             form.save()
-            return http.HttpResponseRedirect(reverse('school_edit_groups_icon', kwargs={
-                'slug': school.slug,
-            }))
+            return http.HttpResponseRedirect(reverse('school_edit_groups_icon',
+                kwargs={'slug': school.slug}))
         else:
             messages.error(request,
                            _('There was an error uploading your image'))
@@ -200,9 +201,8 @@ def edit_background(request, slug):
         if form.is_valid():
             messages.success(request, _('Image updated'))
             form.save()
-            return http.HttpResponseRedirect(reverse('school_edit_background', kwargs={
-                'slug': school.slug,
-            }))
+            return http.HttpResponseRedirect(reverse('school_edit_background',
+                kwargs={'slug': school.slug}))
         else:
             messages.error(request,
                            _('There was an error uploading your image'))
@@ -243,9 +243,8 @@ def edit_site_logo(request, slug):
         if form.is_valid():
             messages.success(request, _('Image updated'))
             form.save()
-            return http.HttpResponseRedirect(reverse('school_edit_site_logo', kwargs={
-                'slug': school.slug,
-            }))
+            return http.HttpResponseRedirect(reverse('school_edit_site_logo',
+                kwargs={'slug': school.slug}))
         else:
             messages.error(request,
                            _('There was an error uploading your image'))
@@ -269,10 +268,11 @@ def edit_organizers(request, slug):
             school.organizers.add(user)
             school.save()
             messages.success(request, _('School organizer added.'))
-            return http.HttpResponseRedirect(
-                reverse('schools_edit_organizers', kwargs=dict(slug=school.slug)))
+            return http.HttpResponseRedirect(reverse(
+                'schools_edit_organizers', kwargs=dict(slug=school.slug)))
         else:
-            messages.error(request, _('There was an error adding the school organizer.'))
+            messages.error(request,
+                _('There was an error adding the school organizer.'))
     else:
         form = school_forms.ProjectAddOrganizerForm(school)
     return render_to_response('schools/school_edit_organizers.html', {
@@ -285,14 +285,15 @@ def edit_organizers(request, slug):
 def matching_non_organizers(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
-        raise CommandException(_("Invalid request"))
+        raise http.Http404
 
-    non_organizers = UserProfile.objects.filter(deleted=False).exclude(id__in=school.organizers.values('user_id'))
-    matching_users = non_organizers.filter(username__icontains = request.GET['term'])
+    non_organizers = UserProfile.objects.filter(deleted=False).exclude(
+        id__in=school.organizers.values('user_id'))
+    matching_users = non_organizers.filter(
+        username__icontains=request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 
-    return HttpResponse(json, mimetype="application/x-javascript")
-
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required
@@ -305,11 +306,13 @@ def edit_featured(request, slug):
             project = form.cleaned_data['project']
             school.featured.add(project)
             school.save()
-            messages.success(request, _('The %s is now featured for this school.' % project.kind.lower()))
-            return http.HttpResponseRedirect(
-                reverse('schools_edit_featured', kwargs=dict(slug=school.slug)))
+            msg = _('The %s is now featured for this school.')
+            messages.success(request, msg % project.kind.lower())
+            return http.HttpResponseRedirect(reverse(
+                'schools_edit_featured', kwargs=dict(slug=school.slug)))
         else:
-            messages.error(request, _("There was an error marking %s as featured for this school.") % slug)
+            msg = _("There was an error marking %s as featured.")
+            messages.error(request, msg % slug)
     else:
         form = school_forms.SchoolAddFeaturedForm(school)
     return render_to_response('schools/school_edit_featured.html', {
@@ -323,14 +326,15 @@ def edit_featured(request, slug):
 def matching_non_featured(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
-        raise CommandException(_("Invalid request"))
+        raise http.Http404
 
     school_projects = Project.objects.filter(school=school)
     non_featured = school_projects.exclude(id__in=school.featured.values('id'))
-    matching_projects = non_featured.filter(slug__icontains = request.GET['term'])
+    matching_projects = non_featured.filter(
+        slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
-    return HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required
@@ -340,8 +344,8 @@ def edit_featured_delete(request, slug, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
         school.featured.remove(project)
-        messages.success(request, _(
-            "The %s stopped being featured for this school.") % project.kind.lower())
+        msg = _("The %s stopped being featured for this school.")
+        messages.success(request, msg % project.kind.lower())
     return http.HttpResponseRedirect(reverse('schools_edit_featured', kwargs={
         'slug': school.slug,
     }))
@@ -357,11 +361,13 @@ def edit_declined(request, slug):
             project = form.cleaned_data['project']
             school.declined.add(project)
             school.save()
-            messages.success(request, _('The %s was declined for this school.') % project.kind.lower())
-            return http.HttpResponseRedirect(
-                reverse('schools_edit_declined', kwargs=dict(slug=school.slug)))
+            msg = _('The %s was declined for this school.')
+            messages.success(request, msg % project.kind.lower())
+            return http.HttpResponseRedirect(reverse('schools_edit_declined',
+                kwargs=dict(slug=school.slug)))
         else:
-            messages.error(request, _("There was an error marking %s as declined for this school.") % slug)
+            msg = _("There was an error when declining %s membership.")
+            messages.error(request, msg % slug)
     else:
         form = school_forms.SchoolAddDeclinedForm(school)
     return render_to_response('schools/school_edit_declined.html', {
@@ -375,14 +381,15 @@ def edit_declined(request, slug):
 def matching_non_declined(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
-        raise CommandException(_("Invalid request"))
+        raise http.Http404
 
     school_projects = Project.objects.filter(school=school)
     non_declined = school_projects.exclude(id__in=school.declined.values('id'))
-    matching_projects = non_declined.filter(slug__icontains = request.GET['term'])
+    matching_projects = non_declined.filter(
+        slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
-    return HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
 @login_required
@@ -392,9 +399,8 @@ def edit_declined_delete(request, slug, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
         school.declined.remove(project)
-        messages.success(request, _(
-            "The %s stopped being declined for this school.") % project.kind.lower())
+        msg = _('The %s stopped being declined for this school.')
+        messages.success(request, msg % project.kind.lower())
     return http.HttpResponseRedirect(reverse('schools_edit_declined', kwargs={
         'slug': school.slug,
     }))
-

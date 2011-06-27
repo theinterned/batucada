@@ -16,15 +16,16 @@ class PageVersionAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
     list_display = ('id', 'page', 'author', 'date', 'deleted')
     list_filter = list_display[3:]
-    search_fields = ('id', 'page__slug', 'page__title', 'author__username', 'author__full_name')
+    search_fields = ('id', 'page__slug', 'page__title',
+        'author__username', 'author__full_name')
 
 
 class PageCommentAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_on'
     list_display = ('id', 'page', 'author', 'created_on', 'deleted')
     list_filter = list_display[3:]
-    search_fields = ('id', 'page__slug', 'page__title', 'author__username', 'author__full_name')
-    
+    search_fields = ('id', 'page__slug', 'page__title',
+        'author__username', 'author__full_name')
 
 
 admin.site.register(Page, PageAdmin)

@@ -4,6 +4,8 @@ docutils==0.7
 ipython==0.10.2
 nose==1.0.0
 jinja2==2.5.5  # only required for test-utils
+pep8==0.6.1
+pyflakes==0.4.0
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/jbalogh/test-utils#egg=test-utils

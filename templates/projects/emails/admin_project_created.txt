@@ -1,3 +1,4 @@
+{% load l10n_tags %}
 Hello admins!
 
 There is a new {{ project.kind|lower }}: {{ project.name }}: http://{{domain}}{{ project.get_absolute_url }}

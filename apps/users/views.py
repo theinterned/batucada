@@ -6,7 +6,6 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate, get_language
 from django.shortcuts import render_to_response, get_object_or_404
@@ -15,7 +14,6 @@ from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
 from django.forms import ValidationError
-from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sites.models import Site
 
@@ -32,7 +30,6 @@ from users.decorators import anonymous_only, login_required
 from users import drupal, badges
 from projects import drupal as projects_drupal
 from links.models import Link
-from projects.models import Project
 from drumbeat import messages
 from activity.models import Activity
 
@@ -97,6 +94,7 @@ def _get_redirect_url(request):
             url = '/%s' % (url,)
         return url
 
+
 def force_language_in_url(url, oldlang, newlang):
     """Rewrite url to use newlang instead of oldlang"""
     # Use when activate(newlang) is not enough
@@ -106,7 +104,7 @@ def force_language_in_url(url, oldlang, newlang):
         npath = p.path.replace('/' + oldlang + '/', '/' + newlang + '/', 1)
     else:
         npath = '/' + newlang + '/' + p.path
-    return urlunparse([p.scheme, p.netloc, npath, 
+    return urlunparse([p.scheme, p.netloc, npath,
         p.params, p.query, p.fragment])
 
 
@@ -289,7 +287,8 @@ def register_openid_complete(request):
 def user_list(request):
     """Display a list of users on the site. Featured, new and active."""
     featured = UserProfile.objects.filter(deleted=False, featured=True)
-    new = UserProfile.objects.filter(deleted=False).order_by('-created_on')[:20]
+    new = UserProfile.objects.filter(deleted=False).order_by(
+        '-created_on')[:20]
     popular = UserProfile.objects.get_popular(limit=20)
     return render_to_response('users/user_list.html', {
         'featured': featured,
@@ -340,7 +339,8 @@ def profile_view(request, username):
     current_projects = profile.get_current_projects(only_public=True)
     following = profile.following()
     followers = profile.followers()
-    links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
+    links = Link.objects.filter(user=profile,
+        project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
     past_projects = profile.get_past_projects(only_public=True)
     past_drupal_courses = projects_drupal.get_past_courses(profile.username)
@@ -429,6 +429,7 @@ def profile_edit(request):
         'general_tab': True,
     }, context_instance=RequestContext(request))
 
+
 @login_required
 def profile_edit_openids(request):
     if request.method == 'POST':
@@ -451,33 +452,34 @@ def profile_edit_openids(request):
 @csrf_exempt
 def profile_edit_openids_complete(request):
     openid_response = openid_views.parse_openid_response(request)
-
+    yours_msg = _('The identity %s has already been claimed by you.')
+    theirs_msg = _('The identity %s has already been claimed by another user.')
     if openid_response:
         if openid_response.status == openid_views.SUCCESS:
+            url = openid_response.identity_url
             try:
                 user_openid = UserOpenID.objects.get(
-                    claimed_id__exact=openid_response.identity_url)
+                    claimed_id__exact=url)
             except UserOpenID.DoesNotExist:
                 user_openid = UserOpenID(user=request.user,
                 claimed_id=openid_response.identity_url,
                 display_id=openid_response.endpoint.getDisplayIdentifier())
                 user_openid.save()
                 messages.info(request,
-                    _('The identity %s has been saved.') % openid_response.identity_url)
+                    _('The identity %s has been saved.') % url)
             else:
                 if user_openid.user == request.user:
-                    messages.error(request,
-                        _('The identity %s has already been claimed by you.') % openid_response.identity_url)
+                    messages.error(request, yours_msg % url)
                 else:
-                    messages.error(request,
-                        _('The identity %s has already been claimed by another user.') % openid_response.identity_url)
+                    messages.error(request, theirs_msg % url)
         elif openid_response.status == openid_views.FAILURE:
             messages.error(request, _('OpenID authentication failed: %s') %
                 openid_response.message)
         elif openid_response.status == openid_views.CANCEL:
             return messages.error(request, _('Authentication cancelled.'))
         else:
-            return messages.error(_('Unknown OpenID response type: %r') % openid_response.status)
+            return messages.error(
+                _('Unknown OpenID response type: %r') % openid_response.status)
     else:
         return messages.error(_('This is an OpenID relying party endpoint.'))
     return http.HttpResponseRedirect(reverse('users_profile_edit_openids'))
@@ -542,7 +544,7 @@ def profile_edit_links(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         form = forms.ProfileLinksForm(request.POST)
-        if form.is_valid(): 
+        if form.is_valid():
             messages.success(request, _('Profile link added.'))
             link = form.save(commit=False)
             log.debug("User instance: %s" % (profile.user,))
@@ -556,7 +558,8 @@ def profile_edit_links(request):
                                       'your link.'))
     else:
         form = forms.ProfileLinksForm()
-    links = Link.objects.select_related('subscription').filter(user=profile, project__isnull=True)
+    links = Link.objects.select_related('subscription').filter(
+        user=profile, project__isnull=True)
 
     return render_to_response('users/profile_edit_links.html', {
         'profile': profile,
@@ -571,8 +574,8 @@ def profile_edit_links_edit(request, link_id):
     link = get_object_or_404(Link, id=link_id)
     form = forms.ProfileLinksForm(request.POST or None, instance=link)
     profile = get_object_or_404(UserProfile, user=request.user)
-    
-    if form.is_valid(): 
+
+    if form.is_valid():
         link = form.save(commit=False)
         link.user = profile
         messages.success(request, _('Profile link updated'))
@@ -589,6 +592,7 @@ def profile_edit_links_edit(request, link_id):
         'link_tab': True,
     }, context_instance=RequestContext(request))
 
+
 @login_required
 def profile_edit_links_delete(request, link):
     if request.method == 'POST':
@@ -600,17 +604,19 @@ def profile_edit_links_delete(request, link):
         messages.success(request, _('The link was deleted.'))
     return http.HttpResponseRedirect(reverse('users_profile_edit_links'))
 
-@login_required 
+
+@login_required
 def link_index_up(request, counter):
     profile = get_object_or_404(UserProfile, user=request.user)
    #Link goes up in the sidebar index (link.index decreases).
     try:
         counter = int(counter)
     except ValueError:
-        raise Http404
-    links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
+        raise http.Http404
+    links = Link.objects.filter(user=profile,
+        project__isnull=True).order_by('index')
     if counter < 1 or links.count() <= counter:
-        raise Http404
+        raise http.Http404
     prev_link = links[counter - 1]
     link = links[counter]
     prev_link.index, link.index = link.index, prev_link.index
@@ -618,23 +624,26 @@ def link_index_up(request, counter):
     prev_link.save()
     return http.HttpResponseRedirect(profile.get_absolute_url() + '#links')
 
-@login_required 
+
+@login_required
 def link_index_down(request, counter):
     profile = get_object_or_404(UserProfile, user=request.user)
     #Link goes down in the sidebar index (link.index increases).
     try:
         counter = int(counter)
     except ValueError:
-        raise Http404
-    links = Link.objects.filter(user=profile, project__isnull=True).order_by('index')
+        raise http.Http404
+    links = Link.objects.filter(user=profile,
+        project__isnull=True).order_by('index')
     if counter < 0 or links.count() - 1 <= counter:
-        raise Http404
+        raise http.Http404
     next_link = links[counter + 1]
     link = links[counter]
     next_link.index, link.index = link.index, next_link.index
     link.save()
     next_link.save()
     return http.HttpResponseRedirect(profile.get_absolute_url() + '#links')
+
 
 def check_username(request):
     """Validate a username and check for uniqueness."""

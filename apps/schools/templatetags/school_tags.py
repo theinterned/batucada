@@ -12,5 +12,3 @@ def schools_menu():
 
 
 register.inclusion_tag('schools/menu.html')(schools_menu)
-
-

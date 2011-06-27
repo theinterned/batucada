@@ -1,10 +1,5 @@
-import datetime
-
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.template import RequestContext
-from django.utils.translation import ugettext as _
-from django.template.loader import render_to_string
 from django.utils.translation import get_language
 
 from pages.models import Page
@@ -24,7 +19,6 @@ def show_page(request, slug):
     except Page.DoesNotExist:
         page = get_object_or_404(Page, slug=slug, language='en')
     return render_to_response(
-        'pages/page.html', {'page': page, }, 
+        'pages/page.html', {'page': page, },
         context_instance=RequestContext(request)
     )
-

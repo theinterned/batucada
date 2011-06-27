@@ -5,7 +5,7 @@ import os
 import logging
 import djcelery
 
-import l10n.locales 
+import l10n.locales
 
 djcelery.setup_loader()
 
@@ -42,7 +42,7 @@ TIME_ZONE = 'America/Toronto'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
 
-SUPPORTED_LANGUAGES = tuple([(i.lower(), l10n.locales.LOCALES[i].native) 
+SUPPORTED_LANGUAGES = tuple([(i.lower(), l10n.locales.LOCALES[i].native)
     for i in l10n.locales.LOCALES])
 
 SITE_ID = 1
@@ -223,12 +223,15 @@ CKEDITOR_CONFIGS = {
     'rich': {
         'toolbar': [
             ['Source', ],  # Using 'Preview' here doesn't use the CSS
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+                'Superscript'],
             ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent', 'SyntaxHighlighting', 'Blockquote'],
+            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent',
+                'Indent', 'SyntaxHighlighting', 'Blockquote'],
             ['Maximize'],
-            ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare', 'Smiley', 'SpecialChar', 'Table'],
-            ['Format','Font','FontSize', 'TextColor','BGColor'],
+            ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare',
+                'Smiley', 'SpecialChar', 'Table'],
+            ['Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
         ],
         'skin': 'kama',
         'width': '568',
@@ -237,11 +240,11 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': False,
         'extraPlugins': 'youtube,slideshare,prettify',
         'format_tags': 'p;h1;h2;h3;h4;h5;h6',
-        'prettify': { 'element' : 'pre', 'attributes' : { 'class' : 'prettyprint' }},
+        'prettify': {'element': 'pre', 'attributes': {'class': 'prettyprint'}},
     },
     'reduced': {
         'toolbar': [
-            ['Source', '-' , 'Bold', 'Italic', '-', 'Link', 'Unlink'],
+            ['Source', '-', 'Bold', 'Italic', '-', 'Link', 'Unlink'],
         ],
         'skin': 'kama',
         'width': '420',
@@ -250,13 +253,16 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': False,
         'extraPlugins': 'youtube,slideshare,prettify',
         'format_tags': 'p;h1;h2;h3;h4;h5;h6',
-        'prettify': { 'element' : 'pre', 'attributes' : { 'class' : 'prettyprint' }},
+        'prettify': {
+            'element': 'pre',
+            'attributes': {'class': 'prettyprint'}},
     }
 }
 
 # Constants for cleaning ckeditor html.
 
-REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike', 'sub', 'sup', 'br')
+REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike',
+    'sub', 'sup', 'br')
 RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
         'ol', 'ul', 'li', 'hr', 'blockquote',
         'span', 'pre', 'code', 'div', 'img',
@@ -284,8 +290,9 @@ RICH_ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
 # Where the default image for sending to Gravatar
 DEFAULT_PROFILE_IMAGE = 'http://new.p2pu.org/media/images/member-missing.png'
 
-# When set to True, if the request URL does not match any of the patterns in the URLconf and
-# it doesn't end in a slash, an HTTP redirect is issued to the same URL with a slash appended.
+# When set to True, if the request URL does not match any
+# of the patterns in the URLconf and it doesn't end in a slash,
+# an HTTP redirect is issued to the same URL with a slash appended.
 APPEND_SLASH = True
 
 # Django logging configuration.
@@ -301,14 +308,14 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'file': {
-            'class' : 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': path('lernanta.log'),
-            'maxBytes': 1024*1024*5, # 5 MB
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
             'backupCount': 5,
         },
         'null': {
-            'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
         },
     },
     'loggers': {
@@ -318,9 +325,9 @@ LOGGING = {
             'propagate': False,
         },
         'caching': {
-            'handlers':['null'],
+            'handlers': ['null'],
             'propagate': False,
-            'level':'DEBUG',
+            'level': 'DEBUG',
         },
         '': {
             'handlers': ['file'],
@@ -329,5 +336,3 @@ LOGGING = {
         }
     }
 }
-
-

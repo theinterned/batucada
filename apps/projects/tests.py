@@ -1,9 +1,7 @@
 from django.test import Client
 from django.contrib.auth.models import User
 
-from l10n.urlresolvers import reverse
-from users.models import UserProfile, create_profile
-from activity.models import Activity
+from users.models import create_profile
 from projects.models import Project
 
 from test_utils import TestCase
@@ -42,5 +40,3 @@ class ProjectTests(TestCase):
         )
         project2.save()
         self.assertEqual('my-cool-project-2', project2.slug)
-
-

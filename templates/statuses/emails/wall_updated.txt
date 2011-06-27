@@ -1,3 +1,4 @@
+{% load l10n_tags %}
 {{ project.name }}{{ _(' was updated.') }}
 
 {% if status.important %}

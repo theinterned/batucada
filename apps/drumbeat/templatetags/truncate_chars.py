@@ -17,7 +17,7 @@ def truncate_chars(s, num):
     length = int(num)
     if len(s) > length:
         length = length - 3
-        if s[length-1] == ' ' or s[length] == ' ':
+        if s[length - 1] == ' ' or s[length] == ' ':
             s = s[:length].strip()
         else:
             words = s[:length].split()
@@ -38,8 +38,9 @@ def truncatechars(value, arg):
     """
     try:
         length = int(arg)
-    except ValueError: # If the argument is not a valid integer.
-        return value # Fail silently.
+    except ValueError:
+        # Fail silently if the argument is not a valid integer.
+        return value
     return truncate_chars(value, length)
 truncatechars.is_safe = True
 truncatechars = stringfilter(truncatechars)

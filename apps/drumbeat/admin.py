@@ -4,7 +4,8 @@ from django.contrib.comments.models import Comment
 from django.contrib.sites.models import Site
 
 from django_openid_auth.models import Nonce, Association, UserOpenID
-from djcelery.models import TaskState, PeriodicTask, CrontabSchedule, IntervalSchedule, WorkerState
+from djcelery.models import TaskState, PeriodicTask, CrontabSchedule
+from djcelery.models import IntervalSchedule, WorkerState
 from taggit.models import Tag
 from wellknown.models import Resource
 from voting.models import Vote
@@ -17,9 +18,8 @@ admin.site.unregister([Group, User, Comment, Nonce, Association, UserOpenID,
 
 
 admin.site._registry[Message].date_hierarchy = 'sent_at'
-admin.site._registry[Message].list_display = ('id', 'subject', 'sender', 'recipient', 'sent_at')
+admin.site._registry[Message].list_display = ('id', 'subject', 'sender',
+    'recipient', 'sent_at')
 admin.site._registry[Message].list_filter = ('sent_at',)
-admin.site._registry[Message].search_fields = ('id', 'subject', 'body', 'sender__username', 'recipient__username')
-
-
-
+admin.site._registry[Message].search_fields = ('id', 'subject', 'body',
+    'sender__username', 'recipient__username')

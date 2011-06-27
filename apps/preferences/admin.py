@@ -8,4 +8,3 @@ class AccountPreferencesAdmin(admin.ModelAdmin):
     search_fields = ('id', 'user__username', 'user__full_name',)
 
 admin.site.register(AccountPreferences, AccountPreferencesAdmin)
-

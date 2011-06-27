@@ -1,7 +1,5 @@
 import os
-import glob
 import logging
-import random
 
 import Image
 
@@ -38,4 +36,3 @@ class ThumbnailGenerator(Task):
 
     def run(self, media):
         return self.create_image_thumbnail(media)
-

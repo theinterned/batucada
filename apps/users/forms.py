@@ -6,7 +6,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import forms as auth_forms
 from django.utils.translation import ugettext as _
-from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 
 from drumbeat.utils import CKEditorWidget
 
@@ -35,7 +34,8 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
 
 def check_password_complexity(password):
-    message = _('Password must be at least 8 characters long and contain both numbers and letters.')
+    message = _('Password must be at least 8 characters long ')
+    message += _('and contain both numbers and letters.')
     if len(password) < 8 or not (
         re.search('[A-Za-z]', password) and re.search('[0-9]', password)):
         return message
@@ -65,7 +65,8 @@ class OpenIDForm(forms.Form):
     openid_identifier = forms.URLField()
 
     def clean_openid_identifier(self):
-        msg = _('Please visit http://qa.p2pu.org to know what to do if you can\'t login with your google openid.')
+        msg = _('This google openid is not supported. ')
+        msg += _('Please use your google profile openid.')
         openid = self.cleaned_data['openid_identifier']
         if drupal.GOOGLE_OPENID in openid:
             raise forms.ValidationError(msg)
@@ -73,11 +74,13 @@ class OpenIDForm(forms.Form):
 
 
 def validate_user_identity(form, data):
-    drupal_user_msg = _('You can login directly with your username and password from the old P2PU website.')
-    if 'username' in data and data['username'] and drupal.get_user(data['username']):
-        form._errors['username'] = forms.util.ErrorList([drupal_user_msg])
-    if 'email' in data and data['email'] and drupal.get_user(data['email']):
-        form._errors['email'] = forms.util.ErrorList([drupal_user_msg])
+    msg = _('Your account was migrated from the old P2PU website.')
+    username_provided = ('username' in data and data['username'])
+    if username_provided and drupal.get_user(data['username']):
+        form._errors['username'] = forms.util.ErrorList([msg])
+    email_provided = ('email' in data and data['email'])
+    if email_provided and drupal.get_user(data['email']):
+        form._errors['email'] = forms.util.ErrorList([msg])
 
 
 class CreateProfileForm(forms.ModelForm):
@@ -115,7 +118,7 @@ class RegisterForm(forms.ModelForm):
         max_length=128,
         widget=forms.PasswordInput(render_value=False))
     newsletter = forms.BooleanField(required=False)
-    preflang = forms.CharField(max_length=3, 
+    preflang = forms.CharField(max_length=3,
             widget=forms.Select(choices=settings.SUPPORTED_LANGUAGES))
     recaptcha = captcha_fields.ReCaptchaField()
 
@@ -142,7 +145,8 @@ class RegisterForm(forms.ModelForm):
     def clean_username(self):
         username = self.cleaned_data['username']
         if UserProfile.objects.filter(username=username).exists():
-            raise forms.ValidationError(_('User profile with this Username already exists.'))
+            raise forms.ValidationError(
+                _('User profile with this Username already exists.'))
         return username
 
     def clean_email(self):
@@ -150,7 +154,8 @@ class RegisterForm(forms.ModelForm):
         if not email or not email.strip():
             raise forms.ValidationError(_('This field is required.'))
         if UserProfile.objects.filter(email=email).exists():
-            raise forms.ValidationError(_('User profile with this Email already exists.'))
+            raise forms.ValidationError(
+                _('User profile with this Email already exists.'))
         return email
 
     def clean(self):
@@ -165,7 +170,8 @@ class RegisterForm(forms.ModelForm):
             data['full_name'] = data['full_name'].strip()
         return data
 
-class ProfileEditForm(forms.ModelForm): 
+
+class ProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
@@ -198,7 +204,7 @@ class ProfileImageForm(forms.ModelForm):
                     max=max_size))
         return self.cleaned_data['image']
 
-        
+
 class ProfileLinksForm(forms.ModelForm):
 
     class Meta:
@@ -206,7 +212,7 @@ class ProfileLinksForm(forms.ModelForm):
         fields = ('name', 'url', 'subscribe',)
 
 
-class PasswordResetForm(DjangoPasswordResetForm):
+class PasswordResetForm(auth_forms.PasswordResetForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
@@ -215,7 +221,9 @@ class PasswordResetForm(DjangoPasswordResetForm):
                                 is_active=True
                             )
         if len(self.users_cache) == 0 and not drupal.migrate(email):
-            raise forms.ValidationError(_("That e-mail address doesn't have an associated user account. Are you sure you've registered?"))
+            msg = _("That e-mail address isn't associated to a user account. ")
+            msg += _("Are you sure you've registered?")
+            raise forms.ValidationError(msg)
         profile = None
         for user in self.users_cache:
             try:
@@ -223,7 +231,7 @@ class PasswordResetForm(DjangoPasswordResetForm):
             except UserProfile.DoesNotExist:
                 user.delete()
         if not profile:
-            msg = _("It seams that you did not finished the registration proccess during your last visit to the site.")
+            msg = _("You did not finish the registration proccess last time. ")
             msg += _("Please register a new account.")
             raise forms.ValidationError(msg)
         return email

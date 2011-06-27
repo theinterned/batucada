@@ -65,16 +65,16 @@ def follow_handler(sender, **kwargs):
     activity = Activity(actor=rel.source,
                         verb='http://activitystrea.ms/schema/1.0/follow')
     receipts = []
-    ulang=get_language()
+    ulang = get_language()
     subject = {}
     body = {}
     if rel.target_user:
         activity.target_user = rel.target_user
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
-            subject[l[0]] = ugettext('%(display_name)s is following you on P2PU!') % {
-                'display_name': rel.source.display_name,
-            }
+            subject[l[0]] = ugettext(
+                '%(display_name)s is following you on P2PU!') % {
+                'display_name': rel.source.display_name}
         preferences = AccountPreferences.objects.filter(user=rel.target_user)
         for pref in preferences:
             if pref.value and pref.key == 'no_email_new_follower':
@@ -85,25 +85,27 @@ def follow_handler(sender, **kwargs):
         activity.project = rel.target_project
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
-            subject[l[0]] = ugettext('%(display_name)s is following %(project)s on P2PU!') % {
-                'display_name': rel.source.display_name, 'project': rel.target_project }
+            msg = ugettext(
+                '%(display_name)s is following %(project)s on P2PU!')
+            subject[l[0]] = msg % {'display_name': rel.source.display_name,
+                'project': rel.target_project}
         for organizer in rel.target_project.organizers():
             if organizer.user != rel.source:
-                preferences = AccountPreferences.objects.filter(user=organizer.user)
+                preferences = AccountPreferences.objects.filter(
+                    user=organizer.user, key='no_email_new_project_follower')
                 for pref in preferences:
-                    if pref.value and pref.key == 'no_email_new_project_follower':
+                    if pref.value:
                         break
                 else:
-                    receipts.append(organizer.user)   
+                    receipts.append(organizer.user)
     activity.save()
 
     for l in settings.SUPPORTED_LANGUAGES:
         activate(l[0])
-        body[l[0]] = render_to_string("relationships/emails/new_follower.txt", {
-            'user': rel.source,
-            'project': rel.target_project,
-            'domain': Site.objects.get_current().domain,
-            })
+        body[l[0]] = render_to_string(
+            "relationships/emails/new_follower.txt", {'user': rel.source,
+                'project': rel.target_project,
+                'domain': Site.objects.get_current().domain})
     activate(ulang)
     for user in receipts:
         pl = user.preflang or settings.LANGUAGE_CODE

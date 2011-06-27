@@ -19,14 +19,13 @@ from django.utils.translation import ugettext
 from django.utils.safestring import mark_safe
 
 from taggit.models import GenericTaggedItemBase, Tag
-from taggit.managers import TaggableManager
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
-from users import tasks 
+from users import tasks
 
 import caching.base
 
@@ -34,6 +33,7 @@ log = logging.getLogger(__name__)
 
 GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s"
                      "?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
+
 
 def determine_upload_path(instance, filename):
     chunk_size = 1000  # max files per directory
@@ -76,8 +76,8 @@ class UserProfileManager(caching.base.CachingManager):
 
     def get_popular(self, limit=0):
         users = Relationship.objects.values('target_user_id').annotate(
-            models.Count('id')).filter(target_user__featured=False, target_user__deleted=False).order_by(
-            '-id__count')[:limit]
+            models.Count('id')).filter(target_user__featured=False,
+            target_user__deleted=False).order_by('-id__count')[:limit]
         user_ids = [u['target_user_id'] for u in users]
         return UserProfile.objects.filter(id__in=user_ids)
 
@@ -103,9 +103,9 @@ class UserProfile(ModelBase):
     discard_welcome = models.BooleanField(default=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
-    preflang = models.CharField(verbose_name = 'preferred language',
-        max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
-        default = settings.LANGUAGE_CODE)
+    preflang = models.CharField(verbose_name='preferred language',
+        max_length=16, choices=settings.SUPPORTED_LANGUAGES,
+        default=settings.LANGUAGE_CODE)
     deleted = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
@@ -131,7 +131,8 @@ class UserProfile(ModelBase):
             return [rel.target_project for rel in relationships
                     if not rel.target_project.archived]
         relationships = Relationship.objects.select_related(
-            'target_user').filter(source=self, target_user__deleted=False).exclude(
+            'target_user').filter(source=self,
+            target_user__deleted=False).exclude(
             target_user__isnull=True)
         return [rel.target_user for rel in relationships]
 
@@ -172,11 +173,12 @@ class UserProfile(ModelBase):
         }
         return data
 
-
     def get_past_projects(self, only_public=False):
         participations = Participation.objects.filter(user=self)
-        current = participations.filter(project__archived=False, left_on__isnull=True)
-        participations = participations.exclude(project__id__in=current.values('project_id'))
+        current = participations.filter(project__archived=False,
+            left_on__isnull=True)
+        participations = participations.exclude(
+            project__id__in=current.values('project_id'))
         past_projects = {}
         for p in participations:
             if p.project.slug in past_projects:
@@ -188,8 +190,7 @@ class UserProfile(ModelBase):
                     'organizer': p.organizing,
                     'image_url': p.project.get_image_url(),
                 }
-        return past_projects.values()   
-
+        return past_projects.values()
 
     @models.permalink
     def get_absolute_url(self):
@@ -213,13 +214,13 @@ class UserProfile(ModelBase):
         if not self.deleted:
             gravatarUrl = self.gravatar(54)
             if self.image:
-        	    avatar =  '%s%s' % (settings.MEDIA_URL, self.image)
+                avatar = '%s%s' % (settings.MEDIA_URL, self.image)
             elif gravatarUrl:
-        	    avatar = gravatarUrl
+                avatar = gravatarUrl
         return mark_safe(avatar)
 
     def gravatar(self, size=54):
-        hash = hashlib.md5(self.email.lower()).hexdigest() 
+        hash = hashlib.md5(self.email.lower()).hexdigest()
         default = urlquote_plus(settings.DEFAULT_PROFILE_IMAGE)
         return GRAVATAR_TEMPLATE % {
             'size': size,
@@ -227,8 +228,8 @@ class UserProfile(ModelBase):
             'default': default,
             'rating': "g",
             'username': self.username,
-            } 
-    
+            }
+
     def generate_confirmation_code(self):
         if not self.confirmation_code:
             self.confirmation_code = ''.join(random.sample(string.letters +
@@ -274,17 +275,18 @@ def create_profile(user, username=None):
     profile.save()
     return profile
 
-        
+
 ###########
 # Signals #
 ###########
 
 def clean_html(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    if isinstance(instance, UserProfile): 
+    if isinstance(instance, UserProfile):
         if instance.bio:
             instance.bio = bleach.clean(instance.bio,
-                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
+                tags=settings.REDUCED_ALLOWED_TAGS,
+                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
                 strip=True)
 
 pre_save.connect(clean_html, sender=UserProfile)

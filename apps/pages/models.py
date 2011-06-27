@@ -2,7 +2,6 @@ import logging
 
 from django.conf import settings
 from django.db import models
-from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 
@@ -15,9 +14,9 @@ class Page(ModelBase):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=110)
     content = models.TextField()
-    language = models.CharField(verbose_name = 'language',
-        max_length = 16, choices = settings.SUPPORTED_LANGUAGES,
-        default = settings.LANGUAGE_CODE)
+    language = models.CharField(verbose_name='language',
+        max_length=16, choices=settings.SUPPORTED_LANGUAGES,
+        default=settings.LANGUAGE_CODE)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -31,4 +30,3 @@ class Page(ModelBase):
         return ('static_page_show', (), {
             'slug': self.slug,
         })
-

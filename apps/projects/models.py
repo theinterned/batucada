@@ -1,4 +1,3 @@
-import os
 import logging
 import datetime
 import bleach
@@ -8,10 +7,10 @@ from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.db import models
 from django.db.models import Count, Q, Max
-from django.db.models.signals import pre_save, post_save, post_delete 
+from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext as ugettex, get_language, activate
+from django.utils.translation import get_language, activate
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
@@ -20,14 +19,11 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
-from content.models import Page
 from activity.models import Activity
 from users.tasks import SendUserEmail
 
-from projects.tasks import ThumbnailGenerator
-
 import caching.base
- 
+
 log = logging.getLogger(__name__)
 
 
@@ -63,11 +59,13 @@ class ProjectManager(caching.base.CachingManager):
             activities = Activity.objects.values('target_project').annotate(
                 Max('created_on')).exclude(target_project__isnull=True,
                 verb='http://activitystrea.ms/schema/1.0/follow',
-                remote_object__isnull=False).filter(target_project__under_development=False,
+                remote_object__isnull=False).filter(
+                target_project__under_development=False,
                 target_project__not_listed=False,
                 target_project__archived=False).order_by('-created_on__max')
             if school:
-                activities = activities.filter(target_project__school=school).exclude(
+                activities = activities.filter(
+                    target_project__school=school).exclude(
                     target_project__id__in=school.declined.values('id'))
             if limit:
                 activities = activities[:limit]
@@ -85,14 +83,17 @@ class Project(ModelBase):
     kind = models.CharField(max_length=30, default=_('Study Group'))
     short_description = models.CharField(max_length=150)
     long_description = models.TextField(validators=[MaxLengthValidator(700)])
-    
+
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    
-    school = models.ForeignKey('schools.School', related_name='projects', null=True, blank=True)
 
-    detailed_description = models.ForeignKey('content.Page', related_name='desc_project', null=True, blank=True)
-    sign_up = models.ForeignKey('content.Page', related_name='sign_up_project', null=True, blank=True)
+    school = models.ForeignKey('schools.School', related_name='projects',
+        null=True, blank=True)
+
+    detailed_description = models.ForeignKey('content.Page',
+        related_name='desc_project', null=True, blank=True)
+    sign_up = models.ForeignKey('content.Page', related_name='sign_up_project',
+        null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
@@ -118,7 +119,8 @@ class Project(ModelBase):
         verbose_name = _('group')
 
     def followers(self):
-        return Relationship.objects.filter(target_project=self, source__deleted=False)
+        return Relationship.objects.filter(target_project=self,
+            source__deleted=False)
 
     def non_participant_followers(self):
         return self.followers().exclude(
@@ -134,7 +136,9 @@ class Project(ModelBase):
         users = []
         first_level_comments = page.comments.filter(reply_to__isnull=True)
         for answer in first_level_comments.filter(deleted=False):
-            if not self.participants().filter(user=answer.author).exists() and not answer.author.deleted:
+            is_participant = self.participants().filter(
+                user=answer.author).exists()
+            if not is_participant and not answer.author.deleted:
                 users.append(answer.author)
         return users
 
@@ -164,7 +168,8 @@ class Project(ModelBase):
     def is_participating(self, user):
         if user.is_authenticated():
             profile = user.get_profile()
-            is_organizer_or_participant = self.participants().filter(user=profile).exists()
+            is_organizer_or_participant = self.participants().filter(
+                user=profile).exists()
             is_superuser = user.is_superuser
             return is_organizer_or_participant or is_superuser
         else:
@@ -250,7 +255,8 @@ class Project(ModelBase):
             'domain': domain,
             }).strip()
         admin_email = settings.ADMIN_PROJECT_CREATE_EMAIL
-        send_mail(admin_subject, admin_body, admin_email, [admin_email], fail_silently=True)
+        send_mail(admin_subject, admin_body, admin_email, [admin_email],
+            fail_silently=True)
 
     def accepted_school(self):
         school = self.school
@@ -260,8 +266,10 @@ class Project(ModelBase):
 
 
 class Participation(ModelBase):
-    user = models.ForeignKey('users.UserProfile', related_name='participations')
-    project = models.ForeignKey('projects.Project', related_name='participations')
+    user = models.ForeignKey('users.UserProfile',
+        related_name='participations')
+    project = models.ForeignKey('projects.Project',
+        related_name='participations')
     organizing = models.BooleanField(default=False)
     joined_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
@@ -270,7 +278,7 @@ class Participation(ModelBase):
     # it with the contact participant form.
     no_wall_updates = models.BooleanField(default=False)
     # for new pages or comments.
-    no_updates = models.BooleanField(default=False) 
+    no_updates = models.BooleanField(default=False)
 
 
 ###########
@@ -283,8 +291,8 @@ def clean_html(sender, **kwargs):
         log.debug("Cleaning html.")
         if instance.long_description:
             instance.long_description = bleach.clean(instance.long_description,
-                tags=settings.REDUCED_ALLOWED_TAGS, attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
-            
+                tags=settings.REDUCED_ALLOWED_TAGS,
+                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+
 
 pre_save.connect(clean_html, sender=Project)
-

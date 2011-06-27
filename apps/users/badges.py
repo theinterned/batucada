@@ -11,10 +11,13 @@ EMERALD = 5
 SAPPHIRE = 4
 
 BADGES_MISSING_IMAGES = {
-    RUBY: 'images/ruby-missing.png',
-    EMERALD: 'images/emerald-missing.png',
-    SAPPHIRE: 'images/sapphire-missing.png',
+    RUBY: settings.MEDIA_URL + 'images/ruby-missing.png',
+    EMERALD: settings.MEDIA_URL + 'images/emerald-missing.png',
+    SAPPHIRE: settings.MEDIA_URL + 'images/sapphire-missing.png',
 }
+
+
+log = logging.getLogger(__name__)
 
 
 def get_awarded_badges(username):
@@ -27,13 +30,16 @@ def get_awarded_badges(username):
         for award in awards:
             badge = ForumBadge.objects.using(BADGES_DB).get(id=award.badge_id)
             if badge.type in [SAPPHIRE, EMERALD, RUBY]:
-                custom_badge = ForumCustombadge.objects.using(BADGES_DB).get(ondb_id=badge.id)
-                tag = ForumTag.objects.using(BADGES_DB).get(id=custom_badge.tag_id)
+                custom_badge = ForumCustombadge.objects.using(BADGES_DB).get(
+                    ondb_id=badge.id)
+                tag = ForumTag.objects.using(BADGES_DB).get(
+                    id=custom_badge.tag_id)
                 if tag.name in badges:
                     badges[tag.name]['count'] += 1
                 else:
-                    url = settings.BADGE_URL % dict(badge_id=badge.id, badge_tag=tag.name, username=username)
-                    image_url = settings.MEDIA_URL + BADGES_MISSING_IMAGES[badge.type]
+                    url = settings.BADGE_URL % dict(badge_id=badge.id,
+                        badge_tag=tag.name, username=username)
+                    image_url = BADGES_MISSING_IMAGES[badge.type]
                     data = {
                         'name': custom_badge.name,
                         'type': badge.type,
@@ -46,6 +52,7 @@ def get_awarded_badges(username):
         pass
     return badges.values()
 
+
 class ForumAward(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
@@ -54,6 +61,7 @@ class ForumAward(models.Model):
     awarded_at = models.DateTimeField()
     trigger_id = models.IntegerField(null=True, blank=True)
     action_id = models.IntegerField(unique=True)
+
     class Meta:
         db_table = u'forum_award'
 
@@ -63,6 +71,7 @@ class ForumBadge(models.Model):
     type = models.IntegerField()
     cls = models.CharField(max_length=150, blank=True)
     awarded_count = models.IntegerField()
+
     class Meta:
         db_table = u'forum_badge'
 
@@ -77,6 +86,7 @@ class ForumCustombadge(models.Model):
     is_peer_given = models.IntegerField()
     min_required_votes = models.IntegerField()
     voting_restricted = models.IntegerField()
+
     class Meta:
         db_table = u'forum_custombadge'
 
@@ -86,6 +96,6 @@ class ForumTag(models.Model):
     name = models.CharField(unique=True, max_length=765)
     created_by_id = models.IntegerField(null=True, blank=True)
     used_count = models.IntegerField()
+
     class Meta:
         db_table = u'forum_tag'
-

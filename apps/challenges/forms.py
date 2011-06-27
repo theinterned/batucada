@@ -26,8 +26,8 @@ class ChallengeImageForm(forms.ModelForm):
     def clean_image(self):
         if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
             max_size = settings.MAX_IMAGE_SIZE / 1024
-            raise forms.ValidationError(
-                _("Image exceeds max image size: %(max)dk" % dict(max=max_size)))
+            msg = _("Image exceeds max image size: %(max)dk")
+            raise forms.ValidationError(msg % dict(max=max_size))
         return self.cleaned_data['image']
 
 
@@ -45,7 +45,8 @@ class ChallengeContactForm(forms.Form):
             challenge = Challenge.objects.get(id=int(challenge))
         except Challenge.DoesNotExist:
             raise forms.ValidationError(_(u'Not a valid challenge'))
-        recipients = UserProfile.objects.filter(submissions__challenge=challenge).distinct()
+        recipients = UserProfile.objects.filter(
+            submissions__challenge=challenge).distinct()
         subject = self.cleaned_data['subject']
         body = self.cleaned_data['body']
         message_list = []

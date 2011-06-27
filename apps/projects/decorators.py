@@ -2,7 +2,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
-from projects.models import Project, Participation
+from projects.models import Project
 
 
 def organizer_required(func):
@@ -16,7 +16,8 @@ def organizer_required(func):
         project = kwargs['slug']
         project = get_object_or_404(Project, slug=project)
         if not project.is_organizing(request.user):
-            return HttpResponseForbidden(_("You are not organizing this %s") % project.kind.lower())
+            msg = _("You are not organizing this %s")
+            return HttpResponseForbidden(msg % project.kind.lower())
         return func(*args, **kwargs)
     return decorator
 
@@ -31,7 +32,7 @@ def participation_required(func):
         project = kwargs['slug']
         project = get_object_or_404(Project, slug=project)
         if not project.is_participating(request.user):
-            return HttpResponseForbidden(_("You are not participating in this %s") % project.kind.lower())
+            msg = _("You are not participating in this %s")
+            return HttpResponseForbidden(msg % project.kind.lower())
         return func(*args, **kwargs)
     return decorator
-

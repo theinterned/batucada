@@ -4,8 +4,6 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.utils.translation import ugettext as _
-from django.utils.translation import activate, get_language
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.sites.models import Site
@@ -76,7 +74,7 @@ def dashboard(request, page=1):
     users_following = profile.following()
     users_followers = profile.followers()
     activities = Activity.objects.dashboard(request.user.get_profile())
-    
+
     paginator = Paginator(activities, 25)
     try:
         current_page = paginator.page(page)

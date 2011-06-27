@@ -1,3 +1,4 @@
+{% load l10n_tags %}
 {% if is_answer %}
 {{ comment.author }}{{ _(' submitted a new answer at the sign-up page of ') }}{{ project.name }}{{ _('.') }}
 {% else %}

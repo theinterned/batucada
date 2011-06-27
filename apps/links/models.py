@@ -27,16 +27,18 @@ class Link(models.Model):
     def save(self, *args, **kwargs):
         if not self.index:
             if self.project:
-                max_index = Link.objects.filter(project=self.project).aggregate(Max('index'))['index__max']
+                max_index = Link.objects.filter(
+                    project=self.project).aggregate(Max('index'))['index__max']
             else:
-                max_index = Link.objects.filter(user=self.user, project__isnull=True).aggregate(Max('index'))['index__max']
+                max_index = Link.objects.filter(user=self.user,
+                    project__isnull=True).aggregate(Max('index'))['index__max']
             self.index = max_index + 1 if max_index else 1
         super(Link, self).save(*args, **kwargs)
+
 
 def link_create_handler(sender, **kwargs):
     """Check for a feed and subscribe to it if it exists."""
     link = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
     if not isinstance(link, Link):
         return
     if link.subscribe:
@@ -67,9 +69,12 @@ def listener(notification, **kwargs):
     if not sender:
         return
     try:
-        log.debug('Received feed update notification: %s, sender: %s' % (notification, sender))
-        eager_result = tasks.HandleNotification.apply_async(args=(notification, sender))
-        log.debug('Result from the feed notification handler: %s, %s' % (eager_result.status, eager_result.result))
+        msg = 'Received feed update notification: %s, sender: %s'
+        log.debug(msg % (notification, sender))
+        eager_result = tasks.HandleNotification.apply_async(
+            args=(notification, sender))
+        msg = 'Result from the feed notification handler: %s, %s'
+        log.debug(msg % (eager_result.status, eager_result.result))
     except Exception, ex:
         log.warn("Unprocessable notification: %s (%s)" % (notification, ex))
 updated.connect(listener)

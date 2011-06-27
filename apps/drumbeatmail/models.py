@@ -1,10 +1,8 @@
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language, ugettext
+from django.conf import settings
 
 from l10n.urlresolvers import reverse
 from messages.models import Message

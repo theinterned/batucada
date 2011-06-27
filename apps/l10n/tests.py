@@ -4,7 +4,7 @@ from django.conf import settings
 from django.test import Client
 from django.contrib.auth.models import User
 
-from users.models import UserProfile, create_profile
+from users.models import create_profile
 from l10n import locales
 
 import test_utils

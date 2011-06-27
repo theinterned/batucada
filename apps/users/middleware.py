@@ -10,15 +10,15 @@ class ProfileExistMiddleware(object):
     def process_request(self, request):
         if request.user.is_authenticated():
             try:
-                profile = request.user.get_profile()
+                request.user.get_profile()
             except UserProfile.DoesNotExist:
                 dashboard_url = reverse('dashboard_index')
                 profile_create_url = reverse('users_profile_create')
-                logout_url = reverse('users_logout')      
-                if request.path in (dashboard_url, profile_create_url, logout_url):
+                logout_url = reverse('users_logout')
+                valid_urls = (dashboard_url, profile_create_url, logout_url)
+                if request.path in valid_urls:
                     return None
                 for prefix in settings.NO_PROFILE_URLS:
                     if request.path.startswith(prefix):
                         return None
                 return HttpResponseRedirect(dashboard_url)
-            

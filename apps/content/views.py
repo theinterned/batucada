@@ -2,10 +2,9 @@ import datetime
 import bleach
 
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
+from django import http
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from django.db.models import Q
 from django.template.loader import render_to_string
 from django.db import IntegrityError
 from django.core.paginator import Paginator, EmptyPage
@@ -19,7 +18,8 @@ from projects.decorators import participation_required, organizer_required
 from projects.models import Project, Participation
 from relationships.models import Relationship
 
-from content.forms import PageForm, NotListedPageForm, CommentForm, OwnersPageForm, OwnersNotListedPageForm
+from content.forms import PageForm, NotListedPageForm, CommentForm
+from content.forms import OwnersPageForm, OwnersNotListedPageForm
 from content.models import Page, PageVersion, PageComment
 from links.models import Link
 
@@ -33,12 +33,12 @@ def show_page(request, slug, page_slug, pagination_page=1):
     if page.deleted:
         messages.error(request, _('This task was deleted.'))
         if can_edit:
-            return HttpResponseRedirect(reverse('page_history', kwargs={'slug':page.project.slug,
-                'page_slug':page.slug}))
+            return http.HttpResponseRedirect(reverse('page_history',
+                kwargs={'slug': page.project.slug, 'page_slug': page.slug}))
         else:
-            return HttpResponseRedirect(page.project.get_absolute_url())
-    first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
-    
+            return http.HttpResponseRedirect(page.project.get_absolute_url())
+    first_level_comments = page.comments.filter(
+        reply_to__isnull=True).order_by('-created_on')
     paginator = Paginator(first_level_comments, 5)
     try:
         current_page = paginator.page(pagination_page)
@@ -58,9 +58,10 @@ def show_page(request, slug, page_slug, pagination_page=1):
         'pagination_page': current_page,
     }, context_instance=RequestContext(request))
 
+
 def show_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, page__project__slug=slug, page__slug=page_slug,
-        id=comment_id)
+    comment = get_object_or_404(PageComment, page__project__slug=slug,
+        page__slug=page_slug, id=comment_id)
     page_url = comment.page.get_absolute_url()
     if comment.deleted:
         if page_slug == 'sign-up' and not comment.reply_to:
@@ -69,12 +70,13 @@ def show_comment(request, slug, page_slug, comment_id):
             msg = _('This comment was deleted.')
         messages.error(request, msg)
         if comment.can_edit(request.user):
-            return HttpResponseRedirect(reverse('comment_restore', kwargs={'slug': comment.page.project.slug,
+            return http.HttpResponseRedirect(reverse('comment_restore',
+                kwargs={'slug': comment.page.project.slug,
                 'page_slug': comment.page.slug, 'comment_id': comment.id}))
         else:
-            return HttpResponseRedirect(page_url)
+            return http.HttpResponseRedirect(page_url)
     else:
-        return HttpResponseRedirect(page_url + '#%s' % comment.id)
+        return http.HttpResponseRedirect(page_url + '#%s' % comment.id)
 
 
 @login_required
@@ -82,14 +84,14 @@ def show_comment(request, slug, page_slug, comment_id):
 def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if not page.editable or page.deleted:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
     elif page.collaborative:
         form_cls = PageForm if page.listed else NotListedPageForm
     else:
         # Restrict permissions for non-collaborative pages.
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     preview = False
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
@@ -101,17 +103,18 @@ def edit_page(request, slug, page_slug):
             page.last_update = datetime.datetime.now()
             if 'show_preview' in request.POST:
                 preview = True
-                page.content = bleach.clean(page.content, tags=settings.RICH_ALLOWED_TAGS,
+                page.content = bleach.clean(page.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
             else:
-              old_version.save()
-              page.save()
-              messages.success(request, _('%s updated!') % page.title)
-              return HttpResponseRedirect(reverse('page_show', kwargs={
-                  'slug': slug,
-                  'page_slug': page_slug,
-              }))
+                old_version.save()
+                page.save()
+                messages.success(request, _('%s updated!') % page.title)
+                return http.HttpResponseRedirect(reverse('page_show', kwargs={
+                    'slug': slug,
+                    'page_slug': page_slug,
+                }))
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
@@ -122,6 +125,7 @@ def edit_page(request, slug, page_slug):
         'project': page.project,
         'preview': preview,
     }, context_instance=RequestContext(request))
+
 
 @login_required
 @participation_required
@@ -141,13 +145,14 @@ def create_page(request, slug):
             page.author = request.user.get_profile()
             if 'show_preview' in request.POST:
                 preview = True
-                page.content = bleach.clean(page.content, tags=settings.RICH_ALLOWED_TAGS,
+                page.content = bleach.clean(page.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
             else:
                 page.save()
                 messages.success(request, _('Task created!'))
-                return HttpResponseRedirect(reverse('page_show', kwargs={
+                return http.HttpResponseRedirect(reverse('page_show', kwargs={
                     'slug': slug,
                     'page_slug': page.slug,
                 }))
@@ -168,9 +173,9 @@ def create_page(request, slug):
 def delete_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if page.deleted or not page.editable or not page.listed:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     if not page.project.is_organizing(request.user) and not page.collaborative:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page)
@@ -180,8 +185,8 @@ def delete_page(request, slug, page_slug):
         page.deleted = True
         page.save()
         messages.success(request, _('%s deleted!') % page.title)
-        return HttpResponseRedirect(reverse('page_history',
-            kwargs={'slug':page.project.slug, 'page_slug':page.slug}))
+        return http.HttpResponseRedirect(reverse('page_history',
+            kwargs={'slug': page.project.slug, 'page_slug': page.slug}))
     else:
         return render_to_response('content/confirm_delete_page.html', {
             'page': page,
@@ -189,13 +194,12 @@ def delete_page(request, slug, page_slug):
         }, context_instance=RequestContext(request))
 
 
-
 @login_required
 @participation_required
 def comment_page(request, slug, page_slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if not page.editable:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     user = request.user.get_profile()
     reply_to = abs_reply_to = None
     if comment_id:
@@ -215,13 +219,14 @@ def comment_page(request, slug, page_slug, comment_id=None):
             comment.abs_reply_to = abs_reply_to
             if 'show_preview' in request.POST:
                 preview = True
-                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                comment.content = bleach.clean(comment.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
             else:
                 comment.save()
                 messages.success(request, _('Comment posted!'))
-                return HttpResponseRedirect(comment.get_absolute_url())
+                return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
@@ -240,9 +245,10 @@ def comment_page(request, slug, page_slug, comment_id=None):
 @login_required
 @participation_required
 def edit_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, id=comment_id, page__slug=page_slug, page__project__slug=slug)
+    comment = get_object_or_404(PageComment, id=comment_id,
+        page__slug=page_slug, page__project__slug=slug)
     if not comment.can_edit(request.user):
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     preview = False
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
@@ -250,13 +256,14 @@ def edit_comment(request, slug, page_slug, comment_id):
             comment = form.save(commit=False)
             if 'show_preview' in request.POST:
                 preview = True
-                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                comment.content = bleach.clean(comment.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
             else:
                 comment.save()
                 messages.success(request, _('Comment updated!'))
-                return HttpResponseRedirect(comment.get_absolute_url())
+                return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
@@ -273,21 +280,28 @@ def edit_comment(request, slug, page_slug, comment_id):
 
 @login_required
 def delete_restore_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, id=comment_id, page__slug=page_slug, page__project__slug=slug)
+    comment = get_object_or_404(PageComment, id=comment_id,
+        page__slug=page_slug, page__project__slug=slug)
     if not comment.can_edit(request.user):
-        return HttpResponseForbidden(_("You can't edit this comment"))
+        return http.HttpResponseForbidden(_("You can't edit this comment"))
     if request.method == 'POST':
         comment.deleted = not comment.deleted
         comment.save()
         if comment.page.slug == 'sign-up' and not comment.reply_to:
-            msg = _('Answer deleted!') if comment.deleted else _('Answer restored!')
+            if comment.deleted:
+                msg = _('Answer deleted!')
+            else:
+                msg = _('Answer restored!')
         else:
-            msg = _('Comment deleted!') if comment.deleted else _('Comment restored!')
+            if comment.deleted:
+                msg = _('Comment deleted!')
+            else:
+                msg = _('Comment restored!')
         messages.success(request, msg)
         if comment.deleted:
-            return HttpResponseRedirect(comment.page.get_absolute_url())
+            return http.HttpResponseRedirect(comment.page.get_absolute_url())
         else:
-            return HttpResponseRedirect(comment.get_absolute_url())
+            return http.HttpResponseRedirect(comment.get_absolute_url())
     else:
         return render_to_response('content/delete_restore_comment.html', {
             'comment': comment,
@@ -299,7 +313,7 @@ def delete_restore_comment(request, slug, page_slug, comment_id):
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     if not page.editable:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     versions = PageVersion.objects.filter(page=page).order_by('-date')
     return render_to_response('content/history_page.html', {
         'page': page,
@@ -313,7 +327,7 @@ def version_page(request, slug, page_slug, version_id):
         page__slug=page_slug, id=version_id, deleted=False)
     page = version.page
     if not page.editable:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     return render_to_response('content/version_page.html', {
         'page': page,
         'version': version,
@@ -329,18 +343,19 @@ def restore_version(request, slug, page_slug, version_id):
         page__slug=page_slug, id=version_id)
     page = version.page
     if not page.editable or version.deleted:
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
     elif page.collaborative:
         form_cls = PageForm if page.listed else NotListedPageForm
     else:
         # Restrict permissions for non-collaborative pages.
-        return HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't edit this page"))
     preview = False
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
-            author=page.author, date=page.last_update, page=page, deleted=page.deleted)
+            author=page.author, date=page.last_update, page=page,
+            deleted=page.deleted)
         form = form_cls(request.POST, instance=page)
         if form.is_valid():
             page = form.save(commit=False)
@@ -349,17 +364,18 @@ def restore_version(request, slug, page_slug, version_id):
             page.last_update = datetime.datetime.now()
             if 'show_preview' in request.POST:
                 preview = True
-                page.content = bleach.clean(page.content, tags=settings.RICH_ALLOWED_TAGS,
+                page.content = bleach.clean(page.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
             else:
-              old_version.save()
-              page.save()
-              messages.success(request, _('%s restored!') % page.title)
-              return HttpResponseRedirect(reverse('page_show', kwargs={
-                  'slug': slug,
-                  'page_slug': page_slug,
-              }))
+                old_version.save()
+                page.save()
+                messages.success(request, _('%s restored!') % page.title)
+                return http.HttpResponseRedirect(reverse('page_show', kwargs={
+                    'slug': slug,
+                    'page_slug': page_slug,
+                }))
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
@@ -382,15 +398,19 @@ def sign_up(request, slug, pagination_page=1):
         profile = request.user.get_profile()
         is_organizing = project.organizers().filter(user=profile).exists()
         is_participating = project.participants().filter(user=profile).exists()
-        first_level_comments = page.comments.filter(reply_to__isnull=True).order_by('-created_on')
+        first_level_comments = page.comments.filter(
+            reply_to__isnull=True).order_by('-created_on')
         can_post_answer = False
         if not is_organizing:
             if is_participating:
                 participants = project.participants()
-                first_level_comments = first_level_comments.filter(author__in=participants.values('user_id'))
+                first_level_comments = first_level_comments.filter(
+                    author__in=participants.values('user_id'))
             else:
-                first_level_comments = first_level_comments.filter(author=profile)
-                can_post_answer = not first_level_comments.filter(deleted=False).exists()
+                first_level_comments = first_level_comments.filter(
+                    author=profile)
+                can_post_answer = not first_level_comments.filter(
+                    deleted=False).exists()
     else:
         first_level_comments = []
         is_organizing = is_participating = can_post_answer = False
@@ -403,7 +423,8 @@ def sign_up(request, slug, pagination_page=1):
                 pending_answers_count += 1
     if is_organizing:
         for comment in first_level_comments:
-             comment.is_participating = project.participants().filter(user=comment.author)
+            comment.is_participating = project.participants().filter(
+                user=comment.author)
     paginator = Paginator(first_level_comments, 7)
     try:
         current_page = paginator.page(pagination_page)
@@ -442,16 +463,18 @@ def comment_sign_up(request, slug, comment_id=None):
         if not is_organizing:
             if is_participating:
                 if not project.is_participating(abs_reply_to.author.user):
-                    return HttpResponseForbidden(_("You can't see this page"))
+                    return http.HttpResponseForbidden(
+                        _("You can't see this page"))
             elif abs_reply_to.author != profile:
-                return HttpResponseForbidden(_("You can't see this page"))
+                return http.HttpResponseForbidden(_("You can't see this page"))
     elif project.signup_closed or is_organizing or is_participating:
-        return HttpResponseForbidden(_("You can't see this page"))
+        return http.HttpResponseForbidden(_("You can't see this page"))
     else:
         answers = page.comments.filter(reply_to__isnull=True, deleted=False,
             author=profile)
         if answers.exists():
-            return HttpResponseForbidden(_("There exists already an answer"))
+            return http.HttpResponseForbidden(
+                _("There exists already an answer"))
     preview = False
     comment = None
     if request.method == 'POST':
@@ -468,24 +491,31 @@ def comment_sign_up(request, slug, comment_id=None):
             comment.abs_reply_to = abs_reply_to
             if 'show_preview' in request.POST:
                 preview = True
-                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                comment.content = bleach.clean(comment.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
                 if not reply_to:
-                    profile.bio = bleach.clean(profile.bio, tags=settings.REDUCED_ALLOWED_TAGS,
-                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+                    profile.bio = bleach.clean(profile.bio,
+                        tags=settings.REDUCED_ALLOWED_TAGS,
+                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
+                        strip=True)
             else:
                 if not reply_to:
                     profile.save()
-                    new_rel = Relationship(source=profile, target_project=project)
+                    new_rel = Relationship(source=profile,
+                        target_project=project)
                     try:
                         new_rel.save()
                     except IntegrityError:
                         pass
                 comment.save()
-                success_msg = _('Reply posted!') if reply_to else _('Answer submitted!')
+                if reply_to:
+                    success_msg = _('Reply posted!')
+                else:
+                    success_msg = _('Answer submitted!')
                 messages.success(request, success_msg)
-                return HttpResponseRedirect(comment.get_absolute_url())
+                return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
@@ -508,9 +538,10 @@ def comment_sign_up(request, slug, comment_id=None):
 
 @login_required
 def edit_comment_sign_up(request, slug, comment_id):
-    comment = get_object_or_404(PageComment, page__project__slug=slug, page__slug='sign-up', id=comment_id)
+    comment = get_object_or_404(PageComment, page__project__slug=slug,
+        page__slug='sign-up', id=comment_id)
     if not comment.can_edit(request.user):
-        return HttpResponseForbidden(_("You can't edit this comment"))
+        return http.HttpResponseForbidden(_("You can't edit this comment"))
     abs_reply_to = comment
     while abs_reply_to.reply_to:
         abs_reply_to = abs_reply_to.reply_to
@@ -530,19 +561,25 @@ def edit_comment_sign_up(request, slug, comment_id):
             comment = form.save(commit=False)
             if 'show_preview' in request.POST:
                 preview = True
-                comment.content = bleach.clean(comment.content, tags=settings.RICH_ALLOWED_TAGS,
+                comment.content = bleach.clean(comment.content,
+                    tags=settings.RICH_ALLOWED_TAGS,
                     attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                     styles=settings.RICH_ALLOWED_STYLES, strip=True)
                 if not reply_to:
-                    profile.bio = bleach.clean(profile.bio, tags=settings.REDUCED_ALLOWED_TAGS,
-                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
+                    profile.bio = bleach.clean(profile.bio,
+                        tags=settings.REDUCED_ALLOWED_TAGS,
+                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
+                        strip=True)
             else:
                 if not reply_to:
                     profile.save()
                 comment.save()
-                success_msg = _('Comment updated!') if reply_to else _('Answer updated!')
+                if reply_to:
+                    success_msg = _('Comment updated!')
+                else:
+                    success_msg = _('Answer updated!')
                 messages.success(request, success_msg)
-                return HttpResponseRedirect(comment.get_absolute_url())
+                return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
@@ -569,28 +606,31 @@ def accept_sign_up(request, slug, comment_id, as_organizer=False):
     project = page.project
     answer = page.comments.get(pk=comment_id)
     organizing = project.organizers().filter(user=answer.author.user).exists()
-    participating = project.participants().filter(user=answer.author.user).exists()
-    if answer.reply_to or organizing or participating or request.method != 'POST':
-        return HttpResponseForbidden(_("You can't see this page"))
-    participation = Participation(project=project, user=answer.author, organizing=as_organizer)
+    participating = project.participants().filter(
+        user=answer.author.user).exists()
+    can_accept = not (answer.reply_to or organizing or participating)
+    if can_accept or request.method != 'POST':
+        return http.HttpResponseForbidden(_("You can't see this page"))
+    participation = Participation(project=project, user=answer.author,
+        organizing=as_organizer)
     participation.save()
     new_rel = Relationship(source=answer.author, target_project=project)
     try:
         new_rel.save()
     except IntegrityError:
         pass
-    accept_content = detail_description_content = render_to_string(
+    accept_content = render_to_string(
             "content/accept_sign_up_comment.html",
             {'as_organizer': as_organizer})
-    accept_comment = PageComment(content=accept_content, 
-        author = request.user.get_profile(), page = page, reply_to = answer, 
-        abs_reply_to = answer)
+    accept_comment = PageComment(content=accept_content,
+        author=request.user.get_profile(), page=page, reply_to=answer,
+        abs_reply_to=answer)
     accept_comment.save()
     if as_organizer:
         messages.success(request, _('Organizer added!'))
     else:
         messages.success(request, _('Participant added!'))
-    return HttpResponseRedirect(answer.get_absolute_url())
+    return http.HttpResponseRedirect(answer.get_absolute_url())
 
 
 @login_required
@@ -601,36 +641,39 @@ def page_index_up(request, slug, counter):
     try:
         counter = int(counter)
     except ValueError:
-        raise Http404
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True).order_by('index')
+        raise http.Http404
+    content_pages = Page.objects.filter(project__pk=project.pk,
+        listed=True).order_by('index')
     if counter < 1 or content_pages.count() <= counter:
-        raise Http404
+        raise http.Http404
     prev_page = content_pages[counter - 1]
     page = content_pages[counter]
     prev_page.index, page.index = page.index, prev_page.index
     page.save()
     prev_page.save()
-    return HttpResponseRedirect(project.get_absolute_url() + '#tasks')
+    return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
 
 
 @login_required
 @participation_required
 def page_index_down(request, slug, counter):
-    #Page goes down in the sidebar index (page.index increases). 
+    #Page goes down in the sidebar index (page.index increases).
     project = get_object_or_404(Project, slug=slug)
     try:
         counter = int(counter)
     except ValueError:
-        raise Http404
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True, deleted=False).order_by('index')
+        raise http.Http404
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
+        deleted=False).order_by('index')
     if counter < 0 or content_pages.count() - 1 <= counter:
-        raise Http404
+        raise http.Http404
     next_page = content_pages[counter + 1]
     page = content_pages[counter]
     next_page.index, page.index = page.index, next_page.index
     page.save()
     next_page.save()
-    return HttpResponseRedirect(project.get_absolute_url() + '#tasks')
+    return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
+
 
 @login_required
 @participation_required
@@ -640,16 +683,16 @@ def link_index_up(request, slug, counter):
     try:
         counter = int(counter)
     except ValueError:
-        raise Http404
+        raise http.Http404
     links = Link.objects.filter(project__pk=project.pk).order_by('index')
     if counter < 1 or links.count() <= counter:
-        raise Http404
+        raise http.Http404
     prev_link = links[counter - 1]
     link = links[counter]
     prev_link.index, link.index = link.index, prev_link.index
     link.save()
     prev_link.save()
-    return HttpResponseRedirect(project.get_absolute_url() + '#links')
+    return http.HttpResponseRedirect(project.get_absolute_url() + '#links')
 
 
 @login_required
@@ -660,14 +703,13 @@ def link_index_down(request, slug, counter):
     try:
         counter = int(counter)
     except ValueError:
-        raise Http404
+        raise http.Http404
     links = Link.objects.filter(project__pk=project.pk).order_by('index')
     if counter < 0 or links.count() - 1 <= counter:
-        raise Http404
+        raise http.Http404
     next_link = links[counter + 1]
     link = links[counter]
     next_link.index, link.index = link.index, next_link.index
     link.save()
     next_link.save()
-    return HttpResponseRedirect(project.get_absolute_url() + '#links')
-
+    return http.HttpResponseRedirect(project.get_absolute_url() + '#links')

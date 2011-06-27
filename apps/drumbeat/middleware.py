@@ -20,5 +20,3 @@ class NotFoundMiddleware(object):
             except UnicodeError:
                 pass
         return response
-
-
