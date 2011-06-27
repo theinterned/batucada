@@ -406,6 +406,7 @@ header {}
     .gsc-control-cse {
         border-radius: 10px;
         border: solid 1px #EEE;
+        width: 960px;
      }
 
       #user-nav a, #main-nav a {
