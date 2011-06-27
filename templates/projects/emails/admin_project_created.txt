@@ -3,4 +3,3 @@ Hello admins!
 
 There is a new {{ project.kind|lower }}: {{ project.name }}: http://{{domain}}{{ project.get_absolute_url }}
 
-School picked: {% if project.school %}{{ project.school.name }}{% else %}None{% endif %}

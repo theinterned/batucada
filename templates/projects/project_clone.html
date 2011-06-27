@@ -8,7 +8,7 @@
 <fieldset id="project_clone" class="project clone tabpane">
 <h2>{{ _('Clone Existing') }}</h2>
 <p class="hint">{{ _('Create a new study group, course ... based on an existing one. Note that if you start typing the matching suggestions will be displayed.') }}</p>
-<form action="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif %}" method="post">
+<form action="{% locale_url projects_clone %}" method="post">
   {% csrf_token %}
   <p>
     <div class="field project{% if form.project.errors %} error{% endif %}">
@@ -18,7 +18,7 @@
     </div>
   </p>
   <p class="buttons">
-    <a class="button" href="{% if school %}{% locale_url school_home slug=school.slug %}{% else %}{% locale_url projects_gallery %}{% endif %}">{{ _('Cancel') }}</a>
+    <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Clone') }}">{{ _('Clone') }}</button>
   </p>
 </form>
@@ -30,7 +30,7 @@
   <script type="text/javascript">
     $('#id_project').autocomplete({
         source: function( request, response ) {
-                url = "{% url matching_projects %}?term=" + request.term + "{% if school %}&school={{ school.slug }}{% endif %}";
+                url = "{% url matching_projects %}?term=" + request.term;
                 $.getJSON(url, function(data) {
                     response(data);
                 });

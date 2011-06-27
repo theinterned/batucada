@@ -75,7 +75,6 @@ def list_all(request, page=1):
 @login_required
 def create(request):
     user = request.user.get_profile()
-    school = None
     if request.method == 'POST':
         form = project_forms.CreateProjectForm(request.POST)
         if form.is_valid():
@@ -118,17 +117,9 @@ def create(request):
             msg = _("Problem creating the study group, course, ...")
             messages.error(request, msg)
     else:
-        if 'school' in request.GET:
-            try:
-                school = School.objects.get(slug=request.GET['school'])
-                form = project_forms.CreateProjectForm(
-                    initial={'school': school})
-            except School.DoesNotExist:
-                return http.HttpResponseRedirect(reverse('projects_create'))
-        else:
-            form = project_forms.CreateProjectForm()
+        form = project_forms.CreateProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
-        'form': form, 'new_tab': True, 'school': school,
+        'form': form, 'new_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -197,21 +188,14 @@ def show(request, slug, page=1):
 @login_required
 def clone(request):
     user = request.user.get_profile()
-    if 'school' in request.GET:
-        try:
-            school = School.objects.get(slug=request.GET['school'])
-        except School.DoesNotExist:
-            return http.HttpResponseRedirect(reverse('projects_clone'))
-    else:
-        school = None
     if request.method == 'POST':
-        form = project_forms.CloneProjectForm(school, request.POST)
+        form = project_forms.CloneProjectForm(request.POST)
         if form.is_valid():
             base_project = form.cleaned_data['project']
             project = Project(name=base_project.name, kind=base_project.kind,
                 short_description=base_project.short_description,
                 long_description=base_project.long_description,
-                school=base_project.school, clone_of=base_project)
+                clone_of=base_project)
             project.save()
             act = Activity(actor=user,
                 verb='http://activitystrea.ms/schema/1.0/post',
@@ -249,6 +233,7 @@ def clone(request):
                 new_link = Link(name=link.name, url=link.url, user=user,
                     project=project)
                 new_link.save()
+            project.create()
             messages.success(request,
                 _('The %s has been cloned.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
@@ -258,9 +243,9 @@ def clone(request):
             messages.error(request,
                 _("There was a problem cloning the study group, course, ..."))
     else:
-        form = project_forms.CloneProjectForm(school)
+        form = project_forms.CloneProjectForm()
     return render_to_response('projects/project_clone.html', {
-        'form': form, 'clone_tab': True, 'school': school,
+        'form': form, 'clone_tab': True,
     }, context_instance=RequestContext(request))
 
 
@@ -268,15 +253,8 @@ def matching_projects(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
 
-    if 'school' in request.GET:
-        try:
-            school = School.objects.get(slug=request.GET['school'])
-            projects = Project.objects.filter(school=school)
-        except School.DoesNotExist:
-            projects = Project.objects.all()
-    else:
-        projects = Project.objects.all()
-    matching_projects = projects.filter(slug__icontains=request.GET['term'])
+    matching_projects = Project.objects.filter(
+        slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
     return http.HttpResponse(json, mimetype="application/x-javascript")
@@ -285,21 +263,14 @@ def matching_projects(request):
 @login_required
 def import_from_old_site(request):
     user = request.user.get_profile()
-    if 'school' in request.GET:
-        try:
-            school = School.objects.get(slug=request.GET['school'])
-        except School.DoesNotExist:
-            return http.HttpResponseRedirect(reverse('projects_clone'))
-    else:
-        school = None
     if request.method == 'POST':
-        form = project_forms.ImportProjectForm(school, request.POST)
+        form = project_forms.ImportProjectForm(request.POST)
         if form.is_valid():
             course = form.cleaned_data['course']
             project = Project(name=course['name'], kind=course['kind'],
                 short_description=course['short_description'],
                 long_description=course['long_description'],
-                school=course['school'], imported_from=course['slug'])
+                imported_from=course['slug'])
             project.save()
             act = Activity(actor=user,
                 verb='http://activitystrea.ms/schema/1.0/post',
@@ -340,6 +311,7 @@ def import_from_old_site(request):
             for name, url in course['links']:
                 new_link = Link(name=name, url=url, user=user, project=project)
                 new_link.save()
+            project.create()
             messages.success(request,
                 _('The %s has been imported.') % project.kind.lower())
             return http.HttpResponseRedirect(reverse('projects_show', kwargs={
@@ -349,23 +321,17 @@ def import_from_old_site(request):
             msg = _("Problem importing the study group, course, ...")
             messages.error(request, msg)
     else:
-        form = project_forms.ImportProjectForm(school)
+        form = project_forms.ImportProjectForm()
     return render_to_response('projects/project_import.html', {
-        'form': form, 'import_tab': True,
-        'school': school}, context_instance=RequestContext(request))
+        'form': form, 'import_tab': True},
+        context_instance=RequestContext(request))
 
 
 def matching_courses(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
-    school = None
-    if 'school' in request.GET:
-        try:
-            school = School.objects.get(slug=request.GET['school'])
-        except School.DoesNotExist:
-            pass
-    matching_nodes = drupal.get_matching_courses(school=school,
-        term=request.GET['term'])
+
+    matching_nodes = drupal.get_matching_courses(term=request.GET['term'])
     json = simplejson.dumps(matching_nodes)
 
     return http.HttpResponse(json, mimetype="application/x-javascript")
@@ -375,7 +341,6 @@ def matching_courses(request):
 @organizer_required
 def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    msg = _('The %(kind)s membership to %(school)s was declined.')
     if request.method == 'POST':
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -385,10 +350,6 @@ def edit(request, slug):
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
-        school = project.school
-        if school and school.declined.filter(id=project.id).exists():
-            messages.error(request,
-                msg % dict(kind=project.kind.lower(), school=school.name))
         form = project_forms.ProjectForm(instance=project)
 
     return render_to_response('projects/project_edit_summary.html', {

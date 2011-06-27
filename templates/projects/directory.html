@@ -19,8 +19,7 @@
     </nav>
     {% if user.is_authenticated %}
     <div id="project-actions">
-      <a id="create-project" class="button" href="{% locale_url projects_create %}{% if school%}?school={{ school.slug }}{% endif %}">{{ _('Create') }}</a>
-      <a class="button" href="{% locale_url projects_directory %}">{{ _('View All') }}</a>
+      {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
     </div>
     {% endif %}
   </div> <!-- /.container -->
