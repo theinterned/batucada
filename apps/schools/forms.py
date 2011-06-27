@@ -151,8 +151,33 @@ class SchoolAddDeclinedForm(forms.Form):
             msg = _('The %(slug)s %(kind)s is not part of this school.')
             raise forms.ValidationError(msg % {'slug': slug,
                 'kind': project.kind.lower()})
-        if self.school.featured.filter(slug=slug).exists():
+        if self.school.declined.filter(slug=slug).exists():
             msg = _('The %(slug)s %(kind)s was already declined.')
             raise forms.ValidationError(msg % {'slug': slug,
                 'kind': project.kind.lower()})
+        return project
+
+
+class SchoolAddProjectForm(forms.Form):
+    project = forms.CharField()
+
+    def __init__(self, school, *args, **kwargs):
+        super(SchoolAddProjectForm, self).__init__(*args, **kwargs)
+        self.school = school
+
+    def clean_project(self):
+        slug = self.cleaned_data['project']
+        msg = _('There is no study group, course, ... with short name: %s.')
+        try:
+            project = Project.objects.get(slug=slug)
+        except Project.DoesNotExist:
+            raise forms.ValidationError(msg % slug)
+        if project.school == self.school:
+            msg = _('The %(slug)s %(kind)s is already part of this school.')
+            raise forms.ValidationError(msg % {'slug': slug,
+                'kind': project.kind.lower()})
+        elif project.school:
+            msg = _('The %(slug)s %(kind)s is part of: %(school)s.')
+            raise forms.ValidationError(msg % {'slug': slug,
+                'kind': project.kind.lower(), 'school': project.school.name})
         return project

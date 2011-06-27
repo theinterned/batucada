@@ -26,12 +26,6 @@
     {{ form.short_description }}
     {{ form.short_description.errors }}
   </div>
-  <div class="field{% if form.school.errors %} error{% endif %}">
-    <label for="id_school">{{ _('School') }}</label>
-    <span class="hint block">{{ _('Optionally, the study group, course, ... may belong to a particular school.') }}</span>
-    {{ form.school }}
-    {{ form.school.errors }}
-  </div>
   <div class="field long-description{% if form.long_description.errors %} error{% endif %}">
     <label for="id_long_description">{{ _('One paragraph description') }}</label>
     <span class="hint block">{{ _('This description is shown on home page of the study group, course, ... It can go into a bit more detail, but it should be brief and to the point.') }}</span>
@@ -43,7 +37,7 @@
     <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
     {% else %}
-    <a class="button" href="{% if school %}{% locale_url school_home slug=school.slug %}{% else %}{% locale_url projects_gallery %}{% endif %}">{{ _('Cancel') }}</a>
+    <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
     {% endif %}
   </p>

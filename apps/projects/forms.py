@@ -23,7 +23,7 @@ class CreateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'kind', 'short_description',
-            'long_description', 'school', 'not_listed')
+            'long_description', 'not_listed')
     widgets = {
         'long_description': CKEditorWidget(config_name='reduced'),
     }
@@ -34,7 +34,7 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'kind', 'short_description',
-            'long_description', 'school')
+            'long_description')
     widgets = {
         'long_description': CKEditorWidget(config_name='reduced'),
     }
@@ -138,10 +138,6 @@ class ProjectContactOrganizersForm(forms.Form):
 class CloneProjectForm(forms.Form):
     project = forms.CharField()
 
-    def __init__(self, school=None, *args, **kwargs):
-        super(CloneProjectForm, self).__init__(*args, **kwargs)
-        self.school = school
-
     def clean_project(self):
         slug = self.cleaned_data['project']
         msg = _('There is no study group, course, ... with short name: %s.')
@@ -149,19 +145,11 @@ class CloneProjectForm(forms.Form):
             project = Project.objects.get(slug=slug)
         except Project.DoesNotExist:
             raise forms.ValidationError(msg % slug)
-        if self.school and project.school != self.school:
-            msg = _('The %(slug)s %(kind)s is not part of this school.')
-            raise forms.ValidationError(msg % {'slug': slug,
-                'kind': project.kind})
         return project
 
 
 class ImportProjectForm(forms.Form):
     course = forms.CharField()
-
-    def __init__(self, school=None, *args, **kwargs):
-        super(ImportProjectForm, self).__init__(*args, **kwargs)
-        self.school = school
 
     def clean_course(self):
         slug = self.cleaned_data['course']
@@ -169,7 +157,4 @@ class ImportProjectForm(forms.Form):
         if not course:
             raise forms.ValidationError(
                 _('There is no course with this short name on the archive.'))
-        if self.school and course['school'] != self.school:
-            msg = _('The %s course was not part of this school.')
-            raise forms.ValidationError(msg % slug)
         return course

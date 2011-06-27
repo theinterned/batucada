@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-27 02:28-0400\n"
+"POT-Creation-Date: 2011-06-27 18:41-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgstr "¡Reto actualizado!"
 msgid "Unable to update your challenge."
 msgstr "No fue posible actualizar su reto."
 
-#: apps/challenges/views.py:118 apps/users/views.py:530
+#: apps/challenges/views.py:118 apps/users/views.py:532
 msgid "There was an error uploading your image."
 msgstr "Ocurrió un error al subir la imagen."
 
@@ -203,7 +203,7 @@ msgstr "Ocurrió un error al subir la imagen."
 msgid "Challenge image updated"
 msgstr "Imagen del reto actualizada"
 
-#: apps/challenges/views.py:139 apps/projects/views.py:434
+#: apps/challenges/views.py:139 apps/projects/views.py:395
 #: apps/schools/views.py:124 apps/schools/views.py:166
 #: apps/schools/views.py:208 apps/schools/views.py:250
 msgid "There was an error uploading your image"
@@ -309,7 +309,7 @@ msgstr "Este comentario fue eliminado."
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:113 apps/projects/views.py:384
+#: apps/content/views.py:113 apps/projects/views.py:349
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
@@ -410,7 +410,7 @@ msgid "Can't send email"
 msgstr "No puede enviarse correo"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:627
+#: apps/projects/views.py:588
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -450,8 +450,8 @@ msgstr "Correo actualizado"
 msgid "Password updated"
 msgstr "Contraseña actualizada"
 
-#: apps/preferences/views.py:97 apps/users/views.py:254
-#: apps/users/views.py:397
+#: apps/preferences/views.py:97 apps/users/views.py:255
+#: apps/users/views.py:399
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
@@ -498,26 +498,15 @@ msgstr "El usuario %s ya está participando."
 msgid "That study group, course, ... does not exist."
 msgstr "Ese grupo de estudio, curso, ... no existe."
 
-#: apps/projects/forms.py:147 apps/schools/forms.py:120
-#: apps/schools/forms.py:145
+#: apps/projects/forms.py:143 apps/schools/forms.py:120
+#: apps/schools/forms.py:145 apps/schools/forms.py:170
 #, python-format
 msgid "There is no study group, course, ... with short name: %s."
 msgstr "No hay un grupo de estudio, curso, ... con nombre corto: %s."
 
-#: apps/projects/forms.py:153 apps/schools/forms.py:126
-#: apps/schools/forms.py:151
-#, python-format
-msgid "The %(slug)s %(kind)s is not part of this school."
-msgstr "El %(kind)s %(slug)s no es parte de esta escuela."
-
-#: apps/projects/forms.py:171
+#: apps/projects/forms.py:159
 msgid "There is no course with this short name on the archive."
 msgstr "No hay un curso con ese nombre corto en el archivo."
-
-#: apps/projects/forms.py:173
-#, python-format
-msgid "The %s course was not part of this school."
-msgstr "El curso %s no era parte de esta escuela."
 
 #: apps/projects/models.py:83
 msgid "Study Group"
@@ -527,97 +516,92 @@ msgstr "Grupo de Estudio"
 msgid "group"
 msgstr "grupo"
 
-#: apps/projects/views.py:99 apps/projects/views.py:229
-#: apps/projects/views.py:323 templates/challenges/submission_edit.html:18
+#: apps/projects/views.py:98 apps/projects/views.py:213
+#: apps/projects/views.py:294 templates/challenges/submission_edit.html:18
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:106 apps/projects/views.py:235
-#: apps/projects/views.py:330
+#: apps/projects/views.py:105 apps/projects/views.py:219
+#: apps/projects/views.py:301
 msgid "Sign-Up"
 msgstr "Inscripción"
 
-#: apps/projects/views.py:113
+#: apps/projects/views.py:112
 #, python-format
 msgid "The %s has been created."
 msgstr "El %s ha sido creado."
 
-#: apps/projects/views.py:118
+#: apps/projects/views.py:117
 msgid "Problem creating the study group, course, ..."
 msgstr "Problema creando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:253
+#: apps/projects/views.py:238
 #, python-format
 msgid "The %s has been cloned."
 msgstr "El %s ha sido clonado."
 
-#: apps/projects/views.py:259
+#: apps/projects/views.py:244
 msgid "There was a problem cloning the study group, course, ..."
 msgstr "Ocurrió un problema al clonar el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:344
+#: apps/projects/views.py:316
 #, python-format
 msgid "The %s has been imported."
 msgstr "El %s ha sido importado."
 
-#: apps/projects/views.py:349
+#: apps/projects/views.py:321
 msgid "Problem importing the study group, course, ..."
 msgstr "Problema importando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:378
-#, python-format
-msgid "The %(kind)s membership to %(school)s was declined."
-msgstr "La membresia del %(kind)s a %(school)s fue rechazada."
-
-#: apps/projects/views.py:427 apps/schools/views.py:118
+#: apps/projects/views.py:388 apps/schools/views.py:118
 #: apps/schools/views.py:160 apps/schools/views.py:202
 #: apps/schools/views.py:244
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:456
+#: apps/projects/views.py:417
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:460
+#: apps/projects/views.py:421
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:480 apps/projects/views.py:510
-#: apps/users/views.py:602
+#: apps/projects/views.py:441 apps/projects/views.py:471
+#: apps/users/views.py:598
 msgid "You can't edit this link"
 msgstr "Usted no puede editar este enlace"
 
-#: apps/projects/views.py:490
+#: apps/projects/views.py:451
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:512
+#: apps/projects/views.py:473
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:534
+#: apps/projects/views.py:495
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:540
+#: apps/projects/views.py:501
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:572
+#: apps/projects/views.py:533
 msgid "You can't make that person an organizer"
 msgstr "Usted no puede convertir ese usuario en organizador"
 
-#: apps/projects/views.py:575
+#: apps/projects/views.py:536
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:588
+#: apps/projects/views.py:549
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:608
+#: apps/projects/views.py:569
 #, python-format
 msgid "There was a problem saving the %s's status."
 msgstr "Ocurrió un problema al guardar el estado del %s."
@@ -657,6 +641,11 @@ msgstr "Usted no esta organizando esta escuela"
 msgid "User %s is organizing the school."
 msgstr "El usuario %s está organizando la escuela."
 
+#: apps/schools/forms.py:126 apps/schools/forms.py:151
+#, python-format
+msgid "The %(slug)s %(kind)s is not part of this school."
+msgstr "El %(kind)s %(slug)s no es parte de esta escuela."
+
 #: apps/schools/forms.py:130
 #, python-format
 msgid "The %(slug)s %(kind)s is already featured."
@@ -666,6 +655,16 @@ msgstr "El %(kind)s %(slug)s ya está marcado como destacado."
 #, python-format
 msgid "The %(slug)s %(kind)s was already declined."
 msgstr "El %(kind)s %(slug)s ya fue rechazado."
+
+#: apps/schools/forms.py:176
+#, python-format
+msgid "The %(slug)s %(kind)s is already part of this school."
+msgstr "El %(kind)s %(slug)s es parte de esta escuela."
+
+#: apps/schools/forms.py:180
+#, python-format
+msgid "The %(slug)s %(kind)s is part of: %(school)s."
+msgstr "El %(kind)s %(slug)s es parte de: %(school)s."
 
 #: apps/schools/views.py:58
 msgid "School updated!"
@@ -708,10 +707,25 @@ msgstr "El %s fue rechazado para esta escuela."
 msgid "There was an error when declining %s membership."
 msgstr "Ocurrió un error al declinar la membresía de %s."
 
-#: apps/schools/views.py:402
+#: apps/schools/views.py:392
+#, python-format
+msgid "The %s was added to this school."
+msgstr "El %s fue añadido a esta escuela."
+
+#: apps/schools/views.py:397
+#, python-format
+msgid "There was an adding %s to this school."
+msgstr "Ocurrió un error al añadir %s a esta escuela."
+
+#: apps/schools/views.py:442
 #, python-format
 msgid "The %s stopped being declined for this school."
 msgstr "El %s dejo de ser rechazado para esta escuela."
+
+#: apps/schools/views.py:458
+#, python-format
+msgid "The %s is no longer part of this school."
+msgstr "El %s ya no es parte de esta escuela."
 
 #: apps/statuses/models.py:31
 msgid "statuses"
@@ -811,11 +825,11 @@ msgstr ""
 msgid "Incorrect username, email or password."
 msgstr "Contraseña, nombre de usuario, o correo incorrectos."
 
-#: apps/users/views.py:239
+#: apps/users/views.py:240
 msgid "Congratulations! Your user account was successfully created."
 msgstr "¡Felicitaciones! Su cuenta de usuario fue creada exitosamente."
 
-#: apps/users/views.py:247 apps/users/views.py:391
+#: apps/users/views.py:248 apps/users/views.py:393
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
@@ -823,15 +837,15 @@ msgstr ""
 "¡Gracias! Hemos enviado un correo a {0} con instrucciones para que termine "
 "de crear su cuenta."
 
-#: apps/users/views.py:307
+#: apps/users/views.py:309
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, ese no parece un código de confirmación correcto"
 
-#: apps/users/views.py:312
+#: apps/users/views.py:314
 msgid "Success! You have verified your account. You may now sign in."
 msgstr "¡Éxito! Ya verificó su cuenta. Ahora puede entrar."
 
-#: apps/users/views.py:328
+#: apps/users/views.py:330
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
@@ -839,15 +853,15 @@ msgstr ""
 "Se ha enviado un código de confirmación la dirección de correo asociada a su "
 "cuenta"
 
-#: apps/users/views.py:337
+#: apps/users/views.py:339
 msgid "This user account was deleted."
 msgstr "Esta cuenta de usuario fue borrada."
 
-#: apps/users/views.py:414
+#: apps/users/views.py:416
 msgid "Profile updated"
 msgstr "Perfil actualizado"
 
-#: apps/users/views.py:420
+#: apps/users/views.py:422
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
@@ -855,64 +869,64 @@ msgstr ""
 "Ocurrieron problemas al actualizar su perfil. Por favor corríja la "
 "información e intente nuevamente."
 
-#: apps/users/views.py:455
+#: apps/users/views.py:457
 #, python-format
 msgid "The identity %s has already been claimed by you."
 msgstr "La identidad %s ya ha sido reservada por usted."
 
-#: apps/users/views.py:456
+#: apps/users/views.py:458
 #, python-format
 msgid "The identity %s has already been claimed by another user."
 msgstr "Otro usuario ya reservó la identidad %s."
 
-#: apps/users/views.py:469
+#: apps/users/views.py:471
 #, python-format
 msgid "The identity %s has been saved."
 msgstr "La identidad %s ha sido salvada."
 
-#: apps/users/views.py:476
+#: apps/users/views.py:478
 #, python-format
 msgid "OpenID authentication failed: %s"
 msgstr "Fallo en la autentificación con OpenID: %s"
 
-#: apps/users/views.py:479
+#: apps/users/views.py:481
 msgid "Authentication cancelled."
 msgstr "Autentificación cancelada."
 
-#: apps/users/views.py:482
+#: apps/users/views.py:484
 #, python-format
 msgid "Unknown OpenID response type: %r"
 msgstr "Tipo de respuesta OpenID desconocido: %r"
 
-#: apps/users/views.py:484
+#: apps/users/views.py:486
 msgid "This is an OpenID relying party endpoint."
 msgstr "Esta url debe ser accedida por un proveedor de OpenID."
 
-#: apps/users/views.py:493
+#: apps/users/views.py:495
 msgid "You can't edit this openid"
 msgstr "Usted no puede editar este openid"
 
-#: apps/users/views.py:495
+#: apps/users/views.py:497
 msgid "The openid was deleted."
 msgstr "El openid fue removido."
 
-#: apps/users/views.py:525
+#: apps/users/views.py:527
 msgid "Profile image updated"
 msgstr "Imagen actualizada"
 
-#: apps/users/views.py:548
+#: apps/users/views.py:544
 msgid "Profile link added."
 msgstr "Enlace añadido."
 
-#: apps/users/views.py:557
+#: apps/users/views.py:553
 msgid "There was an error saving your link."
 msgstr "Ocurrió un error al guardar el enlace."
 
-#: apps/users/views.py:581
+#: apps/users/views.py:577
 msgid "Profile link updated"
 msgstr "Enlace actualizado"
 
-#: apps/users/views.py:604
+#: apps/users/views.py:600
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
@@ -1208,6 +1222,7 @@ msgstr "Reportar Abuso"
 #: templates/projects/project_edit_participants.html:54
 #: templates/schools/school_edit_declined.html:38
 #: templates/schools/school_edit_featured.html:38
+#: templates/schools/school_edit_membership.html:38
 #: templates/users/profile_edit_links.html:60
 #: templates/users/profile_edit_openids.html:30
 #: templates/users/settings_delete.html:26
@@ -1262,8 +1277,8 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/projects/project.html:87 templates/projects/project_clone.html:21
 #: templates/projects/project_edit_image.html:24
 #: templates/projects/project_edit_status.html:60
-#: templates/projects/project_edit_summary.html:43
-#: templates/projects/project_edit_summary.html:46
+#: templates/projects/project_edit_summary.html:37
+#: templates/projects/project_edit_summary.html:40
 #: templates/projects/project_import.html:21
 #: templates/schools/school_edit_background.html:23
 #: templates/schools/school_edit_groups_icon.html:23
@@ -1426,7 +1441,7 @@ msgstr "Reglas"
 #: templates/content/edit_page.html:48
 #: templates/dashboard/setup_profile.html:9
 #: templates/projects/project_edit_status.html:61
-#: templates/projects/project_edit_summary.html:44
+#: templates/projects/project_edit_summary.html:38
 #: templates/schools/school_edit_styles.html:74
 #: templates/schools/school_edit_summary.html:23
 #: templates/users/profile_edit_main.html:26
@@ -1441,8 +1456,8 @@ msgstr "Guardar"
 #: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:31
 #: templates/projects/project_edit.html:45
-#: templates/projects/project_edit_summary.html:47
-#: templates/projects/project_import.html:22 templates/schools/home.html:27
+#: templates/projects/project_edit_summary.html:41
+#: templates/projects/project_import.html:22
 msgid "Create"
 msgstr "Crear"
 
@@ -1467,6 +1482,7 @@ msgstr "Nombre de usuario"
 #: templates/projects/project_edit_participants.html:22
 #: templates/schools/school_edit_declined.html:19
 #: templates/schools/school_edit_featured.html:19
+#: templates/schools/school_edit_membership.html:19
 #: templates/schools/school_edit_organizers.html:19
 #: templates/users/profile_edit_links.html:28
 msgid "Add"
@@ -1479,6 +1495,7 @@ msgstr "Añadir"
 #: templates/projects/project_edit_summary.html:12
 #: templates/schools/school_edit_declined.html:27
 #: templates/schools/school_edit_featured.html:27
+#: templates/schools/school_edit_membership.html:27
 #: templates/schools/school_edit_organizers.html:27
 #: templates/schools/school_edit_summary.html:10
 #: templates/users/profile_edit_links.html:13
@@ -1492,6 +1509,7 @@ msgstr "Nombre"
 #: templates/projects/project_edit_participants.html:32
 #: templates/schools/school_edit_declined.html:28
 #: templates/schools/school_edit_featured.html:28
+#: templates/schools/school_edit_membership.html:28
 #: templates/users/profile_edit_links.html:38
 #: templates/users/profile_edit_openids.html:20
 msgid "Actions"
@@ -1861,7 +1879,7 @@ msgstr "Publicar Comentario"
 #: templates/content/page.html:119 templates/content/page.html.py:121
 #: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
 #: templates/dashboard/dashboard.html:97 templates/dashboard/dashboard.html:99
-#: templates/projects/directory.html:41 templates/projects/directory.html:43
+#: templates/projects/directory.html:40 templates/projects/directory.html:42
 #: templates/projects/project.html:104 templates/projects/project.html:106
 msgid "previous"
 msgstr "anterior"
@@ -1869,8 +1887,8 @@ msgstr "anterior"
 #: templates/content/page.html:124 templates/content/page.html.py:126
 #: templates/content/sign_up.html:126 templates/content/sign_up.html.py:128
 #: templates/dashboard/dashboard.html:102
-#: templates/dashboard/dashboard.html:104 templates/projects/directory.html:46
-#: templates/projects/directory.html:48 templates/projects/project.html:109
+#: templates/dashboard/dashboard.html:104 templates/projects/directory.html:45
+#: templates/projects/directory.html:47 templates/projects/project.html:109
 #: templates/projects/project.html:111
 msgid "next"
 msgstr "siguiente"
@@ -2370,9 +2388,7 @@ msgstr "En Desarrollo"
 msgid "Archived"
 msgstr "Archivado"
 
-#: templates/projects/_project_list.html:80
-#: templates/projects/directory.html:23 templates/projects/gallery.html:16
-#: templates/schools/home.html:25
+#: templates/projects/_project_list.html:80 templates/projects/gallery.html:16
 msgid "View All"
 msgstr "Ver Todos"
 
@@ -2435,13 +2451,14 @@ msgstr ""
 "creación de tareas y en valorar las contribuciones de otros?¿En que "
 "consistirá la tarea final?"
 
-#: templates/projects/directory.html:18 templates/projects/directory.html:32
+#: templates/projects/directory.html:18 templates/projects/directory.html:31
 msgid "All"
 msgstr "Todos"
 
-#: templates/projects/directory.html:30 templates/projects/gallery.html:26
+#: templates/projects/directory.html:29 templates/projects/gallery.html:26
+#: templates/schools/home.html:25
 msgid "Browse"
-msgstr "Examinar"
+msgstr "Navegar"
 
 #: templates/projects/imported_detailed_description.html:9
 msgid "Learning Objectives"
@@ -2518,6 +2535,7 @@ msgstr ""
 #: templates/projects/project_clone.html:15
 #: templates/schools/school_edit_declined.html:13
 #: templates/schools/school_edit_featured.html:13
+#: templates/schools/school_edit_membership.html:13
 msgid "Short Name"
 msgstr "Nombre Corto"
 
@@ -2743,21 +2761,10 @@ msgstr ""
 "listados."
 
 #: templates/projects/project_edit_summary.html:30
-msgid "School"
-msgstr "Escuela"
-
-#: templates/projects/project_edit_summary.html:31
-msgid ""
-"Optionally, the study group, course, ... may belong to a particular school."
-msgstr ""
-"Opcionalmente, el grupo de estudio, curso, ... puede pertenecer a una "
-"escuela en particular."
-
-#: templates/projects/project_edit_summary.html:36
 msgid "One paragraph description"
 msgstr "Un párrafo de descripción"
 
-#: templates/projects/project_edit_summary.html:37
+#: templates/projects/project_edit_summary.html:31
 msgid ""
 "This description is shown on home page of the study group, course, ... It "
 "can go into a bit more detail, but it should be brief and to the point."
@@ -2995,7 +3002,7 @@ msgstr "Escuelas"
 msgid "Edit School"
 msgstr "Editar Escuela"
 
-#: templates/schools/home.html:48 templates/schools/school_edit.html:37
+#: templates/schools/home.html:45 templates/schools/school_edit.html:37
 #: templates/schools/school_edit_organizers.html:7
 msgid "School Organizers"
 msgstr "Organizadores de Escuela"
@@ -3025,9 +3032,9 @@ msgid "Site Logo"
 msgstr "Logo del Sitio"
 
 #: templates/schools/school_edit.html:39
-#: templates/schools/school_edit_declined.html:7
-msgid "Declined"
-msgstr "Rechazado"
+#: templates/schools/school_edit_membership.html:7
+msgid "Membership"
+msgstr ""
 
 #: templates/schools/school_edit_background.html:12
 msgid "Replace School Background Image"
@@ -3044,6 +3051,10 @@ msgid ""
 msgstr ""
 "Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
 "Dimensiones: 20x60 pixels"
+
+#: templates/schools/school_edit_declined.html:7
+msgid "Declined"
+msgstr "Rechazado"
 
 #: templates/schools/school_edit_declined.html:8
 msgid ""
@@ -3090,6 +3101,13 @@ msgid ""
 msgstr ""
 "Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
 "Dimensiones: Variable"
+
+#: templates/schools/school_edit_membership.html:8
+#, fuzzy
+msgid "View, add and remove study groups, courses, ... to this school."
+msgstr ""
+"Ver, añadir y retirar grupos de escuela, cursos, ... rechazados por esta "
+"escuela."
 
 #: templates/schools/school_edit_organizers.html:8
 msgid "View, add and remove organizers of your school."
@@ -3693,3 +3711,19 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid "School"
+#~ msgstr "Escuela"
+
+#~ msgid ""
+#~ "Optionally, the study group, course, ... may belong to a particular "
+#~ "school."
+#~ msgstr ""
+#~ "Opcionalmente, el grupo de estudio, curso, ... puede pertenecer a una "
+#~ "escuela en particular."
+
+#~ msgid "The %s course was not part of this school."
+#~ msgstr "El curso %s no era parte de esta escuela."
+
+#~ msgid "The %(kind)s membership to %(school)s was declined."
+#~ msgstr "La membresia del %(kind)s a %(school)s fue rechazada."

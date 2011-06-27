@@ -254,9 +254,9 @@ class Project(ModelBase):
             'project': project,
             'domain': domain,
             }).strip()
-        admin_email = settings.ADMIN_PROJECT_CREATE_EMAIL
-        send_mail(admin_subject, admin_body, admin_email, [admin_email],
-            fail_silently=True)
+        for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
+            send_mail(admin_subject, admin_body, admin_email,
+                [admin_email], fail_silently=True)
 
     def accepted_school(self):
         school = self.school

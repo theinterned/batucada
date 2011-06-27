@@ -172,6 +172,7 @@ def login_openid(request):
 
 
 @anonymous_only
+@csrf_exempt
 def login_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', False)
     r = openid_views.login_complete(
@@ -278,6 +279,7 @@ def register_openid(request):
 
 
 @anonymous_only
+@csrf_exempt
 def register_openid_complete(request):
     setattr(settings, 'OPENID_CREATE_USERS', True)
     return openid_views.login_complete(
@@ -530,13 +532,7 @@ def profile_edit_image(request):
             messages.error(request, _('There was an error uploading '
                                       'your image.'))
     else:
-        form = forms.ProfileImageForm(instance=profile)
-
-    return render_to_response('users/profile_edit_image.html', {
-        'profile': profile,
-        'profile_image_form': form,
-        'image_tab': True,
-    }, context_instance=RequestContext(request))
+        return http.HttpResponseRedirect(reverse('users_profile_edit'))
 
 
 @login_required

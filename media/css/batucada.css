@@ -1550,7 +1550,7 @@ header {}
 			font-style: italic;
 		}
 
-		.modal .featured_group, .modal .declined_group {
+		.modal .featured_group, .modal .declined_group, .modal .member_group {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 0;
@@ -1575,7 +1575,7 @@ header {}
         }
         
 		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text],
-        .modal .declined_groups input[type=text], .modal .organizers input[type=text] {
+        .modal .declined_groups input[type=text], .modal .organizers input[type=text], .modal .member_groups input[type=text] {
 			width: 154px;
 		}
 		
@@ -1584,18 +1584,20 @@ header {}
 			width: 150px;
 		}
 		.modal .links .add-link, .modal .featured_groups .add-featured,
-        .modal .declined_groups .add-declined, .modal .organizers .add-organizer {
+        .modal .declined_groups .add-declined, .modal .organizers .add-organizer,
+        .modal .member_groups .add-membership {
 			display: inline-block;
 			margin-bottom: 13px;
 			vertical-align: middle;
 		}
 		.modal .links .add-link button, .modal .featured_groups .add-featured button,
-        .modal .declined_groups .add-declined button, .modal .organizers .add-organizer button {
+        .modal .declined_groups .add-declined button, .modal .organizers .add-organizer button,
+        .modal .member_groups .add-membership button {
 			margin-top: 17px;
 			margin-bottom: 5px;
 		}
 		#editing table, .modal .links table, .modal .participants table, .featured_groups table, .declined_groups table,
-        .modal .organizers table, .modal .openids table {
+        .modal .organizers table, .modal .openids table, .member_groups table {
 			width: 516px;
 			position: relative;
 			background-color: #F9F9F9;
@@ -1609,7 +1611,8 @@ header {}
 		}
 		#editing table th, #editing table td,.modal .links th, .modal .links td, .modal .participants th, .modal .participants td,
         .modal .featured_groups th, .modal .featured_groups td, .modal .declined_groups th, .modal .declined_groups td,
-        .modal .organizers th, .modal .organizers td, .modal .openids th, .modal .openids td {
+        .modal .organizers th, .modal .organizers td, .modal .openids th, .modal .openids td
+        .modal .member_groups th, .modal .member_groups td {
 			padding: 9px;	
 			text-align: left;
 		    vertical-align: middle;
@@ -1626,7 +1629,9 @@ header {}
         .modal .organizers table .name {
 			width: 185px;
 		}
-		
+        .member_groups table .name {
+            width: 360px;
+        }
 		.modal .links table .url {
 		    width: 90px; 
 		}
