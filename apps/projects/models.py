@@ -118,6 +118,15 @@ class Project(ModelBase):
     class Meta:
         verbose_name = _('group')
 
+    def __unicode__(self):
+        return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('projects_show', (), {
+            'slug': self.slug,
+        })
+
     def followers(self):
         return Relationship.objects.filter(target_project=self,
             source__deleted=False)
@@ -188,15 +197,6 @@ class Project(ModelBase):
             verb='http://activitystrea.ms/schema/1.0/follow'
         ).order_by('-created_on')
         return activities
-
-    def __unicode__(self):
-        return self.name
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('projects_show', (), {
-            'slug': self.slug,
-        })
 
     def create(self):
         self.save()

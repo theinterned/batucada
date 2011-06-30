@@ -2,9 +2,9 @@
 {{ project.name }}{{ _(' was updated.') }}
 
 {% if status.important %}
-{{ status.author.display_name  }}{{ _(' posted an important message to the wall:') }}
+{{ status.author }}{{ _(' posted an important message to the wall:') }}
 {% else %}
-{{ status.author.display_name  }}{{ _(' posted a message to the wall:') }}
+{{ status.author }}{{ _(' posted a message to the wall:') }}
 {% endif %}
 
 {{ status.status|striptags|safe }}

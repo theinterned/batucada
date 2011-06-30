@@ -58,21 +58,17 @@ class UserActivityFeed(Feed):
     feed_type = ActivityStreamAtomFeed
 
     def item_author_name(self, item):
-        return item.actor.display_name
+        return unicode(item.actor)
 
     def item_author_link(self, item):
         return self._request.build_absolute_uri(item.actor.get_absolute_url())
 
     def title(self, user):
-        return user and user.display_name or _('Public Activity')
+        return unicode(user) or _('Public Activity')
 
     def subtitle(self, user):
         if user:
-            try:
-                name = user.display_name
-            except AttributeError:
-                name = user.name
-            return _('Activity feed for %s' % (name,))
+            return _('Activity feed for %s' % (user,))
         else:
             return _('Public Activity')
 

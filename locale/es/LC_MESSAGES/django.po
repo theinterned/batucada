@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 15:10-0400\n"
+"POT-Creation-Date: 2011-06-30 17:51-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/activity/feeds.py:67 apps/activity/feeds.py:77
+#: apps/activity/feeds.py:67 apps/activity/feeds.py:73
 msgid "Public Activity"
 msgstr "Actividad Pública"
 
-#: apps/activity/feeds.py:75
+#: apps/activity/feeds.py:71
 #, python-format
 msgid "Activity feed for %s"
 msgstr "Bitácora de actividades para %s"
@@ -55,66 +55,29 @@ msgstr "añadió"
 msgid "Activity ID %(id)d. Actor id %(actor)d, Verb %(verb)s"
 msgstr "Id de actividad %(id)d. Id  de Actor %(actor)d, Verbo %(verb)s"
 
-#: apps/activity/schema.py:27
-msgid "favorited"
-msgstr "favoreció"
-
-#: apps/activity/schema.py:28
+#: apps/activity/schema.py:21
 msgid "started following"
 msgstr "comenzó a seguir"
 
-#: apps/activity/schema.py:29
-msgid "liked"
-msgstr "gustó"
-
-#: apps/activity/schema.py:30
-msgid "is now friends with"
-msgstr "ahora es amigo de"
-
-#: apps/activity/schema.py:31
+#: apps/activity/schema.py:22
 msgid "joined"
 msgstr "se unió a"
 
-#: apps/activity/schema.py:32
-msgid "played"
-msgstr "jugó"
-
-#: apps/activity/schema.py:33
+#: apps/activity/schema.py:23
 msgid "posted"
 msgstr "publicó"
 
-#: apps/activity/schema.py:34
-msgid "saved"
-msgstr "salvó"
-
-#: apps/activity/schema.py:35
-msgid "shared"
-msgstr "compartió"
-
-#: apps/activity/schema.py:36
-msgid "tagged"
-msgstr "puso una etiqueta"
-
-#: apps/activity/schema.py:37
+#: apps/activity/schema.py:24
 msgid "updated"
 msgstr "actualizó"
 
-#: apps/activity/schema.py:38
-msgid "is attending"
-msgstr "está atendiendo"
+#: apps/activity/schema.py:25
+msgid "shared"
+msgstr "compartió"
 
-#: apps/activity/schema.py:39
-msgid "is not attending"
-msgstr "no está atendiendo"
-
-#: apps/activity/schema.py:40
-msgid "might be attending"
-msgstr "puede que asista a"
-
-#: apps/activity/schema.py:41 templates/content/history_page.html:27
-#: templates/content/history_page.html:35
-msgid "deleted"
-msgstr "eliminado"
+#: apps/activity/schema.py:26
+msgid "received"
+msgstr "recibió"
 
 #: apps/activity/views.py:17
 msgid "This message was deleted."
@@ -160,7 +123,7 @@ msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgid "This task was deleted."
 msgstr "Esta tarea fue eliminada."
 
-#: apps/content/views.py:68 templates/content/sign_up.html:38
+#: apps/content/views.py:68 templates/content/sign_up.html:51
 msgid "This answer was deleted."
 msgstr "Esta respuesta fue eliminada."
 
@@ -269,7 +232,7 @@ msgstr "No hay nadie con ese nombre de usuario o correo."
 
 #: apps/drumbeatmail/models.py:31
 #, python-format
-msgid "New Message from %(display_name)s"
+msgid "New Message from %(sender)s"
 msgstr "Nuevo mensaje de %(display_name)s"
 
 #: apps/drumbeatmail/views.py:174
@@ -501,13 +464,13 @@ msgstr "No puede crear una relacion consigo mismo."
 
 #: apps/relationships/models.py:76
 #, python-format
-msgid "%(display_name)s is following you on P2PU!"
-msgstr "¡%(display_name)s te está siguiendo en P2PU!"
+msgid "%(user)s is following you on P2PU!"
+msgstr "¡%(user)s te está siguiendo en P2PU!"
 
 #: apps/relationships/models.py:89
 #, python-format
-msgid "%(display_name)s is following %(project)s on P2PU!"
-msgstr "¡%(display_name)s está siguiendo %(project)s en P2PU!"
+msgid "%(user)s is following %(project)s on P2PU!"
+msgstr "¡%(user)s está siguiendo %(project)s en P2PU!"
 
 #: apps/relationships/views.py:39
 msgid "You are already following this study group"
@@ -668,25 +631,25 @@ msgstr "Usted no terminó de crear su cuenta la última vez."
 msgid "Please register a new account."
 msgstr "Por favor cree una nueva cuenta."
 
-#: apps/users/models.py:160
+#: apps/users/models.py:119
+msgid "Anonym"
+msgstr "Anónimo"
+
+#: apps/users/models.py:162
 msgid "(organizing)"
 msgstr "(organizando)"
 
-#: apps/users/models.py:163
+#: apps/users/models.py:165
 msgid "(participating)"
 msgstr "(participando)"
 
-#: apps/users/models.py:166
+#: apps/users/models.py:168
 msgid "(following)"
 msgstr "(siguiendo)"
 
-#: apps/users/models.py:207
+#: apps/users/models.py:209
 msgid "Complete Registration"
 msgstr "Termine de Crear su Cuenta"
-
-#: apps/users/models.py:257
-msgid "Anonym"
-msgstr "Anónimo"
 
 #: apps/users/views.py:41
 #, python-format
@@ -1051,7 +1014,7 @@ msgstr "js/script-es.js"
 
 #: templates/activity/_activity_resource.html:7 templates/content/page.html:33
 #: templates/content/page.html.py:64 templates/content/page.html:92
-#: templates/content/sign_up.html:53 templates/content/sign_up.html.py:95
+#: templates/content/sign_up.html:66 templates/content/sign_up.html.py:108
 #: templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
@@ -1065,8 +1028,8 @@ msgstr "Reportar Abuso"
 #: templates/content/confirm_delete_page.html:29
 #: templates/content/delete_restore_comment.html:62
 #: templates/content/page.html:21 templates/content/page.html.py:61
-#: templates/content/page.html:89 templates/content/sign_up.html:50
-#: templates/content/sign_up.html.py:92
+#: templates/content/page.html:89 templates/content/sign_up.html:63
+#: templates/content/sign_up.html.py:105
 #: templates/projects/project_edit_links.html:39
 #: templates/projects/project_edit_participants.html:54
 #: templates/schools/school_edit_declined.html:38
@@ -1141,7 +1104,7 @@ msgstr "Cancelar"
 #: templates/activity/delete_restore.html:50
 #: templates/content/delete_restore_comment.html:60
 #: templates/content/page.html:49 templates/content/restore_version.html:22
-#: templates/content/restore_version.html:41 templates/content/sign_up.html:40
+#: templates/content/restore_version.html:41 templates/content/sign_up.html:53
 #: templates/content/version_page.html:24
 msgid "Restore"
 msgstr "Restaurar"
@@ -1199,7 +1162,7 @@ msgstr "Comentario"
 #: templates/content/comment_page.html:57
 #: templates/content/comment_sign_up.html:41
 #: templates/content/comment_sign_up.html:63 templates/content/page.html:103
-#: templates/content/sign_up.html:106
+#: templates/content/sign_up.html:119
 msgid "In Reply To:"
 msgstr "En Respuesta A:"
 
@@ -1235,8 +1198,8 @@ msgid "Edit Answer"
 msgstr "Editar Respuesta"
 
 #: templates/content/comment_sign_up.html:29 templates/content/page.html:58
-#: templates/content/page.html.py:86 templates/content/sign_up.html:48
-#: templates/content/sign_up.html.py:90 templates/drumbeatmail/inbox.html:48
+#: templates/content/page.html.py:86 templates/content/sign_up.html:61
+#: templates/content/sign_up.html.py:103 templates/drumbeatmail/inbox.html:48
 #: templates/drumbeatmail/inbox.html:95 templates/drumbeatmail/reply.html:4
 #: templates/drumbeatmail/reply.html:6
 msgid "Reply"
@@ -1247,14 +1210,14 @@ msgid ": Answer Questions"
 msgstr ": Responder Preguntas"
 
 #: templates/content/comment_sign_up.html:47
-#: templates/content/comment_sign_up.html:69 templates/content/sign_up.html:66
+#: templates/content/comment_sign_up.html:69 templates/content/sign_up.html:79
 #: templates/content/emails/sign_up_updated.txt:9
 #: templates/relationships/emails/new_follower.txt:4
 msgid "Bio:"
 msgstr "Biografía:"
 
 #: templates/content/comment_sign_up.html:48
-#: templates/content/comment_sign_up.html:70 templates/content/sign_up.html:67
+#: templates/content/comment_sign_up.html:70 templates/content/sign_up.html:80
 #: templates/content/emails/sign_up_updated.txt:11
 #: templates/relationships/emails/new_follower.txt:6
 #: templates/users/profile.html:63
@@ -1262,7 +1225,7 @@ msgid "Location:"
 msgstr "Ubicación:"
 
 #: templates/content/comment_sign_up.html:49
-#: templates/content/comment_sign_up.html:71 templates/content/sign_up.html:68
+#: templates/content/comment_sign_up.html:71 templates/content/sign_up.html:81
 #: templates/content/emails/sign_up_updated.txt:13
 msgid "Answer:"
 msgstr "Respuesta:"
@@ -1358,7 +1321,7 @@ msgstr "¿Está seguro que desea eliminar este comentario?"
 
 #: templates/content/edit_page.html:19 templates/content/page.html:20
 #: templates/content/page.html.py:62 templates/content/page.html:90
-#: templates/content/sign_up.html:51 templates/content/sign_up.html.py:93
+#: templates/content/sign_up.html:64 templates/content/sign_up.html.py:106
 #: templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:29
 #: templates/projects/project_edit.html:42
@@ -1379,6 +1342,11 @@ msgstr "Actualización menor (no se publica en el muro)."
 msgid "History"
 msgstr "Historial"
 
+#: templates/content/history_page.html:27
+#: templates/content/history_page.html:35
+msgid "deleted"
+msgstr "eliminado"
+
 #: templates/content/history_page.html:29
 msgid "(current)"
 msgstr "(actual)"
@@ -1392,7 +1360,7 @@ msgid "Post Comment"
 msgstr "Publicar Comentario"
 
 #: templates/content/page.html:119 templates/content/page.html.py:121
-#: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
+#: templates/content/sign_up.html:134 templates/content/sign_up.html.py:136
 #: templates/dashboard/dashboard.html:97 templates/dashboard/dashboard.html:99
 #: templates/projects/directory.html:40 templates/projects/directory.html:42
 #: templates/projects/project.html:77 templates/projects/project.html.py:79
@@ -1400,7 +1368,7 @@ msgid "previous"
 msgstr "anterior"
 
 #: templates/content/page.html:124 templates/content/page.html.py:126
-#: templates/content/sign_up.html:126 templates/content/sign_up.html.py:128
+#: templates/content/sign_up.html:139 templates/content/sign_up.html.py:141
 #: templates/dashboard/dashboard.html:102
 #: templates/dashboard/dashboard.html:104 templates/projects/directory.html:45
 #: templates/projects/directory.html:47 templates/projects/project.html:82
@@ -1408,23 +1376,23 @@ msgstr "anterior"
 msgid "next"
 msgstr "siguiente"
 
-#: templates/content/sign_up.html:18
+#: templates/content/sign_up.html:30
 msgid "Post Answer"
 msgstr "Publicar Respuesta"
 
-#: templates/content/sign_up.html:30
+#: templates/content/sign_up.html:43
 msgid "Answers"
 msgstr "Respuestas"
 
-#: templates/content/sign_up.html:31
+#: templates/content/sign_up.html:44
 msgid "Pending Answers:"
 msgstr "Respuesta Pendiente:"
 
-#: templates/content/sign_up.html:74
+#: templates/content/sign_up.html:87
 msgid "Add Participant"
 msgstr "Añadir Participante"
 
-#: templates/content/sign_up.html:78
+#: templates/content/sign_up.html:91
 #: templates/projects/project_edit_participants.html:50
 msgid "Add Organizer"
 msgstr "Añadir Organizador"
@@ -2570,10 +2538,9 @@ msgstr ""
 "Dimensiones: Variable"
 
 #: templates/schools/school_edit_membership.html:8
-#, fuzzy
 msgid "View, add and remove study groups, courses, ... to this school."
 msgstr ""
-"Ver, añadir y retirar grupos de escuela, cursos, ... rechazados por esta "
+"Ver, añadir y remover grupos de estudio, cursos, ... de esta "
 "escuela."
 
 #: templates/schools/school_edit_organizers.html:8

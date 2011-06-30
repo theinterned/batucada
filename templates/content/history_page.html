@@ -29,7 +29,7 @@
     <li>{{ _('(current)') }} &nbsp; <a href="{{ page.get_absolute_url }}">{{ page.last_update }}</a>
   {% endif %}
     &nbsp;
-    <a href="{{ page.author.get_absolute_url }}">{{ page.author.display_name }}</a></li>
+    <a href="{{ page.author.get_absolute_url }}">{{ page.author }}</a></li>
   {% for version in versions %}
     {% if version.deleted %}
       <li>{{ _('deleted') }} &nbsp; {{ version.date }}
@@ -37,7 +37,7 @@
       <li><a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
     {% endif %}
     &nbsp;
-    <a href="{{ version.author.get_absolute_url }}">{{ version.author.display_name }}</a></li>
+    <a href="{{ version.author.get_absolute_url }}">{{ version.author }}</a></li>
   {% endfor %}
 </ul>
 </div>

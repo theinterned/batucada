@@ -543,7 +543,7 @@ def edit_participants_delete(request, slug, username):
         participation.left_on = datetime.datetime.now()
         participation.save()
         msg = _("The participant %s has been removed.")
-        messages.success(request, msg % participation.user.display_name)
+        messages.success(request, msg % participation.user)
     return http.HttpResponseRedirect(reverse(
         'projects_edit_participants',
         kwargs={'slug': participation.project.slug}))

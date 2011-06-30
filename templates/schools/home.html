@@ -45,7 +45,7 @@
       <h2 class="school_header">{{ _('School Organizers') }}</h2>
       <br>
       {% for organizer in school.organizers.all %}
-        <a href="{{ organizer.get_absolute_url }}" title="{{ organizer.display_name }} (school organizer)"><img class="member-picture" src="{{ organizer.image_or_default }}" height="26" width="26" alt="{{ organizer.display_name }} (school organizer)"></a>
+        <a href="{{ organizer.get_absolute_url }}" title="{{ organizer }} (school organizer)"><img class="member-picture" src="{{ organizer.image_or_default }}" height="26" width="26" alt="{{ organizer }} (school organizer)"></a>
       {% endfor %}
     </section>
   </div>

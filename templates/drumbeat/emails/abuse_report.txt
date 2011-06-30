@@ -1,5 +1,5 @@
 {% load l10n_tags %}
-{{ user.display_name }} {{ _('has reported the following content as objectionable:') }}
+{{ user }} {{ _('has reported the following content as objectionable:') }}
 
 {{ url }}
 
