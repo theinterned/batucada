@@ -31,7 +31,6 @@ from activity.models import Activity
 
 from drumbeat import messages
 from users.decorators import login_required
-from challenges.models import Challenge
 
 log = logging.getLogger(__name__)
 
@@ -154,8 +153,6 @@ def show(request, slug, page=1):
         form = statuses_forms.StatusForm()
     else:
         form = None
-    # TODO: See how we can modify and use challenges.
-    challenges = Challenge.objects.upcoming(project_id=project.id)
 
     activities = project.activities()
     paginator = Paginator(activities, 10)
@@ -170,7 +167,6 @@ def show(request, slug, page=1):
         'following': is_following,
         'pending_signup': is_pending_signup,
         'organizing': is_organizing,
-        'challenges': challenges,
         'content_pages_for_header': content_pages_for_header,
         'content_pages_count': content_pages_count,
         'form': form,

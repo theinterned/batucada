@@ -9,8 +9,6 @@ from django.utils.translation import activate, get_language
 from django.template.loader import render_to_string
 
 from l10n.urlresolvers import reverse
-from challenges.models import Challenge, Submission
-from feeds.models import FeedEntry
 from users.models import UserProfile
 from users.tasks import SendUserEmail
 from drumbeat.forms import AbuseForm
@@ -67,25 +65,3 @@ def report_abuse(request, model, app_label, pk):
         'pk': pk,
     }, context_instance=RequestContext(request))
 
-
-def journalism(request):
-    feed_entries = FeedEntry.objects.filter(
-        page='mojo').order_by('-created_on')[0:4]
-    feed_url = getattr(settings, 'FEED_URLS', None)
-    if feed_url and 'mojo' in feed_url:
-        feed_url = feed_url['mojo']
-    # TODO - automatically determine the current challenge
-    try:
-        current_challenge = Challenge.objects.get(
-            slug='beyond-comment-threads')
-        recent_submissions = Submission.objects.filter(
-            challenge=current_challenge).order_by('-created_on')[0:3]
-    except:
-        current_challenge = None
-        recent_submissions = None
-    return render_to_response('drumbeat/journalism/index.html', {
-        'feed_entries': feed_entries,
-        'feed_url': feed_url,
-        'current_challenge': current_challenge,
-        'recent_submissions': recent_submissions,
-    }, context_instance=RequestContext(request))

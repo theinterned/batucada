@@ -111,7 +111,7 @@ class TestLogins(TestCase):
         with other urlpatterns.
         """
         path = reverse('users_register')
-        bad = ('groups', 'admin', 'people', 'events')
+        bad = ('groups', 'admin', 'people', 'about')
         for username in bad:
             response = self.client.post(path, {
                 'username': username,
