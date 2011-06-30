@@ -115,6 +115,8 @@ class UserProfile(ModelBase):
     objects = UserProfileManager()
 
     def __unicode__(self):
+        if self.deleted:
+            return _('Anonym')
         return self.full_name or self.username
 
     def following(self, model=None):
@@ -250,12 +252,6 @@ class UserProfile(ModelBase):
 
         algo, salt, hsh = self.password.split('$')
         return hsh == get_hexdigest(algo, salt, raw_password)
-
-    @property
-    def display_name(self):
-        if self.deleted:
-            return _('Anonym')
-        return self.full_name or self.username
 
 
 def create_profile(user, username=None):

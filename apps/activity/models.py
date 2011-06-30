@@ -125,9 +125,9 @@ class Activity(ModelBase):
     def textual_representation(self):
         target = self.target_user or self.target_project or self.project
         if target and self.verb == schema.verbs['follow']:
-            name = target.display_name if self.target_user else target.name
+            name = target if self.target_user else target.name
             return _('%(actor)s %(verb)s %(target)s') % dict(
-                actor=self.actor.display_name,
+                actor=self.actor,
                 verb=schema.past_tense['follow'], target=name)
         if self.status:
             return self.status.status[:50]
@@ -139,7 +139,7 @@ class Activity(ModelBase):
 
         friendly_verb = schema.verbs_by_uri[self.verb]
         return ugettext('%(verb)s activity performed by %(actor)s') % dict(
-            verb=friendly_verb, actor=self.actor.display_name)
+            verb=friendly_verb, actor=self.actor)
 
     def friendly_verb(self):
         if self.verb == schema.verbs['post']:

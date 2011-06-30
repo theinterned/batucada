@@ -25,11 +25,11 @@ def message_sent_handler(sender, **kwargs):
     for preference in preferences:
         if preference.value and preference.key == 'no_email_message_received':
             return
-    sender = message.sender.get_profile().display_name
+    sender = message.sender.get_profile()
     ulang = get_language()
     activate(user.get_profile().preflang or settings.LANGUAGE_CODE)
-    subject = ugettext('New Message from %(display_name)s') % {
-        'display_name': sender,
+    subject = ugettext('New Message from %(sender)s') % {
+        'sender': sender,
         }
     body = render_to_string('drumbeatmail/emails/direct_message.txt', {
         'sender': sender,

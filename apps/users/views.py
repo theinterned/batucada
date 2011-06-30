@@ -186,7 +186,7 @@ def login_openid_complete(request):
             if user.username[:10] != 'openiduser':
                 username = user.username
             form = forms.CreateProfileForm(initial={
-                'display_name': ' '.join((user.first_name, user.last_name)),
+                'full_name': ' '.join((user.first_name, user.last_name)),
                 'email': user.email,
                 'username': username,
             })

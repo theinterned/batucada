@@ -73,8 +73,8 @@ def follow_handler(sender, **kwargs):
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
             subject[l[0]] = ugettext(
-                '%(display_name)s is following you on P2PU!') % {
-                'display_name': rel.source.display_name}
+                '%(user)s is following you on P2PU!') % {
+                'user': rel.source}
         preferences = AccountPreferences.objects.filter(user=rel.target_user)
         for pref in preferences:
             if pref.value and pref.key == 'no_email_new_follower':
@@ -86,8 +86,8 @@ def follow_handler(sender, **kwargs):
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
             msg = ugettext(
-                '%(display_name)s is following %(project)s on P2PU!')
-            subject[l[0]] = msg % {'display_name': rel.source.display_name,
+                '%(user)s is following %(project)s on P2PU!')
+            subject[l[0]] = msg % {'user': rel.source,
                 'project': rel.target_project}
         for organizer in rel.target_project.organizers():
             if organizer.user != rel.source:

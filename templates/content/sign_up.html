@@ -58,7 +58,7 @@
       </a>
       <div class="post-contents">
         <div class="post-details">
-          <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
+          <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>
           &nbsp;
           <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
         </div>
@@ -100,11 +100,11 @@
     </a>
     <div class="post-contents">
       <div class="post-details">
-        <a href="{{ reply.author.get_absolute_url }}">{{ reply.author.display_name }}</a>
+        <a href="{{ reply.author.get_absolute_url }}">{{ reply.author }}</a>
         &nbsp;
         <a href="{{ reply.get_absolute_url }}">{{ reply.created_on }}</a>
         <br> {{ _('In Reply To:') }} &nbsp;
-        <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author.display_name }}</a>
+        <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author }}</a>
         &nbsp;
         <a href="{{ reply.reply_to.get_absolute_url }}">{{ reply.reply_to.created_on }}</a>
       </div>

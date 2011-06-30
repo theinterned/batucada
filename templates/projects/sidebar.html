@@ -131,14 +131,14 @@
   <h2 class="school_header">{{ _('People') }}</h2>
   <br>
   {% for organizer in project.organizers %}
-   <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user.display_name }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="26" width="26" alt="{{ organizer.user.display_name }} (organizer)"></a>
+   <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="26" width="26" alt="{{ organizer.user }} (organizer)"></a>
   {% endfor %}
   {% for participant in project.non_organizer_participants %}
-   <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user.display_name }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user.display_name }} (participant)"></a>
+   <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user }} (participant)"></a>
   {% endfor %}
   {% for follower in project.non_participant_followers %}
-   <a href="{{ follower.source.get_absolute_url }}" title="{{ follower.source.display_name }} (follower)">
-   <img class="member-picture" src="{{ follower.source.image_or_default }}" height="26" width="26" alt="{{ follower.source.display_name }} (follower)"></a>
+   <a href="{{ follower.source.get_absolute_url }}" title="{{ follower.source }} (follower)">
+   <img class="member-picture" src="{{ follower.source.image_or_default }}" height="26" width="26" alt="{{ follower.source }} (follower)"></a>
   {% endfor %}
   <br><br>
   {% if user.is_authenticated and not organizing and not participating %}

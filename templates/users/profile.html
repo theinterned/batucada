@@ -32,7 +32,7 @@
   <img class="member-picture" src="{{ profile.image_or_default }}" height="54" width="54">
   <div class="member-details">
     <h1 class="member-name">
-      <span class="fn">{{ profile.display_name }}</span>
+      <span class="fn">{{ profile }}</span>
     </h1>
     {% if user.is_authenticated %}
     <div class="member-actions">
@@ -90,13 +90,13 @@
   <h3>{{ _('Followers') }} <span class="followers count">{{ followers|length }}</span></h3>
   <ul class="users followers">
   {% for user_follower in followers|slice:":36" %}
-    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.display_name }}"><img class="member-picture" src="{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.display_name }}"></a></li>
+    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower }}"><img class="member-picture" src="{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower }}"></a></li>
   {% endfor %}
   </ul>
   <h3>{{ _('Following') }} <span class="following count">{{ following|length }}</span></h3>
   <ul class="users following">
   {% for user_following in following|slice:":36" %}
-    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.display_name }}"><img class="member-picture" src="{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.display_name }}"></a></li>
+    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following }}"><img class="member-picture" src="{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following }}"></a></li>
   {% endfor %}
   </ul>
   {% if current_projects.count > 0 %}
