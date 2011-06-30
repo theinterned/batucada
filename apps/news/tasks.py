@@ -11,7 +11,7 @@ from django.utils.encoding import smart_str
 from celery.schedules import crontab
 from celery.decorators import periodic_task
 
-from feeds.models import FeedEntry
+from news.models import FeedEntry
 
 log = logging.getLogger(__name__)
 

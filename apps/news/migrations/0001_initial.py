@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding model 'FeedEntry'
-        db.create_table('feeds_feedentry', (
+        db.create_table('news_feedentry', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('link', self.gf('django.db.models.fields.URLField')(max_length=200)),
@@ -18,17 +18,17 @@ class Migration(SchemaMigration):
             ('checksum', self.gf('django.db.models.fields.CharField')(unique=True, max_length=32)),
             ('created_on', self.gf('django.db.models.fields.DateTimeField')()),
         ))
-        db.send_create_signal('feeds', ['FeedEntry'])
+        db.send_create_signal('news', ['FeedEntry'])
 
 
     def backwards(self, orm):
         
         # Deleting model 'FeedEntry'
-        db.delete_table('feeds_feedentry')
+        db.delete_table('news_feedentry')
 
 
     models = {
-        'feeds.feedentry': {
+        'news.feedentry': {
             'Meta': {'object_name': 'FeedEntry'},
             'body': ('django.db.models.fields.TextField', [], {}),
             'checksum': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
@@ -40,4 +40,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['feeds']
+    complete_apps = ['news']

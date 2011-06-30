@@ -266,11 +266,6 @@ var batucada = {
             loadMoreMessages();
         }
     },
-    journalism: {
-        onload: function() {
-            VideoJS.setupAllWhenReady();
-        }
-    }
 };
 
 

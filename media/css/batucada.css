@@ -1911,13 +1911,13 @@ header {}
     padding-right: 30px;
     }
 
-#splash #main aside #planet_drumbeat p, #splash #main #blog_feed p {
+#splash #main #blog_feed p {
 	color: #777;
 	font-size: 12px;
 	line-height: 1.5;
 	}
 
-#splash #main aside #planet_drumbeat > h1 a.feed-link, #splash #main #blog_feed > h1 a.feed-link {
+#splash #main #blog_feed > h1 a.feed-link {
 	display: block;
 	width: 16px; 
 	height: 16px;
@@ -1927,12 +1927,12 @@ header {}
 	background: url(/media/images/feed-icon-16x16.png) 0 0 no-repeat;
 	}
 
-#splash #main aside #planet_drumbeat article h1, #splash #main #blog_feed article h1 {
+#splash #main #blog_feed article h1 {
 	font-size: 12px;
 	line-height: 1.5;
 	}
 
-#splash #main aside #planet_drumbeat > h1 a:hover, #splash #main #blog_feed > h1 a:hover {
+#splash #main #blog_feed > h1 a:hover {
 	opacity: 0.7;
     }
 /* SIGNIN / SIGNUP */

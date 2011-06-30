@@ -14,7 +14,7 @@ from users.decorators import anonymous_only, login_required
 from users.models import UserProfile
 from users.forms import CreateProfileForm
 from projects.models import Project
-from feeds.models import FeedEntry
+from news.models import FeedEntry
 from relationships.models import Relationship
 
 

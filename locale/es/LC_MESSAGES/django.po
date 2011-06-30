@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-27 18:41-0400\n"
+"POT-Creation-Date: 2011-06-30 15:10-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,141 +133,8 @@ msgid "Message restored!"
 msgstr "¡Mensaje restaurado!"
 
 #: apps/activity/templatetags/activity_tags.py:97
-#: templates/challenges/_submission_resource.html:26
-#: templates/challenges/submission_show.html:37
 msgid " ago"
 msgstr " atrás"
-
-#: apps/challenges/decorators.py:17
-msgid "You didn't create the challenge"
-msgstr "Usted no creó este reto"
-
-#: apps/challenges/decorators.py:32
-msgid "You can't decorate submission"
-msgstr "Usted no puede decorar el envío"
-
-#: apps/challenges/forms.py:29 apps/projects/forms.py:59
-#: apps/schools/forms.py:41 apps/schools/forms.py:55 apps/schools/forms.py:69
-#: apps/schools/forms.py:83 apps/users/forms.py:203
-#, python-format
-msgid "Image exceeds max image size: %(max)dk"
-msgstr "La imagen excede el tamaño máximo: %(max)dk"
-
-#: apps/challenges/forms.py:36 apps/projects/forms.py:112
-#: templates/drumbeatmail/base.html:17 templates/messages/inbox.html:12
-#: templates/projects/contact_organizers.html:12
-msgid "Subject"
-msgstr "Asunto"
-
-#: apps/challenges/forms.py:38 apps/projects/forms.py:114
-msgid "Body"
-msgstr "Cuerpo"
-
-#: apps/challenges/forms.py:47
-msgid "Not a valid challenge"
-msgstr "Reto invalido"
-
-#: apps/challenges/models.py:174
-msgid "Thanks for entering in this challenge!"
-msgstr "!Gracias por ingresar en este reto!"
-
-#: apps/challenges/views.py:41
-msgid "You can't create challenge"
-msgstr "Usted no puede crear el reto"
-
-#: apps/challenges/views.py:54
-msgid "Your new challenge has been created."
-msgstr "Su nuevo reto ha sido creado."
-
-#: apps/challenges/views.py:59
-msgid "Unable to create your challenge."
-msgstr "No fue posible crear su reto."
-
-#: apps/challenges/views.py:79
-msgid "You can't edit challenge"
-msgstr "Usted no puede editar el reto"
-
-#: apps/challenges/views.py:85
-msgid "Challenge updated!"
-msgstr "¡Reto actualizado!"
-
-#: apps/challenges/views.py:90
-msgid "Unable to update your challenge."
-msgstr "No fue posible actualizar su reto."
-
-#: apps/challenges/views.py:118 apps/users/views.py:532
-msgid "There was an error uploading your image."
-msgstr "Ocurrió un error al subir la imagen."
-
-#: apps/challenges/views.py:131
-msgid "Challenge image updated"
-msgstr "Imagen del reto actualizada"
-
-#: apps/challenges/views.py:139 apps/projects/views.py:395
-#: apps/schools/views.py:124 apps/schools/views.py:166
-#: apps/schools/views.py:208 apps/schools/views.py:250
-msgid "There was an error uploading your image"
-msgstr "Ocurrió un error al subir la imagen"
-
-#: apps/challenges/views.py:220
-msgid "Message sent successfully."
-msgstr "Mensaje enviado con éxito."
-
-#: apps/challenges/views.py:238
-msgid "Challenge is not active"
-msgstr "El reto no está activo"
-
-#: apps/challenges/views.py:256
-msgid "Your submission has been created"
-msgstr "Su envío ha sido creado"
-
-#: apps/challenges/views.py:262
-msgid "Unable to create your submission"
-msgstr "No fue posible crear su envío"
-
-#: apps/challenges/views.py:288 apps/challenges/views.py:325
-msgid "Your submission has been edited."
-msgstr "Su envío ha sido editado."
-
-#: apps/challenges/views.py:299 apps/challenges/views.py:336
-msgid "Unable to update your submission"
-msgstr "No fue posible actualizar su envío"
-
-#: apps/challenges/views.py:380
-msgid "Your submission has been deleted"
-msgstr "Su envío ha sido eliminado"
-
-#: apps/challenges/views.py:385
-msgid "Unable to delete submission"
-msgstr "No fue posible eliminar su envío"
-
-#: apps/challenges/views.py:422
-msgid "Judge has been added"
-msgstr "Un juez ha sido añadido"
-
-#: apps/challenges/views.py:424
-msgid "User is already a judge"
-msgstr "El usuario ya es un juez"
-
-#: apps/challenges/views.py:430
-msgid "Unable to add judge."
-msgstr "No fue posible agregar juez."
-
-#: apps/challenges/views.py:454
-msgid "You are not a judge of this challenge"
-msgstr "Usted no es juez de este reto"
-
-#: apps/challenges/views.py:456
-msgid "Judge removed."
-msgstr "Juez eliminado"
-
-#: apps/challenges/views.py:479
-msgid "Your details were saved."
-msgstr "Sus detalles fueron guardados."
-
-#: apps/challenges/views.py:485
-msgid "Unable to save details"
-msgstr "No fue posible guardar sus detalles"
 
 #: apps/content/forms.py:22 apps/content/forms.py:38 apps/content/forms.py:54
 #: apps/content/forms.py:70 apps/content/forms.py:86 apps/users/forms.py:155
@@ -309,7 +176,7 @@ msgstr "Este comentario fue eliminado."
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:113 apps/projects/views.py:349
+#: apps/content/views.py:113 apps/projects/views.py:345
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
@@ -392,7 +259,7 @@ msgstr "¡Organizador añadido!"
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/drumbeat/views.py:53
+#: apps/drumbeat/views.py:51
 msgid "Abuse Report"
 msgstr "Reporte de Abuso"
 
@@ -410,7 +277,7 @@ msgid "Can't send email"
 msgstr "No puede enviarse correo"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:588
+#: apps/projects/views.py:584
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -475,6 +342,12 @@ msgstr "Usted no está organizando este %s"
 msgid "You are not participating in this %s"
 msgstr "Usted no está participando en este %s"
 
+#: apps/projects/forms.py:59 apps/schools/forms.py:41 apps/schools/forms.py:55
+#: apps/schools/forms.py:69 apps/schools/forms.py:83 apps/users/forms.py:203
+#, python-format
+msgid "Image exceeds max image size: %(max)dk"
+msgstr "La imagen excede el tamaño máximo: %(max)dk"
+
 #: apps/projects/forms.py:89 apps/schools/forms.py:101
 msgid "That user account was deleted."
 msgstr "Esa cuenta de usuario fue borrada."
@@ -493,6 +366,16 @@ msgstr "El usuario %s ya es un organizador."
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
+
+#: apps/projects/forms.py:112 templates/drumbeatmail/base.html:17
+#: templates/messages/inbox.html:12
+#: templates/projects/contact_organizers.html:12
+msgid "Subject"
+msgstr "Asunto"
+
+#: apps/projects/forms.py:114
+msgid "Body"
+msgstr "Cuerpo"
 
 #: apps/projects/forms.py:124
 msgid "That study group, course, ... does not exist."
@@ -516,92 +399,98 @@ msgstr "Grupo de Estudio"
 msgid "group"
 msgstr "grupo"
 
-#: apps/projects/views.py:98 apps/projects/views.py:213
-#: apps/projects/views.py:294 templates/challenges/submission_edit.html:18
+#: apps/projects/views.py:97 apps/projects/views.py:209
+#: apps/projects/views.py:290
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:105 apps/projects/views.py:219
-#: apps/projects/views.py:301
+#: apps/projects/views.py:104 apps/projects/views.py:215
+#: apps/projects/views.py:297
 msgid "Sign-Up"
 msgstr "Inscripción"
 
-#: apps/projects/views.py:112
+#: apps/projects/views.py:111
 #, python-format
 msgid "The %s has been created."
 msgstr "El %s ha sido creado."
 
-#: apps/projects/views.py:117
+#: apps/projects/views.py:116
 msgid "Problem creating the study group, course, ..."
 msgstr "Problema creando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:238
+#: apps/projects/views.py:234
 #, python-format
 msgid "The %s has been cloned."
 msgstr "El %s ha sido clonado."
 
-#: apps/projects/views.py:244
+#: apps/projects/views.py:240
 msgid "There was a problem cloning the study group, course, ..."
 msgstr "Ocurrió un problema al clonar el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:316
+#: apps/projects/views.py:312
 #, python-format
 msgid "The %s has been imported."
 msgstr "El %s ha sido importado."
 
-#: apps/projects/views.py:321
+#: apps/projects/views.py:317
 msgid "Problem importing the study group, course, ..."
 msgstr "Problema importando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:388 apps/schools/views.py:118
+#: apps/projects/views.py:384 apps/schools/views.py:118
 #: apps/schools/views.py:160 apps/schools/views.py:202
 #: apps/schools/views.py:244
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:417
+#: apps/projects/views.py:391 apps/schools/views.py:124
+#: apps/schools/views.py:166 apps/schools/views.py:208
+#: apps/schools/views.py:250
+msgid "There was an error uploading your image"
+msgstr "Ocurrió un error al subir la imagen"
+
+#: apps/projects/views.py:413
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:421
+#: apps/projects/views.py:417
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:441 apps/projects/views.py:471
+#: apps/projects/views.py:437 apps/projects/views.py:467
 #: apps/users/views.py:598
 msgid "You can't edit this link"
 msgstr "Usted no puede editar este enlace"
 
-#: apps/projects/views.py:451
+#: apps/projects/views.py:447
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:473
+#: apps/projects/views.py:469
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:495
+#: apps/projects/views.py:491
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:501
+#: apps/projects/views.py:497
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:533
+#: apps/projects/views.py:529
 msgid "You can't make that person an organizer"
 msgstr "Usted no puede convertir ese usuario en organizador"
 
-#: apps/projects/views.py:536
+#: apps/projects/views.py:532
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:549
+#: apps/projects/views.py:545
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:569
+#: apps/projects/views.py:565
 #, python-format
 msgid "There was a problem saving the %s's status."
 msgstr "Ocurrió un problema al guardar el estado del %s."
@@ -914,6 +803,10 @@ msgstr "El openid fue removido."
 msgid "Profile image updated"
 msgstr "Imagen actualizada"
 
+#: apps/users/views.py:532
+msgid "There was an error uploading your image."
+msgstr "Ocurrió un error al subir la imagen."
+
 #: apps/users/views.py:544
 msgid "Profile link added."
 msgstr "Enlace añadido."
@@ -1091,11 +984,10 @@ msgstr "BETA"
 msgid "Learn"
 msgstr "Aprender"
 
-#: templates/base.html:63 templates/mojo.html:67
-#: templates/activity/delete_restore.html:16 templates/activity/index.html:20
-#: templates/projects/sidebar.html:131 templates/users/profile.html:17
-#: templates/users/profile_edit.html:11 templates/users/user_list.html:5
-#: templates/users/user_list.html.py:11
+#: templates/base.html:63 templates/activity/delete_restore.html:16
+#: templates/activity/index.html:20 templates/projects/sidebar.html:131
+#: templates/users/profile.html:17 templates/users/profile_edit.html:11
+#: templates/users/user_list.html:5 templates/users/user_list.html.py:11
 msgid "People"
 msgstr "Personas"
 
@@ -1130,9 +1022,8 @@ msgstr "Ver Perfil"
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
-#: templates/base.html:97 templates/mojo.html:93
-#: templates/drumbeatmail/inbox.html:4 templates/drumbeatmail/inbox.html:9
-#: templates/drumbeatmail/inbox.html:20
+#: templates/base.html:97 templates/drumbeatmail/inbox.html:4
+#: templates/drumbeatmail/inbox.html:9 templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
@@ -1158,46 +1049,6 @@ msgstr "jquery.ui.datepicker-es.js"
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
-#: templates/mojo.html:66 templates/challenges/challenge.html:27
-#: templates/challenges/challenge_full.html:10
-#: templates/challenges/challenge_judges.html:8
-#: templates/challenges/submission_show.html:10
-msgid "Projects"
-msgstr "Proyectos"
-
-#: templates/mojo.html:68 templates/events/index.html:4
-#: templates/events/index.html.py:10
-msgid "Events"
-msgstr "Eventos"
-
-#: templates/mojo.html:84 templates/dashboard/dashboard.html:5
-msgid "Your Dashboard"
-msgstr "Mi Página"
-
-#: templates/mojo.html:85
-msgid "Your Profile"
-msgstr "Mi Perfil"
-
-#: templates/mojo.html:86
-msgid "Account Settings"
-msgstr "Preferencias"
-
-#: templates/mojo.html:87
-msgid "Donate to Drumbeat"
-msgstr "Donar a Drumbeat"
-
-#: templates/mojo.html:108
-msgid "View All Messages"
-msgstr "Ver Todos los Mensajes"
-
-#: templates/mojo.html:119
-msgid "Sign in"
-msgstr "Entrar"
-
-#: templates/mojo.html:120
-msgid "Sign up"
-msgstr "Inscribir"
-
 #: templates/activity/_activity_resource.html:7 templates/content/page.html:33
 #: templates/content/page.html.py:64 templates/content/page.html:92
 #: templates/content/sign_up.html:53 templates/content/sign_up.html.py:95
@@ -1210,8 +1061,6 @@ msgstr "Reportar Abuso"
 
 #: templates/activity/_activity_resource.html:10
 #: templates/activity/delete_restore.html:52
-#: templates/challenges/challenge_judges.html:55
-#: templates/challenges/delete_confirm.html:21
 #: templates/content/confirm_delete_page.html:19
 #: templates/content/confirm_delete_page.html:29
 #: templates/content/delete_restore_comment.html:62
@@ -1234,7 +1083,7 @@ msgid "via"
 msgstr "vía "
 
 #: templates/activity/_activity_resource.html:46
-#: templates/challenges/submission_show.html:60 templates/content/page.html:40
+#: templates/content/page.html:40
 msgid "Comments"
 msgstr "Comentarios"
 
@@ -1259,11 +1108,6 @@ msgid "Are you sure you want to delete this message?"
 msgstr "¿Está seguro que desea eliminar este mensaje?"
 
 #: templates/activity/delete_restore.html:47
-#: templates/challenges/challenge_edit_summary.html:99
-#: templates/challenges/challenge_edit_summary.html:102
-#: templates/challenges/delete_confirm.html:20
-#: templates/challenges/submission_edit_description.html:20
-#: templates/challenges/submission_edit_summary.html:40
 #: templates/content/comment_page.html:89
 #: templates/content/comment_sign_up.html:118
 #: templates/content/confirm_delete_page.html:27
@@ -1274,7 +1118,7 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/dashboard/dashboard.html:81
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
-#: templates/projects/project.html:87 templates/projects/project_clone.html:21
+#: templates/projects/project.html:60 templates/projects/project_clone.html:21
 #: templates/projects/project_edit_image.html:24
 #: templates/projects/project_edit_status.html:60
 #: templates/projects/project_edit_summary.html:37
@@ -1302,368 +1146,6 @@ msgstr "Cancelar"
 msgid "Restore"
 msgstr "Restaurar"
 
-#: templates/challenges/_challenge_sidebar.html:21
-msgid "Start date"
-msgstr "Fecha de inicio"
-
-#: templates/challenges/_challenge_sidebar.html:24
-msgid "End date"
-msgstr "Fecha de cierre"
-
-#: templates/challenges/_submission_resource.html:18
-msgid "Like this submission"
-msgstr "Me gusta este envío"
-
-#: templates/challenges/challenge.html:36
-#: templates/challenges/challenge_edit.html:5
-#: templates/challenges/challenge_edit.html:13
-msgid "Edit Challenge"
-msgstr "Editar Reto"
-
-#: templates/challenges/challenge.html:37
-msgid "Contact Entrants"
-msgstr "Contactar Participantes del Reto"
-
-#: templates/challenges/challenge.html:67
-msgid "What's your idea?"
-msgstr "¿Cúal es su idea?"
-
-#: templates/challenges/challenge.html:77
-#: templates/challenges/submission_edit_description.html:21
-#: templates/challenges/submission_edit_summary.html:41
-msgid "Continue"
-msgstr "Continuar"
-
-#: templates/challenges/challenge.html:93
-msgid "Newest Ideas"
-msgstr "Ideas más Recientes"
-
-#: templates/challenges/challenge_edit.html:5
-#: templates/challenges/challenge_edit.html:15
-#: templates/projects/project.html:13
-msgid "Create Challenge"
-msgstr "Crear Reto"
-
-#: templates/challenges/challenge_edit.html:22
-#: templates/challenges/challenge_edit.html:25
-msgid "Challenge Summary"
-msgstr "Resumen del Reto"
-
-#: templates/challenges/challenge_edit.html:23
-#: templates/challenges/challenge_edit.html:26
-msgid "Challenge Image"
-msgstr "Imagen del Reto"
-
-#: templates/challenges/challenge_edit_image.html:9
-msgid "Upload Challenge Image"
-msgstr "Subir Imagen del Reto"
-
-#: templates/challenges/challenge_edit_image.html:13
-msgid "JPG, GIF or PNG only. Max size of 700k."
-msgstr "JPG, GIF o PNG solamente. Tamaño máximo 700k."
-
-#: templates/challenges/challenge_edit_image.html:18
-#: templates/projects/project_edit_image.html:25
-#: templates/schools/school_edit_background.html:24
-#: templates/schools/school_edit_groups_icon.html:24
-#: templates/schools/school_edit_logo.html:24
-#: templates/schools/school_edit_site_logo.html:24
-#: templates/users/profile_edit_main.html:15
-msgid "Upload"
-msgstr "Subir"
-
-#: templates/challenges/challenge_edit_summary.html:9
-#: templates/content/base_page_form.html:24
-msgid "Title"
-msgstr "Título"
-
-#: templates/challenges/challenge_edit_summary.html:16
-msgid "Title (long)"
-msgstr "Título (largo)"
-
-#: templates/challenges/challenge_edit_summary.html:23
-#: templates/challenges/challenge_full.html:23
-msgid "The Brief"
-msgstr "La Carta"
-
-#: templates/challenges/challenge_edit_summary.html:30
-#: templates/challenges/challenge_full.html:28
-msgid "How does it work? (Submission guidelines)"
-msgstr "¿Cómo funciona? (Lineamientos para hacer envíos)"
-
-#: templates/challenges/challenge_edit_summary.html:37
-msgid "Sidebar text"
-msgstr "Texto lateral"
-
-#: templates/challenges/challenge_edit_summary.html:38
-msgid "Text to populate the left sidebar on a challenge landing page"
-msgstr ""
-"Texto para poblar el lado izquierdo en una página de llegada de un reto"
-
-#: templates/challenges/challenge_edit_summary.html:44
-msgid "Above the fold text."
-msgstr "Encima el texto doblado."
-
-#: templates/challenges/challenge_edit_summary.html:51
-msgid "Start Date"
-msgstr "Fecha de Inicio"
-
-#: templates/challenges/challenge_edit_summary.html:58
-msgid "End Date"
-msgstr "Fecha de Cierre"
-
-#: templates/challenges/challenge_edit_summary.html:65
-msgid "Other Important Dates"
-msgstr "Otras Fechas Importantes"
-
-#: templates/challenges/challenge_edit_summary.html:72
-msgid "Allow users to vote on submissions?"
-msgstr "¿Permitir que los usuarios den su voto respecto a las respuestas?"
-
-#: templates/challenges/challenge_edit_summary.html:78
-msgid "Allow entrants to edit their submissions?"
-msgstr "¿Permitir a los participantes del reto editar sus respuestas?"
-
-#: templates/challenges/challenge_edit_summary.html:84
-#: templates/challenges/challenge_full.html:39
-msgid "Resources and Support"
-msgstr "Recursos y Soporte"
-
-#: templates/challenges/challenge_edit_summary.html:91
-#: templates/challenges/challenge_full.html:44
-msgid "Rules"
-msgstr "Reglas"
-
-#: templates/challenges/challenge_edit_summary.html:100
-#: templates/challenges/voter_details.html:20
-#: templates/content/comment_page.html:92
-#: templates/content/comment_sign_up.html:121
-#: templates/content/edit_page.html:48
-#: templates/dashboard/setup_profile.html:9
-#: templates/projects/project_edit_status.html:61
-#: templates/projects/project_edit_summary.html:38
-#: templates/schools/school_edit_styles.html:74
-#: templates/schools/school_edit_summary.html:23
-#: templates/users/profile_edit_main.html:26
-#: templates/users/settings_email.html:19
-#: templates/users/settings_notifications.html:46
-#: templates/users/settings_password.html:28
-msgid "Save"
-msgstr "Guardar"
-
-#: templates/challenges/challenge_edit_summary.html:103
-#: templates/content/create_page.html:39 templates/projects/directory.html:22
-#: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:31
-#: templates/projects/project_edit.html:45
-#: templates/projects/project_edit_summary.html:41
-#: templates/projects/project_import.html:22
-msgid "Create"
-msgstr "Crear"
-
-#: templates/challenges/challenge_full.html:33
-msgid "Important Dates"
-msgstr "Fechas Importantes"
-
-#: templates/challenges/challenge_judges.html:14
-#: templates/challenges/challenge_judges.html:22
-msgid "Judges"
-msgstr "Jueces"
-
-#: templates/challenges/challenge_judges.html:28
-#: templates/projects/project_edit_participants.html:12
-#: templates/schools/school_edit_organizers.html:13
-#: templates/users/profile_form_base.html:19
-msgid "Username"
-msgstr "Nombre de usuario"
-
-#: templates/challenges/challenge_judges.html:36
-#: templates/projects/project_edit_links.html:7
-#: templates/projects/project_edit_participants.html:22
-#: templates/schools/school_edit_declined.html:19
-#: templates/schools/school_edit_featured.html:19
-#: templates/schools/school_edit_membership.html:19
-#: templates/schools/school_edit_organizers.html:19
-#: templates/users/profile_edit_links.html:28
-msgid "Add"
-msgstr "Añadir"
-
-#: templates/challenges/challenge_judges.html:44
-#: templates/projects/project_edit_links.html:14
-#: templates/projects/project_edit_links_base.html:13
-#: templates/projects/project_edit_participants.html:30
-#: templates/projects/project_edit_summary.html:12
-#: templates/schools/school_edit_declined.html:27
-#: templates/schools/school_edit_featured.html:27
-#: templates/schools/school_edit_membership.html:27
-#: templates/schools/school_edit_organizers.html:27
-#: templates/schools/school_edit_summary.html:10
-#: templates/users/profile_edit_links.html:13
-#: templates/users/profile_edit_links.html:35
-#: templates/users/profile_edit_links_edit.html:13
-msgid "Name"
-msgstr "Nombre"
-
-#: templates/challenges/challenge_judges.html:45
-#: templates/projects/project_edit_links.html:17
-#: templates/projects/project_edit_participants.html:32
-#: templates/schools/school_edit_declined.html:28
-#: templates/schools/school_edit_featured.html:28
-#: templates/schools/school_edit_membership.html:28
-#: templates/users/profile_edit_links.html:38
-#: templates/users/profile_edit_openids.html:20
-msgid "Actions"
-msgstr "Acciones"
-
-#: templates/challenges/contact_entrants.html:4
-msgid "Send Message Challenge entrants"
-msgstr "Envíar mensaje del reto a competidores"
-
-#: templates/challenges/contact_entrants.html:8
-#: templates/drumbeatmail/base.html:39 templates/messages/compose.html:8
-#: templates/projects/contact_organizers.html:36
-#: templates/users/forgot_password.html:18
-msgid "Send"
-msgstr "Enviar"
-
-#: templates/challenges/delete_confirm.html:5
-msgid "Delete Submission?"
-msgstr "¿Eliminar Envío?"
-
-#: templates/challenges/delete_confirm.html:11
-msgid "Confirm Delete"
-msgstr "Confirmar Eliminación"
-
-#: templates/challenges/delete_confirm.html:17
-msgid "Are you sure you want to delete the entry: "
-msgstr "¿Está seguro que desea eliminar la entrada: "
-
-#: templates/challenges/delete_confirm.html:17
-msgid "This action can not be undone."
-msgstr "Esta acción no puede des-hacerse"
-
-#: templates/challenges/submission_edit.html:5
-#: templates/challenges/submission_show.html:19
-msgid "Edit Submission"
-msgstr "Editar Envíos"
-
-#: templates/challenges/submission_edit.html:5
-msgid "Create Submission"
-msgstr "Crear Envíos"
-
-#: templates/challenges/submission_edit.html:11
-msgid "Challenge Submission"
-msgstr "Envío de un Reto"
-
-#: templates/challenges/submission_edit.html:12
-msgid "View Submission"
-msgstr "Ver Envío"
-
-#: templates/challenges/submission_edit.html:17
-msgid "Response Summary"
-msgstr "Resumen de Respuesta"
-
-#: templates/challenges/submission_edit.html:19
-msgid "Share Response"
-msgstr "Compartir Respuesta"
-
-#: templates/challenges/submission_edit_description.html:12
-#: templates/challenges/submission_show.html:45
-#: templates/schools/school_edit_summary.html:16
-msgid "Description"
-msgstr "Descripción"
-
-#: templates/challenges/submission_edit_description.html:23
-#: templates/challenges/submission_edit_summary.html:43
-msgid "Publish"
-msgstr "Publicar"
-
-#: templates/challenges/submission_edit_share.html:9
-msgid "Share your ideas!"
-msgstr "¡Comparta sus ideas!"
-
-#: templates/challenges/submission_edit_summary.html:12
-msgid "Submission Title"
-msgstr "Título del Envío"
-
-#: templates/challenges/submission_edit_summary.html:13
-msgid ""
-"This is the title of your submission. We'll use it to refer to your idea. Be "
-"descriptive!"
-msgstr ""
-"Este es el título de su envío. Lo usaremos para referirnos a su idea. ¡Sea "
-"descriptivo!"
-
-#: templates/challenges/submission_edit_summary.html:19
-#: templates/challenges/submission_show.html:40
-#: templates/projects/imported_detailed_description.html:3
-#: templates/projects/project_edit.html:50
-#: templates/schools/school_edit.html:31
-msgid "Summary"
-msgstr "Resumen"
-
-#: templates/challenges/submission_edit_summary.html:20
-msgid ""
-"What's the 60 second version? Use this space to summarize your idea, explain "
-"the benefits, and put it in context."
-msgstr ""
-"¿Cúal es la versión de 60 segundos? Use este espacio para resumir su idea, "
-"explicar los beneficios, y ponerla en contexto."
-
-#: templates/challenges/submission_edit_summary.html:26
-msgid "Tags"
-msgstr "Etiquetas"
-
-#: templates/challenges/submission_edit_summary.html:27
-msgid ""
-"Give us a comma-separated list of terms to describe your idea (for example: "
-"\"video, html5, transcripts, editorial\")"
-msgstr ""
-"Proporcione una lista separada por comas de los términos que describen su "
-"idea (por ejemplo: \"video, html5, transcripciones, editorial\")"
-
-#: templates/challenges/submission_edit_summary.html:33
-msgid "Bio"
-msgstr "Biografía"
-
-#: templates/challenges/submission_edit_summary.html:34
-msgid ""
-"Tell us a bit about yourself or your team. Who are you collaborating with? "
-"What are your interests?"
-msgstr ""
-"Cuentenos un poco sobre usted o su equipo. ¿Con quienes colabora? ¿Cuáles "
-"son sus intereses?"
-
-#: templates/challenges/submission_show.html:20
-msgid "Delete Submission"
-msgstr "Eliminar Envío"
-
-#: templates/challenges/submission_show.html:51
-msgid "About this entrant"
-msgstr "Acerca de esta entrada"
-
-#: templates/challenges/submission_show.html:80
-msgid "Leave a comment."
-msgstr "Deje un comentario."
-
-#: templates/challenges/submission_show.html:86
-#: templates/content/comment_page.html:94
-#: templates/content/comment_sign_up.html:123
-msgid "Post"
-msgstr "Publicar"
-
-#: templates/challenges/voter_details.html:5
-msgid "Voter details"
-msgstr "Detalles del Votante"
-
-#: templates/challenges/voter_details.html:10
-msgid "Thank you for voting"
-msgstr "Gracias por votar"
-
-#: templates/challenges/voter_details.html:14
-msgid "Please choose 1, 2 or 3 of the following that best describe you."
-msgstr "Por favor entre los siguientes elija 1, 2 o 3 que mejor lo describan."
-
 #: templates/content/accept_sign_up_comment.html:2
 msgid "Welcome aboard! You are an organizer now."
 msgstr "¡Bienvenido a bordo! Ahora usted es un organizador."
@@ -1671,6 +1153,10 @@ msgstr "¡Bienvenido a bordo! Ahora usted es un organizador."
 #: templates/content/accept_sign_up_comment.html:4
 msgid "Welcome aboard! You are a participant now."
 msgstr "¡Bienvenido a bordo! Ahora usted es un participante."
+
+#: templates/content/base_page_form.html:24
+msgid "Title"
+msgstr "Título"
 
 #: templates/content/base_page_form.html:25
 msgid "A good title is short and descriptive."
@@ -1723,6 +1209,26 @@ msgstr "En Respuesta A:"
 #: templates/content/restore_version.html:31
 msgid "[Preview]"
 msgstr "[Vista Previa]"
+
+#: templates/content/comment_page.html:92
+#: templates/content/comment_sign_up.html:121
+#: templates/content/edit_page.html:48
+#: templates/dashboard/setup_profile.html:9
+#: templates/projects/project_edit_status.html:61
+#: templates/projects/project_edit_summary.html:38
+#: templates/schools/school_edit_styles.html:74
+#: templates/schools/school_edit_summary.html:23
+#: templates/users/profile_edit_main.html:26
+#: templates/users/settings_email.html:19
+#: templates/users/settings_notifications.html:46
+#: templates/users/settings_password.html:28
+msgid "Save"
+msgstr "Guardar"
+
+#: templates/content/comment_page.html:94
+#: templates/content/comment_sign_up.html:123
+msgid "Post"
+msgstr "Publicar"
 
 #: templates/content/comment_sign_up.html:27
 msgid "Edit Answer"
@@ -1809,6 +1315,15 @@ msgstr ""
 "preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
 "una empresa en la que todos trabajen durante un mes."
 
+#: templates/content/create_page.html:39 templates/projects/directory.html:22
+#: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
+#: templates/projects/project_edit.html:31
+#: templates/projects/project_edit.html:45
+#: templates/projects/project_edit_summary.html:41
+#: templates/projects/project_import.html:22
+msgid "Create"
+msgstr "Crear"
+
 #: templates/content/delete_restore_comment.html:23
 msgid "Restore Answer:"
 msgstr "Restaurar Respuesta"
@@ -1880,7 +1395,7 @@ msgstr "Publicar Comentario"
 #: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
 #: templates/dashboard/dashboard.html:97 templates/dashboard/dashboard.html:99
 #: templates/projects/directory.html:40 templates/projects/directory.html:42
-#: templates/projects/project.html:104 templates/projects/project.html:106
+#: templates/projects/project.html:77 templates/projects/project.html.py:79
 msgid "previous"
 msgstr "anterior"
 
@@ -1888,8 +1403,8 @@ msgstr "anterior"
 #: templates/content/sign_up.html:126 templates/content/sign_up.html.py:128
 #: templates/dashboard/dashboard.html:102
 #: templates/dashboard/dashboard.html:104 templates/projects/directory.html:45
-#: templates/projects/directory.html:47 templates/projects/project.html:109
-#: templates/projects/project.html:111
+#: templates/projects/directory.html:47 templates/projects/project.html:82
+#: templates/projects/project.html.py:84
 msgid "next"
 msgstr "siguiente"
 
@@ -1999,6 +1514,10 @@ msgstr " envió una nueva respuesta a la página de inscripción."
 msgid " posted a new comment at the sign-up page."
 msgstr " publicó un nuevo comentario en la página de inscripción."
 
+#: templates/dashboard/dashboard.html:5
+msgid "Your Dashboard"
+msgstr "Mi Página"
+
 #: templates/dashboard/dashboard.html:23
 #, python-format
 msgid "%(user)s's profile picture"
@@ -2060,7 +1579,7 @@ msgstr "lo contacta</a>."
 msgid "Post a message to your followers"
 msgstr "Publicar un mensaje para sus seguidores"
 
-#: templates/dashboard/dashboard.html:83 templates/projects/project.html:89
+#: templates/dashboard/dashboard.html:83 templates/projects/project.html:62
 msgid "Post Update"
 msgstr "Publicar"
 
@@ -2122,90 +1641,6 @@ msgstr "Suscribirse al blog de Peer 2 Peer University"
 msgid "feed"
 msgstr "alimentador"
 
-#: templates/drumbeat/about.html:4 templates/drumbeat/about.html.py:10
-msgid "About"
-msgstr "Acerca de"
-
-#: templates/drumbeat/about.html:17
-msgid "What is Mozilla Drumbeat?"
-msgstr "¿Qué es Drumbeat de Mozilla?"
-
-#: templates/drumbeat/about.html:37
-msgid "How can Drumbeat help you?"
-msgstr "¿Cómo Drumbeat puede ayudarle?"
-
-#: templates/drumbeat/about.html:48
-msgid "Connect with other innovators like you."
-msgstr "Conectarse con otros innovadores como usted."
-
-#: templates/drumbeat/about.html:59
-msgid "Share your own project."
-msgstr "Comparta su propio proyecto."
-
-#: templates/drumbeat/about.html:65
-msgid "Connect with Drumbeat events"
-msgstr "Conectar con eventos de Drumbeat"
-
-#: templates/drumbeat/about.html:72
-msgid "Anyone can share a project on Drumbeat."
-msgstr "Cualquiera puede compartir un proyecto en Drumbeat."
-
-#: templates/drumbeat/about.html:81
-msgid "Make it easy for others to participate"
-msgstr "Facilitelo a otros participantes"
-
-#: templates/drumbeat/about.html:82
-msgid "Drumbeat is all about co-creation."
-msgstr "Drumbeat es todo con respecto a co-creación"
-
-#: templates/drumbeat/about.html:82
-msgid "Making and building together."
-msgstr "Crear y construir juntos."
-
-#: templates/drumbeat/about.html:85
-msgid "Drive innovation for the open web and the wider world"
-msgstr "Dirigir la innovación para el web abierto y un mundo más amplio"
-
-#: templates/drumbeat/about.html:86
-msgid "Showing how open technologies can improve other parts of life."
-msgstr "Mostrar como las tecnologías abiertas puede mejorar partes de la vida."
-
-#: templates/drumbeat/about.html:89
-msgid "Bring together people with diverse backgrounds and skill-sets."
-msgstr "Juntar personas con diversos transfondos y habilidades."
-
-#: templates/drumbeat/about.html:99
-msgid "What areas does Drumbeat focus on?"
-msgstr "¿En que áreas se enfoca Drumbeat?"
-
-#: templates/drumbeat/about.html:117
-msgid "How does Drumbeat make the world better?"
-msgstr "¿Cómo Drumbeat hace mejor el mundo?"
-
-#: templates/drumbeat/about.html:128
-msgid "How can I get involved in Drumbeat?"
-msgstr "¿Cómo puedo involucrarme con Drumbeat?"
-
-#: templates/drumbeat/editing.html:4
-msgid "Editing help"
-msgstr "Editar ayuda"
-
-#: templates/drumbeat/editing.html:10
-msgid "Editing Help"
-msgstr "Editar Ayuda"
-
-#: templates/drumbeat/editing.html:13
-msgid ""
-"This site uses <a href=\"http://daringfireball.net/projects/markdown/"
-"\">Markdown</a> for formatting."
-msgstr ""
-"Este sitio usa <a href=\"http://daringfireball.net/projects/markdown/"
-"\">Markdown</a> para dar formato."
-
-#: templates/drumbeat/editing.html:16
-msgid "Basic formatting"
-msgstr "Formato básico"
-
 #: templates/drumbeat/report_abuse.html:5
 #: templates/drumbeat/report_received.html:5
 msgid "Abuse Report Received"
@@ -2231,16 +1666,6 @@ msgstr "Gracias,"
 msgid "We have received your report and will investigate further."
 msgstr "Hemos recibido su reporte e investigaremos más."
 
-#: templates/drumbeat/terms-of-service.html:4
-#: templates/drumbeat/terms-of-service.html:10
-#: templates/drumbeat/terms-of-service.html:17
-msgid "Terms of Service"
-msgstr "Términos de Servicio"
-
-#: templates/drumbeat/terms-of-service.html:18
-msgid "Just a placeholder right now."
-msgstr "Sólo un espacio en el momento"
-
 #: templates/drumbeat/emails/abuse_report.txt:2
 msgid "has reported the following content as objectionable:"
 msgstr "ha reportado el siguiente contenido como objetable:"
@@ -2263,6 +1688,12 @@ msgid ""
 msgstr ""
 "Bienvenidos Robots, ReCaptch ha sido deshabilitado para su conveniencia.  "
 "Envíe spam como lo desee."
+
+#: templates/drumbeatmail/base.html:39 templates/messages/compose.html:8
+#: templates/projects/contact_organizers.html:36
+#: templates/users/forgot_password.html:18
+msgid "Send"
+msgstr "Enviar"
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
@@ -2299,22 +1730,6 @@ msgstr "Ha recibido un nuevo mensaje directo de"
 #: templates/drumbeatmail/emails/direct_message.txt:6
 msgid "Reply:"
 msgstr "Respuesta:"
-
-#: templates/events/index.html:18
-msgid "Using open technologies to build the world we want."
-msgstr "Usando tecnologías abiertas para construir el mundo que queremos."
-
-#: templates/events/index.html:19
-msgid "Online and in your community."
-msgstr "En línea y en su comunidad."
-
-#: templates/events/index.html:57
-msgid "Organize a local Drumbeat event"
-msgstr "Organice un evento Drumbeat local"
-
-#: templates/events/index.html:74
-msgid "The Mozilla Drumbeat Festival"
-msgstr "El Festival de Drumbeat de Mozilla"
 
 #: templates/messages/compose.html:4 templates/messages/inbox.html:40
 msgid "New Message"
@@ -2460,6 +1875,12 @@ msgstr "Todos"
 msgid "Browse"
 msgstr "Navegar"
 
+#: templates/projects/imported_detailed_description.html:3
+#: templates/projects/project_edit.html:50
+#: templates/schools/school_edit.html:31
+msgid "Summary"
+msgstr "Resumen"
+
 #: templates/projects/imported_detailed_description.html:9
 msgid "Learning Objectives"
 msgstr "Objetivos de Aprendizaje"
@@ -2472,46 +1893,42 @@ msgstr "Prerequisitos"
 msgid "Sign-Up Task"
 msgstr "Tarea de Inscripción"
 
-#: templates/projects/project.html:27
+#: templates/projects/project.html:21
 #: templates/projects/project_task_list.html:21
 #: templates/projects/sidebar.html:165
 msgid "Tasks"
 msgstr "Tareas"
 
-#: templates/projects/project.html:32 templates/projects/project_edit.html:43
+#: templates/projects/project.html:26 templates/projects/project_edit.html:43
 #: templates/projects/project_task_list.html:29
 msgid "View"
 msgstr "Vista"
 
-#: templates/projects/project.html:36
+#: templates/projects/project.html:30
 msgid "Displaying"
 msgstr "Presentando"
 
-#: templates/projects/project.html:36
+#: templates/projects/project.html:30
 msgid "of"
 msgstr "de"
 
-#: templates/projects/project.html:36
+#: templates/projects/project.html:30
 msgid "total tasks"
 msgstr "total de tareas"
 
-#: templates/projects/project.html:36
+#: templates/projects/project.html:30
 msgid "See All Tasks"
 msgstr "Ver Todas las Tareas"
 
-#: templates/projects/project.html:42
-msgid "Challenges"
-msgstr "Retos"
-
-#: templates/projects/project.html:62
+#: templates/projects/project.html:35
 msgid "Activity Wall"
 msgstr "Muro de Actividades"
 
-#: templates/projects/project.html:69
+#: templates/projects/project.html:42
 msgid "Post a message"
 msgstr "Publicar un mensajes"
 
-#: templates/projects/project.html:74
+#: templates/projects/project.html:47
 msgid ""
 "Important message (participants can not turn off notifications for important "
 "messages)."
@@ -2592,6 +2009,15 @@ msgstr ""
 "Tipos de Archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
 "Dimensiones: 243x150 pixels"
 
+#: templates/projects/project_edit_image.html:25
+#: templates/schools/school_edit_background.html:24
+#: templates/schools/school_edit_groups_icon.html:24
+#: templates/schools/school_edit_logo.html:24
+#: templates/schools/school_edit_site_logo.html:24
+#: templates/users/profile_edit_main.html:15
+msgid "Upload"
+msgstr "Subir"
+
 #: templates/projects/project_edit_links.html:5
 msgid "Add links to websites associated with this "
 msgstr "Añadir enlaces a sitios web asociados con este "
@@ -2603,6 +2029,31 @@ msgstr ""
 " tales como un blog, página personal, perfil en twitter, repositorio en "
 "github, etc. "
 
+#: templates/projects/project_edit_links.html:7
+#: templates/projects/project_edit_participants.html:22
+#: templates/schools/school_edit_declined.html:19
+#: templates/schools/school_edit_featured.html:19
+#: templates/schools/school_edit_membership.html:19
+#: templates/schools/school_edit_organizers.html:19
+#: templates/users/profile_edit_links.html:28
+msgid "Add"
+msgstr "Añadir"
+
+#: templates/projects/project_edit_links.html:14
+#: templates/projects/project_edit_links_base.html:13
+#: templates/projects/project_edit_participants.html:30
+#: templates/projects/project_edit_summary.html:12
+#: templates/schools/school_edit_declined.html:27
+#: templates/schools/school_edit_featured.html:27
+#: templates/schools/school_edit_membership.html:27
+#: templates/schools/school_edit_organizers.html:27
+#: templates/schools/school_edit_summary.html:10
+#: templates/users/profile_edit_links.html:13
+#: templates/users/profile_edit_links.html:35
+#: templates/users/profile_edit_links_edit.html:13
+msgid "Name"
+msgstr "Nombre"
+
 #: templates/projects/project_edit_links.html:15
 #: templates/users/profile_edit_links.html:36
 msgid "URL"
@@ -2612,6 +2063,16 @@ msgstr "URL"
 #: templates/users/profile_edit_links.html:37
 msgid "Subscribed"
 msgstr "Suscrito"
+
+#: templates/projects/project_edit_links.html:17
+#: templates/projects/project_edit_participants.html:32
+#: templates/schools/school_edit_declined.html:28
+#: templates/schools/school_edit_featured.html:28
+#: templates/schools/school_edit_membership.html:28
+#: templates/users/profile_edit_links.html:38
+#: templates/users/profile_edit_openids.html:20
+msgid "Actions"
+msgstr "Acciones"
 
 #: templates/projects/project_edit_links.html:27
 #: templates/users/profile_edit_links.html:48
@@ -2671,6 +2132,12 @@ msgstr "Actualizar"
 #: templates/projects/project_edit_participants.html:8
 msgid "View, add and remove participants."
 msgstr "Ver, añadir y remover participantes."
+
+#: templates/projects/project_edit_participants.html:12
+#: templates/schools/school_edit_organizers.html:13
+#: templates/users/profile_form_base.html:19
+msgid "Username"
+msgstr "Nombre de usuario"
 
 #: templates/projects/project_edit_participants.html:17
 #: templates/projects/project_edit_participants.html:31
@@ -3232,6 +2699,10 @@ msgstr ""
 "Un buen nombre es corto y descriptivo. La gente debería saber sobre que es "
 "su escuela sin leer la descripción."
 
+#: templates/schools/school_edit_summary.html:16
+msgid "Description"
+msgstr "Descripción"
+
 #: templates/schools/school_edit_summary.html:17
 msgid "This description is shown on the school page."
 msgstr "Esta descripción se usará en la página de la escuela."
@@ -3711,19 +3182,3 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
-
-#~ msgid "School"
-#~ msgstr "Escuela"
-
-#~ msgid ""
-#~ "Optionally, the study group, course, ... may belong to a particular "
-#~ "school."
-#~ msgstr ""
-#~ "Opcionalmente, el grupo de estudio, curso, ... puede pertenecer a una "
-#~ "escuela en particular."
-
-#~ msgid "The %s course was not part of this school."
-#~ msgstr "El curso %s no era parte de esta escuela."
-
-#~ msgid "The %(kind)s membership to %(school)s was declined."
-#~ msgstr "La membresia del %(kind)s a %(school)s fue rechazada."
