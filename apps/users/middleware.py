@@ -12,7 +12,7 @@ class ProfileExistMiddleware(object):
             try:
                 request.user.get_profile()
             except UserProfile.DoesNotExist:
-                dashboard_url = reverse('dashboard_index')
+                dashboard_url = reverse('dashboard')
                 profile_create_url = reverse('users_profile_create')
                 logout_url = reverse('users_logout')
                 valid_urls = (dashboard_url, profile_create_url, logout_url)

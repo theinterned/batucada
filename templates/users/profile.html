@@ -6,7 +6,8 @@
 {% block title %}{{ profile.username }}{% endblock %}
 
 {% block links %}
-<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_user_feed username=profile.username %}">
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_profile_feed username=profile.username %}" title="{{_('Activity from user\'s profile')}}" />
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_dashboard_feed username=profile.username %}" title="{{_('Activity from user\'s dashboard')}}"/>
 <link rel="profile" href="http://microformats.org/profile/hcard" />
 {% endblock %}
 

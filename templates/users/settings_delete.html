@@ -22,7 +22,7 @@
   <form method="post" action="{% locale_url preferences_delete %}">
     {% csrf_token %}
     <p class="buttons">
-      <a class="button" href="{% locale_url dashboard_index %}">{{ _('Cancel') }}</a>
+      <a class="button" href="{% locale_url dashboard %}">{{ _('Cancel') }}</a>
       <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
     </p>
   </form>

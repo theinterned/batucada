@@ -46,7 +46,7 @@ def delete_restore(request, activity_id):
             return HttpResponseRedirect(
                 activity.target_project.get_absolute_url())
         else:
-            return HttpResponseRedirect(reverse('dashboard_index'))
+            return HttpResponseRedirect(reverse('dashboard'))
     else:
         return render_to_response('activity/delete_restore.html', {
             'activity': activity,

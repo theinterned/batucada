@@ -43,7 +43,7 @@
         <span class="hint block">{{ _('Are you sure you want to delete this message?') }}</span>
       {% endif %}
       <p class="content_buttons">
-        <a class="button" href="{% if activity.target_project %}{{ activity.target_project.get_absolute_url }}{% else %}{% locale_url dashboard_index %}{% endif %}">
+        <a class="button" href="{% if activity.target_project %}{{ activity.target_project.get_absolute_url }}{% else %}{% locale_url dashboard %}{% endif %}">
           {{ _('Cancel') }}
         </a>
         {% if activity.deleted %}

@@ -55,7 +55,7 @@
           }, true);
         </script> 
 
-		<a id="logo" class="ir" href="{% locale_url dashboard_index %}">P2PU</a>
+		<a id="logo" class="ir" href="{% if user.is_authenticated %}{% locale_url dashboard %}{% else %}{% locale_url splash %}{% endif %}">P2PU</a>
 		<a id="beta-tag" href="http://p2pu.lighthouseapp.com/projects/71002-lernanta/milestones" target="_blank">{{ _('BETA') }}</a>
 		<nav id="main-nav">
 		  <ul>
@@ -91,7 +91,7 @@
 	          <span class="dropdown">&nbsp;</span>
 		      </a>
 		      <ul id="user-actions">
-				<li><a href="{% locale_url dashboard_index %}" class="sub-level">{{ _('Dashboard') }}</a></li>
+				<li><a href="{% locale_url dashboard %}" class="sub-level">{{ _('Dashboard') }}</a></li>
 				<li><a href="{{ user.get_profile.get_absolute_url }}" class="sub-level">{{ _('View Profile') }}</a></li>
 				<li><a href="{% locale_url users_profile_edit %}" class="sub-level">{{ _('Edit Profile') }}</a></li>
 				<li><a href="{% locale_url drumbeatmail_inbox %}" class="sub-level">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>

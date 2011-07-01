@@ -165,7 +165,7 @@ WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 
 # Auth settings
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
