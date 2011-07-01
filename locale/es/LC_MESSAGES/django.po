@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-01 10:27-0400\n"
+"POT-Creation-Date: 2011-07-01 13:25-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,29 +29,29 @@ msgstr "Bitácora de actividades que %s está siguiendo"
 msgid "activities"
 msgstr "actividades"
 
-#: apps/activity/models.py:129
+#: apps/activity/models.py:129 apps/activity/models.py:141
 #, python-format
 msgid "%(actor)s %(verb)s %(target)s"
 msgstr "%(actor)s %(verb)s %(target)s"
 
-#: apps/activity/models.py:141
+#: apps/activity/models.py:145
 #, python-format
 msgid "%(verb)s activity performed by %(actor)s"
 msgstr "La actividad %(verb)s fue realizada por %(actor)s"
 
-#: apps/activity/models.py:147
+#: apps/activity/models.py:151
 msgid "created"
 msgstr "creó el grupo de estudio"
 
-#: apps/activity/models.py:151 apps/content/models.py:151
+#: apps/activity/models.py:155
 msgid "posted comment"
 msgstr "publicó un comentario"
 
-#: apps/activity/models.py:153 apps/content/models.py:79
+#: apps/activity/models.py:157 apps/content/models.py:81
 msgid "added"
 msgstr "añadió"
 
-#: apps/activity/models.py:164
+#: apps/activity/models.py:168
 #, python-format
 msgid "Activity ID %(id)d. Actor id %(actor)d, Verb %(verb)s"
 msgstr "Id de actividad %(id)d. Id  de Actor %(actor)d, Verbo %(verb)s"
@@ -105,17 +105,27 @@ msgstr " atrás"
 msgid "This field is required."
 msgstr "Este campo es requerido."
 
-#: apps/content/models.py:82
+#: apps/content/models.py:84
 #, python-format
 msgid " <a href=\"%(page_url)s\">%(page_title)s</a>."
 msgstr " <a href=\"%(page_url)s\">%(page_title)s</a>."
 
-#: apps/content/models.py:133 apps/content/models.py:145
+#: apps/content/models.py:136
+#, python-format
+msgid "answer at %s"
+msgstr "respuesta en %s"
+
+#: apps/content/models.py:138
+#, python-format
+msgid "comment at %s"
+msgstr "comentario en %s"
+
+#: apps/content/models.py:150
 #, python-format
 msgid "Comment to %s"
 msgstr "Comentario para %s"
 
-#: apps/content/models.py:154
+#: apps/content/models.py:156
 #, python-format
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."

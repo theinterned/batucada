@@ -35,7 +35,7 @@
     {{ activity.status|safe|nofollow|safe }}
   {% else %}
     {% if activity.target_object %}
-      {{ activity.target_object.representation }}
+      <a href="{{ activity.target_object.get_absolute_url }}">{{ activity.target_object }}</a>.
     {% else %}
       {{ activity|activity_representation }}
     {% endif %}

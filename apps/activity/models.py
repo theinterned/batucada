@@ -133,15 +133,20 @@ class Activity(ModelBase):
             return self.status.status[:50]
         elif self.remote_object:
             return self.remote_object.title
-
         elif self.target_object:
-            return self.target_object.title
-
+            return _('%(actor)s %(verb)s %(target)s') % dict (
+                actor=self.actor, verb=self.friendly_verb(), target=self.target_object)
         friendly_verb = schema.verbs_by_uri[self.verb]
         return ugettext('%(verb)s activity performed by %(actor)s') % dict(
             verb=friendly_verb, actor=self.actor)
 
     def friendly_verb(self):
+        if self.target_object:
+            verb = None
+            if hasattr(self.target_object, 'friendly_verb'):
+                verb = self.target_object.friendly_verb(self.verb)
+            verb = verb or schema.past_tense[schema.verbs_by_uri[self.verb]]
+            return verb
         if self.verb == schema.verbs['post']:
             if self.project_id:
                 return mark_safe(ugettext('created'))
