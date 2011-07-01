@@ -38,7 +38,7 @@ def report_abuse(request, model, app_label, pk):
         try:
             url = request.build_absolute_uri(instance.get_absolute_url())
         except NoReverseMatch:
-            url = request.build_absolute_uri(reverse('dashboard_index'))
+            url = request.build_absolute_uri(reverse('dashboard'))
         ulang = get_language()
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])

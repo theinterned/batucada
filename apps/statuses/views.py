@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 @login_required
 def create(request):
     if request.method != 'POST' or 'status' not in request.POST:
-        return HttpResponseRedirect(reverse('dashboard_index'))
+        return HttpResponseRedirect(reverse('dashboard'))
     form = StatusForm(data=request.POST)
     if form.is_valid():
         status = form.save(commit=False)
@@ -29,7 +29,7 @@ def create(request):
         log.debug("form error: %s" % (str(form.errors)))
         messages.error(request, _('There was an error posting '
                                   'your status update'))
-    return HttpResponseRedirect(reverse('dashboard_index'))
+    return HttpResponseRedirect(reverse('dashboard'))
 
 
 @login_required
@@ -51,11 +51,11 @@ def reply(request, in_reply_to):
 
 @login_required
 def create_project_status(request, project_id):
-    if request.method != 'POST' or 'status' not in request.POST:
-        return HttpResponseRedirect(reverse('dashboard_index'))
     project = get_object_or_404(Project, id=project_id)
+    if request.method != 'POST' or 'status' not in request.POST:
+        return HttpResponseRedirect(project.get_absolute_url())
     if not project.is_participating(request.user):
-        return HttpResponseRedirect(reverse('dashboard_index'))
+        return HttpResponseRedirect(project.get_absolute_url())
     if project.is_organizing(request.user):
         form = ImportantStatusForm(data=request.POST)
     else:

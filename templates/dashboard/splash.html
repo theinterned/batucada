@@ -4,6 +4,10 @@
 {% block title %}{{ _('Learning for everyone, by everyone, about almost anything') }}{% endblock %}
 {% block bodyid %}splash{% endblock %}
 
+{% block links %}
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_public_feed %}" />
+{% endblock %}
+
 {% block body %}
 
 

@@ -63,11 +63,10 @@ class BaseActivityFeed(Feed):
         return self._request.build_absolute_uri(item.actor.get_absolute_url())
 
     def title(self, obj):
-        return unicode(obj) if obj else _('Public Activity')
+        return unicode(obj)
 
     def subtitle(self, obj):
-        obj = obj or Site.objects.get_current().domain
-        return _('Activity feed for %s' % (obj,))
+        return _('Activity feed from %s') % (obj,)
 
     def item_title(self, item):
         return item.textual_representation()
@@ -106,6 +105,22 @@ class ProfileActivityFeed(BaseActivityFeed):
         return Activity.objects.filter(actor=user).order_by('-created_on')[:25]
 
 
+class DashboardActivityFeed(ProfileActivityFeed):
+
+    def subtitle(self, user):
+        return _('Activity feed from %s\'s dashboard') % (user,)
+
+    def items(self, user):
+        user_ids = [u.pk for u in user.following()]
+        project_ids = [p.pk for p in user.following(model=Project)]
+        return Activity.objects.select_related(
+            'actor', 'status', 'project', 'remote_object',
+            'remote_object_link', 'target_project').filter(
+            Q(actor__exact=user) | Q(actor__in=user_ids) |
+            Q(project__in=project_ids),
+       ).order_by('-created_on')[0:25]
+
+
 class ProjectActivityFeed(BaseActivityFeed):
 
     def get_object(self, request, project):
@@ -121,26 +136,14 @@ class ProjectActivityFeed(BaseActivityFeed):
         ).order_by('-created_on')[:25]
 
 
-class DashboardActivityFeed(BaseActivityFeed):
+class PublicActivityFeed(BaseActivityFeed):
 
     def get_object(self, request):
         self._request = request
-        if request.user.is_authenticated():
-            return request.user.get_profile()
-        else:
-            return None
+        return Site.objects.get_current().domain
 
-    def items(self, user):
-        if user is None:
-            return Activity.objects.public()
-        user_ids = [u.pk for u in user.following()]
-        project_ids = [p.pk for p in user.following(model=Project)]
-        return Activity.objects.select_related(
-            'actor', 'status', 'project', 'remote_object',
-            'remote_object_link', 'target_project').filter(
-            Q(actor__exact=user) | Q(actor__in=user_ids) |
-            Q(project__in=project_ids),
-       ).order_by('-created_on')[0:25]
+    def items(self, obj):
+        return Activity.objects.public()
 
     def link(self, user):
-        return reverse('dashboard_index')
+        return reverse('splash')

@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.sites.models import Site
+from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
 from activity.models import Activity
@@ -16,9 +17,9 @@ from users.forms import CreateProfileForm
 from projects.models import Project
 from news.models import FeedEntry
 from relationships.models import Relationship
+from drumbeat import messages
 
 
-@anonymous_only
 def splash(request):
     """Splash page we show to users who are not authenticated."""
     project = None
@@ -49,7 +50,7 @@ def hide_welcome(request):
         profile.save()
     if request.is_ajax():
         return HttpResponse()
-    return HttpResponseRedirect(reverse('dashboard_index'))
+    return HttpResponseRedirect(reverse('dashboard'))
 
 
 @login_required(profile_required=False)
@@ -67,6 +68,8 @@ def dashboard(request, page=1):
             'email': user.email,
             'username': username,
         })
+        messages.info(request,
+            _('Please fill out your profile to complete the account registration.'))
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
@@ -95,13 +98,3 @@ def dashboard(request, page=1):
         'page': current_page,
         'domain': Site.objects.get_current().domain,
     }, context_instance=RequestContext(request))
-
-
-def index(request, page=1):
-    """
-    Direct user to personalized dashboard or generic splash page, depending
-    on whether they are logged in authenticated or not.
-    """
-    if request.user.is_authenticated():
-        return dashboard(request, page=page)
-    return splash(request)

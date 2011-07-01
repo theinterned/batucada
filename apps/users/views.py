@@ -88,6 +88,8 @@ def _clean_redirect_url(request):
 
 def _get_redirect_url(request):
     url = request.session.get(REDIRECT_FIELD_NAME, None)
+    if url == reverse('splash'):
+        url = reverse('dashboard')
     if url:
         del request.session[REDIRECT_FIELD_NAME]
         if not url.startswith('/'):
@@ -211,7 +213,7 @@ def login_openid_complete(request):
 def logout(request):
     """Destroy user session."""
     auth.logout(request)
-    return http.HttpResponseRedirect(reverse('dashboard_index'))
+    return http.HttpResponseRedirect(reverse('splash'))
 
 
 @anonymous_only
@@ -371,7 +373,7 @@ def profile_view(request, username):
 def profile_create(request):
     try:
         request.user.get_profile()
-        return http.HttpResponseRedirect(reverse('dashboard_index'))
+        return http.HttpResponseRedirect(reverse('dashboard'))
     except UserProfile.DoesNotExist:
         pass
     form = forms.CreateProfileForm(request.POST)
@@ -394,7 +396,7 @@ def profile_create(request):
                 'instructions for completing your '
                 'registration.').format(profile.email)
         messages.info(request, msg)
-        return http.HttpResponseRedirect(reverse('dashboard_index'))
+        return http.HttpResponseRedirect(reverse('splash'))
     else:
         messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
