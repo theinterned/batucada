@@ -64,4 +64,3 @@ def report_abuse(request, model, app_label, pk):
         'app_label': app_label,
         'pk': pk,
     }, context_instance=RequestContext(request))
-

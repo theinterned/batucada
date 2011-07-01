@@ -1,6 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 
-# Select new verbs an objects from http://activitystrea.ms/head/activity-schema.html
+# Select new verbs an objects from
+# http://activitystrea.ms/head/activity-schema.html
 # as neccesary.
 
 # a list of verbs defined in the activity schema
