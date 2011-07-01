@@ -8,7 +8,6 @@ from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save, post_save
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
-from django.utils.timesince import timesince
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language, ugettext
 from django.db.models import Max
@@ -72,9 +71,6 @@ class Page(ModelBase):
             else:
                 self.index = 0
         super(Page, self).save()
-
-    def timesince(self, now=None):
-        return timesince(self.created_on, now)
 
     def friendly_verb(self, verb):
         if verbs['post'] == verb:
@@ -143,9 +139,6 @@ class PageComment(ModelBase):
     @property
     def title(self):
         return ugettext('Comment to %s') % self.page.title
-
-    def timesince(self, now=None):
-        return timesince(self.created_on, now)
 
     @property
     def project(self):

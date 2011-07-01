@@ -3,7 +3,6 @@ import bleach
 
 from django.db import models
 from django.db.models.signals import post_save
-from django.utils.timesince import timesince
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
@@ -35,9 +34,6 @@ class Status(ModelBase):
 
     def get_absolute_url(self):
         return self.activity.get().get_absolute_url()
-
-    def timesince(self, now=None):
-        return timesince(self.created_on, now)
 
     def send_wall_notification(self):
         if not self.project:
