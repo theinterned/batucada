@@ -606,45 +606,46 @@ header {}
         margin: 0 5px;
     }
 
-    #breadcrumbs #project-actions {
+    #breadcrumbs #breadcrumbs-actions {
         float: right;
         position: relative;
         top: -47px;
         margin-right: 10px;
     }
     
-    #user_profile #breadcrumbs #project-actions, #project_gallery #breadcrumbs #project-actions, #project_directory #breadcrumbs #project-actions, 
-    #school_home #breadcrumbs #project-actions, #inbox #breadcrumbs #project-actions {
+    #user_profile #breadcrumbs #breadcrumbs-actions, #project_gallery #breadcrumbs #breadcrumbs-actions,
+    #project_directory #breadcrumbs #breadcrumbs-actions, 
+    #school_home #breadcrumbs #breadcrumbs-actions, #inbox #breadcrumbs #breadcrumbs-actions {
         top: -25px;
     }
     
-    #breadcrumbs #project-actions .button {
+    #breadcrumbs #breadcrumbs-actions .button {
       float: left;
       margin-right: 15px;
     }
     
-    #project_landing #breadcrumbs #project-actions {
+    #project_landing #breadcrumbs #breadcrumbs-actions {
       top: -44px;
       margin-right: 35px;
     }
     
-    #sidebar #project-actions {
+    #sidebar #breadcrumbs-actions {
       padding: 0 10px 0 10px;
       position: relative;
       width: 223px;
       top: -50px;
     }
 
-    #sidebar #project-actions form { 
+    #sidebar #breadcrumbs-actions form { 
         float: left;
     }
 
-    #sidebar #project-actions #participate_button { 
+    #sidebar #breadcrumbs-actions #participate_button { 
         float: right;
         margin: 5px 0 0 0;
     }
     
-    #sidebar #project-action #participate_button a, #sidebar #project-actions button {
+    #sidebar #project-action #participate_button a, #sidebar #breadcrumbs-actions button {
         -webkit-box-shadow:0 0 15px #ffffff; 
         -moz-box-shadow: 0 0 15px #ffffff; 
         box-shadow:0 0 15px #ffffff; 

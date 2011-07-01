@@ -10,7 +10,7 @@
              <img src="/media/images/project-missing.png" width="243" height="150" alt="project image"/>
         {% endif %}
       </a>
-    <div id="project-actions">
+    </figure>
     {% if user.is_authenticated %}
       {% if not organizing and not participating %}
         {% if following %}
@@ -31,8 +31,7 @@
     {% else %}
           <p id="participate_button"><a href="{{ login_with_redirect_url }}">{{ _('Participate')}}</a></p>     
     {% endif %}
-    </div>
-    </figure>
+    <br>
     <div id="project-description">
         {{ project.short_description|safe }}
     </div> 
@@ -40,8 +39,18 @@
     <div id="project-summary">
       {{ project.long_description|safe }}
     </div>
+    <a id="project-description-link"
+       href="{{ project.detailed_description.get_absolute_url }}">
+      {{ _('View Full Description') }}
+    </a>
     {% if organizing %}
-      <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
+      <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }} {{ project.kind|title }}</a>
+    {% else %}
+      {% if user.is_authenticated %}
+        <p class="supplemental_actions">
+          <a class="report abuse action" href="{% locale_url drumbeat_abuse  model="project" app_label="projects" pk=project.id %}">{{_('Report Abuse')}}</a>
+        </p>
+      {% endif %}
     {% endif %}
     <ul id="project-stats">
       {% if project.accepted_school %}
@@ -115,16 +124,6 @@
     </li>
     {% endif %}
     </ul> <!-- /#project-stats -->
-    {% if user.is_authenticated and not organizing %}
-    <p class="supplemental_actions">
-      <a class="report abuse action" href="{% locale_url drumbeat_abuse  model="project" app_label="projects" pk=project.id %}">{{_('Report Abuse')}}</a>
-    </p>
-    {% endif %}
-    <a id="project-description-link"
-       href="{{ project.detailed_description.get_absolute_url }}">
-      {{ _('View Full Description') }}
-    </a>
-
   </section>
 
 <section id="people" class="panel">

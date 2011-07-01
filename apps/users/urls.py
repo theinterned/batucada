@@ -1,4 +1,6 @@
 from django.conf.urls.defaults import patterns, url
+from django.contrib.auth.views import password_reset
+from users.decorators import anonymous_only
 
 from users import forms
 
@@ -16,7 +18,7 @@ urlpatterns = patterns('',
 
   # Reset password urls
   url(r'^forgot/$',
-      'django.contrib.auth.views.password_reset',
+      anonymous_only(password_reset),
       {'template_name': 'users/forgot_password.html',
        'email_template_name': 'users/emails/forgot_password.txt',
        'password_reset_form': forms.PasswordResetForm},
