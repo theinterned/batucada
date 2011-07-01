@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.utils.feedgenerator import rfc3339_date
+from django.contrib.sites.models import Site
 
 from l10n.urlresolvers import reverse
 from django_push.publisher.feeds import Feed, HubAtom1Feed
@@ -10,10 +11,10 @@ from projects.models import Project
 from users.models import UserProfile
 
 
-class ActivityStreamAtomFeed(HubAtom1Feed):
+class ActivityStreamFeedType(HubAtom1Feed):
 
     def root_attributes(self):
-        attrs = super(ActivityStreamAtomFeed, self).root_attributes()
+        attrs = super(ActivityStreamFeedType, self).root_attributes()
         attrs['xmlns:activity'] = 'http://activitystrea.ms/spec/1.0/'
         return attrs
 
@@ -29,7 +30,7 @@ class ActivityStreamAtomFeed(HubAtom1Feed):
         if self.feed['author_name'] is not None:
             self._add_author_info(
                 handler, self.feed['author_name'], self.feed['author_link'])
-        super(ActivityStreamAtomFeed, self).add_root_elements(handler)
+        super(ActivityStreamFeedType, self).add_root_elements(handler)
 
     def add_item_elements(self, handler, item):
         handler.addQuickElement(u'updated', rfc3339_date(item['updated']))
@@ -49,13 +50,11 @@ class ActivityStreamAtomFeed(HubAtom1Feed):
         handler.addQuickElement(
             u'content', obj['content'], {'type': 'text/html'})
         handler.endElement(u'activity:object')
-        super(ActivityStreamAtomFeed, self).add_item_elements(handler, item)
+        super(ActivityStreamFeedType, self).add_item_elements(handler, item)
 
 
-class UserActivityFeed(Feed):
-    """Atom feed of user activities."""
-
-    feed_type = ActivityStreamAtomFeed
+class BaseActivityFeed(Feed):
+    feed_type = ActivityStreamFeedType
 
     def item_author_name(self, item):
         return unicode(item.actor)
@@ -63,25 +62,12 @@ class UserActivityFeed(Feed):
     def item_author_link(self, item):
         return self._request.build_absolute_uri(item.actor.get_absolute_url())
 
-    def title(self, user):
-        return unicode(user) or _('Public Activity')
+    def title(self, obj):
+        return unicode(obj) if obj else _('Public Activity')
 
-    def subtitle(self, user):
-        if user:
-            return _('Activity feed for %s' % (user,))
-        else:
-            return _('Public Activity')
-
-    def link(self, user):
-        return reverse('users_profile_view',
-                       kwargs={'username': user.username})
-
-    def get_object(self, request, username):
-        self._request = request
-        return get_object_or_404(UserProfile, username=username)
-
-    def items(self, user):
-        return Activity.objects.filter(actor=user).order_by('-created_on')[:25]
+    def subtitle(self, obj):
+        obj = obj or Site.objects.get_current().domain
+        return _('Activity feed for %s' % (obj,))
 
     def item_title(self, item):
         return item.textual_representation()
@@ -106,27 +92,36 @@ class UserActivityFeed(Feed):
         }
 
 
-class ProjectActivityFeed(UserActivityFeed):
-    """Atom feed of project activities."""
+class ProfileActivityFeed(BaseActivityFeed):
 
-    def title(self, project):
-        return project.name
+    def get_object(self, request, username):
+        self._request = request
+        return get_object_or_404(UserProfile, username=username)
+
+    def link(self, user):
+        return reverse('users_profile_view',
+                       kwargs={'username': user.username})
+
+    def items(self, user):
+        return Activity.objects.filter(actor=user).order_by('-created_on')[:25]
+
+
+class ProjectActivityFeed(BaseActivityFeed):
 
     def get_object(self, request, project):
         self._request = request
         return get_object_or_404(Project, slug=project)
+
+    def link(self, project):
+        return reverse('projects_show', kwargs={'slug': project.slug})
 
     def items(self, project):
         return Activity.objects.filter(
             Q(target_project=project) | Q(project=project),
         ).order_by('-created_on')[:25]
 
-    def link(self, project):
-        return reverse('projects_show', kwargs={'slug': project.slug})
 
-
-class DashboardFeed(UserActivityFeed):
-    """Atom feed of activities from a users dashboard."""
+class DashboardActivityFeed(BaseActivityFeed):
 
     def get_object(self, request):
         self._request = request
