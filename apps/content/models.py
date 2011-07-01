@@ -17,6 +17,7 @@ from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
+from activity.schema import verbs
 from users.tasks import SendUserEmail
 
 log = logging.getLogger(__name__)
@@ -75,13 +76,9 @@ class Page(ModelBase):
     def timesince(self, now=None):
         return timesince(self.created_on, now)
 
-    def friendly_verb(self):
-        return mark_safe(ugettext('added'))
-
-    def representation(self):
-        text = ugettext(' <a href="%(page_url)s">%(page_title)s</a>.')
-        return mark_safe(text % dict(page_url=self.get_absolute_url(),
-            page_title=escape(self.title)))
+    def friendly_verb(self, verb):
+        if verbs['post'] == verb:
+            return _('added')
 
     def can_edit(self, user):
         if not self.editable:
@@ -130,7 +127,10 @@ class PageComment(ModelBase):
     deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return _('Comment to %s') % self.page.title
+        if self.page.slug == 'sign-up' and not self.reply_to:
+            return _('answer at %s') % self.page.title
+        else:
+            return _('comment at %s') % self.page.title
 
     @models.permalink
     def get_absolute_url(self):
@@ -146,14 +146,6 @@ class PageComment(ModelBase):
 
     def timesince(self, now=None):
         return timesince(self.created_on, now)
-
-    def friendly_verb(self):
-        return mark_safe(ugettext('posted comment'))
-
-    def representation(self):
-        text = ugettext(' at <a href="%(comment_url)s">%(page_title)s</a>.')
-        return mark_safe(text % dict(comment_url=self.get_absolute_url(),
-            page_title=escape(self.page.title)))
 
     @property
     def project(self):
