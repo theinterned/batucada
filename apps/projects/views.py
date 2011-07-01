@@ -10,6 +10,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
 
@@ -176,6 +177,7 @@ def show(request, slug, page=1):
         'prev_page': int(page) - 1,
         'num_pages': paginator.num_pages,
         'page': current_page,
+        'domain': Site.objects.get_current().domain,
     }
     return render_to_response('projects/project.html', context,
                               context_instance=RequestContext(request))
