@@ -6,11 +6,8 @@
 {% block bodyid %}user_list{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
 {% block breadcrumbs %}
-<div class="container">
-  <nav>
-    <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
-  </nav>
-</div>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
 {% endblock %}
 
 {% block body %}

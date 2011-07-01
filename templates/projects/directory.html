@@ -7,22 +7,19 @@
 {% block links %}<link rel="stylesheet" href="{% if school %}{% locale_url schools_css slug=school.slug %}{% else %}{% locale_url multiple_schools_css %}{% endif %}?v=1">{% endblock %}
 
 {% block breadcrumbs %}
-<div class="container">
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
-      {% if school %}
-        <span class="arrow">&rsaquo;</span>
-        <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
-      {% endif %}
-      <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_directory %}">{{ _('All') }}</a>
-    </nav>
-    {% if user.is_authenticated %}
-    <div id="project-actions">
-      {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
-    </div>
-    {% endif %}
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  {% if school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+  {% endif %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_directory %}">{{ _('All') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  {% if user.is_authenticated %}
+    {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block body %}

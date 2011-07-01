@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-01 00:06-0400\n"
+"POT-Creation-Date: 2011-07-01 10:27-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -944,18 +944,18 @@ msgstr "(más)"
 msgid "BETA"
 msgstr "BETA"
 
-#: templates/base.html:62 templates/activity/delete_restore.html:12
-#: templates/activity/index.html:16 templates/projects/base.html:15
-#: templates/projects/directory.html:3 templates/projects/directory.html:12
-#: templates/projects/gallery.html:4 templates/projects/gallery.html.py:13
-#: templates/projects/project_edit.html:24
+#: templates/base.html:62 templates/activity/base.html:16
+#: templates/projects/base.html:16 templates/projects/directory.html:3
+#: templates/projects/directory.html:11 templates/projects/gallery.html:4
+#: templates/projects/gallery.html.py:12
+#: templates/projects/project_edit.html:25
 msgid "Learn"
 msgstr "Aprender"
 
-#: templates/base.html:63 templates/activity/delete_restore.html:16
-#: templates/activity/index.html:20 templates/projects/sidebar.html:131
-#: templates/users/profile.html:18 templates/users/profile_edit.html:11
-#: templates/users/user_list.html:5 templates/users/user_list.html.py:11
+#: templates/base.html:63 templates/activity/base.html:20
+#: templates/projects/sidebar.html:130 templates/users/profile.html:17
+#: templates/users/profile_edit.html:11 templates/users/user_list.html:5
+#: templates/users/user_list.html.py:10
 msgid "People"
 msgstr "Personas"
 
@@ -975,23 +975,23 @@ msgstr "Manual"
 msgid "My P2PU"
 msgstr "Mi P2PU"
 
-#: templates/base.html:94 templates/dashboard/dashboard.html:15
+#: templates/base.html:94 templates/dashboard/dashboard.html:14
+#: templates/drumbeatmail/inbox.html:9
 msgid "Dashboard"
 msgstr "Mi Página"
 
-#: templates/base.html:95 templates/dashboard/dashboard.html:29
-#: templates/users/profile_edit.html:25
+#: templates/base.html:95 templates/dashboard/dashboard.html:26
+#: templates/users/profile_edit.html:22
 msgid "View Profile"
 msgstr "Ver Perfil"
 
-#: templates/base.html:96 templates/users/profile.html:24
-#: templates/users/profile_edit.html:5 templates/users/profile_edit.html:15
-#: templates/users/profile_edit.html:24
+#: templates/base.html:96 templates/users/profile.html:23
+#: templates/users/profile_edit.html:5 templates/users/profile_edit.html:21
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
 #: templates/base.html:97 templates/drumbeatmail/inbox.html:4
-#: templates/drumbeatmail/inbox.html:9 templates/drumbeatmail/inbox.html:20
+#: templates/drumbeatmail/inbox.html:11 templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
 msgstr "Bandeja de Entrada"
 
@@ -1003,17 +1003,21 @@ msgstr "Salir"
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/base.html:147 templates/drumbeatmail/base.html:52
+#: templates/base.html:114
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:156 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
-#: templates/base.html:166
+#: templates/base.html:175
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
-#: templates/base.html:168
+#: templates/base.html:177
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
@@ -1023,12 +1027,12 @@ msgstr "js/script-es.js"
 #: templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
-#: templates/projects/sidebar.html:120 templates/users/profile.html:85
+#: templates/projects/sidebar.html:51 templates/users/profile.html:82
 msgid "Report Abuse"
 msgstr "Reportar Abuso"
 
 #: templates/activity/_activity_resource.html:10
-#: templates/activity/delete_restore.html:52
+#: templates/activity/delete_restore.html:32
 #: templates/content/confirm_delete_page.html:19
 #: templates/content/confirm_delete_page.html:29
 #: templates/content/delete_restore_comment.html:62
@@ -1055,27 +1059,27 @@ msgstr "vía "
 msgid "Comments"
 msgstr "Comentarios"
 
-#: templates/activity/delete_restore.html:4 templates/activity/index.html:4
+#: templates/activity/base.html:4
 msgid "Activity"
 msgstr "Actividad"
 
-#: templates/activity/delete_restore.html:28
+#: templates/activity/delete_restore.html:8
 msgid "Restore Message"
 msgstr "Restaurar Mensaje"
 
-#: templates/activity/delete_restore.html:30
+#: templates/activity/delete_restore.html:10
 msgid "Delete Message"
 msgstr "Borrar Mensaje"
 
-#: templates/activity/delete_restore.html:41
+#: templates/activity/delete_restore.html:21
 msgid "Are you sure you want to restore this message?"
 msgstr "¿Está seguro que desea restaurar este mensaje?"
 
-#: templates/activity/delete_restore.html:43
+#: templates/activity/delete_restore.html:23
 msgid "Are you sure you want to delete this message?"
 msgstr "¿Está seguro que desea eliminar este mensaje?"
 
-#: templates/activity/delete_restore.html:47
+#: templates/activity/delete_restore.html:27
 #: templates/content/comment_page.html:89
 #: templates/content/comment_sign_up.html:118
 #: templates/content/confirm_delete_page.html:27
@@ -1083,7 +1087,7 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 #: templates/content/delete_restore_comment.html:57
 #: templates/content/edit_page.html:46
 #: templates/content/restore_version.html:39
-#: templates/dashboard/dashboard.html:82
+#: templates/dashboard/dashboard.html:79
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
 #: templates/projects/project.html:60 templates/projects/project_clone.html:21
@@ -1106,7 +1110,7 @@ msgstr "¿Está seguro que desea eliminar este mensaje?"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/activity/delete_restore.html:50
+#: templates/activity/delete_restore.html:30
 #: templates/content/delete_restore_comment.html:60
 #: templates/content/page.html:49 templates/content/restore_version.html:22
 #: templates/content/restore_version.html:41 templates/content/sign_up.html:40
@@ -1225,7 +1229,7 @@ msgstr "Biografía:"
 #: templates/content/comment_sign_up.html:70 templates/content/sign_up.html:67
 #: templates/content/emails/sign_up_updated.txt:11
 #: templates/relationships/emails/new_follower.txt:6
-#: templates/users/profile.html:64
+#: templates/users/profile.html:61
 msgid "Location:"
 msgstr "Ubicación:"
 
@@ -1283,10 +1287,9 @@ msgstr ""
 "preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
 "una empresa en la que todos trabajen durante un mes."
 
-#: templates/content/create_page.html:39 templates/projects/directory.html:22
-#: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:31
-#: templates/projects/project_edit.html:45
+#: templates/content/create_page.html:39 templates/projects/directory.html:21
+#: templates/projects/gallery.html:17 templates/projects/project_edit.html:6
+#: templates/projects/project_edit.html:40
 #: templates/projects/project_edit_summary.html:41
 #: templates/projects/project_import.html:22
 msgid "Create"
@@ -1328,10 +1331,9 @@ msgstr "¿Está seguro que desea eliminar este comentario?"
 #: templates/content/page.html.py:62 templates/content/page.html:90
 #: templates/content/sign_up.html:51 templates/content/sign_up.html.py:93
 #: templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:29
-#: templates/projects/project_edit.html:42
+#: templates/projects/project_edit.html:37
 #: templates/projects/project_edit_links.html:35
-#: templates/projects/sidebar.html:44 templates/schools/school_edit.html:17
+#: templates/projects/sidebar.html:47
 #: templates/users/profile_edit_links.html:56
 msgid "Edit"
 msgstr "Editar"
@@ -1366,18 +1368,17 @@ msgstr "Publicar Comentario"
 
 #: templates/content/page.html:119 templates/content/page.html.py:121
 #: templates/content/sign_up.html:121 templates/content/sign_up.html.py:123
-#: templates/dashboard/dashboard.html:98
-#: templates/dashboard/dashboard.html:100 templates/projects/directory.html:40
-#: templates/projects/directory.html:42 templates/projects/project.html:77
-#: templates/projects/project.html.py:79
+#: templates/dashboard/dashboard.html:95 templates/dashboard/dashboard.html:97
+#: templates/projects/directory.html:37 templates/projects/directory.html:39
+#: templates/projects/project.html:77 templates/projects/project.html.py:79
 msgid "previous"
 msgstr "anterior"
 
 #: templates/content/page.html:124 templates/content/page.html.py:126
 #: templates/content/sign_up.html:126 templates/content/sign_up.html.py:128
-#: templates/dashboard/dashboard.html:103
-#: templates/dashboard/dashboard.html:105 templates/projects/directory.html:45
-#: templates/projects/directory.html:47 templates/projects/project.html:82
+#: templates/dashboard/dashboard.html:100
+#: templates/dashboard/dashboard.html:102 templates/projects/directory.html:42
+#: templates/projects/directory.html:44 templates/projects/project.html:82
 #: templates/projects/project.html.py:84
 msgid "next"
 msgstr "siguiente"
@@ -1500,37 +1501,37 @@ msgstr "Actividad de mi perfil"
 msgid "Activity from your dashboard"
 msgstr "Actividad que estoy siguiendo"
 
-#: templates/dashboard/dashboard.html:24
+#: templates/dashboard/dashboard.html:21
 #, python-format
 msgid "%(user)s's profile picture"
 msgstr "imagén del perfil de %(user)s"
 
-#: templates/dashboard/dashboard.html:34
+#: templates/dashboard/dashboard.html:31
 #: templates/projects/_project_card.html:31
-#: templates/projects/sidebar.html:106 templates/users/_user_card.html:12
-#: templates/users/profile.html:91
+#: templates/projects/sidebar.html:115 templates/users/_user_card.html:12
+#: templates/users/profile.html:88
 msgid "Followers"
 msgstr "Seguidores"
 
-#: templates/dashboard/dashboard.html:40 templates/users/_user_card.html:16
-#: templates/users/profile.html:97
+#: templates/dashboard/dashboard.html:37 templates/users/_user_card.html:16
+#: templates/users/profile.html:94
 msgid "Following"
 msgstr "Siguiendo"
 
-#: templates/dashboard/dashboard.html:47 templates/users/profile.html:104
+#: templates/dashboard/dashboard.html:44 templates/users/profile.html:101
 msgid "Learning"
 msgstr "Aprendiendo"
 
-#: templates/dashboard/dashboard.html:67
+#: templates/dashboard/dashboard.html:64
 #: templates/users/emails/registration_confirm.txt:2
 msgid "Welcome to P2PU!"
 msgstr "¡Bienvenido a P2PU!"
 
-#: templates/dashboard/dashboard.html:68
+#: templates/dashboard/dashboard.html:65
 msgid "To get started, you should "
 msgstr "Para comenzar debería "
 
-#: templates/dashboard/dashboard.html:68
+#: templates/dashboard/dashboard.html:65
 msgid ""
 "update your profile</a>. This is a great way to tell people a bit more about "
 "yourself. Then find "
@@ -1538,30 +1539,30 @@ msgstr ""
 "actualizar su perfil</a>. Esta es una buena forma de decirle a otros un poco "
 "más acerca de usted. Después busque "
 
-#: templates/dashboard/dashboard.html:68
+#: templates/dashboard/dashboard.html:65
 msgid "people</a> and "
 msgstr "personas</a> y "
 
-#: templates/dashboard/dashboard.html:68
+#: templates/dashboard/dashboard.html:65
 msgid "topics</a> that interest you and start following them! You can also "
 msgstr ""
 "temas</a> que sean de su interés y ¡comience a seguirlos! También puede "
 
-#: templates/dashboard/dashboard.html:68
+#: templates/dashboard/dashboard.html:65
 msgid "create a new topics</a>. You can also update how often P2PU "
 msgstr ""
 "crear un nuevo tema</a>. Además, puede actualizar la frecuencia con la que "
 "P2PU "
 
-#: templates/dashboard/dashboard.html:68
+#: templates/dashboard/dashboard.html:65
 msgid "contacts you</a>."
 msgstr "lo contacta</a>."
 
-#: templates/dashboard/dashboard.html:75
+#: templates/dashboard/dashboard.html:72
 msgid "Post a message to your followers"
 msgstr "Publicar un mensaje para sus seguidores"
 
-#: templates/dashboard/dashboard.html:84 templates/projects/project.html:62
+#: templates/dashboard/dashboard.html:81 templates/projects/project.html:62
 msgid "Post Update"
 msgstr "Publicar"
 
@@ -1605,9 +1606,9 @@ msgstr ""
 "retroalimentación constructiva."
 
 #: templates/dashboard/splash.html:36 templates/projects/_project_list.html:5
-#: templates/schools/school_edit.html:38
+#: templates/schools/school_edit.html:23
 #: templates/schools/school_edit_featured.html:7
-#: templates/users/user_list.html:21
+#: templates/users/user_list.html:18
 msgid "Featured"
 msgstr "Destacado"
 
@@ -1685,7 +1686,7 @@ msgstr "Componer Mensaje"
 msgid "New Private Message"
 msgstr "Nuevo Mensaje Privado"
 
-#: templates/drumbeatmail/inbox.html:12
+#: templates/drumbeatmail/inbox.html:14
 msgid "New Private Discussion"
 msgstr "Nuevo Mensaje Privado"
 
@@ -1745,19 +1746,15 @@ msgstr "j N Y P"
 msgid "delete"
 msgstr "eliminar"
 
-#: templates/pages/page.html:14
-msgid "P2PU"
-msgstr "P2PU"
-
-#: templates/projects/_project_card.html:23 templates/projects/sidebar.html:94
-#: templates/users/_user_card.html:20
+#: templates/projects/_project_card.html:23
+#: templates/projects/sidebar.html:103 templates/users/_user_card.html:20
 msgid "Updates"
 msgstr "Actualizaciones"
 
 #: templates/projects/_project_card.html:27
-#: templates/projects/project_edit.html:53
+#: templates/projects/project_edit.html:48
 #: templates/projects/project_edit_participants.html:7
-#: templates/projects/sidebar.html:102
+#: templates/projects/sidebar.html:111
 msgid "Participants"
 msgstr "Participantes"
 
@@ -1777,15 +1774,15 @@ msgstr "Popular"
 msgid "New"
 msgstr "Nuevo"
 
-#: templates/projects/_project_list.html:60 templates/projects/sidebar.html:62
+#: templates/projects/_project_list.html:60 templates/projects/sidebar.html:71
 msgid "Under Development"
 msgstr "En Desarrollo"
 
-#: templates/projects/_project_list.html:71 templates/projects/sidebar.html:59
+#: templates/projects/_project_list.html:71 templates/projects/sidebar.html:68
 msgid "Archived"
 msgstr "Archivado"
 
-#: templates/projects/_project_list.html:80 templates/projects/gallery.html:16
+#: templates/projects/_project_list.html:80 templates/projects/gallery.html:15
 msgid "View All"
 msgstr "Ver Todos"
 
@@ -1848,18 +1845,18 @@ msgstr ""
 "creación de tareas y en valorar las contribuciones de otros?¿En que "
 "consistirá la tarea final?"
 
-#: templates/projects/directory.html:18 templates/projects/directory.html:31
+#: templates/projects/directory.html:17 templates/projects/directory.html:28
 msgid "All"
 msgstr "Todos"
 
-#: templates/projects/directory.html:29 templates/projects/gallery.html:26
-#: templates/schools/home.html:25
+#: templates/projects/directory.html:26 templates/projects/gallery.html:23
+#: templates/schools/home.html:15
 msgid "Browse"
 msgstr "Navegar"
 
 #: templates/projects/imported_detailed_description.html:3
-#: templates/projects/project_edit.html:50
-#: templates/schools/school_edit.html:31
+#: templates/projects/project_edit.html:45
+#: templates/schools/school_edit.html:16
 msgid "Summary"
 msgstr "Resumen"
 
@@ -1877,11 +1874,11 @@ msgstr "Tarea de Inscripción"
 
 #: templates/projects/project.html:21
 #: templates/projects/project_task_list.html:21
-#: templates/projects/sidebar.html:165
+#: templates/projects/sidebar.html:164
 msgid "Tasks"
 msgstr "Tareas"
 
-#: templates/projects/project.html:26 templates/projects/project_edit.html:43
+#: templates/projects/project.html:26 templates/projects/project_edit.html:38
 #: templates/projects/project_task_list.html:29
 msgid "View"
 msgstr "Vista"
@@ -1919,7 +1916,7 @@ msgstr ""
 "mensajes importantes)."
 
 #: templates/projects/project_clone.html:9
-#: templates/projects/project_edit.html:59
+#: templates/projects/project_edit.html:54
 msgid "Clone Existing"
 msgstr "Clonar Existente"
 
@@ -1942,25 +1939,25 @@ msgstr "Nombre Corto"
 msgid "Clone"
 msgstr "Clonar"
 
-#: templates/projects/project_edit.html:51
+#: templates/projects/project_edit.html:46
 msgid "Image"
 msgstr "Imagen"
 
-#: templates/projects/project_edit.html:52
+#: templates/projects/project_edit.html:47
 #: templates/projects/project_edit_status.html:9
 msgid "Status &amp; Dates"
 msgstr "Estado y Fechas"
 
-#: templates/projects/project_edit.html:54
+#: templates/projects/project_edit.html:49
 #: templates/projects/project_edit_links_base.html:7
 msgid "Links &amp; Content"
 msgstr "Enlaces y Contenido"
 
-#: templates/projects/project_edit.html:57
+#: templates/projects/project_edit.html:52
 msgid "Create from Scratch"
 msgstr "Crear desde Ceros"
 
-#: templates/projects/project_edit.html:61
+#: templates/projects/project_edit.html:56
 #: templates/projects/project_import.html:9
 msgid "Import from Old Site"
 msgstr "Importa del Sitio Anterior"
@@ -2174,7 +2171,7 @@ msgid "Active from"
 msgstr "Activo desde el"
 
 #: templates/projects/project_edit_status.html:52
-#: templates/projects/sidebar.html:70
+#: templates/projects/sidebar.html:79
 msgid "to"
 msgstr "hasta el"
 
@@ -2187,7 +2184,7 @@ msgstr ""
 "su grupo de estudio, curso, ... sin leer la descripción."
 
 #: templates/projects/project_edit_summary.html:18
-#: templates/projects/sidebar.html:86
+#: templates/projects/sidebar.html:95
 msgid "Kind"
 msgstr "Clase"
 
@@ -2238,15 +2235,15 @@ msgid "Import"
 msgstr "Importar"
 
 #: templates/projects/project_task_list.html:35
-#: templates/projects/sidebar.html:184
+#: templates/projects/sidebar.html:183
 msgid "No tasks have been added."
 msgstr "Ninguna tarea ha sido añadida."
 
-#: templates/projects/sidebar.html:19 templates/users/profile.html:44
+#: templates/projects/sidebar.html:19 templates/users/profile.html:41
 msgid "Unfollow"
 msgstr "Dejar de Seguir"
 
-#: templates/projects/sidebar.html:24 templates/users/profile.html:49
+#: templates/projects/sidebar.html:24 templates/users/profile.html:46
 msgid "Follow"
 msgstr "Seguir"
 
@@ -2254,79 +2251,79 @@ msgstr "Seguir"
 msgid "Participate"
 msgstr "Participar"
 
-#: templates/projects/sidebar.html:65
-msgid "Not Listed"
-msgstr "No Listado"
-
-#: templates/projects/sidebar.html:67
-msgid "DATE_FORMAT"
-msgstr "j N Y"
-
-#: templates/projects/sidebar.html:69
-msgid "Runs"
-msgstr "Activo del"
-
-#: templates/projects/sidebar.html:75 templates/projects/sidebar.html.py:81
-msgid "Based on"
-msgstr "Basado en"
-
-#: templates/projects/sidebar.html:90
-msgid "Signup"
-msgstr "Inscripción"
-
-#: templates/projects/sidebar.html:91
-msgid "Closed"
-msgstr "Cerrada"
-
-#: templates/projects/sidebar.html:91
-msgid "Open"
-msgstr "Abierta"
-
-#: templates/projects/sidebar.html:98
-msgid "Organizers"
-msgstr "Organizadores"
-
-#: templates/projects/sidebar.html:111
-msgid "Pending Applicants"
-msgstr "Aspirantes Pendientes:"
-
-#: templates/projects/sidebar.html:125
+#: templates/projects/sidebar.html:44
 msgid "View Full Description"
 msgstr "Ver Descripción Completa"
 
-#: templates/projects/sidebar.html:147
+#: templates/projects/sidebar.html:74
+msgid "Not Listed"
+msgstr "No Listado"
+
+#: templates/projects/sidebar.html:76
+msgid "DATE_FORMAT"
+msgstr "j N Y"
+
+#: templates/projects/sidebar.html:78
+msgid "Runs"
+msgstr "Activo del"
+
+#: templates/projects/sidebar.html:84 templates/projects/sidebar.html.py:90
+msgid "Based on"
+msgstr "Basado en"
+
+#: templates/projects/sidebar.html:99
+msgid "Signup"
+msgstr "Inscripción"
+
+#: templates/projects/sidebar.html:100
+msgid "Closed"
+msgstr "Cerrada"
+
+#: templates/projects/sidebar.html:100
+msgid "Open"
+msgstr "Abierta"
+
+#: templates/projects/sidebar.html:107
+msgid "Organizers"
+msgstr "Organizadores"
+
+#: templates/projects/sidebar.html:120
+msgid "Pending Applicants"
+msgstr "Aspirantes Pendientes:"
+
+#: templates/projects/sidebar.html:146
 msgid "Closed Sign-up"
 msgstr "Inscripción Cerrada"
 
-#: templates/projects/sidebar.html:149
+#: templates/projects/sidebar.html:148
 msgid "Sign-up in Progress"
 msgstr "Inscripción en Progreso"
 
-#: templates/projects/sidebar.html:151
+#: templates/projects/sidebar.html:150
 msgid "Your Answer"
 msgstr "Su Respuesta"
 
-#: templates/projects/sidebar.html:156
+#: templates/projects/sidebar.html:155
 msgid "Edit Participants"
 msgstr "Editar Participantes"
 
-#: templates/projects/sidebar.html:158
+#: templates/projects/sidebar.html:157
 msgid "Contact Organizer"
 msgstr "Contactar Organizador"
 
-#: templates/projects/sidebar.html:189
+#: templates/projects/sidebar.html:188
 msgid "New Task"
 msgstr "Nueva Tarea"
 
-#: templates/projects/sidebar.html:195
+#: templates/projects/sidebar.html:194
 msgid "External Links"
 msgstr "Enlaces Externos"
 
-#: templates/projects/sidebar.html:213
+#: templates/projects/sidebar.html:212
 msgid "No external links have been added."
 msgstr "Ningún enlace externo ha sido añadido."
 
-#: templates/projects/sidebar.html:218
+#: templates/projects/sidebar.html:217
 msgid "Edit Links"
 msgstr "Editar Enlaces"
 
@@ -2441,46 +2438,45 @@ msgstr "en P2PU!"
 msgid "You can see their profile here:"
 msgstr "Puede ver su perfil aquí:"
 
-#: templates/schools/home.html:17 templates/schools/menu.html:4
-#: templates/schools/school_edit.html:13
-msgid "Schools"
-msgstr "Escuelas"
-
-#: templates/schools/home.html:23 templates/schools/school_edit.html:5
-#: templates/schools/school_edit.html:26
+#: templates/schools/home.html:13 templates/schools/school_edit.html:4
+#: templates/schools/school_edit.html:11
 msgid "Edit School"
 msgstr "Editar Escuela"
 
-#: templates/schools/home.html:45 templates/schools/school_edit.html:37
+#: templates/schools/home.html:33 templates/schools/school_edit.html:22
 #: templates/schools/school_edit_organizers.html:7
 msgid "School Organizers"
 msgstr "Organizadores de Escuela"
 
-#: templates/schools/school_edit.html:27
+#: templates/schools/menu.html:4
+msgid "Schools"
+msgstr "Escuelas"
+
+#: templates/schools/school_edit.html:12
 msgid "View School"
 msgstr "Ver Escuela"
 
-#: templates/schools/school_edit.html:32
+#: templates/schools/school_edit.html:17
 msgid "Styles"
 msgstr "Estilos"
 
-#: templates/schools/school_edit.html:33
+#: templates/schools/school_edit.html:18
 msgid "Logo"
 msgstr "Logo"
 
-#: templates/schools/school_edit.html:34
+#: templates/schools/school_edit.html:19
 msgid "Groups Icon"
 msgstr "Ícono de los Grupos"
 
-#: templates/schools/school_edit.html:35
+#: templates/schools/school_edit.html:20
 msgid "Background"
 msgstr "Fondo"
 
-#: templates/schools/school_edit.html:36
+#: templates/schools/school_edit.html:21
 msgid "Site Logo"
 msgstr "Logo del Sitio"
 
-#: templates/schools/school_edit.html:39
+#: templates/schools/school_edit.html:24
 #: templates/schools/school_edit_membership.html:7
 msgid "Membership"
 msgstr ""
@@ -2686,7 +2682,7 @@ msgstr "Descripción"
 msgid "This description is shown on the school page."
 msgstr "Esta descripción se usará en la página de la escuela."
 
-#: templates/search/search.html:4 templates/search/search.html.py:11
+#: templates/search/search.html:4 templates/search/search.html.py:10
 msgid "Search"
 msgstr "Buscar"
 
@@ -2865,59 +2861,59 @@ msgstr "Actividad del pérfil del usuario"
 msgid "Activity from user's dashboard"
 msgstr "Actividad que el usuario está siguiendo"
 
-#: templates/users/profile.html:52
+#: templates/users/profile.html:49
 msgid "Private Message"
 msgstr "Mensaje Privado"
 
-#: templates/users/profile.html:72 templates/users/profile.html.py:79
+#: templates/users/profile.html:69 templates/users/profile.html.py:76
 msgid "See more about "
 msgstr "Ver más sobre "
 
-#: templates/users/profile.html:118
+#: templates/users/profile.html:115
 msgid "Past Involvement"
 msgstr "Participación Anterior"
 
-#: templates/users/profile.html:137
+#: templates/users/profile.html:134
 msgid "Badges"
 msgstr "Insignias"
 
-#: templates/users/profile.html:155
+#: templates/users/profile.html:152
 msgid "(UP)"
 msgstr "(ARRIBA)"
 
-#: templates/users/profile.html:156
+#: templates/users/profile.html:153
 msgid "(DOWN)"
 msgstr "(ABAJO)"
 
-#: templates/users/profile_edit.html:29
+#: templates/users/profile_edit.html:26
 #: templates/users/profile_edit_main.html:8
 msgid "Basic Information"
 msgstr "Información Básica"
 
-#: templates/users/profile_edit.html:30
+#: templates/users/profile_edit.html:27
 #: templates/users/profile_edit_links.html:8
 #: templates/users/profile_edit_links_edit.html:8
 msgid "Links"
 msgstr "Enlaces"
 
-#: templates/users/profile_edit.html:31
+#: templates/users/profile_edit.html:28
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: templates/users/profile_edit.html:32
+#: templates/users/profile_edit.html:29
 msgid "Update Email"
 msgstr "Actualizar Correo"
 
-#: templates/users/profile_edit.html:33
+#: templates/users/profile_edit.html:30
 msgid "Update Password"
 msgstr "Actualizar Contraseña"
 
-#: templates/users/profile_edit.html:34
+#: templates/users/profile_edit.html:31
 #: templates/users/profile_edit_openids.html:8
 msgid "OpenIDs"
 msgstr "OpenIDs"
 
-#: templates/users/profile_edit.html:35
+#: templates/users/profile_edit.html:32
 msgid "Delete Account"
 msgstr "Eliminar Cuenta"
 
@@ -3128,15 +3124,15 @@ msgstr "Recordarme"
 msgid "or use"
 msgstr "o usar"
 
-#: templates/users/user_list.html:18
+#: templates/users/user_list.html:15
 msgid "Browse <b>People</b>"
 msgstr "Lista de <b>Personas</b>"
 
-#: templates/users/user_list.html:31
+#: templates/users/user_list.html:28
 msgid "Active this Week"
 msgstr "Activos esta Semana"
 
-#: templates/users/user_list.html:42
+#: templates/users/user_list.html:39
 msgid "New People"
 msgstr "Nuevas"
 

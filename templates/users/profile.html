@@ -13,18 +13,15 @@
 
 {% block bodyid %}user_profile{% endblock %}
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
-    </nav>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
     {% if user == profile.user %}
-      <div id="project-actions">
-        <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-      </div>
+      <a class="button" href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
     {% endif %}
-  </div> <!-- /.container -->
 {% endblock %}
 
 {% block body %}

@@ -6,11 +6,8 @@
 {% block bodyid %}search{%endblock%}
 
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <a href="{% locale_url search %}">{{ _('Search') }}</a>
-    </nav>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url search %}">{{ _('Search') }}</a>
 {% endblock %}
 
 {% block body %}

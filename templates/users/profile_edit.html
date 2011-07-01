@@ -5,17 +5,14 @@
 {% block title %}{{ _('Edit Profile') }}{% endblock %}
 {% block bodyid %}profile_edit{% endblock %}
 {% block bodyclasses %}profile edit info{% endblock %}
+
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
-      <span class="arrow">&rsaquo;</span>      
-      <a href="{% locale_url users_profile_edit %}">{{ _('Edit Profile') }}</a>
-    </nav>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ profile.get_absolute_url }}">{{ profile.username }}</a>
 {% endblock %}
+
 {% block body %}
 <section class="modal nav">
   <article>

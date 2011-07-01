@@ -108,7 +108,16 @@
       </div> <!-- /.container -->
     </div> <!-- /#masthead -->
     <div id="breadcrumbs">
-      {% block breadcrumbs %}{% endblock %}
+      <div class="container">
+        {% block breadcrumbs_title %}{% endblock %}
+        <nav>
+          <a href="{% locale_url splash %}">{{ _('Home') }}</a>
+          {% block breadcrumbs %}{% endblock %}
+        </nav>
+        <div id="breadcrumbs-actions">
+          {% block breadcrumbs_actions %}{% endblock %}
+        </div>
+      </div>
     </div>
   </header>
 {% endblock %}
