@@ -15,7 +15,7 @@
   <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
 {% endblock %}
 
-{% block project_actions%}
+{% block breadcrumbs_actions%}
   {% if can_edit %}
     <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit') }}</a>
     {% if page.listed %}<a class="button" href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>{% endif %}

@@ -19,7 +19,7 @@
   <a href="{{ version.get_absolute_url }}">{{ version.date }}</a>
 {% endblock %}
 
-{% block project_actions %}
+{% block breadcrumbs_actions %}
   {% if can_edit %}
     <a class="button" href="{% locale_url version_restore slug=project.slug page_slug=page.slug version_id=version.id %}">{{ _('Restore') }}</a>
   {% endif %}
