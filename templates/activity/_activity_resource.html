@@ -6,9 +6,7 @@
     {% if user.id != activity.actor.id %}
       <a class="report abuse action" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
     {% else %}
-      {% if activity.status %}
-        <a class="action delete" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
-      {% endif %}
+      <a class="action delete" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
     {% endif %}
   {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">

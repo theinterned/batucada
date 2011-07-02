@@ -1,6 +1,7 @@
 {% load activity_tags %}
 {% load l10n_tags %}
 {% load no_follow %}
+{% load truncate_chars %}
 {% spaceless %}
 
 {% if activity|should_show_verb and show_actor %}
@@ -20,17 +21,17 @@
 {% if activity|should_hyperlink %}
   {{ activity|get_link_name }} 
   <a href="{{ activity|get_link }}">
-    {{ activity|get_link|truncate:50 }}
+    {{ activity|get_link|truncatechars:50 }}
   </a>
 {% else %}
-  {% if activity.status %}
-    {{ activity.status|safe|nofollow|safe }}
-  {% else %}
-    {% if activity.target_object %}
+  {% if activity.target_object %}
+    {% if activity.get_absolute_url != activity.target_object.get_absolute_url %}
       <a href="{{ activity.target_object.get_absolute_url }}">{{ activity.target_object }}</a>.
     {% else %}
-      {{ activity|activity_representation }}
+      {{ activity.target_object|nofollow|safe }}
     {% endif %}
+  {% else %}
+    {{ activity|activity_representation }}
   {% endif %}
 {% endif %}
 {% endspaceless %}

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load truncate_chars %}
 
 {% block title %}{{ _('Learning for everyone, by everyone, about almost anything') }}{% endblock %}
 {% block bodyid %}splash{% endblock %}
@@ -47,7 +48,7 @@
           {% for entry in feed_entries %}
             <article>
               <h1><a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></h1>
-                <p>{{ entry.body|truncatewords:50 }}</p>
+                <p>{{ entry.body|truncatechars:400 }}</p>
             </article>
           {% endfor %}
       </section>

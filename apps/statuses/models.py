@@ -8,6 +8,7 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
+from django.contrib.contenttypes.models import ContentType
 
 from activity.models import Activity
 from activity.schema import object_types, verbs
@@ -31,10 +32,13 @@ class Status(ModelBase):
         verbose_name_plural = _('statuses')
 
     def __unicode__(self):
-        return self.status
+        return 'message: %s' % self.status
 
     def get_absolute_url(self):
-        return self.activity.get().get_absolute_url()
+        ct = ContentType.objects.get_for_model(Status)
+        activity = Activity.objects.get(target_id=self.id,
+            target_content_type=ct)
+        return activity.get_absolute_url()
 
     def send_wall_notification(self):
         if not self.project:
@@ -86,7 +90,7 @@ def status_creation_handler(sender, **kwargs):
     activity = Activity(
         actor=status.author,
         verb=verbs['post'],
-        status=status,
+        target_object=status,
     )
     if status.project:
         activity.scope_object = status.project
