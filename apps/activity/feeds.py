@@ -80,13 +80,15 @@ class BaseActivityFeed(Feed):
         return self._request.build_absolute_uri(item.get_absolute_url())
 
     def item_extra_kwargs(self, item):
+        link = self._request.build_absolute_uri(
+            item.target_object.get_absolute_url())
         return {
             'updated': item.created_on,
             'activity': {
                 'verb': item.verb,
                 'object': {
-                    'object-type': item.object_type,
-                    'link': self._request.build_absolute_uri(item.object_url),
+                    'object-type': item.target_object.object_type,
+                    'link': link,
                     'content': item.html_representation(),
                 },
             },
@@ -116,8 +118,7 @@ class DashboardActivityFeed(ProfileActivityFeed):
         user_ids = [u.pk for u in user.following()]
         project_ids = [p.pk for p in user.following(model=Project)]
         return Activity.objects.select_related(
-            'actor', 'target_object', 'remote_object',
-            'remote_object_link', 'scope_object').filter(
+            'actor', 'target_object', 'scope_object').filter(
             Q(actor__exact=user) | Q(actor__in=user_ids) |
             Q(scope_object__in=project_ids),
        ).order_by('-created_on')[0:25]

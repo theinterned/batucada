@@ -27,7 +27,7 @@
     </li>
         {% endfor %}
       </ul>
-      <p id="more_task_link"><span id="task-count">{{ _('Displaying') }} {% if content_pages_count < 3 %}{{ content_pages_count}} {%else %}3{% endif %} {{ _('of') }} {{ content_pages_count }} {{ _('total tasks') }}</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></p>
+      <p id="more_task_link"><span id="task-count">{{ _('Displaying') }} {% if content_pages_count < 3 %}{{ content_pages_count}} {% else %}3{% endif %} {{ _('of') }} {{ content_pages_count }} {{ _('total tasks') }}</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></p>
   </div>
   {% endif %}
 

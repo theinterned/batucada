@@ -117,7 +117,7 @@ class HandleNotification(Task):
                 link=link, title=title, uri=uri, object_type=object_type)
             remote_obj.save()
             activity = Activity(
-                actor=link.user, verb=verbs['share'], remote_object=remote_obj)
+                actor=link.user, verb=verbs['share'], target_object=remote_obj)
             if link.project:
                 activity.scope_object = link.project
             activity.save()

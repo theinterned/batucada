@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from drumbeat.models import ModelBase, ManagerBase
+from drumbeat.templatetags.truncate_chars import truncate_chars
 from activity import schema
 
 
@@ -17,6 +17,9 @@ class RemoteObject(models.Model):
     uri = models.URLField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    def __unicode__(self):
+        return self.title
+
     def get_absolute_url(self):
         return self.uri
 
@@ -25,13 +28,12 @@ class ActivityManager(ManagerBase):
 
     def public(self):
         """Get list of activities to show on splash page."""
-
+        ct = ContentType.objects.get_for_model(RemoteObject)
         return Activity.objects.filter(deleted=False,
-            parent__isnull=True, remote_object__isnull=True,
-            scope_object__isnull=False, scope_object__not_listed=False
-            ).exclude(
-                verb=schema.verbs['follow']
-            ).order_by('-created_on')[:10]
+            parent__isnull=True, scope_object__isnull=False,
+            scope_object__not_listed=False).exclude(
+            target_content_type=ct, verb=schema.verbs['follow']).order_by(
+            '-created_on')[:10]
 
     def dashboard(self, user):
         """
@@ -42,8 +44,7 @@ class ActivityManager(ManagerBase):
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
         return Activity.objects.filter(deleted=False).select_related(
-            'actor', 'target_object', 'remote_object',
-            'remote_object__link', 'scope_object').filter(
+            'actor', 'target_object', 'scope_object').filter(
             models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
           | models.Q(scope_object__in=project_ids),
         ).exclude(
@@ -76,7 +77,6 @@ class Activity(ModelBase):
     target_object = generic.GenericForeignKey('target_content_type',
         'target_id')
     scope_object = models.ForeignKey('projects.Project', null=True)
-    remote_object = models.ForeignKey(RemoteObject, null=True)
     parent = models.ForeignKey('self', null=True, related_name='comments')
     created_on = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
@@ -92,35 +92,17 @@ class Activity(ModelBase):
             'activity_id': self.pk,
         })
 
-    @property
-    def object_type(self):
-        obj = (self.remote_object or self.target_object or None)
-        return obj and obj.object_type or None
-
-    @property
-    def object_url(self):
-        obj = (self.remote_object or self.target_object or None)
-        return obj and obj.get_absolute_url() or None
-
     def textual_representation(self):
-        if self.remote_object:
-            return self.remote_object.title
-        elif self.target_object:
-            return _('%(actor)s %(verb)s %(target)s') % dict(
+        return _('%(actor)s %(verb)s %(target)s') % dict(
                 actor=self.actor, verb=self.friendly_verb(),
                 target=unicode(self.target_object))
-        friendly_verb = schema.verbs_by_uri[self.verb]
-        return ugettext('%(verb)s activity performed by %(actor)s') % dict(
-            verb=friendly_verb, actor=self.actor)
 
     def friendly_verb(self):
-        if self.target_object:
-            verb = None
-            if hasattr(self.target_object, 'friendly_verb'):
-                verb = self.target_object.friendly_verb(self.verb)
-            verb = verb or schema.past_tense[schema.verbs_by_uri[self.verb]]
-            return verb
-        return schema.past_tense[schema.verbs_by_uri[self.verb]]
+        verb = None
+        if hasattr(self.target_object, 'friendly_verb'):
+            verb = self.target_object.friendly_verb(self.verb)
+        verb = verb or schema.past_tense[schema.verbs_by_uri[self.verb]]
+        return verb
 
     def html_representation(self):
         return render_to_string('activity/_activity_body.html', {
@@ -129,8 +111,7 @@ class Activity(ModelBase):
         })
 
     def __unicode__(self):
-        return _("Activity ID %(id)d. Actor id %(actor)d, Verb %(verb)s") % {
-            'id': self.pk, 'actor': self.actor.pk, 'verb': self.verb}
+        return truncate_chars(self.textual_representation(), 130)
 
     def can_edit(self, user):
         if user.is_authenticated():

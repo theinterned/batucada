@@ -1,5 +1,5 @@
 {% load l10n_tags %}
-{% load activity_tags %}
+{% load time_since %}
 
 <li class="post-container">
   {% if user.is_authenticated %}
@@ -24,10 +24,10 @@
     </div> <!-- /.post-body -->
 
     <div class="post-details">
-      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity|created_on }}</a>
+      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity|time_since }}</a>
       {{ _('via') }}
-      {% if activity.remote_object %}
-        <a href="{{ activity.remote_object.link.url }}">{{ activity.remote_object.link.name }}</a>
+      {% if activity.target_object.link %}
+        <a href="{{ activity.target_object.link.url }}">{{ activity.target_object.link.name }}</a>
       {% else %}
         <a href="http://{{ domain }}">{{ domain }}</a>
       {% endif %}
