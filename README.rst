@@ -32,12 +32,11 @@ You need a few libraries and can grab them with this command::
 
    sudo apt-get install git libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
 
-To obtain the lernanta's source code that you will be modifying, first `fork the repository`_ on the `github website`_ and then clone it by running::
+To obtain the lernanta's source code that you will be modifying, first `fork the repository on the github website`_ and then clone it by running::
 
    git clone git://github.com/<your github username>/lernanta.git
 
-.. _fork the repository: http://help.github.com/forking/
-.. _github website: http://github.com/p2pu/lernanta/
+.. _fork the repository on the github website: https://github.com/p2pu/lernanta/wiki/Github-Cheat-Sheet
 
 Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using `virtualenvwrapper`_ is also recommended. ::
 
