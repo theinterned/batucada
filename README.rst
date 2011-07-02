@@ -30,7 +30,7 @@ You will need to set up `git and your SSH keys`_
 
 You need a few libraries and can grab them with this command::
 
-   sudo apt-get install virtualenvwrapper libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
+   sudo apt-get install git virtualenvwrapper libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
 
 To install Lernanta, you must clone the repository: ::
 
@@ -42,9 +42,7 @@ If you're planning on contributing back to the project, `fork the repository`_ i
 
 Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using `virtualenvwrapper`_ is also recommended. ::
 
-   sudo easy_install virtualenv
-   sudo easy_install pip
-   pip install virtualenvwrapper
+   sudo easy_install --upgrade virtualenv; sudo easy_install --upgrade pip; sudo pip install --upgrade virtualenvwrapper
    
 Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
