@@ -30,12 +30,10 @@ class ActivityManager(ManagerBase):
         return Activity.objects.filter(deleted=False,
             parent__isnull=True, remote_object__isnull=True,
             status__isnull=True).filter(
-                models.Q(target_project__isnull=True)
-                | models.Q(target_project__not_listed=False),
-                models.Q(project__isnull=True)
-                | models.Q(project__not_listed=False)
+                models.Q(scope_object__isnull=True)
+                | models.Q(scope_object__not_listed=False)
             ).exclude(
-                verb='http://activitystrea.ms/schema/1.0/follow'
+                verb=schema.verbs['follow']
             ).order_by('-created_on')[:10]
 
     def dashboard(self, user):
@@ -47,16 +45,15 @@ class ActivityManager(ManagerBase):
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
         return Activity.objects.filter(deleted=False).select_related(
-            'actor', 'status', 'project', 'remote_object',
-            'remote_object__link', 'target_project').filter(
-            models.Q(actor__exact=user) |
-            models.Q(actor__in=user_ids) | models.Q(project__in=project_ids),
+            'actor', 'status', 'target_object', 'remote_object',
+            'remote_object__link', 'scope_object').filter(
+            models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
+          | models.Q(scope_object__in=project_ids),
         ).exclude(
-            models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-            models.Q(target_user__isnull=True),
-            models.Q(project__in=project_ids),
+            models.Q(verb=schema.verbs['follow']),
+            models.Q(scope_object__in=project_ids),
         ).exclude(
-            models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
+            models.Q(verb=schema.verbs['follow']),
             models.Q(actor=user),
         ).exclude(parent__isnull=False).exclude(
             models.Q(status__in_reply_to__isnull=False),
@@ -65,15 +62,13 @@ class ActivityManager(ManagerBase):
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
         return Activity.objects.filter(deleted=False).select_related(
-            'actor', 'status', 'project').filter(
+            'actor', 'status', 'target_object').filter(
             actor=user).filter(
-            models.Q(target_project__isnull=True)
-            | models.Q(target_project__not_listed=False),
-            models.Q(project__isnull=True)
-            | models.Q(project__not_listed=False)
+            models.Q(scope_object__isnull=True)
+            | models.Q(scope_object__not_listed=False)
         ).exclude(
-            models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-            models.Q(target_user__isnull=False),
+            models.Q(verb=schema.verbs['follow']),
+            models.Q(scope_object__isnull=True),
         ).exclude(
             models.Q(status__in_reply_to__isnull=False),
         ).order_by('-created_on')[0:25]
@@ -89,11 +84,7 @@ class Activity(ModelBase):
     target_id = models.PositiveIntegerField(null=True)
     target_object = generic.GenericForeignKey('target_content_type',
         'target_id')
-    project = models.ForeignKey('projects.Project', null=True)
-    target_user = models.ForeignKey('users.UserProfile', null=True,
-                                    related_name='target_user')
-    target_project = models.ForeignKey('projects.Project', null=True,
-                                       related_name='target_project')
+    scope_object = models.ForeignKey('projects.Project', null=True)
     remote_object = models.ForeignKey(RemoteObject, null=True)
     parent = models.ForeignKey('self', null=True, related_name='comments')
     created_on = models.DateTimeField(auto_now_add=True)
@@ -112,30 +103,25 @@ class Activity(ModelBase):
 
     @property
     def object_type(self):
-        obj = (self.status or self.target_user or self.remote_object
+        obj = (self.status or self.remote_object
             or self.target_object or None)
         return obj and obj.object_type or None
 
     @property
     def object_url(self):
-        obj = (self.status or self.target_user or self.remote_object
+        obj = (self.status or self.remote_object
             or self.target_object or None)
         return obj and obj.get_absolute_url() or None
 
     def textual_representation(self):
-        target = self.target_user or self.target_project or self.project
-        if target and self.verb == schema.verbs['follow']:
-            name = target if self.target_user else target.name
-            return _('%(actor)s %(verb)s %(target)s') % dict(
-                actor=self.actor,
-                verb=schema.past_tense['follow'], target=name)
         if self.status:
             return self.status.status[:50]
         elif self.remote_object:
             return self.remote_object.title
         elif self.target_object:
-            return _('%(actor)s %(verb)s %(target)s') % dict (
-                actor=self.actor, verb=self.friendly_verb(), target=self.target_object)
+            return _('%(actor)s %(verb)s %(target)s') % dict(
+                actor=self.actor, verb=self.friendly_verb(),
+                target=self.target_object)
         friendly_verb = schema.verbs_by_uri[self.verb]
         return ugettext('%(verb)s activity performed by %(actor)s') % dict(
             verb=friendly_verb, actor=self.actor)
@@ -148,14 +134,11 @@ class Activity(ModelBase):
             verb = verb or schema.past_tense[schema.verbs_by_uri[self.verb]]
             return verb
         if self.verb == schema.verbs['post']:
-            if self.project_id:
-                return mark_safe(ugettext('created'))
+            comment_type = schema.object_types['comment']
+            if self.object_type == comment_type:
+                return mark_safe(ugettext('posted comment'))
             else:
-                comment_type = 'http://activitystrea.ms/schema/1.0/comment'
-                if self.object_type == comment_type:
-                    return mark_safe(ugettext('posted comment'))
-                else:
-                    return mark_safe(ugettext('added'))
+                return mark_safe(ugettext('added'))
         else:
             return schema.past_tense[schema.verbs_by_uri[self.verb]]
 

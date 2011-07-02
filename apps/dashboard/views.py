@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 
 from l10n.urlresolvers import reverse
 from activity.models import Activity
-from users.decorators import anonymous_only, login_required
+from users.decorators import login_required
 from users.models import UserProfile
 from users.forms import CreateProfileForm
 from projects.models import Project
@@ -69,7 +69,7 @@ def dashboard(request, page=1):
             'username': username,
         })
         messages.info(request,
-            _('Please fill out your profile to complete the account registration.'))
+            _('Please fill out your profile to finish registration.'))
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))

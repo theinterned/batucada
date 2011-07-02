@@ -6,8 +6,6 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save, post_save
-from django.utils.safestring import mark_safe
-from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language, ugettext
 from django.db.models import Max
@@ -16,7 +14,7 @@ from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
-from activity.schema import verbs
+from activity.schema import verbs, object_types
 from users.tasks import SendUserEmail
 
 log = logging.getLogger(__name__)
@@ -24,7 +22,7 @@ log = logging.getLogger(__name__)
 
 class Page(ModelBase):
     """Placeholder model for pages."""
-    object_type = 'http://activitystrea.ms/schema/1.0/article'
+    object_type = object_types['article']
 
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=110)
@@ -50,6 +48,10 @@ class Page(ModelBase):
             'page_slug': self.slug,
         })
 
+    def friendly_verb(self, verb):
+        if verbs['post'] == verb:
+            return _('added')
+
     def save(self):
         """Make sure each page has a unique url."""
         count = 1
@@ -71,10 +73,6 @@ class Page(ModelBase):
             else:
                 self.index = 0
         super(Page, self).save()
-
-    def friendly_verb(self, verb):
-        if verbs['post'] == verb:
-            return _('added')
 
     def can_edit(self, user):
         if not self.editable:
@@ -108,7 +106,7 @@ class PageVersion(ModelBase):
 
 class PageComment(ModelBase):
     """Placeholder model for comments."""
-    object_type = 'http://activitystrea.ms/schema/1.0/comment'
+    object_type = object_types['comment']
 
     content = models.TextField()
     author = models.ForeignKey('users.UserProfile',
@@ -261,24 +259,13 @@ def fire_activity(sender, **kwargs):
         else:
             send_content_notification(instance, is_comment)
         # Fire activity.
-        activity = Activity(
-            actor=instance.author,
-            verb='http://activitystrea.ms/schema/1.0/post',
-            target_object=instance,
-        )
-        activity.target_project = instance.project
+        activity = Activity(actor=instance.author, verb=verbs['post'],
+            target_object=instance, scope_object=instance.project)
         activity.save()
-    elif not created and is_page and not instance.minor_update:
-        if instance.deleted:
-            verb = 'http://activitystrea.ms/schema/1.0/delete'
-        else:
-            verb = 'http://activitystrea.ms/schema/1.0/update'
-        activity = Activity(
-            actor=instance.author,
-            verb=verb,
-            target_object=instance,
-        )
-        activity.target_project = instance.project
+    elif (not created and is_page and not instance.minor_update \
+          and not instance.deleted):
+        activity = Activity(actor=instance.author, verb=verbs['update'],
+            target_object=instance, scope_object=instance.project)
         activity.save()
 
 post_save.connect(fire_activity, sender=Page)

@@ -10,12 +10,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
 
 from activity.models import Activity
+from activity.schema import object_types, verbs
 from drumbeat.models import ModelBase
 from users.tasks import SendUserEmail
 
 
 class Status(ModelBase):
-    object_type = 'http://activitystrea.ms/schema/1.0/status'
+    object_type = object_types['status']
 
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
@@ -84,11 +85,11 @@ def status_creation_handler(sender, **kwargs):
     # fire activity
     activity = Activity(
         actor=status.author,
-        verb='http://activitystrea.ms/schema/1.0/post',
+        verb=verbs['post'],
         status=status,
     )
     if status.project:
-        activity.target_project = status.project
+        activity.scope_object = status.project
     if status.in_reply_to:
         activity.parent = status.in_reply_to
     activity.save()

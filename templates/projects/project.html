@@ -5,7 +5,7 @@
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block project_links %}
-<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_project_feed project=project.slug %}" />
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_project_feed slug=project.slug %}" />
 {% endblock %}
 
 {% block bodyid %}project_landing{% endblock %}

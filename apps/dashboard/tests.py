@@ -30,7 +30,7 @@ class DashboardTests(TestCase):
         """
         self.client.login(username=self.test_username,
                           password=self.test_password)
-        response = self.client.get('/%s/' % (self.locale,))
+        response = self.client.get('/%s/dashboard/' % (self.locale,))
         self.assertTemplateUsed(response, 'dashboard/setup_profile.html')
 
     def test_authorized_request_profile(self):
@@ -45,5 +45,5 @@ class DashboardTests(TestCase):
         user.save()
         self.client.login(username=self.test_username,
                           password=self.test_password)
-        response = self.client.get('/%s/' % (self.locale,))
+        response = self.client.get('/%s/dashboard/' % (self.locale,))
         self.assertTemplateUsed(response, 'dashboard/dashboard.html')
