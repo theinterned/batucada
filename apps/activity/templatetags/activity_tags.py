@@ -29,10 +29,6 @@ def truncate(value, arg):
 
 @register.filter
 def should_hyperlink(activity):
-    if activity.verb == schema.verbs['follow']:
-        return True
-    if activity.project:
-        return True
     if not activity.remote_object:
         return False
     if not activity.remote_object.uri:
@@ -46,16 +42,12 @@ def should_hyperlink(activity):
 def get_link(activity):
     if activity.remote_object and activity.remote_object.uri:
         return activity.remote_object.uri
-    if activity.target_user:
-        return activity.target_user.get_absolute_url()
 
 
 @register.filter
 def get_link_name(activity):
     if activity.remote_object:
         return activity.remote_object.title
-    if activity.target_user:
-        return unicode(activity.target_user)
 
 
 @register.filter
@@ -65,8 +57,6 @@ def activity_representation(activity):
     if activity.remote_object:
         if activity.remote_object.title:
             return activity.remote_object.title
-    if activity.project:
-        return activity.project
     return None
 
 

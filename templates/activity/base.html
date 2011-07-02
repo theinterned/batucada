@@ -6,16 +6,16 @@
 
 
 {% block links %}
-{% if activity.target_project.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=activity.target_project.accepted_school.slug %}?v=1">{% endif %}
+{% if activity.scope_object.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=activity.scope_object.accepted_school.slug %}?v=1">{% endif %}
 {% endblock %}
 
 
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  {% if activity.target_project %}
+  {% if activity.scope_object %}
     <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
     <span class="arrow">&rsaquo;</span>
-    <a href="{{ activity.target_project.get_absolute_url }}">{{ activity.target_project }}</a>
+    <a href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object }}</a>
   {% else %}
     <a href="{% locale_url users_user_list %}">{{ _('People') }}</a>
     <span class="arrow">&rsaquo;</span>

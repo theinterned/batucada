@@ -12,6 +12,7 @@ from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
+from activity.schema import verbs
 from preferences.models import AccountPreferences
 from users.tasks import SendUserEmail
 
@@ -33,13 +34,6 @@ class Relationship(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
 
-    def save(self, *args, **kwargs):
-        """Check that the source and the target are not the same user."""
-        if (self.source == self.target_user):
-            raise ValidationError(
-                _('Cannot create self referencing relationship.'))
-        super(Relationship, self).save(*args, **kwargs)
-
     class Meta:
         unique_together = (
             ('source', 'target_user'),
@@ -47,10 +41,24 @@ class Relationship(ModelBase):
         )
 
     def __unicode__(self):
-        return "%(from)r => %(to)r" % {
-            'from': repr(self.source),
-            'to': repr(self.target_user or self.target_project),
-        }
+        return unicode(self.target_user or self.target_project)
+
+    @property
+    def object_type(self):
+        target = (self.target_user or self.target_project)
+        return target.object_type
+
+    def get_absolute_url(self):
+        target = (self.target_user or self.target_project)
+        return target.get_absolute_url()
+
+    def save(self, *args, **kwargs):
+        """Check that the source and the target are not the same user."""
+        if (self.source == self.target_user):
+            raise ValidationError(
+                _('Cannot create self referencing relationship.'))
+        super(Relationship, self).save(*args, **kwargs)
+
 
 ###########
 # Signals #
@@ -63,13 +71,13 @@ def follow_handler(sender, **kwargs):
     if not created or not isinstance(rel, Relationship):
         return
     activity = Activity(actor=rel.source,
-                        verb='http://activitystrea.ms/schema/1.0/follow')
+                        verb=verbs['follow'],
+                        target_object=rel)
     receipts = []
     ulang = get_language()
     subject = {}
     body = {}
     if rel.target_user:
-        activity.target_user = rel.target_user
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
             subject[l[0]] = ugettext(
@@ -82,7 +90,7 @@ def follow_handler(sender, **kwargs):
         else:
             receipts.append(rel.target_user)
     else:
-        activity.project = rel.target_project
+        activity.scope_object = rel.target_project
         for l in settings.SUPPORTED_LANGUAGES:
             activate(l[0])
             msg = ugettext(

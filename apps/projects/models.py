@@ -20,6 +20,7 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from activity.models import Activity
+from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
 
 import caching.base
@@ -56,28 +57,27 @@ class ProjectManager(caching.base.CachingManager):
     def get_active(self, limit=0, school=None):
         active = cache.get('projectsactive')
         if not active:
-            activities = Activity.objects.values('target_project').annotate(
-                Max('created_on')).exclude(target_project__isnull=True,
-                verb='http://activitystrea.ms/schema/1.0/follow',
+            activities = Activity.objects.values('scope_object').annotate(
+                Max('created_on')).exclude(scope_object__isnull=True,
+                verb=verbs['follow'],
                 remote_object__isnull=False).filter(
-                target_project__under_development=False,
-                target_project__not_listed=False,
-                target_project__archived=False).order_by('-created_on__max')
+                scope_object__under_development=False,
+                scope_object__not_listed=False,
+                scope_object__archived=False).order_by('-created_on__max')
             if school:
                 activities = activities.filter(
-                    target_project__school=school).exclude(
-                    target_project__id__in=school.declined.values('id'))
+                    scope_object__school=school).exclude(
+                    scope_object__id__in=school.declined.values('id'))
             if limit:
                 activities = activities[:limit]
-            active = [a['target_project'] for a in activities]
+            active = [a['scope_object'] for a in activities]
             cache.set('projectsactive', active, 3000)
         return Project.objects.filter(id__in=active)
 
 
 class Project(ModelBase):
     """Placeholder model for projects."""
-    object_type = 'http://drumbeat.org/activity/schema/1.0/project'
-    generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
+    object_type = object_types['group']
 
     name = models.CharField(max_length=100)
     kind = models.CharField(max_length=30, default=_('Study Group'))
@@ -119,13 +119,18 @@ class Project(ModelBase):
         verbose_name = _('group')
 
     def __unicode__(self):
-        return self.name
+        return _('%(name)s %(kind)s') % dict(name=self.name,
+            kind=self.kind.lower())
 
     @models.permalink
     def get_absolute_url(self):
         return ('projects_show', (), {
             'slug': self.slug,
         })
+
+    def friendly_verb(self, verb):
+        if verbs['post'] == verb:
+            return _('created')
 
     def followers(self):
         return Relationship.objects.filter(target_project=self,
@@ -192,9 +197,9 @@ class Project(ModelBase):
 
     def activities(self):
         activities = Activity.objects.filter(deleted=False).filter(
-            Q(project=self) | Q(target_project=self),
+            Q(scope_object=self),
         ).exclude(
-            verb='http://activitystrea.ms/schema/1.0/follow'
+            verb=verbs['follow']
         ).order_by('-created_on')
         return activities
 

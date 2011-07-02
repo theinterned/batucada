@@ -26,6 +26,7 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
 from users import tasks
+from activity.schema import object_types
 
 import caching.base
 
@@ -84,7 +85,7 @@ class UserProfileManager(caching.base.CachingManager):
 
 class UserProfile(ModelBase):
     """Each user gets a profile."""
-    object_type = 'http://activitystrea.ms/schema/1.0/person'
+    object_type = object_types['person']
 
     username = models.CharField(max_length=255, default='', unique=True)
     full_name = models.CharField(

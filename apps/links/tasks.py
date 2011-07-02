@@ -7,6 +7,7 @@ from django_push.subscriber.models import Subscription, SubscriptionError
 
 from links import utils
 from activity.models import RemoteObject, Activity
+from activity.schema import verbs, object_types
 
 
 class SubscribeToFeed(Task):
@@ -95,16 +96,12 @@ class HandleNotification(Task):
 
     def create_activity_entry(self, entry, sender, activity_prefix=None):
         """Create activity feed entries for the provided feed entry."""
-        verb, object_type = None, None
+        object_type = None
         if activity_prefix:
-            verb = self.get_namespaced_attr(
-                entry, activity_prefix, 'verb')
             object_type = self.get_namespaced_attr(
                 entry, activity_prefix, 'object-type')
-        if not verb:
-            verb = 'http://activitystrea.ms/schema/1.0/post'
         if not object_type:
-            object_type = 'http://activitystrea.ms/schema/1.0/article'
+            object_type = object_types['article']
         title = getattr(entry, 'title', None)
         uri = getattr(entry, 'link', None)
         if not title:
@@ -120,9 +117,9 @@ class HandleNotification(Task):
                 link=link, title=title, uri=uri, object_type=object_type)
             remote_obj.save()
             activity = Activity(
-                actor=link.user, verb=verb, remote_object=remote_obj)
+                actor=link.user, verb=verbs['share'], remote_object=remote_obj)
             if link.project:
-                activity.target_project = link.project
+                activity.scope_object = link.project
             activity.save()
 
     def run(self, notification, sender, **kwargs):

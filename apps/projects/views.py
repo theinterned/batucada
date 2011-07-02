@@ -29,6 +29,7 @@ from content.models import Page
 from schools.models import School
 from statuses import forms as statuses_forms
 from activity.models import Activity
+from activity.schema import verbs
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -80,9 +81,9 @@ def create(request):
         if form.is_valid():
             project = form.save()
             act = Activity(actor=user,
-                verb='http://activitystrea.ms/schema/1.0/post',
-                project=project,
-                target_project=project)
+                verb=verbs['post'],
+                scope_object=project,
+                target_object=project)
             act.save()
             participation = Participation(project=project, user=user,
                 organizing=True)
@@ -196,9 +197,9 @@ def clone(request):
                 clone_of=base_project)
             project.save()
             act = Activity(actor=user,
-                verb='http://activitystrea.ms/schema/1.0/post',
-                project=project,
-                target_project=project)
+                verb=verbs['post'],
+                scope_object=project,
+                target_object=project)
             act.save()
             participation = Participation(project=project, user=user,
                 organizing=True)
@@ -271,9 +272,9 @@ def import_from_old_site(request):
                 imported_from=course['slug'])
             project.save()
             act = Activity(actor=user,
-                verb='http://activitystrea.ms/schema/1.0/post',
-                project=project,
-                target_project=project)
+                verb=verbs['post'],
+                scope_object=project,
+                target_object=project)
             act.save()
             participation = Participation(project=project, user=user,
                 organizing=True)
