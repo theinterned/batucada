@@ -1,37 +1,21 @@
-{% load activity_tags %}
 {% load l10n_tags %}
 {% load no_follow %}
 {% load truncate_chars %}
+
 {% spaceless %}
-
-{% if activity|should_show_verb and show_actor %}
-  <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor }}</a>
-{% endif %}
-
-{% endspaceless %} {% spaceless %}
-
-
-{% if activity|should_show_verb %}
-    {{ activity.friendly_verb }}
-{% endif %}
-
-{% endspaceless %} {% spaceless %}
-
-
-{% if activity|should_hyperlink %}
-  {{ activity|get_link_name }} 
-  <a href="{{ activity|get_link }}">
-    {{ activity|get_link|truncatechars:50 }}
-  </a>
-{% else %}
-  {% if activity.target_object %}
-    {% if activity.get_absolute_url != activity.target_object.get_absolute_url %}
-      <a href="{{ activity.target_object.get_absolute_url }}">{{ activity.target_object }}</a>.
-    {% else %}
-      {{ activity.target_object|nofollow|safe }}
-    {% endif %}
-  {% else %}
-    {{ activity|activity_representation }}
+  {% if show_actor %}
+    <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor }}</a>
   {% endif %}
-{% endif %}
+{% endspaceless %} {% spaceless %}
+  {{ activity.friendly_verb }}
+{% endspaceless %} {% spaceless %}
+  {% if not activity.target_object.get_absolute_url %}
+    {{ activity.target_object }}
+  {% else %}
+    {% if activity.target_object.get_absolute_url == activity.get_absolute_url %}
+      {{ activity.target_object|nofollow|safe }}
+    {% else %}
+      <a rel="nofollow" href="{{ activity.target_object.get_absolute_url }}">{{ activity.target_object }}</a>.
+    {% endif %}
+  {% endif %}
 {% endspaceless %}

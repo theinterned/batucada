@@ -14,12 +14,13 @@ from django.utils.translation import get_language, activate
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
+from django.contrib.contenttypes.models import ContentType
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
-from activity.models import Activity
+from activity.models import Activity, RemoteObject
 from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
 
@@ -57,10 +58,10 @@ class ProjectManager(caching.base.CachingManager):
     def get_active(self, limit=0, school=None):
         active = cache.get('projectsactive')
         if not active:
+            ct = ContentType.objects.get_for_model(RemoteObject)
             activities = Activity.objects.values('scope_object').annotate(
                 Max('created_on')).exclude(scope_object__isnull=True,
-                verb=verbs['follow'],
-                remote_object__isnull=False).filter(
+                verb=verbs['follow'], target_content_type=ct).filter(
                 scope_object__under_development=False,
                 scope_object__not_listed=False,
                 scope_object__archived=False).order_by('-created_on__max')

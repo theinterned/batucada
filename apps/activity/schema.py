@@ -23,7 +23,7 @@ past_tense = {
     'join': _('joined'),
     'post': _('posted'),
     'update': _('updated'),
-    'shared': _('shared'),
+    'share': _('shared'),
     'received': _('received'),
 }
 
