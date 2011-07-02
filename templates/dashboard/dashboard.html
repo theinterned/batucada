@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load l10n_tags %}
-{% load truncate_chars %}
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
 {% block links %}
 <link rel="alternate" type="application/atom+xml" href="{% locale_url activity_profile_feed username=user.get_profile.username %}" title="{{_('Activity from your profile')}}" />

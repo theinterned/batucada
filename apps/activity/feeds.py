@@ -10,6 +10,7 @@ from activity.models import Activity
 from activity.schema import object_types
 from projects.models import Project
 from users.models import UserProfile
+from drumbeat.templatetags.truncate_chars import truncate_chars
 
 
 class ActivityStreamFeedType(HubAtom1Feed):
@@ -70,7 +71,7 @@ class BaseActivityFeed(Feed):
         return _('Activity feed from %s') % (obj,)
 
     def item_title(self, item):
-        return item.textual_representation()
+        return truncate_chars(item.textual_representation(), 130)
 
     def item_description(self, item):
         return item.html_representation()
@@ -115,7 +116,7 @@ class DashboardActivityFeed(ProfileActivityFeed):
         user_ids = [u.pk for u in user.following()]
         project_ids = [p.pk for p in user.following(model=Project)]
         return Activity.objects.select_related(
-            'actor', 'status', 'target_object', 'remote_object',
+            'actor', 'target_object', 'remote_object',
             'remote_object_link', 'scope_object').filter(
             Q(actor__exact=user) | Q(actor__in=user_ids) |
             Q(scope_object__in=project_ids),
