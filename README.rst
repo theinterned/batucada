@@ -23,22 +23,20 @@ Interested in getting involved in Lernanta code development? Check out the devel
 Setting up a local development environment in Ubuntu
 ------------
 
-You will need to set up `git and your SSH keys`_ 
+You will need to `configure git and upload your SSH keys to github`_ 
 
-.. _git and your SSH keys: http://help.github.com/set-up-git-redirect
+.. _configure git and upload your SSH keys to github: http://help.github.com/set-up-git-redirect
      
 
 You need a few libraries and can grab them with this command::
 
-   sudo apt-get install virtualenvwrapper libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
+   sudo apt-get install git libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
 
-To install Lernanta, you must clone the repository: ::
+To obtain the lernanta's source code that you will be modifying, first `fork the repository on the github website`_ and then clone it by running::
 
-   git clone git://github.com/p2pu/lernanta.git
+   git clone git@github.com:<your github username>/lernanta.git
 
-If you're planning on contributing back to the project, `fork the repository`_ instead in the usual GitHub fashion.
-
-.. _fork the repository: http://help.github.com/forking/
+.. _fork the repository on the github website: https://github.com/p2pu/lernanta/wiki/Github-Cheat-Sheet
 
 Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using `virtualenvwrapper`_ is also recommended. ::
 
@@ -86,15 +84,5 @@ Next, sync the database and run migrations. ::
 Finally, start the development server to take it for a spin. You can register a new account and look in the terminal window where the server is running to find the activation link (If you get 404 error for that url, remove the "=": http://www.flickr.com/photos/digifoo/5593967846/). ::
 
    python manage.py runserver 
-
-To run the test framework. ::
-
-   python manage.py test
-
-To recreate the test database before running the tests. ::
-
-   FORCE_DB=True python manage.py test
-
-After updating a database model you will have to make a migration for the change. See the documentation for more information: https://github.com/p2pu/lernanta/blob/master/docs/migrations.txt  
 
 Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki
