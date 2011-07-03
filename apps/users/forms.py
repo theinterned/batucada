@@ -175,7 +175,7 @@ class ProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('full_name', 'location', 'bio', 'preflang', 'tags')
+        fields = ('full_name', 'location', 'bio', 'preflang')
         widgets = {
             'bio': CKEditorWidget(config_name='reduced'),
         }
