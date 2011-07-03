@@ -1,7 +1,7 @@
 {% load l10n_tags %}
  <br><br><br><br>
  <footer class="main">
-      <div>
+      <div class="container">
         <nav>
           <ul class="about-us">
             <li>{{ _('About Us') }}</li>
@@ -33,10 +33,10 @@
             <li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">{{ _('Creative Commons BY SA') }}</a></li>
             <li class="icons"><a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" target="_blank">{{ _('CC BY SA') }}</a></li>
           </ul>
-          <ul role="supporters">
+          <ul class="supporters">
             <li><a href="{% locale_url static_page_show 'supporters' %}">{{ _('Supporters') }}</a></li>
-            <li role="hewlett"><a href="http://www.hewlett.org/" target="_blank">{{ _('The Hewlett Foundation') }}</a></li>
-            <li role="shuttleworth"><a href="http://www.shuttleworthfoundation.org/" target="_blank">{{ _('The Shuttleworth Foundation') }}</a></li>
+            <li class="hewlett"><a href="http://www.hewlett.org/" target="_blank">{{ _('The Hewlett Foundation') }}</a></li>
+            <li class="shuttleworth"><a href="http://www.shuttleworthfoundation.org/" target="_blank">{{ _('The Shuttleworth Foundation') }}</a></li>
           </ul>
         </nav>
                

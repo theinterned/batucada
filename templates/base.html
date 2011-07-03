@@ -80,9 +80,9 @@
 		      <a href="#" id="user-link" class="top-level">
 			{# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
 			{% if user.get_profile %}
-			<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="19" width="19" alt="{{ activity.actor.display_name }}">
+			<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="19" width="19" alt="{{ user.get_profile.display_name }}">
 			{% else %}
-			<img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19" alt="{{ activity.actor.display_name }}">
+			<img id="user-picture" src="{{ MEDIA_URL }}images/member-missing.png" height="19" width="19" alt="{{ user.get_profile.display_name }}">
 			{% endif %}
 			<span>{{ _('My P2PU') }}</span>
 			{% if messages_inbox_count > 0 %}
@@ -123,6 +123,7 @@
     {% endif %}
     {% block body %}{% endblock %}
     {% block footer %}{% include "_footer.html" %}{% endblock %}
+  </div>
 
   <script src="{{ MEDIA_URL }}js/libs/jquery-1.4.2.min.js"></script>
   <script src="{{ MEDIA_URL }}js/libs/jquery-ui-1.8.7.custom.min.js"></script>  
