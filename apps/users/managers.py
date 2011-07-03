@@ -5,6 +5,7 @@ from taggit.managers import TaggableManager, _TaggableManager
 class CategoryTaggableManager(TaggableManager):
     def formfield(self, *args, **kwargs):
         return None
+
     def __get__(self, instance, model):
         """Override ___get___ to return a slightly tweaked manager class"""
         if instance is not None and instance.pk is None:
@@ -39,7 +40,8 @@ class _CategoryTaggableManager(_TaggableManager):
                 create(name=new_tag, category=category))
 
         for tag in tag_objs:
-            self.through.objects.get_or_create(tag=tag, **self._lookup_kwargs())
+            self.through.objects.get_or_create(
+                tag=tag, **self._lookup_kwargs())
 
     @require_instance_manager
     def set(self, category, *tags):
@@ -53,5 +55,5 @@ class _CategoryTaggableManager(_TaggableManager):
 
     @require_instance_manager
     def clear(self, category):
-        self.through.objects.filter(**self._lookup_kwargs()).filter(tag__category=category).delete()
-
+        self.through.objects.filter(**self._lookup_kwargs()).filter(
+            tag__category=category).delete()

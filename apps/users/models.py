@@ -115,7 +115,7 @@ class UserProfile(ModelBase):
     deleted = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
-    
+
     tags = CategoryTaggableManager(through=TaggedProfile, blank=True)
 
     objects = UserProfileManager()

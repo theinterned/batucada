@@ -298,15 +298,16 @@ def user_list(request):
         'popular': popular,
     }, context_instance=RequestContext(request))
 
+
 def user_tagged_list(request, tag_slug):
     """Display a list of users that are tagged with the tag and tag type. """
     tag = get_object_or_404(ProfileTag, slug=tag_slug)
-    users = UserProfile.objects.filter(deleted=False,tags__slug=tag_slug)
+    users = UserProfile.objects.filter(deleted=False, tags__slug=tag_slug)
     return render_to_response('users/user_list.html', {
         'tagged': users,
-        'tag': tag  
+        'tag': tag,
     }, context_instance=RequestContext(request))
- 
+
 
 @anonymous_only
 def confirm_registration(request, token, username):
@@ -350,9 +351,10 @@ def profile_view(request, username):
     current_projects = profile.get_current_projects(only_public=True)
     following = profile.following()
     followers = profile.followers()
-    skills = profile.tags.filter(category='skill').all().order_by('name')
-    interests = profile.tags.filter(category='interest').all().order_by('name')
-    desired_topics = profile.tags.filter(category='desired_topic').all().order_by('name')
+    skills = profile.tags.filter(category='skill').order_by('name')
+    interests = profile.tags.filter(category='interest').order_by('name')
+    desired_topics = profile.tags.filter(
+        category='desired_topic').order_by('name')
     links = Link.objects.filter(user=profile,
         project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)
