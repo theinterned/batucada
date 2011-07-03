@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-02 21:30-0500\n"
+"POT-Creation-Date: 2011-07-03 12:03-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -289,15 +289,15 @@ msgstr "Comentario para %s"
 msgid " at <a href=\"%(comment_url)s\">%(page_title)s</a>."
 msgstr " en <a href=\"%(comment_url)s\">%(page_title)s</a>."
 
-#: apps/content/views.py:34 t/views.py:32
+#: apps/content/views.py:34
 msgid "This task was deleted."
 msgstr "Esta tarea fue eliminada."
 
-#: apps/content/views.py:68 t/views.py:65 templates/content/sign_up.html:38
+#: apps/content/views.py:68 templates/content/sign_up.html:38
 msgid "This answer was deleted."
 msgstr "Esta respuesta fue eliminada."
 
-#: apps/content/views.py:70 t/views.py:67 templates/content/page.html:47
+#: apps/content/views.py:70 templates/content/page.html:47
 msgid "This comment was deleted."
 msgstr "Este comentario fue eliminado."
 
@@ -305,13 +305,11 @@ msgstr "Este comentario fue eliminado."
 #: apps/content/views.py:178 apps/content/views.py:202
 #: apps/content/views.py:251 apps/content/views.py:316
 #: apps/content/views.py:330 apps/content/views.py:346
-#: apps/content/views.py:353 t/views.py:83 t/views.py:90 t/views.py:162
-#: t/views.py:164 t/views.py:189 t/views.py:226 t/views.py:274 t/views.py:288
-#: t/views.py:304 t/views.py:311
+#: apps/content/views.py:353
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:113 apps/projects/views.py:349 t/views.py:101
+#: apps/content/views.py:113 apps/projects/views.py:349
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
@@ -323,77 +321,74 @@ msgstr "¡%s actualizado!"
 msgid "Please correct errors bellow."
 msgstr "Por favor corrija los errores mostrados a continuación."
 
-#: apps/content/views.py:154 t/views.py:140
+#: apps/content/views.py:154
 msgid "Task created!"
 msgstr "Tarea creada!"
 
-#: apps/content/views.py:187 t/views.py:173
+#: apps/content/views.py:187
 #, python-format
 msgid "%s deleted!"
 msgstr "¡%s eliminada!"
 
-#: apps/content/views.py:228 t/views.py:206
+#: apps/content/views.py:228
 msgid "Comment posted!"
 msgstr "¡Comentario publicado!"
 
-#: apps/content/views.py:265 apps/content/views.py:578 t/views.py:231
-#: t/views.py:483
+#: apps/content/views.py:265 apps/content/views.py:578
 msgid "Comment updated!"
 msgstr "¡Comentario actualizado!"
 
-#: apps/content/views.py:286 apps/content/views.py:544 t/views.py:250
-#: t/views.py:466
+#: apps/content/views.py:286 apps/content/views.py:544
 msgid "You can't edit this comment"
 msgstr "Usted no puede editar este comentario"
 
-#: apps/content/views.py:292 t/views.py:255
+#: apps/content/views.py:292
 msgid "Answer deleted!"
 msgstr "¡Respuesta eliminada!"
 
-#: apps/content/views.py:294 t/views.py:255
+#: apps/content/views.py:294
 msgid "Answer restored!"
 msgstr "¡Respuesta restaurada!"
 
-#: apps/content/views.py:297 t/views.py:257
+#: apps/content/views.py:297
 msgid "Comment deleted!"
 msgstr "¡Comentario eliminado!"
 
-#: apps/content/views.py:299 t/views.py:257
+#: apps/content/views.py:299
 msgid "Comment restored!"
 msgstr "¡Comentario restaurado!"
 
-#: apps/content/views.py:374 t/views.py:323
+#: apps/content/views.py:374
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
 #: apps/content/views.py:467 apps/content/views.py:469
-#: apps/content/views.py:471 apps/content/views.py:613 t/views.py:410
-#: t/views.py:412 t/views.py:414 t/views.py:516
+#: apps/content/views.py:471 apps/content/views.py:613
 msgid "You can't see this page"
 msgstr "Usted no puede ver esta página"
 
-#: apps/content/views.py:477 t/views.py:419
+#: apps/content/views.py:477
 msgid "There exists already an answer"
 msgstr "Ya hay una respuesta"
 
-#: apps/content/views.py:514 t/views.py:439
+#: apps/content/views.py:514
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:516 t/views.py:439
+#: apps/content/views.py:516
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:580 t/views.py:483
+#: apps/content/views.py:580
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/content/views.py:630 t/views.py:532
+#: apps/content/views.py:630
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/content/views.py:632 t/views.py:534
+#: apps/content/views.py:632
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
@@ -935,168 +930,6 @@ msgstr "Enlace actualizado"
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
-#: t/create_page.html:4 t/create_page.html.py:14
-#: templates/content/create_page.html:6 templates/content/create_page.html:16
-msgid "Create Task"
-msgstr "Crear Tarea"
-
-#: t/create_page.html:10 t/edit_page.html:10
-#: templates/content/comment_page.html:11
-#: templates/content/comment_sign_up.html:11
-#: templates/content/confirm_delete_page.html:11
-#: templates/content/create_page.html:12
-#: templates/content/delete_restore_comment.html:11
-#: templates/content/edit_page.html:12 templates/content/history_page.html:13
-#: templates/content/page.html:13 templates/content/restore_version.html:11
-#: templates/content/version_page.html:13
-#: templates/projects/project_task_list.html:9
-msgid "Task List"
-msgstr "Lista de Tareas"
-
-#: t/create_page.html:18 t/edit_page.html:26
-#: templates/content/create_page.html:28 templates/content/edit_page.html:28
-msgid ""
-"Constructing a good task is crucial to the peer learning process. Tasks "
-"should have a clear goal in mind and should be sequential throughout the "
-"learning process. A task can be as big or as small and last as long as you "
-"like - it can be a planned discussion for one day, a piece of writing "
-"constructed over a week, a project that lasts for a few weeks, or a month-"
-"long endeavour that everyone works on."
-msgstr ""
-"Construir una buena tarea es crucial para el proceso de aprendizaje. La "
-"tarea debe tener una meta clara y ser secuencial durante el proceso de "
-"aprendizaje.  Una tarea puede ser grande o pequeña y durar tanto como usted "
-"desee - puede ser una discusión planeada para un día, un documento escrito "
-"preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
-"una empresa en la que todos trabajen durante un mes."
-
-#: t/create_page.html:21 t/create_page.html.py:42 t/edit_page.html:41
-#: templates/content/base_page_form.html:42
-msgid "Preview"
-msgstr "Vista Previa"
-
-#: t/create_page.html:38 t/edit_page.html:37
-#: templates/activity/delete_restore.html:47
-#: templates/challenges/challenge_edit_summary.html:99
-#: templates/challenges/challenge_edit_summary.html:102
-#: templates/challenges/delete_confirm.html:20
-#: templates/challenges/submission_edit_description.html:20
-#: templates/challenges/submission_edit_summary.html:40
-#: templates/content/comment_page.html:89
-#: templates/content/comment_sign_up.html:118
-#: templates/content/confirm_delete_page.html:27
-#: templates/content/create_page.html:37
-#: templates/content/delete_restore_comment.html:57
-#: templates/content/edit_page.html:46
-#: templates/content/restore_version.html:39
-#: templates/dashboard/dashboard.html:81
-#: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
-#: templates/projects/contact_organizers.html:34
-#: templates/projects/project.html:87 templates/projects/project_clone.html:21
-#: templates/projects/project_edit_image.html:24
-#: templates/projects/project_edit_status.html:60
-#: templates/projects/project_edit_summary.html:37
-#: templates/projects/project_edit_summary.html:40
-#: templates/projects/project_import.html:21
-#: templates/schools/school_edit_background.html:23
-#: templates/schools/school_edit_groups_icon.html:23
-#: templates/schools/school_edit_logo.html:23
-#: templates/schools/school_edit_site_logo.html:23
-#: templates/schools/school_edit_styles.html:73
-#: templates/schools/school_edit_summary.html:22
-#: templates/users/profile_edit_main.html:25
-#: templates/users/settings_delete.html:25
-#: templates/users/settings_email.html:18
-#: templates/users/settings_notifications.html:45
-#: templates/users/settings_password.html:27
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: t/create_page.html:40 templates/challenges/challenge_edit_summary.html:103
-#: templates/content/create_page.html:39 templates/projects/directory.html:22
-#: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:31
-#: templates/projects/project_edit.html:45
-#: templates/projects/project_edit_summary.html:41
-#: templates/projects/project_import.html:22
-msgid "Create"
-msgstr "Crear"
-
-#: t/edit_page.html:17 templates/content/edit_page.html:19
-#: templates/content/page.html:20 templates/content/page.html.py:62
-#: templates/content/page.html:90 templates/content/sign_up.html:51
-#: templates/content/sign_up.html.py:93 templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:29
-#: templates/projects/project_edit.html:42
-#: templates/projects/project_edit_links.html:35
-#: templates/projects/sidebar.html:44 templates/schools/school_edit.html:17
-#: templates/users/profile_edit_links.html:56
-msgid "Edit"
-msgstr "Editar"
-
-#: t/edit_page.html:33 templates/content/edit_page.html:42
-msgid "Minor update (not posted to the wall)."
-msgstr "Actualización menor (no se publica en el muro)."
-
-#: t/edit_page.html:39 templates/challenges/challenge_edit_summary.html:100
-#: templates/challenges/voter_details.html:20
-#: templates/content/comment_page.html:92
-#: templates/content/comment_sign_up.html:121
-#: templates/content/edit_page.html:48
-#: templates/dashboard/setup_profile.html:9
-#: templates/projects/project_edit_status.html:61
-#: templates/projects/project_edit_summary.html:38
-#: templates/schools/school_edit_styles.html:74
-#: templates/schools/school_edit_summary.html:23
-#: templates/users/profile_edit_main.html:26
-#: templates/users/settings_email.html:19
-#: templates/users/settings_notifications.html:46
-#: templates/users/settings_password.html:28
-msgid "Save"
-msgstr "Guardar"
-
-#: t/views.py:108 t/views.py:330
-#, python-format
-msgid "There was a problem saving %s."
-msgstr "Ocurrió un problema al guardar %s."
-
-#: t/views.py:147
-msgid "There was a problem creating the task."
-msgstr "Ocurrió un problema al crear la tarea."
-
-#: t/views.py:210
-msgid "There was a problem posting the comment. Comments cannot be empty."
-msgstr ""
-"Ocurrió un problema al publicar comnetario. Los comentarios no pueden ser "
-"vacíos"
-
-#: t/views.py:235
-msgid "There was a problem saving the comment."
-msgstr "Ocurrió un problema al guardar el comentario."
-
-#: t/views.py:443
-msgid "There was a problem posting your reply. Reply cannot be empty. "
-msgstr ""
-"Ocurrió un problema al publicar su respuesta. La respuesta no puede ser "
-"vacía."
-
-#: t/views.py:444
-msgid "There was a problem submitting your answer. Answer cannot be empty. "
-msgstr ""
-"Ocurrio un problema al envíar su respuesta.  Respuestas no pueden ser vacías"
-
-#: t/views.py:487
-msgid "There was a problem updating your comment. Comments cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar su comentario.  Los comentarios no pueden "
-"ser vacíos. "
-
-#: t/views.py:488
-msgid "There was a problem updating your answer. Answers cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar su respuesta. Las respuestas no pueden ser "
-"vacías."
-
 #: templates/404.html:6
 msgid "Page not found"
 msgstr "Página no encontrada"
@@ -1429,6 +1262,42 @@ msgstr "¿Está seguro que desea restaurar este mensaje?"
 msgid "Are you sure you want to delete this message?"
 msgstr "¿Está seguro que desea eliminar este mensaje?"
 
+#: templates/activity/delete_restore.html:47
+#: templates/challenges/challenge_edit_summary.html:99
+#: templates/challenges/challenge_edit_summary.html:102
+#: templates/challenges/delete_confirm.html:20
+#: templates/challenges/submission_edit_description.html:20
+#: templates/challenges/submission_edit_summary.html:40
+#: templates/content/comment_page.html:89
+#: templates/content/comment_sign_up.html:118
+#: templates/content/confirm_delete_page.html:27
+#: templates/content/create_page.html:37
+#: templates/content/delete_restore_comment.html:57
+#: templates/content/edit_page.html:46
+#: templates/content/restore_version.html:39
+#: templates/dashboard/dashboard.html:81
+#: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
+#: templates/projects/contact_organizers.html:34
+#: templates/projects/project.html:87 templates/projects/project_clone.html:21
+#: templates/projects/project_edit_image.html:24
+#: templates/projects/project_edit_status.html:60
+#: templates/projects/project_edit_summary.html:37
+#: templates/projects/project_edit_summary.html:40
+#: templates/projects/project_import.html:21
+#: templates/schools/school_edit_background.html:23
+#: templates/schools/school_edit_groups_icon.html:23
+#: templates/schools/school_edit_logo.html:23
+#: templates/schools/school_edit_site_logo.html:23
+#: templates/schools/school_edit_styles.html:73
+#: templates/schools/school_edit_summary.html:22
+#: templates/users/profile_edit_main.html:25
+#: templates/users/settings_delete.html:25
+#: templates/users/settings_email.html:18
+#: templates/users/settings_notifications.html:45
+#: templates/users/settings_password.html:27
+msgid "Cancel"
+msgstr "Cancelar"
+
 #: templates/activity/delete_restore.html:50
 #: templates/content/delete_restore_comment.html:60
 #: templates/content/page.html:49 templates/content/restore_version.html:22
@@ -1568,6 +1437,33 @@ msgstr "Recursos y Soporte"
 #: templates/challenges/challenge_full.html:44
 msgid "Rules"
 msgstr "Reglas"
+
+#: templates/challenges/challenge_edit_summary.html:100
+#: templates/challenges/voter_details.html:20
+#: templates/content/comment_page.html:92
+#: templates/content/comment_sign_up.html:121
+#: templates/content/edit_page.html:48
+#: templates/dashboard/setup_profile.html:9
+#: templates/projects/project_edit_status.html:61
+#: templates/projects/project_edit_summary.html:38
+#: templates/schools/school_edit_styles.html:74
+#: templates/schools/school_edit_summary.html:23
+#: templates/users/profile_edit_main.html:26
+#: templates/users/settings_email.html:19
+#: templates/users/settings_notifications.html:46
+#: templates/users/settings_password.html:28
+msgid "Save"
+msgstr "Guardar"
+
+#: templates/challenges/challenge_edit_summary.html:103
+#: templates/content/create_page.html:39 templates/projects/directory.html:22
+#: templates/projects/gallery.html:18 templates/projects/project_edit.html:6
+#: templates/projects/project_edit.html:31
+#: templates/projects/project_edit.html:45
+#: templates/projects/project_edit_summary.html:41
+#: templates/projects/project_import.html:22
+msgid "Create"
+msgstr "Crear"
 
 #: templates/challenges/challenge_full.html:33
 msgid "Important Dates"
@@ -1788,6 +1684,22 @@ msgstr "Un buen título es corto y descriptivo."
 msgid "Collaborative work (editable by all the participants)."
 msgstr "Trabajo colaborativo (editable por todos los participantes)."
 
+#: templates/content/base_page_form.html:42
+msgid "Preview"
+msgstr "Vista Previa"
+
+#: templates/content/comment_page.html:11
+#: templates/content/comment_sign_up.html:11
+#: templates/content/confirm_delete_page.html:11
+#: templates/content/create_page.html:12
+#: templates/content/delete_restore_comment.html:11
+#: templates/content/edit_page.html:12 templates/content/history_page.html:13
+#: templates/content/page.html:13 templates/content/restore_version.html:11
+#: templates/content/version_page.html:13
+#: templates/projects/project_task_list.html:9
+msgid "Task List"
+msgstr "Lista de Tareas"
+
 #: templates/content/comment_page.html:26
 #: templates/content/comment_sign_up.html:25
 msgid "Edit Comment"
@@ -1881,6 +1793,26 @@ msgstr "Enviar"
 msgid "Are you sure you want to delete this task?"
 msgstr "¿Está seguro que desea eliminar esta tarea?"
 
+#: templates/content/create_page.html:6 templates/content/create_page.html:16
+msgid "Create Task"
+msgstr "Crear Tarea"
+
+#: templates/content/create_page.html:28 templates/content/edit_page.html:28
+msgid ""
+"Constructing a good task is crucial to the peer learning process. Tasks "
+"should have a clear goal in mind and should be sequential throughout the "
+"learning process. A task can be as big or as small and last as long as you "
+"like - it can be a planned discussion for one day, a piece of writing "
+"constructed over a week, a project that lasts for a few weeks, or a month-"
+"long endeavour that everyone works on."
+msgstr ""
+"Construir una buena tarea es crucial para el proceso de aprendizaje. La "
+"tarea debe tener una meta clara y ser secuencial durante el proceso de "
+"aprendizaje.  Una tarea puede ser grande o pequeña y durar tanto como usted "
+"desee - puede ser una discusión planeada para un día, un documento escrito "
+"preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
+"una empresa en la que todos trabajen durante un mes."
+
 #: templates/content/delete_restore_comment.html:23
 msgid "Restore Answer:"
 msgstr "Restaurar Respuesta"
@@ -1912,6 +1844,22 @@ msgstr "¿Está seguro que desea restaurar este comentario?"
 #: templates/content/delete_restore_comment.html:52
 msgid "Are you sure you want to delete this comment?"
 msgstr "¿Está seguro que desea eliminar este comentario?"
+
+#: templates/content/edit_page.html:19 templates/content/page.html:20
+#: templates/content/page.html.py:62 templates/content/page.html:90
+#: templates/content/sign_up.html:51 templates/content/sign_up.html.py:93
+#: templates/projects/project_edit.html:6
+#: templates/projects/project_edit.html:29
+#: templates/projects/project_edit.html:42
+#: templates/projects/project_edit_links.html:35
+#: templates/projects/sidebar.html:44 templates/schools/school_edit.html:17
+#: templates/users/profile_edit_links.html:56
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/content/edit_page.html:42
+msgid "Minor update (not posted to the wall)."
+msgstr "Actualización menor (no se publica en el muro)."
 
 #: templates/content/history_page.html:17
 #: templates/content/history_page.html:23
@@ -2137,7 +2085,7 @@ msgstr "Busque Grupos y Cursos"
 msgid "Start Your Own"
 msgstr "Inicie el Suyo Propio"
 
-#: templates/dashboard/splash.html:17
+#: templates/dashboard/splash.html:16
 msgid ""
 "We are an <em class=\"highlight1\">online</em><br>community that<br><em "
 "class=\"highlight2\">enables learning</em>. <em class=\"highlight3\">So</em>"
@@ -2146,11 +2094,11 @@ msgstr ""
 "línea</em> que <em class=\"highlight2\">posibilita<br> el aprendizaje</em>, "
 "&nbsp;&nbsp;<em class=\"highlight3\" align=\"right\">así que</em></div>"
 
-#: templates/dashboard/splash.html:18
+#: templates/dashboard/splash.html:17
 msgid "At"
 msgstr "En"
 
-#: templates/dashboard/splash.html:18
+#: templates/dashboard/splash.html:17
 msgid ""
 "people work together to learn a particular topic by completing tasks, "
 "assessing individual and group work, and providing constructive feedback."
@@ -2159,22 +2107,22 @@ msgstr ""
 "tareas, evaluar el trabajo individual y colectivo y brindar "
 "retroalimentación constructiva."
 
-#: templates/dashboard/splash.html:32 templates/projects/_project_list.html:5
+#: templates/dashboard/splash.html:30 templates/projects/_project_list.html:5
 #: templates/schools/school_edit.html:38
 #: templates/schools/school_edit_featured.html:7
 #: templates/users/user_list.html:21
 msgid "Featured"
 msgstr "Destacado"
 
-#: templates/dashboard/splash.html:42
+#: templates/dashboard/splash.html:40
 msgid "P2PU Blog"
 msgstr "Blog de P2PU"
 
-#: templates/dashboard/splash.html:42
+#: templates/dashboard/splash.html:40
 msgid "Subscribe to the Peer 2 Peer University blog"
 msgstr "Suscribirse al blog de Peer 2 Peer University"
 
-#: templates/dashboard/splash.html:42
+#: templates/dashboard/splash.html:40
 msgid "feed"
 msgstr "alimentador"
 
@@ -3765,3 +3713,4 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
+
