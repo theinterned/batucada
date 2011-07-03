@@ -128,7 +128,6 @@ INSTALLED_APPS = (
     'dashboard',
     'relationships',
     'activity',
-    'projects',
     'statuses',
     'messages',
     'taggit',
@@ -143,8 +142,9 @@ INSTALLED_APPS = (
     'schools',
     'voting',
     'news',
-    'drumbeat',
     'pages',
+    'projects',
+    'drumbeat',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
