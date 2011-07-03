@@ -34,7 +34,7 @@ You need a few libraries and can grab them with this command::
 
 To obtain the lernanta's source code that you will be modifying, first `fork the repository on the github website`_ and then clone it by running::
 
-   git clone git://github.com/<your github username>/lernanta.git
+   git clone git@github.com:<your github username>/lernanta.git
 
 .. _fork the repository on the github website: https://github.com/p2pu/lernanta/wiki/Github-Cheat-Sheet
 
