@@ -9,7 +9,7 @@
 {% block bodyid %}project_user_list{% endblock %}
 {% block project_breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_user_list project%}">{{ _('People') }}</a>
+  <a href="{% locale_url projects_user_list slug=project.slug %}">{{ _('People') }}</a>
 {% endblock %}
 
 {% block body %}
@@ -39,6 +39,20 @@
       {% endwith %}
     {% endfor %}
   </ul>
+
+<div class="pagination">
+  {% if participants_page.has_previous %}
+    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_prev_page followers_page=followers_page_num %}">← {{ _('previous') }}</a>
+  {% else %}
+    <span class="btn">← {{ _('previous') }}</span>
+  {% endif %}
+  {% if participants_page.has_next %}
+    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_next_page followers_page=followers_page_num %}">{{ _('next') }} →</a>
+  {% else %}
+    <span class="btn">{{_('next')}} →</span>
+  {% endif %}
+</div>
+
 </section>
 {% endif %}
 
@@ -47,11 +61,25 @@
   <h1><span>{{ _('Followers') }}</span></h1>
   <ul class="user-list">
     {% for relationship in followers %}
-      {% with person=relationship.user %}
+      {% with person=relationship.source %}
         <li>{% include "users/_user_card.html" %}</li>
       {% endwith %}
     {% endfor %}
   </ul>
+
+<div class="pagination">
+  {% if followers_page.has_previous %}
+    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_page_num followers_page=followers_prev_page %}">← {{ _('previous') }}</a>
+  {% else %}
+    <span class="btn">← {{ _('previous') }}</span>
+  {% endif %}
+  {% if followers_page.has_next %}
+    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_page_num followers_page=followers_next_page %}">{{ _('next') }} →</a>
+  {% else %}
+    <span class="btn">{{_('next')}} →</span>
+  {% endif %}
+</div>
+
 </section>
 {% endif %}
 </div>

@@ -608,12 +608,42 @@ def task_list(request, slug):
         context_instance=RequestContext(request))
 
 
-def user_list(request, slug):
+def user_list(request, slug, participants_page=1, followers_page=1):
     """Display full list of users for the project."""
     project = get_object_or_404(Project, slug=slug)
+
+    participants = project.non_organizer_participants()
+    participants_paginator = Paginator(participants, 24)
+    try:
+        participants_current_page = participants_paginator.page(
+            participants_page)
+    except EmptyPage:
+        raise http.Http404
+    participants = participants_current_page.object_list
+
+    followers = project.non_participant_followers()
+    followers_paginator = Paginator(followers, 24)
+    try:
+        followers_current_page = followers_paginator.page(followers_page)
+    except EmptyPage:
+        raise http.Http404
+    followers = followers_current_page.object_list
+
     return render_to_response('projects/project_user_list.html', {
         'project': project,
         'organizers': project.organizers(),
-        'participants': project.non_organizer_participants(),
-        'followers': project.non_participant_followers(),
+        'participants': participants,
+        'followers': followers,
+        'participants_paginator': participants_paginator,
+        'participants_page_num': participants_page,
+        'participants_next_page': int(participants_page) + 1,
+        'participants_prev_page': int(participants_page) - 1,
+        'participants_num_pages': participants_paginator.num_pages,
+        'participants_page': participants_current_page,
+        'followers_paginator': followers_paginator,
+        'followers_page_num': followers_page,
+        'followers_next_page': int(followers_page) + 1,
+        'followers_prev_page': int(followers_page) - 1,
+        'followers_num_pages': followers_paginator.num_pages,
+        'followers_page': followers_current_page,
     }, context_instance=RequestContext(request))
