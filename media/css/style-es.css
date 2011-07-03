@@ -12,7 +12,7 @@
   padding: 4px 6px 8px 0px;
 }
 
-footer[role="main"] ul {
+footer[class="main"] ul {
     float: left;
     margin-left: 39px;
     padding-bottom: 50px;
