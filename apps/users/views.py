@@ -352,7 +352,7 @@ def profile_view(request, username):
     followers = profile.followers()
     skills = profile.tags.filter(category='skill').all().order_by('name')
     interests = profile.tags.filter(category='interest').all().order_by('name')
-    desired_topics = profile.tags.filter(category='desired').all().order_by('name')
+    desired_topics = profile.tags.filter(category='desired_topic').all().order_by('name')
     links = Link.objects.filter(user=profile,
         project__isnull=True).order_by('index')
     activities = Activity.objects.for_user(profile)

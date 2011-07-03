@@ -19,6 +19,7 @@ from django.utils.translation import ugettext
 from django.utils.safestring import mark_safe
 
 from taggit.models import GenericTaggedItemBase, Tag
+from south.modelsinspector import add_ignored_fields
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -31,6 +32,9 @@ from users.managers import CategoryTaggableManager
 import caching.base
 
 log = logging.getLogger(__name__)
+
+# To fix a South problem (Cannot freeze field 'users.userprofile.tags')
+add_ignored_fields(["^users\.managers"])
 
 GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s"
                      "?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
@@ -112,7 +116,7 @@ class UserProfile(ModelBase):
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
     
-    tags = CategoryTaggableManager(through=TaggedProfile)
+    tags = CategoryTaggableManager(through=TaggedProfile, blank=True)
 
     objects = UserProfileManager()
 
