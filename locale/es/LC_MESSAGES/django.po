@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-27 23:02-0500\n"
+"POT-Creation-Date: 2011-07-02 21:30-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1245,6 +1245,10 @@ msgstr "css/style-es.css"
 #: templates/base.html:42
 msgid "(more)"
 msgstr "(más)"
+
+#: templates/base.html:45 templates/search/search.html:18
+msgid "Loading"
+msgstr "Cargando"
 
 #: templates/base.html:59
 msgid "BETA"
@@ -3761,19 +3765,3 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
-
-#~ msgid "School"
-#~ msgstr "Escuela"
-
-#~ msgid ""
-#~ "Optionally, the study group, course, ... may belong to a particular "
-#~ "school."
-#~ msgstr ""
-#~ "Opcionalmente, el grupo de estudio, curso, ... puede pertenecer a una "
-#~ "escuela en particular."
-
-#~ msgid "The %s course was not part of this school."
-#~ msgstr "El curso %s no era parte de esta escuela."
-
-#~ msgid "The %(kind)s membership to %(school)s was declined."
-#~ msgstr "La membresia del %(kind)s a %(school)s fue rechazada."
