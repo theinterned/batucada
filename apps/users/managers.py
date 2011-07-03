@@ -1,8 +1,10 @@
-
 from taggit.utils import require_instance_manager
 from taggit.managers import TaggableManager, _TaggableManager
 
+
 class CategoryTaggableManager(TaggableManager):
+    def formfield(self, *args, **kwargs):
+        return None
     def __get__(self, instance, model):
         """Override ___get___ to return a slightly tweaked manager class"""
         if instance is not None and instance.pk is None:
