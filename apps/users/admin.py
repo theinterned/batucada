@@ -9,6 +9,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_filter = list_display[5:]
     search_fields = list_display[:5]
 
+
 class TaggedProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'tag')
 

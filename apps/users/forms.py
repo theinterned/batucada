@@ -175,12 +175,13 @@ class RegisterForm(forms.ModelForm):
 class CategoryTagWidget(forms.TextInput):
     def __init__(self, *args, **kwargs):
         self.category = kwargs.pop('category', None)
-        
         super(CategoryTagWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
         if value is not None and not isinstance(value, basestring):
-            value = edit_string_for_tags([o.tag for o in value.select_related("tag").filter(tag__category=self.category)])
+            objs = value.select_related("tag").filter(
+                tag__category=self.category)
+            value = edit_string_for_tags([o.tag for o in objs])
         return super(CategoryTagWidget, self).render(name, value, attrs)
 
 
@@ -200,26 +201,26 @@ class ProfileEditForm(forms.ModelForm):
     interest = CategoryTagField(category='interest', required=False)
     skill = CategoryTagField(category='skill', required=False)
     desired_topic = CategoryTagField(category='desired_topic', required=False)
-    
+
     def __init__(self, *args, **kwargs):
         super(ProfileEditForm, self).__init__(*args, **kwargs)
-        
+
         if kwargs.has_key('instance'):
             instance = kwargs['instance']
-            self.initial['interest'] = TaggedProfile.objects.filter(object_id=instance.id)
-            self.initial['skill'] = TaggedProfile.objects.filter(object_id=instance.id)
-            self.initial['desired_topic'] = TaggedProfile.objects.filter(object_id=instance.id)
+            self.initial['interest'] = TaggedProfile.objects.filter(
+                object_id=instance.id)
+            self.initial['skill'] = TaggedProfile.objects.filter(
+                object_id=instance.id)
+            self.initial['desired_topic'] = TaggedProfile.objects.filter(
+                object_id=instance.id)
 
     def save(self, commit=True):
         model = super(ProfileEditForm, self).save(commit=False)
-        
         model.tags.set('interest', *self.cleaned_data['interest'])
         model.tags.set('skill', *self.cleaned_data['skill'])
         model.tags.set('desired_topic', *self.cleaned_data['desired_topic'])
-        
         if commit:
             model.save()
-
         return model
 
     class Meta:
