@@ -26,6 +26,7 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
 from users import tasks
+from users.managers import CategoryTaggableManager
 
 import caching.base
 
@@ -59,8 +60,9 @@ class ProfileTag(Tag):
     CATEGORY_CHOICES = (
         ('skill', 'Skill'),
         ('interest', 'Interest'),
+        ('desired_topic', 'Desired Topics'),
     )
-    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
 
 class TaggedProfile(GenericTaggedItemBase):
@@ -109,8 +111,8 @@ class UserProfile(ModelBase):
     deleted = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
-    # TODO: enable when addition/edition of tags is implemented.
-    # tags = TaggableManager(through=TaggedProfile)
+    
+    tags = CategoryTaggableManager(through=TaggedProfile)
 
     objects = UserProfileManager()
 
