@@ -1,7 +1,7 @@
 import logging
 
 from django.db.utils import IntegrityError
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
+from django.http import HttpResponseRedirect, Http404
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
@@ -26,9 +26,11 @@ def follow(request, object_type, slug):
     if object_type == PROJECT:
         project = get_object_or_404(Project, slug=slug)
         relationship = Relationship(source=profile, target_project=project)
+        url = project.get_absolute_url()
     elif object_type == USER:
         user = get_object_or_404(UserProfile, username=slug)
         relationship = Relationship(source=profile, target_user=user)
+        url = user.get_absolute_url()
     else:
         raise Http404
     try:
@@ -41,7 +43,7 @@ def follow(request, object_type, slug):
             messages.error(request, _('You are already following this user'))
         log.warn("Attempt to create duplicate relationship: %s" % (
             relationship,))
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(url)
 
 
 @login_required
@@ -52,13 +54,16 @@ def unfollow(request, object_type, slug):
         project = get_object_or_404(Project, slug=slug)
         # project.participants() includes project.organizers()
         if project.participants().filter(user=profile).exists():
-            return HttpResponseForbidden(_("You can't unfollow"))
-        Relationship.objects.filter(
-            source=profile, target_project=project).delete()
+            messages.error(request, _("You can't unfollow"))
+        else:
+            Relationship.objects.filter(
+                source=profile, target_project=project).delete()
+        url = project.get_absolute_url()
     elif object_type == USER:
         user = get_object_or_404(UserProfile, username=slug)
         Relationship.objects.filter(
             source=profile, target_user=user).delete()
+        url = user.get_absolute_url()
     else:
         raise Http404
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(url)
