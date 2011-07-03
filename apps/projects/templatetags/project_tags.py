@@ -10,7 +10,7 @@ from projects import drupal
 register = template.Library()
 
 
-def sidebar(context):
+def sidebar(context, max_people_count=64):
     user = context['user']
     project = context['project']
     is_participating = is_following = is_organizing = False
@@ -26,9 +26,27 @@ def sidebar(context):
                 deleted=False, author=profile)
             if answers.exists():
                 pending_signup = answers[0]
-    participants_count = project.non_organizer_participants().count()
-    followers_count = project.non_participant_followers().count()
-    organizers_count = project.organizers().count()
+
+    organizers = project.organizers()
+    organizers_count = organizers.count()
+    participants = project.non_organizer_participants()
+    participants_count = participants.count()
+    followers = project.non_participant_followers()
+    followers_count = followers.count()
+
+    # only display a subset of the participants and followers.
+    remaining = max_people_count
+    sidebar_organizers = organizers[:remaining]
+    sidebar_participants = []
+    sidebar_followers = []
+    remaining -= sidebar_organizers.count()
+    if remaining > 0:
+        sidebar_participants = participants[:remaining]
+        remaining -= sidebar_participants.count()
+    if remaining > 0:
+        sidebar_followers = followers[:remaining]
+        remaining -= sidebar_followers.count()
+
     update_count = project.activities().count()
     pending_applicants_count = len(project.pending_applicants())
     content_pages = Page.objects.filter(project__pk=project.pk,
@@ -52,6 +70,9 @@ def sidebar(context):
         'school': school,
         'imported_from': imported_from,
         'pending_signup': pending_signup,
+        'sidebar_organizers': sidebar_organizers,
+        'sidebar_participants': sidebar_participants,
+        'sidebar_followers': sidebar_followers,
     })
     return context
 
