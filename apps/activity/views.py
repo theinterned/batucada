@@ -33,14 +33,14 @@ def index(request, activity_id):
 def delete_restore(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     if not activity.can_edit(request.user):
-        return HttpResponseForbidden(_("You can't edit this message"))
+        return HttpResponseForbidden(_("You can't edit this activity"))
     if request.method == 'POST':
         activity.deleted = not activity.deleted
         activity.save()
         if activity.deleted:
-            msg = _('Message deleted!')
+            msg = _('Activity deleted!')
         else:
-            msg = _('Message restored!')
+            msg = _('Activity restored!')
         messages.success(request, msg)
         if activity.scope_object:
             return HttpResponseRedirect(

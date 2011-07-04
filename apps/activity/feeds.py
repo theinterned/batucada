@@ -106,7 +106,7 @@ class ProfileActivityFeed(BaseActivityFeed):
                        kwargs={'username': user.username})
 
     def items(self, user):
-        return Activity.objects.filter(actor=user).order_by('-created_on')[:25]
+        return Activity.objects.for_user(user)[:25]
 
 
 class DashboardActivityFeed(ProfileActivityFeed):
@@ -115,13 +115,7 @@ class DashboardActivityFeed(ProfileActivityFeed):
         return _('Activity feed from %s\'s dashboard') % (user,)
 
     def items(self, user):
-        user_ids = [u.pk for u in user.following()]
-        project_ids = [p.pk for p in user.following(model=Project)]
-        return Activity.objects.select_related(
-            'actor', 'target_object', 'scope_object').filter(
-            Q(actor__exact=user) | Q(actor__in=user_ids) |
-            Q(scope_object__in=project_ids),
-       ).order_by('-created_on')[0:25]
+        return Activity.objects.dashboard(user)[:25]
 
 
 class ProjectActivityFeed(BaseActivityFeed):
@@ -134,9 +128,7 @@ class ProjectActivityFeed(BaseActivityFeed):
         return reverse('projects_show', kwargs={'slug': project.slug})
 
     def items(self, project):
-        return Activity.objects.filter(
-            Q(scope_object=project)
-        ).order_by('-created_on')[:25]
+        return project.activities()[:25]
 
 
 class PublicActivityFeed(BaseActivityFeed):
@@ -146,7 +138,7 @@ class PublicActivityFeed(BaseActivityFeed):
         return Site.objects.get_current().domain
 
     def items(self, obj):
-        return Activity.objects.public()
+        return Activity.objects.public()[:25]
 
     def link(self, user):
         return reverse('splash')

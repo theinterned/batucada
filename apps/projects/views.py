@@ -8,7 +8,6 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
-from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
@@ -58,10 +57,6 @@ def list_all(request, page=1):
         current_page = paginator.page(page)
     except EmptyPage:
         raise http.Http404
-    projects = current_page.object_list
-    for project in projects:
-        project.followers_count = Relationship.objects.filter(
-            target_project=project).count()
     return render_to_response('projects/directory.html', {
         'paginator': paginator,
         'page_num': page,
@@ -88,11 +83,10 @@ def create(request):
             participation = Participation(project=project, user=user,
                 organizing=True)
             participation.save()
-            new_rel = Relationship(source=user, target_project=project)
-            try:
-                new_rel.save()
-            except IntegrityError:
-                pass
+            new_rel, created = Relationship.objects.get_or_create(source=user,
+                target_project=project)
+            new_rel.deleted = False
+            new_rel.save()
             detailed_description_content = render_to_string(
                 "projects/detailed_description_initial_content.html",
                 {})
@@ -204,11 +198,10 @@ def clone(request):
             participation = Participation(project=project, user=user,
                 organizing=True)
             participation.save()
-            new_rel = Relationship(source=user, target_project=project)
-            try:
-                new_rel.save()
-            except IntegrityError:
-                pass
+            new_rel, created = Relationship.objects.get_or_create(source=user,
+                target_project=project)
+            new_rel.deleted = False
+            new_rel.save()
             detailed_description = Page(title=_('Full Description'),
                 slug='full-description',
                 content=base_project.detailed_description.content,
@@ -279,11 +272,10 @@ def import_from_old_site(request):
             participation = Participation(project=project, user=user,
                 organizing=True)
             participation.save()
-            new_rel = Relationship(source=user, target_project=project)
-            try:
-                new_rel.save()
-            except IntegrityError:
-                pass
+            new_rel, created = Relationship.objects.get_or_create(source=user,
+                target_project=project)
+            new_rel.deleted = False
+            new_rel.save()
             if course['detailed_description']:
                 detailed_description_content = course['detailed_description']
             else:
@@ -487,10 +479,8 @@ def edit_participants(request, slug):
                 organizing=organizing)
             participation.save()
             new_rel = Relationship(source=user, target_project=project)
-            try:
-                new_rel.save()
-            except IntegrityError:
-                pass
+            new_rel.deleted = False
+            new_rel.save()
             messages.success(request, _('Participant added.'))
             return http.HttpResponseRedirect(reverse(
                 'projects_edit_participants',

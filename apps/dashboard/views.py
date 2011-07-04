@@ -16,18 +16,18 @@ from users.models import UserProfile
 from users.forms import CreateProfileForm
 from projects.models import Project
 from news.models import FeedEntry
-from relationships.models import Relationship
 from drumbeat import messages
+from schools.models import School
 
 
 def splash(request):
     """Splash page we show to users who are not authenticated."""
     project = None
-    projects = Project.objects.filter(featured=True)
+    projects = list(Project.objects.filter(featured=True))
+    for school in School.objects.all():
+        projects.extend(list(school.featured.all()))
     if projects:
         project = random.choice(projects)
-        project.followers_count = Relationship.objects.filter(
-            target_project=project).count()
     activities = Activity.objects.public()
     feed_entries = FeedEntry.objects.filter(
         page='splash').order_by('-created_on')[0:4]
