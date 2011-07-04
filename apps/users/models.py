@@ -135,20 +135,21 @@ class UserProfile(ModelBase):
         if (model == 'Project' or isinstance(model, Project) or
             model == Project):
             relationships = Relationship.objects.select_related(
-                'target_project').filter(source=self).exclude(
+                'target_project').filter(source=self, deleted=False).exclude(
                 target_project__isnull=True)
             return [rel.target_project for rel in relationships
                     if not rel.target_project.archived]
         relationships = Relationship.objects.select_related(
             'target_user').filter(source=self,
-            target_user__deleted=False).exclude(
+            target_user__deleted=False, deleted=False).exclude(
             target_user__isnull=True)
         return [rel.target_user for rel in relationships]
 
     def followers(self):
         """Return a list of this users followers."""
         relationships = Relationship.objects.select_related(
-            'source').filter(target_user=self, source__deleted=False)
+            'source').filter(target_user=self, source__deleted=False,
+            deleted=False)
         return [rel.source for rel in relationships]
 
     def is_following(self, model):

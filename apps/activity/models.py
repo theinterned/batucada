@@ -32,7 +32,8 @@ class ActivityManager(ManagerBase):
         return Activity.objects.filter(deleted=False,
             parent__isnull=True, scope_object__isnull=False,
             scope_object__not_listed=False).exclude(
-            target_content_type=ct, verb=schema.verbs['follow']).order_by(
+            models.Q(target_content_type=ct)
+            | models.Q(verb=schema.verbs['follow'])).order_by(
             '-created_on')[:10]
 
     def dashboard(self, user):
@@ -43,17 +44,10 @@ class ActivityManager(ManagerBase):
         users_following = user.following()
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
-        return Activity.objects.filter(deleted=False).select_related(
+        return Activity.objects.filter(deleted=False, parent__isnull=True).select_related(
             'actor', 'target_object', 'scope_object').filter(
             models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
-          | models.Q(scope_object__in=project_ids),
-        ).exclude(
-            models.Q(verb=schema.verbs['follow']),
-            models.Q(scope_object__in=project_ids),
-        ).exclude(
-            models.Q(verb=schema.verbs['follow']),
-            models.Q(actor=user),
-        ).exclude(parent__isnull=False).order_by('-created_on')
+          | models.Q(scope_object__in=project_ids)).order_by('-created_on')
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
@@ -62,10 +56,7 @@ class ActivityManager(ManagerBase):
             actor=user).filter(
             models.Q(scope_object__isnull=True)
             | models.Q(scope_object__not_listed=False)
-        ).exclude(
-            models.Q(verb=schema.verbs['follow']),
-            models.Q(scope_object__isnull=True),
-        ).exclude(parent__isnull=False).order_by('-created_on')[0:25]
+        ).exclude(parent__isnull=False).order_by('-created_on')[:25]
 
 
 class Activity(ModelBase):

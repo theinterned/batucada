@@ -33,6 +33,7 @@ class Relationship(ModelBase):
 
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (
@@ -68,7 +69,7 @@ class Relationship(ModelBase):
 def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     created = kwargs.get('created', False)
-    if not created or not isinstance(rel, Relationship):
+    if not created or not isinstance(rel, Relationship) or rel.deleted:
         return
     activity = Activity(actor=rel.source,
                         verb=verbs['follow'],

@@ -6,7 +6,6 @@ from django import http
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
-from django.db import IntegrityError
 from django.core.paginator import Paginator, EmptyPage
 from django.conf import settings
 
@@ -503,12 +502,10 @@ def comment_sign_up(request, slug, comment_id=None):
             else:
                 if not reply_to:
                     profile.save()
-                    new_rel = Relationship(source=profile,
-                        target_project=project)
-                    try:
-                        new_rel.save()
-                    except IntegrityError:
-                        pass
+                    new_rel, created = Relationship.objects.get_or_create(
+                        source=profile, target_project=project)
+                    new_rel.deleted = False
+                    new_rel.save()
                 comment.save()
                 if reply_to:
                     success_msg = _('Reply posted!')
@@ -614,11 +611,10 @@ def accept_sign_up(request, slug, comment_id, as_organizer=False):
     participation = Participation(project=project, user=answer.author,
         organizing=as_organizer)
     participation.save()
-    new_rel = Relationship(source=answer.author, target_project=project)
-    try:
-        new_rel.save()
-    except IntegrityError:
-        pass
+    new_rel, created = Relationship.objects.get_or_create(source=answer.author,
+        target_project=project)
+    new_rel.deleted = False
+    new_rel.save()
     accept_content = render_to_string(
             "content/accept_sign_up_comment.html",
             {'as_organizer': as_organizer})

@@ -41,8 +41,9 @@ class ProjectManager(caching.base.CachingManager):
     def get_popular(self, limit=0, school=None):
         popular = cache.get('projectspopular')
         if not popular:
-            rels = Relationship.objects.values('target_project').annotate(
-                Count('id')).exclude(target_project__isnull=True).filter(
+            rels = Relationship.objects.filter(deleted=False).values(
+                'target_project').annotate(Count('id')).exclude(
+                target_project__isnull=True).filter(
                 target_project__under_development=False,
                 target_project__not_listed=False,
                 target_project__archived=False).order_by('-id__count')
@@ -134,8 +135,8 @@ class Project(ModelBase):
             return _('created')
 
     def followers(self):
-        return Relationship.objects.filter(target_project=self,
-            source__deleted=False)
+        return Relationship.objects.filter(deleted=False,
+            target_project=self, source__deleted=False)
 
     def non_participant_followers(self):
         return self.followers().exclude(
@@ -197,12 +198,8 @@ class Project(ModelBase):
         return False
 
     def activities(self):
-        activities = Activity.objects.filter(deleted=False).filter(
-            Q(scope_object=self),
-        ).exclude(
-            verb=verbs['follow']
-        ).order_by('-created_on')
-        return activities
+        return Activity.objects.filter(deleted=False,
+            scope_object=self).order_by('-created_on')
 
     def create(self):
         self.save()
