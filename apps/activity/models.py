@@ -28,11 +28,16 @@ class ActivityManager(ManagerBase):
 
     def public(self):
         """Get list of activities to show on splash page."""
-        ct = ContentType.objects.get_for_model(RemoteObject)
+        remote_object_ct = ContentType.objects.get_for_model(
+            RemoteObject)
+        from statuses.models import Status
+        status_ct = ContentType.objects.get_for_model(
+            Status)
         return Activity.objects.filter(deleted=False,
             parent__isnull=True, scope_object__isnull=False,
             scope_object__not_listed=False).exclude(
-            models.Q(target_content_type=ct)
+            models.Q(target_content_type=remote_object_ct)
+            | models.Q(target_content_type=status_ct)
             | models.Q(verb=schema.verbs['follow'])).order_by(
             '-created_on')[:10]
 
