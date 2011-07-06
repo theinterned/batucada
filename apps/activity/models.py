@@ -49,7 +49,8 @@ class ActivityManager(ManagerBase):
         users_following = user.following()
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
-        return Activity.objects.filter(deleted=False, parent__isnull=True).select_related(
+        return Activity.objects.filter(deleted=False,
+            parent__isnull=True).select_related(
             'actor', 'target_object', 'scope_object').filter(
             models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
           | models.Q(scope_object__in=project_ids)).order_by('-created_on')

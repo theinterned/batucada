@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.db import models
-from django.db.models import Count, Q, Max
+from django.db.models import Count, Max
 from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _

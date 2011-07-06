@@ -478,7 +478,8 @@ def edit_participants(request, slug):
             participation = Participation(project=project, user=user,
                 organizing=organizing)
             participation.save()
-            new_rel = Relationship(source=user, target_project=project)
+            new_rel, created = Relationship.objects.get_or_create(
+                source=user, target_project=project)
             new_rel.deleted = False
             new_rel.save()
             messages.success(request, _('Participant added.'))

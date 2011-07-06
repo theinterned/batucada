@@ -353,9 +353,11 @@ def profile_view(request, username):
     current_projects = profile.get_current_projects(only_public=True)
     following = profile.following()
     followers = profile.followers()
-    skills = profile.tags.filter(category='skill').order_by('name')
-    interests = profile.tags.filter(category='interest').order_by('name')
-    desired_topics = profile.tags.filter(
+    skills = profile.tags.filter(category='skill').exclude(
+        slug='').order_by('name')
+    interests = profile.tags.filter(category='interest').exclude(
+        slug='').order_by('name')
+    desired_topics = profile.tags.exclude(slug='').filter(
         category='desired_topic').order_by('name')
     links = Link.objects.filter(user=profile,
         project__isnull=True).order_by('index')

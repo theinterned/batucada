@@ -1,6 +1,10 @@
 h1.school_header, h2.school_header, h3.school_header, a.school_header,
-span.school_header, #beta-tag, #participate_button a {
+span.school_header, #beta-tag {
   color: {{ school.headers_color }};
+}
+
+#participate_button a {
+  background-color: {{ school.headers_color }};
 }
 
 #participate_button a:hover {

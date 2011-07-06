@@ -35,7 +35,7 @@
 
     {% if activity.scope_object %}
     <ul class="post-tags">
-      <li><a href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object|slice:":50" }}</a></li>
+      <li><a href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object.name|slice:":50" }}</a></li>
     </ul>
     {% endif %}
     
