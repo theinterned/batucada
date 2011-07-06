@@ -22,3 +22,4 @@ django-maintenancemode==0.9.2
 -e git://github.com/paulosman/django-push.git#egg=django_push
 -e git://github.com/paulosman/django-openid-auth.git#egg=django_openid_auth
 -e git://github.com/shaunsephton/django-ckeditor.git#egg=django_ckeditor
+-e git://github.com/jdunck/python-unicodecsv.git#egg=unicodecsv

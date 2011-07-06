@@ -1,4 +1,4 @@
-import csv
+import unicodecsv
 
 from django.contrib import admin
 from django.contrib.auth.models import Group, User
@@ -40,7 +40,7 @@ def export_as_csv(modeladmin, request, queryset):
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=%s.csv' % unicode(
         opts).replace('.', '_')
-    writer = csv.writer(response)
+    writer = unicodecsv.writer(response, encoding='utf-8')
     field_names = [field.name for field in opts.fields]
     # Write a first row with header information
     writer.writerow(field_names)

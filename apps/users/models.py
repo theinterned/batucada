@@ -123,7 +123,7 @@ class UserProfile(ModelBase):
 
     def __unicode__(self):
         if self.deleted:
-            return _('Anonym')
+            return ugettext('Anonym')
         return self.full_name or self.username
 
     def following(self, model=None):

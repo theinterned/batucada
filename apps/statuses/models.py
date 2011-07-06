@@ -32,7 +32,7 @@ class Status(ModelBase):
         verbose_name_plural = _('statuses')
 
     def __unicode__(self):
-        return 'message: %s' % self.status
+        return _('message: %s') % self.status
 
     def get_absolute_url(self):
         ct = ContentType.objects.get_for_model(Status)

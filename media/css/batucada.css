@@ -214,8 +214,14 @@ input[type=submit]:active,
     text-decoration: none;
 }
 
+#follow_button, #participate_button {
+    width: 100px;
+}
+
 #participate_button {
-    float: left;
+    float: right;
+    margin-top: -23px;
+    margin-right: 2px;
 }
 
 #participate_button a {
