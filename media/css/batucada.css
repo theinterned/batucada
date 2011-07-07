@@ -232,6 +232,9 @@ input[type=submit]:active,
     border-width: 1px;
 }
 
+.login_participate_button {
+    margin-top: 0px !important
+}
 /* FORMS */
 form .field {
 	position: relative;
