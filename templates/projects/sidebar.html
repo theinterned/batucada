@@ -11,8 +11,8 @@
         {% endif %}
       </a>
     </figure>
-    {% if user.is_authenticated %}
-      {% if not organizing and not participating %}
+    {% if not organizing and not participating %}
+      {% if user.is_authenticated %}
         {% if following %}
           <form id="unfollow_button" method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">
             {% csrf_token %}
@@ -24,12 +24,10 @@
             <button>{{ _('Follow') }}</button>
           </form>
         {% endif %}
-        {% if not project.signup_closed and not pending_signup %}
-          <p id="participate_button"><a href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a></p>
-        {% endif %}
-      {% endif %}
-    {% else %}
-          <p id="participate_button" class="login_participate_button"><a href="{{ login_with_redirect_url }}">{{ _('Participate')}}</a></p>
+      {% endif%}
+      <p id="participate_button" {% if not user.is_authenticated %}class="login_participate_button"{% endif %}>
+        <a href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a>
+      </p>
     {% endif %}
     <br>
     <div id="project-description">
