@@ -606,7 +606,7 @@ def accept_sign_up(request, slug, comment_id, as_organizer=False):
     participating = project.participants().filter(
         user=answer.author.user).exists()
     can_accept = not (answer.reply_to or organizing or participating)
-    if can_accept or request.method != 'POST':
+    if not can_accept or request.method != 'POST':
         return http.HttpResponseForbidden(_("You can't see this page"))
     participation = Participation(project=project, user=answer.author,
         organizing=as_organizer)
