@@ -18,26 +18,32 @@ from projects import drupal
 log = logging.getLogger(__name__)
 
 
-class CreateProjectForm(forms.ModelForm):
-
-    class Meta:
-        model = Project
-        fields = ('name', 'kind', 'short_description',
-            'long_description', 'not_listed')
-    widgets = {
-        'long_description': CKEditorWidget(config_name='reduced'),
-    }
-
-
 class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'kind', 'short_description',
-            'long_description')
-    widgets = {
-        'long_description': CKEditorWidget(config_name='reduced'),
-    }
+        fields = ('name', 'category', 'other', 'other_description',
+            'short_description', 'long_description')
+        widgets = {
+            'long_description': CKEditorWidget(config_name='reduced'),
+            'category': forms.RadioSelect,
+        }
+
+    def clean_other(self):
+        data = self.cleaned_data
+        other = data.get('other')
+        other_provided = (other and other.strip())
+        if data.get('category') == Project.OTHER and not other_provided:
+            raise forms.ValidationError(_('This field is required.'))
+        return other.strip() if other else other
+
+    def clean(self):
+        super(ProjectForm, self).clean()
+        data = self.cleaned_data
+        if data.get('category') != Project.OTHER:
+            data['other'] = ''
+            data['other_description'] = ''
+        return data
 
 
 class ProjectLinksForm(forms.ModelForm):

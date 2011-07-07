@@ -14,12 +14,6 @@
     {{ form.name }}
     {{ form.name.errors }}
   </div>
-  <div class="field{% if form.kind.errors %} error{% endif %}">
-    <label for="id_kind">{{ _('Kind') }}</label>
-    <span class="hint block">{{ _('Select if you are creating a study group, course, seminar, workshop, working group, ...') }}</span>
-    {{ form.kind }}
-    {{ form.kind.errors }}
-  </div>
   <div class="field{% if form.short_description.errors %} error{% endif %}">
     <label for="id_short_description">{{ _('One sentence description') }}</label>
     <span class="hint block">{{ _('This description will be used on search results and listing pages.') }}</span>
@@ -31,6 +25,21 @@
     <span class="hint block">{{ _('This description is shown on home page of the study group, course, ... It can go into a bit more detail, but it should be brief and to the point.') }}</span>
     {{ form.long_description }}
     {{ form.long_description.errors }}
+  </div>
+  <div class="field{% if form.category.errors %} error{% endif %}">
+    <label for="id_category">{{ _('Kind') }}</label>
+    <span class="hint block">{{ _('Select if you are creating a study group, a course, or other kind of learning project.') }}</span>
+    {{ form.category }}
+    <div class="field term{% if form.other.errors %} error{% endif %}">
+      <label for="id_other">{{ _('Term') }}</label>
+      {{ form.other }}
+      {{ form.other.errors }}
+    </div> -- <div class="field term_desc{% if form.other_description.errors %} error{% endif %}">
+      <label for="id_other_description">{{ _('Description') }}</label>
+      {{ form.other_description }}
+      {{ form.other_description.errors }}
+    </div>
+    {{ form.category.errors }}
   </div>
   <p class="buttons">
     {% if project %}

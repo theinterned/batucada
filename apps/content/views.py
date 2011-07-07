@@ -132,8 +132,14 @@ def create_page(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.is_organizing(request.user):
         form_cls = OwnersPageForm
-    else:
+    elif project.category != Project.COURSE:
         form_cls = PageForm
+    else:
+        messages.error(request, _('You can not create a new task!'))
+        return http.HttpResponseRedirect(project.get_absolute_url())
+    initial = {}
+    if project.category == Project.COURSE:
+        initial['collaborative'] = False
     preview = False
     page = None
     if request.method == 'POST':
@@ -158,7 +164,7 @@ def create_page(request, slug):
         else:
             messages.error(request, _('Please correct errors bellow.'))
     else:
-        form = form_cls()
+        form = form_cls(initial=initial)
     return render_to_response('content/create_page.html', {
         'form': form,
         'project': project,
@@ -638,6 +644,10 @@ def page_index_up(request, slug, counter):
         counter = int(counter)
     except ValueError:
         raise http.Http404
+    organizing = project.is_organizing(request.user)
+    if not organizing and project.category == Project.COURSE:
+        messages.error(request, _('You can not change tasks order.'))
+        return http.HttpResponseRedirect(project.get_absolute_url())
     content_pages = Page.objects.filter(project__pk=project.pk,
         listed=True).order_by('index')
     if counter < 1 or content_pages.count() <= counter:
@@ -659,6 +669,10 @@ def page_index_down(request, slug, counter):
         counter = int(counter)
     except ValueError:
         raise http.Http404
+    organizing = project.is_organizing(request.user)
+    if not organizing and project.category == Project.COURSE:
+        messages.error(request, _('You can not change tasks order.'))
+        return http.HttpResponseRedirect(project.get_absolute_url())
     content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
         deleted=False).order_by('index')
     if counter < 0 or content_pages.count() - 1 <= counter:
@@ -680,6 +694,10 @@ def link_index_up(request, slug, counter):
         counter = int(counter)
     except ValueError:
         raise http.Http404
+    organizing = project.is_organizing(request.user)
+    if not organizing and project.category == Project.COURSE:
+        messages.error(request, _('You can not change links order.'))
+        return http.HttpResponseRedirect(project.get_absolute_url())
     links = Link.objects.filter(project__pk=project.pk).order_by('index')
     if counter < 1 or links.count() <= counter:
         raise http.Http404
@@ -700,6 +718,10 @@ def link_index_down(request, slug, counter):
         counter = int(counter)
     except ValueError:
         raise http.Http404
+    organizing = project.is_organizing(request.user)
+    if not organizing and project.category == Project.COURSE:
+        messages.error(request, _('You can not change links order.'))
+        return http.HttpResponseRedirect(project.get_absolute_url())
     links = Link.objects.filter(project__pk=project.pk).order_by('index')
     if counter < 0 or links.count() - 1 <= counter:
         raise http.Http404

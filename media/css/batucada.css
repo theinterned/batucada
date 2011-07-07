@@ -1577,12 +1577,28 @@ header {}
 			vertical-align: middle;
 			padding-right: 35px;
 		}
-	    .modal .link, .modal .participants .field, .modal .organizers .field {
+	    .modal .link, .modal .participants .field, .modal .organizers .field,
+        .modal .project.edit.summary .term.field,
+        .modal .project.edit.summary .term_desc.field {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 30px;
 			vertical-align: middle;
 		}
+        .modal .project.edit.summary .term.field {
+            margin-left: 40px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .modal .project.edit.summary .term_desc.field {
+			width: 260px;
+            margin-top: 5px;
+            margin-left: 5px;
+            margin-bottom: 10px;
+		}
+        .modal .project.edit.summary .term label, .modal .project.edit.summary .term_desc label {
+            padding-left: 2px;
+        }
 		.modal .link.url {
 			width: 178px;
 			padding: 0;
@@ -1595,11 +1611,15 @@ header {}
         }
         
 		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text],
-        .modal .declined_groups input[type=text], .modal .organizers input[type=text], .modal .member_groups input[type=text] {
+        .modal .declined_groups input[type=text], .modal .organizers input[type=text], .modal .member_groups input[type=text],
+        .modal .project.edit.summary .term input[type=text] {
 			width: 154px;
 		}
-		
-        
+
+        .modal .project.edit.summary .term_desc input[type=text] {
+			width: 100%;
+		}
+
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
@@ -2293,6 +2313,10 @@ div.warning h2 {
 #sign_up_comment .errorlist, #comment .errorlist {
 	right: -170px;
 	top: 50px;
+}
+
+.project.edit.summary .term .errorlist {
+    left: 45em;
 }
 
 .start_date .errorlist, 

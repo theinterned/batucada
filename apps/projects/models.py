@@ -82,7 +82,25 @@ class Project(ModelBase):
     object_type = object_types['group']
 
     name = models.CharField(max_length=100)
-    kind = models.CharField(max_length=30, default=_('Study Group'))
+
+    # Select kind of project (study group, course, or other)
+    STUDY_GROUP = 'study group'
+    COURSE = 'course'
+    OTHER = 'other'
+    CATEGORY_CHOICES = (
+        (STUDY_GROUP, _('Study Group -- group of people working ' \
+                        'collaboratively to acquire and share knowledge.')),
+        (COURSE, _('Course -- led by one or more organizers with skills on ' \
+                   'a field who direct and help participants during their ' \
+                   'learning.')),
+        (OTHER, _('Other -- if other, please fill out and describe the ' \
+                  'term you will use to categorize it.'))
+    )
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
+        default=STUDY_GROUP, null=True, blank=False)
+    other = models.CharField(max_length=30, blank=True, null=True)
+    other_description = models.CharField(max_length=150, blank=True, null=True)
+
     short_description = models.CharField(max_length=150)
     long_description = models.TextField(validators=[MaxLengthValidator(700)])
 
@@ -133,6 +151,13 @@ class Project(ModelBase):
     def friendly_verb(self, verb):
         if verbs['post'] == verb:
             return _('created')
+
+    @property
+    def kind(self):
+        if self.category == Project.OTHER:
+            return self.other.lower()
+        else:
+            return self.category.lower()
 
     def followers(self):
         return Relationship.objects.filter(deleted=False,
