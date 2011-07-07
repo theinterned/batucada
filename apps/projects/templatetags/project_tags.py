@@ -56,6 +56,11 @@ def sidebar(context, max_people_count=64):
     imported_from = None
     if project.imported_from:
         imported_from = drupal.get_course(project.imported_from)
+
+    can_add_task = is_organizing
+    if project.category != Project.COURSE:
+        can_add_task = is_participating
+    can_change_order = can_add_task
     context.update({
         'participating': is_participating,
         'participants_count': participants_count,
@@ -73,6 +78,8 @@ def sidebar(context, max_people_count=64):
         'sidebar_organizers': sidebar_organizers,
         'sidebar_participants': sidebar_participants,
         'sidebar_followers': sidebar_followers,
+        'can_add_task': can_add_task,
+        'can_change_order': can_change_order,
     })
     return context
 

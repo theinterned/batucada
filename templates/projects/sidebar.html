@@ -172,7 +172,7 @@
 	<li>	
 	    <a class="taskLink" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
 	    
-            {% if participating %}
+            {% if can_change_order %}
 	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url page_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
 	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url page_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
             {% endif %}
@@ -185,7 +185,7 @@
     {{ _('No tasks have been added.') }}
         <br>
   {% endif %}
-  {% if participating %}
+  {% if can_add_task %}
     <br>
     <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
   {% endif %}
@@ -201,7 +201,7 @@
         {% for link in links %}
           <li><a class="externalLink" href="{{ link.url }}">{{ link.name }}</a>
           
-            {% if participating %}
+            {% if can_change_order %}
                 {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
                 {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
             {% endif %}

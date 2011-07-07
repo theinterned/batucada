@@ -72,7 +72,7 @@ def list_all(request, page=1):
 def create(request):
     user = request.user.get_profile()
     if request.method == 'POST':
-        form = project_forms.CreateProjectForm(request.POST)
+        form = project_forms.ProjectForm(request.POST)
         if form.is_valid():
             project = form.save()
             act = Activity(actor=user,
@@ -93,6 +93,8 @@ def create(request):
             detailed_description = Page(title=_('Full Description'),
                 slug='full-description', content=detailed_description_content,
                 listed=False, author_id=user.id, project_id=project.id)
+            if project.category == Project.COURSE:
+                detailed_description.collaborative = False
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
             sign_up_content = render_to_string(
@@ -112,7 +114,7 @@ def create(request):
             msg = _("Problem creating the study group, course, ...")
             messages.error(request, msg)
     else:
-        form = project_forms.CreateProjectForm()
+        form = project_forms.ProjectForm()
     return render_to_response('projects/project_edit_summary.html', {
         'form': form, 'new_tab': True,
     }, context_instance=RequestContext(request))
