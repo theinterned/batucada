@@ -53,7 +53,9 @@ def link_delete_handler(sender, **kwargs):
     if not isinstance(link, Link):
         return
 
-    if not link.subscription:
+    try:
+        subscribed = (not link.subscription)
+    except Subscription.DoesNotExist:
         return
 
     tasks.UnsubscribeFromFeed.apply_async(args=(link,))
