@@ -9,21 +9,6 @@ from drumbeat.templatetags.truncate_chars import truncate_chars
 from activity import schema
 
 
-class RemoteObject(models.Model):
-    """Represents an object originating from another system."""
-    object_type = models.URLField(verify_exists=False)
-    link = models.ForeignKey('links.Link')
-    title = models.CharField(max_length=255)
-    uri = models.URLField(null=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-
-    def __unicode__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return self.uri
-
-
 class ActivityManager(ManagerBase):
 
     def public(self):
@@ -116,3 +101,22 @@ class Activity(ModelBase):
             return (profile == self.actor)
         else:
             return False
+
+
+class RemoteObject(models.Model):
+    """Represents an object originating from another system."""
+    object_type = models.URLField(verify_exists=False)
+    link = models.ForeignKey('links.Link')
+    title = models.CharField(max_length=255)
+    uri = models.URLField(null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    activity = generic.GenericRelation(Activity,
+        content_type_field='target_content_type',
+        object_id_field='target_id')
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return self.uri
