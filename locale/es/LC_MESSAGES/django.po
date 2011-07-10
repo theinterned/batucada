@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 23:47-0400\n"
+"POT-Creation-Date: 2011-07-10 01:11-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,19 +183,20 @@ msgid "You can't see this page"
 msgstr "Usted no puede ver esta página"
 
 #: apps/content/views.py:476
-#, fuzzy, python-format
+#, python-format
 msgid "You already joined this %s."
-msgstr "Usted no está organizando este %s"
+msgstr "Usted ya se unió a este %s."
 
 #: apps/content/views.py:479
 #, python-format
 msgid "Sign-up is currently closed. You can clone the %s if is full."
 msgstr ""
+"La inscripción esta cerrada en estos momentos. Usted puede clonar el %s si "
+"está lleno."
 
 #: apps/content/views.py:486
-#, fuzzy
 msgid "You already posted an answer to the signup questions."
-msgstr " envió una nueva respuesta a la página de inscripción."
+msgstr "Usted ya envió una respuesta en la página de inscripción."
 
 #: apps/content/views.py:522
 msgid "Reply posted!"
@@ -1633,16 +1634,16 @@ msgid "Start Your Own"
 msgstr "Inicie el Suyo Propio"
 
 #: templates/dashboard/splash.html:22
-#, fuzzy
 msgid ""
 "<em class=\"highlight3\">Learn</em> anything<br>with your <em class="
 "\"highlight2\">peers</em>.<br><span class=\"sub\">It's <em class="
 "\"highlight2\">online</em> and totally <em class=\"highlight3\">free</em></"
 "span>."
 msgstr ""
-"<div style='font-size=50'>Somos una comunidad<br><em class=\"highlight1\">en "
-"línea</em> que <em class=\"highlight2\">posibilita<br> el aprendizaje</em>, "
-"&nbsp;&nbsp;<em class=\"highlight3\" align=\"right\">así que</em></div>"
+"<em class=\"highlight3\">Aprenda</em> cualquier cosa<br>con sus <em class="
+"\"highlight2\">colegas</em>.<br><span class=\"sub\">Es <em class="
+"\"highlight2\">en línea</em> y totalmente <em class=\"highlight3\">gratis</"
+"em></span>."
 
 #: templates/dashboard/splash.html:24
 msgid "At"
@@ -1653,8 +1654,8 @@ msgid ""
 "people work together to learn a particular topic by completing tasks, "
 "assessing individual and group work, and providing constructive feedback."
 msgstr ""
-"la gente trabaja unida para aprender sobre un tema particular completar "
-"tareas, evaluar el trabajo individual y colectivo y brindar "
+"la gente trabaja unida para aprender sobre un tema particular completando "
+"tareas, evaluando el trabajo individual y colectivo y brindando "
 "retroalimentación constructiva."
 
 #: templates/dashboard/splash.html:37 templates/projects/_project_list.html:5
@@ -3269,41 +3270,3 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
-
-#~ msgid "There exists already an answer"
-#~ msgstr "Ya hay una respuesta"
-
-#~ msgid "There was a problem saving %s."
-#~ msgstr "Ocurrió un problema al guardar %s."
-
-#~ msgid "There was a problem creating the task."
-#~ msgstr "Ocurrió un problema al crear la tarea."
-
-#~ msgid "There was a problem posting the comment. Comments cannot be empty."
-#~ msgstr ""
-#~ "Ocurrió un problema al publicar el comentario.  Los comentarios no pueden "
-#~ "ser vacíos."
-
-#~ msgid "There was a problem saving the comment."
-#~ msgstr "Ocurrió un problema al guardar el comentario."
-
-#~ msgid "There was a problem posting your reply. Reply cannot be empty. "
-#~ msgstr ""
-#~ "Ocurrió un problema al publicar su respuesta. La respuesta no puede ser "
-#~ "vacía."
-
-#~ msgid "There was a problem submitting your answer. Answer cannot be empty. "
-#~ msgstr ""
-#~ "Ocurrió un problema al enviar su respuesta.  La respuesta no puede ser "
-#~ "vacía. "
-
-#~ msgid ""
-#~ "There was a problem updating your comment. Comments cannot be empty. "
-#~ msgstr ""
-#~ "Ocurrió un problema al actualizar su comentario.  Los comentarios no "
-#~ "pueden ser vacíos. "
-
-#~ msgid "There was a problem updating your answer. Answers cannot be empty. "
-#~ msgstr ""
-#~ "Ocurrió un problema al actualizar su respuesta. Las respuestas no pueden "
-#~ "ser vacías."

@@ -1,11 +1,15 @@
 
 
 #splash #content header h1{
-  font-size: 50px;
+  font-size: 48px;
 }
 
 #intro-links a {
   font-size: 36px;
+}
+
+#intro-links a.big-run-course {
+  padding-left: 33px;
 }
 
 #user-nav a.top-level, #main-nav a.top-level {
