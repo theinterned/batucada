@@ -9,9 +9,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language, ugettext
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
 
 from drumbeat.models import ModelBase
-from activity.models import Activity
+from activity.models import Activity, register_filter
 from activity.schema import verbs
 from preferences.models import AccountPreferences
 from users.tasks import SendUserEmail
@@ -59,6 +60,13 @@ class Relationship(ModelBase):
             raise ValidationError(
                 _('Cannot create self referencing relationship.'))
         super(Relationship, self).save(*args, **kwargs)
+
+    @staticmethod
+    def filter_activities(activities):
+        ct = ContentType.objects.get_for_model(Relationship)
+        return activities.filter(target_content_type=ct)
+
+register_filter('people', Relationship.filter_activities)
 
 
 ###########

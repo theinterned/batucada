@@ -11,7 +11,7 @@ from django.utils.translation import activate, get_language
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from activity.models import Activity
+from activity.models import Activity, register_filter
 from activity.schema import object_types, verbs
 from drumbeat.models import ModelBase
 from users.tasks import SendUserEmail
@@ -71,6 +71,13 @@ class Status(ModelBase):
                 pl = participation.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
                     (participation.user, subject[pl], body[pl]))
+
+    @staticmethod
+    def filter_activities(activities):
+        ct = ContentType.objects.get_for_model(Status)
+        return activities.filter(target_content_type=ct)
+
+register_filter('messages', Status.filter_activities)
 
 
 ###########

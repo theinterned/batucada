@@ -18,6 +18,7 @@ from projects.models import Project
 from news.models import FeedEntry
 from drumbeat import messages
 from schools.models import School
+from activity.views import filter_activities
 
 
 def splash(request):
@@ -76,7 +77,7 @@ def dashboard(request, page=1):
 
     activities = Activity.objects.dashboard(
         request.user.get_profile()).filter(reply_to__isnull=True)
-
+    activities = filter_activities(request, activities)
     paginator = Paginator(activities, 25)
     try:
         current_page = paginator.page(page)
@@ -95,4 +96,5 @@ def dashboard(request, page=1):
         'num_pages': paginator.num_pages,
         'page': current_page,
         'domain': Site.objects.get_current().domain,
+        'dashboard_url': reverse('dashboard'),
     }, context_instance=RequestContext(request))

@@ -20,7 +20,7 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
-from activity.models import Activity, RemoteObject
+from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
 
@@ -291,6 +291,20 @@ class Project(ModelBase):
         if school and school.declined.filter(id=self.id).exists():
             school = None
         return school
+
+    @staticmethod
+    def filter_activities(activities):
+        from content.models import Page, PageComment
+        from statuses.models import Status
+        content_types = [
+            ContentType.objects.get_for_model(Page),
+            ContentType.objects.get_for_model(PageComment),
+            ContentType.objects.get_for_model(Status),
+            ContentType.objects.get_for_model(Project),
+        ]
+        return activities.filter(target_content_type__in=content_types)
+
+register_filter('default', Project.filter_activities)
 
 
 class Participation(ModelBase):

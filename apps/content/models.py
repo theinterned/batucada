@@ -11,9 +11,10 @@ from django.utils.translation import activate, get_language, ugettext
 from django.db.models import Max
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
 
 from drumbeat.models import ModelBase
-from activity.models import Activity
+from activity.models import Activity, register_filter
 from activity.schema import verbs, object_types
 from users.tasks import SendUserEmail
 
@@ -228,6 +229,14 @@ def send_content_notification(instance, is_comment):
             pl = participation.user.preflang or settings.LANGUAGE_CODE
             SendUserEmail.apply_async(
                     (participation.user, subject[pl], body[pl]))
+
+
+def filter_activities(activities):
+    pages_ct = ContentType.objects.get_for_model(Page)
+    comments_ct = ContentType.objects.get_for_model(PageComment)
+    return activities.filter(target_content_type__in=[pages_ct, comments_ct])
+
+register_filter('learning', filter_activities)
 
 
 ###########
