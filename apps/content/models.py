@@ -83,6 +83,9 @@ class Page(ModelBase):
             return self.project.is_participating(user)
         return False
 
+    def can_comment(self, user):
+        return self.project.is_participating(user)
+
 
 class PageVersion(ModelBase):
 

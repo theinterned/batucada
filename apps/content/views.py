@@ -48,6 +48,7 @@ def show_page(request, slug, page_slug, pagination_page=1):
         'page': page,
         'project': page.project,
         'can_edit': can_edit,
+        'can_comment': page.can_comment(request.user),
         'first_level_comments': first_level_comments,
         'paginator': paginator,
         'page_num': pagination_page,
