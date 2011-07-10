@@ -28,6 +28,7 @@ from content.models import Page
 from schools.models import School
 from statuses import forms as statuses_forms
 from activity.models import Activity
+from activity.views import filter_activities
 from activity.schema import verbs
 
 from drumbeat import messages
@@ -153,6 +154,7 @@ def show(request, slug, page=1):
         form = None
 
     activities = project.activities().filter(reply_to__isnull=True)
+    activities = filter_activities(request, activities)
     paginator = Paginator(activities, 10)
     try:
         current_page = paginator.page(page)

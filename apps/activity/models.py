@@ -11,6 +11,15 @@ from activity import schema
 from l10n.urlresolvers import reverse
 
 
+FILTERS = {
+    'all': lambda activities: activities,
+}
+
+
+def register_filter(name, filter_func):
+    FILTERS[name] = filter_func
+
+
 class ActivityManager(ManagerBase):
 
     def public(self):
@@ -135,3 +144,10 @@ class RemoteObject(models.Model):
 
     def get_absolute_url(self):
         return self.uri
+
+    @staticmethod
+    def filter_activities(activities):
+        ct = ContentType.objects.get_for_model(RemoteObject)
+        return activities.filter(target_content_type=ct)
+
+register_filter('subscriptions', RemoteObject.filter_activities)

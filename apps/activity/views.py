@@ -7,13 +7,25 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.contenttypes.models import ContentType
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
 from statuses.forms import StatusForm
 
-from activity.models import Activity
+from activity.models import Activity, FILTERS
+
+
+def filter_activities(request, activities, default=None):
+    if 'activities_filter' in request.GET:
+        filter_name = request.GET['activities_filter']
+        if filter_name in FILTERS:
+            return FILTERS[filter_name](activities)
+    if 'default' in FILTERS:
+        return FILTERS['default'](activities)
+    else:
+        return activities
 
 
 def index(request, activity_id, page=1):

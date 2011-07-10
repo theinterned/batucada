@@ -1182,8 +1182,8 @@ header {}
 		behavior: url("/media/css/PIE.htc");
 	}
 	#main .post-tags li a:hover,
-	.tags li a:hover{
-		background-color: #DFEFFB;
+	.tags li a:hover, #main .post-tags li a.active-post-tag {
+		background-color:#DFEFFB;
 		border-color: #b7d1e5;
 		color: #2084CA;
 		/*text-shadow: -1px -1px 0 rgba(0,0,0,0.2);*/
@@ -1208,10 +1208,9 @@ header {}
       color: #d00;
     }
     #main .post-tags {
-      margin: 0 0 -5px;
-      padding: 0;
+      padding-right: 10px;
       list-style: none;
-      float: left;     
+      float: right;
     }
     .tags {
 		list-style: none;

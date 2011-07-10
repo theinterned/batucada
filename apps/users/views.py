@@ -32,6 +32,7 @@ from users import drupal
 from links.models import Link
 from drumbeat import messages
 from activity.models import Activity
+from activity.views import filter_activities
 
 log = logging.getLogger(__name__)
 
@@ -353,6 +354,7 @@ def profile_view(request, username, page=1):
 
     activities = Activity.objects.for_user(profile).filter(
         reply_to__isnull=True)
+    activities = filter_activities(request, activities)
     paginator = Paginator(activities, 25)
     try:
         current_page = paginator.page(page)

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load user_tags %}
+{% load activity_tags %}
 
 {% block title %}{{ profile.username }}{% endblock %}
 
@@ -28,6 +29,7 @@
 {% user_sidebar %}
 
 <div id="main">
+  {% activity_filters request profile.get_absolute_url %}
   <ul id="posts">
     {% for activity in page.object_list %}
     {% include "activity/_activity_resource.html" %}
@@ -36,12 +38,12 @@
 
   <div class="pagination">
     {% if page.has_previous %}
-      <a class="btn" href="{% locale_url users_profile_view username=profile.username page=prev_page %}">← {{ _('previous') }}</a>
+      <a class="btn" href="{% locale_url users_profile_view username=profile.username page=prev_page %}{% if query_string %}?{{ query_string }}{% endif %}">← {{ _('previous') }}</a>
     {% else %}
       <span class="btn">← {{ _('previous') }}</span>
     {% endif %}
     {% if page.has_next %}
-      <a class="btn" href="{% locale_url users_profile_view username=profile.username page=next_page %}">{{ _('next') }} →</a>
+      <a class="btn" href="{% locale_url users_profile_view username=profile.username page=next_page %}{% if query_string %}?{{ query_string }}{% endif %}">{{ _('next') }} →</a>
     {% else %}
       <span class="btn">{{_('next')}} →</span>
     {% endif %}
