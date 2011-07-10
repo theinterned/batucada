@@ -96,6 +96,7 @@
 				<li><a href="{% locale_url dashboard %}" class="sub-level">{{ _('Dashboard') }}</a></li>
 				<li><a href="{{ user.get_profile.get_absolute_url }}" class="sub-level">{{ _('View Profile') }}</a></li>
 				<li><a href="{% locale_url users_profile_edit %}" class="sub-level">{{ _('Edit Profile') }}</a></li>
+                <li><a href="{% locale_url chat %}" class="sub-level" target="_blank">{{ _('Chat') }}</a></li>
 				<li><a href="{% locale_url drumbeatmail_inbox %}" class="sub-level">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>
 				<li><a href="{% locale_url users_logout %}" class="sub-level">{{ _('Logout') }}</a></li>
 		      </ul>
