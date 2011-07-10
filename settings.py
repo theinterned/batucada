@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'wellknown',
     'users',
     'search',
+    'chat',
     'l10n',
     'dashboard',
     'relationships',
