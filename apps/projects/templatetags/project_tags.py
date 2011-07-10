@@ -61,6 +61,8 @@ def sidebar(context, max_people_count=64):
     if project.category != Project.COURSE:
         can_add_task = is_participating
     can_change_order = can_add_task
+
+    chat = '#p2pu-%s-%s' % (project.id, project.slug[:10])
     context.update({
         'participating': is_participating,
         'participants_count': participants_count,
@@ -80,6 +82,7 @@ def sidebar(context, max_people_count=64):
         'sidebar_followers': sidebar_followers,
         'can_add_task': can_add_task,
         'can_change_order': can_change_order,
+        'chat': chat,
     })
     return context
 
