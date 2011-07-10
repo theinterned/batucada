@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-07 15:01-0400\n"
+"POT-Creation-Date: 2011-07-09 23:47-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,11 +25,11 @@ msgstr "Bitácora de actividades de %s"
 msgid "Activity feed from %s's dashboard"
 msgstr "Bitácora de actividades que %s está siguiendo"
 
-#: apps/activity/models.py:84
+#: apps/activity/models.py:69
 msgid "activities"
 msgstr "actividades"
 
-#: apps/activity/models.py:93
+#: apps/activity/models.py:78
 #, python-format
 msgid "%(actor)s %(verb)s %(target)s"
 msgstr "%(actor)s %(verb)s %(target)s"
@@ -126,8 +126,8 @@ msgstr "¡%s actualizado!"
 
 #: apps/content/views.py:118 apps/content/views.py:165
 #: apps/content/views.py:236 apps/content/views.py:273
-#: apps/content/views.py:385 apps/content/views.py:523
-#: apps/content/views.py:587
+#: apps/content/views.py:385 apps/content/views.py:528
+#: apps/content/views.py:592
 msgid "Please correct errors bellow."
 msgstr "Por favor corrija los errores mostrados a continuación."
 
@@ -148,11 +148,11 @@ msgstr "¡%s eliminada!"
 msgid "Comment posted!"
 msgstr "¡Comentario publicado!"
 
-#: apps/content/views.py:270 apps/content/views.py:581
+#: apps/content/views.py:270 apps/content/views.py:586
 msgid "Comment updated!"
 msgstr "¡Comentario actualizado!"
 
-#: apps/content/views.py:291 apps/content/views.py:547
+#: apps/content/views.py:291 apps/content/views.py:552
 msgid "You can't edit this comment"
 msgstr "Usted no puede editar este comentario"
 
@@ -178,39 +178,50 @@ msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
 #: apps/content/views.py:472 apps/content/views.py:474
-#: apps/content/views.py:476 apps/content/views.py:616
+#: apps/content/views.py:621
 msgid "You can't see this page"
 msgstr "Usted no puede ver esta página"
 
-#: apps/content/views.py:482
-msgid "There exists already an answer"
-msgstr "Ya hay una respuesta"
+#: apps/content/views.py:476
+#, fuzzy, python-format
+msgid "You already joined this %s."
+msgstr "Usted no está organizando este %s"
 
-#: apps/content/views.py:517
+#: apps/content/views.py:479
+#, python-format
+msgid "Sign-up is currently closed. You can clone the %s if is full."
+msgstr ""
+
+#: apps/content/views.py:486
+#, fuzzy
+msgid "You already posted an answer to the signup questions."
+msgstr " envió una nueva respuesta a la página de inscripción."
+
+#: apps/content/views.py:522
 msgid "Reply posted!"
 msgstr "¡Respuesta publicada!"
 
-#: apps/content/views.py:519
+#: apps/content/views.py:524
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/content/views.py:583
+#: apps/content/views.py:588
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/content/views.py:632
+#: apps/content/views.py:637
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/content/views.py:634
+#: apps/content/views.py:639
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/content/views.py:649 apps/content/views.py:674
+#: apps/content/views.py:654 apps/content/views.py:679
 msgid "You can not change tasks order."
 msgstr "Usted no puede modificar el orden de las tareas."
 
-#: apps/content/views.py:699 apps/content/views.py:723
+#: apps/content/views.py:704 apps/content/views.py:728
 msgid "You can not change links order."
 msgstr "Usted no puede modificar el orden de los enlaces."
 
@@ -816,160 +827,6 @@ msgstr "Enlace actualizado"
 msgid "The link was deleted."
 msgstr "El enlace fue eliminado."
 
-#: t/create_page.html:4 t/create_page.html.py:14
-#: templates/content/create_page.html:6 templates/content/create_page.html:16
-msgid "Create Task"
-msgstr "Crear Tarea"
-
-#: t/create_page.html:10 t/edit_page.html:10
-#: templates/content/comment_page.html:11
-#: templates/content/comment_sign_up.html:11
-#: templates/content/confirm_delete_page.html:11
-#: templates/content/create_page.html:12
-#: templates/content/delete_restore_comment.html:11
-#: templates/content/edit_page.html:12 templates/content/history_page.html:13
-#: templates/content/page.html:13 templates/content/restore_version.html:11
-#: templates/content/version_page.html:13
-#: templates/projects/project_task_list.html:9
-msgid "Task List"
-msgstr "Lista de Tareas"
-
-#: t/create_page.html:18 t/edit_page.html:26
-#: templates/content/create_page.html:28 templates/content/edit_page.html:28
-msgid ""
-"Constructing a good task is crucial to the peer learning process. Tasks "
-"should have a clear goal in mind and should be sequential throughout the "
-"learning process. A task can be as big or as small and last as long as you "
-"like - it can be a planned discussion for one day, a piece of writing "
-"constructed over a week, a project that lasts for a few weeks, or a month-"
-"long endeavour that everyone works on."
-msgstr ""
-"Construir una buena tarea es crucial para el proceso de aprendizaje. La "
-"tarea debe tener una meta clara y ser secuencial durante el proceso de "
-"aprendizaje.  Una tarea puede ser grande o pequeña y durar tanto como usted "
-"desee - puede ser una discusión planeada para un día, un documento escrito "
-"preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
-"una empresa en la que todos trabajen durante un mes."
-
-#: t/create_page.html:21 t/create_page.html.py:42 t/edit_page.html:41
-#: templates/content/base_page_form.html:42
-msgid "Preview"
-msgstr "Vista Previa"
-
-#: t/create_page.html:38 t/edit_page.html:37
-#: templates/activity/delete_restore.html:27
-#: templates/content/comment_page.html:89
-#: templates/content/comment_sign_up.html:118
-#: templates/content/confirm_delete_page.html:27
-#: templates/content/create_page.html:37
-#: templates/content/delete_restore_comment.html:57
-#: templates/content/edit_page.html:46
-#: templates/content/restore_version.html:39
-#: templates/dashboard/dashboard.html:78
-#: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
-#: templates/projects/contact_organizers.html:34
-#: templates/projects/project.html:60 templates/projects/project_clone.html:21
-#: templates/projects/project_edit_image.html:24
-#: templates/projects/project_edit_status.html:60
-#: templates/projects/project_edit_summary.html:37
-#: templates/projects/project_edit_summary.html:40
-#: templates/projects/project_import.html:21
-#: templates/schools/school_edit_background.html:23
-#: templates/schools/school_edit_groups_icon.html:23
-#: templates/schools/school_edit_logo.html:23
-#: templates/schools/school_edit_site_logo.html:23
-#: templates/schools/school_edit_styles.html:73
-#: templates/schools/school_edit_summary.html:22
-#: templates/users/profile_edit_main.html:25
-#: templates/users/settings_delete.html:25
-#: templates/users/settings_email.html:18
-#: templates/users/settings_notifications.html:45
-#: templates/users/settings_password.html:27
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: t/create_page.html:40 templates/content/create_page.html:39
-#: templates/projects/directory.html:21 templates/projects/gallery.html:17
-#: templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:40
-#: templates/projects/project_edit_summary.html:41
-#: templates/projects/project_import.html:22
-msgid "Create"
-msgstr "Crear"
-
-#: t/edit_page.html:17 templates/content/edit_page.html:19
-#: templates/content/page.html:20 templates/content/page.html.py:62
-#: templates/content/page.html:90 templates/content/sign_up.html:51
-#: templates/content/sign_up.html.py:93 templates/projects/project_edit.html:6
-#: templates/projects/project_edit.html:37
-#: templates/projects/project_edit_links.html:35
-#: templates/projects/sidebar.html:47
-#: templates/users/profile_edit_links.html:56
-msgid "Edit"
-msgstr "Editar"
-
-#: t/edit_page.html:33 templates/content/edit_page.html:42
-msgid "Minor update (not posted to the wall)."
-msgstr "Actualización menor (no se publica en el muro)."
-
-#: t/edit_page.html:39 templates/content/comment_page.html:92
-#: templates/content/comment_sign_up.html:121
-#: templates/content/edit_page.html:48
-#: templates/dashboard/setup_profile.html:9
-#: templates/projects/project_edit_status.html:61
-#: templates/projects/project_edit_summary.html:38
-#: templates/schools/school_edit_styles.html:74
-#: templates/schools/school_edit_summary.html:23
-#: templates/users/profile_edit_main.html:26
-#: templates/users/settings_email.html:19
-#: templates/users/settings_notifications.html:46
-#: templates/users/settings_password.html:28
-msgid "Save"
-msgstr "Guardar"
-
-#: t/views.py:108 t/views.py:330
-#, python-format
-msgid "There was a problem saving %s."
-msgstr "Ocurrió un problema al guardar %s."
-
-#: t/views.py:147
-msgid "There was a problem creating the task."
-msgstr "Ocurrió un problema al crear la tarea."
-
-#: t/views.py:210
-msgid "There was a problem posting the comment. Comments cannot be empty."
-msgstr ""
-"Ocurrió un problema al publicar el comentario.  Los comentarios no pueden "
-"ser vacíos."
-
-#: t/views.py:235
-msgid "There was a problem saving the comment."
-msgstr "Ocurrió un problema al guardar el comentario."
-
-#: t/views.py:443
-msgid "There was a problem posting your reply. Reply cannot be empty. "
-msgstr ""
-"Ocurrió un problema al publicar su respuesta. La respuesta no puede ser "
-"vacía."
-
-#: t/views.py:444
-msgid "There was a problem submitting your answer. Answer cannot be empty. "
-msgstr ""
-"Ocurrió un problema al enviar su respuesta.  La respuesta no puede ser "
-"vacía. "
-
-#: t/views.py:487
-msgid "There was a problem updating your comment. Comments cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar su comentario.  Los comentarios no pueden "
-"ser vacíos. "
-
-#: t/views.py:488
-msgid "There was a problem updating your answer. Answers cannot be empty. "
-msgstr ""
-"Ocurrió un problema al actualizar su respuesta. Las respuestas no pueden ser "
-"vacías."
-
 #: templates/404.html:6
 msgid "Page not found"
 msgstr "Página no encontrada"
@@ -1138,7 +995,7 @@ msgstr "Aprender"
 #: templates/base.html:63 templates/activity/base.html:20
 #: templates/projects/project_user_list.html:7
 #: templates/projects/project_user_list.html:12
-#: templates/projects/sidebar.html:131 templates/users/profile.html:16
+#: templates/projects/sidebar.html:129 templates/users/profile.html:16
 #: templates/users/profile_edit.html:11 templates/users/user_list.html:5
 #: templates/users/user_list.html.py:10
 msgid "People"
@@ -1212,7 +1069,7 @@ msgstr "js/script-es.js"
 #: templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
-#: templates/projects/sidebar.html:51 templates/users/profile.html:93
+#: templates/projects/sidebar.html:49 templates/users/profile.html:93
 msgid "Report Abuse"
 msgstr "Reportar Abuso"
 
@@ -1322,6 +1179,22 @@ msgstr "Un buen título es corto y descriptivo."
 #: templates/content/base_page_form.html:36
 msgid "Collaborative work (editable by all the participants)."
 msgstr "Trabajo colaborativo (editable por todos los participantes)."
+
+#: templates/content/base_page_form.html:42
+msgid "Preview"
+msgstr "Vista Previa"
+
+#: templates/content/comment_page.html:11
+#: templates/content/comment_sign_up.html:11
+#: templates/content/confirm_delete_page.html:11
+#: templates/content/create_page.html:12
+#: templates/content/delete_restore_comment.html:11
+#: templates/content/edit_page.html:12 templates/content/history_page.html:13
+#: templates/content/page.html:13 templates/content/restore_version.html:11
+#: templates/content/version_page.html:13
+#: templates/projects/project_task_list.html:9
+msgid "Task List"
+msgstr "Lista de Tareas"
 
 #: templates/content/comment_page.html:26
 #: templates/content/comment_sign_up.html:25
@@ -1495,6 +1368,21 @@ msgstr "¿Está seguro que desea restaurar este comentario?"
 #: templates/content/delete_restore_comment.html:52
 msgid "Are you sure you want to delete this comment?"
 msgstr "¿Está seguro que desea borrar este comentario?"
+
+#: templates/content/edit_page.html:19 templates/content/page.html:20
+#: templates/content/page.html.py:62 templates/content/page.html:90
+#: templates/content/sign_up.html:51 templates/content/sign_up.html.py:93
+#: templates/projects/project_edit.html:6
+#: templates/projects/project_edit.html:37
+#: templates/projects/project_edit_links.html:35
+#: templates/projects/sidebar.html:45
+#: templates/users/profile_edit_links.html:56
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/content/edit_page.html:42
+msgid "Minor update (not posted to the wall)."
+msgstr "Actualización menor (no se publica en el muro)."
 
 #: templates/content/history_page.html:17
 #: templates/content/history_page.html:23
@@ -1671,7 +1559,7 @@ msgstr "imagén del perfil de %(user)s"
 #: templates/dashboard/dashboard.html:30
 #: templates/projects/_project_card.html:31
 #: templates/projects/project_user_list.html:61
-#: templates/projects/sidebar.html:115 templates/users/_user_card.html:12
+#: templates/projects/sidebar.html:113 templates/users/_user_card.html:12
 #: templates/users/profile.html:99
 msgid "Followers"
 msgstr "Seguidores"
@@ -1744,20 +1632,23 @@ msgstr "Busque Grupos y Cursos"
 msgid "Start Your Own"
 msgstr "Inicie el Suyo Propio"
 
-#: templates/dashboard/splash.html:21
+#: templates/dashboard/splash.html:22
+#, fuzzy
 msgid ""
-"We are an <em class=\"highlight1\">online</em><br>community that<br><em "
-"class=\"highlight2\">enables learning</em>. <em class=\"highlight3\">So</em>"
+"<em class=\"highlight3\">Learn</em> anything<br>with your <em class="
+"\"highlight2\">peers</em>.<br><span class=\"sub\">It's <em class="
+"\"highlight2\">online</em> and totally <em class=\"highlight3\">free</em></"
+"span>."
 msgstr ""
 "<div style='font-size=50'>Somos una comunidad<br><em class=\"highlight1\">en "
 "línea</em> que <em class=\"highlight2\">posibilita<br> el aprendizaje</em>, "
 "&nbsp;&nbsp;<em class=\"highlight3\" align=\"right\">así que</em></div>"
 
-#: templates/dashboard/splash.html:22
+#: templates/dashboard/splash.html:24
 msgid "At"
 msgstr "En"
 
-#: templates/dashboard/splash.html:22
+#: templates/dashboard/splash.html:24
 msgid ""
 "people work together to learn a particular topic by completing tasks, "
 "assessing individual and group work, and providing constructive feedback."
@@ -1766,22 +1657,22 @@ msgstr ""
 "tareas, evaluar el trabajo individual y colectivo y brindar "
 "retroalimentación constructiva."
 
-#: templates/dashboard/splash.html:35 templates/projects/_project_list.html:5
+#: templates/dashboard/splash.html:37 templates/projects/_project_list.html:5
 #: templates/schools/school_edit.html:23
 #: templates/schools/school_edit_featured.html:7
 #: templates/users/user_list.html:30
 msgid "Featured"
 msgstr "Destacado"
 
-#: templates/dashboard/splash.html:45
+#: templates/dashboard/splash.html:47
 msgid "P2PU Blog"
 msgstr "Blog de P2PU"
 
-#: templates/dashboard/splash.html:45
+#: templates/dashboard/splash.html:47
 msgid "Subscribe to the Peer 2 Peer University blog"
 msgstr "Suscribirse al blog de Peer 2 Peer University"
 
-#: templates/dashboard/splash.html:45
+#: templates/dashboard/splash.html:47
 msgid "feed"
 msgstr "alimentador"
 
@@ -1908,7 +1799,7 @@ msgid "delete"
 msgstr "borrar"
 
 #: templates/projects/_project_card.html:23
-#: templates/projects/sidebar.html:103 templates/users/_user_card.html:20
+#: templates/projects/sidebar.html:101 templates/users/_user_card.html:20
 msgid "Updates"
 msgstr "Actualizaciones"
 
@@ -1916,7 +1807,7 @@ msgstr "Actualizaciones"
 #: templates/projects/project_edit.html:48
 #: templates/projects/project_edit_participants.html:7
 #: templates/projects/project_user_list.html:34
-#: templates/projects/sidebar.html:111
+#: templates/projects/sidebar.html:109
 msgid "Participants"
 msgstr "Participantes"
 
@@ -1936,11 +1827,11 @@ msgstr "Popular"
 msgid "New"
 msgstr "Nuevo"
 
-#: templates/projects/_project_list.html:60 templates/projects/sidebar.html:71
+#: templates/projects/_project_list.html:60 templates/projects/sidebar.html:69
 msgid "Under Development"
 msgstr "En Desarrollo"
 
-#: templates/projects/_project_list.html:71 templates/projects/sidebar.html:68
+#: templates/projects/_project_list.html:71 templates/projects/sidebar.html:66
 msgid "Archived"
 msgstr "Archivado"
 
@@ -2036,7 +1927,7 @@ msgstr "Tarea de Inscripción"
 
 #: templates/projects/project.html:21
 #: templates/projects/project_task_list.html:21
-#: templates/projects/sidebar.html:166
+#: templates/projects/sidebar.html:164
 msgid "Tasks"
 msgstr "Tareas"
 
@@ -2333,7 +2224,7 @@ msgid "Active from"
 msgstr "Activo desde el"
 
 #: templates/projects/project_edit_status.html:52
-#: templates/projects/sidebar.html:79
+#: templates/projects/sidebar.html:77
 msgid "to"
 msgstr "hasta el"
 
@@ -2368,7 +2259,7 @@ msgstr ""
 "Puede ser más detallada, pero debe ser breve e ir al grano."
 
 #: templates/projects/project_edit_summary.html:30
-#: templates/projects/sidebar.html:95
+#: templates/projects/sidebar.html:93
 msgid "Kind"
 msgstr "Tipo"
 
@@ -2406,12 +2297,12 @@ msgid "Import"
 msgstr "Importar"
 
 #: templates/projects/project_task_list.html:35
-#: templates/projects/sidebar.html:185
+#: templates/projects/sidebar.html:183
 msgid "No tasks have been added."
 msgstr "Ninguna tarea ha sido añadida."
 
 #: templates/projects/project_user_list.html:22
-#: templates/projects/sidebar.html:107
+#: templates/projects/sidebar.html:105
 msgid "Organizers"
 msgstr "Organizadores"
 
@@ -2423,83 +2314,83 @@ msgstr "Dejar de Seguir"
 msgid "Follow"
 msgstr "Seguir"
 
-#: templates/projects/sidebar.html:28 templates/projects/sidebar.html.py:32
+#: templates/projects/sidebar.html:29
 msgid "Participate"
 msgstr "Participar"
 
-#: templates/projects/sidebar.html:44
+#: templates/projects/sidebar.html:42
 msgid "View Full Description"
 msgstr "Ver Descripción Completa"
 
-#: templates/projects/sidebar.html:74
+#: templates/projects/sidebar.html:72
 msgid "Not Listed"
 msgstr "No Listado"
 
-#: templates/projects/sidebar.html:76
+#: templates/projects/sidebar.html:74
 msgid "DATE_FORMAT"
 msgstr "j N Y"
 
-#: templates/projects/sidebar.html:78
+#: templates/projects/sidebar.html:76
 msgid "Runs"
 msgstr "Activo del"
 
-#: templates/projects/sidebar.html:84 templates/projects/sidebar.html.py:90
+#: templates/projects/sidebar.html:82 templates/projects/sidebar.html.py:88
 msgid "Based on"
 msgstr "Basado en"
 
-#: templates/projects/sidebar.html:99
+#: templates/projects/sidebar.html:97
 msgid "Signup"
 msgstr "Inscripción"
 
-#: templates/projects/sidebar.html:100
+#: templates/projects/sidebar.html:98
 msgid "Closed"
 msgstr "Cerrada"
 
-#: templates/projects/sidebar.html:100
+#: templates/projects/sidebar.html:98
 msgid "Open"
 msgstr "Abierta"
 
-#: templates/projects/sidebar.html:120
+#: templates/projects/sidebar.html:118
 msgid "Pending Applicants"
 msgstr "Aspirantes Pendientes:"
 
-#: templates/projects/sidebar.html:130
+#: templates/projects/sidebar.html:128
 msgid "See All"
 msgstr "Ver Todos"
 
-#: templates/projects/sidebar.html:148
+#: templates/projects/sidebar.html:146
 msgid "Closed Sign-up"
 msgstr "Inscripción Cerrada"
 
-#: templates/projects/sidebar.html:150
+#: templates/projects/sidebar.html:148
 msgid "Sign-up in Progress"
 msgstr "Inscripción en Progreso"
 
-#: templates/projects/sidebar.html:152
+#: templates/projects/sidebar.html:150
 msgid "Your Answer"
 msgstr "Su Respuesta"
 
-#: templates/projects/sidebar.html:157
+#: templates/projects/sidebar.html:155
 msgid "Edit Participants"
 msgstr "Editar Participantes"
 
-#: templates/projects/sidebar.html:159
+#: templates/projects/sidebar.html:157
 msgid "Contact Organizer"
 msgstr "Contactar Organizador"
 
-#: templates/projects/sidebar.html:190
+#: templates/projects/sidebar.html:188
 msgid "New Task"
 msgstr "Nueva Tarea"
 
-#: templates/projects/sidebar.html:196
+#: templates/projects/sidebar.html:194
 msgid "External Links"
 msgstr "Enlaces Externos"
 
-#: templates/projects/sidebar.html:214
+#: templates/projects/sidebar.html:212
 msgid "No external links have been added."
 msgstr "Ningún enlace externo ha sido añadido."
 
-#: templates/projects/sidebar.html:219
+#: templates/projects/sidebar.html:217
 msgid "Edit Links"
 msgstr "Editar Enlaces"
 
@@ -3378,3 +3269,41 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid "There exists already an answer"
+#~ msgstr "Ya hay una respuesta"
+
+#~ msgid "There was a problem saving %s."
+#~ msgstr "Ocurrió un problema al guardar %s."
+
+#~ msgid "There was a problem creating the task."
+#~ msgstr "Ocurrió un problema al crear la tarea."
+
+#~ msgid "There was a problem posting the comment. Comments cannot be empty."
+#~ msgstr ""
+#~ "Ocurrió un problema al publicar el comentario.  Los comentarios no pueden "
+#~ "ser vacíos."
+
+#~ msgid "There was a problem saving the comment."
+#~ msgstr "Ocurrió un problema al guardar el comentario."
+
+#~ msgid "There was a problem posting your reply. Reply cannot be empty. "
+#~ msgstr ""
+#~ "Ocurrió un problema al publicar su respuesta. La respuesta no puede ser "
+#~ "vacía."
+
+#~ msgid "There was a problem submitting your answer. Answer cannot be empty. "
+#~ msgstr ""
+#~ "Ocurrió un problema al enviar su respuesta.  La respuesta no puede ser "
+#~ "vacía. "
+
+#~ msgid ""
+#~ "There was a problem updating your comment. Comments cannot be empty. "
+#~ msgstr ""
+#~ "Ocurrió un problema al actualizar su comentario.  Los comentarios no "
+#~ "pueden ser vacíos. "
+
+#~ msgid "There was a problem updating your answer. Answers cannot be empty. "
+#~ msgstr ""
+#~ "Ocurrió un problema al actualizar su respuesta. Las respuestas no pueden "
+#~ "ser vacías."
