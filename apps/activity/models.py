@@ -3,10 +3,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.utils.html import strip_tags
 
 from drumbeat.models import ModelBase, ManagerBase
 from drumbeat.templatetags.truncate_chars import truncate_chars
 from activity import schema
+from l10n.urlresolvers import reverse
 
 
 class ActivityManager(ManagerBase):
@@ -19,7 +21,7 @@ class ActivityManager(ManagerBase):
         status_ct = ContentType.objects.get_for_model(
             Status)
         return Activity.objects.filter(deleted=False,
-            parent__isnull=True, scope_object__isnull=False,
+            scope_object__isnull=False,
             scope_object__not_listed=False).exclude(
             models.Q(target_content_type=remote_object_ct)
             | models.Q(target_content_type=status_ct)
@@ -34,8 +36,7 @@ class ActivityManager(ManagerBase):
         users_following = user.following()
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
-        return Activity.objects.filter(deleted=False,
-            parent__isnull=True).select_related(
+        return Activity.objects.filter(deleted=False).select_related(
             'actor', 'target_object', 'scope_object').filter(
             models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
           | models.Q(scope_object__in=project_ids)).order_by('-created_on')
@@ -47,7 +48,7 @@ class ActivityManager(ManagerBase):
             actor=user).filter(
             models.Q(scope_object__isnull=True)
             | models.Q(scope_object__not_listed=False)
-        ).exclude(parent__isnull=False).order_by('-created_on')[:25]
+        ).order_by('-created_on')
 
 
 class Activity(ModelBase):
@@ -59,7 +60,9 @@ class Activity(ModelBase):
     target_object = generic.GenericForeignKey('target_content_type',
         'target_id')
     scope_object = models.ForeignKey('projects.Project', null=True)
-    parent = models.ForeignKey('self', null=True, related_name='comments')
+    reply_to = models.ForeignKey('self', null=True, related_name='replies')
+    abs_reply_to = models.ForeignKey('self', null=True,
+        related_name='all_replies')
     created_on = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
 
@@ -68,16 +71,19 @@ class Activity(ModelBase):
     class Meta:
         verbose_name_plural = _('activities')
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('activity_index', (), {
-            'activity_id': self.pk,
-        })
+        if self.abs_reply_to:
+            url = reverse('activity_index',
+                kwargs={'activity_id': self.abs_reply_to.pk})
+            return url + '#%d' % self.id
+        else:
+            return reverse('activity_index',
+                kwargs={'activity_id': self.pk})
 
     def textual_representation(self):
         return _('%(actor)s %(verb)s %(target)s') % dict(
                 actor=self.actor, verb=self.friendly_verb(),
-                target=unicode(self.target_object))
+                target=strip_tags(unicode(self.target_object)))
 
     def friendly_verb(self):
         verb = None
@@ -101,6 +107,15 @@ class Activity(ModelBase):
             return (profile == self.actor)
         else:
             return False
+
+    def can_reply(self, user):
+        if user.is_authenticated():
+            if self.scope_object:
+                return self.scope_object.is_participating(user)
+            else:
+                is_author = (user.get_profile() == self.actor)
+                return is_author or self.actor.is_following(user)
+        return False
 
 
 class RemoteObject(models.Model):
