@@ -1,10 +1,36 @@
 {% extends "activity/base.html" %}
 {% load l10n_tags %}
+{% load user_tags %}
+{% load project_tags %}
 
 {% block body %}
+
+  {% if activity.scope_object %}
+    {% sidebar %}
+  {% else %}
+    {% user_sidebar %}
+  {% endif %}
+
   <div id="main">
     <ul id="posts">
       {% include "activity/_activity_resource.html" %}
+      {% for reply in page.object_list %}
+        {% with activity=reply %}
+          {% include "activity/_activity_resource.html" %}
+        {% endwith %}
+      {% endfor %}
     </ul>
+    <div class="pagination">
+      {% if page.has_previous %}
+        <a class="btn" href="{% locale_url activity_index activity_id=activity.id page=prev_page %}">← {{ _('previous') }}</a>
+      {% else %}
+        <span class="btn">← {{ _('previous') }}</span>
+      {% endif %}
+      {% if page.has_next %}
+        <a class="btn" href="{% locale_url activity_index activity_id=activity.id page=next_page %}">{{ _('next') }} →</a>
+      {% else %}
+        <span class="btn">{{_('next')}} →</span>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

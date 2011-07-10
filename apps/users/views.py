@@ -16,6 +16,7 @@ from django.views.decorators.http import require_http_methods
 from django.forms import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sites.models import Site
+from django.core.paginator import Paginator, EmptyPage
 
 from django_openid_auth import views as openid_views
 from django_openid_auth.models import UserOpenID
@@ -27,8 +28,7 @@ from users import forms
 from users.models import UserProfile, create_profile, ProfileTag
 from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
-from users import drupal, badges
-from projects import drupal as projects_drupal
+from users import drupal
 from links.models import Link
 from drumbeat import messages
 from activity.models import Activity
@@ -345,42 +345,31 @@ def confirm_resend(request, username):
     return http.HttpResponseRedirect(reverse('users_login'))
 
 
-def profile_view(request, username):
+def profile_view(request, username, page=1):
     profile = get_object_or_404(UserProfile, username=username)
     if profile.deleted:
         messages.error(request, _('This user account was deleted.'))
         return http.HttpResponseRedirect(reverse('users_user_list'))
-    current_projects = profile.get_current_projects(only_public=True)
-    following = profile.following()
-    followers = profile.followers()
-    skills = profile.tags.filter(category='skill').exclude(
-        slug='').order_by('name')
-    interests = profile.tags.filter(category='interest').exclude(
-        slug='').order_by('name')
-    desired_topics = profile.tags.exclude(slug='').filter(
-        category='desired_topic').order_by('name')
-    links = Link.objects.filter(user=profile,
-        project__isnull=True).order_by('index')
-    activities = Activity.objects.for_user(profile)
-    past_projects = profile.get_past_projects(only_public=True)
-    past_drupal_courses = projects_drupal.get_past_courses(profile.username)
-    past_involvement_count = len(past_projects) + len(past_drupal_courses)
-    pilot_badges = badges.get_awarded_badges(profile.username)
+
+    activities = Activity.objects.for_user(profile).filter(
+        reply_to__isnull=True)
+    paginator = Paginator(activities, 25)
+    try:
+        current_page = paginator.page(page)
+    except EmptyPage:
+        raise http.Http404
+
     return render_to_response('users/profile.html', {
         'profile': profile,
-        'current_projects': current_projects,
-        'following': following,
-        'followers': followers,
-        'skills': skills,
-        'interests': interests,
-        'desired_topics': desired_topics,
-        'links': links,
+        'profile_view': True,
         'activities': activities,
-        'past_projects': past_projects,
-        'past_drupal_courses': past_drupal_courses,
-        'past_involvement_count': past_involvement_count,
-        'pilot_badges': pilot_badges,
         'domain': Site.objects.get_current().domain,
+        'paginator': paginator,
+        'page_num': page,
+        'next_page': int(page) + 1,
+        'prev_page': int(page) - 1,
+        'num_pages': paginator.num_pages,
+        'page': current_page,
     }, context_instance=RequestContext(request))
 
 

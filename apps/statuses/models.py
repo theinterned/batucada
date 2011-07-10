@@ -9,6 +9,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import activate, get_language
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 from activity.models import Activity
 from activity.schema import object_types, verbs
@@ -22,11 +23,15 @@ class Status(ModelBase):
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
     status = models.TextField()
-    in_reply_to = models.ForeignKey(Activity, related_name='replies',
-                                    null=True, blank=True)
+    reply_to = models.ForeignKey(Activity, related_name='status_replies',
+        null=True, blank=True)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     important = models.BooleanField(default=False)
+
+    activity = generic.GenericRelation(Activity,
+        content_type_field='target_content_type',
+        object_id_field='target_id')
 
     class Meta:
         verbose_name_plural = _('statuses')
@@ -94,8 +99,12 @@ def status_creation_handler(sender, **kwargs):
     )
     if status.project:
         activity.scope_object = status.project
-    if status.in_reply_to:
-        activity.parent = status.in_reply_to
+    if status.reply_to:
+        activity.reply_to = status.reply_to
+        if activity.reply_to.abs_reply_to:
+            activity.abs_reply_to = activity.reply_to.abs_reply_to
+        else:
+            activity.abs_reply_to = activity.reply_to
     activity.save()
     # Send notifications.
     if status.project:

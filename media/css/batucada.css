@@ -1278,7 +1278,7 @@ header {}
     }
     #posts .action,
     .supplemental_actions .action {
-	  display: none;
+      display: block;
       float: right;
       color: #919191;
       text-decoration: none;
@@ -1306,9 +1306,13 @@ header {}
 	    width: 575px;
 	}
 
-    #comment .post-replies, #sign_up_comment .post-replies {
+    #comment .post-replies, #sign_up_comment .post-replies, #activity .post-replies {
        margin-left: 30px;
 	   width: 530px;
+    }
+
+    #posts .post-comments {
+       float: right;
     }
 
     #create_page .preview, #edit_page .preview {
@@ -1320,12 +1324,6 @@ header {}
     #posts .action:hover,
     .supplemental_actions .action:hover {
       color: #777;
-    }
-	#posts .post-container:hover .action{
-		display: block;
-	}
-    #page #posts .post-container .action {
-        display: block;
     }
     #posts .reply-to{
 		background: url("/media/images/reply.icon.png") 0 0 no-repeat;

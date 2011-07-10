@@ -1,13 +1,17 @@
+{% load i18n %}
 {% load l10n_tags %}
 {% load time_since %}
+{% load activity_tags %}
 
-<li class="post-container">
+<li class="post-container {% if activity.reply_to %}post-replies{% endif %}">
+  <a name="{{ activity.id }}"></a>
   {% if user.is_authenticated %}
     {% if user.id != activity.actor.id %}
       <a class="report abuse action" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
     {% else %}
       <a class="action delete" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
     {% endif %}
+    {% activity_reply_action activity user %}
   {% endif %}
   <a href="{{ activity.actor.get_absolute_url }}">
     <img class="member-picture" width="54" height="54" src="{{ activity.actor.image_or_default }}" alt="{{ activity.actor }}">
@@ -17,6 +21,10 @@
 
     <div class="post-details">
       <a class="member-name" href="{{ activity.actor.get_absolute_url }}">{{ activity.actor }}</a>
+      {% if activity.scope_object %}
+        {{ _('at') }}
+        <a class="member-name" href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object.name|slice:":50" }}</a>
+      {% endif %}
     </div>
 
     <div class="post-body">
@@ -24,26 +32,25 @@
     </div> <!-- /.post-body -->
 
     <div class="post-details">
-      <a href="{% locale_url activity_index activity_id=activity.id %}">{{ activity|time_since }}</a>
+      <a href="{{ activity.get_absolute_url }}">{{ activity|time_since }}</a>
       {{ _('via') }}
       {% if activity.target_object.link %}
         <a href="{{ activity.target_object.link.url }}">{{ activity.target_object.link.name }}</a>
       {% else %}
         <a href="http://{{ domain }}">{{ domain }}</a>
       {% endif %}
+      {% if activity.all_replies.count %}
+        <div class="post-comments">
+          <a href="{{ activity.get_absolute_url }}">
+            {% blocktrans count counter=activity.all_replies.count %}
+              {{ counter }} Comment
+            {% plural %}
+              {{ counter }} Comments
+            {% endblocktrans %}
+          </a>
+        </div>
+      {% endif %}
     </div>
-
-    {% if activity.scope_object %}
-    <ul class="post-tags">
-      <li><a href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object.name|slice:":50" }}</a></li>
-    </ul>
-    {% endif %}
-    
-    {% if activity.comments.count %}
-      <div class="post-comments">
-        {{ activity.comments.count }} {{ _('Comments') }}
-      </div>
-    {% endif %}
 
     <div class="clear ir"></div>
 

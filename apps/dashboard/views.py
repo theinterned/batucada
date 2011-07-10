@@ -73,10 +73,9 @@ def dashboard(request, page=1):
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
-    current_projects = profile.get_current_projects()
-    users_following = profile.following()
-    users_followers = profile.followers()
-    activities = Activity.objects.dashboard(request.user.get_profile())
+
+    activities = Activity.objects.dashboard(
+        request.user.get_profile()).filter(reply_to__isnull=True)
 
     paginator = Paginator(activities, 25)
     try:
@@ -86,9 +85,8 @@ def dashboard(request, page=1):
 
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
-        'current_projects': current_projects,
-        'users_following': users_following,
-        'users_followers': users_followers,
+        'profile': profile,
+        'profile_view': True,
         'show_welcome': show_welcome,
         'paginator': paginator,
         'page_num': page,

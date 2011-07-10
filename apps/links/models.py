@@ -54,7 +54,8 @@ def link_delete_handler(sender, **kwargs):
         return
 
     try:
-        subscribed = (not link.subscription)
+        if not link.subscription:
+            return
     except Subscription.DoesNotExist:
         return
 

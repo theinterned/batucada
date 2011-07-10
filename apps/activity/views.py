@@ -1,31 +1,90 @@
+import bleach
+
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django import http
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
+from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
+from statuses.forms import StatusForm
 
 from activity.models import Activity
 
 
-def index(request, activity_id):
+def index(request, activity_id, page=1):
     activity = get_object_or_404(Activity, id=activity_id)
-    if activity.deleted:
-        messages.error(request, _('This message was deleted.'))
-        if activity.can_edit(request.user):
-            return HttpResponseRedirect(reverse('activity_restore',
-                kwargs={'activity_id': activity.id}))
-        elif activity.scope_object:
-            return HttpResponseRedirect(
-                activity.scope_object.get_absolute_url())
-        else:
-            return HttpResponseRedirect(activity.actor.get_absolute_url())
-    return render_to_response('activity/index.html', {
+    context = {
         'activity': activity,
         'domain': Site.objects.get_current().domain,
+    }
+    if activity.scope_object:
+        scope_url = activity.scope_object.get_absolute_url()
+        context['project'] = activity.scope_object
+    else:
+        scope_url = activity.actor.get_absolute_url()
+        context['profile'] = activity.actor
+        context['profile_view'] = True
+    if activity.deleted:
+        messages.error(request, _('This activity was deleted.'))
+        if activity.can_edit(request.user):
+            return http.HttpResponseRedirect(reverse('activity_restore',
+                kwargs={'activity_id': activity.id}))
+        return http.HttpResponseRedirect(scope_url)
+    replies = activity.all_replies.filter(deleted=False).order_by(
+        '-created_on')
+    paginator = Paginator(replies, 25)
+    try:
+        current_page = paginator.page(page)
+    except EmptyPage:
+        raise http.Http404
+    context.update({
+        'paginator': paginator,
+        'page_num': page,
+        'next_page': int(page) + 1,
+        'prev_page': int(page) - 1,
+        'num_pages': paginator.num_pages,
+        'page': current_page,
+    })
+    return render_to_response('activity/index.html', context,
+        context_instance=RequestContext(request))
+
+
+@login_required
+def reply(request, activity_id):
+    """Create a status update that is a reply to an activity."""
+    reply_to = get_object_or_404(Activity, id=activity_id)
+    if not reply_to.can_reply(request.user):
+        messages.error(request, _("You can't reply to this activity"))
+        return http.HttpResponseRedirect(reply_to.get_absolute_url())
+    preview = False
+    status = None
+    if request.method == 'POST':
+        form = StatusForm(data=request.POST)
+        if form.is_valid():
+            status = form.save(commit=False)
+            status.author = request.user.get_profile()
+            status.reply_to = reply_to
+            status.project = reply_to.scope_object
+            if 'show_preview' in request.POST:
+                preview = True
+                status.status = bleach.clean(status.status, strip=True,
+                    tags=settings.REDUCED_ALLOWED_TAGS,
+                    attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)
+            else:
+                status.save()
+                return http.HttpResponseRedirect(status.get_absolute_url())
+        else:
+            messages.error(request, _('Please correct errors bellow.'))
+    else:
+        form = StatusForm()
+    return render_to_response('activity/reply.html', {
+        'reply_to': reply_to, 'preview': preview,
+        'form': form, 'status': status,
     }, context_instance=RequestContext(request))
 
 
@@ -33,7 +92,7 @@ def index(request, activity_id):
 def delete_restore(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     if not activity.can_edit(request.user):
-        return HttpResponseForbidden(_("You can't edit this activity"))
+        return http.HttpResponseForbidden(_("You can't edit this activity"))
     if request.method == 'POST':
         activity.deleted = not activity.deleted
         activity.save()
@@ -43,10 +102,10 @@ def delete_restore(request, activity_id):
             msg = _('Activity restored!')
         messages.success(request, msg)
         if activity.scope_object:
-            return HttpResponseRedirect(
+            return http.HttpResponseRedirect(
                 activity.scope_object.get_absolute_url())
         else:
-            return HttpResponseRedirect(reverse('dashboard'))
+            return http.HttpResponseRedirect(reverse('dashboard'))
     else:
         return render_to_response('activity/delete_restore.html', {
             'activity': activity,

@@ -474,17 +474,20 @@ def comment_sign_up(request, slug, comment_id=None):
             elif abs_reply_to.author != profile:
                 return http.HttpResponseForbidden(_("You can't see this page"))
     elif is_organizing or is_participating:
-        messages.error(request, _("You already joined this %s.") % project.kind)
+        messages.error(request,
+            _("You already joined this %s.") % project.kind)
         return http.HttpResponseRedirect(page.get_absolute_url())
     elif project.signup_closed:
-        msg = _("Sign-up is currently closed. You can clone the %s if is full.")
+        msg = _("Sign-up is currently closed." \
+                "You can clone the %s if is full.")
         messages.error(request, msg % project.kind)
         return http.HttpResponseRedirect(page.get_absolute_url())
     else:
         answers = page.comments.filter(reply_to__isnull=True, deleted=False,
             author=profile)
         if answers.exists():
-            messages.error(request, _("You already posted an answer to the signup questions."))
+            messages.error(request,
+                _("You already posted an answer to the signup questions."))
             return http.HttpResponseRedirect(page.get_absolute_url())
     preview = False
     comment = None

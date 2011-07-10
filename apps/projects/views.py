@@ -152,7 +152,7 @@ def show(request, slug, page=1):
     else:
         form = None
 
-    activities = project.activities()
+    activities = project.activities().filter(reply_to__isnull=True)
     paginator = Paginator(activities, 10)
     try:
         current_page = paginator.page(page)
