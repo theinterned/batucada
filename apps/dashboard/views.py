@@ -87,7 +87,7 @@ def dashboard(request, page=1):
     show_welcome = not profile.discard_welcome
     return render_to_response('dashboard/dashboard.html', {
         'profile': profile,
-        'profile_view': True,
+        'profile_view': False,
         'show_welcome': show_welcome,
         'paginator': paginator,
         'page_num': page,
