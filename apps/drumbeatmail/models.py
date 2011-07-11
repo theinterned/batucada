@@ -41,4 +41,4 @@ def message_sent_handler(sender, **kwargs):
         })
     activate(ulang)
     SendUserEmail.apply_async((user.get_profile(), subject, body))
-post_save.connect(message_sent_handler, sender=Message)
+post_save.connect(message_sent_handler, sender=Message, dispatch_uid='drumbeatmail_message_sent_handler')

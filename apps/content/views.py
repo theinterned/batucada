@@ -387,7 +387,7 @@ def restore_version(request, slug, page_slug, version_id):
     else:
         page.title = version.title
         page.content = version.content
-        form = form_cls(instance=page)
+        form = form_cls(instance=page, initial={'minor_update': True})
     return render_to_response('content/restore_version.html', {
         'form': form,
         'page': page,
