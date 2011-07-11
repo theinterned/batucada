@@ -97,4 +97,4 @@ def clean_html(sender, **kwargs):
                 attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                 styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
-pre_save.connect(clean_html, sender=School)
+pre_save.connect(clean_html, sender=School, dispatch_uid='schools_clean_html')

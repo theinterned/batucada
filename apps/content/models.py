@@ -254,8 +254,8 @@ def clean_html(sender, **kwargs):
                 attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                 styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
-pre_save.connect(clean_html, sender=Page)
-pre_save.connect(clean_html, sender=PageComment)
+pre_save.connect(clean_html, sender=Page, dispatch_uid='content_page_clean_html')
+pre_save.connect(clean_html, sender=PageComment, dispatch_uid='content_pagecomment_clean_html')
 
 
 def fire_activity(sender, **kwargs):
@@ -280,5 +280,5 @@ def fire_activity(sender, **kwargs):
             target_object=instance, scope_object=instance.project)
         activity.save()
 
-post_save.connect(fire_activity, sender=Page)
-post_save.connect(fire_activity, sender=PageComment)
+post_save.connect(fire_activity, sender=Page, dispatch_uid='content_page_fire_activity')
+post_save.connect(fire_activity, sender=PageComment, dispatch_uid='content_pagecomment_fire_activity')

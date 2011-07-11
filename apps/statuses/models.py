@@ -116,4 +116,4 @@ def status_creation_handler(sender, **kwargs):
     # Send notifications.
     if status.project:
         status.send_wall_notification()
-post_save.connect(status_creation_handler, sender=Status)
+post_save.connect(status_creation_handler, sender=Status, dispatch_uid='statuses_status_creation_handler')

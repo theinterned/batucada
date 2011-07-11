@@ -127,4 +127,4 @@ def follow_handler(sender, **kwargs):
     for user in receipts:
         pl = user.preflang or settings.LANGUAGE_CODE
         SendUserEmail.apply_async((user, subject[pl], body[pl]))
-post_save.connect(follow_handler, sender=Relationship)
+post_save.connect(follow_handler, sender=Relationship, dispatch_uid='relationships_follow_handler')

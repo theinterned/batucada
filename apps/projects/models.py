@@ -337,4 +337,4 @@ def clean_html(sender, **kwargs):
                 attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
 
 
-pre_save.connect(clean_html, sender=Project)
+pre_save.connect(clean_html, sender=Project, dispatch_uid='projects_clean_html')
