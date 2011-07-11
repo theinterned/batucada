@@ -116,7 +116,7 @@ def edit_page(request, slug, page_slug):
                     'page_slug': page_slug,
                 }))
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         form = form_cls(instance=page, initial={'minor_update': True})
     return render_to_response('content/edit_page.html', {
@@ -163,7 +163,7 @@ def create_page(request, slug):
                     'page_slug': page.slug,
                 }))
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         form = form_cls(initial=initial)
     return render_to_response('content/create_page.html', {
@@ -234,7 +234,7 @@ def comment_page(request, slug, page_slug, comment_id=None):
                 messages.success(request, _('Comment posted!'))
                 return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm()
     return render_to_response('content/comment_page.html', {
@@ -271,7 +271,7 @@ def edit_comment(request, slug, page_slug, comment_id):
                 messages.success(request, _('Comment updated!'))
                 return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm(instance=comment)
     return render_to_response('content/comment_page.html', {
@@ -383,7 +383,7 @@ def restore_version(request, slug, page_slug, version_id):
                     'page_slug': page_slug,
                 }))
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         page.title = version.title
         page.content = version.content
@@ -529,7 +529,7 @@ def comment_sign_up(request, slug, comment_id=None):
                 messages.success(request, success_msg)
                 return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         profile_form = ProfileEditForm(instance=profile)
         profile_image_form = ProfileImageForm()
@@ -593,7 +593,7 @@ def edit_comment_sign_up(request, slug, comment_id):
                 messages.success(request, success_msg)
                 return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         profile_form = ProfileEditForm(instance=comment.author)
         profile_image_form = ProfileImageForm()
