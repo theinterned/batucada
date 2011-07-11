@@ -91,7 +91,7 @@ def reply(request, activity_id):
                 status.save()
                 return http.HttpResponseRedirect(status.get_absolute_url())
         else:
-            messages.error(request, _('Please correct errors bellow.'))
+            messages.error(request, _('Please correct errors below.'))
     else:
         form = StatusForm()
     return render_to_response('activity/reply.html', {

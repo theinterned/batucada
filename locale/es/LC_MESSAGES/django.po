@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-10 13:52-0400\n"
+"POT-Creation-Date: 2011-07-11 09:41-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,7 +70,8 @@ msgstr "Usted no puede responder a esta actividad"
 #: apps/content/views.py:166 apps/content/views.py:237
 #: apps/content/views.py:274 apps/content/views.py:386
 #: apps/content/views.py:532 apps/content/views.py:596
-msgid "Please correct errors bellow."
+#, fuzzy
+msgid "Please correct errors below."
 msgstr "Por favor corrija los errores mostrados a continuación."
 
 #: apps/activity/views.py:107
@@ -1149,7 +1150,7 @@ msgstr "¿Está seguro que desea borrar esta actividad?"
 #: templates/content/create_page.html:37
 #: templates/content/delete_restore_comment.html:57
 #: templates/content/edit_page.html:46
-#: templates/content/restore_version.html:39
+#: templates/content/restore_version.html:43
 #: templates/dashboard/dashboard.html:42
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
@@ -1176,7 +1177,7 @@ msgstr "Cancelar"
 #: templates/activity/delete_restore.html:30
 #: templates/content/delete_restore_comment.html:60
 #: templates/content/page.html:49 templates/content/restore_version.html:22
-#: templates/content/restore_version.html:41 templates/content/sign_up.html:40
+#: templates/content/restore_version.html:45 templates/content/sign_up.html:40
 #: templates/content/version_page.html:24
 msgid "Restore"
 msgstr "Restaurar"
@@ -1431,6 +1432,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #: templates/content/edit_page.html:42
+#: templates/content/restore_version.html:39
 msgid "Minor update (not posted to the wall)."
 msgstr "Actualización menor (no se publica en el muro)."
 
