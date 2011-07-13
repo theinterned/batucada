@@ -17,7 +17,7 @@ class SendUserEmail(Task):
         profile.user.email_user(subject, body)
 
 
-class SendUsersEmail(Task):
+class SendPrivateMessages(Task):
     """
     Send an email to multiple users. ``messages`` should be a sequence
     containing tuples of sender, recipient, subject, body, parent.
