@@ -137,7 +137,7 @@ class ProjectContactOrganizersForm(forms.Form):
             'project': project}).strip()
         messages = [(sender, r.user.user, subject, body, parent_msg)
             for r in recipients]
-        tasks.SendUsersEmail.apply_async(args=(self, messages))
+        tasks.SendPrivateMessages.apply_async(args=(self, messages))
         return messages
 
 
