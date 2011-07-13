@@ -27,6 +27,8 @@ def sidebar(context, max_people_count=64):
             if answers.exists():
                 pending_signup = answers[0]
 
+    tags = project.tags.exclude(slug='').order_by('name')
+        
     organizers = project.organizers()
     organizers_count = organizers.count()
     participants = project.non_organizer_participants()
@@ -68,6 +70,7 @@ def sidebar(context, max_people_count=64):
         'participants_count': participants_count,
         'following': is_following,
         'followers_count': followers_count,
+        'tags': tags,
         'organizing': is_organizing,
         'organizers_count': organizers_count,
         'update_count': update_count,
