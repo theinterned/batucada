@@ -4,14 +4,12 @@ from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import NoReverseMatch
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language
-from django.template.loader import render_to_string
 
 from l10n.urlresolvers import reverse
 from users.models import UserProfile
 from users.tasks import SendUserEmail
 from drumbeat.forms import AbuseForm
+from l10n.models import localize_email
 
 import logging
 import sys
@@ -39,21 +37,20 @@ def report_abuse(request, model, app_label, pk):
             url = request.build_absolute_uri(instance.get_absolute_url())
         except NoReverseMatch:
             url = request.build_absolute_uri(reverse('dashboard'))
-        ulang = get_language()
+        context = {
+            'user': request.user.get_profile(),
+            'url': url, 'model': model,
+            'app_label': app_label, 'pk': pk,
+        }
+        subjects, bodies = localize_email(
+            'drumbeat/emails/abuse_report_subject.txt',
+            'drumbeat/emails/abuse_report.txt', context)
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
-            activate(profile.preflang or settings.LANGUAGE_CODE)
-            body = render_to_string(
-                "drumbeat/emails/abuse_report.txt", {
-                'user': request.user.get_profile(),
-                'url': url, 'model': model, 'app_label': app_label,
-                'pk': pk}).strip()
-            subject = _("Abuse Report")
-            SendUserEmail.apply_async(args=(profile, subject, body))
+            SendUserEmail.apply_async(args=(profile, subjects, bodies))
         except:
             log.debug("Error sending abuse report: %s" % sys.exc_info()[0])
             pass
-        activate(ulang)
         return render_to_response('drumbeat/report_received.html', {},
                                   context_instance=RequestContext(request))
     else:

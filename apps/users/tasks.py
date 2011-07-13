@@ -8,10 +8,12 @@ from messages.models import Message
 class SendUserEmail(Task):
     """Send an email to a specific user specified by ``profile``."""
 
-    def run(self, profile, subject, body, **kwargs):
+    def run(self, profile, subjects, bodies, **kwargs):
         if profile.deleted:
             return
         log = self.get_logger(**kwargs)
+        subject = subjects[profile.preflang]
+        body = bodies[profile.preflang]
         log.debug("Sending email to user %d with subject %s" % (
             profile.user.id, subject,))
         profile.user.email_user(subject, body)

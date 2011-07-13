@@ -7,7 +7,6 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage
-from django.contrib.contenttypes.models import ContentType
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required

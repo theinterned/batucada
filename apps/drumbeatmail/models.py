@@ -1,13 +1,11 @@
 from django.db.models.signals import post_save
-from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
-from django.utils.translation import activate, get_language, ugettext
-from django.conf import settings
 
 from l10n.urlresolvers import reverse
 from messages.models import Message
 from users.tasks import SendUserEmail
 from preferences.models import AccountPreferences
+from l10n.models import localize_email
 
 import logging
 
@@ -19,26 +17,24 @@ def message_sent_handler(sender, **kwargs):
     created = kwargs.get('created', False)
     if not created or not isinstance(message, Message):
         return
-    user = message.recipient
-    preferences = AccountPreferences.objects.filter(
-        user=user.get_profile())
+    recipient = message.recipient.get_profile()
+    preferences = AccountPreferences.objects.filter(user=recipient,
+       key='no_email_message_received')
     for preference in preferences:
-        if preference.value and preference.key == 'no_email_message_received':
+        if preference.value:
             return
     sender = message.sender.get_profile()
-    ulang = get_language()
-    activate(user.get_profile().preflang or settings.LANGUAGE_CODE)
-    subject = ugettext('New Message from %(sender)s') % {
-        'sender': sender,
-        }
-    body = render_to_string('drumbeatmail/emails/direct_message.txt', {
+    reply_url = reverse('drumbeatmail_reply', kwargs={'message': message.pk})
+    context = {
         'sender': sender,
         'message': message.body,
         'domain': Site.objects.get_current().domain,
-        'reply_url': reverse('drumbeatmail_reply', kwargs={
-            'message': message.pk,
-            }),
-        })
-    activate(ulang)
-    SendUserEmail.apply_async((user.get_profile(), subject, body))
-post_save.connect(message_sent_handler, sender=Message, dispatch_uid='drumbeatmail_message_sent_handler')
+        'reply_url': reply_url,
+    }
+    subjects, bodies = localize_email(
+        'drumbeatmail/emails/direct_message_subject.txt',
+        'drumbeatmail/emails/direct_message.txt', context)
+    SendUserEmail.apply_async((recipient, subjects, bodies))
+
+post_save.connect(message_sent_handler, sender=Message,
+    dispatch_uid='drumbeatmail_message_sent_handler')

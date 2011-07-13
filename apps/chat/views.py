@@ -21,5 +21,5 @@ def chat(request):
             channels.add('p2pu-%s' % project.school.slug)
     return render_to_response('chat/chat.html', {
         'nick': nick,
-        'channels': ','.join(channels),},
+        'channels': ','.join(channels)},
         context_instance=RequestContext(request))

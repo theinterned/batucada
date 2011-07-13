@@ -10,7 +10,6 @@ from django.db.models import Count, Max
 from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import get_language, activate
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
@@ -23,6 +22,7 @@ from relationships.models import Relationship
 from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
 
 import caching.base
 
@@ -251,37 +251,23 @@ class Project(ModelBase):
 
     def send_creation_notification(self):
         """Send notification when a new project is created."""
-        project = self
-        ulang = get_language()
-        subject = {}
-        body = {}
-        domain = Site.objects.get_current().domain
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = render_to_string(
-                "projects/emails/project_created_subject.txt", {
-                'project': project,
-                }).strip()
-            body[l[0]] = render_to_string(
-                "projects/emails/project_created.txt", {
-                'project': project,
-                'domain': domain,
-                }).strip()
-        activate(ulang)
-        for organizer in project.organizers():
+        context = {
+            'project': self,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'projects/emails/project_created_subject.txt',
+            'projects/emails/project_created.txt', context)
+        for organizer in self.organizers():
             if not organizer.no_updates:
-                ol = organizer.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
-                        (organizer.user, subject[ol], body[ol]))
+                        (organizer.user, subjects, bodies))
+
         admin_subject = render_to_string(
-            "projects/emails/admin_project_created_subject.txt", {
-            'project': project,
-            }).strip()
+            "projects/emails/admin_project_created_subject.txt",
+            context).strip()
         admin_body = render_to_string(
-            "projects/emails/admin_project_created.txt", {
-            'project': project,
-            'domain': domain,
-            }).strip()
+            "projects/emails/admin_project_created.txt", context).strip()
         for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
             send_mail(admin_subject, admin_body, admin_email,
                 [admin_email], fail_silently=True)
@@ -337,4 +323,5 @@ def clean_html(sender, **kwargs):
                 attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
 
 
-pre_save.connect(clean_html, sender=Project, dispatch_uid='projects_clean_html')
+pre_save.connect(clean_html, sender=Project,
+    dispatch_uid='projects_clean_html')

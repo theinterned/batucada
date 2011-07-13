@@ -7,9 +7,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save, post_save
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language, ugettext
+from django.utils.translation import ugettext
 from django.db.models import Max
-from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 
@@ -17,6 +16,7 @@ from drumbeat.models import ModelBase
 from activity.models import Activity, register_filter
 from activity.schema import verbs, object_types
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
 
 log = logging.getLogger(__name__)
 
@@ -165,25 +165,15 @@ class PageComment(ModelBase):
             return
         project = self.page.project
         is_answer = not self.reply_to
-        ulang = get_language()
-        subject = {}
-        body = {}
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = render_to_string(
-                "content/emails/sign_up_updated_subject.txt", {
-                'comment': self,
-                'is_answer': is_answer,
-                'project': project,
-                }).strip()
-            body[l[0]] = render_to_string(
-                "content/emails/sign_up_updated.txt", {
-                'comment': self,
-                'is_answer': is_answer,
-                'project': project,
-                'domain': Site.objects.get_current().domain,
-                }).strip()
-        activate(ulang)
+        context = {
+            'comment': self,
+            'is_answer': is_answer,
+            'project': project,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'content/emails/sign_up_updated_subject.txt',
+            'content/emails/sign_up_updated.txt', context)
         recipients = {}
         for organizer in project.organizers():
             recipients[organizer.user.username] = organizer.user
@@ -194,9 +184,8 @@ class PageComment(ModelBase):
                 recipients[comment.author.username] = comment.author
         for username in recipients:
             if recipients[username] != self.author:
-                pl = recipients[username].preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async((recipients[username],
-                    subject[pl], body[pl]))
+                    subjects, bodies))
 
 
 def send_content_notification(instance, is_comment):
@@ -204,31 +193,20 @@ def send_content_notification(instance, is_comment):
     project = instance.project
     if project.not_listed or not is_comment and not instance.listed:
         return
-    ulang = get_language()
-    subject = {}
-    body = {}
-    for l in settings.SUPPORTED_LANGUAGES:
-        activate(l[0])
-        subject[l[0]] = render_to_string(
-            "content/emails/content_update_subject.txt", {
-            'instance': instance,
-            'is_comment': is_comment,
-            'project': project,
-            }).strip()
-        body[l[0]] = render_to_string(
-            "content/emails/content_update.txt", {
-            'instance': instance,
-            'is_comment': is_comment,
-            'project': project,
-            'domain': Site.objects.get_current().domain,
-            }).strip()
-    activate(ulang)
+    context = {
+        'instance': instance,
+        'is_comment': is_comment,
+        'project': project,
+        'domain': Site.objects.get_current().domain,
+    }
+    subjects, bodies = localize_email(
+        'content/emails/content_update_subject.txt',
+        'content/emails/content_update.txt', context)
     for participation in project.participants():
         is_author = (instance.author == participation.user)
         if not is_author and not participation.no_updates:
-            pl = participation.user.preflang or settings.LANGUAGE_CODE
             SendUserEmail.apply_async(
-                    (participation.user, subject[pl], body[pl]))
+                    (participation.user, subjects, bodies))
 
 
 def filter_activities(activities):
@@ -254,8 +232,10 @@ def clean_html(sender, **kwargs):
                 attributes=settings.RICH_ALLOWED_ATTRIBUTES,
                 styles=settings.RICH_ALLOWED_STYLES, strip=True)
 
-pre_save.connect(clean_html, sender=Page, dispatch_uid='content_page_clean_html')
-pre_save.connect(clean_html, sender=PageComment, dispatch_uid='content_pagecomment_clean_html')
+pre_save.connect(clean_html, sender=Page,
+    dispatch_uid='content_page_clean_html')
+pre_save.connect(clean_html, sender=PageComment,
+    dispatch_uid='content_pagecomment_clean_html')
 
 
 def fire_activity(sender, **kwargs):
@@ -280,5 +260,7 @@ def fire_activity(sender, **kwargs):
             target_object=instance, scope_object=instance.project)
         activity.save()
 
-post_save.connect(fire_activity, sender=Page, dispatch_uid='content_page_fire_activity')
-post_save.connect(fire_activity, sender=PageComment, dispatch_uid='content_pagecomment_fire_activity')
+post_save.connect(fire_activity, sender=Page,
+    dispatch_uid='content_page_fire_activity')
+post_save.connect(fire_activity, sender=PageComment,
+    dispatch_uid='content_pagecomment_fire_activity')
