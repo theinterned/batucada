@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-11 09:41-0400\n"
+"POT-Creation-Date: 2011-07-13 19:43-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,31 +58,30 @@ msgstr "compartió"
 msgid "received"
 msgstr "recibió"
 
-#: apps/activity/views.py:45
+#: apps/activity/views.py:44
 msgid "This activity was deleted."
 msgstr "Esta actividad fue eliminada."
 
-#: apps/activity/views.py:74
+#: apps/activity/views.py:73
 msgid "You can't reply to this activity"
 msgstr "Usted no puede responder a esta actividad"
 
-#: apps/activity/views.py:94 apps/content/views.py:119
+#: apps/activity/views.py:93 apps/content/views.py:119
 #: apps/content/views.py:166 apps/content/views.py:237
 #: apps/content/views.py:274 apps/content/views.py:386
 #: apps/content/views.py:532 apps/content/views.py:596
-#, fuzzy
 msgid "Please correct errors below."
 msgstr "Por favor corrija los errores mostrados a continuación."
 
-#: apps/activity/views.py:107
+#: apps/activity/views.py:106
 msgid "You can't edit this activity"
 msgstr "Usted no puede editar esta actividad"
 
-#: apps/activity/views.py:112
+#: apps/activity/views.py:111
 msgid "Activity deleted!"
 msgstr "¡Actividad eliminada!"
 
-#: apps/activity/views.py:114
+#: apps/activity/views.py:113
 msgid "Activity restored!"
 msgstr "¡Actividad restaurada!"
 
@@ -239,10 +238,6 @@ msgstr "Por favor llene su perfil para completar la creación de la cuenta."
 msgid "Export selected objects as csv file"
 msgstr "Exportar los objectos seleccionados como un fichero csv"
 
-#: apps/drumbeat/views.py:51
-msgid "Abuse Report"
-msgstr "Reporte de Abuso"
-
 #: apps/drumbeat/templatetags/time_since.py:16
 msgid " ago"
 msgstr " atrás"
@@ -250,11 +245,6 @@ msgstr " atrás"
 #: apps/drumbeatmail/fields.py:22
 msgid "No such user with that username or email."
 msgstr "No hay nadie con ese nombre de usuario o correo."
-
-#: apps/drumbeatmail/models.py:31
-#, python-format
-msgid "New Message from %(sender)s"
-msgstr "Nuevo mensaje de %(sender)s"
 
 #: apps/drumbeatmail/views.py:174
 msgid "Can't send email"
@@ -508,19 +498,9 @@ msgstr "El participante %s ha sido removido."
 msgid "There was a problem saving the %s's status."
 msgstr "Ocurrió un problema al guardar el estado del %s."
 
-#: apps/relationships/models.py:61
+#: apps/relationships/models.py:59
 msgid "Cannot create self referencing relationship."
 msgstr "No puede crear una relacion consigo mismo."
-
-#: apps/relationships/models.py:93
-#, python-format
-msgid "%(user)s is following you on P2PU!"
-msgstr "¡%(user)s te está siguiendo en P2PU!"
-
-#: apps/relationships/models.py:106
-#, python-format
-msgid "%(user)s is following %(project)s on P2PU!"
-msgstr "¡%(user)s está siguiendo %(project)s en P2PU!"
 
 #: apps/relationships/views.py:50
 msgid "You can't unfollow"
@@ -621,11 +601,11 @@ msgstr "El %s dejo de ser rechazado para esta escuela."
 msgid "The %s is no longer part of this school."
 msgstr "El %s ya no es parte de esta escuela."
 
-#: apps/statuses/models.py:37
+#: apps/statuses/models.py:36
 msgid "statuses"
 msgstr "estados"
 
-#: apps/statuses/models.py:40
+#: apps/statuses/models.py:39
 #, python-format
 msgid "message: %s"
 msgstr "mensaje: %s"
@@ -1714,6 +1694,10 @@ msgstr "Hemos recibido su reporte e investigaremos más."
 msgid "has reported the following content as objectionable:"
 msgstr "ha reportado el siguiente contenido como objetable:"
 
+#: templates/drumbeat/emails/abuse_report_subject.txt:2
+msgid "Abuse Report"
+msgstr "Reporte de Abuso"
+
 #: templates/drumbeatmail/base.html:12
 msgid "To"
 msgstr "Para"
@@ -1774,6 +1758,10 @@ msgstr "Ha recibido un nuevo mensaje directo de"
 #: templates/drumbeatmail/emails/direct_message.txt:6
 msgid "Reply:"
 msgstr "Respuesta:"
+
+#: templates/drumbeatmail/emails/direct_message_subject.txt:2
+msgid "New Message from"
+msgstr "Nuevo Mensaje de"
 
 #: templates/messages/compose.html:4 templates/messages/inbox.html:40
 msgid "New Message"
@@ -2514,16 +2502,22 @@ msgid "is now following "
 msgstr "ahora está siguiendo "
 
 #: templates/relationships/emails/new_follower.txt:2
+#: templates/relationships/emails/new_follower_subject.txt:1
 msgid "you"
 msgstr "su actividad"
 
 #: templates/relationships/emails/new_follower.txt:2
+#: templates/relationships/emails/new_follower_subject.txt:1
 msgid "on P2PU!"
 msgstr "en P2PU!"
 
 #: templates/relationships/emails/new_follower.txt:8
 msgid "You can see their profile here:"
 msgstr "Puede ver su perfil aquí:"
+
+#: templates/relationships/emails/new_follower_subject.txt:1
+msgid "is following "
+msgstr "ahora está siguiendo "
 
 #: templates/schools/home.html:13 templates/schools/school_edit.html:4
 #: templates/schools/school_edit.html:11
@@ -3297,3 +3291,12 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#~ msgid "New Message from %(sender)s"
+#~ msgstr "Nuevo mensaje de %(sender)s"
+
+#~ msgid "%(user)s is following you on P2PU!"
+#~ msgstr "¡%(user)s te está siguiendo en P2PU!"
+
+#~ msgid "%(user)s is following %(project)s on P2PU!"
+#~ msgstr "¡%(user)s está siguiendo %(project)s en P2PU!"

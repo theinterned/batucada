@@ -3,11 +3,9 @@ import bleach
 
 from django.db import models
 from django.db.models.signals import post_save
-from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
@@ -15,6 +13,7 @@ from activity.models import Activity, register_filter
 from activity.schema import object_types, verbs
 from drumbeat.models import ModelBase
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
 
 
 class Status(ModelBase):
@@ -48,29 +47,19 @@ class Status(ModelBase):
     def send_wall_notification(self):
         if not self.project:
             return
-        project = self.project
-        ulang = get_language()
-        subject = {}
-        body = {}
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = render_to_string(
-                "statuses/emails/wall_updated_subject.txt", {
-                'status': self,
-                'project': project,
-                }).strip()
-            body[l[0]] = render_to_string("statuses/emails/wall_updated.txt", {
-                'status': self,
-                'project': project,
-                'domain': Site.objects.get_current().domain,
-                }).strip()
-        activate(ulang)
-        for participation in project.participants():
+        context = {
+            'status': self,
+            'project': self.project,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'statuses/emails/wall_updated_subject.txt',
+            'statuses/emails/wall_updated.txt', context)
+        for participation in self.project.participants():
             subscribed = (self.important or not participation.no_wall_updates)
             if self.author != participation.user and subscribed:
-                pl = participation.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
-                    (participation.user, subject[pl], body[pl]))
+                    (participation.user, subjects, bodies))
 
     @staticmethod
     def filter_activities(activities):
@@ -116,4 +105,5 @@ def status_creation_handler(sender, **kwargs):
     # Send notifications.
     if status.project:
         status.send_wall_notification()
-post_save.connect(status_creation_handler, sender=Status, dispatch_uid='statuses_status_creation_handler')
+post_save.connect(status_creation_handler, sender=Status,
+    dispatch_uid='statuses_status_creation_handler')
