@@ -1,6 +1,5 @@
 import logging
 import datetime
-import bleach
 import random
 import string
 import hashlib
@@ -10,7 +9,6 @@ import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.http import urlquote_plus
@@ -29,6 +27,7 @@ from projects.models import Project, Participation
 from users import tasks
 from activity.schema import object_types
 from users.managers import CategoryTaggableManager
+from richtext.models import RichTextField
 
 import caching.base
 
@@ -98,7 +97,7 @@ class UserProfile(ModelBase):
         max_length=255, default='', null=True, blank=True)
     password = models.CharField(max_length=255, default='')
     email = models.EmailField(unique=True, null=True)
-    bio = models.TextField(blank=True, default='')
+    bio = RichTextField()
     image = models.ImageField(
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())
@@ -278,20 +277,3 @@ def create_profile(user, username=None):
     profile.email = user.email
     profile.save()
     return profile
-
-
-###########
-# Signals #
-###########
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, UserProfile):
-        if instance.bio:
-            instance.bio = bleach.clean(instance.bio,
-                tags=settings.REDUCED_ALLOWED_TAGS,
-                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
-                strip=True)
-
-pre_save.connect(clean_html, sender=UserProfile,
-    dispatch_uid='users_clean_html')

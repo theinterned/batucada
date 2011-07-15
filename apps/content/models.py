@@ -1,11 +1,9 @@
 import logging
-import bleach
 import datetime
 
-from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.db.models import Max
@@ -17,6 +15,7 @@ from activity.models import Activity, register_filter
 from activity.schema import verbs, object_types
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
+from richtext.models import RichTextField
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +26,7 @@ class Page(ModelBase):
 
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=110)
-    content = models.TextField()
+    content = RichTextField(config_name='rich', blank='False')
     author = models.ForeignKey('users.UserProfile', related_name='pages')
     last_update = models.DateTimeField(auto_now_add=True,
         default=datetime.datetime.now)
@@ -91,7 +90,7 @@ class Page(ModelBase):
 class PageVersion(ModelBase):
 
     title = models.CharField(max_length=100)
-    content = models.TextField()
+    content = RichTextField(config_name='rich', blank='False')
     author = models.ForeignKey('users.UserProfile',
         related_name='page_versions')
     date = models.DateTimeField()
@@ -112,7 +111,7 @@ class PageComment(ModelBase):
     """Placeholder model for comments."""
     object_type = object_types['comment']
 
-    content = models.TextField()
+    content = RichTextField(config_name='rich', blank='False')
     author = models.ForeignKey('users.UserProfile',
         related_name='comments')
     page = models.ForeignKey('content.Page', related_name='comments')
@@ -220,22 +219,6 @@ register_filter('learning', filter_activities)
 ###########
 # Signals #
 ###########
-
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, Page) or isinstance(instance, PageComment):
-        log.debug("Cleaning html.")
-        if instance.content:
-            instance.content = bleach.clean(instance.content,
-                tags=settings.RICH_ALLOWED_TAGS,
-                attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                styles=settings.RICH_ALLOWED_STYLES, strip=True)
-
-pre_save.connect(clean_html, sender=Page,
-    dispatch_uid='content_page_clean_html')
-pre_save.connect(clean_html, sender=PageComment,
-    dispatch_uid='content_pagecomment_clean_html')
 
 
 def fire_activity(sender, **kwargs):
