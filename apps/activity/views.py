@@ -1,11 +1,8 @@
-import bleach
-
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django import http
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
-from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage
 
 from l10n.urlresolvers import reverse
@@ -72,7 +69,6 @@ def reply(request, activity_id):
     if not reply_to.can_reply(request.user):
         messages.error(request, _("You can't reply to this activity"))
         return http.HttpResponseRedirect(reply_to.get_absolute_url())
-    preview = False
     status = None
     if request.method == 'POST':
         form = StatusForm(data=request.POST)
@@ -81,12 +77,7 @@ def reply(request, activity_id):
             status.author = request.user.get_profile()
             status.reply_to = reply_to
             status.project = reply_to.scope_object
-            if 'show_preview' in request.POST:
-                preview = True
-                status.status = bleach.clean(status.status, strip=True,
-                    tags=settings.REDUCED_ALLOWED_TAGS,
-                    attributes=settings.REDUCED_ALLOWED_ATTRIBUTES)
-            else:
+            if 'show_preview' not in request.POST:
                 status.save()
                 return http.HttpResponseRedirect(status.get_absolute_url())
         else:
@@ -94,7 +85,7 @@ def reply(request, activity_id):
     else:
         form = StatusForm()
     return render_to_response('activity/reply.html', {
-        'reply_to': reply_to, 'preview': preview,
+        'reply_to': reply_to, 'preview': ('show_preview' in request.POST),
         'form': form, 'status': status,
     }, context_instance=RequestContext(request))
 

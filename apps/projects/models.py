@@ -1,13 +1,11 @@
 import logging
 import datetime
-import bleach
 
 from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.db import models
 from django.db.models import Count, Max
-from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
@@ -23,6 +21,7 @@ from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
+from richtext.models import RichTextField
 
 import caching.base
 
@@ -102,7 +101,7 @@ class Project(ModelBase):
     other_description = models.CharField(max_length=150, blank=True, null=True)
 
     short_description = models.CharField(max_length=150)
-    long_description = models.TextField(validators=[MaxLengthValidator(700)])
+    long_description = RichTextField(validators=[MaxLengthValidator(700)])
 
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -307,21 +306,3 @@ class Participation(ModelBase):
     no_wall_updates = models.BooleanField(default=False)
     # for new pages or comments.
     no_updates = models.BooleanField(default=False)
-
-
-###########
-# Signals #
-###########
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, Project):
-        log.debug("Cleaning html.")
-        if instance.long_description:
-            instance.long_description = bleach.clean(instance.long_description,
-                tags=settings.REDUCED_ALLOWED_TAGS,
-                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
-
-
-pre_save.connect(clean_html, sender=Project,
-    dispatch_uid='projects_clean_html')

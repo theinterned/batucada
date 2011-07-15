@@ -1,14 +1,12 @@
 import logging
-import bleach
 
 from django.db import models
-from django.conf import settings
-from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 
 from drumbeat.models import ModelBase
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat import storage
+from richtext.models import RichTextField
 
 
 log = logging.getLogger(__name__)
@@ -26,7 +24,7 @@ class School(ModelBase):
 
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    description = models.TextField()
+    description = RichTextField(config_name='rich')
     organizers = models.ManyToManyField('users.UserProfile',
         null=True, blank=True)
     featured = models.ManyToManyField('projects.Project',
@@ -85,16 +83,3 @@ class School(ModelBase):
                 self.slug = "%s-%s" % (slug, count + 1)
                 count += 1
         super(School, self).save()
-
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, School):
-        log.debug("Cleaning html.")
-        if instance.description:
-            instance.description = bleach.clean(instance.description,
-                tags=settings.RICH_ALLOWED_TAGS,
-                attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                styles=settings.RICH_ALLOWED_STYLES, strip=True)
-
-pre_save.connect(clean_html, sender=School, dispatch_uid='schools_clean_html')

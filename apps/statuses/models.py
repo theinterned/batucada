@@ -1,10 +1,8 @@
 import datetime
-import bleach
 
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.sites.models import Site
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -14,6 +12,7 @@ from activity.schema import object_types, verbs
 from drumbeat.models import ModelBase
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
+from richtext.models import RichTextField
 
 
 class Status(ModelBase):
@@ -21,7 +20,7 @@ class Status(ModelBase):
 
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
-    status = models.TextField()
+    status = RichTextField()
     reply_to = models.ForeignKey(Activity, related_name='status_replies',
         null=True, blank=True)
     created_on = models.DateTimeField(
@@ -80,12 +79,6 @@ def status_creation_handler(sender, **kwargs):
 
     if not created or not isinstance(status, Status):
         return
-
-    # clean html
-    status.status = bleach.clean(status.status,
-        tags=settings.REDUCED_ALLOWED_TAGS,
-        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
-    status.save()
 
     # fire activity
     activity = Activity(

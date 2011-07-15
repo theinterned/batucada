@@ -1,5 +1,4 @@
 import datetime
-import bleach
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django import http
@@ -7,7 +6,6 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage
-from django.conf import settings
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -92,7 +90,6 @@ def edit_page(request, slug, page_slug):
     else:
         # Restrict permissions for non-collaborative pages.
         return http.HttpResponseForbidden(_("You can't edit this page"))
-    preview = False
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page)
@@ -101,13 +98,7 @@ def edit_page(request, slug, page_slug):
             page = form.save(commit=False)
             page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
-            if 'show_preview' in request.POST:
-                preview = True
-                page.content = bleach.clean(page.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 old_version.save()
                 page.save()
                 messages.success(request, _('%s updated!') % page.title)
@@ -123,7 +114,7 @@ def edit_page(request, slug, page_slug):
         'form': form,
         'page': page,
         'project': page.project,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
@@ -141,7 +132,6 @@ def create_page(request, slug):
     initial = {}
     if project.category == Project.COURSE:
         initial['collaborative'] = False
-    preview = False
     page = None
     if request.method == 'POST':
         form = form_cls(request.POST)
@@ -149,13 +139,7 @@ def create_page(request, slug):
             page = form.save(commit=False)
             page.project = project
             page.author = request.user.get_profile()
-            if 'show_preview' in request.POST:
-                preview = True
-                page.content = bleach.clean(page.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 page.save()
                 messages.success(request, _('Task created!'))
                 return http.HttpResponseRedirect(reverse('page_show', kwargs={
@@ -170,7 +154,7 @@ def create_page(request, slug):
         'form': form,
         'project': project,
         'page': page,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
@@ -213,7 +197,6 @@ def comment_page(request, slug, page_slug, comment_id=None):
         abs_reply_to = reply_to
         while abs_reply_to.reply_to:
             abs_reply_to = abs_reply_to.reply_to
-    preview = False
     comment = None
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -223,13 +206,7 @@ def comment_page(request, slug, page_slug, comment_id=None):
             comment.author = user
             comment.reply_to = reply_to
             comment.abs_reply_to = abs_reply_to
-            if 'show_preview' in request.POST:
-                preview = True
-                comment.content = bleach.clean(comment.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 comment.save()
                 messages.success(request, _('Comment posted!'))
                 return http.HttpResponseRedirect(comment.get_absolute_url())
@@ -244,7 +221,7 @@ def comment_page(request, slug, page_slug, comment_id=None):
         'reply_to': reply_to,
         'comment': comment,
         'create': True,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
@@ -255,18 +232,11 @@ def edit_comment(request, slug, page_slug, comment_id):
         page__slug=page_slug, page__project__slug=slug)
     if not comment.can_edit(request.user):
         return http.HttpResponseForbidden(_("You can't edit this page"))
-    preview = False
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             comment = form.save(commit=False)
-            if 'show_preview' in request.POST:
-                preview = True
-                comment.content = bleach.clean(comment.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 comment.save()
                 messages.success(request, _('Comment updated!'))
                 return http.HttpResponseRedirect(comment.get_absolute_url())
@@ -280,7 +250,7 @@ def edit_comment(request, slug, page_slug, comment_id):
         'page': comment.page,
         'project': comment.page.project,
         'reply_to': comment.reply_to,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
@@ -357,7 +327,6 @@ def restore_version(request, slug, page_slug, version_id):
     else:
         # Restrict permissions for non-collaborative pages.
         return http.HttpResponseForbidden(_("You can't edit this page"))
-    preview = False
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page,
@@ -368,13 +337,7 @@ def restore_version(request, slug, page_slug, version_id):
             page.deleted = False
             page.author = request.user.get_profile()
             page.last_update = datetime.datetime.now()
-            if 'show_preview' in request.POST:
-                preview = True
-                page.content = bleach.clean(page.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 old_version.save()
                 page.save()
                 messages.success(request, _('%s restored!') % page.title)
@@ -393,7 +356,7 @@ def restore_version(request, slug, page_slug, version_id):
         'page': page,
         'version': version,
         'project': page.project,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
@@ -489,7 +452,6 @@ def comment_sign_up(request, slug, comment_id=None):
             messages.error(request,
                 _("You already posted an answer to the signup questions."))
             return http.HttpResponseRedirect(page.get_absolute_url())
-    preview = False
     comment = None
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -503,18 +465,7 @@ def comment_sign_up(request, slug, comment_id=None):
             comment.author = profile
             comment.reply_to = reply_to
             comment.abs_reply_to = abs_reply_to
-            if 'show_preview' in request.POST:
-                preview = True
-                comment.content = bleach.clean(comment.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-                if not reply_to:
-                    profile.bio = bleach.clean(profile.bio,
-                        tags=settings.REDUCED_ALLOWED_TAGS,
-                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
-                        strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 if not reply_to:
                     profile.save()
                     new_rel, created = Relationship.objects.get_or_create(
@@ -544,7 +495,7 @@ def comment_sign_up(request, slug, comment_id=None):
         'reply_to': reply_to,
         'comment': comment,
         'create': True,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
@@ -561,7 +512,6 @@ def edit_comment_sign_up(request, slug, comment_id):
         abs_reply_to = reply_to = None
     else:
         reply_to = comment.reply_to
-    preview = False
     profile = comment.author
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
@@ -571,18 +521,7 @@ def edit_comment_sign_up(request, slug, comment_id):
             if not reply_to:
                 profile = profile_form.save(commit=False)
             comment = form.save(commit=False)
-            if 'show_preview' in request.POST:
-                preview = True
-                comment.content = bleach.clean(comment.content,
-                    tags=settings.RICH_ALLOWED_TAGS,
-                    attributes=settings.RICH_ALLOWED_ATTRIBUTES,
-                    styles=settings.RICH_ALLOWED_STYLES, strip=True)
-                if not reply_to:
-                    profile.bio = bleach.clean(profile.bio,
-                        tags=settings.REDUCED_ALLOWED_TAGS,
-                        attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
-                        strip=True)
-            else:
+            if 'show_preview' not in request.POST:
                 if not reply_to:
                     profile.save()
                 comment.save()
@@ -607,7 +546,7 @@ def edit_comment_sign_up(request, slug, comment_id):
         'page': comment.page,
         'reply_to': reply_to,
         'comment': comment,
-        'preview': preview,
+        'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
