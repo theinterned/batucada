@@ -75,7 +75,7 @@ Create a ``settings_local.py`` based on the template provided in the checkout. E
 
    cp settings_local.dist.py settings_local.py
 
-If you have yet to get a local version of mysql running you will want to do so now. 
+If you not installed a local version of mysql, you will need to do so now. 
 
 Next, sync the database and run migrations. ::
 
