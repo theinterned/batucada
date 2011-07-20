@@ -32,11 +32,23 @@
     <br>
     <div id="project-description">
         {{ project.short_description|safe }}
-    </div> 
+    </div>
     <br>
     <div id="project-summary">
       {{ project.long_description|safe }}
     </div>
+    {% if tags %}
+      <h3><b>{{ _('Tags') }}</b></h3>
+      <ul class="tags">
+        {% for tag in tags %}
+          <li>
+            <a href="{% locale_url projects_tagged_list tag.slug %}" title="{{ _('View more tagged with ') }}{{ tag.name }}">
+              {{ tag.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
     <a id="project-description-link"
        href="{{ project.detailed_description.get_absolute_url }}">
       {{ _('View Full Description') }}
