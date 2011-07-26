@@ -22,6 +22,8 @@ from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
 from richtext.models import RichTextField
+from content.models import Page
+from replies.models import PageComment
 
 import caching.base
 
@@ -279,7 +281,6 @@ class Project(ModelBase):
 
     @staticmethod
     def filter_activities(activities):
-        from content.models import Page, PageComment
         from statuses.models import Status
         content_types = [
             ContentType.objects.get_for_model(Page),
@@ -289,8 +290,14 @@ class Project(ModelBase):
         ]
         return activities.filter(target_content_type__in=content_types)
 
-register_filter('default', Project.filter_activities)
+    @staticmethod
+    def filter_learning_activities(activities):
+        pages_ct = ContentType.objects.get_for_model(Page)
+        comments_ct = ContentType.objects.get_for_model(PageComment)
+        return activities.filter(target_content_type__in=[pages_ct, comments_ct])
 
+register_filter('default', Project.filter_activities)
+register_filter('learning', Project.filter_learning_activities)
 
 class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile',

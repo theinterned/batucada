@@ -5,13 +5,11 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.db.models import Max
 from django.contrib.sites.models import Site
-from django.contrib.contenttypes.models import ContentType
 
 from drumbeat.models import ModelBase
-from activity.models import Activity, register_filter
+from activity.models import Activity
 from activity.schema import verbs, object_types
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
@@ -107,94 +105,12 @@ class PageVersion(ModelBase):
         })
 
 
-class PageComment(ModelBase):
-    """Placeholder model for comments."""
-    object_type = object_types['comment']
-
-    content = RichTextField(config_name='rich', blank='False')
-    author = models.ForeignKey('users.UserProfile',
-        related_name='comments')
-    page = models.ForeignKey('content.Page', related_name='comments')
-    created_on = models.DateTimeField(
-        auto_now_add=True, default=datetime.datetime.now)
-    reply_to = models.ForeignKey('content.PageComment', blank=True,
-        null=True, related_name='replies')
-    abs_reply_to = models.ForeignKey('content.PageComment', blank=True,
-        null=True, related_name='all_replies')
-    deleted = models.BooleanField(default=False)
-
-    def __unicode__(self):
-        if self.page.slug == 'sign-up' and not self.reply_to:
-            return _('answer at %s') % self.page.title
-        else:
-            return _('comment at %s') % self.page.title
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('comment_show', (), {
-            'slug': self.page.project.slug,
-            'page_slug': self.page.slug,
-            'comment_id': self.id,
-        })
-
-    @property
-    def title(self):
-        return ugettext('Comment to %s') % self.page.title
-
-    @property
-    def project(self):
-        return self.page.project
-
-    def has_visible_childs(self):
-        return self.visible_replies().exists()
-
-    def visible_replies(self):
-        return self.all_replies.filter(deleted=False).order_by('created_on')
-
-    def can_edit(self, user):
-        if user.is_authenticated():
-            profile = user.get_profile()
-            return (profile == self.author)
-        else:
-            return False
-
-    def send_sign_up_notification(self):
-        """Send sign_up notifications."""
-        if self.page.slug != 'sign-up':
-            return
-        project = self.page.project
-        is_answer = not self.reply_to
-        context = {
-            'comment': self,
-            'is_answer': is_answer,
-            'project': project,
-            'domain': Site.objects.get_current().domain,
-        }
-        subjects, bodies = localize_email(
-            'content/emails/sign_up_updated_subject.txt',
-            'content/emails/sign_up_updated.txt', context)
-        recipients = {}
-        for organizer in project.organizers():
-            recipients[organizer.user.username] = organizer.user
-        if self.reply_to:
-            comment = self
-            while comment.reply_to:
-                comment = comment.reply_to
-                recipients[comment.author.username] = comment.author
-        for username in recipients:
-            if recipients[username] != self.author:
-                SendUserEmail.apply_async((recipients[username],
-                    subjects, bodies))
-
-
-def send_content_notification(instance, is_comment):
-    """Send notification when a new page or comment is posted."""
+def send_email_notification(instance):
     project = instance.project
-    if project.not_listed or not is_comment and not instance.listed:
+    if not instance.listed:
         return
     context = {
         'instance': instance,
-        'is_comment': is_comment,
         'project': project,
         'domain': Site.objects.get_current().domain,
     }
@@ -208,14 +124,6 @@ def send_content_notification(instance, is_comment):
                     (participation.user, subjects, bodies))
 
 
-def filter_activities(activities):
-    pages_ct = ContentType.objects.get_for_model(Page)
-    comments_ct = ContentType.objects.get_for_model(PageComment)
-    return activities.filter(target_content_type__in=[pages_ct, comments_ct])
-
-register_filter('learning', filter_activities)
-
-
 ###########
 # Signals #
 ###########
@@ -225,14 +133,8 @@ def fire_activity(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     is_page = isinstance(instance, Page)
-    is_comment = isinstance(instance, PageComment)
-    if created and (is_page or is_comment):
-        # Send notification.
-        if is_comment and instance.page.slug == 'sign-up':
-            instance.send_sign_up_notification()
-            return
-        else:
-            send_content_notification(instance, is_comment)
+    if created and is_page:
+        send_email_notification(instance)
         # Fire activity.
         activity = Activity(actor=instance.author, verb=verbs['post'],
             target_object=instance, scope_object=instance.project)
@@ -245,5 +147,4 @@ def fire_activity(sender, **kwargs):
 
 post_save.connect(fire_activity, sender=Page,
     dispatch_uid='content_page_fire_activity')
-post_save.connect(fire_activity, sender=PageComment,
-    dispatch_uid='content_pagecomment_fire_activity')
+

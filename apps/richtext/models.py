@@ -1,5 +1,7 @@
 from ckeditor.fields import RichTextField as BaseRichTextField
 
+from south.modelsinspector import add_introspection_rules
+
 from richtext.forms import RichTextFormField
 from richtext import clean_html
 
@@ -15,3 +17,5 @@ class RichTextField(BaseRichTextField):
         setattr(model_instance, self.attname, clean_html(self.config_name,
             value))
         return value
+
+add_introspection_rules([], ["^richtext\.models\.RichTextField"])

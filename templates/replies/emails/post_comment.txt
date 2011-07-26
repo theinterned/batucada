@@ -1,12 +1,12 @@
 {% load l10n_tags %}
 {{ project.name }}{{ _(' was updated.') }}
 
-{{ instance.author }}{{ _(' created a new task: ') }}{{ instance.title }}{{ _('.') }}
+{{ instance.author }}{{ _(' posted a new comment at ') }}{{ instance.page.title }}{{ _('.') }}
 
-{{ instance.title }}
+{{ _('Comment:') }}
 {{ instance.content|striptags|safe }}
 
-{{ _('See task at:') }} http://{{domain}}{{ instance.get_absolute_url }}
+{{ _('See comment at:') }} http://{{domain}}{{ instance.get_absolute_url }}
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
