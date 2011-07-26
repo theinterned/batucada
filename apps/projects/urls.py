@@ -1,6 +1,8 @@
 from django.conf.urls.defaults import patterns, url, include
 
 urlpatterns = patterns('',
+  url(r'^tag/(?P<tag_slug>[\w\-\. ]+)/$', 'projects.views.list_tagged_all',
+      name='projects_tagged_list'),
   url(r'^$', 'projects.views.project_list',
       name='projects_gallery'),
   url(r'^all/$', 'projects.views.list_all',

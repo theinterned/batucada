@@ -26,6 +26,12 @@
     {{ form.long_description }}
     {{ form.long_description.errors }}
   </div>
+  <div class="field{% if form.tags.errors %} error{% endif %}">
+    <label for="id_tags">{{ _('Tags') }}</label>
+    <span class="hint block">{{ _('Please describe this study group, course, ... by providing a comma-separated list of tags.') }}</span>
+    {{ form.tags }}
+    {{ form.tags.errors }}
+  </div>
   <div class="field{% if form.category.errors %} error{% endif %}">
     <label for="id_category">{{ _('Kind') }}</label>
     <span class="hint block">{{ _('Select if you are creating a study group, a course, or other kind of learning project.') }}</span>
