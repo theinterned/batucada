@@ -13,6 +13,8 @@ from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.contrib.contenttypes.models import ContentType
 
+from taggit.managers import TaggableManager
+
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
@@ -99,6 +101,8 @@ class Project(ModelBase):
     )
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
+    tags = TaggableManager(blank=True)
+    
     other = models.CharField(max_length=30, blank=True, null=True)
     other_description = models.CharField(max_length=150, blank=True, null=True)
 

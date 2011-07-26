@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
+from taggit.models import Tag
 
 from links import tasks as links_tasks
 
@@ -40,6 +41,37 @@ log = logging.getLogger(__name__)
 def project_list(request):
     return render_to_response('projects/gallery.html', {},
                               context_instance=RequestContext(request))
+
+
+def list_tagged_all(request, tag_slug, page=1):
+    """Display a list of courses that are tagged with the tag and tag type. """
+    school = None
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+        except School.DoesNotExist:
+            return http.HttpResponseRedirect(reverse('projects_tagged_list'))
+    projects = Project.objects.filter(not_listed=False, tags__slug=tag_slug).order_by('name')
+    if school:
+        projects = projects.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
+    paginator = Paginator(projects, 24)
+    try:
+        current_page = paginator.page(page)
+    except EmptyPage:
+        raise http.Http404
+    return render_to_response('projects/directory.html', {
+        'tagged': projects,
+        'tag': tag,
+        'paginator': paginator,
+        'page_num': page,
+        'next_page': int(page) + 1,
+        'prev_page': int(page) - 1,
+        'num_pages': paginator.num_pages,
+        'page': current_page,
+        'school': school,
+    }, context_instance=RequestContext(request))
 
 
 def list_all(request, page=1):
