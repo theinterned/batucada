@@ -1,2 +1,2 @@
 {% load l10n_tags %}
-[{{ project.name|slice:":20" }}] {{ instance.author }}{% if is_comment %}{{ _(' posted a new comment at ') }}{{ instance.page.title }}{% else %}{{ _(' created a new task: ') }}{{ instance.title }}{% endif %}{{ _('.') }}
+[{{ project.name|slice:":20" }}] {{ instance.author }}{{ _(' created a new task: ') }}{{ instance.title }}{{ _('.') }}

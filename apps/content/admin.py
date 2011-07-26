@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from content.models import Page, PageVersion, PageComment
+from content.models import Page, PageVersion
 
 
 class PageAdmin(admin.ModelAdmin):
@@ -30,4 +30,3 @@ class PageCommentAdmin(admin.ModelAdmin):
 
 admin.site.register(Page, PageAdmin)
 admin.site.register(PageVersion, PageVersionAdmin)
-admin.site.register(PageComment, PageCommentAdmin)

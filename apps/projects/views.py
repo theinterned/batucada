@@ -99,7 +99,7 @@ def create(request):
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
             sign_up_content = render_to_string(
-                "projects/sign_up_initial_content.html", {})
+                "signups/sign_up_initial_content.html", {})
             sign_up = Page(title=_('Sign-Up'), slug='sign-up',
                 content=sign_up_content, listed=False, editable=False,
                 author_id=user.id, project_id=project.id)
