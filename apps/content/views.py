@@ -39,11 +39,17 @@ def show_page(request, slug, page_slug, pagination_page=1):
     except EmptyPage:
         raise http.Http404
 
+    new_comment_url = reverse('page_comment', kwargs=dict(
+        scope_app_label='projects', scope_model='project',
+        scope_pk=page.project.id, page_app_label='content',
+        page_model='page', page_pk=page.id))
+
     return render_to_response('content/page.html', {
         'page': page,
         'project': page.project,
         'can_edit': can_edit,
         'can_comment': page.can_comment(request.user),
+        'new_comment_url': new_comment_url,
         'first_level_comments': first_level_comments,
         'paginator': paginator,
         'page_num': pagination_page,
@@ -159,7 +165,6 @@ def delete_page(request, slug, page_slug):
             'page': page,
             'project': page.project,
         }, context_instance=RequestContext(request))
-
 
 
 def history_page(request, slug, page_slug):
@@ -284,4 +289,3 @@ def page_index_down(request, slug, counter):
     page.save()
     next_page.save()
     return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
-

@@ -43,8 +43,6 @@ urlpatterns = patterns('',
   (r'^(?P<slug>[\w-]+)/links/', include('links.urls')),
   (r'^(?P<slug>[\w-]+)/content/sign-up/', include('signups.urls')),
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),
-  (r'^(?P<slug>[\w-]+)/content/(?P<page_slug>[\w-]+)/comment/',
-      include('replies.urls')),
 
   # Project Edit URLs
   url(r'^(?P<slug>[\w-]+)/edit/$', 'projects.views.edit',

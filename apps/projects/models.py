@@ -102,7 +102,7 @@ class Project(ModelBase):
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
     tags = TaggableManager(blank=True)
-    
+
     other = models.CharField(max_length=30, blank=True, null=True)
     other_description = models.CharField(max_length=150, blank=True, null=True)
 
@@ -298,10 +298,12 @@ class Project(ModelBase):
     def filter_learning_activities(activities):
         pages_ct = ContentType.objects.get_for_model(Page)
         comments_ct = ContentType.objects.get_for_model(PageComment)
-        return activities.filter(target_content_type__in=[pages_ct, comments_ct])
+        return activities.filter(
+            target_content_type__in=[pages_ct, comments_ct])
 
 register_filter('default', Project.filter_activities)
 register_filter('learning', Project.filter_learning_activities)
+
 
 class Participation(ModelBase):
     user = models.ForeignKey('users.UserProfile',

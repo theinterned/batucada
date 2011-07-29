@@ -71,6 +71,7 @@ def sign_up(request, slug, pagination_page=1):
         'pagination_page': current_page,
     }, context_instance=RequestContext(request))
 
+
 @login_required
 def comment_sign_up(request, slug, comment_id=None):
     page = get_object_or_404(Page, project__slug=slug, slug='sign-up')
@@ -116,7 +117,8 @@ def comment_sign_up(request, slug, comment_id=None):
             if not reply_to:
                 profile = profile_form.save()
             comment = form.save(commit=False)
-            comment.page = page
+            comment.page_object = page
+            comment.scope_object = project
             comment.author = profile
             comment.reply_to = reply_to
             comment.abs_reply_to = abs_reply_to
@@ -156,8 +158,7 @@ def comment_sign_up(request, slug, comment_id=None):
 
 @login_required
 def edit_comment_sign_up(request, slug, comment_id):
-    comment = get_object_or_404(PageComment, page__project__slug=slug,
-        page__slug='sign-up', id=comment_id)
+    comment = get_object_or_404(PageComment, id=comment_id)
     if not comment.can_edit(request.user):
         return http.HttpResponseForbidden(_("You can't edit this comment"))
     abs_reply_to = comment
@@ -197,8 +198,8 @@ def edit_comment_sign_up(request, slug, comment_id):
         'profile_form': profile_form,
         'profile': profile,
         'form': form,
-        'project': comment.page.project,
-        'page': comment.page,
+        'project': comment.scope_object,
+        'page': comment.page_object,
         'reply_to': reply_to,
         'comment': comment,
         'preview': ('show_preview' in request.POST),
@@ -228,13 +229,11 @@ def accept_sign_up(request, slug, comment_id, as_organizer=False):
             "signups/accept_sign_up_comment.html",
             {'as_organizer': as_organizer})
     accept_comment = PageComment(content=accept_content,
-        author=request.user.get_profile(), page=page, reply_to=answer,
-        abs_reply_to=answer)
+        author=request.user.get_profile(), page_object=page,
+        scope_object=project, reply_to=answer, abs_reply_to=answer)
     accept_comment.save()
     if as_organizer:
         messages.success(request, _('Organizer added!'))
     else:
         messages.success(request, _('Participant added!'))
     return http.HttpResponseRedirect(answer.get_absolute_url())
-
-

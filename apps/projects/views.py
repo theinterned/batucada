@@ -52,7 +52,8 @@ def list_tagged_all(request, tag_slug, page=1):
             school = School.objects.get(slug=request.GET['school'])
         except School.DoesNotExist:
             return http.HttpResponseRedirect(reverse('projects_tagged_list'))
-    projects = Project.objects.filter(not_listed=False, tags__slug=tag_slug).order_by('name')
+    projects = Project.objects.filter(not_listed=False,
+        tags__slug=tag_slug).order_by('name')
     if school:
         projects = projects.filter(school=school).exclude(
             id__in=school.declined.values('id'))
