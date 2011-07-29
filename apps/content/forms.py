@@ -29,6 +29,3 @@ class OwnersNotListedPageForm(forms.ModelForm):
     class Meta:
         model = Page
         fields = ('content', 'collaborative', 'minor_update')
-
-
-

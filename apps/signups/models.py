@@ -6,9 +6,9 @@ from l10n.models import localize_email
 
 def send_sign_up_notification(instance):
     """Send sign_up notifications."""
-    if instance.page.slug != 'sign-up':
+    if instance.page_object.slug != 'sign-up':
         return
-    project = instance.page.project
+    project = instance.scope_object
     is_answer = not instance.reply_to
     context = {
         'comment': instance,
@@ -31,4 +31,3 @@ def send_sign_up_notification(instance):
         if recipients[username] != instance.author:
             SendUserEmail.apply_async((recipients[username],
                 subjects, bodies))
-

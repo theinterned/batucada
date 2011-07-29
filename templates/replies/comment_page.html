@@ -1,4 +1,4 @@
-{% extends "content/base_page_form.html" %}
+{% extends "replies/base.html" %}
 {% load l10n_tags %}
 {% load youtube %}
 {% load slideshare %}
@@ -6,11 +6,7 @@
 {% block bodyid %}comment{% endblock %}
 
 
-{% block project_breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
-  <span class="arrow">&rsaquo;</span>
-  <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+{% block comments_breadcrumbs %}
   {% if not create %}
     <span class="arrow">&rsaquo;</span>
     <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
@@ -21,76 +17,92 @@
 {% endblock %}
 
 
-{% block page_form_title %}
-  {% if not create %}
-    <h1>{{ _('Edit Comment') }} {{ comment.author }} {{ comment.created_on }} </h1>
-  {% else %}{% if reply_to %}
-    <h1>{{ _('Reply Comment') }} </h1>
-  {% else %}
-    <h1>{{ _('Comment') }} {{ page.title }}</h1>
-  {% endif %}{% endif %}
-  <div id="posts">
-    {% if reply_to %}
-      <div class="post-container">
-        <img class="member-picture" width="54" height="54" src="{{ reply_to.author.image_or_default }}">
-        <div class="post-contents">
-          <div class="post-details">
-            {{ reply_to.author }} &nbsp; {{ reply_to.created_on }}
-            {% if reply_to.reply_to %}
-              <br> {{ _('In Reply To:') }} &nbsp;
-              {{ reply_to.reply_to.author }} &nbsp; {{ reply_to.reply_to.created_on }}
-            {% endif %}
+{% block body %}
+
+  <section class="modal">
+    <article>
+      <h1>
+        {% if not create %}
+          {{ _('Edit Comment') }}
+        {% else %}{% if reply_to %}
+          {{ _('Reply Comment') }}
+        {% else %}
+          {{ _('New Comment') }}
+        {% endif %}{% endif %}
+      </h1>
+      <div id="posts">
+        {% if reply_to %}
+          <div class="post-container">
+            <img class="member-picture" width="54" height="54" src="{{ reply_to.author.image_or_default }}">
+            <div class="post-contents">
+              <div class="post-details">
+                {{ reply_to.author }} &nbsp; {{ reply_to.created_on }}
+                {% if reply_to.reply_to %}
+                  <br> {{ _('In Reply To:') }} &nbsp;
+                  {{ reply_to.reply_to.author }} &nbsp; {{ reply_to.reply_to.created_on }}
+                {% endif %}
+              </div>
+              <div class="post-body">
+                {{ reply_to.content|youtube|slideshare|safe }}
+              </div>
+            </div>
           </div>
-          <div class="post-body">
-            {{ reply_to.content|youtube|slideshare|safe }}
+        {% endif %}
+        {% if preview %}
+          <div class="post-container {% if reply_to %}post-replies{% endif %}">
+            <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
+            <div class="post-contents">
+              <div class="post-details">
+                {{ _('[Preview]') }} {{ comment.author }} &nbsp; {{ comment.created_on }}
+                {% if reply_to %}
+                  <br> {{ _('In Reply To:') }} &nbsp;
+                  {{ reply_to.author }} &nbsp; {{ reply_to.created_on }}
+                {% endif %}
+              </div>
+              <div class="post-body">
+                {{ comment.content|youtube|slideshare|safe }}
+              </div>
+            </div>
           </div>
-        </div>
+        {% endif %}
       </div>
-    {% endif %}
-    {% if preview %}
-      <div class="post-container {% if reply_to %}post-replies{% endif %}">
-        <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
-        <div class="post-contents">
-          <div class="post-details">
-            {{ _('[Preview]') }} {{ comment.author }} &nbsp; {{ comment.created_on }}
-            {% if reply_to %}
-              <br> {{ _('In Reply To:') }} &nbsp;
-              {{ reply_to.author }} &nbsp; {{ reply_to.created_on }}
+      <br clear="both">
+      <br />
+      <fieldset>
+        {% if not create %}
+          <form action="{% locale_url comment_edit comment_id=comment.id %}" method="post">
+        {% else %}{% if reply_to %}
+          <form action="{% locale_url comment_reply comment_id=reply_to.id %}" method="post">
+        {% else %}
+          <form action="{{ new_comment_url }}" method="post">
+        {% endif %}{% endif %}
+          {% csrf_token %}
+          <div class="field{% if form.content.errors %} error{% endif %}">
+            {{ form.content }}
+            {{ form.content.errors }}
+          </div>
+          <p class="content_buttons">
+            {% if not create %}
+              <a class="button" href="{{ comment.get_absolute_url }}">
+            {% else %}{% if reply_to %}
+              <a class="button" href="{{ reply_to.get_absolute_url }}">
+            {% else %}
+              <a class="button" href="{{ page.get_absolute_url }}">
+            {% endif %}{% endif %}
+              {{ _('Cancel') }}
+            </a>
+            {% if not create %}
+              <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+            {% else %}
+              <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
             {% endif %}
-          </div>
-          <div class="post-body">
-            {{ comment.content|youtube|slideshare|safe }}
-          </div>
-        </div>
-      </div>
-    {% endif %}
-  </div>
-  <br clear="both">
+            <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
+          </p>
+        </form>
+      </fieldset>
+    </article>
+  </section>
+
 {% endblock %}
 
-{% block page_form_url %}
-  {% if not create %}
-    {% locale_url comment_edit slug=page.project.slug page_slug=page.slug comment_id=comment.id %}
-  {% else %}{% if reply_to %}
-    {% locale_url comment_reply slug=page.project.slug page_slug=page.slug comment_id=reply_to.id %}
-  {% else %}
-    {% locale_url page_comment slug=page.project.slug page_slug=page.slug %}
-  {% endif %}{% endif %}
-{% endblock %}
 
-{% block page_form_buttons %}
-  {% if not create %}
-    <a class="button" href="{{ comment.get_absolute_url }}">
-  {% else %}{% if reply_to %}
-    <a class="button" href="{{ reply_to.get_absolute_url }}">
-  {% else %}
-    <a class="button" href="{{ page.get_absolute_url }}">
-  {% endif %}{% endif %}
-    {{ _('Cancel') }}
-  </a>
-  {% if not create %}
-    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
-  {% else %}
-    <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
-  {% endif %}
-{% endblock %}

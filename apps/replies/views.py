@@ -2,59 +2,52 @@ from django import http
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.contrib.contenttypes.models import ContentType
 
 from l10n.urlresolvers import reverse
 from drumbeat import messages
 from users.decorators import login_required
-from projects.decorators import participation_required
-from content.models import Page
 
 from replies.models import PageComment
 from replies.forms import CommentForm
 
 
-def show_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, page__project__slug=slug,
-        page__slug=page_slug, id=comment_id)
-    page_url = comment.page.get_absolute_url()
+def show_comment(request, comment_id):
+    comment = get_object_or_404(PageComment, id=comment_id)
     if comment.deleted:
-        if page_slug == 'sign-up' and not comment.reply_to:
-            msg = _('This answer was deleted.')
-        else:
-            msg = _('This comment was deleted.')
-        messages.error(request, msg)
+        messages.error(request, _('This comment was deleted.'))
         if comment.can_edit(request.user):
             return http.HttpResponseRedirect(reverse('comment_restore',
-                kwargs={'slug': comment.page.project.slug,
-                'page_slug': comment.page.slug, 'comment_id': comment.id}))
+                kwargs={'comment_id': comment.id}))
         else:
+            page_url = comment.page_object.get_absolute_url()
             return http.HttpResponseRedirect(page_url)
     else:
-        return http.HttpResponseRedirect(page_url + '#%s' % comment.id)
+        comment_url = comment.page_object.get_comment_url(comment)
+        return http.HttpResponseRedirect(comment_url)
 
 
 @login_required
-@participation_required
-def comment_page(request, slug, page_slug, comment_id=None):
-    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if not page.editable:
-        return http.HttpResponseForbidden(_("You can't edit this page"))
+def reply_comment(request, comment_id):
+    reply_to = get_object_or_404(PageComment, id=comment_id)
+    if reply_to.deleted:
+        return http.HttpResponseRedirect(reply_to.get_absolute_url())
+    can_reply = reply_to.page_object.can_comment(request.user,
+        reply_to=reply_to)
+    if not can_reply:
+        messages.error(request, _('You can not reply to this comment.'))
+        return http.HttpResponseRedirect(reply_to.get_absolute_url())
     user = request.user.get_profile()
-    reply_to = abs_reply_to = None
-    if comment_id:
-        reply_to = page.comments.get(pk=comment_id)
-        abs_reply_to = reply_to
-        while abs_reply_to.reply_to:
-            abs_reply_to = abs_reply_to.reply_to
     comment = None
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.page = page
+            comment.page_object = reply_to.page_object
+            comment.scope_object = reply_to.scope_object
             comment.author = user
             comment.reply_to = reply_to
-            comment.abs_reply_to = abs_reply_to
+            comment.abs_reply_to = reply_to.abs_reply_to or reply_to
             if 'show_preview' not in request.POST:
                 comment.save()
                 messages.success(request, _('Comment posted!'))
@@ -65,8 +58,8 @@ def comment_page(request, slug, page_slug, comment_id=None):
         form = CommentForm()
     return render_to_response('replies/comment_page.html', {
         'form': form,
-        'project': page.project,
-        'page': page,
+        'scope_object': reply_to.scope_object,
+        'page_object': reply_to.page_object,
         'reply_to': reply_to,
         'comment': comment,
         'create': True,
@@ -74,15 +67,63 @@ def comment_page(request, slug, page_slug, comment_id=None):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+def comment_page(request, scope_model, scope_app_label, scope_pk,
+        page_model, page_app_label, page_pk):
+
+    scope_ct_cls = get_object_or_404(ContentType, model=scope_model,
+        app_label=scope_app_label).model_class()
+    scope_object = get_object_or_404(scope_ct_cls, pk=scope_pk)
+    page_ct_cls = get_object_or_404(ContentType, model=page_model,
+        app_label=page_app_label).model_class()
+    page_object = get_object_or_404(page_ct_cls, pk=page_pk)
+
+    can_comment = page_object.can_comment(request.user)
+    if not can_comment:
+        msg = _('You can not post a comment at %s.')
+        messages.error(request, msg % page_object)
+        return http.HttpResponseRedirect(page_object.get_absolute_url())
+
+    new_comment_url = reverse('page_comment', kwargs=dict(
+        scope_app_label=scope_app_label, scope_model=scope_model,
+        scope_pk=scope_pk, page_app_label=page_app_label,
+        page_model=page_model, page_pk=page_pk))
+
+    user = request.user.get_profile()
+
+    comment = None
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.page_object = page_object
+            comment.scope_object = scope_object
+            comment.author = user
+            if 'show_preview' not in request.POST:
+                comment.save()
+                messages.success(request, _('Comment posted!'))
+                return http.HttpResponseRedirect(comment.get_absolute_url())
+        else:
+            messages.error(request, _('Please correct errors below.'))
+    else:
+        form = CommentForm()
+    return render_to_response('replies/comment_page.html', {
+        'form': form,
+        'scope_object': scope_object,
+        'page_object': page_object,
+        'comment': comment,
+        'create': True,
+        'preview': ('show_preview' in request.POST),
+        'new_comment_url': new_comment_url,
+    }, context_instance=RequestContext(request))
 
 
 @login_required
-@participation_required
-def edit_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, id=comment_id,
-        page__slug=page_slug, page__project__slug=slug)
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(PageComment, id=comment_id)
     if not comment.can_edit(request.user):
-        return http.HttpResponseForbidden(_("You can't edit this page"))
+        messages.error(request, _('You can not edit this comment.'))
+        return http.HttpResponseRedirect(comment.get_absolute_url())
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
@@ -98,42 +139,39 @@ def edit_comment(request, slug, page_slug, comment_id):
     return render_to_response('replies/comment_page.html', {
         'form': form,
         'comment': comment,
-        'page': comment.page,
-        'project': comment.page.project,
+        'page_object': comment.page_object,
+        'scope_object': comment.scope_object,
         'reply_to': comment.reply_to,
         'preview': ('show_preview' in request.POST),
     }, context_instance=RequestContext(request))
 
 
 @login_required
-def delete_restore_comment(request, slug, page_slug, comment_id):
-    comment = get_object_or_404(PageComment, id=comment_id,
-        page__slug=page_slug, page__project__slug=slug)
+def delete_restore_comment(request, comment_id):
+    comment = get_object_or_404(PageComment, id=comment_id)
     if not comment.can_edit(request.user):
-        return http.HttpResponseForbidden(_("You can't edit this comment"))
+        if comment.deleted:
+            msg = _('You can not restore this comment.')
+        else:
+            msg = _('You can not delete this comment.')
+        messages.error(request, msg)
+        return http.HttpResponseRedirect(comment.get_absolute_url())
     if request.method == 'POST':
         comment.deleted = not comment.deleted
         comment.save()
-        if comment.page.slug == 'sign-up' and not comment.reply_to:
-            if comment.deleted:
-                msg = _('Answer deleted!')
-            else:
-                msg = _('Answer restored!')
+        if comment.deleted:
+            msg = _('Comment deleted!')
         else:
-            if comment.deleted:
-                msg = _('Comment deleted!')
-            else:
-                msg = _('Comment restored!')
+            msg = _('Comment restored!')
         messages.success(request, msg)
         if comment.deleted:
-            return http.HttpResponseRedirect(comment.page.get_absolute_url())
+            return http.HttpResponseRedirect(
+                comment.page_object.get_absolute_url())
         else:
             return http.HttpResponseRedirect(comment.get_absolute_url())
     else:
         return render_to_response('replies/delete_restore_comment.html', {
             'comment': comment,
-            'page': comment.page,
-            'project': comment.page.project,
+            'page_object': comment.page_object,
+            'scope_object': comment.scope_object,
         }, context_instance=RequestContext(request))
-
-
