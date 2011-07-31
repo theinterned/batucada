@@ -9,6 +9,7 @@ from drumbeat.models import ModelBase, ManagerBase
 from drumbeat.templatetags.truncate_chars import truncate_chars
 from activity import schema
 from l10n.urlresolvers import reverse
+from replies.models import PageComment
 
 
 FILTERS = {
@@ -69,11 +70,12 @@ class Activity(ModelBase):
     target_object = generic.GenericForeignKey('target_content_type',
         'target_id')
     scope_object = models.ForeignKey('projects.Project', null=True)
-    reply_to = models.ForeignKey('self', null=True, related_name='replies')
-    abs_reply_to = models.ForeignKey('self', null=True,
-        related_name='all_replies')
     created_on = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
+
+    comments = generic.GenericRelation(PageComment,
+        content_type_field='page_content_type',
+        object_id_field='page_id')
 
     objects = ActivityManager()
 
@@ -81,13 +83,8 @@ class Activity(ModelBase):
         verbose_name_plural = _('activities')
 
     def get_absolute_url(self):
-        if self.abs_reply_to:
-            url = reverse('activity_index',
-                kwargs={'activity_id': self.abs_reply_to.pk})
-            return url + '#%d' % self.id
-        else:
-            return reverse('activity_index',
-                kwargs={'activity_id': self.pk})
+        return reverse('activity_index',
+            kwargs={'activity_id': self.pk})
 
     def textual_representation(self):
         return _('%(actor)s %(verb)s %(target)s') % dict(
@@ -108,7 +105,7 @@ class Activity(ModelBase):
         })
 
     def __unicode__(self):
-        return truncate_chars(self.textual_representation(), 130)
+        return _('wall activity from %s') % self.actor
 
     def can_edit(self, user):
         if user.is_authenticated():
@@ -117,14 +114,38 @@ class Activity(ModelBase):
         else:
             return False
 
-    def can_reply(self, user):
+    def visible_replies(self):
+        return self.comments.filter(deleted=False)
+
+    def can_comment(self, user, reply_to=None):
         if user.is_authenticated():
             if self.scope_object:
                 return self.scope_object.is_participating(user)
             else:
-                is_author = (user.get_profile() == self.actor)
-                return is_author or self.actor.is_following(user)
+                can_reply = (user.get_profile() == self.actor)
+                can_reply = can_reply or self.actor.is_following(user)
+                if reply_to:
+                    can_reply = can_reply or reply_to.author.is_following(user)
+                return can_reply
         return False
+
+    def get_comment_url(self, comment):
+        # TODO: bugfix link for pagination
+        return self.get_absolute_url() + '#%s' % comment.id
+
+    def comments_fire_activity(self):
+        return True
+
+    def comment_notification_recipients(self, comment):
+        if self.scope_object:
+            return self.scope_object.participants().filter(
+                no_wall_updates=False).values_list('user')
+        else:
+            recipients = {self.actor.username: self.actor}
+            while comment.reply_to:
+                comment = comment.reply_to
+                recipients[comment.author.username] = comment.author
+            return recipients.values()
 
 
 class RemoteObject(models.Model):

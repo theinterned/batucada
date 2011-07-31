@@ -107,7 +107,7 @@
     </li>
   {% endif %}
   {% if participating or answer.author == user.get_profile %}
-    <div id='signup_replies'>
+    <div id='extra-indent-post-replies'>
       {% with comments=answer.first_level_comments %}
         {% comment_threads %}
       {% endwith %}

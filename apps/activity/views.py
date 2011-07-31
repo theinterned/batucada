@@ -8,7 +8,6 @@ from django.core.paginator import Paginator, EmptyPage
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
-from statuses.forms import StatusForm
 
 from activity.models import Activity, FILTERS
 
@@ -43,9 +42,9 @@ def index(request, activity_id, page=1):
             return http.HttpResponseRedirect(reverse('activity_restore',
                 kwargs={'activity_id': activity.id}))
         return http.HttpResponseRedirect(scope_url)
-    replies = activity.all_replies.filter(deleted=False).order_by(
-        '-created_on')
-    paginator = Paginator(replies, 25)
+    replies = activity.comments.filter(
+        reply_to__isnull=True).order_by('-created_on')
+    paginator = Paginator(replies, 15)
     try:
         current_page = paginator.page(page)
     except EmptyPage:
@@ -60,34 +59,6 @@ def index(request, activity_id, page=1):
     })
     return render_to_response('activity/index.html', context,
         context_instance=RequestContext(request))
-
-
-@login_required
-def reply(request, activity_id):
-    """Create a status update that is a reply to an activity."""
-    reply_to = get_object_or_404(Activity, id=activity_id)
-    if not reply_to.can_reply(request.user):
-        messages.error(request, _("You can't reply to this activity"))
-        return http.HttpResponseRedirect(reply_to.get_absolute_url())
-    status = None
-    if request.method == 'POST':
-        form = StatusForm(data=request.POST)
-        if form.is_valid():
-            status = form.save(commit=False)
-            status.author = request.user.get_profile()
-            status.reply_to = reply_to
-            status.project = reply_to.scope_object
-            if 'show_preview' not in request.POST:
-                status.save()
-                return http.HttpResponseRedirect(status.get_absolute_url())
-        else:
-            messages.error(request, _('Please correct errors below.'))
-    else:
-        form = StatusForm()
-    return render_to_response('activity/reply.html', {
-        'reply_to': reply_to, 'preview': ('show_preview' in request.POST),
-        'form': form, 'status': status,
-    }, context_instance=RequestContext(request))
 
 
 @login_required

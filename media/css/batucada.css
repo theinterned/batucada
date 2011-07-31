@@ -1140,7 +1140,7 @@ header {}
      padding-left: 20px;
    }
 
-    .post-container.post-replies, #signup_replies .post-container {
+    .post-container.post-replies, #extra-indent-post-replies .post-container {
 	    margin-left: 30px;
 	    width: 575px;
 	}
@@ -1150,7 +1150,7 @@ header {}
 	   width: 530px;
     }
 
-    #signup_replies .post-container.post-replies {
+    #extra-indent-post-replies .post-container.post-replies {
        margin-left: 60px;
     }
 

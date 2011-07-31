@@ -1,7 +1,7 @@
 {% load l10n_tags %}
 {{ _('You have received a new direct message from') }} {{ sender}}:
 
-{{ message }}
+{{ message|safe }}
 
 {{ _('Reply:') }} http://{{domain}}{{ reply_url }}
 

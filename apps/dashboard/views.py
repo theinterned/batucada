@@ -76,7 +76,7 @@ def dashboard(request, page=1):
         }, context_instance=RequestContext(request))
 
     activities = Activity.objects.dashboard(
-        request.user.get_profile()).filter(reply_to__isnull=True)
+        request.user.get_profile())
     activities = filter_activities(request, activities)
     paginator = Paginator(activities, 25)
     try:

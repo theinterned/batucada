@@ -11,7 +11,7 @@
         {% endif %}
       </a>
     </figure>
-    {% if not organizing and not participating %}
+    {% if not organizing and not participating and not project.archived %}
       {% if user.is_authenticated %}
         {% if following %}
           <form id="unfollow_button" method="post" action="{% locale_url relationships_unfollow object_type='course' slug=project.slug %}">

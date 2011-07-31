@@ -352,8 +352,7 @@ def profile_view(request, username, page=1):
         messages.error(request, _('This user account was deleted.'))
         return http.HttpResponseRedirect(reverse('users_user_list'))
 
-    activities = Activity.objects.for_user(profile).filter(
-        reply_to__isnull=True)
+    activities = Activity.objects.for_user(profile)
     activities = filter_activities(request, activities)
     paginator = Paginator(activities, 25)
     try:
