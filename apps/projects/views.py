@@ -31,6 +31,7 @@ from statuses import forms as statuses_forms
 from activity.models import Activity
 from activity.views import filter_activities
 from activity.schema import verbs
+from signups.models import Signup
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -131,13 +132,8 @@ def create(request):
                 detailed_description.collaborative = False
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
-            sign_up_content = render_to_string(
-                "signups/sign_up_initial_content.html", {})
-            sign_up = Page(title=_('Sign-Up'), slug='sign-up',
-                content=sign_up_content, listed=False, editable=False,
-                author_id=user.id, project_id=project.id)
+            sign_up = Signup(author_id=user.id, project_id=project.id)
             sign_up.save()
-            project.sign_up_id = sign_up.id
             project.create()
             messages.success(request,
                 _('The %s has been created.') % project.kind.lower())
@@ -174,11 +170,6 @@ def show(request, slug, page=1):
         deleted=False).order_by('index')
     content_pages_for_header = content_pages[0:3]
     content_pages_count = len(content_pages)
-    if request.user.is_authenticated():
-        is_pending_signup = project.is_pending_signup(
-            request.user.get_profile())
-    else:
-        is_pending_signup = False
     if is_organizing:
         form = statuses_forms.ImportantStatusForm()
     elif is_participating:
@@ -198,7 +189,6 @@ def show(request, slug, page=1):
         'project': project,
         'participating': is_participating,
         'following': is_following,
-        'pending_signup': is_pending_signup,
         'organizing': is_organizing,
         'content_pages_for_header': content_pages_for_header,
         'content_pages_count': content_pages_count,
@@ -245,11 +235,10 @@ def clone(request):
                 listed=False, author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
-            sign_up = Page(title=_('Sign-Up'), slug='sign-up',
-                content=base_project.sign_up.content, listed=False,
-                editable=False, author_id=user.id, project_id=project.id)
+            sign_up = Signup(public=base_project.sign_up.public,
+                between_participants=base_project.sign_up.between_participants,
+                author_id=user.id, project_id=project.id)
             sign_up.save()
-            project.sign_up_id = sign_up.id
             project.save()
             tasks = Page.objects.filter(project=base_project, listed=True,
                 deleted=False).order_by('index')
@@ -324,13 +313,9 @@ def import_from_old_site(request):
                 listed=False, author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
-            sign_up_content = render_to_string(
-                "projects/sign_up_initial_content.html", {})
-            sign_up = Page(title=_('Sign-Up'), slug='sign-up',
-                content=sign_up_content, listed=False, editable=False,
+            sign_up = Signup(between_participants=course['sign_up'],
                 author_id=user.id, project_id=project.id)
             sign_up.save()
-            project.sign_up_id = sign_up.id
             project.save()
             for title, content in course['tasks']:
                 new_task = Page(title=title, content=content, author=user,
@@ -383,6 +368,7 @@ def edit(request, slug):
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
+        'school': project.school,
         'summary_tab': True,
     }, context_instance=RequestContext(request))
 

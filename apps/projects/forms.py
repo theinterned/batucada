@@ -73,7 +73,7 @@ class ProjectStatusForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('start_date', 'end_date', 'under_development',
-            'not_listed', 'signup_closed', 'archived')
+            'not_listed', 'archived')
 
 
 class ProjectAddParticipantForm(forms.Form):

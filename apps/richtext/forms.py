@@ -28,6 +28,8 @@ class RichTextFormField(fields.Field):
     def to_python(self, value):
         value = super(RichTextFormField, self).to_python(value)
         value = clean_html(self.config_name, value)
-        if value.strip() == "<br />":
+        if value and value.strip() in ('<br />', '<br>'):
+            value = u''
+        elif not value:
             value = u''
         return value

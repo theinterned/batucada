@@ -1,0 +1,106 @@
+{% extends "signups/base.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
+
+
+{% block body %}
+
+  <section class="modal">
+    <article>
+      <h1>
+        {% if create %}
+          {{ _('New Answer') }}
+        {% else %}
+          {{ _('Edit answer') }}
+        {% endif %}
+      </h1>
+      {% if preview %}
+        <div id="posts">
+          <div class="post-container">
+            <img class="member-picture" width="54" height="54" src="{{ answer.author.image_or_default }}">
+            <div class="post-contents">
+              <div class="post-details">
+                {{ _('[Preview]') }} {{ answer.author }} &nbsp; {{ answer.created_on }}
+              </div>
+              <div class="post-body">
+	            <p><strong>{{ _('Bio:') }}</strong> {{ answer.author.bio|safe }}</p>
+	            <p><strong>{{ _('Location:') }}</strong> {{ answer.author.location }}</p>
+                <strong>{{ _('Standard Set Answer:') }}</strong>
+                {{ answer.standard|youtube|slideshare|safe }}
+                {% if answer.sign_up.public %}
+                  <strong>{{ _('Public Set Answer:') }}</strong>
+                  {{ answer.public|youtube|slideshare|safe }}
+                {% endif %}
+                {% if answer.sign_up.between_participants %}
+                  <strong>{{ _('Between Participants Set Answer:') }}</strong>
+                  {{ answer.between_participants|youtube|slideshare|safe }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <br clear="both">
+        </div>
+      {% endif %}
+      <br />
+      <fieldset>
+        {% if create %}
+          <form action="{% locale_url sign_up_answer slug=project.slug %}" method="post" enctype="multipart/form-data" data-url="{% locale_url users_profile_edit_image_async %}">
+        {% else %}
+          <form action="{% locale_url sign_up_edit_answer slug=project.slug answer_id=answer.id %}" method="post" enctype="multipart/form-data" data-url="{% locale_url users_profile_edit_image_async %}">
+        {% endif %}
+          {% csrf_token %}
+          <h2>{{ _('Profile') }}</h2>
+          <p class="hint">{{ _('Your profile information is displayed with your signup answer. If you need, you can update the information of your profile bellow.') }}</p>
+          {% include "users/_profile_edit_image.html" %}
+          {% include "users/_profile_edit.html" %}
+          <h2>{{ _('Signup Questions') }}</h2>
+          <p>{{ _('Please answer the following set(s) of questions if you want to become a participant or organizer.') }}</p>
+          <h3>{{ _('Standard Set') }}</h3>
+          <p>{{ _('This set of signup questions is common to all study groups, courses, ... in P2PU. The answers to these questions will be public once you get accepted.') }}</p>
+          {{ sign_up.standard|youtube|slideshare|safe }}
+          <br>
+          <div class="field{% if form.standard.errors %} error{% endif %}">
+            {{ form.standard }}
+            {{ form.standard.errors }}
+          </div>
+          {% if sign_up.public %}
+            <h3>{{ _('Public Custom Set') }}</h3>
+            <p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be public once you get accepted.{% endblocktrans %}</p>
+            {{ sign_up.public|youtube|slideshare|safe }}
+            <div class="field{% if form.public.errors %} error{% endif %}">
+              {{ form.public }}
+              {{ form.public.errors }}
+            </div>
+          {% endif %}
+          {% if sign_up.between_participants %}
+            <h3>{{ _('Between Participants Custom Set') }}</h3>
+            <p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be visible to all participants once you get accepted.{% endblocktrans %}</p>
+            {{ sign_up.between_participants|youtube|slideshare|safe }}
+            <div class="field{% if form.between_participants.errors %} error{% endif %}">
+              {{ form.between_participants }}
+              {{ form.between_participants.errors }}
+            </div>
+          {% endif %}
+          <p class="content_buttons">
+            {% if create %}
+              <a class="button" href="{{ sign_up.get_absolute_url }}">
+            {% else %}
+              <a class="button" href="{{ answer.get_absolute_url }}">
+            {% endif %}
+              {{ _('Cancel') }}
+            </a>
+            {% if create %}
+              <button type="submit" value="{{ _('Post') }}">{{ _('Post') }}</button>
+            {% else %}
+              <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+            {% endif %}
+            <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
+          </p>
+        </form>
+      </fieldset>
+    </article>
+  </section>
+
+{% endblock %}

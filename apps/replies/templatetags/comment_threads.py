@@ -7,7 +7,8 @@ register = template.Library()
 def comment_threads(context):
     return context
 
-register.inclusion_tag('replies/_comment_threads.html', takes_context=True)(comment_threads)
+register.inclusion_tag('replies/_comment_threads.html', takes_context=True)(
+    comment_threads)
 
 
 def can_reply_comment(user, comment):

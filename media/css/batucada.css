@@ -599,8 +599,8 @@ header {}
   }
 
     #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
-    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs,
-    #sign_up_comment #breadcrumbs, #project_user_list #breadcrumbs {
+    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #signup #breadcrumbs, 
+    #project_user_list #breadcrumbs {
         height: 6em;    
     }
     
@@ -737,11 +737,6 @@ header {}
 	background-color:red;
 	color:white;
 }
-
-#people .pending {
-    background-color:red;
-    color:white;
-} 
         
       #project-summary,
       #sidebar #project-description { 
@@ -1119,7 +1114,7 @@ header {}
   margin-left: 0;
 }
 
-    #main .post-container, .modal .post-container {
+    .post-container {
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
       border-radius: 6px;
       -moz-border-radius: 6px;
@@ -1144,6 +1139,20 @@ header {}
      color: #a00;
      padding-left: 20px;
    }
+
+    .post-container.post-replies, #signup_replies .post-container {
+	    margin-left: 30px;
+	    width: 575px;
+	}
+
+    .modal .post-container.post-replies {
+       margin-left: 30px;
+	   width: 530px;
+    }
+
+    #signup_replies .post-container.post-replies {
+       margin-left: 60px;
+    }
 
     .tags li,
     #main .post-tags li, #main .post-char-count {
@@ -1300,15 +1309,6 @@ header {}
 	#page #main .action {
 	    float: right;
 	}
-	#page #main .post-replies {
-	    margin-left: 30px;
-	    width: 575px;
-	}
-
-    #comment .post-replies, #sign_up_comment .post-replies, #activity .post-replies {
-       margin-left: 30px;
-	   width: 530px;
-    }
 
     #posts .post-comments {
        float: right;

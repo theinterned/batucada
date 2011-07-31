@@ -26,7 +26,7 @@
         {% endif %}
       {% endif%}
       <p id="participate_button" {% if not user.is_authenticated %}class="login_participate_button"{% endif %}>
-        <a href="{% locale_url sign_up_comment slug=project.slug %}">{{ _('Participate')}}</a>
+        <a href="{% locale_url sign_up_answer slug=project.slug %}">{{ _('Participate')}}</a>
       </p>
     {% endif %}
     <br>
@@ -107,7 +107,7 @@
       </li>
       <li>
         <div class="label">{{ _('Signup') }}</div>
-	    <div class="value"><a href="{{ project.sign_up.get_absolute_url }}">{% if project.signup_closed %}{{ _('Closed') }}{% else %}{{ _('Open') }}{% endif %}</a></div>
+	    <div class="value"><a href="{{ sign_up.get_absolute_url }}">{{ sign_up.get_status_display }}</a></div>
       </li>
       <li>
         <div class="label">{{ _('Chat') }}</div>
@@ -133,7 +133,7 @@
     <li>
 		<div class="label">{{ _('Pending Applicants') }}</div>
 		<div class="value">
-		<a href="{{ project.sign_up.get_absolute_url }}">{{ pending_applicants_count }}</a>
+		<a href="{{ project.sign_up.get_absolute_url }}">{{ pending_signup_answers_count }}</a>
 		</div>
     </li>
     {% endif %}
@@ -156,17 +156,6 @@
   {% endfor %}
 
   <br><br>
-  {% if user.is_authenticated and not organizing and not participating %}
-    {% if pending_signup %}
-        {% if project.signup_closed %}
-          <div class="label pending">{{ _('Closed Sign-up') }}</div>
-        {% else %}
-          <div class="label pending">{{ _('Sign-up in Progress') }}</div>
-        {% endif %} 
-        <div class="value"><a href={{ pending_signup.get_absolute_url }}>{{ _('Your Answer') }}</a></div>
-        <br><br>
-    {% endif %}
-  {% endif %}
   {% if organizing %}
     <a class="button" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
   {% else %}{% if user.is_authenticated %}

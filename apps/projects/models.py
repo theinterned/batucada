@@ -117,8 +117,6 @@ class Project(ModelBase):
 
     detailed_description = models.ForeignKey('content.Page',
         related_name='desc_project', null=True, blank=True)
-    sign_up = models.ForeignKey('content.Page', related_name='sign_up_project',
-        null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
@@ -130,7 +128,6 @@ class Project(ModelBase):
 
     under_development = models.BooleanField(default=True)
     not_listed = models.BooleanField(default=False)
-    signup_closed = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)
 
     clone_of = models.ForeignKey('projects.Project', blank=True, null=True,
@@ -177,17 +174,6 @@ class Project(ModelBase):
         return Participation.objects.filter(project=self,
             left_on__isnull=True, user__deleted=False)
 
-    def pending_applicants(self):
-        page = self.sign_up
-        users = []
-        first_level_comments = page.comments.filter(reply_to__isnull=True)
-        for answer in first_level_comments.filter(deleted=False):
-            is_participant = self.participants().filter(
-                user=answer.author).exists()
-            if not is_participant and not answer.author.deleted:
-                users.append(answer.author)
-        return users
-
     def non_organizer_participants(self):
         return self.participants().filter(organizing=False)
 
@@ -220,12 +206,6 @@ class Project(ModelBase):
             return is_organizer_or_participant or is_superuser
         else:
             return False
-
-    def is_pending_signup(self, user):
-        for applicant in self.pending_applicants():
-            if applicant == user:
-                return True
-        return False
 
     def activities(self):
         return Activity.objects.filter(deleted=False,
