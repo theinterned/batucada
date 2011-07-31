@@ -108,3 +108,6 @@ INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved',
     'math-future', 'license', 'contact-us', 'values', 'privacy',
     'terms-of-use', 'news', 'create-draft-course', 'create-draft-course-panel',
     'supporters', 'about-p2pu',)
+
+# Pagination
+PAGINATION_DEFAULT_ITEMS_PER_PAGE = 20

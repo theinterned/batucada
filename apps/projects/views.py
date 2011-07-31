@@ -2,7 +2,6 @@ import logging
 import datetime
 
 from django import http
-from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
@@ -15,6 +14,7 @@ from commonware.decorators import xframe_sameorigin
 from taggit.models import Tag
 
 from links import tasks as links_tasks
+from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
 from projects.decorators import organizer_required
@@ -44,63 +44,48 @@ def project_list(request):
                               context_instance=RequestContext(request))
 
 
-def list_tagged_all(request, tag_slug, page=1):
+def list_tagged_all(request, tag_slug):
     """Display a list of courses that are tagged with the tag and tag type. """
     school = None
     tag = get_object_or_404(Tag, slug=tag_slug)
+    directory_url = reverse('projects_tagged_list', kwargs=dict(tag_slug=tag_slug))
     if 'school' in request.GET:
         try:
             school = School.objects.get(slug=request.GET['school'])
         except School.DoesNotExist:
-            return http.HttpResponseRedirect(reverse('projects_tagged_list'))
+            return http.HttpResponseRedirect(directory_url)
     projects = Project.objects.filter(not_listed=False,
         tags__slug=tag_slug).order_by('name')
     if school:
         projects = projects.filter(school=school).exclude(
             id__in=school.declined.values('id'))
-    paginator = Paginator(projects, 24)
-    try:
-        current_page = paginator.page(page)
-    except EmptyPage:
-        raise http.Http404
-    return render_to_response('projects/directory.html', {
+    context = {
         'tagged': projects,
         'tag': tag,
-        'paginator': paginator,
-        'page_num': page,
-        'next_page': int(page) + 1,
-        'prev_page': int(page) - 1,
-        'num_pages': paginator.num_pages,
-        'page': current_page,
         'school': school,
-    }, context_instance=RequestContext(request))
+        'directory_url': directory_url,
+    }
+    context.update(get_pagination_context(request, projects, 24))
+    return render_to_response('projects/directory.html', context,
+        context_instance=RequestContext(request))
 
 
-def list_all(request, page=1):
+def list_all(request):
     school = None
+    directory_url = reverse('projects_directory')
     if 'school' in request.GET:
         try:
             school = School.objects.get(slug=request.GET['school'])
         except School.DoesNotExist:
-            return http.HttpResponseRedirect(reverse('projects_directory'))
+            return http.HttpResponseRedirect(directory_url)
     projects = Project.objects.filter(not_listed=False).order_by('name')
     if school:
         projects = projects.filter(school=school).exclude(
             id__in=school.declined.values('id'))
-    paginator = Paginator(projects, 24)
-    try:
-        current_page = paginator.page(page)
-    except EmptyPage:
-        raise http.Http404
-    return render_to_response('projects/directory.html', {
-        'paginator': paginator,
-        'page_num': page,
-        'next_page': int(page) + 1,
-        'prev_page': int(page) - 1,
-        'num_pages': paginator.num_pages,
-        'page': current_page,
-        'school': school,
-    }, context_instance=RequestContext(request))
+    context = {'school': school, 'directory_url': directory_url}
+    context.update(get_pagination_context(request, projects, 24))
+    return render_to_response('projects/directory.html', context,
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -161,7 +146,7 @@ def matching_kinds(request):
     return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
-def show(request, slug, page=1):
+def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
@@ -179,11 +164,6 @@ def show(request, slug, page=1):
 
     activities = project.activities()
     activities = filter_activities(request, activities)
-    paginator = Paginator(activities, 10)
-    try:
-        current_page = paginator.page(page)
-    except EmptyPage:
-        raise http.Http404
 
     context = {
         'project': project,
@@ -193,14 +173,9 @@ def show(request, slug, page=1):
         'content_pages_for_header': content_pages_for_header,
         'content_pages_count': content_pages_count,
         'form': form,
-        'paginator': paginator,
-        'page_num': page,
-        'next_page': int(page) + 1,
-        'prev_page': int(page) - 1,
-        'num_pages': paginator.num_pages,
-        'page': current_page,
         'domain': Site.objects.get_current().domain,
     }
+    context.update(get_pagination_context(request, activities))
     return render_to_response('projects/project.html', context,
                               context_instance=RequestContext(request))
 
@@ -621,42 +596,21 @@ def task_list(request, slug):
         context_instance=RequestContext(request))
 
 
-def user_list(request, slug, participants_page=1, followers_page=1):
+def user_list(request, slug):
     """Display full list of users for the project."""
     project = get_object_or_404(Project, slug=slug)
-
     participants = project.non_organizer_participants()
-    participants_paginator = Paginator(participants, 24)
-    try:
-        participants_current_page = participants_paginator.page(
-            participants_page)
-    except EmptyPage:
-        raise http.Http404
-    participants = participants_current_page.object_list
-
     followers = project.non_participant_followers()
-    followers_paginator = Paginator(followers, 24)
-    try:
-        followers_current_page = followers_paginator.page(followers_page)
-    except EmptyPage:
-        raise http.Http404
-    followers = followers_current_page.object_list
-
-    return render_to_response('projects/project_user_list.html', {
+    projects_users_url = reverse('projects_user_list',
+        kwargs=dict(slug=project.slug))
+    context = {
         'project': project,
         'organizers': project.organizers(),
-        'participants': participants,
-        'followers': followers,
-        'participants_paginator': participants_paginator,
-        'participants_page_num': participants_page,
-        'participants_next_page': int(participants_page) + 1,
-        'participants_prev_page': int(participants_page) - 1,
-        'participants_num_pages': participants_paginator.num_pages,
-        'participants_page': participants_current_page,
-        'followers_paginator': followers_paginator,
-        'followers_page_num': followers_page,
-        'followers_next_page': int(followers_page) + 1,
-        'followers_prev_page': int(followers_page) - 1,
-        'followers_num_pages': followers_paginator.num_pages,
-        'followers_page': followers_current_page,
-    }, context_instance=RequestContext(request))
+        'projects_users_url': projects_users_url,
+    }
+    context.update(get_pagination_context(request, participants, 24,
+        prefix='participants_'))
+    context.update(get_pagination_context(request, followers, 24,
+        prefix='followers_'))
+    return render_to_response('projects/project_user_list.html', context,
+        context_instance=RequestContext(request))

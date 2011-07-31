@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'django.contrib.redirects',
     'south',
     'wellknown',
+    'pagination',
     'users',
     'search',
     'chat',

@@ -6,6 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.template.loader import render_to_string
 from django.contrib.contenttypes import generic
+from django.db.models import Q
+from django.conf import settings
 
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
@@ -47,9 +49,34 @@ class Signup(ModelBase):
     def pending_answers(self):
         return self.answers.filter(accepted=False, deleted=False)
 
-    def get_answer_url(self, answer):
-        # TODO: bugfix link for pagination
-        return self.get_absolute_url() + '#answer-%s' % answer.id
+    def get_visible_answers(self, user):
+        answers = self.answers.all()
+        if user.is_authenticated():
+            profile = user.get_profile()
+            is_organizing = self.project.organizers().filter(
+                user=profile).exists()
+            is_participating = self.project.participants().filter(
+                user=profile).exists()
+            if not is_organizing:
+                answers = answers.filter(Q(accepted=True) | Q(author=profile))
+        else:
+            answers = answers.filter(accepted=True)
+        return answers.order_by('-created_on')
+
+    def get_page_for_answer(self, answer, user):
+        answer_index = 0
+        for visible_answer in self.get_visible_answers(user):
+            if visible_answer.id == answer.id:
+                break
+            answer_index += 1
+        items_per_page = settings.PAGINATION_DEFAULT_ITEMS_PER_PAGE
+        return (answer_index / items_per_page) + 1
+
+    def get_answer_url(self, answer, user):
+        page = self.get_page_for_answer(answer, user)
+        url = self.get_absolute_url()
+        return url + '?pagination_page_number=%s#answer-%s' % (
+            page, answer.id)
 
 
 class SignupAnswer(ModelBase):
@@ -108,9 +135,11 @@ class SignupAnswer(ModelBase):
         else:
             return False
 
-    def get_comment_url(self, comment):
-        # TODO: bugfix link for pagination
-        return self.sign_up.get_absolute_url() + '#%s' % comment.id
+    def get_comment_url(self, comment, user):
+        page = self.sign_up.get_page_for_answer(self, user)
+        url = self.sign_up.get_absolute_url()
+        return url + '?pagination_page_number=%s#%s' % (
+            page, comment.id)
 
     def comments_fire_activity(self):
         return False

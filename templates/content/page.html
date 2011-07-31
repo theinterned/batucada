@@ -4,6 +4,7 @@
 {% load slideshare %}
 {% load project_tags %}
 {% load comment_threads %}
+{% load pagination_tags %}
 
 {% block project_title %}{{ page.title }}{% endblock %}
 
@@ -37,28 +38,18 @@
 <hr />
 {{ page.content|youtube|slideshare|safe }}
 
-{% if first_level_comments %}
+{% if pagination_current_page.object_list %}
 
 <h1>{{_('Comments')}}</h1>
 <br>
 <ul id="posts">
-  {% with comments=pagination_page.object_list%}
+  {% with comments=pagination_current_page.object_list %}
     {% comment_threads %}
   {% endwith %}
 </ul>
-
-<div class="pagination">
-  {% if pagination_page.has_previous %}
-    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=prev_page %}">← {{ _('previous') }}</a>
-  {% else %}
-    <span class="btn">← {{ _('previous') }}</span>
-  {% endif %}
-  {% if pagination_page.has_next %}
-    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=next_page %}">{{ _('next') }} →</a>
-  {% else %}
-    <span class="btn">{{_('next')}} →</span>
-  {% endif %}
-</div>
+{% with prefix='' page_url=page.get_absolute_url %}
+  {% pagination_links %}
+{% endwith %}
 
 {% endif %}
 </div>

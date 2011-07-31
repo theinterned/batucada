@@ -15,7 +15,8 @@ def activity_reply_action(activity, user):
         kwargs.update(dict(scope_app_label='projects',
             scope_model='project', scope_pk=activity.scope_object.id))
     reply_url = reverse('page_comment', kwargs=kwargs)
-    return {'can_reply': can_reply, 'activity': activity, 'reply_url': reply_url}
+    return {'can_reply': can_reply, 'activity': activity,
+        'reply_url': reply_url}
 
 register.inclusion_tag('activity/reply_action_link.html')(
     activity_reply_action)
