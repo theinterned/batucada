@@ -16,7 +16,6 @@ from users.tasks import SendUserEmail
 from l10n.models import localize_email
 from richtext.models import RichTextField
 from replies.models import PageComment
-from signups.models import send_sign_up_notification
 
 
 log = logging.getLogger(__name__)
@@ -36,7 +35,6 @@ class Page(ModelBase):
     listed = models.BooleanField(default=True)
     minor_update = models.BooleanField(default=True)
     collaborative = models.BooleanField(default=True)
-    editable = models.BooleanField(default=True)
     index = models.IntegerField()
     deleted = models.BooleanField(default=False)
 
@@ -81,8 +79,6 @@ class Page(ModelBase):
         super(Page, self).save()
 
     def can_edit(self, user):
-        if not self.editable:
-            return False
         if self.project.is_organizing(user):
             return True
         if self.collaborative:
@@ -96,24 +92,12 @@ class Page(ModelBase):
         # TODO: bugfix link for pagination
         return self.get_absolute_url() + '#%s' % comment.id
 
-    def send_new_comment_notification(self, instance):
-        if self.slug == 'sign-up':
-            send_sign_up_notification(instance)
-        else:
-            project = self.project
-            context = {
-                'instance': instance,
-                'project': project,
-                'domain': Site.objects.get_current().domain,
-            }
-            subjects, bodies = localize_email(
-                'replies/emails/post_comment_subject.txt',
-                'replies/emails/post_comment.txt', context)
-            for participation in project.participants():
-                is_author = (instance.author == participation.user)
-                if not is_author and not participation.no_updates:
-                    SendUserEmail.apply_async(
-                            (participation.user, subjects, bodies))
+    def comments_fire_activity(self):
+        return True
+
+    def comment_notification_recipients(self, comment):
+        return self.project.participants().filter(
+            no_updates=False).values_list('user')
 
 
 class PageVersion(ModelBase):

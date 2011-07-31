@@ -41,7 +41,7 @@ urlpatterns = patterns('',
 
   # Project Content URLs
   (r'^(?P<slug>[\w-]+)/links/', include('links.urls')),
-  (r'^(?P<slug>[\w-]+)/content/sign-up/', include('signups.urls')),
+  (r'^(?P<slug>[\w-]+)/sign-up/', include('signups.urls')),
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),
 
   # Project Edit URLs

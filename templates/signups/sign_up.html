@@ -1,80 +1,102 @@
-{% extends "projects/base.html" %}
+{% extends "signups/base.html" %}
+{% load i18n %}
 {% load l10n_tags %}
 {% load youtube %}
 {% load slideshare %}
 {% load project_tags %}
 {% load comment_threads %}
-
-{% block project_title %}{{ page.title }}{% endblock %}
-
-{% block bodyid %}page{% endblock %}
-
-{% block project_breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-{% endblock %}
+{% load signup_tags %}
 
 {% block breadcrumbs_actions %}
   {% if can_post_answer %}
-    <a class="button" href="{% locale_url sign_up_comment slug=page.project.slug %}">{{ _('Post Answer') }}</a>
+    <a class="button" href="{% locale_url sign_up_answer slug=project.slug %}">{{ _('Post Answer') }}</a>
   {% endif %}
 {% endblock %}
 
 {% block body %}
 {% sidebar %}
 <div id="main" class="content_page">
-<h1 class="school_header">{{ page.title }}</h1>
+<h1 class="school_header">{{ _('Sign-Up') }}</h1>
 <hr />
-{{ page.content|youtube|slideshare|safe }}
-{% if first_level_comments %}
+<p>{{ _('Anyone can follow a') }} {{ project.kind|lower }} {{ _('on P2PU. Participating is the next level of engagement. The sign-up is a space where interested individuals can express their interest and background in the topic and commit to working with the rest of the participants. Please answer the following set(s) of questions if you want to become a participant or organizer.') }}</p>
+<h3>{{ _('Standard Set') }}</h3>
+<p>{{ _('This set of signup questions is common to all study groups, courses, ... in P2PU. The answers to these questions will be public once you get accepted.') }}</p>
+{{ sign_up.standard|youtube|slideshare|safe }}
+
+{% if sign_up.public %}
+<br>
+<h3>{{ _('Public Custom Set') }}</h3>
+<p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be public once you get accepted.{% endblocktrans %}</p>
+{{ sign_up.public|youtube|slideshare|safe }}
+{% endif %}
+
+{% if sign_up.between_participants %}
+<br>
+<h3>{{ _('Between Participants Custom Set') }}</h3>
+<p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be visible to all participants once you get accepted.{% endblocktrans %}</p>
+{{ sign_up.between_participants|youtube|slideshare|safe }}
+{% endif %}
+
+{% if answers %}
 <br>
 <h1>{{ _('Answers') }}</h1>
 {% if organizing %}<p>{{_('Pending Answers:')}} {{ pending_answers_count }}</p>{% endif %}
 <br>
 <ul id="posts">
-{% for comment in pagination_page.object_list %}
-  <a name="{{ comment.id }}"></a>
-  {% if comment.deleted %}
-    {% if comment.has_visible_childs %}
+{% for answer in pagination_page.object_list %}
+  <a name="answer-{{ answer.id }}"></a>
+  {% if answer.deleted %}
+    {% if answer.has_visible_childs %}
       <li class="post-container deleted">
         {{ _('This answer was deleted.') }}
-        {% if user|can_edit_comment:comment %}
-          <a class="action restore" href="{% locale_url comment_restore comment_id=comment.id %}">{{ _('Restore') }}</a>
+        {% if user|can_edit_signup_answer:answer %}
+          <a class="action restore" href="{% locale_url restore_signup_answer slug=project.slug answer_id=answer.id %}">{{ _('Restore') }}</a>
         {% endif %}
       <li>
     {% endif %}
   {% else %}
     <li class="post-container">
       {% if user.is_authenticated %}
-        <a class="action reply-to" href="{% locale_url sign_up_reply slug=project.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
-        {% if user|can_edit_comment:comment %}
-          <a class="action delete" href="{% locale_url comment_delete comment_id=comment.id %}">{{ _('Delete') }}</a>
-          <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=comment.id %}">{{ _('Edit') }}</a>
+        <a class="action reply-to" href="{% locale_url page_comment scope_model='project' scope_app_label='projects' scope_pk=project.id page_model='signupanswer' page_app_label='signups' page_pk=answer.id %}">{{ _('Reply') }}</a>
+        {% if user|can_edit_signup_answer:answer %}
+          <a class="action delete" href="{% locale_url delete_signup_answer slug=project.slug answer_id=answer.id %}">{{ _('Delete') }}</a>
+          <a class="action edit" href="{% locale_url sign_up_edit_answer slug=project.slug answer_id=answer.id %}">{{ _('Edit') }}</a>
         {% else %}
-          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{ _('Report Abuse') }}</a>
+          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="signupanswer" app_label="signups" pk=answer.id %}">{{ _('Report Abuse') }}</a>
         {% endif %}
       {% endif %}
-      <a href="{{ comment.author.get_absolute_url }}">
-        <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
+      <a href="{{ answer.author.get_absolute_url }}">
+        <img class="member-picture" width="54" height="54" src="{{ answer.author.image_or_default }}">
       </a>
       <div class="post-contents">
         <div class="post-details">
-          <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>
+          <a href="{{ answer.author.get_absolute_url }}">{{ answer.author }}</a>
           &nbsp;
-          <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
+          <a href="{{ answer.get_absolute_url }}">{{ answer.created_on }}</a>
         </div>
         <div class="post-body">
-	        <p><strong>{{ _('Bio:') }}</strong> {{ comment.author.bio|safe }}</p>
-	        <p><strong>{{ _('Location:') }}</strong> {{ comment.author.location }}</p>
-	        <h3>{{ _('Answer:') }}</h3>
-          {{ comment.content|youtube|slideshare|safe }}
+	        <p><strong>{{ _('Bio:') }}</strong> {{ answer.author.bio|safe }}</p>
+	        <p><strong>{{ _('Location:') }}</strong> {{ answer.author.location }}</p>
+            <strong>{{ _('Standard Set Answer:') }}</strong>
+            {{ answer.standard|youtube|slideshare|safe }}
+            {% if answer.sign_up.public %}
+              <strong>{{ _('Public Set Answer:') }}</strong>
+              {{ answer.public|youtube|slideshare|safe }}
+            {% endif %}
+            {% if answer.sign_up.between_participants %}
+              {% if participating or answer.author == user.get_profile %}
+                <strong>{{ _('Between Participants Set Answer:') }}</strong>
+                {{ answer.between_participants|youtube|slideshare|safe }}
+              {% endif%}
+            {% endif %}
+
           {% if organizing %}
-            {% if not comment.is_participating %}
-              <form method="post" action="{% locale_url sign_up_add_participant slug=project.slug comment_id=comment.id %}">
+            {% if not answer.accepted %}
+              <form method="post" action="{% locale_url sign_up_accept_participant slug=project.slug answer_id=answer.id %}">
                 {% csrf_token %}
                 <button>{{ _('Add Participant') }}</button>
               </form>
-              <form method="post" action="{% locale_url sign_up_add_organizer slug=project.slug comment_id=comment.id %}">
+              <form method="post" action="{% locale_url sign_up_accept_organizer slug=project.slug answer_id=answer.id %}">
                 {% csrf_token %}
                 <button>{{ _('Add Organizer') }}</button>
               </form>
@@ -84,47 +106,23 @@
       </div>
     </li>
   {% endif %}
-{% for reply in comment.visible_replies %}
-  <li class="post-container post-replies">
-    <a name="{{ reply.id }}"></a>
-    {% if user.is_authenticated %}
-      <a class="action reply-to" href="{% locale_url sign_up_reply slug=project.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
-      {% if user|can_edit_comment:reply %}
-        <a class="action delete" href="{% locale_url comment_delete comment_id=reply.id %}">{{ _('Delete') }}</a>
-        <a class="action edit" href="{% locale_url sign_up_edit_comment slug=project.slug comment_id=reply.id %}">{{ _('Edit') }}</a>  
-      {% else %}
-        <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="replies" pk=reply.id %}">{{ _('Report Abuse') }}</a>
-      {% endif %}
-    {% endif %}
-    <a href="{{ reply.author.get_absolute_url }}">
-      <img class="member-picture" width="54" height="54" src="{{ reply.author.image_or_default }}">
-    </a>
-    <div class="post-contents">
-      <div class="post-details">
-        <a href="{{ reply.author.get_absolute_url }}">{{ reply.author }}</a>
-        &nbsp;
-        <a href="{{ reply.get_absolute_url }}">{{ reply.created_on }}</a>
-        <br> {{ _('In Reply To:') }} &nbsp;
-        <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author }}</a>
-        &nbsp;
-        <a href="{{ reply.reply_to.get_absolute_url }}">{{ reply.reply_to.created_on }}</a>
-      </div>
-      <div class="post-body">
-        {{ reply.content|youtube|slideshare|safe }}
-      </div>
+  {% if participating or answer.author == user.get_profile %}
+    <div id='signup_replies'>
+      {% with comments=answer.first_level_comments %}
+        {% comment_threads %}
+      {% endwith %}
     </div>
-  </li>
-{% endfor %}
+  {% endif %}
 {% endfor %}
 </ul>
 <div class="pagination">
   {% if pagination_page.has_previous %}
-    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=prev_page %}">← {{ _('previous') }}</a>
+    <a class="btn" href="{% locale_url sign_up slug=project.slug pagination_page=prev_page %}">← {{ _('previous') }}</a>
   {% else %}
     <span class="btn">← {{ _('previous') }}</span>
   {% endif %}
   {% if pagination_page.has_next %}
-    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=next_page %}">{{ _('next') }} →</a>
+    <a class="btn" href="{% locale_url sign_up slug=project.slug pagination_page=next_page %}">{{ _('next') }} →</a>
   {% else %}
     <span class="btn">{{_('next')}} →</span>
   {% endif %}

@@ -5,6 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from users.tasks import SendUserEmail
+from l10n.models import localize_email
+from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.schema import verbs, object_types
@@ -16,7 +19,7 @@ class PageComment(ModelBase):
     """Placeholder model for comments."""
     object_type = object_types['comment']
 
-    content = RichTextField(config_name='rich', blank='False')
+    content = RichTextField(config_name='rich', blank=False)
     author = models.ForeignKey('users.UserProfile',
         related_name='comments')
 
@@ -65,6 +68,19 @@ class PageComment(ModelBase):
         else:
             return False
 
+    def send_comment_notification(self):
+        context = {
+            'comment': self,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'replies/emails/post_comment_subject.txt',
+            'replies/emails/post_comment.txt', context)
+        recipients = self.page_object.comment_notification_recipients(self)
+        for recipient in recipients:
+            if self.author != recipient:
+                SendUserEmail.apply_async((recipient, subjects, bodies))
+
 
 ###########
 # Signals #
@@ -75,10 +91,11 @@ def fire_activity(sender, **kwargs):
     created = kwargs.get('created', False)
     is_comment = isinstance(instance, PageComment)
     if created and is_comment:
-        instance.page_object.send_new_comment_notification(instance)
-        activity = Activity(actor=instance.author, verb=verbs['post'],
-            target_object=instance, scope_object=instance.scope_object)
-        activity.save()
+        instance.send_comment_notification()
+        if instance.page_object.comments_fire_activity():
+            activity = Activity(actor=instance.author, verb=verbs['post'],
+                target_object=instance, scope_object=instance.scope_object)
+            activity.save()
 
 
 post_save.connect(fire_activity, sender=PageComment,

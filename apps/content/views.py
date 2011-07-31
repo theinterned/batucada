@@ -64,7 +64,7 @@ def show_page(request, slug, page_slug, pagination_page=1):
 @participation_required
 def edit_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if not page.editable or page.deleted:
+    if page.deleted:
         return http.HttpResponseForbidden(_("You can't edit this page"))
     if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
@@ -145,10 +145,10 @@ def create_page(request, slug):
 @participation_required
 def delete_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if page.deleted or not page.editable or not page.listed:
-        return http.HttpResponseForbidden(_("You can't edit this page"))
+    if page.deleted or not page.listed:
+        return http.HttpResponseForbidden(_("You can't delete this page"))
     if not page.project.is_organizing(request.user) and not page.collaborative:
-        return http.HttpResponseForbidden(_("You can't edit this page"))
+        return http.HttpResponseForbidden(_("You can't delete this page"))
     if request.method == 'POST':
         old_version = PageVersion(title=page.title, content=page.content,
             author=page.author, date=page.last_update, page=page)
@@ -169,8 +169,6 @@ def delete_page(request, slug, page_slug):
 
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if not page.editable:
-        return http.HttpResponseForbidden(_("You can't edit this page"))
     versions = PageVersion.objects.filter(page=page).order_by('-date')
     return render_to_response('content/history_page.html', {
         'page': page,
@@ -183,8 +181,6 @@ def version_page(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id, deleted=False)
     page = version.page
-    if not page.editable:
-        return http.HttpResponseForbidden(_("You can't edit this page"))
     return render_to_response('content/version_page.html', {
         'page': page,
         'version': version,
@@ -199,8 +195,8 @@ def restore_version(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id)
     page = version.page
-    if not page.editable or version.deleted:
-        return http.HttpResponseForbidden(_("You can't edit this page"))
+    if version.deleted:
+        return http.HttpResponseForbidden(_("You can't restore this page"))
     if page.project.is_organizing(request.user):
         form_cls = OwnersPageForm if page.listed else OwnersNotListedPageForm
     elif page.collaborative:

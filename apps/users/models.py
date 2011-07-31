@@ -97,7 +97,7 @@ class UserProfile(ModelBase):
         max_length=255, default='', null=True, blank=True)
     password = models.CharField(max_length=255, default='')
     email = models.EmailField(unique=True, null=True)
-    bio = RichTextField()
+    bio = RichTextField(blank=True)
     image = models.ImageField(
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())

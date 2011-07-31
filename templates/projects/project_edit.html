@@ -45,6 +45,7 @@
 	<li class="summary {% if summary_tab %}active{% endif %}"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Summary') }}</a></li>
 	<li class="image {% if image_tab %}active{% endif %}"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Image') }}</a></li>
 	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{{ _('Status &amp; Dates') }}</a></li>
+    <li class="status {% if signup_tab %}active{% endif %}"><a href="{% locale_url edit_signup slug=project.slug %}">{{ _('Signup') }}</a></li>
 	<li class="participants {% if participants_tab %}active{% endif %}"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
 	<li class="links {% if links_tab %}active{% endif %}"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
     {% else %}

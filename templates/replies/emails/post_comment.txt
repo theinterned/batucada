@@ -1,12 +1,14 @@
 {% load l10n_tags %}
-{{ project.name }}{{ _(' was updated.') }}
+{% if comment.scope_object %}
+{{ comment.scope_object.name }}{{ _(' was updated.') }}
+{% endif %}
 
-{{ instance.author }}{{ _(' posted a new comment at ') }}{{ instance.page.title }}{{ _('.') }}
+{{ comment.author }}{{ _(' posted a new comment at ') }}{{ comment.page_object }}{{ _('.') }}
 
 {{ _('Comment:') }}
-{{ instance.content|striptags|safe }}
+{{ comment.content|striptags|safe }}
 
-{{ _('See comment at:') }} http://{{domain}}{{ instance.get_absolute_url }}
+{{ _('See comment at:') }} http://{{domain}}{{ comment.get_absolute_url }}
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}

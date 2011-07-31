@@ -3,6 +3,8 @@ import datetime
 from django import template
 
 from content.models import Page
+from signups.models import Signup
+
 from projects.models import Project
 from projects import drupal
 
@@ -13,19 +15,13 @@ register = template.Library()
 def sidebar(context, max_people_count=64):
     user = context['user']
     project = context['project']
+    sign_up = Signup.objects.get(project=project)
     is_participating = is_following = is_organizing = False
-    pending_signup = None
     if user.is_authenticated():
         is_participating = project.participants().filter(user=user).exists()
         profile = user.get_profile()
         is_following = profile.is_following(project)
         is_organizing = project.organizers().filter(user=user).exists()
-        if not is_participating and not is_organizing:
-            signup = Page.objects.get(slug='sign-up', project=project)
-            answers = signup.comments.filter(reply_to__isnull=True,
-                deleted=False, author=profile)
-            if answers.exists():
-                pending_signup = answers[0]
 
     tags = project.tags.exclude(slug='').order_by('name')
 
@@ -50,7 +46,7 @@ def sidebar(context, max_people_count=64):
         remaining -= sidebar_followers.count()
 
     update_count = project.activities().count()
-    pending_applicants_count = len(project.pending_applicants())
+    pending_signup_answers_count = sign_up.pending_answers().count()
     content_pages = Page.objects.filter(project__pk=project.pk,
         listed=True, deleted=False).order_by('index')
     links = project.link_set.all().order_by('index')
@@ -74,12 +70,12 @@ def sidebar(context, max_people_count=64):
         'organizing': is_organizing,
         'organizers_count': organizers_count,
         'update_count': update_count,
-        'pending_applicants_count': pending_applicants_count,
+        'pending_signup_answers_count': pending_signup_answers_count,
         'content_pages': content_pages,
         'links': links,
         'school': school,
         'imported_from': imported_from,
-        'pending_signup': pending_signup,
+        'sign_up': sign_up,
         'sidebar_organizers': sidebar_organizers,
         'sidebar_participants': sidebar_participants,
         'sidebar_followers': sidebar_followers,
@@ -103,7 +99,8 @@ def project_list(school=None, limit=8):
     popular = Project.objects.get_popular(limit=limit, school=school)
     one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
     new = listed.filter(created_on__gte=one_week).order_by('-created_on')
-    open_signup = listed.filter(signup_closed=False)
+    open_signup_ids = Signup.objects.exclude(status=Signup.CLOSED).values('project')
+    open_signup = Project.objects.filter(id__in=open_signup_ids)
     under_development = Project.objects.filter(under_development=True,
         not_listed=False, archived=False)
     archived = Project.objects.filter(not_listed=False,
@@ -113,8 +110,8 @@ def project_list(school=None, limit=8):
             id__in=school.declined.values('id'))
         new = new.filter(school=school).exclude(
             id__in=school.declined.values('id'))
-        open_signup = open_signup.filter(school=school).exclude(
-            id__in=school.declined.values('id'))
+        open_signup = open_signup.filter(project__school=school).exclude(
+            project_id__in=school.declined.values('id'))
         under_development = under_development.filter(school=school).exclude(
             id__in=school.declined.values('id'))
         archived = archived.filter(school=school).exclude(
