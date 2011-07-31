@@ -65,7 +65,7 @@ Once installed, create your virtual environment for ``lernanta`` and install the
 
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
-    sh/rmpyc
+    ./sh/rmpyc
 
 If the mysql database doesn't exist yet, create it. You need to `create the user`_ you'll use. You will use the database name, user, and password in the next file (settings_local.py) ::
 
