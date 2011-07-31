@@ -4,10 +4,10 @@
 {% load slideshare %}
 
 {% for comment in comments %}
-  <a name="{{ comment.id }}"></a>
   {% if comment.deleted %}
     {% if comment.has_visible_childs %}
       <li class="post-container deleted">
+        <a name="{{ comment.id }}"></a>
         {{ _('This comment was deleted.') }}
         {% if user|can_edit_comment:comment %}
           <a class="action restore" href="{% locale_url comment_restore comment_id=comment.id %}">{{ _('Restore') }}</a>
@@ -16,6 +16,7 @@
     {% endif %}
   {% else %}
     <li class="post-container">
+      <a name="{{ comment.id }}"></a>
       {% if user.is_authenticated %}
         {% if user|can_reply_comment:comment %}
           <a class="action reply-to" href="{% locale_url comment_reply comment_id=comment.id %}">{{ _('Reply') }}</a>

@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import Max
 from django.contrib.sites.models import Site
 from django.contrib.contenttypes import generic
+from django.conf import settings
 
 from drumbeat.models import ModelBase
 from activity.models import Activity
@@ -85,12 +86,25 @@ class Page(ModelBase):
             return self.project.is_participating(user)
         return False
 
+    def first_level_comments(self):
+        return self.comments.filter(reply_to__isnull=True).order_by(
+            '-created_on')
+
     def can_comment(self, user, reply_to=None):
         return self.project.is_participating(user)
 
-    def get_comment_url(self, comment):
-        # TODO: bugfix link for pagination
-        return self.get_absolute_url() + '#%s' % comment.id
+    def get_comment_url(self, comment, user):
+        comment_index = 0
+        abs_reply_to = comment.abs_reply_to or comment
+        for first_level_comment in self.first_level_comments():
+            if abs_reply_to.id == first_level_comment.id:
+                break
+            comment_index += 1
+        items_per_page = settings.PAGINATION_DEFAULT_ITEMS_PER_PAGE
+        page = (comment_index / items_per_page) + 1
+        url = self.get_absolute_url()
+        return url + '?pagination_page_number=%s#%s' % (
+            page, comment.id)
 
     def comments_fire_activity(self):
         return True

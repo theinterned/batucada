@@ -2,8 +2,6 @@ from django import http
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.core.paginator import Paginator, EmptyPage
-from django.db.models import Q
 
 from l10n.urlresolvers import reverse
 from drumbeat import messages
@@ -11,6 +9,7 @@ from users.decorators import login_required
 from users.forms import ProfileEditForm, ProfileImageForm
 from relationships.models import Relationship
 from projects.decorators import organizer_required
+from pagination.views import get_pagination_context
 
 from signups.models import Signup
 from signups.forms import SignupForm, SignupAnswerForm
@@ -41,10 +40,9 @@ def edit_signup(request, slug):
     }, context_instance=RequestContext(request))
 
 
-def show_signup(request, slug, pagination_page=1):
+def show_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
-    answers = sign_up.answers.all()
-    pending_answers = answers.filter(deleted=False, accepted=False)
+    pending_answers = sign_up.answers.filter(deleted=False, accepted=False)
     project = sign_up.project
     is_organizing = is_participating = can_post_answer = False
     if request.user.is_authenticated():
@@ -52,34 +50,22 @@ def show_signup(request, slug, pagination_page=1):
         is_organizing = project.organizers().filter(user=profile).exists()
         is_participating = project.participants().filter(user=profile).exists()
         if not is_organizing:
-            answers = answers.filter(Q(accepted=True) | Q(author=profile))
             if sign_up.status != Signup.CLOSED and not is_participating:
                 can_post_answer = (not pending_answers.filter(
                     author=profile).exists())
-    else:
-        answers = answers.filter(accepted=True)
     pending_answers_count = pending_answers.count()
-    answers = answers.order_by('-created_on')
-    paginator = Paginator(answers, 15)
-    try:
-        current_page = paginator.page(pagination_page)
-    except EmptyPage:
-        raise http.Http404
-    return render_to_response('signups/sign_up.html', {
+    answers = sign_up.get_visible_answers(request.user)
+    context = {
         'sign_up': sign_up,
         'project': project,
         'organizing': is_organizing,
         'participating': is_participating,
-        'answers': answers,
         'can_post_answer': can_post_answer,
         'pending_answers_count': pending_answers_count,
-        'paginator': paginator,
-        'page_num': pagination_page,
-        'next_page': int(pagination_page) + 1,
-        'prev_page': int(pagination_page) - 1,
-        'num_pages': paginator.num_pages,
-        'pagination_page': current_page,
-    }, context_instance=RequestContext(request))
+    }
+    context.update(get_pagination_context(request, answers))
+    return render_to_response('signups/sign_up.html', context,
+        context_instance=RequestContext(request))
 
 
 def show_signup_answer(request, slug, answer_id):
@@ -93,7 +79,7 @@ def show_signup_answer(request, slug, answer_id):
         else:
             return http.HttpResponseRedirect(sign_up.get_absolute_url())
     else:
-        return http.HttpResponseRedirect(sign_up.get_answer_url(answer))
+        return http.HttpResponseRedirect(sign_up.get_answer_url(answer, request.user))
 
 
 @login_required

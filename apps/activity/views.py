@@ -3,11 +3,11 @@ from django.template import RequestContext
 from django import http
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
-from django.core.paginator import Paginator, EmptyPage
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
+from pagination.views import get_pagination_context
 
 from activity.models import Activity, FILTERS
 
@@ -23,7 +23,7 @@ def filter_activities(request, activities, default=None):
         return activities
 
 
-def index(request, activity_id, page=1):
+def index(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     context = {
         'activity': activity,
@@ -42,21 +42,8 @@ def index(request, activity_id, page=1):
             return http.HttpResponseRedirect(reverse('activity_restore',
                 kwargs={'activity_id': activity.id}))
         return http.HttpResponseRedirect(scope_url)
-    replies = activity.comments.filter(
-        reply_to__isnull=True).order_by('-created_on')
-    paginator = Paginator(replies, 15)
-    try:
-        current_page = paginator.page(page)
-    except EmptyPage:
-        raise http.Http404
-    context.update({
-        'paginator': paginator,
-        'page_num': page,
-        'next_page': int(page) + 1,
-        'prev_page': int(page) - 1,
-        'num_pages': paginator.num_pages,
-        'page': current_page,
-    })
+    replies = activity.first_level_comments()
+    context.update(get_pagination_context(request, replies))
     return render_to_response('activity/index.html', context,
         context_instance=RequestContext(request))
 

@@ -4,13 +4,13 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django import http
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from django.core.paginator import Paginator, EmptyPage
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
 from projects.decorators import participation_required
 from projects.models import Project
+from pagination.views import get_pagination_context
 
 from content.forms import PageForm, NotListedPageForm
 from content.forms import OwnersPageForm, OwnersNotListedPageForm
@@ -21,7 +21,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-def show_page(request, slug, page_slug, pagination_page=1):
+def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     can_edit = page.can_edit(request.user)
     if page.deleted:
@@ -31,33 +31,21 @@ def show_page(request, slug, page_slug, pagination_page=1):
                 kwargs={'slug': page.project.slug, 'page_slug': page.slug}))
         else:
             return http.HttpResponseRedirect(page.project.get_absolute_url())
-    first_level_comments = page.comments.filter(
-        reply_to__isnull=True).order_by('-created_on')
-    paginator = Paginator(first_level_comments, 15)
-    try:
-        current_page = paginator.page(pagination_page)
-    except EmptyPage:
-        raise http.Http404
-
     new_comment_url = reverse('page_comment', kwargs=dict(
         scope_app_label='projects', scope_model='project',
         scope_pk=page.project.id, page_app_label='content',
         page_model='page', page_pk=page.id))
-
-    return render_to_response('content/page.html', {
+    first_level_comments = page.first_level_comments()
+    context = {
         'page': page,
         'project': page.project,
         'can_edit': can_edit,
         'can_comment': page.can_comment(request.user),
         'new_comment_url': new_comment_url,
-        'first_level_comments': first_level_comments,
-        'paginator': paginator,
-        'page_num': pagination_page,
-        'next_page': int(pagination_page) + 1,
-        'prev_page': int(pagination_page) - 1,
-        'num_pages': paginator.num_pages,
-        'pagination_page': current_page,
-    }, context_instance=RequestContext(request))
+    }
+    context.update(get_pagination_context(request, first_level_comments))
+    return render_to_response('content/page.html', context,
+        context_instance=RequestContext(request))
 
 
 @login_required
