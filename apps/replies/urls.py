@@ -6,7 +6,9 @@ page_url = (r'(?P<page_model>[\w ]+)/(?P<page_app_label>[\w ]+)/' +
     '(?P<page_pk>\d+)')
 
 urlpatterns = patterns('replies.views',
-  url(r'^create/%s/%s/$' % (scope_url, page_url), 'comment_page',
+  url(r'^create/%s/$' % (page_url), 'comment_page',
+      name='page_comment'),
+  url(r'^create/%s/%s/$' % (page_url, scope_url), 'comment_page',
       name='page_comment'),
   url(r'^(?P<comment_id>\d+)/$', 'show_comment',
       name='comment_show'),

@@ -68,15 +68,18 @@ def reply_comment(request, comment_id):
 
 
 @login_required
-def comment_page(request, scope_model, scope_app_label, scope_pk,
-        page_model, page_app_label, page_pk):
+def comment_page(request, page_model, page_app_label, page_pk,
+        scope_model, scope_app_label, scope_pk):
 
-    scope_ct_cls = get_object_or_404(ContentType, model=scope_model,
-        app_label=scope_app_label).model_class()
-    scope_object = get_object_or_404(scope_ct_cls, pk=scope_pk)
     page_ct_cls = get_object_or_404(ContentType, model=page_model,
         app_label=page_app_label).model_class()
     page_object = get_object_or_404(page_ct_cls, pk=page_pk)
+
+    scope_object = None
+    if scope_model:
+        scope_ct_cls = get_object_or_404(ContentType, model=scope_model,
+            app_label=scope_app_label).model_class()
+        scope_object = get_object_or_404(scope_ct_cls, pk=scope_pk)
 
     can_comment = page_object.can_comment(request.user)
     if not can_comment:
@@ -84,10 +87,12 @@ def comment_page(request, scope_model, scope_app_label, scope_pk,
         messages.error(request, msg % page_object)
         return http.HttpResponseRedirect(page_object.get_absolute_url())
 
-    new_comment_url = reverse('page_comment', kwargs=dict(
-        scope_app_label=scope_app_label, scope_model=scope_model,
-        scope_pk=scope_pk, page_app_label=page_app_label,
-        page_model=page_model, page_pk=page_pk))
+    kwargs = dict(page_app_label=page_app_label,
+        page_model=page_model, page_pk=page_pk)
+    if scope_object:
+        kwargs.update(dict(scope_app_label=scope_app_label,
+            scope_model=scope_model, scope_pk=scope_pk))
+    new_comment_url = reverse('page_comment', kwargs=kwargs)
 
     user = request.user.get_profile()
 

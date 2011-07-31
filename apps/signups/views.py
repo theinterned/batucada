@@ -60,7 +60,7 @@ def show_signup(request, slug, pagination_page=1):
         answers = answers.filter(accepted=True)
     pending_answers_count = pending_answers.count()
     answers = answers.order_by('-created_on')
-    paginator = Paginator(answers, 10)
+    paginator = Paginator(answers, 15)
     try:
         current_page = paginator.page(pagination_page)
     except EmptyPage:

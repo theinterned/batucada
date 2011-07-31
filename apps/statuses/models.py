@@ -20,9 +20,7 @@ class Status(ModelBase):
 
     author = models.ForeignKey('users.UserProfile')
     project = models.ForeignKey('projects.Project', null=True, blank=True)
-    status = RichTextField()
-    reply_to = models.ForeignKey(Activity, related_name='status_replies',
-        null=True, blank=True)
+    status = RichTextField(blank=False)
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     important = models.BooleanField(default=False)
@@ -88,15 +86,10 @@ def status_creation_handler(sender, **kwargs):
     )
     if status.project:
         activity.scope_object = status.project
-    if status.reply_to:
-        activity.reply_to = status.reply_to
-        if activity.reply_to.abs_reply_to:
-            activity.abs_reply_to = activity.reply_to.abs_reply_to
-        else:
-            activity.abs_reply_to = activity.reply_to
     activity.save()
     # Send notifications.
     if status.project:
         status.send_wall_notification()
+
 post_save.connect(status_creation_handler, sender=Status,
     dispatch_uid='statuses_status_creation_handler')

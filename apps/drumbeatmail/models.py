@@ -6,6 +6,7 @@ from messages.models import Message
 from users.tasks import SendUserEmail
 from preferences.models import AccountPreferences
 from l10n.models import localize_email
+from richtext import clean_html
 
 import logging
 
@@ -25,9 +26,10 @@ def message_sent_handler(sender, **kwargs):
             return
     sender = message.sender.get_profile()
     reply_url = reverse('drumbeatmail_reply', kwargs={'message': message.pk})
+    msg_body = clean_html('rich', message.body)
     context = {
         'sender': sender,
-        'message': message.body,
+        'message': msg_body,
         'domain': Site.objects.get_current().domain,
         'reply_url': reply_url,
     }

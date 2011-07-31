@@ -33,7 +33,7 @@ def show_page(request, slug, page_slug, pagination_page=1):
             return http.HttpResponseRedirect(page.project.get_absolute_url())
     first_level_comments = page.comments.filter(
         reply_to__isnull=True).order_by('-created_on')
-    paginator = Paginator(first_level_comments, 5)
+    paginator = Paginator(first_level_comments, 15)
     try:
         current_page = paginator.page(pagination_page)
     except EmptyPage:

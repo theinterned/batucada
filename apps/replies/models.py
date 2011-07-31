@@ -11,7 +11,7 @@ from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.schema import verbs, object_types
-from activity.models import Activity
+
 from richtext.models import RichTextField
 
 
@@ -93,6 +93,7 @@ def fire_activity(sender, **kwargs):
     if created and is_comment:
         instance.send_comment_notification()
         if instance.page_object.comments_fire_activity():
+            from activity.models import Activity
             activity = Activity(actor=instance.author, verb=verbs['post'],
                 target_object=instance, scope_object=instance.scope_object)
             activity.save()

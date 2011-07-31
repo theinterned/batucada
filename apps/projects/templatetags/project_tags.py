@@ -99,7 +99,8 @@ def project_list(school=None, limit=8):
     popular = Project.objects.get_popular(limit=limit, school=school)
     one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
     new = listed.filter(created_on__gte=one_week).order_by('-created_on')
-    open_signup_ids = Signup.objects.exclude(status=Signup.CLOSED).values('project')
+    open_signup_ids = Signup.objects.exclude(
+        status=Signup.CLOSED).values('project')
     open_signup = Project.objects.filter(id__in=open_signup_ids)
     under_development = Project.objects.filter(under_development=True,
         not_listed=False, archived=False)

@@ -177,7 +177,7 @@ def show(request, slug, page=1):
     else:
         form = None
 
-    activities = project.activities().filter(reply_to__isnull=True)
+    activities = project.activities()
     activities = filter_activities(request, activities)
     paginator = Paginator(activities, 10)
     try:

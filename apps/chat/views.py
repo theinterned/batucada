@@ -18,7 +18,7 @@ def chat(request):
                 channels.add('p2pu-%s' % project.school.slug)
     for school in School.objects.all():
         if school.organizers.filter(username=profile.username):
-            channels.add('p2pu-%s' % project.school.slug)
+            channels.add('p2pu-%s' % school.slug)
     return render_to_response('chat/chat.html', {
         'nick': nick,
         'channels': ','.join(channels)},

@@ -49,7 +49,7 @@ class Signup(ModelBase):
 
     def get_answer_url(self, answer):
         # TODO: bugfix link for pagination
-        return self.get_absolute_url() + '#answer-%s' %answer.id
+        return self.get_absolute_url() + '#answer-%s' % answer.id
 
 
 class SignupAnswer(ModelBase):
@@ -133,8 +133,8 @@ class SignupAnswer(ModelBase):
         is_participating = self.project.participants().filter(
             user=self.author).exists()
         if not is_organizing and not is_participating:
-            participation = Participation(project=self.project, user=self.author,
-                organizing=as_organizer)
+            participation = Participation(project=self.project,
+                user=self.author, organizing=as_organizer)
             participation.save()
         accept_content = render_to_string(
             "signups/accept_sign_up_comment.html",
