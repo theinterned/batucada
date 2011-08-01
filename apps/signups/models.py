@@ -95,7 +95,8 @@ class SignupAnswer(ModelBase):
         object_id_field='page_id')
 
     def __unicode__(self):
-        return _("the signup answer of %s at %s") % (self.author, self.project)
+        return _("the signup answer of %(author)s at %(project)s") % {
+            'author': self.author, 'project': self.project}
 
     @property
     def project(self):
