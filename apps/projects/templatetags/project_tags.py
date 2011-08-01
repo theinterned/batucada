@@ -101,7 +101,7 @@ def project_list(school=None, limit=8):
     new = listed.filter(created_on__gte=one_week).order_by('-created_on')
     open_signup_ids = Signup.objects.exclude(
         status=Signup.CLOSED).values('project')
-    open_signup = Project.objects.filter(id__in=open_signup_ids)
+    open_signup = listed.filter(id__in=open_signup_ids)
     under_development = Project.objects.filter(under_development=True,
         not_listed=False, archived=False)
     archived = Project.objects.filter(not_listed=False,
