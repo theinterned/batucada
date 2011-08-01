@@ -103,6 +103,8 @@ FILE_PATH_PREFIX = 'sites/archive.p2pu.org/files/'
 # Badges pilot url
 BADGE_URL = ('http://badges.p2pu.org/badges/%(badge_id)s/' +
     '%(badge_tag)s?user_filter=%(username)s#badge_data')
+BADGE_IMAGES_DIR = path('media/images/pilotbadges/')
+BADGE_IMAGES_URL = 'images/pilotbadges/'
 
 INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved',
     'math-future', 'license', 'contact-us', 'values', 'privacy',
@@ -111,3 +113,12 @@ INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved',
 
 # Pagination
 PAGINATION_DEFAULT_ITEMS_PER_PAGE = 20
+
+# Used for open badges integration.
+MOZBADGES = {
+    # location of badge hub. Currently this is the only public one
+    'hub': 'http://alpha.badgehub.org',
+
+    # method for getting badges for a user. Called with user object.
+    'badge_getter': 'users.badges.get_awarded_badges',
+}

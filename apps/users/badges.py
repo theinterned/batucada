@@ -1,8 +1,14 @@
+import re
 import logging
+import os
 
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+
+
+log = logging.getLogger(__name__)
+
 
 BADGES_DB = 'badges_db'
 
@@ -17,7 +23,14 @@ BADGES_MISSING_IMAGES = {
 }
 
 
-log = logging.getLogger(__name__)
+def pilot_image(tag, badge):
+    image_path = os.path.join(settings.BADGE_IMAGES_DIR,
+        '%s.png' % tag.name)
+    if os.path.exists(image_path):
+        return '%s%s%s.png' % (settings.MEDIA_URL,
+            settings.BADGE_IMAGES_URL, tag.name)
+    else:
+        return BADGES_MISSING_IMAGES[badge.type]
 
 
 def get_awarded_badges(username):
@@ -39,18 +52,21 @@ def get_awarded_badges(username):
                 else:
                     url = settings.BADGE_URL % dict(badge_id=badge.id,
                         badge_tag=tag.name, username=username)
-                    image_url = BADGES_MISSING_IMAGES[badge.type]
+                    image_url = pilot_image(tag, badge)
                     data = {
                         'name': custom_badge.name,
                         'type': badge.type,
+                        'id': badge.id,
                         'url': url,
                         'image_url': image_url,
                         'count': 1,
+                        'description': custom_badge.description,
+                        'template': re.sub(r'\?.*', '', url),
                     }
                     badges[tag.name] = data
     except User.DoesNotExist:
         pass
-    return badges.values()
+    return badges
 
 
 class ForumAward(models.Model):

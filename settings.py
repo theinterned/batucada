@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'pages',
     'projects',
     'drumbeat',
+    'django_obi',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

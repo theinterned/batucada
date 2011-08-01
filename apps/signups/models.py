@@ -55,8 +55,6 @@ class Signup(ModelBase):
             profile = user.get_profile()
             is_organizing = self.project.organizers().filter(
                 user=profile).exists()
-            is_participating = self.project.participants().filter(
-                user=profile).exists()
             if not is_organizing:
                 answers = answers.filter(Q(accepted=True) | Q(author=profile))
         else:
