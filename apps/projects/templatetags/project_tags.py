@@ -111,8 +111,8 @@ def project_list(school=None, limit=8):
             id__in=school.declined.values('id'))
         new = new.filter(school=school).exclude(
             id__in=school.declined.values('id'))
-        open_signup = open_signup.filter(project__school=school).exclude(
-            project_id__in=school.declined.values('id'))
+        open_signup = open_signup.filter(school=school).exclude(
+            id__in=school.declined.values('id'))
         under_development = under_development.filter(school=school).exclude(
             id__in=school.declined.values('id'))
         archived = archived.filter(school=school).exclude(
