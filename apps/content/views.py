@@ -245,6 +245,7 @@ def page_index_up(request, slug, counter):
     prev_page = content_pages[counter - 1]
     page = content_pages[counter]
     prev_page.index, page.index = page.index, prev_page.index
+    page.minor_update = prev_page.minor_update = True
     page.save()
     prev_page.save()
     return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
@@ -270,6 +271,7 @@ def page_index_down(request, slug, counter):
     next_page = content_pages[counter + 1]
     page = content_pages[counter]
     next_page.index, page.index = page.index, next_page.index
+    next_page.minor_update = page.minor_update = True
     page.save()
     next_page.save()
     return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
