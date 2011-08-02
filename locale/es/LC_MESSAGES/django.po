@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-01 08:02-0400\n"
+"POT-Creation-Date: 2011-08-02 16:00-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -707,10 +707,6 @@ msgstr "(participando)"
 #: apps/users/models.py:175
 msgid "(following)"
 msgstr "(siguiendo)"
-
-#: apps/users/models.py:216
-msgid "Complete Registration"
-msgstr "Termine de Crear su Cuenta"
 
 #: apps/users/views.py:43
 #, python-format
@@ -3368,3 +3364,7 @@ msgstr ""
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
 msgstr "Gracias!"
+
+#: templates/users/emails/registration_confirm_subject.txt:2
+msgid "[P2PU] Complete Registration!"
+msgstr "[P2PU] Termine de Crear su Cuenta."

@@ -9,7 +9,6 @@ import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.http import urlquote_plus
 from django.utils.translation import ugettext_lazy as _
@@ -28,6 +27,7 @@ from users import tasks
 from activity.schema import object_types
 from users.managers import CategoryTaggableManager
 from richtext.models import RichTextField
+from l10n.models import localize_email
 
 import caching.base
 
@@ -210,12 +210,11 @@ class UserProfile(ModelBase):
 
     def email_confirmation_code(self, url):
         """Send a confirmation email to the user after registering."""
-        body = render_to_string('users/emails/registration_confirm.txt', {
-            'confirmation_url': url,
-        })
-        subject = ugettext('Complete Registration')
-        # During registration use the interface language to send email
-        tasks.SendUserEmail.apply_async(args=(self, subject, body))
+        context = {'confirmation_url': url}
+        subjects, bodies = localize_email(
+            'users/emails/registration_confirm_subject.txt',
+            'users/emails/registration_confirm.txt', context)
+        tasks.SendUserEmail.apply_async(args=(self, subjects, bodies))
 
     def image_or_default(self):
         """Return user profile image or a default."""
