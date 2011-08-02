@@ -42,7 +42,7 @@ Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already hav
 
    sudo easy_install virtualenv
    sudo easy_install pip
-   pip install virtualenvwrapper
+   sudo pip install virtualenvwrapper
    
 Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
