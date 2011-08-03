@@ -3,6 +3,8 @@
 {% load youtube %}
 {% load slideshare %}
 {% load project_tags %}
+{% load comment_threads %}
+{% load pagination_tags %}
 
 {% block project_title %}{{ page.title }}{% endblock %}
 
@@ -22,7 +24,7 @@
   {% endif %}
   <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
   {% if can_comment %}
-    <a class="button" href="{% locale_url page_comment slug=project.slug page_slug=page.slug %}">{{ _('Post Comment') }}</a>
+    <a class="button" href="{{ new_comment_url }}">{{ _('Post Comment') }}</a>
   {% endif %}
 {% endblock %}
 
@@ -32,100 +34,22 @@
 {% if user.is_authenticated %}
     <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse model="page" app_label="content" pk=page.id %}">{{_('Report Abuse')}}</a></p>
 {% endif %}
-<h1 class="{% if page.collaborative and page.editable %}collaborative{% endif %} school_header">{{ page.title }}</h1>
+<h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">{{ page.title }}</h1>
 <hr />
 {{ page.content|youtube|slideshare|safe }}
-{% if first_level_comments %}
-<br>
+
+{% if pagination_current_page.object_list %}
+
 <h1>{{_('Comments')}}</h1>
 <br>
 <ul id="posts">
-{% for comment in pagination_page.object_list %}
-  {% if comment.deleted %}
-    {% if comment.has_visible_childs %}
-      <li class="post-container deleted">
-        {{ _('This comment was deleted.') }}
-        {% if user.get_profile == comment.author %}
-          <a class="action restore" href="{% locale_url comment_restore slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Restore') }}</a>
-        {% endif %}
-      </li>
-    {% endif %}
-  {% else %}
-  <li class="post-container">
-    <a name="{{ comment.id }}"></a>
-    {% if user.is_authenticated %}
-      {% if can_edit %}
-        <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Reply') }}</a>
-      {% endif %}
-      {% if user.get_profile == comment.author %}
-        <a class="action delete" href="{% locale_url comment_delete slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Delete') }}</a>
-        <a class="action edit" href="{% locale_url comment_edit slug=project.slug page_slug=page.slug comment_id=comment.id %}">{{ _('Edit') }}</a>
-      {% else %}
-        <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=comment.id %}">{{_('Report Abuse')}}</a>
-      {% endif %}
-    {% endif %}
-    <a href="{{ comment.author.get_absolute_url }}">
-      <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
-    </a>
-    <div class="post-contents">
-      <div class="post-details">
-        <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>
-        &nbsp;
-        <a href="{{ comment.get_absolute_url }}">{{comment.created_on}}</a>
-      </div>
-      <div class="post-body">
-        {{ comment.content|youtube|slideshare|safe }}
-      </div>
-    </div>
-  </li>{% endif%}
-{% for reply in comment.visible_replies %}
-    <li class="post-container post-replies">
-      <a name="{{ reply.id }}"></a>
-      {% if user.is_authenticated %}
-        {% if can_edit %}
-          <a class="action reply-to" href="{% locale_url comment_reply slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Reply') }}</a>
-        {% endif %}
-        {% if user.get_profile == reply.author %}
-          <a class="action delete" href="{% locale_url comment_delete slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Delete') }}</a>
-          <a class="action edit" href="{% locale_url comment_edit slug=project.slug page_slug=page.slug comment_id=reply.id %}">{{ _('Edit') }}</a>
-        {% else %}
-          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="content" pk=reply.id %}">{{_('Report Abuse')}}</a>
-        {% endif %}
-      {% endif %}
-      <a href="{{ reply.author.get_absolute_url }}">
-        <img class="member-picture" width="54" height="54" src="{{ reply.author.image_or_default }}">
-      </a>
-      <div class="post-contents">
-        <div class="post-details">
-          <a href="{{ reply.author.get_absolute_url }}">{{ reply.author }}</a>
-          &nbsp;
-          <a href="{{ reply.get_absolute_url }}">{{reply.created_on}}</a>
-          <br> {{ _('In Reply To:') }} &nbsp;
-          <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author }}</a>
-          &nbsp;
-          <a href="{{ reply.reply_to.get_absolute_url }}">{{reply.reply_to.created_on}}</a>
-        </div>
-        <div class="post-body">
-          {{ reply.content|youtube|slideshare|safe }}
-        </div>
-      </div>
-  </li>
-{% endfor %}
-{% endfor %}
+  {% with comments=pagination_current_page.object_list %}
+    {% comment_threads %}
+  {% endwith %}
 </ul>
-
-<div class="pagination">
-  {% if pagination_page.has_previous %}
-    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=prev_page %}">← {{ _('previous') }}</a>
-  {% else %}
-    <span class="btn">← {{ _('previous') }}</span>
-  {% endif %}
-  {% if pagination_page.has_next %}
-    <a class="btn" href="{% locale_url page_show slug=project.slug page_slug=page.slug pagination_page=next_page %}">{{ _('next') }} →</a>
-  {% else %}
-    <span class="btn">{{_('next')}} →</span>
-  {% endif %}
-</div>
+{% with prefix='' page_url=page.get_absolute_url %}
+  {% pagination_links %}
+{% endwith %}
 
 {% endif %}
 </div>

@@ -7,8 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import forms as auth_forms
 from django.utils.translation import ugettext as _
 
-from drumbeat.utils import CKEditorWidget
-
 from captcha import fields as captcha_fields
 from taggit.forms import TagField
 from taggit.utils import edit_string_for_tags
@@ -227,7 +225,6 @@ class ProfileEditForm(forms.ModelForm):
         model = UserProfile
         fields = ('full_name', 'location', 'bio', 'preflang', 'interest')
         widgets = {
-            'bio': CKEditorWidget(config_name='reduced'),
             'interest': CategoryTagWidget(category='interest')
         }
 

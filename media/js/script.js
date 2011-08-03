@@ -253,7 +253,7 @@ var batucada = {
             }
         }
     },
-    sign_up_task: {
+    signup: {
         onload: function() {
             var $inputs = $('input[type=file]');
             if ($inputs) {
@@ -266,53 +266,6 @@ var batucada = {
             loadMoreMessages();
         }
     },
-};
-
-
-var customizeCKEditor = function() {
-
-    CKEDITOR.on( 'dialogDefinition', function( ev ) {
-        // Take the dialog name and its definition from the event
-        // data.
-        var dialogName = ev.data.name;
-        var dialogDefinition = ev.data.definition;
-
-        // Check if the definition is from the "Link" dialog.
-        if ( dialogName == 'link' ) {
-            // Get a reference to the "Link Info" tab.
-            var infoTab = dialogDefinition.getContents( 'info' );
-            infoTab.remove( 'linkType' );
-            infoTab.remove( 'browse' );
-            infoTab.remove('anchorOptions');
-            infoTab.remove('emailOptions');
-            // Get a reference to the "Advanced" tab.
-            var advancedTab = dialogDefinition.getContents( 'advanced' );
-            infoTab.add(advancedTab.get('advTitle'));
-            // Remove uneccesary tabs.
-            dialogDefinition.removeContents( 'target' );
-            dialogDefinition.removeContents( 'upload' );
-            dialogDefinition.removeContents( 'advanced' );
-        }
-        if (dialogName == 'image') {
-            // Get a reference to the "Image Info" tab.
-            var infoTab = dialogDefinition.getContents( 'info' );
-            infoTab.remove( 'browse' );
-            // Get a reference to the "Link" tab.
-            var linkTab = dialogDefinition.getContents( 'Link' );
-            var linkUrl = linkTab.get('txtUrl');
-            infoTab.add(linkUrl);
-            // Get a reference to the "Advanced" tab.
-            var advancedTab = dialogDefinition.getContents( 'advanced' );
-            infoTab.add(advancedTab.get('txtGenTitle'));
-            // Remove uneccesary tabs.
-            dialogDefinition.removeContents( 'Link' );
-            dialogDefinition.removeContents( 'Upload' );
-            dialogDefinition.removeContents( 'advanced' );
-        }
-    });
-    
-    prettyPrint();
-
 };
 
 
@@ -353,6 +306,7 @@ $(document).ready(function() {
     
     $('#id_start_date').datepicker();
     $('#id_end_date').datepicker();
+
     $.farbtastic('#headers_colorpicker', { callback: '#id_headers_color', width: 100, heigth: 100 });
     $.farbtastic('#headers_light_colorpicker', { callback: '#id_headers_color_light', width: 100, heigth: 100 });
     $.farbtastic('#background_colorpicker', { callback: '#id_background_color', width: 100, heigth: 100 });
@@ -361,7 +315,8 @@ $(document).ready(function() {
     $.farbtastic('#about_us_footnote_colorpicker', { callback: '#id_about_us_footnote_color', width: 100, heigth: 100 });
     $.farbtastic('#contact_us_footnote_colorpicker', { callback: '#id_contact_us_footnote_color', width: 100, heigth: 100 });
     $.farbtastic('#license_info_footnote_colorpicker', { callback: '#id_license_info_footnote_color', width: 100, heigth: 100 });
-    customizeCKEditor();
+
+    prettyPrint();
 
     // disable submit button on form submit
     $('form').submit(function(){

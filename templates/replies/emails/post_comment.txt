@@ -1,0 +1,16 @@
+{% load l10n_tags %}
+{% if comment.scope_object %}
+{{ comment.scope_object.name }}{{ _(' was updated.') }}
+{% endif %}
+
+{{ comment.author }}{{ _(' posted a new comment at ') }}{{ comment.page_object }}{{ _('.') }}
+
+{{ _('Comment:') }}
+{{ comment.content|striptags|safe }}
+
+{{ _('See comment at:') }} http://{{domain}}{{ comment.get_absolute_url }}
+
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}
+
+{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/

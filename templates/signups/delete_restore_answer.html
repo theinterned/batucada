@@ -1,0 +1,42 @@
+{% extends "signups/base.html" %}
+{% load l10n_tags %}
+
+{% block signup_breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ answer.get_absolute_url }}">{{ answer.author }} {{ answer.created_on }}</a>
+{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>
+      {% if answer.deleted %}{{ _('Restore Answer:') }}{% else %}{{ _('Delete Answer:') }}{% endif %} {{ answer.author }} {{ answer.created_on }}
+    </h1>
+    <br />
+    <fieldset>
+    {% if answer.deleted %}
+      <form action="{% locale_url restore_signup_answer slug=project.slug answer_id=answer.id %}" method="post">
+    {% else %}
+      <form action="{% locale_url delete_signup_answer slug=project.slug answer_id=answer.id %}" method="post">
+    {% endif %}
+      {% csrf_token %}
+      {% if answer.deleted %}
+        <span class="hint block">{{ _('Are you sure you want to restore this answer?') }}</span>
+      {% else %}
+        <span class="hint block">{{ _('Are you sure you want to delete this answer?') }}</span>
+      {% endif %}
+      <p class="content_buttons">
+        <a class="button" href="{% if answer.deleted %}{{ sign_up.get_absolute_url }}{% else %}{{ answer.get_absolute_url }}{%endif%}">
+          {{ _('Cancel') }}
+        </a>
+        {% if answer.deleted %}
+          <button type="submit" value="{{ _('Restore') }}">{{ _('Restore') }}</button>
+        {% else %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        {% endif %}
+      </p>
+    </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "projects/project_edit.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit signup{% endblock %}
+
+{% block links %}{% if school %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endif %}{% endblock %}
+
+{% block form %}
+<fieldset id="project_edit_signup" class="project edit signup tabpane">
+<form action="{% locale_url edit_signup slug=project.slug %}" method="post">
+  {% csrf_token %}
+  <div class="field status{% if form.public.errors %} error{% endif %}">
+    <label for="id_status">{{ _('Sign-up Status') }}</label>
+    <span class="hint block">{% blocktrans with kind=project.kind|lower %}To allow peers to signup to the {{kind}} change the signup status to either moderated of non-moderated signup.{% endblocktrans %}</span>
+    {{ form.status }}
+    {{ form.status.errors }}
+  </div>
+  <div class="field public{% if form.public.errors %} error{% endif %}">
+    <label for="id_public">{{ _('Public Custom Set') }}</label>
+    <span class="hint block">{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be public once you get accepted.{% endblocktrans %}</span>
+    {{ form.public }}
+    {{ form.public.errors }}
+  </div>
+  <div class="field{% if form.between_participants.errors %} error{% endif %}">
+    <label for="id_between_participants">{{ _('Between Participants Custom Set') }}</label>
+    <span class="hint block">{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be visible to all participants once you get accepted.{% endblocktrans %}</span>
+    {{ form.between_participants }}
+    {{ form.between_participants.errors }}
+  </div>
+  <p class="buttons">
+    <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+  </p>
+</form>
+</fieldset>
+{% endblock %}
+

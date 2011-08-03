@@ -6,7 +6,6 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 
-from drumbeat.utils import CKEditorWidget
 from links.models import Link
 from users.models import UserProfile
 from users import tasks
@@ -25,7 +24,6 @@ class ProjectForm(forms.ModelForm):
         fields = ('name', 'category', 'other', 'other_description',
             'short_description', 'long_description', 'tags')
         widgets = {
-            'long_description': CKEditorWidget(config_name='reduced'),
             'category': forms.RadioSelect,
         }
 
@@ -75,7 +73,7 @@ class ProjectStatusForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('start_date', 'end_date', 'under_development',
-            'not_listed', 'signup_closed', 'archived')
+            'not_listed', 'archived')
 
 
 class ProjectAddParticipantForm(forms.Form):
@@ -137,7 +135,7 @@ class ProjectContactOrganizersForm(forms.Form):
             'project': project}).strip()
         messages = [(sender, r.user.user, subject, body, parent_msg)
             for r in recipients]
-        tasks.SendUsersEmail.apply_async(args=(self, messages))
+        tasks.SendPrivateMessages.apply_async(args=(self, messages))
         return messages
 
 

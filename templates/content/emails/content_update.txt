@@ -1,12 +1,12 @@
 {% load l10n_tags %}
 {{ project.name }}{{ _(' was updated.') }}
 
-{% if is_comment %}{{ instance.author }}{{ _(' posted a new comment at ') }}{{ instance.page.title }}{{ _('.') }}{% else %}{{ instance.author }}{{ _(' created a new task: ') }}{{ instance.title }}{{ _('.') }}{% endif %}
+{{ instance.author }}{{ _(' created a new task: ') }}{{ instance.title }}{{ _('.') }}
 
-{% if not is_comment %}{{ instance.title }}{% else %}{{ _('Comment:') }}{% endif %}
+{{ instance.title }}
 {{ instance.content|striptags|safe }}
 
-{% if is_comment %}{{ _('See comment at:') }}{% else %}{{ _('See task at:') }}{% endif %} http://{{domain}}{{ instance.get_absolute_url }}
+{{ _('See task at:') }} http://{{domain}}{{ instance.get_absolute_url }}
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
