@@ -42,7 +42,7 @@ Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already hav
 
    sudo easy_install virtualenv
    sudo easy_install pip
-   pip install virtualenvwrapper
+   sudo pip install virtualenvwrapper
    
 Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
@@ -65,7 +65,7 @@ Once installed, create your virtual environment for ``lernanta`` and install the
 
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
-    sh/rmpyc
+    ./sh/rmpyc
 
 If the mysql database doesn't exist yet, create it. You need to `create the user`_ you'll use. You will use the database name, user, and password in the next file (settings_local.py) ::
 
@@ -81,7 +81,7 @@ If you not installed a local version of mysql, you will need to do so now.
 
 Next, sync the database and run migrations. ::
 
-   python manage.py syncdb --noinput --migrate
+   ./sh/syncdb
 
 Finally, start the development server to take it for a spin. You can register a new account and look in the terminal window where the server is running to find the activation link (If you get 404 error for that url, remove the "=": http://www.flickr.com/photos/digifoo/5593967846/). ::
 

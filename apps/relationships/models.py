@@ -1,13 +1,10 @@
 import datetime
 import logging
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language, ugettext
-from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 
@@ -16,6 +13,7 @@ from activity.models import Activity, register_filter
 from activity.schema import verbs
 from preferences.models import AccountPreferences
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
 
 log = logging.getLogger(__name__)
 
@@ -83,29 +81,16 @@ def follow_handler(sender, **kwargs):
                         verb=verbs['follow'],
                         target_object=rel)
     receipts = []
-    ulang = get_language()
-    subject = {}
-    body = {}
     if rel.target_user:
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = ugettext(
-                '%(user)s is following you on P2PU!') % {
-                'user': rel.source}
-        preferences = AccountPreferences.objects.filter(user=rel.target_user)
+        preferences = AccountPreferences.objects.filter(
+            user=rel.target_user, key='no_email_new_follower')
         for pref in preferences:
-            if pref.value and pref.key == 'no_email_new_follower':
+            if pref.value:
                 break
         else:
             receipts.append(rel.target_user)
     else:
         activity.scope_object = rel.target_project
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            msg = ugettext(
-                '%(user)s is following %(project)s on P2PU!')
-            subject[l[0]] = msg % {'user': rel.source,
-                'project': rel.target_project}
         for organizer in rel.target_project.organizers():
             if organizer.user != rel.source:
                 preferences = AccountPreferences.objects.filter(
@@ -116,15 +101,16 @@ def follow_handler(sender, **kwargs):
                 else:
                     receipts.append(organizer.user)
     activity.save()
-
-    for l in settings.SUPPORTED_LANGUAGES:
-        activate(l[0])
-        body[l[0]] = render_to_string(
-            "relationships/emails/new_follower.txt", {'user': rel.source,
-                'project': rel.target_project,
-                'domain': Site.objects.get_current().domain})
-    activate(ulang)
+    context = {
+        'user': rel.source,
+        'project': rel.target_project,
+        'domain': Site.objects.get_current().domain
+    }
+    subjects, bodies = localize_email(
+        'relationships/emails/new_follower_subject.txt',
+        'relationships/emails/new_follower.txt', context)
     for user in receipts:
-        pl = user.preflang or settings.LANGUAGE_CODE
-        SendUserEmail.apply_async((user, subject[pl], body[pl]))
-post_save.connect(follow_handler, sender=Relationship, dispatch_uid='relationships_follow_handler')
+        SendUserEmail.apply_async((user, subjects, bodies))
+
+post_save.connect(follow_handler, sender=Relationship,
+    dispatch_uid='relationships_follow_handler')

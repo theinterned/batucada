@@ -1,0 +1,79 @@
+{% load l10n_tags %}
+{% load comment_threads %}
+{% load youtube %}
+{% load slideshare %}
+
+{% for comment in comments %}
+  {% if comment.deleted %}
+    {% if comment.has_visible_childs %}
+      <li class="post-container deleted">
+        <a name="{{ comment.id }}"></a>
+        {{ _('This comment was deleted.') }}
+        {% if user|can_edit_comment:comment %}
+          <a class="action restore" href="{% locale_url comment_restore comment_id=comment.id %}">{{ _('Restore') }}</a>
+        {% endif %}
+      </li>
+    {% endif %}
+  {% else %}
+    <li class="post-container">
+      <a name="{{ comment.id }}"></a>
+      {% if user.is_authenticated %}
+        {% if user|can_reply_comment:comment %}
+          <a class="action reply-to" href="{% locale_url comment_reply comment_id=comment.id %}">{{ _('Reply') }}</a>
+        {% endif %}
+        {% if user|can_edit_comment:comment %}
+          <a class="action delete" href="{% locale_url comment_delete comment_id=comment.id %}">{{ _('Delete') }}</a>
+          <a class="action edit" href="{% locale_url comment_edit comment_id=comment.id %}">{{ _('Edit') }}</a>
+        {% else %}
+          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="replies" pk=comment.id %}">{{_('Report Abuse')}}</a>
+        {% endif %}
+      {% endif %}
+      <a href="{{ comment.author.get_absolute_url }}">
+        <img class="member-picture" width="54" height="54" src="{{ comment.author.image_or_default }}">
+      </a>
+      <div class="post-contents">
+        <div class="post-details">
+          <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>
+          &nbsp;
+          <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
+        </div>
+        <div class="post-body">
+          {{ comment.content|youtube|slideshare|safe }}
+        </div>
+      </div>
+    </li>
+  {% endif%}
+  {% for reply in comment.visible_replies %}
+    <li class="post-container post-replies">
+      <a name="{{ reply.id }}"></a>
+      {% if user.is_authenticated %}
+        {% if user|can_reply_comment:reply %}
+          <a class="action reply-to" href="{% locale_url comment_reply comment_id=reply.id %}">{{ _('Reply') }}</a>
+        {% endif %}
+        {% if user|can_edit_comment:reply %}
+          <a class="action delete" href="{% locale_url comment_delete comment_id=reply.id %}">{{ _('Delete') }}</a>
+          <a class="action edit" href="{% locale_url comment_edit comment_id=reply.id %}">{{ _('Edit') }}</a>
+        {% else %}
+          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="pagecomment" app_label="replies" pk=reply.id %}">{{_('Report Abuse')}}</a>
+        {% endif %}
+      {% endif %}
+      <a href="{{ reply.author.get_absolute_url }}">
+        <img class="member-picture" width="54" height="54" src="{{ reply.author.image_or_default }}">
+      </a>
+      <div class="post-contents">
+        <div class="post-details">
+          <a href="{{ reply.author.get_absolute_url }}">{{ reply.author }}</a>
+          &nbsp;
+          <a href="{{ reply.get_absolute_url }}">{{reply.created_on}}</a>
+          <br> {{ _('In Reply To:') }} &nbsp;
+          <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author }}</a>
+          &nbsp;
+          <a href="{{ reply.reply_to.get_absolute_url }}">{{reply.reply_to.created_on}}</a>
+        </div>
+        <div class="post-body">
+          {{ reply.content|youtube|slideshare|safe }}
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+{% endfor %}

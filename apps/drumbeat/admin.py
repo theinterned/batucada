@@ -2,7 +2,6 @@ import unicodecsv
 
 from django.contrib import admin
 from django.contrib.auth.models import Group, User
-from django.contrib.comments.models import Comment
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
 from django.core.exceptions import PermissionDenied
@@ -17,7 +16,7 @@ from voting.models import Vote
 from drumbeatmail.models import Message
 
 
-admin.site.unregister([Group, User, Comment, Nonce, Association, UserOpenID,
+admin.site.unregister([Group, User, Nonce, Association, UserOpenID,
     TaskState, PeriodicTask, CrontabSchedule, IntervalSchedule, WorkerState,
     Tag, Resource, Vote, Site])
 
