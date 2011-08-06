@@ -1,52 +1,71 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django import http
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
+from pagination.views import get_pagination_context
 
-from activity.models import Activity
+from activity.models import Activity, FILTERS
+
+
+def filter_activities(request, activities, default=None):
+    if 'activities_filter' in request.GET:
+        filter_name = request.GET['activities_filter']
+        if filter_name in FILTERS:
+            return FILTERS[filter_name](activities)
+    if 'default' in FILTERS:
+        return FILTERS['default'](activities)
+    else:
+        return activities
 
 
 def index(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
-    if activity.deleted:
-        messages.error(request, _('This message was deleted.'))
-        if activity.can_edit(request.user):
-            return HttpResponseRedirect(reverse('activity_restore',
-                kwargs={'activity_id': activity.id}))
-        elif activity.target_project:
-            return HttpResponseRedirect(
-                activity.target_project.get_absolute_url())
-        else:
-            return HttpResponseRedirect(activity.actor.get_absolute_url())
-    return render_to_response('activity/index.html', {
+    context = {
         'activity': activity,
         'domain': Site.objects.get_current().domain,
-    }, context_instance=RequestContext(request))
+    }
+    if activity.scope_object:
+        scope_url = activity.scope_object.get_absolute_url()
+        context['project'] = activity.scope_object
+    else:
+        scope_url = activity.actor.get_absolute_url()
+        context['profile'] = activity.actor
+        context['profile_view'] = True
+    if activity.deleted:
+        messages.error(request, _('This activity was deleted.'))
+        if activity.can_edit(request.user):
+            return http.HttpResponseRedirect(reverse('activity_restore',
+                kwargs={'activity_id': activity.id}))
+        return http.HttpResponseRedirect(scope_url)
+    replies = activity.first_level_comments()
+    context.update(get_pagination_context(request, replies))
+    return render_to_response('activity/index.html', context,
+        context_instance=RequestContext(request))
 
 
 @login_required
 def delete_restore(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
     if not activity.can_edit(request.user):
-        return HttpResponseForbidden(_("You can't edit this message"))
+        return http.HttpResponseForbidden(_("You can't edit this activity"))
     if request.method == 'POST':
         activity.deleted = not activity.deleted
         activity.save()
         if activity.deleted:
-            msg = _('Message deleted!')
+            msg = _('Activity deleted!')
         else:
-            msg = _('Message restored!')
+            msg = _('Activity restored!')
         messages.success(request, msg)
-        if activity.target_project:
-            return HttpResponseRedirect(
-                activity.target_project.get_absolute_url())
+        if activity.scope_object:
+            return http.HttpResponseRedirect(
+                activity.scope_object.get_absolute_url())
         else:
-            return HttpResponseRedirect(reverse('dashboard_index'))
+            return http.HttpResponseRedirect(reverse('dashboard'))
     else:
         return render_to_response('activity/delete_restore.html', {
             'activity': activity,

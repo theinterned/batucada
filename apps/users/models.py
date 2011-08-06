@@ -1,6 +1,5 @@
 import logging
 import datetime
-import bleach
 import random
 import string
 import hashlib
@@ -10,8 +9,6 @@ import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save
-from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.http import urlquote_plus
 from django.utils.translation import ugettext_lazy as _
@@ -19,6 +16,7 @@ from django.utils.translation import ugettext
 from django.utils.safestring import mark_safe
 
 from taggit.models import GenericTaggedItemBase, Tag
+from south.modelsinspector import add_ignored_fields
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -26,10 +24,17 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
 from users import tasks
+from activity.schema import object_types
+from users.managers import CategoryTaggableManager
+from richtext.models import RichTextField
+from l10n.models import localize_email
 
 import caching.base
 
 log = logging.getLogger(__name__)
+
+# To fix a South problem (Cannot freeze field 'users.userprofile.tags')
+add_ignored_fields(["^users\.managers"])
 
 GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s"
                      "?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
@@ -59,8 +64,9 @@ class ProfileTag(Tag):
     CATEGORY_CHOICES = (
         ('skill', 'Skill'),
         ('interest', 'Interest'),
+        ('desired_topic', 'Desired Topics'),
     )
-    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
 
 class TaggedProfile(GenericTaggedItemBase):
@@ -84,14 +90,14 @@ class UserProfileManager(caching.base.CachingManager):
 
 class UserProfile(ModelBase):
     """Each user gets a profile."""
-    object_type = 'http://activitystrea.ms/schema/1.0/person'
+    object_type = object_types['person']
 
     username = models.CharField(max_length=255, default='', unique=True)
     full_name = models.CharField(
         max_length=255, default='', null=True, blank=True)
     password = models.CharField(max_length=255, default='')
     email = models.EmailField(unique=True, null=True)
-    bio = models.TextField(blank=True, default='')
+    bio = RichTextField(blank=True)
     image = models.ImageField(
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())
@@ -109,12 +115,14 @@ class UserProfile(ModelBase):
     deleted = models.BooleanField(default=False)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
-    # TODO: enable when addition/edition of tags is implemented.
-    # tags = TaggableManager(through=TaggedProfile)
+
+    tags = CategoryTaggableManager(through=TaggedProfile, blank=True)
 
     objects = UserProfileManager()
 
     def __unicode__(self):
+        if self.deleted:
+            return ugettext('Anonym')
         return self.full_name or self.username
 
     def following(self, model=None):
@@ -126,20 +134,21 @@ class UserProfile(ModelBase):
         if (model == 'Project' or isinstance(model, Project) or
             model == Project):
             relationships = Relationship.objects.select_related(
-                'target_project').filter(source=self).exclude(
+                'target_project').filter(source=self, deleted=False).exclude(
                 target_project__isnull=True)
             return [rel.target_project for rel in relationships
                     if not rel.target_project.archived]
         relationships = Relationship.objects.select_related(
             'target_user').filter(source=self,
-            target_user__deleted=False).exclude(
+            target_user__deleted=False, deleted=False).exclude(
             target_user__isnull=True)
         return [rel.target_user for rel in relationships]
 
     def followers(self):
         """Return a list of this users followers."""
         relationships = Relationship.objects.select_related(
-            'source').filter(target_user=self, source__deleted=False)
+            'source').filter(target_user=self, source__deleted=False,
+            deleted=False)
         return [rel.source for rel in relationships]
 
     def is_following(self, model):
@@ -201,12 +210,11 @@ class UserProfile(ModelBase):
 
     def email_confirmation_code(self, url):
         """Send a confirmation email to the user after registering."""
-        body = render_to_string('users/emails/registration_confirm.txt', {
-            'confirmation_url': url,
-        })
-        subject = ugettext('Complete Registration')
-        # During registration use the interface language to send email
-        tasks.SendUserEmail.apply_async(args=(self, subject, body))
+        context = {'confirmation_url': url}
+        subjects, bodies = localize_email(
+            'users/emails/registration_confirm_subject.txt',
+            'users/emails/registration_confirm.txt', context)
+        tasks.SendUserEmail.apply_async(args=(self, subjects, bodies))
 
     def image_or_default(self):
         """Return user profile image or a default."""
@@ -251,12 +259,6 @@ class UserProfile(ModelBase):
         algo, salt, hsh = self.password.split('$')
         return hsh == get_hexdigest(algo, salt, raw_password)
 
-    @property
-    def display_name(self):
-        if self.deleted:
-            return _('Anonym')
-        return self.full_name or self.username
-
 
 def create_profile(user, username=None):
     """Make a UserProfile for this django.contrib.auth.models.User."""
@@ -274,19 +276,3 @@ def create_profile(user, username=None):
     profile.email = user.email
     profile.save()
     return profile
-
-
-###########
-# Signals #
-###########
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, UserProfile):
-        if instance.bio:
-            instance.bio = bleach.clean(instance.bio,
-                tags=settings.REDUCED_ALLOWED_TAGS,
-                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
-                strip=True)
-
-pre_save.connect(clean_html, sender=UserProfile)

@@ -13,25 +13,20 @@
   {% endif %}
 {% endblock %}
 
+{% block breadcrumbs_title %}
+  {% if project %}
+    <h1 id="project-name">
+      <a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a>
+    </h1>
+  {% endif %}
+{% endblock %}
 {% block breadcrumbs %}
-  <div class="container">
-    {% if project %}
-      <h1 id="project-name">
-        <a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a>
-      </h1>
-    {% endif %}
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      {% if project %}
-      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Edit') }}</a>
-      {% else %}
-      <a href="{% locale_url projects_create %}">{{ _('Create') }}</a>
-      {% endif %}
-    </nav>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  {% if project %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+  {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -50,6 +45,7 @@
 	<li class="summary {% if summary_tab %}active{% endif %}"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Summary') }}</a></li>
 	<li class="image {% if image_tab %}active{% endif %}"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Image') }}</a></li>
 	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{{ _('Status &amp; Dates') }}</a></li>
+    <li class="status {% if signup_tab %}active{% endif %}"><a href="{% locale_url edit_signup slug=project.slug %}">{{ _('Signup') }}</a></li>
 	<li class="participants {% if participants_tab %}active{% endif %}"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
 	<li class="links {% if links_tab %}active{% endif %}"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
     {% else %}

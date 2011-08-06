@@ -1,12 +1,15 @@
 from django.contrib import admin
+
+from drumbeat.admin import export_as_csv
+
 from projects.models import Project, Participation
 
 
 class ProjectAdmin(admin.ModelAdmin):
+    actions = [export_as_csv]
     date_hierarchy = 'created_on'
     list_display = ('id', 'name', 'clone_of', 'created_on', 'school',
-        'featured', 'under_development', 'not_listed', 'signup_closed',
-        'archived')
+        'featured', 'under_development', 'not_listed', 'archived')
     list_filter = list_display[3:]
     search_fields = ('id', 'name', 'slug', 'school__name',
         'clone_of__slug', 'clone_of__name')

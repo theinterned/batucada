@@ -118,35 +118,38 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django.contrib.comments',
     'django.contrib.redirects',
     'south',
     'wellknown',
+    'pagination',
     'users',
     'search',
+    'chat',
     'l10n',
     'dashboard',
     'relationships',
     'activity',
-    'projects',
     'statuses',
     'messages',
     'taggit',
     'preferences',
     'drumbeatmail',
     'links',
-    'challenges',
     'django_push.subscriber',
     'djcelery',
-    'events',
     'django_openid_auth',
     'ckeditor',
+    'richtext',
+    'replies',
+    'signups',
     'content',
     'schools',
     'voting',
-    'feeds',
-    'drumbeat',
+    'news',
     'pages',
+    'projects',
+    'drumbeat',
+    'django_obi',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -167,7 +170,7 @@ WELLKNOWN_HOSTMETA_HOSTS = ('localhost:8000',)
 
 # Auth settings
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
@@ -219,73 +222,6 @@ FEED_URLS = {
 # Ckeditor
 CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
 CKEDITOR_UPLOAD_PATH = path("uploads")
-CKEDITOR_CONFIGS = {
-    'rich': {
-        'toolbar': [
-            ['Source', ],  # Using 'Preview' here doesn't use the CSS
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
-                'Superscript'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent',
-                'Indent', 'SyntaxHighlighting', 'Blockquote'],
-            ['Maximize'],
-            ['Link', 'Unlink', 'Image', 'YouTube', 'SlideShare',
-                'Smiley', 'SpecialChar', 'Table'],
-            ['Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
-        ],
-        'skin': 'kama',
-        'width': '568',
-        'height': '255',
-        'removePlugins': 'resize, elementspath',
-        'toolbarCanCollapse': False,
-        'extraPlugins': 'youtube,slideshare,prettify',
-        'format_tags': 'p;h1;h2;h3;h4;h5;h6',
-        'prettify': {'element': 'pre', 'attributes': {'class': 'prettyprint'}},
-    },
-    'reduced': {
-        'toolbar': [
-            ['Source', '-', 'Bold', 'Italic', '-', 'Link', 'Unlink'],
-        ],
-        'skin': 'kama',
-        'width': '420',
-        'height': '110',
-        'removePlugins': 'resize, elementspath',
-        'toolbarCanCollapse': False,
-        'extraPlugins': 'youtube,slideshare,prettify',
-        'format_tags': 'p;h1;h2;h3;h4;h5;h6',
-        'prettify': {
-            'element': 'pre',
-            'attributes': {'class': 'prettyprint'}},
-    }
-}
-
-# Constants for cleaning ckeditor html.
-
-REDUCED_ALLOWED_TAGS = ('a', 'b', 'em', 'i', 'strong', 'p', 'u', 'strike',
-    'sub', 'sup', 'br')
-RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'ol', 'ul', 'li', 'hr', 'blockquote',
-        'span', 'pre', 'code', 'div', 'img',
-        'table', 'thead', 'tr', 'th', 'caption', 'tbody', 'td', 'br')
-
-REDUCED_ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'title'],
-}
-RICH_ALLOWED_ATTRIBUTES = REDUCED_ALLOWED_ATTRIBUTES.copy()
-RICH_ALLOWED_ATTRIBUTES.update({
-    'img': ['src', 'alt', 'style', 'title'],
-    'p': ['style'],
-    'table': ['align', 'border', 'cellpadding', 'cellspacing',
-        'style', 'summary'],
-    'th': ['scope'],
-    'span': ['style'],
-    'pre': ['class'],
-    'code': ['class'],
-})
-
-RICH_ALLOWED_STYLES = ('text-align', 'margin-left', 'border-width',
-    'border-style', 'margin', 'float', 'width', 'height',
-    'font-family', 'font-size', 'color', 'background-color')
 
 # Where the default image for sending to Gravatar
 DEFAULT_PROFILE_IMAGE = 'http://new.p2pu.org/media/images/member-missing.png'

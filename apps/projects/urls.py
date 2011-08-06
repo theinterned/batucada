@@ -1,11 +1,11 @@
 from django.conf.urls.defaults import patterns, url, include
 
 urlpatterns = patterns('',
+  url(r'^tag/(?P<tag_slug>[\w\-\. ]+)/$', 'projects.views.list_tagged_all',
+      name='projects_tagged_list'),
   url(r'^$', 'projects.views.project_list',
       name='projects_gallery'),
   url(r'^all/$', 'projects.views.list_all',
-      name='projects_directory'),
-  url(r'^all/(?P<page>\d+)/$', 'projects.views.list_all',
       name='projects_directory'),
   url(r'^create/$', 'projects.views.create',
       name='projects_create'),
@@ -24,8 +24,6 @@ urlpatterns = patterns('',
       name='matching_courses'),
   url(r'^(?P<slug>[\w-]+)/$', 'projects.views.show',
       name='projects_show'),
-  url(r'^(?P<slug>[\w-]+)/(?P<page>\d+)/$', 'projects.views.show',
-      name='projects_show'),
   url(r'^(?P<slug>[\w-]+)/people/$', 'projects.views.user_list',
       name='projects_user_list'),
   url(r'^(?P<slug>[\w-]+)/contact_organizers/$',
@@ -35,6 +33,8 @@ urlpatterns = patterns('',
       name='projects_task_list'),
 
   # Project Content URLs
+  (r'^(?P<slug>[\w-]+)/links/', include('links.urls')),
+  (r'^(?P<slug>[\w-]+)/sign-up/', include('signups.urls')),
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),
 
   # Project Edit URLs

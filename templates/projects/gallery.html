@@ -8,17 +8,14 @@
 {% block links %}<link rel="stylesheet" href="{% locale_url multiple_schools_css %}?v=1">{% endblock %}
 
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
-    </nav>
-    <div id="project-actions">
-      <a class="button" href="{% locale_url projects_directory %}">{{ _('View All') }}</a>
-      {% if user.is_authenticated %}
-        <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
-      {% endif %}
-    </div>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  <a class="button" href="{% locale_url projects_directory %}">{{ _('View All') }}</a>
+  {% if user.is_authenticated %}
+    <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+  {% endif %}
 {% endblock %}
 
 {% block body %}

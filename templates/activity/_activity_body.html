@@ -1,44 +1,21 @@
-{% load activity_tags %}
 {% load l10n_tags %}
 {% load no_follow %}
+{% load truncate_chars %}
+
 {% spaceless %}
-
-{% if activity|should_show_verb and show_actor %}
-  <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor.display_name }}</a>
-{% endif %}
-
+  {% if show_actor %}
+    <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor }}</a>
+  {% endif %}
 {% endspaceless %} {% spaceless %}
-
-
-{% if activity|should_show_verb %}
-    {{ activity.friendly_verb }}
-{% endif %}
-
+  {{ activity.friendly_verb }}
 {% endspaceless %} {% spaceless %}
-
-
-{% if activity|should_hyperlink %}
-  {% if activity.target_user %}
-    <a href="{{ activity|get_link }}">{{ activity|get_link_name }}</a>
+  {% if not activity.target_object.get_absolute_url %}
+    {{ activity.target_object }}
   {% else %}
-    {% if activity.project %}
-      <a href="{{ activity.project.get_absolute_url }}">{{ activity.project }}</a> {{ activity.project.kind|lower}}.
+    {% if activity.target_object.get_absolute_url == activity.get_absolute_url %}
+      {{ activity.target_object|nofollow|safe }}
     {% else %}
-      {{ activity|get_link_name }} 
-      <a href="{{ activity|get_link }}">
-	{{ activity|get_link|truncate:50 }}
-      </a>
+      <a rel="nofollow" href="{{ activity.target_object.get_absolute_url }}">{{ activity.target_object }}</a>.
     {% endif %}
   {% endif %}
-{% else %}
-  {% if activity.status %}
-    {{ activity.status|safe|nofollow|safe }}
-  {% else %}
-    {% if activity.target_object %}
-      {{ activity.target_object.representation }}
-    {% else %}
-      {{ activity|activity_representation }}
-    {% endif %}
-  {% endif %}
-{% endif %}
 {% endspaceless %}

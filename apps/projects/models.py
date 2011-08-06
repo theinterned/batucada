@@ -1,26 +1,31 @@
 import logging
 import datetime
-import bleach
 
 from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.db import models
-from django.db.models import Count, Q, Max
-from django.db.models.signals import pre_save
+from django.db.models import Count, Max
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import get_language, activate
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
+from django.contrib.contenttypes.models import ContentType
+
+from taggit.managers import TaggableManager
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
-from activity.models import Activity
+from activity.models import Activity, RemoteObject, register_filter
+from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
+from richtext.models import RichTextField
+from content.models import Page
+from replies.models import PageComment
 
 import caching.base
 
@@ -39,8 +44,9 @@ class ProjectManager(caching.base.CachingManager):
     def get_popular(self, limit=0, school=None):
         popular = cache.get('projectspopular')
         if not popular:
-            rels = Relationship.objects.values('target_project').annotate(
-                Count('id')).exclude(target_project__isnull=True).filter(
+            rels = Relationship.objects.filter(deleted=False).values(
+                'target_project').annotate(Count('id')).exclude(
+                target_project__isnull=True).filter(
                 target_project__under_development=False,
                 target_project__not_listed=False,
                 target_project__archived=False).order_by('-id__count')
@@ -56,33 +62,52 @@ class ProjectManager(caching.base.CachingManager):
     def get_active(self, limit=0, school=None):
         active = cache.get('projectsactive')
         if not active:
-            activities = Activity.objects.values('target_project').annotate(
-                Max('created_on')).exclude(target_project__isnull=True,
-                verb='http://activitystrea.ms/schema/1.0/follow',
-                remote_object__isnull=False).filter(
-                target_project__under_development=False,
-                target_project__not_listed=False,
-                target_project__archived=False).order_by('-created_on__max')
+            ct = ContentType.objects.get_for_model(RemoteObject)
+            activities = Activity.objects.values('scope_object').annotate(
+                Max('created_on')).exclude(scope_object__isnull=True,
+                verb=verbs['follow'], target_content_type=ct).filter(
+                scope_object__under_development=False,
+                scope_object__not_listed=False,
+                scope_object__archived=False).order_by('-created_on__max')
             if school:
                 activities = activities.filter(
-                    target_project__school=school).exclude(
-                    target_project__id__in=school.declined.values('id'))
+                    scope_object__school=school).exclude(
+                    scope_object__id__in=school.declined.values('id'))
             if limit:
                 activities = activities[:limit]
-            active = [a['target_project'] for a in activities]
+            active = [a['scope_object'] for a in activities]
             cache.set('projectsactive', active, 3000)
         return Project.objects.filter(id__in=active)
 
 
 class Project(ModelBase):
     """Placeholder model for projects."""
-    object_type = 'http://drumbeat.org/activity/schema/1.0/project'
-    generalized_object_type = 'http://activitystrea.ms/schema/1.0/group'
+    object_type = object_types['group']
 
     name = models.CharField(max_length=100)
-    kind = models.CharField(max_length=30, default=_('Study Group'))
+
+    # Select kind of project (study group, course, or other)
+    STUDY_GROUP = 'study group'
+    COURSE = 'course'
+    OTHER = 'other'
+    CATEGORY_CHOICES = (
+        (STUDY_GROUP, _('Study Group -- group of people working ' \
+                        'collaboratively to acquire and share knowledge.')),
+        (COURSE, _('Course -- led by one or more organizers with skills on ' \
+                   'a field who direct and help participants during their ' \
+                   'learning.')),
+        (OTHER, _('Other -- if other, please fill out and describe the ' \
+                  'term you will use to categorize it.'))
+    )
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
+        default=STUDY_GROUP, null=True, blank=False)
+    tags = TaggableManager(blank=True)
+
+    other = models.CharField(max_length=30, blank=True, null=True)
+    other_description = models.CharField(max_length=150, blank=True, null=True)
+
     short_description = models.CharField(max_length=150)
-    long_description = models.TextField(validators=[MaxLengthValidator(700)])
+    long_description = RichTextField(validators=[MaxLengthValidator(700)])
 
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -92,8 +117,6 @@ class Project(ModelBase):
 
     detailed_description = models.ForeignKey('content.Page',
         related_name='desc_project', null=True, blank=True)
-    sign_up = models.ForeignKey('content.Page', related_name='sign_up_project',
-        null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
@@ -105,7 +128,6 @@ class Project(ModelBase):
 
     under_development = models.BooleanField(default=True)
     not_listed = models.BooleanField(default=False)
-    signup_closed = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)
 
     clone_of = models.ForeignKey('projects.Project', blank=True, null=True,
@@ -118,9 +140,30 @@ class Project(ModelBase):
     class Meta:
         verbose_name = _('group')
 
+    def __unicode__(self):
+        return _('%(name)s %(kind)s') % dict(name=self.name,
+            kind=self.kind.lower())
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('projects_show', (), {
+            'slug': self.slug,
+        })
+
+    def friendly_verb(self, verb):
+        if verbs['post'] == verb:
+            return _('created')
+
+    @property
+    def kind(self):
+        if self.category == Project.OTHER:
+            return self.other.lower()
+        else:
+            return self.category.lower()
+
     def followers(self):
-        return Relationship.objects.filter(target_project=self,
-            source__deleted=False)
+        return Relationship.objects.filter(deleted=False,
+            target_project=self, source__deleted=False)
 
     def non_participant_followers(self):
         return self.followers().exclude(
@@ -130,17 +173,6 @@ class Project(ModelBase):
         """Return a list of users participating in this project."""
         return Participation.objects.filter(project=self,
             left_on__isnull=True, user__deleted=False)
-
-    def pending_applicants(self):
-        page = self.sign_up
-        users = []
-        first_level_comments = page.comments.filter(reply_to__isnull=True)
-        for answer in first_level_comments.filter(deleted=False):
-            is_participant = self.participants().filter(
-                user=answer.author).exists()
-            if not is_participant and not answer.author.deleted:
-                users.append(answer.author)
-        return users
 
     def non_organizer_participants(self):
         return self.participants().filter(organizing=False)
@@ -175,28 +207,9 @@ class Project(ModelBase):
         else:
             return False
 
-    def is_pending_signup(self, user):
-        for applicant in self.pending_applicants():
-            if applicant == user:
-                return True
-        return False
-
     def activities(self):
-        activities = Activity.objects.filter(deleted=False).filter(
-            Q(project=self) | Q(target_project=self),
-        ).exclude(
-            verb='http://activitystrea.ms/schema/1.0/follow'
-        ).order_by('-created_on')
-        return activities
-
-    def __unicode__(self):
-        return self.name
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('projects_show', (), {
-            'slug': self.slug,
-        })
+        return Activity.objects.filter(deleted=False,
+            scope_object=self).order_by('-created_on')
 
     def create(self):
         self.save()
@@ -223,37 +236,23 @@ class Project(ModelBase):
 
     def send_creation_notification(self):
         """Send notification when a new project is created."""
-        project = self
-        ulang = get_language()
-        subject = {}
-        body = {}
-        domain = Site.objects.get_current().domain
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = render_to_string(
-                "projects/emails/project_created_subject.txt", {
-                'project': project,
-                }).strip()
-            body[l[0]] = render_to_string(
-                "projects/emails/project_created.txt", {
-                'project': project,
-                'domain': domain,
-                }).strip()
-        activate(ulang)
-        for organizer in project.organizers():
+        context = {
+            'project': self,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'projects/emails/project_created_subject.txt',
+            'projects/emails/project_created.txt', context)
+        for organizer in self.organizers():
             if not organizer.no_updates:
-                ol = organizer.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
-                        (organizer.user, subject[ol], body[ol]))
+                        (organizer.user, subjects, bodies))
+
         admin_subject = render_to_string(
-            "projects/emails/admin_project_created_subject.txt", {
-            'project': project,
-            }).strip()
+            "projects/emails/admin_project_created_subject.txt",
+            context).strip()
         admin_body = render_to_string(
-            "projects/emails/admin_project_created.txt", {
-            'project': project,
-            'domain': domain,
-            }).strip()
+            "projects/emails/admin_project_created.txt", context).strip()
         for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
             send_mail(admin_subject, admin_body, admin_email,
                 [admin_email], fail_silently=True)
@@ -263,6 +262,27 @@ class Project(ModelBase):
         if school and school.declined.filter(id=self.id).exists():
             school = None
         return school
+
+    @staticmethod
+    def filter_activities(activities):
+        from statuses.models import Status
+        content_types = [
+            ContentType.objects.get_for_model(Page),
+            ContentType.objects.get_for_model(PageComment),
+            ContentType.objects.get_for_model(Status),
+            ContentType.objects.get_for_model(Project),
+        ]
+        return activities.filter(target_content_type__in=content_types)
+
+    @staticmethod
+    def filter_learning_activities(activities):
+        pages_ct = ContentType.objects.get_for_model(Page)
+        comments_ct = ContentType.objects.get_for_model(PageComment)
+        return activities.filter(
+            target_content_type__in=[pages_ct, comments_ct])
+
+register_filter('default', Project.filter_activities)
+register_filter('learning', Project.filter_learning_activities)
 
 
 class Participation(ModelBase):
@@ -279,20 +299,3 @@ class Participation(ModelBase):
     no_wall_updates = models.BooleanField(default=False)
     # for new pages or comments.
     no_updates = models.BooleanField(default=False)
-
-
-###########
-# Signals #
-###########
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, Project):
-        log.debug("Cleaning html.")
-        if instance.long_description:
-            instance.long_description = bleach.clean(instance.long_description,
-                tags=settings.REDUCED_ALLOWED_TAGS,
-                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
-
-
-pre_save.connect(clean_html, sender=Project)

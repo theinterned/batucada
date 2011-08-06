@@ -1,24 +1,28 @@
 
 
 #splash #content header h1{
-  font-size: 50px;
+  font-size: 48px;
 }
 
 #intro-links a {
   font-size: 36px;
 }
 
+#intro-links a.big-run-course {
+  padding-left: 33px;
+}
+
 #user-nav a.top-level, #main-nav a.top-level {
   padding: 4px 6px 8px 0px;
 }
 
-footer[role="main"] ul {
+footer[class="main"] ul {
     float: left;
     margin-left: 39px;
     padding-bottom: 50px;
 }
 
-footer[role="main"] ul[role="supporters"] {
+footer[class="main"] ul[class="supporters"] {
     font-size: 15px;
     margin-left: 240px;
     margin-top: -65px;

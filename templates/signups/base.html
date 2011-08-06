@@ -1,0 +1,12 @@
+{% extends "projects/base.html" %}
+{% load l10n_tags %}
+
+{% block project_title %}{{ _('Sign-Up') }}{% endblock %}
+
+{% block bodyid %}signup{% endblock %}
+
+{% block project_breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ sign_up.get_absolute_url }}">{{ _('Sign-Up') }}</a>
+  {% block signup_breadcrumbs %}{% endblock %}
+{% endblock %}

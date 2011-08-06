@@ -1,17 +1,13 @@
 {% extends "projects/base.html" %}
 {% load l10n_tags %}
 {% load project_tags %}
+{% load activity_tags %}
+{% load pagination_tags %}
 
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block project_links %}
-<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_project_feed project=project.slug %}" />
-{% endblock %}
-
-{% block project_actions %}
-    {% if organizing %}
-        <!--<a class="button" href="{% locale_url challenges_create project_id=project.pk %}">{{ _('Create Challenge') }}</a>-->
-    {% endif %}
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_project_feed slug=project.slug %}" />
 {% endblock %}
 
 {% block bodyid %}project_landing{% endblock %}
@@ -33,29 +29,8 @@
     </li>
         {% endfor %}
       </ul>
-      <p id="more_task_link"><span id="task-count">{{ _('Displaying') }} {% if content_pages_count < 3 %}{{ content_pages_count}} {%else %}3{% endif %} {{ _('of') }} {{ content_pages_count }} {{ _('total tasks') }}</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></p>
+      <p id="more_task_link"><span id="task-count">{{ _('Displaying') }} {% if content_pages_count < 3 %}{{ content_pages_count}} {% else %}3{% endif %} {{ _('of') }} {{ content_pages_count }} {{ _('total tasks') }}</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></p>
   </div>
-  {% endif %}
-  
-  {% if challenges %}
-  <div id="challenge_header" class="challenges">
-    <h2>{{ _('Challenges') }}</h2>
-    <ul>
-      {% for challenge in challenges %}
-      <li>
-        <a href="{% locale_url challenges_show slug=challenge.slug %}">
-          {% if challenge.image %}
-          <img src="{{ challenge.image.url }}" alt="{{ challenge }} image" />
-          {% else %}
-          <img src="/media/images/project-missing.png" alt="{{ challenge }} image"/>
-          {% endif %}
-        </a>
-
-        <a href="{% locale_url challenges_show slug=challenge.slug %}">{{ challenge.title }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div> <!-- /.challenges -->
   {% endif %}
 
   <div id="activity_header">
@@ -93,24 +68,15 @@
     </div> <!-- /.#create-post -->
     {% endif %}
 
-
+    {% activity_filters request project.get_absolute_url %}
     <ul id="posts">
-      {% for activity in page.object_list %}
+      {% for activity in pagination_current_page.object_list %}
 	  {% include "activity/_activity_resource.html" %}
       {% endfor %}
     </ul>
-    <div class="pagination">
-      {% if page.has_previous %}
-        <a class="btn" href="{% locale_url projects_show slug=project.slug page=prev_page %}">← {{ _('previous') }}</a>
-      {% else %}
-        <span class="btn">← {{ _('previous') }}</span>
-      {% endif %}
-      {% if page.has_next %}
-        <a class="btn" href="{% locale_url projects_show slug=project.slug page=next_page %}">{{ _('next') }} →</a>
-      {% else %}
-        <span class="btn">{{_('next')}} →</span>
-      {% endif %}
-    </div>
+    {% with prefix='' page_url=project.get_absolute_url %}
+      {% pagination_links %}
+    {% endwith %}
 
 </div> <!-- /#main -->
 

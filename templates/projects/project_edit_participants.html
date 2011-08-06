@@ -35,7 +35,7 @@
 <tbody>
   {% for participation in participations %}
     <tr>
-      <td class="name"><a href="{{ participation.user.get_absolute_url }}">{{ participation.user.display_name }}</a></td>
+      <td class="name"><a href="{{ participation.user.get_absolute_url }}">{{ participation.user }}</a></td>
       <td class="organizer">
         {% if participation.organizing %}
           <span class="yes" title="{{_('Organizing.') }}">{{ _('yes') }}</span>
@@ -51,7 +51,7 @@
         </form>
         <form action="{% locale_url projects_edit_participants_delete slug=project.slug username=participation.user.username %}" method="post">
           {% csrf_token %}
-          <button class="delete" type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+          <button class="delete" type="submit" value="{{ _('Remove') }}">{{ _('Remove') }}</button>
         </form>
         {% endif %}
       </td>

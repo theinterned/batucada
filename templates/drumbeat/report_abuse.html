@@ -13,7 +13,7 @@
 	{% csrf_token %}
         <p>{{ _('Would you like to report this content as objectionable? This can be anything from suspected spam to offensive content.') }}</p>
         <p>
-	  <a class="button" href="{% locale_url dashboard_index %}">{{ _('Cancel') }}</a>
+	  <a class="button" href="{% locale_url dashboard %}">{{ _('Cancel') }}</a>
 	  <button type="submit">{{ _('Report') }}</button>
 	</p>
       </form>

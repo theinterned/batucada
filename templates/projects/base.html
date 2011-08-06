@@ -8,17 +8,13 @@
 {% block project_links %}{% endblock %}
 {% endblock %}
 
+{% block breadcrumbs_title %}
+  <h1 id="project-name"><a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a></h1>
+{% endblock %}
 {% block breadcrumbs %}
-  <div class="container">
-    <h1 id="project-name"><a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a></h1>
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
-      {% block project_breadcrumbs %}{% endblock %}
-    </nav>
-      <div id="project-actions">
-        {% block project_actions %}{% endblock %}
-      </div>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+  {% block project_breadcrumbs %}{% endblock %}
 {% endblock %}

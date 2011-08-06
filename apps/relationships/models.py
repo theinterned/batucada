@@ -1,19 +1,19 @@
 import datetime
 import logging
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate, get_language, ugettext
-from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
 
 from drumbeat.models import ModelBase
-from activity.models import Activity
+from activity.models import Activity, register_filter
+from activity.schema import verbs
 from preferences.models import AccountPreferences
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
 
 log = logging.getLogger(__name__)
 
@@ -32,13 +32,7 @@ class Relationship(ModelBase):
 
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
-
-    def save(self, *args, **kwargs):
-        """Check that the source and the target are not the same user."""
-        if (self.source == self.target_user):
-            raise ValidationError(
-                _('Cannot create self referencing relationship.'))
-        super(Relationship, self).save(*args, **kwargs)
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (
@@ -47,10 +41,31 @@ class Relationship(ModelBase):
         )
 
     def __unicode__(self):
-        return "%(from)r => %(to)r" % {
-            'from': repr(self.source),
-            'to': repr(self.target_user or self.target_project),
-        }
+        return unicode(self.target_user or self.target_project)
+
+    @property
+    def object_type(self):
+        target = (self.target_user or self.target_project)
+        return target.object_type
+
+    def get_absolute_url(self):
+        target = (self.target_user or self.target_project)
+        return target.get_absolute_url()
+
+    def save(self, *args, **kwargs):
+        """Check that the source and the target are not the same user."""
+        if (self.source == self.target_user):
+            raise ValidationError(
+                _('Cannot create self referencing relationship.'))
+        super(Relationship, self).save(*args, **kwargs)
+
+    @staticmethod
+    def filter_activities(activities):
+        ct = ContentType.objects.get_for_model(Relationship)
+        return activities.filter(target_content_type=ct)
+
+register_filter('people', Relationship.filter_activities)
+
 
 ###########
 # Signals #
@@ -60,35 +75,22 @@ class Relationship(ModelBase):
 def follow_handler(sender, **kwargs):
     rel = kwargs.get('instance', None)
     created = kwargs.get('created', False)
-    if not created or not isinstance(rel, Relationship):
+    if not created or not isinstance(rel, Relationship) or rel.deleted:
         return
     activity = Activity(actor=rel.source,
-                        verb='http://activitystrea.ms/schema/1.0/follow')
+                        verb=verbs['follow'],
+                        target_object=rel)
     receipts = []
-    ulang = get_language()
-    subject = {}
-    body = {}
     if rel.target_user:
-        activity.target_user = rel.target_user
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = ugettext(
-                '%(display_name)s is following you on P2PU!') % {
-                'display_name': rel.source.display_name}
-        preferences = AccountPreferences.objects.filter(user=rel.target_user)
+        preferences = AccountPreferences.objects.filter(
+            user=rel.target_user, key='no_email_new_follower')
         for pref in preferences:
-            if pref.value and pref.key == 'no_email_new_follower':
+            if pref.value:
                 break
         else:
             receipts.append(rel.target_user)
     else:
-        activity.project = rel.target_project
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            msg = ugettext(
-                '%(display_name)s is following %(project)s on P2PU!')
-            subject[l[0]] = msg % {'display_name': rel.source.display_name,
-                'project': rel.target_project}
+        activity.scope_object = rel.target_project
         for organizer in rel.target_project.organizers():
             if organizer.user != rel.source:
                 preferences = AccountPreferences.objects.filter(
@@ -99,15 +101,16 @@ def follow_handler(sender, **kwargs):
                 else:
                     receipts.append(organizer.user)
     activity.save()
-
-    for l in settings.SUPPORTED_LANGUAGES:
-        activate(l[0])
-        body[l[0]] = render_to_string(
-            "relationships/emails/new_follower.txt", {'user': rel.source,
-                'project': rel.target_project,
-                'domain': Site.objects.get_current().domain})
-    activate(ulang)
+    context = {
+        'user': rel.source,
+        'project': rel.target_project,
+        'domain': Site.objects.get_current().domain
+    }
+    subjects, bodies = localize_email(
+        'relationships/emails/new_follower_subject.txt',
+        'relationships/emails/new_follower.txt', context)
     for user in receipts:
-        pl = user.preflang or settings.LANGUAGE_CODE
-        SendUserEmail.apply_async((user, subject[pl], body[pl]))
-post_save.connect(follow_handler, sender=Relationship)
+        SendUserEmail.apply_async((user, subjects, bodies))
+
+post_save.connect(follow_handler, sender=Relationship,
+    dispatch_uid='relationships_follow_handler')
