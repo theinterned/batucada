@@ -1,7 +1,7 @@
 {% extends "projects/base.html" %}
-
 {% load l10n_tags %}
 {% load project_tags %}
+{% load pagination_tags %}
 
 
 {% block title %}{{ _('People') }}{% endblock %}
@@ -9,7 +9,7 @@
 {% block bodyid %}project_user_list{% endblock %}
 {% block project_breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_user_list project%}">{{ _('People') }}</a>
+  <a href="{% locale_url projects_user_list slug=project.slug %}">{{ _('People') }}</a>
 {% endblock %}
 
 {% block body %}
@@ -29,29 +29,39 @@
   </ul>
 </section>
 {% endif %}
-{% if participants %}
+{% if participants_pagination_current_page.object_list %}
   <section id="participants">
   <h1><span>{{ _('Participants') }}</span></h1>
   <ul class="user-list">
-    {% for participation in participants %}
+    {% for participation in participants_pagination_current_page.object_list %}
       {% with person=participation.user %}
         <li>{% include "users/_user_card.html" %}</li>
       {% endwith %}
     {% endfor %}
   </ul>
+ 
+  {% with prefix='participants_' page_url=projects_users_url %}
+    {% pagination_links %}
+  {% endwith %}
+
 </section>
 {% endif %}
 
-{% if followers %}
+{% if followers_pagination_current_page.object_list %}
 <section id="followers">
   <h1><span>{{ _('Followers') }}</span></h1>
   <ul class="user-list">
-    {% for relationship in followers %}
-      {% with person=relationship.user %}
+    {% for relationship in followers_pagination_current_page.object_list %}
+      {% with person=relationship.source %}
         <li>{% include "users/_user_card.html" %}</li>
       {% endwith %}
     {% endfor %}
   </ul>
+
+  {% with prefix='followers_' page_url=projects_users_url %}
+    {% pagination_links %}
+  {% endwith %}
+
 </section>
 {% endif %}
 </div>

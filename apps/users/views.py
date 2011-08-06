@@ -23,15 +23,17 @@ from commonware.decorators import xframe_sameorigin
 
 from l10n.urlresolvers import reverse
 from urlparse import urlparse, urlunparse
-from users import forms
-from users.models import UserProfile, create_profile
-from users.fields import UsernameField
-from users.decorators import anonymous_only, login_required
-from users import drupal, badges
-from projects import drupal as projects_drupal
 from links.models import Link
 from drumbeat import messages
 from activity.models import Activity
+from activity.views import filter_activities
+from pagination.views import get_pagination_context
+
+from users import forms
+from users.models import UserProfile, create_profile, ProfileTag
+from users.fields import UsernameField
+from users.decorators import anonymous_only, login_required
+from users import drupal
 
 log = logging.getLogger(__name__)
 
@@ -88,6 +90,8 @@ def _clean_redirect_url(request):
 
 def _get_redirect_url(request):
     url = request.session.get(REDIRECT_FIELD_NAME, None)
+    if url == reverse('splash'):
+        url = reverse('dashboard')
     if url:
         del request.session[REDIRECT_FIELD_NAME]
         if not url.startswith('/'):
@@ -186,7 +190,7 @@ def login_openid_complete(request):
             if user.username[:10] != 'openiduser':
                 username = user.username
             form = forms.CreateProfileForm(initial={
-                'display_name': ' '.join((user.first_name, user.last_name)),
+                'full_name': ' '.join((user.first_name, user.last_name)),
                 'email': user.email,
                 'username': username,
             })
@@ -211,7 +215,7 @@ def login_openid_complete(request):
 def logout(request):
     """Destroy user session."""
     auth.logout(request)
-    return http.HttpResponseRedirect(reverse('dashboard_index'))
+    return http.HttpResponseRedirect(reverse('splash'))
 
 
 @anonymous_only
@@ -299,6 +303,16 @@ def user_list(request):
     }, context_instance=RequestContext(request))
 
 
+def user_tagged_list(request, tag_slug):
+    """Display a list of users that are tagged with the tag and tag type. """
+    tag = get_object_or_404(ProfileTag, slug=tag_slug)
+    users = UserProfile.objects.filter(deleted=False, tags__slug=tag_slug)
+    return render_to_response('users/user_list.html', {
+        'tagged': users,
+        'tag': tag,
+    }, context_instance=RequestContext(request))
+
+
 @anonymous_only
 def confirm_registration(request, token, username):
     """Confirm a users registration."""
@@ -338,32 +352,17 @@ def profile_view(request, username):
     if profile.deleted:
         messages.error(request, _('This user account was deleted.'))
         return http.HttpResponseRedirect(reverse('users_user_list'))
-    current_projects = profile.get_current_projects(only_public=True)
-    following = profile.following()
-    followers = profile.followers()
-    links = Link.objects.filter(user=profile,
-        project__isnull=True).order_by('index')
+
     activities = Activity.objects.for_user(profile)
-    past_projects = profile.get_past_projects(only_public=True)
-    past_drupal_courses = projects_drupal.get_past_courses(profile.username)
-    past_involvement_count = len(past_projects) + len(past_drupal_courses)
-    pilot_badges = badges.get_awarded_badges(profile.username)
-    return render_to_response('users/profile.html', {
+    activities = filter_activities(request, activities)
+    context = {
         'profile': profile,
-        'current_projects': current_projects,
-        'following': following,
-        'followers': followers,
-        # TODO: enable when addition/edition of tags is implemented.
-        # 'skills': profile.tags.filter(category='skill'),
-        # 'interests': profile.tags.filter(category='interest'),
-        'links': links,
-        'activities': activities,
-        'past_projects': past_projects,
-        'past_drupal_courses': past_drupal_courses,
-        'past_involvement_count': past_involvement_count,
-        'pilot_badges': pilot_badges,
+        'profile_view': True,
         'domain': Site.objects.get_current().domain,
-    }, context_instance=RequestContext(request))
+    }
+    context.update(get_pagination_context(request, activities))
+    return render_to_response('users/profile.html', context,
+        context_instance=RequestContext(request))
 
 
 @login_required(profile_required=False)
@@ -371,7 +370,7 @@ def profile_view(request, username):
 def profile_create(request):
     try:
         request.user.get_profile()
-        return http.HttpResponseRedirect(reverse('dashboard_index'))
+        return http.HttpResponseRedirect(reverse('dashboard'))
     except UserProfile.DoesNotExist:
         pass
     form = forms.CreateProfileForm(request.POST)
@@ -394,7 +393,7 @@ def profile_create(request):
                 'instructions for completing your '
                 'registration.').format(profile.email)
         messages.info(request, msg)
-        return http.HttpResponseRedirect(reverse('dashboard_index'))
+        return http.HttpResponseRedirect(reverse('splash'))
     else:
         messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))

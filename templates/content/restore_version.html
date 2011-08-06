@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block content_preview %}
-  <h1 class="{% if page.collaborative and page.editable %}collaborative{% endif %} school_header">
+  <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">
     {{ _('[Preview]') }} {{ page.title }}
   </h2>
   <hr />
@@ -35,6 +35,10 @@
 {% endblock %}
 
 {% block page_form_buttons %}
+  <div class="field{% if form.minor_update.errors %} error{% endif %}">
+    {{ form.minor_update }} {{ _('Minor update (not posted to the wall).') }}
+    {{ form.minor_update.errors }}
+  </div>
   <a class="button" href="{% locale_url page_version slug=page.project.slug page_slug=page.slug version_id=version.id %}">
     {{ _('Cancel') }}
   </a>

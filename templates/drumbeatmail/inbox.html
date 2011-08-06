@@ -3,15 +3,15 @@
 
 {% block title %}{{ _('Inbox') }}{% endblock %}
 {% block bodyid %}inbox{% endblock %}
+
 {% block breadcrumbs %}
-<div class="container">
-  <nav>
-    <a href="{% locale_url drumbeatmail_inbox %}">{{ _('Inbox') }}</a>
-  </nav>
-  <div id="project-actions"> <!-- TODO: reusing div#id -->
-      <a id="create-message" class="button" href="{% locale_url drumbeatmail_compose %}">{{ _('New Private Discussion') }}</a>
-  </div>
-</div>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url dashboard %}">{{ _('Dashboard') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url drumbeatmail_inbox %}">{{ _('Inbox') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  <a id="create-message" class="button" href="{% locale_url drumbeatmail_compose %}">{{ _('New Private Discussion') }}</a>
 {% endblock %}
 
 {% block body %}
@@ -29,7 +29,7 @@
     {% if senders %}
       <ul id="conversations">
 	{% for sender, count in senders %}
-	  <li><a href="{% locale_url drumbeatmail_inbox_filtered filter=sender.username %}">{{ sender.display_name }} ({{ count }})</a></li>
+	  <li><a href="{% locale_url drumbeatmail_inbox_filtered filter=sender.username %}">{{ sender }} ({{ count }})</a></li>
 	{% endfor %}
       </ul>
     {% endif %}
@@ -62,9 +62,9 @@
       <div class="post-contents">
         <div class="post-details">
           {% if message.sender == user %}
-            <a class="member-name" href="{{ message.recipient.get_profile.get_absolute_url }}">{{ message.recipient.get_profile.display_name }}</a>
+            <a class="member-name" href="{{ message.recipient.get_profile.get_absolute_url }}">{{ message.recipient.get_profile }}</a>
           {% else %}
-            <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile.display_name }}</a>
+            <a class="member-name" href="{{ message.sender.get_profile.get_absolute_url }}">{{ message.sender.get_profile }}</a>
           {% endif %}
           {{ message.sent_at }}
         </div>

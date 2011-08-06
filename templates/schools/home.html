@@ -1,30 +1,18 @@
-{% extends "base.html" %}
+{% extends "schools/base.html" %}
 {% load l10n_tags %}
 {% load youtube %}
 {% load slideshare %}
 {% load project_tags %}
 
 {% block title %}{{ school.name }}{% endblock %}
-
-{% block links %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endblock %}
-
 {% block bodyid %}school_home{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
 
-{% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <span>{{ _('Schools') }}</span>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
-    </nav>
-    <div id="project-actions">
-      {% if is_organizer %}
-        <a id="edit-school" class="button" href="{% locale_url schools_edit slug=school.slug %}">{{ _('Edit School') }}</a>
-      {% endif %}
-      <a class="button" href="{% locale_url projects_directory %}?school={{ school.slug }}">{{ _('Browse') }}</a>
-    </div>
-  </div> <!-- /.container -->
+{% block breadcrumbs_actions %}
+    {% if is_organizer %}
+      <a id="edit-school" class="button" href="{% locale_url schools_edit slug=school.slug %}">{{ _('Edit School') }}</a>
+    {% endif %}
+    <a class="button" href="{% locale_url projects_directory %}?school={{ school.slug }}">{{ _('Browse') }}</a>
 {% endblock %}
 
 {% block body %}
@@ -45,7 +33,7 @@
       <h2 class="school_header">{{ _('School Organizers') }}</h2>
       <br>
       {% for organizer in school.organizers.all %}
-        <a href="{{ organizer.get_absolute_url }}" title="{{ organizer.display_name }} (school organizer)"><img class="member-picture" src="{{ organizer.image_or_default }}" height="26" width="26" alt="{{ organizer.display_name }} (school organizer)"></a>
+        <a href="{{ organizer.get_absolute_url }}" title="{{ organizer }} (school organizer)"><img class="member-picture" src="{{ organizer.image_or_default }}" height="26" width="26" alt="{{ organizer }} (school organizer)"></a>
       {% endfor %}
     </section>
   </div>

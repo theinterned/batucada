@@ -1,2 +1,0 @@
-{% load l10n_tags %}
-[{{ project.name|slice:":20" }}] {{ comment.author }}{% if is_answer %}{{ _(' submitted a new answer at the sign-up page.') }}{% else %}{{ _(' posted a new comment at the sign-up page.') }}{% endif %}

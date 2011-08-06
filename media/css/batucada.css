@@ -214,8 +214,14 @@ input[type=submit]:active,
     text-decoration: none;
 }
 
+#follow_button, #participate_button {
+    width: 100px;
+}
+
 #participate_button {
-    float: left;
+    float: right;
+    margin-top: -23px;
+    margin-right: 2px;
 }
 
 #participate_button a {
@@ -226,6 +232,9 @@ input[type=submit]:active,
     border-width: 1px;
 }
 
+.login_participate_button {
+    margin-top: 0px !important
+}
 /* FORMS */
 form .field {
 	position: relative;
@@ -428,7 +437,7 @@ header {}
         padding: 4px 10px 8px 10px;
       }
 
-      #user-nav .menu a:hover, #main-nav .menu a:hover {
+      #user-nav a:hover, #main-nav a:hover {
         background: #36cdc4;
         color: #fff;
       }
@@ -539,10 +548,10 @@ header {}
         #inbox-count {
           padding: 0 3px;
           margin-left: 5px;
-          border: 1px solid #f60403;
-          background: -webkit-gradient(linear,left bottom,left top,color-stop(0.45, rgb(208,4,4)),color-stop(0.55, rgb(254,31,35)));
-          background: -moz-linear-gradient(center bottom, rgb(208,4,4) 45%, rgb(254,31,35) 55%);
-          -pie-background: linear-gradient(center bottom, rgb(208,4,4) 45%, rgb(254,31,35) 55%);
+          border: 1px solid #309443;
+          background: -webkit-gradient(linear,left bottom,left top,color-stop(0.45, rgb(48,148,67)),color-stop(0.55, rgb(75,231,104)));
+          background: -moz-linear-gradient(center bottom, rgb(48,148,67) 45%, rgb(75,231,104) 55%);
+          -pie-background: linear-gradient(center bottom, rgb(48,148,67) 45%, rgb(75,231,104) 55%);
           border-radius: 6px;
           -moz-border-radius: 6px;
           -o-border-radius: 6px;
@@ -584,14 +593,14 @@ header {}
     font-size: 11px;
     /*line-height: 31px;*/
     line-height: 22px;
-	padding-left:10px;
-	border-radius: 10px;
-    border: solid 1px #EEE;
+    padding-left:10px;
+    border-radius: 10px;
+    border: solid 1px #EEE;     
   }
 
     #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
-    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #sign_up_task #breadcrumbs,
-    #sign_up_comment #breadcrumbs, #project_user_list #breadcrumbs {
+    #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #signup #breadcrumbs, 
+    #project_user_list #breadcrumbs {
         height: 6em;    
     }
     
@@ -606,45 +615,46 @@ header {}
         margin: 0 5px;
     }
 
-    #breadcrumbs #project-actions {
+    #breadcrumbs #breadcrumbs-actions {
         float: right;
         position: relative;
         top: -47px;
         margin-right: 10px;
     }
     
-    #user_profile #breadcrumbs #project-actions, #project_gallery #breadcrumbs #project-actions, #project_directory #breadcrumbs #project-actions, 
-    #school_home #breadcrumbs #project-actions, #inbox #breadcrumbs #project-actions {
+    #user_profile #breadcrumbs #breadcrumbs-actions, #project_gallery #breadcrumbs #breadcrumbs-actions,
+    #project_directory #breadcrumbs #breadcrumbs-actions, 
+    #school_home #breadcrumbs #breadcrumbs-actions, #inbox #breadcrumbs #breadcrumbs-actions {
         top: -25px;
     }
     
-    #breadcrumbs #project-actions .button {
+    #breadcrumbs #breadcrumbs-actions .button {
       float: left;
       margin-right: 15px;
     }
     
-    #project_landing #breadcrumbs #project-actions {
+    #project_landing #breadcrumbs #breadcrumbs-actions {
       top: -44px;
       margin-right: 35px;
     }
     
-    #sidebar #project-actions {
+    #sidebar #breadcrumbs-actions {
       padding: 0 10px 0 10px;
       position: relative;
       width: 223px;
       top: -50px;
     }
 
-    #sidebar #project-actions form { 
+    #sidebar #breadcrumbs-actions form { 
         float: left;
     }
 
-    #sidebar #project-actions #participate_button { 
+    #sidebar #breadcrumbs-actions #participate_button { 
         float: right;
         margin: 5px 0 0 0;
     }
     
-    #sidebar #project-action #participate_button a, #sidebar #project-actions button {
+    #sidebar #project-action #participate_button a, #sidebar #breadcrumbs-actions button {
         -webkit-box-shadow:0 0 15px #ffffff; 
         -moz-box-shadow: 0 0 15px #ffffff; 
         box-shadow:0 0 15px #ffffff; 
@@ -727,11 +737,6 @@ header {}
 	background-color:red;
 	color:white;
 }
-
-#people .pending {
-    background-color:red;
-    color:white;
-} 
         
       #project-summary,
       #sidebar #project-description { 
@@ -1109,7 +1114,7 @@ header {}
   margin-left: 0;
 }
 
-    #main .post-container, .modal .post-container {
+    .post-container {
       -pie-background: linear-gradient(top,#fff,#f4f4f4);
       border-radius: 6px;
       -moz-border-radius: 6px;
@@ -1134,6 +1139,20 @@ header {}
      color: #a00;
      padding-left: 20px;
    }
+
+    .post-container.post-replies, #extra-indent-post-replies .post-container {
+	    margin-left: 30px;
+	    width: 575px;
+	}
+
+    .modal .post-container.post-replies {
+       margin-left: 30px;
+	   width: 530px;
+    }
+
+    #extra-indent-post-replies .post-container.post-replies {
+       margin-left: 60px;
+    }
 
     .tags li,
     #main .post-tags li, #main .post-char-count {
@@ -1172,8 +1191,8 @@ header {}
 		behavior: url("/media/css/PIE.htc");
 	}
 	#main .post-tags li a:hover,
-	.tags li a:hover{
-		background-color: #DFEFFB;
+	.tags li a:hover, #main .post-tags li a.active-post-tag {
+		background-color:#DFEFFB;
 		border-color: #b7d1e5;
 		color: #2084CA;
 		/*text-shadow: -1px -1px 0 rgba(0,0,0,0.2);*/
@@ -1198,10 +1217,9 @@ header {}
       color: #d00;
     }
     #main .post-tags {
-      margin: 0 0 -5px;
-      padding: 0;
+      padding-right: 10px;
       list-style: none;
-      float: left;     
+      float: right;
     }
     .tags {
 		list-style: none;
@@ -1268,7 +1286,7 @@ header {}
     }
     #posts .action,
     .supplemental_actions .action {
-	  display: none;
+      display: block;
       float: right;
       color: #919191;
       text-decoration: none;
@@ -1291,14 +1309,9 @@ header {}
 	#page #main .action {
 	    float: right;
 	}
-	#page #main .post-replies {
-	    margin-left: 30px;
-	    width: 575px;
-	}
 
-    #comment .post-replies, #sign_up_comment .post-replies {
-       margin-left: 30px;
-	   width: 530px;
+    #posts .post-comments {
+       float: right;
     }
 
     #create_page .preview, #edit_page .preview {
@@ -1310,12 +1323,6 @@ header {}
     #posts .action:hover,
     .supplemental_actions .action:hover {
       color: #777;
-    }
-	#posts .post-container:hover .action{
-		display: block;
-	}
-    #page #posts .post-container .action {
-        display: block;
     }
     #posts .reply-to{
 		background: url("/media/images/reply.icon.png") 0 0 no-repeat;
@@ -1570,12 +1577,28 @@ header {}
 			vertical-align: middle;
 			padding-right: 35px;
 		}
-	    .modal .link, .modal .participants .field, .modal .organizers .field {
+	    .modal .link, .modal .participants .field, .modal .organizers .field,
+        .modal .project.edit.summary .term.field,
+        .modal .project.edit.summary .term_desc.field {
 			display: inline-block;
 			width: 178px;
 			margin-bottom: 30px;
 			vertical-align: middle;
 		}
+        .modal .project.edit.summary .term.field {
+            margin-left: 40px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .modal .project.edit.summary .term_desc.field {
+			width: 260px;
+            margin-top: 5px;
+            margin-left: 5px;
+            margin-bottom: 10px;
+		}
+        .modal .project.edit.summary .term label, .modal .project.edit.summary .term_desc label {
+            padding-left: 2px;
+        }
 		.modal .link.url {
 			width: 178px;
 			padding: 0;
@@ -1588,11 +1611,15 @@ header {}
         }
         
 		.modal .links input[type=text], .modal .participants input[type=text], .modal .featured_groups input[type=text],
-        .modal .declined_groups input[type=text], .modal .organizers input[type=text], .modal .member_groups input[type=text] {
+        .modal .declined_groups input[type=text], .modal .organizers input[type=text], .modal .member_groups input[type=text],
+        .modal .project.edit.summary .term input[type=text] {
 			width: 154px;
 		}
-		
-        
+
+        .modal .project.edit.summary .term_desc input[type=text] {
+			width: 100%;
+		}
+
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
@@ -1803,6 +1830,9 @@ header {}
         border: solid 1px #EEE;
         border-bottom: 1px solid #fff;
 }
+#call-to-action .sub{
+  font-size: 35px;
+}
 #intro-links {
   float: right;
   text-align: left;
@@ -1924,13 +1954,13 @@ header {}
     padding-right: 30px;
     }
 
-#splash #main aside #planet_drumbeat p, #splash #main #blog_feed p {
+#splash #main #blog_feed p {
 	color: #777;
 	font-size: 12px;
 	line-height: 1.5;
 	}
 
-#splash #main aside #planet_drumbeat > h1 a.feed-link, #splash #main #blog_feed > h1 a.feed-link {
+#splash #main #blog_feed > h1 a.feed-link {
 	display: block;
 	width: 16px; 
 	height: 16px;
@@ -1940,12 +1970,12 @@ header {}
 	background: url(/media/images/feed-icon-16x16.png) 0 0 no-repeat;
 	}
 
-#splash #main aside #planet_drumbeat article h1, #splash #main #blog_feed article h1 {
+#splash #main #blog_feed article h1 {
 	font-size: 12px;
 	line-height: 1.5;
 	}
 
-#splash #main aside #planet_drumbeat > h1 a:hover, #splash #main #blog_feed > h1 a:hover {
+#splash #main #blog_feed > h1 a:hover {
 	opacity: 0.7;
     }
 /* SIGNIN / SIGNUP */
@@ -2286,6 +2316,10 @@ div.warning h2 {
 #sign_up_comment .errorlist, #comment .errorlist {
 	right: -170px;
 	top: 50px;
+}
+
+.project.edit.summary .term .errorlist {
+    left: 45em;
 }
 
 .start_date .errorlist, 
@@ -2776,43 +2810,43 @@ footer {
  * brian@nyhacker.org 
  */
  
-footer[role="main"] ul {
+footer[class="main"] ul {
   margin-left: 104px;
   padding-bottom: 50px;
   float: left;
 }
-footer[role="main"] ul:first-child {
+footer[class="main"] ul:first-child {
   margin-left: 0px;
 }
-footer[role="main"] ul > li:first-child {
+footer[class="main"] ul > li:first-child {
   font-weight: normal;
   font-size: 17px;
   background-color: #fff;
   line-height: 40px;
   padding: 0 8px;
 }
-footer[role="main"] ul li {
+footer[class="main"] ul li {
   margin: 0 0 8px;
 }
-footer[role="main"] ul li a {
+footer[class="main"] ul li a {
   font-size: 15px;
   padding: 0 8px;
 }
-footer[role="main"] ul[role="about-us"] > li a {
+footer[class="main"] ul[class="about-us"] > li a {
   background-color: #cef200;
 }
-footer[role="main"] ul[role="contact-us"] > li a {
+footer[class="main"] ul[class="contact-us"] > li a {
   background-color: #4cebe2;
 }
-footer[role="main"] ul[role="license-info"] > li a {
+footer[class="main"] ul[class="license-info"] > li a {
   background-color: #ffde00;
 }
 
-footer[role="main"] ul[role="cc"] {
+footer[class="main"] ul[class="cc"] {
    line-height: 30px;
    font-size: 15px;
 }
-footer[role="main"] ul[role="cc"] li[role="icons"] a {
+footer[class="main"] ul[class="cc"] li[class="icons"] a {
   display: block;
   background: url('/media/images/cc-icons.png') no-repeat;
   height: 65px;
@@ -2822,7 +2856,7 @@ footer[role="main"] ul[role="cc"] li[role="icons"] a {
   text-indent: -999em;
 }
 
-footer[role="main"] ul[role="supporters"] {
+footer[class="main"] ul[class="supporters"] {
    margin-left: 20px;
    margin-top: -65px;
    text-align: center;
@@ -2830,7 +2864,7 @@ footer[role="main"] ul[role="supporters"] {
    font-size: 15px;
 }
 
-footer[role="main"] ul[role="supporters"] li[role="hewlett"] a {
+footer[class="main"] ul[class="supporters"] li[class="hewlett"] a {
   display: block;
   background: url('/media/images/hewlett-logo-white.png') no-repeat;
   height: 53px;
@@ -2841,7 +2875,7 @@ footer[role="main"] ul[role="supporters"] li[role="hewlett"] a {
   margin-left: 0px;
 }
 
-footer[role="main"] ul[role="supporters"] li[role="shuttleworth"] a {
+footer[class="main"] ul[class="supporters"] li[class="shuttleworth"] a {
   display: block;
   background: url('/media/images/shuttleworth-funded-small.png') no-repeat;
   height: 53px;

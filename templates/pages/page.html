@@ -9,13 +9,8 @@
 {% block bodyclasses %}page{% endblock %}
 
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <span>{{ _('P2PU') }}</span>
-      <span class="arrow">&rsaquo;</span>
-      <a href="{{ URL }}/pages/{{ page.slug }}">{{ page.title }}</a>
-    </nav>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url static_page_show slug=page.slug %}">{{ page.title }}</a>
 {% endblock %}
 
 {% block body %} 

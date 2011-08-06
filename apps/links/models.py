@@ -43,7 +43,9 @@ def link_create_handler(sender, **kwargs):
         return
     if link.subscribe:
         tasks.SubscribeToFeed.apply_async(args=(link,))
-post_save.connect(link_create_handler, sender=Link)
+
+post_save.connect(link_create_handler, sender=Link,
+    dispatch_uid='links_link_create_handler')
 
 
 def link_delete_handler(sender, **kwargs):
@@ -53,11 +55,16 @@ def link_delete_handler(sender, **kwargs):
     if not isinstance(link, Link):
         return
 
-    if not link.subscription:
+    try:
+        if not link.subscription:
+            return
+    except Subscription.DoesNotExist:
         return
 
     tasks.UnsubscribeFromFeed.apply_async(args=(link,))
-post_delete.connect(link_delete_handler, sender=Link)
+
+post_delete.connect(link_delete_handler, sender=Link,
+    dispatch_uid='links_link_delete_handler')
 
 
 def listener(notification, **kwargs):
@@ -77,4 +84,4 @@ def listener(notification, **kwargs):
         log.debug(msg % (eager_result.status, eager_result.result))
     except Exception, ex:
         log.warn("Unprocessable notification: %s (%s)" % (notification, ex))
-updated.connect(listener)
+updated.connect(listener, dispatch_uid='links_listener')

@@ -20,29 +20,36 @@ Interested in getting involved in Lernanta code development? Check out the devel
 [2] http://wiki.p2pu.org
 
 
-Setting up a local development environment in Ubuntu
+Setting up a local development environment in Ubuntu (Please note that your system most be updated before following these instructions.)
 ------------
 
-You will need to set up `git and your SSH keys`_ 
+You will need to `configure git and upload your SSH keys to github`_ 
 
-.. _git and your SSH keys: http://help.github.com/set-up-git-redirect
+.. _configure git and upload your SSH keys to github: http://help.github.com/set-up-git-redirect
      
 
 You need a few libraries and can grab them with this command::
 
-   sudo apt-get install git virtualenvwrapper libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev
+   sudo apt-get install git-core
+   sudo apt-get install libxml2-dev
+   sudo apt-get install libxslt-dev
+   sudo apt-get install mysql-client
+   sudo apt-get install mysql-server
+   sudo apt-get install libmysqlclient-dev
+   sudo apt-get install python-dev
+   sudo apt-get install python-setuptools
 
-To install Lernanta, you must clone the repository: ::
+To obtain the lernanta's source code that you will be modifying, first `fork the repository on the github website`_ and then clone it by running::
 
-   git clone git://github.com/p2pu/lernanta.git
+   git clone git@github.com:<your github username>/lernanta.git
 
-If you're planning on contributing back to the project, `fork the repository`_ instead in the usual GitHub fashion.
-
-.. _fork the repository: http://help.github.com/forking/
+.. _fork the repository on the github website: https://github.com/p2pu/lernanta/wiki/Github-Cheat-Sheet
 
 Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already have them.  Using `virtualenvwrapper`_ is also recommended. ::
 
-   sudo easy_install --upgrade virtualenv; sudo easy_install --upgrade pip; sudo pip install --upgrade virtualenvwrapper
+   sudo easy_install virtualenv
+   sudo easy_install pip
+   sudo pip install virtualenvwrapper
    
 Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
@@ -65,34 +72,26 @@ Once installed, create your virtual environment for ``lernanta`` and install the
 
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
-    sh/rmpyc
+    ./sh/rmpyc
 
-If the mysql database doesn't exist yet, create it. You will use the database name, user, and password in the next file (settings_local.py) ::
+If the mysql database doesn't exist yet, create it. You need to `create the user`_ you'll use. You will use the database name, user, and password in the next file (settings_local.py) ::
 
    mysqladmin -u <user> -p create <database name>
+
+.. _create the user: http://www.debuntu.org/how-to-create-a-mysql-database-and-set-privileges-to-a-user
 
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
    cp settings_local.dist.py settings_local.py
 
-If you have yet to get a local version of mysql running you will want to do so now. 
+If you not installed a local version of mysql, you will need to do so now. 
 
 Next, sync the database and run migrations. ::
 
-   python manage.py syncdb --noinput --migrate
+   ./sh/syncdb
 
 Finally, start the development server to take it for a spin. You can register a new account and look in the terminal window where the server is running to find the activation link (If you get 404 error for that url, remove the "=": http://www.flickr.com/photos/digifoo/5593967846/). ::
 
    python manage.py runserver 
-
-To run the test framework. ::
-
-   python manage.py test
-
-To recreate the test database before running the tests. ::
-
-   FORCE_DB=True python manage.py test
-
-After updating a database model you will have to make a migration for the change. See the documentation for more information: https://github.com/p2pu/lernanta/blob/master/docs/migrations.txt  
 
 Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki

@@ -121,5 +121,5 @@ class RelationshipsTests(TestCase):
         self.assertEqual(1, len(activities))
         activity = activities[0]
         self.assertEqual(self.user_one, activity.actor)
-        self.assertEqual(self.user_two, activity.target_user)
+        self.assertEqual(self.user_two, activity.target_object.target_user)
         self.assertEqual(verbs['follow'], activity.verb)

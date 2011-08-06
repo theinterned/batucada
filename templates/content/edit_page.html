@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block content_preview %}
-  <h1 class="{% if page.collaborative and page.editable %}collaborative{% endif %} school_header">
+  <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">
     {{ _('[Preview]') }} {{ page.title }}
   </h2>
   <hr />

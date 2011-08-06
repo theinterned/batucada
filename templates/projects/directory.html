@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load pagination_tags %}
 {% block title %}{{ _('Learn') }}{% endblock %}
 {% block bodyid %}project_directory{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
@@ -7,45 +8,33 @@
 {% block links %}<link rel="stylesheet" href="{% if school %}{% locale_url schools_css slug=school.slug %}{% else %}{% locale_url multiple_schools_css %}{% endif %}?v=1">{% endblock %}
 
 {% block breadcrumbs %}
-<div class="container">
-    <nav>
-      <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
-      {% if school %}
-        <span class="arrow">&rsaquo;</span>
-        <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
-      {% endif %}
-      <span class="arrow">&rsaquo;</span>
-      <a href="{% locale_url projects_directory %}">{{ _('All') }}</a>
-    </nav>
-    {% if user.is_authenticated %}
-    <div id="project-actions">
-      {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
-    </div>
-    {% endif %}
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  {% if school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+  {% endif %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_directory %}">{{ _('All') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  {% if user.is_authenticated %}
+    {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block body %}
 <h1>{{ _('Browse') }}</h1>
 <section id="all_projects">
-<h1><span>{{ _('All') }}</span></h1>
+  <h1><span>{% if tagged %}All {{ _('tagged') }} {{ tag.name }}{% else %}{{ _('All') }}{% endif %}</span></h1>
 <br>
 <ul class="project-list">
-  {% for project in page.object_list %}
+  {% for project in pagination_current_page.object_list %}
     <li>{% include "projects/_project_card.html" %}</li>
   {% endfor %}
 </ul>
-<div class="pagination">
-{% if page.has_previous %}
-<a class="btn" href="{% locale_url projects_directory page=prev_page %}{% if school%}?school={{ school.slug }}{% endif %}">← {{ _('previous') }}</a>
-{% else %}
-<span class="btn">← {{ _('previous') }}</span>
-{% endif %}
-{% if page.has_next %}
-<a class="btn" href="{% locale_url projects_directory page=next_page %}{% if school%}?school={{ school.slug }}{% endif %}">{{ _('next') }} →</a>
-{% else %}
-<span class="btn">{{_('next')}} →</span>
-{% endif %}
-</div>
+{% with prefix='' page_url=directory_url %}
+  {% pagination_links %}
+{% endwith %}
 </section>
 {% endblock %}

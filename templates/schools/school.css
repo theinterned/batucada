@@ -1,6 +1,10 @@
 h1.school_header, h2.school_header, h3.school_header, a.school_header,
-span.school_header, #beta-tag, #participate_button a {
+span.school_header, #beta-tag {
   color: {{ school.headers_color }};
+}
+
+#participate_button a {
+  background-color: {{ school.headers_color }};
 }
 
 #participate_button a:hover {
@@ -35,7 +39,7 @@ footer[role="main"] ul > li:first-child, .card-list .card,
     background-color:  {{ school.menu_color }};
 }
 
-#user-nav .menu a:hover, #main-nav .menu a:hover,
+#user-nav a:hover, #main-nav a:hover,
 #follow_button button:hover, #unfollow_button button:hover {
     background-color: {{ school.menu_color_light }};
 }

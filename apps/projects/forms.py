@@ -6,7 +6,6 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 
-from drumbeat.utils import CKEditorWidget
 from links.models import Link
 from users.models import UserProfile
 from users import tasks
@@ -18,26 +17,31 @@ from projects import drupal
 log = logging.getLogger(__name__)
 
 
-class CreateProjectForm(forms.ModelForm):
-
-    class Meta:
-        model = Project
-        fields = ('name', 'kind', 'short_description',
-            'long_description', 'not_listed')
-    widgets = {
-        'long_description': CKEditorWidget(config_name='reduced'),
-    }
-
-
 class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'kind', 'short_description',
-            'long_description')
-    widgets = {
-        'long_description': CKEditorWidget(config_name='reduced'),
-    }
+        fields = ('name', 'category', 'other', 'other_description',
+            'short_description', 'long_description', 'tags')
+        widgets = {
+            'category': forms.RadioSelect,
+        }
+
+    def clean_other(self):
+        data = self.cleaned_data
+        other = data.get('other')
+        other_provided = (other and other.strip())
+        if data.get('category') == Project.OTHER and not other_provided:
+            raise forms.ValidationError(_('This field is required.'))
+        return other.strip() if other else other
+
+    def clean(self):
+        super(ProjectForm, self).clean()
+        data = self.cleaned_data
+        if data.get('category') != Project.OTHER:
+            data['other'] = ''
+            data['other_description'] = ''
+        return data
 
 
 class ProjectLinksForm(forms.ModelForm):
@@ -69,7 +73,7 @@ class ProjectStatusForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('start_date', 'end_date', 'under_development',
-            'not_listed', 'signup_closed', 'archived')
+            'not_listed', 'archived')
 
 
 class ProjectAddParticipantForm(forms.Form):
@@ -131,7 +135,7 @@ class ProjectContactOrganizersForm(forms.Form):
             'project': project}).strip()
         messages = [(sender, r.user.user, subject, body, parent_msg)
             for r in recipients]
-        tasks.SendUsersEmail.apply_async(args=(self, messages))
+        tasks.SendPrivateMessages.apply_async(args=(self, messages))
         return messages
 
 

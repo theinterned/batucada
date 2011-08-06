@@ -6,16 +6,13 @@
 {% block bodyid %}search{%endblock%}
 
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <a href="{% locale_url search %}">{{ _('Search') }}</a>
-    </nav>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url search %}">{{ _('Search') }}</a>
 {% endblock %}
 
 {% block body %}
 
-<div id="cse" style="width: 100%;">Loading</div>
+<div id="cse" style="width: 100%;">{{ _('Loading') }}</div>
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript"> 
   function parseQueryFromUrl () {

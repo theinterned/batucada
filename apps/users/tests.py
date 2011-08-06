@@ -43,7 +43,7 @@ class TestLogins(TestCase):
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
             print response
-            self.assertRedirects(response, '/', status_code=302,
+            self.assertRedirects(response, '/dashboard/', status_code=302,
                                  target_status_code=301)
         self.client.logout()
 
@@ -65,7 +65,7 @@ class TestLogins(TestCase):
             'username': self.test_username,
             'password': self.test_password,
         })
-        self.assertRedirects(response, '/', status_code=302,
+        self.assertRedirects(response, '/dashboard/', status_code=302,
                              target_status_code=301)
         # TODO - Improve this so it doesn't take so many redirects to get a 200
         response2 = self.client.get(response["location"])
@@ -111,7 +111,7 @@ class TestLogins(TestCase):
         with other urlpatterns.
         """
         path = reverse('users_register')
-        bad = ('groups', 'admin', 'people', 'events')
+        bad = ('groups', 'admin', 'people', 'about')
         for username in bad:
             response = self.client.post(path, {
                 'username': username,

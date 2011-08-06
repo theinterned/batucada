@@ -1,42 +1,42 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from django.utils.safestring import mark_safe
+from django.utils.html import strip_tags
+from django.conf import settings
 
 from drumbeat.models import ModelBase, ManagerBase
 from activity import schema
+from l10n.urlresolvers import reverse
+from replies.models import PageComment
 
 
-class RemoteObject(models.Model):
-    """Represents an object originating from another system."""
-    object_type = models.URLField(verify_exists=False)
-    link = models.ForeignKey('links.Link')
-    title = models.CharField(max_length=255)
-    uri = models.URLField(null=True)
-    created_on = models.DateTimeField(auto_now_add=True)
+FILTERS = {
+    'all': lambda activities: activities,
+}
 
-    def get_absolute_url(self):
-        return self.uri
+
+def register_filter(name, filter_func):
+    FILTERS[name] = filter_func
 
 
 class ActivityManager(ManagerBase):
 
     def public(self):
         """Get list of activities to show on splash page."""
-
+        remote_object_ct = ContentType.objects.get_for_model(
+            RemoteObject)
+        from statuses.models import Status
+        status_ct = ContentType.objects.get_for_model(
+            Status)
         return Activity.objects.filter(deleted=False,
-            parent__isnull=True, remote_object__isnull=True,
-            status__isnull=True).filter(
-                models.Q(target_project__isnull=True)
-                | models.Q(target_project__not_listed=False),
-                models.Q(project__isnull=True)
-                | models.Q(project__not_listed=False)
-            ).exclude(
-                verb='http://activitystrea.ms/schema/1.0/follow'
-            ).order_by('-created_on')[:10]
+            scope_object__isnull=False,
+            scope_object__not_listed=False).exclude(
+            models.Q(target_content_type=remote_object_ct)
+            | models.Q(target_content_type=status_ct)
+            | models.Q(verb=schema.verbs['follow'])).order_by(
+            '-created_on')[:10]
 
     def dashboard(self, user):
         """
@@ -47,112 +47,56 @@ class ActivityManager(ManagerBase):
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
         return Activity.objects.filter(deleted=False).select_related(
-            'actor', 'status', 'project', 'remote_object',
-            'remote_object__link', 'target_project').filter(
-            models.Q(actor__exact=user) |
-            models.Q(actor__in=user_ids) | models.Q(project__in=project_ids),
-        ).exclude(
-            models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-            models.Q(target_user__isnull=True),
-            models.Q(project__in=project_ids),
-        ).exclude(
-            models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-            models.Q(actor=user),
-        ).exclude(parent__isnull=False).exclude(
-            models.Q(status__in_reply_to__isnull=False),
-        ).order_by('-created_on')
+            'actor', 'target_object', 'scope_object').filter(
+            models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
+          | models.Q(scope_object__in=project_ids)).order_by('-created_on')
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
         return Activity.objects.filter(deleted=False).select_related(
-            'actor', 'status', 'project').filter(
+            'actor', 'target_object').filter(
             actor=user).filter(
-            models.Q(target_project__isnull=True)
-            | models.Q(target_project__not_listed=False),
-            models.Q(project__isnull=True)
-            | models.Q(project__not_listed=False)
-        ).exclude(
-            models.Q(verb='http://activitystrea.ms/schema/1.0/follow'),
-            models.Q(target_user__isnull=False),
-        ).exclude(
-            models.Q(status__in_reply_to__isnull=False),
-        ).order_by('-created_on')[0:25]
+            models.Q(scope_object__isnull=True)
+            | models.Q(scope_object__not_listed=False)
+        ).order_by('-created_on')
 
 
 class Activity(ModelBase):
     """Represents a single activity entry."""
     actor = models.ForeignKey('users.UserProfile')
     verb = models.URLField(verify_exists=False)
-    status = models.ForeignKey('statuses.Status', null=True,
-        related_name='activity')
     target_content_type = models.ForeignKey(ContentType, null=True)
     target_id = models.PositiveIntegerField(null=True)
     target_object = generic.GenericForeignKey('target_content_type',
         'target_id')
-    project = models.ForeignKey('projects.Project', null=True)
-    target_user = models.ForeignKey('users.UserProfile', null=True,
-                                    related_name='target_user')
-    target_project = models.ForeignKey('projects.Project', null=True,
-                                       related_name='target_project')
-    remote_object = models.ForeignKey(RemoteObject, null=True)
-    parent = models.ForeignKey('self', null=True, related_name='comments')
+    scope_object = models.ForeignKey('projects.Project', null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
+
+    comments = generic.GenericRelation(PageComment,
+        content_type_field='page_content_type',
+        object_id_field='page_id')
 
     objects = ActivityManager()
 
     class Meta:
         verbose_name_plural = _('activities')
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('activity_index', (), {
-            'activity_id': self.pk,
-        })
-
-    @property
-    def object_type(self):
-        obj = (self.status or self.target_user or self.remote_object
-            or self.target_object or None)
-        return obj and obj.object_type or None
-
-    @property
-    def object_url(self):
-        obj = (self.status or self.target_user or self.remote_object
-            or self.target_object or None)
-        return obj and obj.get_absolute_url() or None
+        return reverse('activity_index',
+            kwargs={'activity_id': self.pk})
 
     def textual_representation(self):
-        target = self.target_user or self.target_project or self.project
-        if target and self.verb == schema.verbs['follow']:
-            name = target.display_name if self.target_user else target.name
-            return _('%(actor)s %(verb)s %(target)s') % dict(
-                actor=self.actor.display_name,
-                verb=schema.past_tense['follow'], target=name)
-        if self.status:
-            return self.status.status[:50]
-        elif self.remote_object:
-            return self.remote_object.title
-
-        elif self.target_object:
-            return self.target_object.title
-
-        friendly_verb = schema.verbs_by_uri[self.verb]
-        return ugettext('%(verb)s activity performed by %(actor)s') % dict(
-            verb=friendly_verb, actor=self.actor.display_name)
+        return _('%(actor)s %(verb)s %(target)s') % dict(
+                actor=self.actor, verb=self.friendly_verb(),
+                target=strip_tags(unicode(self.target_object)))
 
     def friendly_verb(self):
-        if self.verb == schema.verbs['post']:
-            if self.project_id:
-                return mark_safe(ugettext('created'))
-            else:
-                comment_type = 'http://activitystrea.ms/schema/1.0/comment'
-                if self.object_type == comment_type:
-                    return mark_safe(ugettext('posted comment'))
-                else:
-                    return mark_safe(ugettext('added'))
-        else:
-            return schema.past_tense[schema.verbs_by_uri[self.verb]]
+        verb = None
+        if hasattr(self.target_object, 'friendly_verb'):
+            verb = self.target_object.friendly_verb(self.verb)
+        verb = verb or schema.past_tense[schema.verbs_by_uri[self.verb]]
+        return verb
 
     def html_representation(self):
         return render_to_string('activity/_activity_body.html', {
@@ -161,14 +105,83 @@ class Activity(ModelBase):
         })
 
     def __unicode__(self):
-        return _("Activity ID %(id)d. Actor id %(actor)d, Verb %(verb)s") % {
-            'id': self.pk, 'actor': self.actor.pk, 'verb': self.verb}
+        return _('wall activity from %s') % self.actor
 
     def can_edit(self, user):
-        if not self.status:
-            return False
         if user.is_authenticated():
             profile = user.get_profile()
             return (profile == self.actor)
         else:
             return False
+
+    def visible_replies(self):
+        return self.comments.filter(deleted=False)
+
+    def first_level_comments(self):
+        return self.comments.filter(reply_to__isnull=True).order_by(
+            '-created_on')
+
+    def can_comment(self, user, reply_to=None):
+        if user.is_authenticated():
+            if self.scope_object:
+                return self.scope_object.is_participating(user)
+            else:
+                can_reply = (user.get_profile() == self.actor)
+                can_reply = can_reply or self.actor.is_following(user)
+                if reply_to:
+                    can_reply = can_reply or reply_to.author.is_following(user)
+                return can_reply
+        return False
+
+    def get_comment_url(self, comment, user):
+        comment_index = 0
+        abs_reply_to = comment.abs_reply_to or comment
+        for first_level_comment in self.first_level_comments():
+            if abs_reply_to.id == first_level_comment.id:
+                break
+            comment_index += 1
+        items_per_page = settings.PAGINATION_DEFAULT_ITEMS_PER_PAGE
+        page = (comment_index / items_per_page) + 1
+        url = self.get_absolute_url()
+        return url + '?pagination_page_number=%s#%s' % (
+            page, comment.id)
+
+    def comments_fire_activity(self):
+        return True
+
+    def comment_notification_recipients(self, comment):
+        if self.scope_object:
+            return self.scope_object.participants().filter(
+                no_wall_updates=False).values_list('user')
+        else:
+            recipients = {self.actor.username: self.actor}
+            while comment.reply_to:
+                comment = comment.reply_to
+                recipients[comment.author.username] = comment.author
+            return recipients.values()
+
+
+class RemoteObject(models.Model):
+    """Represents an object originating from another system."""
+    object_type = models.URLField(verify_exists=False)
+    link = models.ForeignKey('links.Link')
+    title = models.CharField(max_length=255)
+    uri = models.URLField(null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    activity = generic.GenericRelation(Activity,
+        content_type_field='target_content_type',
+        object_id_field='target_id')
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return self.uri
+
+    @staticmethod
+    def filter_activities(activities):
+        ct = ContentType.objects.get_for_model(RemoteObject)
+        return activities.filter(target_content_type=ct)
+
+register_filter('subscriptions', RemoteObject.filter_activities)

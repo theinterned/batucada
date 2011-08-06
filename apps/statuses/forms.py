@@ -14,4 +14,4 @@ class StatusForm(forms.ModelForm):
 
     class Meta:
         model = Status
-        fields = ('status', 'in_reply_to')
+        fields = ('status',)

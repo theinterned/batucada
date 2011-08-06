@@ -1,70 +1,32 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load l10n_tags %}
-{% load truncate_chars %}
+{% load user_tags %}
+{% load activity_tags %}
+{% load pagination_tags %}
+
 {% block title %}{{ _('Your Dashboard') }}{% endblock %}
 {% block links %}
-<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_dashboard_feed %}" />
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_profile_feed username=user.get_profile.username %}" title="{{_('Activity from your profile')}}" />
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_dashboard_feed username=user.get_profile.username %}" title="{{_('Activity from your dashboard')}}"/>
 {% endblock %}
 {% block bodyid %}dashboard{%endblock%}
 
 {% block breadcrumbs %}
-  <div class="container">
-    <nav>
-      <a href="{% locale_url dashboard_index %}">{{ _('Dashboard') }}</a>
-    </nav>
-  </div> <!-- /.container -->
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ dashboard_url }}">{{ _('Dashboard') }}</a>
 {% endblock %}
 
 {% block body %}
 
-<div id="sidebar">
-<div class="vcard panel">
-    <img class="member-picture" src="{{ user.get_profile.image_or_default }}" height="40" width="40" 'alt="{% blocktrans with user=user.username%}{{ user }}'s profile picture{% endblocktrans %}">
-  <div class="member-details">
-    <h2 class="member-name">
-      <span class="fn">{{ user.get_profile.display_name }}</span>
-    </h2>
-    <p><a href="{{ user.get_profile.get_absolute_url }}">{{ _('View Profile') }}</a></p>
-  </div> 
-</div> <!-- /.vcard -->  
-  
-<div id="member_relationships" class="panel">
-  <h3>{{ _('Followers') }} <span class="followers count">{{ users_followers|length }}</span></h3>
-  <ul class="followers">
-  {% for user_follower in users_followers|slice:":36" %}
-    <li><a href="{{ user_follower.get_absolute_url }}" title="{{ user_follower.display_name }}"><img class="member-picture" src="{{ user_follower.image_or_default }}" height="26" width="26" alt="{{ user_follower.name }}"></a></li>
-  {% endfor %}
-  </ul>
-  <h3>{{ _('Following') }} <span class="following count">{{ users_following|length }}</span></h3>
-  <ul class="following">
-  {% for user_following in users_following|slice:":36" %}
-    <li><a href="{{ user_following.get_absolute_url }}" title="{{ user_following.display_name }}"><img class="member-picture" src="{{ user_following.image_or_default }}" height="26" width="26" alt="{{ user_following.name }}"></a></li>
-  {% endfor %}
-  </ul>
-  {% if current_projects.count > 0 %}
-    <h3>{{ _('Learning') }} <span class="projects count">{{ current_projects.count }}</span></h3>
-    <ul class="following">
-      {% for project in current_projects.organizing %}
-        {% include "dashboard/_project_image.html"%}
-      {% endfor %}
-      {% for project in current_projects.participating %}
-        <li>{% include "dashboard/_project_image.html"%}</li>
-      {% endfor %}
-      {% for project in current_projects.following %}
-        <li>{% include "dashboard/_project_image.html"%}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-</div> <!-- /#member_relationships-->
-</div> <!-- /#sidebar -->
+{% user_sidebar %}
 
 <div id="main">
   {% if show_welcome %}
     <article class="welcome">
       <header><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ MEDIA_URL }}images/closeButton.png"></a></header>
       <h1>{{ _('Welcome to P2PU!') }}</h1>
-      <p>{{ _('To get started, you should ') }}<a href="{% locale_url users_profile_edit %}">{{ _('update your profile</a>. This is a great way to tell people a bit more about yourself. Then find ') }}<a href="{% locale_url users_user_list %}">{{_('people</a> and ') }}<a href="{% locale_url projects_gallery %}">{{ _('topics</a> that interest you and start following them! You can also ') }}<a href="{% locale_url projects_create %}">{{ _('create a new topics</a>. You can also update how often P2PU ') }}<a href="{% locale_url preferences_settings %}">{{_('contacts you</a>.') }}</p>
+      <p>{{ _('To get started, you should ') }}<a href="{% locale_url users_profile_edit %}">{{ _('update your profile</a>. This is a great way to tell people a bit more about yourself. Then find ') }}<a href="{% locale_url users_user_list %}">{{_('people</a> and ') }}<a href="{% locale_url projects_gallery %}">{{ _('groups</a> that interest you and start following them! You can also ') }}<a href="{% locale_url projects_create %}">{{ _('create new groups</a> and update how often P2PU ') }}<a href="{% locale_url preferences_settings %}">{{_('contacts you</a>.') }}</p>
     </article>
   {% endif %}
   <div id="create-post">
@@ -77,7 +39,7 @@
 	<div class="status-and-actions">
 	  <div class="post-char-count">750</div>
 
-          <a class="button update cancel" href="{% locale_url dashboard_index %}">
+          <a class="button update cancel" href="{% locale_url dashboard %}">
 	    {{ _('Cancel') }}
 	  </a>
           <button class="button update submit" id="post-update">{{ _('Post Update') }}</button>
@@ -88,22 +50,14 @@
   </div> <!-- /#create-post -->
 
   <ul id="posts">
-    {% for activity in page.object_list %}
+    {% activity_filters request dashboard_url %}
+    {% for activity in pagination_current_page.object_list %}
       {% include "activity/_activity_resource.html" %}
     {% endfor %}
   </ul>
-  <div class="pagination">
-    {% if page.has_previous %}
-      <a class="btn" href="{% locale_url dashboard_index page=prev_page %}">← {{ _('previous') }}</a>
-    {% else %}
-      <span class="btn">← {{ _('previous') }}</span>
-    {% endif %}
-    {% if page.has_next %}
-      <a class="btn" href="{% locale_url dashboard_index page=next_page %}">{{ _('next') }} →</a>
-    {% else %}
-      <span class="btn">{{_('next')}} →</span>
-    {% endif %}
-  </div>
+  {% with prefix='' page_url=dashboard_url %}
+    {% pagination_links %}
+  {% endwith %}
 
 </div> <!-- /#main -->
 
