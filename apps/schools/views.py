@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
@@ -458,3 +460,20 @@ def edit_membership_delete(request, slug, project_slug):
             "The %s is no longer part of this school.") % project.kind.lower())
     return http.HttpResponseRedirect(reverse('schools_edit_membership',
         kwargs={'slug': school.slug}))
+
+
+@login_required
+@school_organizer_required
+def edit_statistics(request, slug):
+    school = get_object_or_404(School, slug=slug)
+
+    all_projects = school.projects.all()
+    project_counts = defaultdict(int)
+    for project in all_projects:
+        project_counts[project.category] += 1
+
+    return render_to_response('schools/school_edit_statistics.html', {
+        'school': school,
+        'statistics_tab': True,
+        'project_counts': project_counts.items(),
+    }, context_instance=RequestContext(request))

@@ -1,0 +1,17 @@
+{% extends "schools/school_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}school edit statistics{% endblock %}
+
+{% block form %}
+{# <p>{{ _('Use this form to upload the striped background for pages of this school. This background will also be used on the pages of study groups, courses, ... of this school.') }}</p> #}
+
+<fieldset id="school_edit_statistics" class="school edit statistics tabpane">
+  <h2>{{ _('Statistics') }}</h2>
+  <span>This is some data</span>
+  <ul>
+  {% for key, value in project_counts %}
+      <li>{{ key }}: {{ value }}</li>  
+  {% endfor %}
+  </ul>
+</fieldset>
+{% endblock %}
