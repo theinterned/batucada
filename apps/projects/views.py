@@ -604,6 +604,24 @@ def edit_status(request, slug):
 
 
 @login_required
+@organizer_required
+def admin_metrics(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    return render_to_response('projects/project_admin_metrics.html', {
+            'project': project,
+            'metrics_tab': True,
+    }, context_instance=RequestContext(request))
+
+@login_required
+@organizer_required
+def admin_metrics_detail(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    return render_to_response('projects/project_admin_metrics_detail.html', {
+            'project': project,
+            'metrics_tab': True,
+    }, context_instance=RequestContext(request))
+
+@login_required
 def contact_organizers(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.method == 'POST':

@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/batucada.css?v=1">
   <link rel="stylesheet" href="{{ MEDIA_URL }}{{ _('css/style-en.css') }}?v=1">
   <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/prettify/prettify.css">
+  {% block css %}{% endblock %}
+  
   <script src="{{ MEDIA_URL }}js/libs/modernizr-1.6.min.js"></script>
   <script src="{{ MEDIA_URL }}ckeditor/ckeditor.js"></script>
   {% block links %}{% endblock %}
