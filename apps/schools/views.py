@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from django import http
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
+from django.db.models import Count
 
 from commonware.decorators import xframe_sameorigin
 
@@ -14,6 +15,7 @@ from drumbeat import messages
 from projects.models import Project
 from users.models import UserProfile
 from l10n.urlresolvers import reverse
+from content.models import Page
 
 from schools.decorators import school_organizer_required
 from schools.models import School
@@ -472,8 +474,13 @@ def edit_statistics(request, slug):
     for project in all_projects:
         project_counts[project.category] += 1
 
+    comment_count = Page.objects.filter(
+        project__id__in=school.projects.values('id')).aggregate(
+        Count('comments'))['comments__count']
+
     return render_to_response('schools/school_edit_statistics.html', {
         'school': school,
         'statistics_tab': True,
         'project_counts': project_counts.items(),
+        'comment_count': comment_count,
     }, context_instance=RequestContext(request))
