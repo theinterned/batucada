@@ -7,11 +7,16 @@
 
 <fieldset id="school_edit_statistics" class="school edit statistics tabpane">
   <h2>{{ _('Statistics') }}</h2>
-  <span>This is some data</span>
+  <p class="hint">Statistics for this school</p>
+  <h3>Groups</h3>
   <ul>
   {% for key, value in project_counts %}
       <li>{{ key }}: {{ value }}</li>  
   {% endfor %}
+  </ul>
+  <h3>Activity</h3>
+  <ul>
+  <li>Page comments: {{comment_count}}</li>
   </ul>
 </fieldset>
 {% endblock %}
