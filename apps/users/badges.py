@@ -34,9 +34,9 @@ def pilot_image(tag, badge):
 
 
 def get_awarded_badges(username):
-    if not BADGES_DB in settings.DATABASES:
-        return []
     badges = {}
+    if not BADGES_DB in settings.DATABASES:
+        return badges
     try:
         user = User.objects.using(BADGES_DB).get(username=username)
         awards = ForumAward.objects.using(BADGES_DB).filter(user_id=user.id)
