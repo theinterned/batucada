@@ -1424,7 +1424,7 @@ header {}
 			padding-bottom: 40px;
 		}
         .school .modal article {
-            min-height: 330px;
+            min-height: 360px;
         }
 		.modal.nav article {
 			background: #fff url(/media/images/panel-bg.png) 0 0 repeat-y;
@@ -1515,6 +1515,7 @@ header {}
 			line-height: 25px;
 			margin-bottom: 5px;
 		}
+		
 		.modal fieldset{
 			padding: 0 10px;
 			width: 516px;
@@ -1524,6 +1525,10 @@ header {}
 			width: 500px;
 		}
 
+        #school_edit_statistics ul {
+            padding-bottom: 1em;
+        }
+        
         .modal .school #headers_colorpicker, .modal .school #headers_light_colorpicker,
         .modal .school #background_colorpicker, .modal .school #menu_colorpicker,
         .modal .school #menu_light_colorpicker, .modal .school #about_us_footnote_colorpicker,
