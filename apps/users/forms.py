@@ -275,22 +275,22 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
                     username__iexact=email,
                     is_active=True
                 )
-
-        if len(self.users_cache) == 0 and not (is_email and drupal.migrate(email)):
-            if is_email:
-                msg = _("That e-mail address isn't associated to a user account. ")
-            else:
-                msg = _("Username not found. ")
-            msg += _("Are you sure you've registered?")
-            raise forms.ValidationError(msg)
         profile = None
         for user in self.users_cache:
             try:
                 profile = user.get_profile()
             except UserProfile.DoesNotExist:
                 user.delete()
-        if not profile:
-            msg = _("You did not finish the registration proccess last time. ")
-            msg += _("Please register a new account.")
-            raise forms.ValidationError(msg)
+        if not profile and not drupal.migrate(email):
+            if len(self.users_cache) == 0:
+                if is_email:
+                    msg = _("That e-mail address isn't associated to a user account. ")
+                else:
+                    msg = _("Username not found. ")
+                msg += _("Are you sure you've registered?")
+                raise forms.ValidationError(msg)
+            else:
+                msg = _("You did not finish the registration proccess last time. ")
+                msg += _("Please register a new account.")
+                raise forms.ValidationError(msg)
         return email
