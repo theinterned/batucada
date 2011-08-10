@@ -20,7 +20,7 @@ Interested in getting involved in Lernanta code development? Check out the devel
 [2] http://wiki.p2pu.org
 
 
-Setting up a local development environment in Ubuntu
+Setting up a local development environment in Ubuntu (Please note that your system most be updated before following these instructions.)
 ------------
 
 You will need to `configure git and upload your SSH keys to github`_ 
@@ -30,7 +30,14 @@ You will need to `configure git and upload your SSH keys to github`_
 
 You need a few libraries and can grab them with this command::
 
-   sudo apt-get install git libxml2-dev libxslt-dev mysql-client mysql-server libmysqlclient-dev python-dev python-setuptools
+   sudo apt-get install git-core
+   sudo apt-get install libxml2-dev
+   sudo apt-get install libxslt-dev
+   sudo apt-get install mysql-client
+   sudo apt-get install mysql-server
+   sudo apt-get install libmysqlclient-dev
+   sudo apt-get install python-dev
+   sudo apt-get install python-setuptools
 
 To obtain the lernanta's source code that you will be modifying, first `fork the repository on the github website`_ and then clone it by running::
 
@@ -42,7 +49,7 @@ Next, you'll need to install ``virtualenv`` and ``pip`` if you don't already hav
 
    sudo easy_install virtualenv
    sudo easy_install pip
-   pip install virtualenvwrapper
+   sudo pip install virtualenvwrapper
    
 Be sure to configure your shell so that pip knows where to find your virtual environments: ::
 
@@ -65,13 +72,13 @@ Once installed, create your virtual environment for ``lernanta`` and install the
 
 To be extra sure you're working from a clean slate, you might find it helps to delete ``.pyc`` files: ::
 
-    sh/rmpyc
+    ./sh/rmpyc
 
 If the mysql database doesn't exist yet, create it. You need to `create the user`_ you'll use. You will use the database name, user, and password in the next file (settings_local.py) ::
 
    mysqladmin -u <user> -p create <database name>
 
-.. _create the user: http://dev.mysql.com/doc/refman/5.1/en/adding-users.html
+.. _create the user: http://www.debuntu.org/how-to-create-a-mysql-database-and-set-privileges-to-a-user
 
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
@@ -81,7 +88,7 @@ If you not installed a local version of mysql, you will need to do so now.
 
 Next, sync the database and run migrations. ::
 
-   python manage.py syncdb --noinput --migrate
+   ./sh/syncdb
 
 Finally, start the development server to take it for a spin. You can register a new account and look in the terminal window where the server is running to find the activation link (If you get 404 error for that url, remove the "=": http://www.flickr.com/photos/digifoo/5593967846/). ::
 

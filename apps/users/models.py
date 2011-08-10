@@ -1,6 +1,5 @@
 import logging
 import datetime
-import bleach
 import random
 import string
 import hashlib
@@ -10,8 +9,6 @@ import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save
-from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.http import urlquote_plus
 from django.utils.translation import ugettext_lazy as _
@@ -29,6 +26,8 @@ from projects.models import Project, Participation
 from users import tasks
 from activity.schema import object_types
 from users.managers import CategoryTaggableManager
+from richtext.models import RichTextField
+from l10n.models import localize_email
 
 import caching.base
 
@@ -98,7 +97,7 @@ class UserProfile(ModelBase):
         max_length=255, default='', null=True, blank=True)
     password = models.CharField(max_length=255, default='')
     email = models.EmailField(unique=True, null=True)
-    bio = models.TextField(blank=True, default='')
+    bio = RichTextField(blank=True)
     image = models.ImageField(
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())
@@ -211,12 +210,11 @@ class UserProfile(ModelBase):
 
     def email_confirmation_code(self, url):
         """Send a confirmation email to the user after registering."""
-        body = render_to_string('users/emails/registration_confirm.txt', {
-            'confirmation_url': url,
-        })
-        subject = ugettext('Complete Registration')
-        # During registration use the interface language to send email
-        tasks.SendUserEmail.apply_async(args=(self, subject, body))
+        context = {'confirmation_url': url}
+        subjects, bodies = localize_email(
+            'users/emails/registration_confirm_subject.txt',
+            'users/emails/registration_confirm.txt', context)
+        tasks.SendUserEmail.apply_async(args=(self, subjects, bodies))
 
     def image_or_default(self):
         """Return user profile image or a default."""
@@ -278,19 +276,3 @@ def create_profile(user, username=None):
     profile.email = user.email
     profile.save()
     return profile
-
-
-###########
-# Signals #
-###########
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, UserProfile):
-        if instance.bio:
-            instance.bio = bleach.clean(instance.bio,
-                tags=settings.REDUCED_ALLOWED_TAGS,
-                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES,
-                strip=True)
-
-pre_save.connect(clean_html, sender=UserProfile, dispatch_uid='users_clean_html')

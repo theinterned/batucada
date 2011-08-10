@@ -1,0 +1,22 @@
+{% load l10n_tags %}
+{{ answer.author }}{{ _(' submitted a new answer at the sign-up page of ') }}{{ answer.sign_up.project.name }}{{ _('.') }}
+
+{{ _('Bio:') }} {{ answer.author.bio|striptags|safe }}
+
+{{ _('Location:') }} {{ answer.author.location }}
+
+{{ _('Standard Set Answer:') }}
+{{ answer.standard|striptags|safe }}
+{% if answer.sign_up.public %}
+{{ _('Public Set Answer:') }}
+{{ answer.public|striptags|safe }}
+{% endif %}
+{% if answer.sign_up.between_participants %}
+{{ _('Between Participants Set Answer:') }}
+{{ answer.between_participants|striptags|safe }}
+{% endif %}
+
+{{ _('See answer at:') }} http://{{domain}}{{ answer.get_absolute_url }}
+
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}

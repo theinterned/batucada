@@ -1,16 +1,13 @@
 import logging
 import datetime
-import bleach
 
 from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.db import models
 from django.db.models import Count, Max
-from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import get_language, activate
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
@@ -25,6 +22,10 @@ from relationships.models import Relationship
 from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
 from users.tasks import SendUserEmail
+from l10n.models import localize_email
+from richtext.models import RichTextField
+from content.models import Page
+from replies.models import PageComment
 
 import caching.base
 
@@ -101,12 +102,12 @@ class Project(ModelBase):
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
     tags = TaggableManager(blank=True)
-    
+
     other = models.CharField(max_length=30, blank=True, null=True)
     other_description = models.CharField(max_length=150, blank=True, null=True)
 
     short_description = models.CharField(max_length=150)
-    long_description = models.TextField(validators=[MaxLengthValidator(700)])
+    long_description = RichTextField(validators=[MaxLengthValidator(700)])
 
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -116,8 +117,6 @@ class Project(ModelBase):
 
     detailed_description = models.ForeignKey('content.Page',
         related_name='desc_project', null=True, blank=True)
-    sign_up = models.ForeignKey('content.Page', related_name='sign_up_project',
-        null=True, blank=True)
 
     image = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
@@ -129,7 +128,6 @@ class Project(ModelBase):
 
     under_development = models.BooleanField(default=True)
     not_listed = models.BooleanField(default=False)
-    signup_closed = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)
 
     clone_of = models.ForeignKey('projects.Project', blank=True, null=True,
@@ -176,17 +174,6 @@ class Project(ModelBase):
         return Participation.objects.filter(project=self,
             left_on__isnull=True, user__deleted=False)
 
-    def pending_applicants(self):
-        page = self.sign_up
-        users = []
-        first_level_comments = page.comments.filter(reply_to__isnull=True)
-        for answer in first_level_comments.filter(deleted=False):
-            is_participant = self.participants().filter(
-                user=answer.author).exists()
-            if not is_participant and not answer.author.deleted:
-                users.append(answer.author)
-        return users
-
     def non_organizer_participants(self):
         return self.participants().filter(organizing=False)
 
@@ -220,12 +207,6 @@ class Project(ModelBase):
         else:
             return False
 
-    def is_pending_signup(self, user):
-        for applicant in self.pending_applicants():
-            if applicant == user:
-                return True
-        return False
-
     def activities(self):
         return Activity.objects.filter(deleted=False,
             scope_object=self).order_by('-created_on')
@@ -255,37 +236,23 @@ class Project(ModelBase):
 
     def send_creation_notification(self):
         """Send notification when a new project is created."""
-        project = self
-        ulang = get_language()
-        subject = {}
-        body = {}
-        domain = Site.objects.get_current().domain
-        for l in settings.SUPPORTED_LANGUAGES:
-            activate(l[0])
-            subject[l[0]] = render_to_string(
-                "projects/emails/project_created_subject.txt", {
-                'project': project,
-                }).strip()
-            body[l[0]] = render_to_string(
-                "projects/emails/project_created.txt", {
-                'project': project,
-                'domain': domain,
-                }).strip()
-        activate(ulang)
-        for organizer in project.organizers():
+        context = {
+            'project': self,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'projects/emails/project_created_subject.txt',
+            'projects/emails/project_created.txt', context)
+        for organizer in self.organizers():
             if not organizer.no_updates:
-                ol = organizer.user.preflang or settings.LANGUAGE_CODE
                 SendUserEmail.apply_async(
-                        (organizer.user, subject[ol], body[ol]))
+                        (organizer.user, subjects, bodies))
+
         admin_subject = render_to_string(
-            "projects/emails/admin_project_created_subject.txt", {
-            'project': project,
-            }).strip()
+            "projects/emails/admin_project_created_subject.txt",
+            context).strip()
         admin_body = render_to_string(
-            "projects/emails/admin_project_created.txt", {
-            'project': project,
-            'domain': domain,
-            }).strip()
+            "projects/emails/admin_project_created.txt", context).strip()
         for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
             send_mail(admin_subject, admin_body, admin_email,
                 [admin_email], fail_silently=True)
@@ -298,7 +265,6 @@ class Project(ModelBase):
 
     @staticmethod
     def filter_activities(activities):
-        from content.models import Page, PageComment
         from statuses.models import Status
         content_types = [
             ContentType.objects.get_for_model(Page),
@@ -308,7 +274,15 @@ class Project(ModelBase):
         ]
         return activities.filter(target_content_type__in=content_types)
 
+    @staticmethod
+    def filter_learning_activities(activities):
+        pages_ct = ContentType.objects.get_for_model(Page)
+        comments_ct = ContentType.objects.get_for_model(PageComment)
+        return activities.filter(
+            target_content_type__in=[pages_ct, comments_ct])
+
 register_filter('default', Project.filter_activities)
+register_filter('learning', Project.filter_learning_activities)
 
 
 class Participation(ModelBase):
@@ -325,20 +299,3 @@ class Participation(ModelBase):
     no_wall_updates = models.BooleanField(default=False)
     # for new pages or comments.
     no_updates = models.BooleanField(default=False)
-
-
-###########
-# Signals #
-###########
-
-def clean_html(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    if isinstance(instance, Project):
-        log.debug("Cleaning html.")
-        if instance.long_description:
-            instance.long_description = bleach.clean(instance.long_description,
-                tags=settings.REDUCED_ALLOWED_TAGS,
-                attributes=settings.REDUCED_ALLOWED_ATTRIBUTES, strip=True)
-
-
-pre_save.connect(clean_html, sender=Project, dispatch_uid='projects_clean_html')

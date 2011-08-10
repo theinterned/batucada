@@ -1,0 +1,126 @@
+{% extends "signups/base.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+{% load youtube %}
+{% load slideshare %}
+{% load project_tags %}
+{% load comment_threads %}
+{% load signup_tags %}
+{% load pagination_tags %}
+
+{% block breadcrumbs_actions %}
+  {% if can_post_answer %}
+    <a class="button" href="{% locale_url sign_up_answer slug=project.slug %}">{{ _('Post Answer') }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+{% sidebar %}
+<div id="main" class="content_page">
+<h1 class="school_header">{{ _('Sign-Up') }}</h1>
+<hr />
+<p>{{ _('Anyone can follow a') }} {{ project.kind|lower }} {{ _('on P2PU. Participating is the next level of engagement. The sign-up is a space where interested individuals can express their interest and background in the topic and commit to working with the rest of the participants. Please answer the following set(s) of questions if you want to become a participant or organizer.') }}</p>
+<h3>{{ _('Standard Set') }}</h3>
+<p>{{ _('This set of signup questions is common to all study groups, courses, ... in P2PU. The answers to these questions will be public once you get accepted.') }}</p>
+{{ sign_up.standard|youtube|slideshare|safe }}
+
+{% if sign_up.public %}
+<br>
+<h3>{{ _('Public Custom Set') }}</h3>
+<p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be public once you get accepted.{% endblocktrans %}</p>
+{{ sign_up.public|youtube|slideshare|safe }}
+{% endif %}
+
+{% if sign_up.between_participants %}
+<br>
+<h3>{{ _('Between Participants Custom Set') }}</h3>
+<p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be visible to all participants once you get accepted.{% endblocktrans %}</p>
+{{ sign_up.between_participants|youtube|slideshare|safe }}
+{% endif %}
+
+{% if pagination_current_page.object_list %}
+<br>
+<h1>{{ _('Answers') }}</h1>
+{% if organizing %}<p>{{_('Pending Answers:')}} {{ pending_answers_count }}</p>{% endif %}
+<br>
+<ul id="posts">
+{% for answer in pagination_current_page.object_list %}
+  {% if answer.deleted %}
+    {% if answer.has_visible_childs %}
+      <li class="post-container deleted">
+        <a name="answer-{{ answer.id }}"></a>
+        {{ _('This answer was deleted.') }}
+        {% if user|can_edit_signup_answer:answer %}
+          <a class="action restore" href="{% locale_url restore_signup_answer slug=project.slug answer_id=answer.id %}">{{ _('Restore') }}</a>
+        {% endif %}
+      <li>
+    {% endif %}
+  {% else %}
+    <li class="post-container">
+      <a name="answer-{{ answer.id }}"></a>
+      {% if user.is_authenticated %}
+        <a class="action reply-to" href="{% locale_url page_comment scope_model='project' scope_app_label='projects' scope_pk=project.id page_model='signupanswer' page_app_label='signups' page_pk=answer.id %}">{{ _('Reply') }}</a>
+        {% if user|can_edit_signup_answer:answer %}
+          <a class="action delete" href="{% locale_url delete_signup_answer slug=project.slug answer_id=answer.id %}">{{ _('Delete') }}</a>
+          <a class="action edit" href="{% locale_url sign_up_edit_answer slug=project.slug answer_id=answer.id %}">{{ _('Edit') }}</a>
+        {% else %}
+          <a class="report abuse action" href="{% locale_url drumbeat_abuse model="signupanswer" app_label="signups" pk=answer.id %}">{{ _('Report Abuse') }}</a>
+        {% endif %}
+      {% endif %}
+      <a href="{{ answer.author.get_absolute_url }}">
+        <img class="member-picture" width="54" height="54" src="{{ answer.author.image_or_default }}">
+      </a>
+      <div class="post-contents">
+        <div class="post-details">
+          <a href="{{ answer.author.get_absolute_url }}">{{ answer.author }}</a>
+          &nbsp;
+          <a href="{{ answer.get_absolute_url }}">{{ answer.created_on }}</a>
+        </div>
+        <div class="post-body">
+	        <p><strong>{{ _('Bio:') }}</strong> {{ answer.author.bio|safe }}</p>
+	        <p><strong>{{ _('Location:') }}</strong> {{ answer.author.location }}</p>
+            <strong>{{ _('Standard Set Answer:') }}</strong>
+            {{ answer.standard|youtube|slideshare|safe }}
+            {% if answer.sign_up.public %}
+              <strong>{{ _('Public Set Answer:') }}</strong>
+              {{ answer.public|youtube|slideshare|safe }}
+            {% endif %}
+            {% if answer.sign_up.between_participants %}
+              {% if participating or answer.author == user.get_profile %}
+                <strong>{{ _('Between Participants Set Answer:') }}</strong>
+                {{ answer.between_participants|youtube|slideshare|safe }}
+              {% endif%}
+            {% endif %}
+
+          {% if organizing %}
+            {% if not answer.accepted %}
+              <form method="post" action="{% locale_url sign_up_accept_participant slug=project.slug answer_id=answer.id %}">
+                {% csrf_token %}
+                <button>{{ _('Add Participant') }}</button>
+              </form>
+              <form method="post" action="{% locale_url sign_up_accept_organizer slug=project.slug answer_id=answer.id %}">
+                {% csrf_token %}
+                <button>{{ _('Add Organizer') }}</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </li>
+  {% endif %}
+  {% if participating or answer.author == user.get_profile %}
+    <div id='extra-indent-post-replies'>
+      {% with comments=answer.first_level_comments %}
+        {% comment_threads %}
+      {% endwith %}
+    </div>
+  {% endif %}
+{% endfor %}
+</ul>
+{% with prefix='' page_url=sign_up.get_absolute_url %}
+  {% pagination_links %}
+{% endwith %}
+{% endif %}
+</div>
+{% endblock %}
+

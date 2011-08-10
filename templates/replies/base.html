@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{% if scope_object %}{{ scope_object.name }} | {% endif %}{{ page_object }}{% endblock %}
+
+{% block links %}
+{% if scope_object.accepted_school %}
+  <link rel="stylesheet" href="{% locale_url schools_css slug=scope_object.accepted_school.slug %}?v=1">
+{% endif %}
+{% endblock %}
+
+{% block breadcrumbs_title %}
+  {% if scope_object %}
+    <h1 id="project-name"><a href="{{ scope_object.get_absolute_url }}" class="school_header">{{ scope_object.name }}</a></h1>
+  {% endif %}
+{% endblock %}
+{% block breadcrumbs %}
+  {% if scope_object %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ scope_object.get_absolute_url }}">{{ scope_object.name }}</a>
+  {% endif %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ page_object.get_absolute_url }}">{{ page_object }}</a>
+  {% block comments_breadcrumbs %}{% endblock %}
+{% endblock %}
