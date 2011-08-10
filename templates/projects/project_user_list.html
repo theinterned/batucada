@@ -1,7 +1,7 @@
 {% extends "projects/base.html" %}
-
 {% load l10n_tags %}
 {% load project_tags %}
+{% load pagination_tags %}
 
 
 {% block title %}{{ _('People') }}{% endblock %}
@@ -29,56 +29,38 @@
   </ul>
 </section>
 {% endif %}
-{% if participants %}
+{% if participants_pagination_current_page.object_list %}
   <section id="participants">
   <h1><span>{{ _('Participants') }}</span></h1>
   <ul class="user-list">
-    {% for participation in participants %}
+    {% for participation in participants_pagination_current_page.object_list %}
       {% with person=participation.user %}
         <li>{% include "users/_user_card.html" %}</li>
       {% endwith %}
     {% endfor %}
   </ul>
-
-<div class="pagination">
-  {% if participants_page.has_previous %}
-    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_prev_page followers_page=followers_page_num %}">← {{ _('previous') }}</a>
-  {% else %}
-    <span class="btn">← {{ _('previous') }}</span>
-  {% endif %}
-  {% if participants_page.has_next %}
-    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_next_page followers_page=followers_page_num %}">{{ _('next') }} →</a>
-  {% else %}
-    <span class="btn">{{_('next')}} →</span>
-  {% endif %}
-</div>
+ 
+  {% with prefix='participants_' page_url=projects_users_url %}
+    {% pagination_links %}
+  {% endwith %}
 
 </section>
 {% endif %}
 
-{% if followers %}
+{% if followers_pagination_current_page.object_list %}
 <section id="followers">
   <h1><span>{{ _('Followers') }}</span></h1>
   <ul class="user-list">
-    {% for relationship in followers %}
+    {% for relationship in followers_pagination_current_page.object_list %}
       {% with person=relationship.source %}
         <li>{% include "users/_user_card.html" %}</li>
       {% endwith %}
     {% endfor %}
   </ul>
 
-<div class="pagination">
-  {% if followers_page.has_previous %}
-    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_page_num followers_page=followers_prev_page %}">← {{ _('previous') }}</a>
-  {% else %}
-    <span class="btn">← {{ _('previous') }}</span>
-  {% endif %}
-  {% if followers_page.has_next %}
-    <a class="btn" href="{% locale_url projects_user_list slug=project.slug participants_page=participants_page_num followers_page=followers_next_page %}">{{ _('next') }} →</a>
-  {% else %}
-    <span class="btn">{{_('next')}} →</span>
-  {% endif %}
-</div>
+  {% with prefix='followers_' page_url=projects_users_url %}
+    {% pagination_links %}
+  {% endwith %}
 
 </section>
 {% endif %}

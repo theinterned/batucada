@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load pagination_tags %}
 {% block title %}{{ _('Learn') }}{% endblock %}
 {% block bodyid %}project_directory{% endblock %}
 {% block bodyclasses %}card-list{% endblock %}
@@ -28,21 +29,12 @@
   <h1><span>{% if tagged %}All {{ _('tagged') }} {{ tag.name }}{% else %}{{ _('All') }}{% endif %}</span></h1>
 <br>
 <ul class="project-list">
-  {% for project in page.object_list %}
+  {% for project in pagination_current_page.object_list %}
     <li>{% include "projects/_project_card.html" %}</li>
   {% endfor %}
 </ul>
-<div class="pagination">
-{% if page.has_previous %}
-<a class="btn" href="{% locale_url projects_directory page=prev_page %}{% if school%}?school={{ school.slug }}{% endif %}">← {{ _('previous') }}</a>
-{% else %}
-<span class="btn">← {{ _('previous') }}</span>
-{% endif %}
-{% if page.has_next %}
-<a class="btn" href="{% locale_url projects_directory page=next_page %}{% if school%}?school={{ school.slug }}{% endif %}">{{ _('next') }} →</a>
-{% else %}
-<span class="btn">{{_('next')}} →</span>
-{% endif %}
-</div>
+{% with prefix='' page_url=directory_url %}
+  {% pagination_links %}
+{% endwith %}
 </section>
 {% endblock %}

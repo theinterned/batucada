@@ -3,9 +3,8 @@ import random
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator, EmptyPage
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
 
@@ -19,6 +18,7 @@ from news.models import FeedEntry
 from drumbeat import messages
 from schools.models import School
 from activity.views import filter_activities
+from pagination.views import get_pagination_context
 
 
 def splash(request):
@@ -55,7 +55,7 @@ def hide_welcome(request):
 
 
 @login_required(profile_required=False)
-def dashboard(request, page=1):
+def dashboard(request):
     """Personalized dashboard for authenticated users."""
     try:
         profile = request.user.get_profile()
@@ -74,27 +74,17 @@ def dashboard(request, page=1):
         return render_to_response('dashboard/setup_profile.html', {
             'form': form,
         }, context_instance=RequestContext(request))
-
-    activities = Activity.objects.dashboard(
-        request.user.get_profile()).filter(reply_to__isnull=True)
-    activities = filter_activities(request, activities)
-    paginator = Paginator(activities, 25)
-    try:
-        current_page = paginator.page(page)
-    except EmptyPage:
-        raise Http404
-
     show_welcome = not profile.discard_welcome
-    return render_to_response('dashboard/dashboard.html', {
+    activities = Activity.objects.dashboard(
+        request.user.get_profile())
+    activities = filter_activities(request, activities)
+    context = {
         'profile': profile,
         'profile_view': False,
         'show_welcome': show_welcome,
-        'paginator': paginator,
-        'page_num': page,
-        'next_page': int(page) + 1,
-        'prev_page': int(page) - 1,
-        'num_pages': paginator.num_pages,
-        'page': current_page,
         'domain': Site.objects.get_current().domain,
         'dashboard_url': reverse('dashboard'),
-    }, context_instance=RequestContext(request))
+    }
+    context.update(get_pagination_context(request, activities))
+    return render_to_response('dashboard/dashboard.html', context,
+        context_instance=RequestContext(request))

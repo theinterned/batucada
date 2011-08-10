@@ -1,0 +1,45 @@
+{% extends "replies/base.html" %}
+{% load l10n_tags %}
+
+{% block bodyid %}delete_restore_comment{% endblock %}
+
+
+{% block commets_breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ comment.get_absolute_url }}">{{ comment.author }} {{ comment.created_on }}</a>
+{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>
+      {% if comment.deleted %}{{ _('Restore Comment:') }}{% else %}{{ _('Delete Comment:') }}{% endif %} {{ comment.author }} {{ comment.created_on }}
+    </h1>
+    <br />
+    <fieldset>
+    {% if comment.deleted %}
+      <form action="{% locale_url comment_restore comment_id=comment.id %}" method="post">
+    {% else %}
+      <form action="{% locale_url comment_delete comment_id=comment.id %}" method="post">
+    {% endif %}
+      {% csrf_token %}
+      {% if comment.deleted %}
+        <span class="hint block">{{ _('Are you sure you want to restore this comment?') }}</span>
+      {% else %}
+        <span class="hint block">{{ _('Are you sure you want to delete this comment?') }}</span>
+      {% endif %}
+      <p class="content_buttons">
+        <a class="button" href="{% if comment.deleted %}{{ page_object.get_absolute_url }}{% else %}{{ comment.get_absolute_url }}{%endif%}">
+          {{ _('Cancel') }}
+        </a>
+        {% if comment.deleted %}
+          <button type="submit" value="{{ _('Restore') }}">{{ _('Restore') }}</button>
+        {% else %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        {% endif %}
+      </p>
+    </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

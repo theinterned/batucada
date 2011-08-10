@@ -16,7 +16,6 @@ from django.views.decorators.http import require_http_methods
 from django.forms import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sites.models import Site
-from django.core.paginator import Paginator, EmptyPage
 
 from django_openid_auth import views as openid_views
 from django_openid_auth.models import UserOpenID
@@ -24,15 +23,17 @@ from commonware.decorators import xframe_sameorigin
 
 from l10n.urlresolvers import reverse
 from urlparse import urlparse, urlunparse
+from links.models import Link
+from drumbeat import messages
+from activity.models import Activity
+from activity.views import filter_activities
+from pagination.views import get_pagination_context
+
 from users import forms
 from users.models import UserProfile, create_profile, ProfileTag
 from users.fields import UsernameField
 from users.decorators import anonymous_only, login_required
 from users import drupal
-from links.models import Link
-from drumbeat import messages
-from activity.models import Activity
-from activity.views import filter_activities
 
 log = logging.getLogger(__name__)
 
@@ -346,33 +347,22 @@ def confirm_resend(request, username):
     return http.HttpResponseRedirect(reverse('users_login'))
 
 
-def profile_view(request, username, page=1):
+def profile_view(request, username):
     profile = get_object_or_404(UserProfile, username=username)
     if profile.deleted:
         messages.error(request, _('This user account was deleted.'))
         return http.HttpResponseRedirect(reverse('users_user_list'))
 
-    activities = Activity.objects.for_user(profile).filter(
-        reply_to__isnull=True)
+    activities = Activity.objects.for_user(profile)
     activities = filter_activities(request, activities)
-    paginator = Paginator(activities, 25)
-    try:
-        current_page = paginator.page(page)
-    except EmptyPage:
-        raise http.Http404
-
-    return render_to_response('users/profile.html', {
+    context = {
         'profile': profile,
         'profile_view': True,
-        'activities': activities,
         'domain': Site.objects.get_current().domain,
-        'paginator': paginator,
-        'page_num': page,
-        'next_page': int(page) + 1,
-        'prev_page': int(page) - 1,
-        'num_pages': paginator.num_pages,
-        'page': current_page,
-    }, context_instance=RequestContext(request))
+    }
+    context.update(get_pagination_context(request, activities))
+    return render_to_response('users/profile.html', context,
+        context_instance=RequestContext(request))
 
 
 @login_required(profile_required=False)

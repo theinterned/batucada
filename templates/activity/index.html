@@ -2,6 +2,8 @@
 {% load l10n_tags %}
 {% load user_tags %}
 {% load project_tags %}
+{% load comment_threads %}
+{% load pagination_tags %}
 
 {% block body %}
 
@@ -14,23 +16,16 @@
   <div id="main">
     <ul id="posts">
       {% include "activity/_activity_resource.html" %}
-      {% for reply in page.object_list %}
-        {% with activity=reply %}
-          {% include "activity/_activity_resource.html" %}
+      {% if pagination_current_page.object_list %}
+        <h1>{{_('Comments')}}</h1>
+        <br>
+        {% with comments=pagination_current_page.object_list %}
+          {% comment_threads %}
         {% endwith %}
-      {% endfor %}
+      {% endif %}
     </ul>
-    <div class="pagination">
-      {% if page.has_previous %}
-        <a class="btn" href="{% locale_url activity_index activity_id=activity.id page=prev_page %}">← {{ _('previous') }}</a>
-      {% else %}
-        <span class="btn">← {{ _('previous') }}</span>
-      {% endif %}
-      {% if page.has_next %}
-        <a class="btn" href="{% locale_url activity_index activity_id=activity.id page=next_page %}">{{ _('next') }} →</a>
-      {% else %}
-        <span class="btn">{{_('next')}} →</span>
-      {% endif %}
-    </div>
+    {% with prefix='' page_url=activity.get_absolute_url %}
+      {% pagination_links %}
+    {% endwith %}
   </div>
 {% endblock %}
