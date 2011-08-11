@@ -1,9 +1,14 @@
+import unicodecsv
+
 from django.conf import settings
 from django import http
 from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import NoReverseMatch
+from django.utils.translation import ugettext as _
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 
 from l10n.urlresolvers import reverse
 from users.models import UserProfile
@@ -61,3 +66,24 @@ def report_abuse(request, model, app_label, pk):
         'app_label': app_label,
         'pk': pk,
     }, context_instance=RequestContext(request))
+
+
+def export_as_csv(modeladmin, request, queryset):
+    """
+    Generic csv export admin action.
+    """
+    if not request.user.is_staff:
+        raise PermissionDenied
+    opts = modeladmin.model._meta
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=%s.csv' % unicode(
+        opts).replace('.', '_')
+    writer = unicodecsv.writer(response, encoding='utf-8')
+    field_names = [field.name for field in opts.fields]
+    # Write a first row with header information
+    writer.writerow(field_names)
+    # Write data rows
+    for obj in queryset:
+        writer.writerow([getattr(obj, field) for field in field_names])
+    return response
+export_as_csv.short_description = _("Export selected objects as csv file")
