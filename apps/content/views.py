@@ -228,7 +228,7 @@ def restore_version(request, slug, page_slug, version_id):
 @login_required
 @participation_required
 def page_index_up(request, slug, counter):
-    #Page goes up in the sidebar index (page.index decreases)."""
+    # Page goes up in the sidebar index (page.index decreases)."""
     project = get_object_or_404(Project, slug=slug)
     try:
         counter = int(counter)
@@ -245,6 +245,9 @@ def page_index_up(request, slug, counter):
     prev_page = content_pages[counter - 1]
     page = content_pages[counter]
     prev_page.index, page.index = page.index, prev_page.index
+    # TODO: Fix this so no update messages are added to the wall but
+    # we don't loose the data for the minor_update field of PageVersion.
+    # For now relly on the Activity model to store this information.
     page.minor_update = prev_page.minor_update = True
     page.save()
     prev_page.save()
@@ -254,7 +257,7 @@ def page_index_up(request, slug, counter):
 @login_required
 @participation_required
 def page_index_down(request, slug, counter):
-    #Page goes down in the sidebar index (page.index increases).
+    # Page goes down in the sidebar index (page.index increases).
     project = get_object_or_404(Project, slug=slug)
     try:
         counter = int(counter)
@@ -271,6 +274,9 @@ def page_index_down(request, slug, counter):
     next_page = content_pages[counter + 1]
     page = content_pages[counter]
     next_page.index, page.index = page.index, next_page.index
+    # TODO: Fix this so no update messages are added to the wall but
+    # we don't loose the data for the minor_update field of PageVersion.
+    # For now relly on the Activity model to store this information.
     next_page.minor_update = page.minor_update = True
     page.save()
     next_page.save()
