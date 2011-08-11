@@ -1,21 +1,25 @@
-from collections import defaultdict
-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django import http
 from django.utils import simplejson
 from django.views.decorators.http import require_http_methods
-from django.db.models import Count
+from django.contrib.contenttypes.models import ContentType
 
 from commonware.decorators import xframe_sameorigin
 
 from users.decorators import login_required
 from drumbeat import messages
-from projects.models import Project
+from projects.models import Project, Participation
 from users.models import UserProfile
 from l10n.urlresolvers import reverse
 from content.models import Page
+from replies.models import PageComment
+from statuses.models import Status
+from activity.models import Activity
+from activity.schema import verbs
+from relationships.models import Relationship
+from signups.models import SignupAnswer
 
 from schools.decorators import school_organizer_required
 from schools.models import School
@@ -470,17 +474,51 @@ def edit_statistics(request, slug):
     school = get_object_or_404(School, slug=slug)
 
     all_projects = school.projects.all()
-    project_counts = defaultdict(int)
+    project_counts = {}
+    for category, name in Project.CATEGORY_CHOICES:
+        project_counts[category] = 0
     for project in all_projects:
         project_counts[project.category] += 1
-
-    comment_count = Page.objects.filter(
-        project__id__in=school.projects.values('id')).aggregate(
-        Count('comments'))['comments__count']
+    project_ct = ContentType.objects.get_for_model(Project)
+    project_ids = school.projects.values('id')
+    comments = PageComment.objects.filter(scope_content_type=project_ct,
+        scope_id__in=project_ids)
+    page_ct = ContentType.objects.get_for_model(Page)
+    page_comments_count = comments.filter(page_content_type=page_ct).count()
+    statuses_count = Status.objects.filter(project__in=project_ids).count()
+    status_ct = ContentType.objects.get_for_model(Activity)
+    activity_comments_count = comments.filter(page_content_type=status_ct).count()
+    page_edits_count = Activity.objects.filter(scope_object__in=project_ids,
+       target_content_type=page_ct, verb=verbs['update']).count()
+    participations = Participation.objects.filter(project__in=project_ids)
+    organizer_ids = participations.filter(organizing=True).values(
+        'user__id')
+    participant_ids = participations.filter(organizing=False).values(
+        'user__id')
+    follower_ids = Relationship.objects.filter(
+        target_project__in=project_ids).exclude(
+        source__in=organizer_ids).exclude(
+        source__in=participant_ids).values('source_id').distinct()
+    organizers_count = organizer_ids.distinct().count()
+    participants_count = participant_ids.distinct().count()
+    followers_count = follower_ids.distinct().count()
+    signup_answers_count = SignupAnswer.objects.filter(
+        sign_up__project__in=project_ids).count()
+    signup_answer_ct = ContentType.objects.get_for_model(SignupAnswer)
+    signup_comments_count = comments.filter(
+        page_content_type=signup_answer_ct).count()
 
     return render_to_response('schools/school_edit_statistics.html', {
         'school': school,
         'statistics_tab': True,
         'project_counts': project_counts.items(),
-        'comment_count': comment_count,
+        'page_comments_count': page_comments_count,
+        'statuses_count': statuses_count,
+        'activity_comments_count': activity_comments_count,
+        'page_edits_count': page_edits_count,
+        'organizers_count': organizers_count,
+        'participants_count': participants_count,
+        'followers_count': followers_count,
+        'signup_answers_count': signup_answers_count,
+        'signup_comments_count': signup_comments_count,
     }, context_instance=RequestContext(request))
