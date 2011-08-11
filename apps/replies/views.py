@@ -69,7 +69,7 @@ def reply_comment(request, comment_id):
 
 @login_required
 def comment_page(request, page_model, page_app_label, page_pk,
-        scope_model, scope_app_label, scope_pk):
+        scope_model=None, scope_app_label=None, scope_pk=None):
 
     page_ct_cls = get_object_or_404(ContentType, model=page_model,
         app_label=page_app_label).model_class()
