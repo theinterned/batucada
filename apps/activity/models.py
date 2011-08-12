@@ -151,8 +151,10 @@ class Activity(ModelBase):
 
     def comment_notification_recipients(self, comment):
         if self.scope_object:
-            return self.scope_object.participants().filter(
-                no_wall_updates=False).values_list('user')
+            from users.models import UserProfile
+            user_ids = self.scope_object.participants().filter(
+                no_wall_updates=False).values('user__id')
+            return UserProfile.objects.filter(id__in=user_ids)
         else:
             recipients = {self.actor.username: self.actor}
             while comment.reply_to:
