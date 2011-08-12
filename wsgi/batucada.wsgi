@@ -14,6 +14,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings_local'
 # Add the zamboni dir to the python path so we can import manage.
 wsgidir = os.path.dirname(__file__)
 site.addsitedir(os.path.abspath(os.path.join(wsgidir, '../')))
+site.addsitedir(os.path.abspath(os.path.join(wsgidir, '../../')))
 
 # manage adds /apps, /lib, and /vendor to the Python path.
 import manage

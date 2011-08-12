@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from drumbeat.admin import export_as_csv
+from drumbeat.views import export_as_csv
 
 from projects.models import Project, Participation
 
