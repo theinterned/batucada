@@ -26,7 +26,7 @@
 {% block body %}
 <h1>{{ _('Browse') }}</h1>
 <section id="all_projects">
-  <h1><span>{{ _('All') }}</span></h1>
+  <h1><span>{{ _('All courses tagged \'') }}{{ tag.name }}'</span></h1>
 <br>
 <ul class="project-list">
   {% for project in pagination_current_page.object_list %}

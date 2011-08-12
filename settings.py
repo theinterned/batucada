@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'lernanta.apps.projects',
     'lernanta.apps.drumbeat',
     'django_obi',
+    'lernanta.apps.tags',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
