@@ -26,6 +26,7 @@ from l10n.models import localize_email
 from richtext.models import RichTextField
 from content.models import Page
 from replies.models import PageComment
+from tags.models import GeneralTaggedItem
 
 import caching.base
 
@@ -101,7 +102,8 @@ class Project(ModelBase):
     )
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
-    tags = TaggableManager(blank=True)
+
+    tags = TaggableManager(through=GeneralTaggedItem, blank=True)
 
     other = models.CharField(max_length=30, blank=True, null=True)
     other_description = models.CharField(max_length=150, blank=True, null=True)
