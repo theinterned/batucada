@@ -45,13 +45,14 @@ def unfollow(request, object_type, slug):
     profile = request.user.get_profile()
     if object_type == PROJECT:
         project = get_object_or_404(Project, slug=slug)
+        url = project.get_absolute_url()
         # project.participants() includes project.organizers()
         if project.participants().filter(user=profile).exists():
             messages.error(request, _("You can't unfollow"))
+            return HttpResponseRedirect(url)
         else:
             relationship = get_object_or_404(Relationship, source=profile,
                 target_project=project)
-            url = project.get_absolute_url()
     elif object_type == USER:
         user = get_object_or_404(UserProfile, username=slug)
         relationship = get_object_or_404(Relationship, source=profile,
