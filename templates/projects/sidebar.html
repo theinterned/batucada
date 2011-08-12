@@ -42,7 +42,7 @@
       <ul class="tags">
         {% for tag in tags %}
           <li>
-            <a href="{% locale_url projects_tagged_list tag.slug %}" title="{{ _('View more tagged with ') }}{{ tag.name }}">
+            <a href="{% locale_url tags_tagged_list tag.slug %}" title="{{ _('View more tagged with ') }}{{ tag.name }}">
               {{ tag.name }}
             </a>
           </li>
