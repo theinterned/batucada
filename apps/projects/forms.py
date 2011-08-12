@@ -9,6 +9,8 @@ from django.template.loader import render_to_string
 from links.models import Link
 from users.models import UserProfile
 from users import tasks
+from tags.forms import GeneralTagField
+from tags.models import GeneralTaggedItem
 
 from projects.models import Project
 from projects import drupal
@@ -18,11 +20,19 @@ log = logging.getLogger(__name__)
 
 
 class ProjectForm(forms.ModelForm):
+    tags = GeneralTagField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        if kwargs.has_key('instance'):
+            instance = kwargs['instance']
+            self.initial['tags'] = GeneralTaggedItem.objects.filter(
+               object_id=instance.id)
 
     class Meta:
         model = Project
         fields = ('name', 'category', 'other', 'other_description',
-            'short_description', 'long_description', 'tags')
+            'short_description', 'long_description')
         widgets = {
             'category': forms.RadioSelect,
         }
@@ -42,6 +52,14 @@ class ProjectForm(forms.ModelForm):
             data['other'] = ''
             data['other_description'] = ''
         return data
+
+    def save(self, commit=True):
+        model = super(ProjectForm, self).save(commit=False)
+        if commit:
+            model.save()
+            model.tags.set(*self.cleaned_data['tags'])
+            model.save()
+        return model
 
 
 class ProjectLinksForm(forms.ModelForm):
