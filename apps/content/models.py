@@ -110,8 +110,10 @@ class Page(ModelBase):
         return True
 
     def comment_notification_recipients(self, comment):
-        return self.project.participants().filter(
-            no_updates=False).values_list('user')
+        from users.models import UserProfile
+        user_ids = self.project.participants().filter(
+            no_updates=False).values('user__id')
+        return UserProfile.objects.filter(id__in=user_ids)
 
 
 class PageVersion(ModelBase):
