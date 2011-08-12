@@ -44,32 +44,6 @@ def project_list(request):
                               context_instance=RequestContext(request))
 
 
-def list_tagged_all(request, tag_slug):
-    """Display a list of courses that are tagged with the tag and tag type. """
-    school = None
-    tag = get_object_or_404(Tag, slug=tag_slug)
-    directory_url = reverse('projects_tagged_list', kwargs=dict(tag_slug=tag_slug))
-    if 'school' in request.GET:
-        try:
-            school = School.objects.get(slug=request.GET['school'])
-        except School.DoesNotExist:
-            return http.HttpResponseRedirect(directory_url)
-    projects = Project.objects.filter(not_listed=False,
-        tags__slug=tag_slug).order_by('name')
-    if school:
-        projects = projects.filter(school=school).exclude(
-            id__in=school.declined.values('id'))
-    context = {
-        'tagged': projects,
-        'tag': tag,
-        'school': school,
-        'directory_url': directory_url,
-    }
-    context.update(get_pagination_context(request, projects, 24))
-    return render_to_response('projects/directory.html', context,
-        context_instance=RequestContext(request))
-
-
 def list_all(request):
     school = None
     directory_url = reverse('projects_directory')
