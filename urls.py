@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     (r'^chat/',          include('chat.urls')),
     (r'^comments/',      include('replies.urls')),
     (r'^badges/',        include('badges.urls')),
+    (r'^tags/',          include('tags.urls')),
     (r'',                include('users.urls')),
 )
 
