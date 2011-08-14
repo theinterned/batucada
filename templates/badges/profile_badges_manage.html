@@ -1,0 +1,30 @@
+{% extends "users/profile_edit.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+
+{% block bodyclasses %}manage profile badges{% endblock %}
+{% block title %}{{ _('Manage Badges') }}{% endblock %}
+{% block form %}
+<fieldset id="manage_profile_badges" class="manage profile badges tabpane">
+  <h2>{{ _('Manage Badges') }}</h2>
+  <p class="hint">{% blocktrans with obi_url=obi_url badges_help_url=badges_help_url %}Send your email address and badges to the <a href="{{ obi_url }}" target="_blank">Open Badges Infrastructure (OBI)</a>. Visit the <a href="{{ badges_help_url }}" target="_blank">assesments and badges page</a> for more information.{% endblocktrans %}
+  </p>
+
+  {% if badges %}
+    <form action="{% locale_url users_badges_manage %}" method="post">
+      {% csrf_token %}
+      <div class="field{% if form.badges.errors %} error{% endif %}">
+        <label for="id_badges">{{ _('Badges') }}</label>
+        {{ form.badges }}
+        {{ form.badges.errors }}
+      </div>
+      <p class="buttons">
+        <button type="submit" >{{ _('Send') }}</button>
+      </p>
+    </form>
+  {% else %}
+    <strong>{{ _('You don\'t have any badges.') }}</strong>
+  {% endif %}
+
+</fieldset>
+{% endblock %}

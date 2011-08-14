@@ -1,10 +1,11 @@
-import re
 import logging
 import os
 
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+
+from django.core.urlresolvers import reverse
 
 
 log = logging.getLogger(__name__)
@@ -33,6 +34,22 @@ def pilot_image(tag, badge):
         return BADGES_MISSING_IMAGES[badge.type]
 
 
+def get_badge_url(tag_name):
+    url = None
+    if not BADGES_DB in settings.DATABASES:
+        return url
+    try:
+        tag = ForumTag.objects.using(BADGES_DB).get(
+            name=tag_name)
+        custom_badge = ForumCustombadge.objects.using(BADGES_DB).get(
+            tag_id=tag.id)
+        url = settings.BADGE_URL % dict(badge_id=custom_badge.ondb_id,
+            badge_tag=tag.name)
+    except (ForumTag.DoesNotExist, ForumCustombadge.DoesNotExist):
+        pass
+    return url
+
+
 def get_awarded_badges(username):
     badges = {}
     if not BADGES_DB in settings.DATABASES:
@@ -50,18 +67,18 @@ def get_awarded_badges(username):
                 if tag.name in badges:
                     badges[tag.name]['count'] += 1
                 else:
-                    url = settings.BADGE_URL % dict(badge_id=badge.id,
+                    url = settings.BADGE_EVIDENCE_URL % dict(badge_id=badge.id,
                         badge_tag=tag.name, username=username)
                     image_url = pilot_image(tag, badge)
                     data = {
                         'name': custom_badge.name,
                         'type': badge.type,
                         'id': badge.id,
-                        'url': url,
-                        'image_url': image_url,
+                        'evidence': url,
+                        'image': image_url,
                         'count': 1,
                         'description': custom_badge.description,
-                        'template': re.sub(r'\?.*', '', url),
+                        'template': reverse('badge_description', kwargs=dict(slug=tag.name)),
                     }
                     badges[tag.name] = data
     except User.DoesNotExist:
