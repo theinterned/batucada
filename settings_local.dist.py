@@ -120,5 +120,5 @@ MOZBADGES = {
     'hub': 'http://alpha.badgehub.org',
 
     # method for getting badges for a user. Called with user object.
-    'badge_getter': 'users.badges.get_awarded_badges',
+    'badge_getter': 'badges.models.get_awarded_badges',
 }
