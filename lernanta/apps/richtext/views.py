@@ -52,7 +52,6 @@ def browse_file(request):
         if form.is_valid():
             ckeditor_func_num = form.cleaned_data['CKEditorFuncNum']
             url = form.cleaned_data['file']
-            print ckeditor_func_num, url
             response = HttpResponse("""
                 <script type='text/javascript'>
                     window.opener.CKEDITOR.tools.callFunction(%s, '%s');
@@ -96,21 +95,17 @@ def upload_file(request):
     # Get the uploaded file from request.
     upload = request.FILES['upload']
 
-    print upload
-
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
-    print upload_filename
     out = open(upload_filename, 'wb+')
 
     # Iterate through chunks and write to destination.
     for chunk in upload.chunks():
         out.write(chunk)
     out.close()
-    print upload_filename
+
     # Respond with Javascript sending ckeditor upload url.
     url = get_media_url(upload_filename)
-    print upload_filename
     response = HttpResponse("""
         <script type='text/javascript'>
             window.parent.CKEDITOR.tools.callFunction(%s, '%s');

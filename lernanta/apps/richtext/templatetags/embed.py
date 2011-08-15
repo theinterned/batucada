@@ -30,7 +30,6 @@ def replace(match):
         embedded_url = None
         if embedded_urls.exists():
             embedded_url = embedded_urls[0]
-            print embedded_url.extra_data
         else:
             embedly_key = getattr(settings, 'EMBEDLY_KEY', False)
             if embedly_key:
