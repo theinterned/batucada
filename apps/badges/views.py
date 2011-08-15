@@ -53,5 +53,3 @@ def badges_manage(request):
         render_failure=badges_manage_render_failure,
         extra_context=dict(profile=profile, obi_url=settings.MOZBADGES['hub'],
         badges_help_url=badges_help_url, badges_tab=True))
-
-
