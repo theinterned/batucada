@@ -1,8 +1,7 @@
 {% extends "signups/base.html" %}
 {% load i18n %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 
 
 {% block body %}
@@ -28,14 +27,14 @@
 	            <p><strong>{{ _('Bio:') }}</strong> {{ answer.author.bio|safe }}</p>
 	            <p><strong>{{ _('Location:') }}</strong> {{ answer.author.location }}</p>
                 <strong>{{ _('Standard Set Answer:') }}</strong>
-                {{ answer.standard|youtube|slideshare|safe }}
+                {{ answer.standard|embed|safe }}
                 {% if answer.sign_up.public %}
                   <strong>{{ _('Public Set Answer:') }}</strong>
-                  {{ answer.public|youtube|slideshare|safe }}
+                  {{ answer.public|embed|safe }}
                 {% endif %}
                 {% if answer.sign_up.between_participants %}
                   <strong>{{ _('Between Participants Set Answer:') }}</strong>
-                  {{ answer.between_participants|youtube|slideshare|safe }}
+                  {{ answer.between_participants|embed|safe }}
                 {% endif %}
               </div>
             </div>
@@ -59,7 +58,7 @@
           <p>{{ _('Please answer the following set(s) of questions if you want to become a participant or organizer.') }}</p>
           <h3>{{ _('Standard Set') }}</h3>
           <p>{{ _('This set of signup questions is common to all study groups, courses, ... in P2PU. The answers to these questions will be public once you get accepted.') }}</p>
-          {{ sign_up.standard|youtube|slideshare|safe }}
+          {{ sign_up.standard|embed|safe }}
           <br>
           <div class="field{% if form.standard.errors %} error{% endif %}">
             {{ form.standard }}
@@ -68,7 +67,7 @@
           {% if sign_up.public %}
             <h3>{{ _('Public Custom Set') }}</h3>
             <p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be public once you get accepted.{% endblocktrans %}</p>
-            {{ sign_up.public|youtube|slideshare|safe }}
+            {{ sign_up.public|embed|safe }}
             <div class="field{% if form.public.errors %} error{% endif %}">
               {{ form.public }}
               {{ form.public.errors }}
@@ -77,7 +76,7 @@
           {% if sign_up.between_participants %}
             <h3>{{ _('Between Participants Custom Set') }}</h3>
             <p>{% blocktrans with kind=project.kind|lower %}This set of signup questions is particular to this {{ kind }}. The answers to these questions will be visible to all participants once you get accepted.{% endblocktrans %}</p>
-            {{ sign_up.between_participants|youtube|slideshare|safe }}
+            {{ sign_up.between_participants|embed|safe }}
             <div class="field{% if form.between_participants.errors %} error{% endif %}">
               {{ form.between_participants }}
               {{ form.between_participants.errors }}

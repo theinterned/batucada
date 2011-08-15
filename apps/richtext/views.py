@@ -40,7 +40,7 @@ def get_file_browse_urls(user=None):
 
     for root, dirs, filenames in os.walk(browse_path):
         for filename in [os.path.join(root, x) for x in filenames]:
-            files.append((get_media_url(filename), filename[len(browse_path) + 1 :]))
+            files.append((get_media_url(filename), filename[len(browse_path) + 1:]))
 
     return files
 
@@ -79,14 +79,14 @@ def get_upload_filename(upload_name, user):
 
     # Generate date based path to put uploaded file.
     date_path = datetime.now().strftime('%Y/%m/%d')
-    
+
     # Complete upload path (upload_path + date_path).
     upload_path = os.path.join(settings.CKEDITOR_FILE_UPLOAD_PATH, user_path, date_path)
-   
+
     # Make sure upload_path exists.
     if not os.path.exists(upload_path):
         os.makedirs(upload_path)
-    
+
     # Get available name and return.
     return get_available_name(os.path.join(upload_path, upload_name))
 

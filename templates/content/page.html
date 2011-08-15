@@ -1,7 +1,6 @@
 {% extends "projects/base.html" %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 {% load project_tags %}
 {% load comment_threads %}
 {% load pagination_tags %}
@@ -36,7 +35,7 @@
 {% endif %}
 <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">{{ page.title }}</h1>
 <hr />
-{{ page.content|youtube|slideshare|safe }}
+{{ page.content|embed|safe }}
 
 {% if pagination_current_page.object_list %}
 

@@ -1,7 +1,6 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 
 {% block project_title %}{{ _('Create Task') }}{% endblock %}
 
@@ -21,7 +20,7 @@
     {{ _('[Preview]') }} {{ page.title }}
   </h2>
   <hr />
-  {{ page.content|youtube|slideshare|safe }}
+  {{ page.content|embed|safe }}
 {% endblock %}
 
 {% block extra_fields %}

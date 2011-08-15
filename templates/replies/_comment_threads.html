@@ -1,7 +1,6 @@
 {% load l10n_tags %}
 {% load comment_threads %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 
 {% for comment in comments %}
   {% if comment.deleted %}
@@ -38,7 +37,7 @@
           <a href="{{ comment.get_absolute_url }}">{{ comment.created_on }}</a>
         </div>
         <div class="post-body">
-          {{ comment.content|youtube|slideshare|safe }}
+          {{ comment.content|embed|safe }}
         </div>
       </div>
     </li>
@@ -71,7 +70,7 @@
           <a href="{{ reply.reply_to.get_absolute_url }}">{{reply.reply_to.created_on}}</a>
         </div>
         <div class="post-body">
-          {{ reply.content|youtube|slideshare|safe }}
+          {{ reply.content|embed|safe }}
         </div>
       </div>
     </li>
