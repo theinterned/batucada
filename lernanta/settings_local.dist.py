@@ -106,8 +106,8 @@ DRUPAL_FILES_URL = DRUPAL_URL + 'sites/archive.p2pu.org/files/'
 FILE_PATH_PREFIX = 'sites/archive.p2pu.org/files/'
 
 # Badges pilot url
-BADGE_URL = ('http://badges.p2pu.org/badges/%(badge_id)s/' +
-    '%(badge_tag)s?user_filter=%(username)s#badge_data')
+BADGE_URL = 'http://badges.p2pu.org/badges/%(badge_id)s/%(badge_tag)s'
+BADGE_EVIDENCE_URL = BADGE_URL + '?user_filter=%(username)s#badge_data'
 BADGE_IMAGES_DIR = path('media/images/pilotbadges/')
 BADGE_IMAGES_URL = 'images/pilotbadges/'
 
