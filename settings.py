@@ -225,10 +225,12 @@ FEED_URLS = {
 
 # Ckeditor
 CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
-CKEDITOR_UPLOAD_PATH = path("uploads")
+CKEDITOR_UPLOAD_PATH = path("media/uploads/images")
+CKEDITOR_FILE_UPLOAD_PATH = path("media/uploads/files")
+CKEDITOR_RESTRICT_BY_USER = True
 
 # Where the default image for sending to Gravatar
-DEFAULT_PROFILE_IMAGE = 'http://new.p2pu.org/media/images/member-missing.png'
+DEFAULT_PROFILE_IMAGE = 'http://p2pu.org/media/images/member-missing.png'
 
 # When set to True, if the request URL does not match any
 # of the patterns in the URLconf and it doesn't end in a slash,

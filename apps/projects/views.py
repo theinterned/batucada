@@ -11,7 +11,6 @@ from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
-from taggit.models import Tag
 
 from links import tasks as links_tasks
 from pagination.views import get_pagination_context

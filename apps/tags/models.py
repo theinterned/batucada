@@ -3,10 +3,12 @@ from django.utils.translation import ugettext as _
 
 from taggit.models import TagBase, GenericTaggedItemBase, ItemBase
 
+
 class GeneralTag(TagBase):
     class Meta:
         verbose_name = _("Tag")
         verbose_name_plural = _("Tags")
+
 
 class GeneralTaggedItem(GenericTaggedItemBase, ItemBase):
 
