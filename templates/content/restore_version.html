@@ -1,7 +1,6 @@
 {% extends "content/base_page_form.html" %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 
 {% block bodyid %}edit_page{% endblock %}
 
@@ -31,7 +30,7 @@
     {{ _('[Preview]') }} {{ page.title }}
   </h2>
   <hr />
-  {{ page.content|youtube|slideshare|safe }}
+  {{ page.content|embed|safe }}
 {% endblock %}
 
 {% block page_form_buttons %}

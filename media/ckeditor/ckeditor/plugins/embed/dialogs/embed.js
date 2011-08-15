@@ -1,8 +1,8 @@
 
-CKEDITOR.dialog.add( 'slideshare', function( editor )
+CKEDITOR.dialog.add( 'embed', function( editor )
 {
 	return {
-		title : 'SlideShare',
+		title : 'Embed',
 		minWidth : 350,
 		minHeight : 140,
 		onShow : function()
@@ -11,22 +11,22 @@ CKEDITOR.dialog.add( 'slideshare', function( editor )
 		},
 		onOk : function()
 		{
-            editor.insertText('[slideshare:');
+            editor.insertText('[embed:');
             editor.insertText(this.getValueOf( 'info', 'url' ));
             editor.insertText(']');
 		},
 		contents : [
 			{
 				id : 'info',
-				label : 'SlideShare',
-				title : 'SlideShare',
+				label : 'Embed',
+				title : 'Embed',
 				startupFocus : 'url',
 				elements : [
 					{
 						id : 'url',
 						type : 'text',
 						label : 'URL',
-						'default' : 'http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=creative-commons-spectrum-of-rights-1192738788152957-2',
+						'default' : 'http://www.slideshare.net/gya/creative-commons-spectrum-of-rights',
 						setup : function( element )
 						{
 

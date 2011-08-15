@@ -1,4 +1,5 @@
 from settings import *
+import datetime
 
 # Useful settings for running a local instance of batucada.
 
@@ -76,6 +77,10 @@ RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
 RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
                  RECAPTCHA_PUBLIC_KEY)
+
+# Embed.ly
+EMBEDLY_KEY = ''
+EMBEDLY_CACHE_EXPIRES = datetime.timedelta(weeks=4)
 
 # Use dummy caching for development.
 CACHE_BACKEND = 'dummy://'

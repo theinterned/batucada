@@ -1,7 +1,6 @@
 {% extends "replies/base.html" %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 
 {% block bodyid %}comment{% endblock %}
 
@@ -43,7 +42,7 @@
                 {% endif %}
               </div>
               <div class="post-body">
-                {{ reply_to.content|youtube|slideshare|safe }}
+                {{ reply_to.content|embed|safe }}
               </div>
             </div>
           </div>
@@ -60,7 +59,7 @@
                 {% endif %}
               </div>
               <div class="post-body">
-                {{ comment.content|youtube|slideshare|safe }}
+                {{ comment.content|embed|safe }}
               </div>
             </div>
           </div>

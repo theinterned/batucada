@@ -1,7 +1,6 @@
 {% extends "projects/base.html" %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 {% load project_tags %}
 
 {% block project_title %}{{ page.title }}{% endblock %}
@@ -30,7 +29,7 @@
 <div id="main" class="content_page">
 <h1>{{ version.title }} [{{ version.date }}]</h1>
 <hr />
-{{ version.content|youtube|slideshare|safe }}
+{{ version.content|embed|safe }}
 </div>
 {% endblock %}
 

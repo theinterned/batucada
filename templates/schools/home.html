@@ -1,7 +1,6 @@
 {% extends "schools/base.html" %}
 {% load l10n_tags %}
-{% load youtube %}
-{% load slideshare %}
+{% load embed %}
 {% load project_tags %}
 
 {% block title %}{{ school.name }}{% endblock %}
@@ -38,7 +37,7 @@
     </section>
   </div>
   <h1 class="school_header"><b>{{ school.name }}</b></h1>
-  {{ school.description|youtube|slideshare|safe }}
+  {{ school.description|embed|safe }}
   <br><br><br><br><br>
   {% project_list school %}
 </div>
