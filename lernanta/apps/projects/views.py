@@ -183,8 +183,9 @@ def clone(request):
                 listed=False, author_id=user.id, project_id=project.id)
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
-            sign_up = Signup(public=base_project.sign_up.public,
-                between_participants=base_project.sign_up.between_participants,
+            base_sign_up = base_project.sign_up.get()
+            sign_up = Signup(public=base_sign_up.public,
+                between_participants=base_sign_up.between_participants,
                 author_id=user.id, project_id=project.id)
             sign_up.save()
             project.save()
