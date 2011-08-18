@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+{% block title %}{{ _('Learn') }}{% endblock %}
+{% block bodyid %}project_directory{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
+
+{% block links %}<link rel="stylesheet" href="{% if school %}{% locale_url schools_css slug=school.slug %}{% else %}{% locale_url multiple_schools_css %}{% endif %}?v=1">{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  {% if school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+  {% endif %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url projects_directory %}">{{ _('All') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  {% if user.is_authenticated %}
+    {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+<h1>{{ _('Browse') }}</h1>
+<section id="all_projects">
+  <h1><span>{{ _('All courses tagged \'') }}{{ tag.name }}'</span></h1>
+<br>
+<ul class="project-list">
+  {% for project in pagination_current_page.object_list %}
+    <li>{% include "projects/_project_card.html" %}</li>
+  {% endfor %}
+</ul>
+{% with prefix='' page_url=directory_url %}
+  {% pagination_links %}
+{% endwith %}
+</section>
+{% endblock %}
