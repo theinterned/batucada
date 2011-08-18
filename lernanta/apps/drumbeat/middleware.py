@@ -38,7 +38,6 @@ class NotFoundMiddleware(object):
             if username:
                 try:
                     user = UserProfile.objects.get(username=username)
-                    import sys; print >> sys.stderr, "REDIRECTING", request.path, "=>", user.get_absolute_url()
                     return HttpResponseRedirect(user.get_absolute_url())
                 except UserProfile.DoesNotExist:
                     pass # didn't find a matching user, so fall through to next case
