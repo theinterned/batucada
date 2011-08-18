@@ -41,3 +41,7 @@ tidy :
 # Display the settings.
 settings :
 	echo "PYTHON:" ${PYTHON}
+
+# Run tests.
+test :
+	FORCE_DB=1 ${MANAGE} test
