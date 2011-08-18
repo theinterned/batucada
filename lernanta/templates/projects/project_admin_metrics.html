@@ -1,0 +1,190 @@
+{% extends "projects/project_edit.html" %} {% load l10n_tags %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/datatables/media/css/demo_page.css">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/datatables/media/css/demo_table.css">
+ {% endblock %}
+ 
+{% block form %}
+<div style="overflow: auto; padding: 1em; min-height: 10em;">
+<h3>Organizer Quick View (<a href="export_as_csv">export data &raquo;</a>)</h3>
+<p><i>This table shows the overview of participant data. To see
+follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.</i></p>
+
+<div id="demo">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+    <thead style="background-color: #eee;">
+        <tr>
+            <th>Participants</th>
+            <th>Last Login Date</th>
+            <th>Total # of Comments*</th>
+            <th>Total Min. Logged In</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>username1</td>
+            <td>2011-08-05</td>
+            <td class="center">5</td>
+            <td class="center">1</td>
+        </tr>
+        <tr>
+            <td>username2</td>
+            <td>2011-08-01</td>
+            <td class="center">0</td>
+            <td class="center">2</td>
+
+        </tr>
+        <tr>
+            <td>username3</td>
+            <td>2011-07-31</td>
+            <td class="center">4</td>
+            <td class="center">2</td>
+        </tr>
+        <tr>
+            <td>username4</td>
+            <td>2011-08-02</td>
+            <td class="center">1</td>
+            <td class="center">2</td>
+        </tr>
+        <tr>
+            <td>username5</td>
+            <td>2011-08-02</td>
+            <td class="center">0</td>
+            <td class="center">3</td>
+        </tr>
+        <tr>
+            <td>username6</td>
+            <td>2011-08-03</td>
+            <td class="center">1</td>
+            <td class="center">1</td>
+        </tr>
+        <tr>
+            <td>username7</td>
+            <td>2011-07-30</td>
+            <td class="center">0</td>
+            <td class="center">0</td>
+        </tr>
+        <tr>
+            <td>username17</td>
+            <td>2011-08-01</td>
+            <td class="center">0</td>
+            <td class="center">0</td>
+        </tr>
+    </tbody>
+    <tfoot style="background-color: #eee;">
+        <tr>
+            <th>Participants</th>
+            <th>Last Login Date</th>
+            <th>Total # of Comments*</th>
+            <th>Total Min. Logged In</th>
+        </tr>
+    </tfoot>
+</table>
+<p style="clear:both;"><i>* includes comments on wall and task pages</i></p>
+</div>
+
+
+
+<a href="{% locale_url projects_admin_metrics_detail slug=project.slug %}">Activity as a Graph &raquo;</a>
+<!-- 
+
+organizer data is optional to karen
+start showing data as soon as we start having it and stop showing data when there's no more data (ignore course end date)
+
+- participants (with user names, at least for admins/facilitators)
+- followers (with user names, at least for admins/facilitators)
+- non-participants (and you can decide whether to break this into logged in and not logged in)
+
+ -->
+<div style="display: none;">
+<table>
+	<tr>
+		<td colspan="6">Course Name</td>
+	</tr>
+	<tr>
+		<td colspan="6">Report updated: August 3, 2011</td>
+	</tr>
+	<tr>
+		<td>Users</td>
+		<td colspan="5">August 1, 2011</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Page A</td>
+		<td>Page B</td>
+		<td>Total</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Page A</td>
+		<td>Page B</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>Time logged in</td>
+		<td># of comments</td>
+		<td># of task edits</td>
+		<td>Min on page</td>
+		<td>Min on page</td>
+		<td>Time logged in</td>
+		<td># of comments</td>
+		<td># of task edits</td>
+		<td>Min on Page</td>
+		<td>Min on Page</td>
+	</tr>
+	<tr>
+		<td>username1</td>
+		<td>03:33 pm</td>
+		<td>1</td>
+		<td>0</td>
+		<td>1</td>
+		<td>0</td>
+		<td>5</td>
+		<td>10</td>
+		<td>0</td>
+		<td>5</td>
+		<td>10</td>
+	</tr>
+	<tr>
+		<td>127.0.0.1</td>
+		<td>04:33 pm</td>
+		<td>---</td>
+		<td>---</td>
+		<td>---</td>
+		<td>0</td>
+		<td>5</td>
+		<td>10</td>
+		<td>0</td>
+		<td>5</td>
+		<td>10</td>
+	</tr>
+</table>
+</div>
+</div>
+
+<div style="margin-left: 190px;width:700px;">
+    <div id="actOverTime" style="width: 700px; height: 500px;"></div>
+</div>
+
+{% block js %}
+	<script src="{{ MEDIA_URL }}js/libs/datatables/dataTables.js"
+		type="text/javascript"></script>
+		    <script src="{{ MEDIA_URL }}js/libs/highcharts/highcharts.js" type="text/javascript"></script>
+	    <script src="{{ MEDIA_URL }}js/libs/highcharts/exporting.js" type="text/javascript"></script>
+	<script>
+	$(document).ready(function() {
+	    $('#example').dataTable();
+	} );
+	
+	</script>
+
+
+ {%endblock %}
+
+{% endblock %}
+
