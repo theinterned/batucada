@@ -9,6 +9,10 @@ endif
 # Command for running management tool.
 MANAGE=${PYTHON} manage.py
 
+# Clean up.
+clean : tidy
+	rm -f lernanta.db
+
 # Prepares existing .po for localizations and compiles them
 # Public domain
 # To make first time localization (for example for de_DE) run
@@ -19,29 +23,29 @@ int :
 
 # Handle schema migration for all applications.
 schemamigration :
-	for i in `find apps -type d -depth 1 -print`; \
+	for i in `find apps -type d -maxdepth 1 -print`; \
 	do \
 	  echo `basename $$i`; \
 	  ${PYTHON} ./manage.py schemamigration `basename $$i` --auto; \
 	done
 
+# Display the settings.
+settings :
+	echo "PYTHON:" ${PYTHON}
+
 # Synchronize the database.
 syncdb :
 	${PYTHON} manage.py syncdb --noinput
-	for i in `find apps -type d -depth 1 -print`; \
+	for i in `find apps -type d -maxdepth 1 -print`; \
 	do \
 	  echo `basename $$i`; \
 	  ${PYTHON} ./manage.py migrate `basename $$i`; \
 	done
 
-# Tidy up by removing .pyc files.
-tidy :
-	rm -f `find . -name '*.pyc'`
-
-# Display the settings.
-settings :
-	echo "PYTHON:" ${PYTHON}
-
 # Run tests.
 test :
 	FORCE_DB=1 ${MANAGE} test
+
+# Tidy up by removing .pyc files.
+tidy :
+	rm -f `find . -name '*.pyc'` `find . -name '*~'`
