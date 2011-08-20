@@ -17,6 +17,7 @@ ADMIN_PROJECT_CREATE_EMAIL = tuple()
 
 DATABASES = {
 
+    # Uncomment the following lines to run with MySQL.
     'default': {
         'NAME': 'lernanta',
         'ENGINE': 'django.db.backends.mysql',
@@ -26,6 +27,16 @@ DATABASES = {
         'PORT': '',  # An empty string means the default port.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     },
+
+    # Uncomment the following lines to run with SQLite.
+#    'default': {
+#        'NAME': 'lernanta.db',
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'USER': 'lernanta',
+#        'PASSWORD': '',
+#        'HOST': '',
+#        'PORT': ''
+#    },
 
     # Uncomment the following lines to run on SQLite for development.
 #    'default': {
