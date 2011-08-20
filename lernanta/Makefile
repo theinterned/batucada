@@ -1,5 +1,3 @@
-# $Id:$
-
 # Determine the command used to start Python.  This will be the
 # shell's Python unless the variable ${PYTHON} is set.
 ifndef PYTHON
@@ -9,9 +7,12 @@ endif
 # Command for running management tool.
 MANAGE=${PYTHON} manage.py
 
+# List all installed applications
+APPS=$(notdir $(shell find apps -type d -mindepth 1 -maxdepth 1 -print))
+
 # Clean up.
 clean : tidy
-	rm -f lernanta.db
+	rm -f lernanta.db lernanta.log
 
 # Prepares existing .po for localizations and compiles them
 # Public domain
@@ -23,24 +24,17 @@ int :
 
 # Handle schema migration for all applications.
 schemamigration :
-	for i in `find apps -type d -maxdepth 1 -print`; \
-	do \
-	  echo `basename $$i`; \
-	  ${PYTHON} ./manage.py schemamigration `basename $$i` --auto; \
-	done
+	@for i in ${APPS}; do ${MANAGE} schemamigration $$i --auto; done
 
 # Display the settings.
 settings :
-	echo "PYTHON:" ${PYTHON}
+	@echo "PYTHON:" ${PYTHON}
+	@echo "APPS:" ${APPS}
 
 # Synchronize the database.
 syncdb :
-	${PYTHON} manage.py syncdb --noinput
-	for i in `find apps -type d -maxdepth 1 -print`; \
-	do \
-	  echo `basename $$i`; \
-	  ${PYTHON} ./manage.py migrate `basename $$i`; \
-	done
+	@${PYTHON} manage.py syncdb --noinput
+	@for i in ${APPS}; do ${MANAGE} migrate $$i; done
 
 # Run tests.
 test :
