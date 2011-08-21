@@ -113,6 +113,7 @@ class UserProfile(ModelBase):
         max_length=16, choices=settings.SUPPORTED_LANGUAGES,
         default=settings.LANGUAGE_CODE)
     deleted = models.BooleanField(default=False)
+    last_active = models.DateTimeField(null=True, blank=True)
 
     user = models.ForeignKey(User, null=True, editable=False, blank=True)
 
