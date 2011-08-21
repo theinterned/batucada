@@ -103,6 +103,7 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
+    'tracker.middleware.VisitorTrackerMiddlware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'
@@ -154,6 +155,7 @@ INSTALLED_APPS = (
     'lernanta.apps.drumbeat',
     'django_obi',
     'lernanta.apps.tags',
+    'lernanta.apps.tracker',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
