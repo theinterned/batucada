@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
-    'tracker.middleware.VisitorTrackerMiddlware',
+    'tracker.middleware.PageViewTrackerMiddleware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'
@@ -280,3 +280,5 @@ LOGGING = {
         }
     }
 }
+
+TRACKING_PREFIXES = ['/??/groups/*/content/*',]
