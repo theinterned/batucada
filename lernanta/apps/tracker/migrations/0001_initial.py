@@ -8,22 +8,23 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Visitor'
-        db.create_table('tracker_visitor', (
-            ('session', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['sessions.Session'], unique=True, null=True, primary_key=True)),
+        # Adding model 'PageView'
+        db.create_table('tracker_pageview', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('session_key', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('session_start', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, db_index=True, blank=True)),
+            ('access_time', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, db_index=True, blank=True)),
             ('request_url', self.gf('django.db.models.fields.CharField')(max_length=755, db_index=True)),
             ('referrer_url', self.gf('django.db.models.fields.URLField')(db_index=True, max_length=200, null=True, blank=True)),
             ('ip_address', self.gf('django.db.models.fields.IPAddressField')(max_length=15, null=True, blank=True)),
         ))
-        db.send_create_signal('tracker', ['Visitor'])
+        db.send_create_signal('tracker', ['PageView'])
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Visitor'
-        db.delete_table('tracker_visitor')
+        # Deleting model 'PageView'
+        db.delete_table('tracker_pageview')
 
 
     models = {
@@ -63,19 +64,14 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'sessions.session': {
-            'Meta': {'object_name': 'Session', 'db_table': "'django_session'"},
-            'expire_date': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True'}),
-            'session_data': ('django.db.models.fields.TextField', [], {}),
-            'session_key': ('django.db.models.fields.CharField', [], {'max_length': '40', 'primary_key': 'True'})
-        },
-        'tracker.visitor': {
-            'Meta': {'object_name': 'Visitor'},
+        'tracker.pageview': {
+            'Meta': {'object_name': 'PageView'},
+            'access_time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'db_index': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'ip_address': ('django.db.models.fields.IPAddressField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
             'referrer_url': ('django.db.models.fields.URLField', [], {'db_index': 'True', 'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'request_url': ('django.db.models.fields.CharField', [], {'max_length': '755', 'db_index': 'True'}),
-            'session': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['sessions.Session']", 'unique': 'True', 'null': 'True', 'primary_key': 'True'}),
-            'session_start': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'db_index': 'True', 'blank': 'True'}),
+            'session_key': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         }
     }
