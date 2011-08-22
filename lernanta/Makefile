@@ -12,7 +12,7 @@ APPS=$(notdir $(shell find apps -mindepth 1 -maxdepth 1 -type d -print))
 
 # Clean up.
 clean : tidy
-	rm -f lernanta.db lernanta.log
+	@rm -f lernanta.db lernanta.log
 
 # Prepares existing .po for localizations and compiles them
 # Public domain
@@ -38,8 +38,15 @@ syncdb :
 
 # Run tests.
 test :
-	FORCE_DB=1 ${MANAGE} test
+	@FORCE_DB=1 ${MANAGE} test
+
+# Run tests with coverage.
+test_coverage :
+	@rm -rf htmlcov
+	@FORCE_DB=1 coverage run --include ${PWD}'/*.py' manage.py test || true
+	@coverage html
+	@${PYTHON} -c '__import__("webbrowser").open_new("file://$(PWD)/htmlcov/index.html")' > /dev/null
 
 # Tidy up by removing .pyc files.
 tidy :
-	rm -f `find . -name '*.pyc'` `find . -name '*~'`
+	@rm -rf htmlcov `find . -name '*.pyc'` `find . -name '*~'`
