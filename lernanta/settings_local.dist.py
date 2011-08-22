@@ -114,7 +114,7 @@ BADGE_IMAGES_URL = 'images/pilotbadges/'
 INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved',
     'math-future', 'license', 'contact-us', 'values', 'privacy',
     'terms-of-use', 'news', 'create-draft-course', 'create-draft-course-panel',
-    'supporters', 'about-p2pu', 'tag', 'tags',)
+    'supporters', 'about-p2pu', 'tag', 'tags','school-of-ed',)
 
 # Pagination
 PAGINATION_DEFAULT_ITEMS_PER_PAGE = 20
