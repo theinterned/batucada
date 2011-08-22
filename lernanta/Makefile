@@ -40,6 +40,11 @@ syncdb :
 test :
 	@FORCE_DB=1 ${MANAGE} test
 
+# Runs pep8 and pyflakes
+check_code :
+	@-pep8 --exclude migrations .
+	@pyflakes apps/ |grep -v migrations
+
 # Run tests with coverage.
 test_coverage :
 	@rm -rf htmlcov
