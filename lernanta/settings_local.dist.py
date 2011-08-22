@@ -127,3 +127,6 @@ MOZBADGES = {
     # method for getting badges for a user. Called with user object.
     'badge_getter': 'badges.models.get_awarded_badges',
 }
+
+# Statistics permissions
+STATISTICS_COURSE_CAN_VIEW_CSV = ('kfasimpaur')
