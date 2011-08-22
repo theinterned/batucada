@@ -8,7 +8,7 @@ endif
 MANAGE=${PYTHON} manage.py
 
 # List all installed applications
-APPS=$(notdir $(shell find apps -type d -mindepth 1 -maxdepth 1 -print))
+APPS=$(notdir $(shell find apps -mindepth 1 -maxdepth 1 -type d -print))
 
 # Clean up.
 clean : tidy
