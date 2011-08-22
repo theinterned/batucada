@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-15 08:48-0400\n"
+"POT-Creation-Date: 2011-08-22 18:44-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1848,10 +1848,6 @@ msgstr "Objetivos de Aprendizaje"
 #: templates/projects/imported_detailed_description.html:15
 msgid "Prerequisites"
 msgstr "Prerequisitos"
-
-#: templates/projects/imported_detailed_description.html:21
-msgid "Sign-Up Task"
-msgstr "Tarea de Inscripción"
 
 #: templates/projects/project.html:23
 #: templates/projects/project_task_list.html:21
