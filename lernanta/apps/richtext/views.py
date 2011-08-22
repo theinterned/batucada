@@ -40,7 +40,7 @@ def get_file_browse_urls(user=None):
 
     for root, dirs, filenames in os.walk(browse_path):
         for filename in [os.path.join(root, x) for x in filenames]:
-            files.append((get_media_url(filename), filename[len(browse_path) + 1:]))
+            files.append((get_media_url(filename), filename[len(browse_path):]))
 
     return files
 

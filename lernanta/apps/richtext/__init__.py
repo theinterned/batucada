@@ -63,7 +63,7 @@ RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 
 
 REDUCED_ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'title'],
+    'a': ['href', 'title', 'name'],
 }
 
 RICH_ALLOWED_ATTRIBUTES = REDUCED_ALLOWED_ATTRIBUTES.copy()
