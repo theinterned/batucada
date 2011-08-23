@@ -2,8 +2,9 @@ import logging
 import datetime
 
 from django import http
+from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
@@ -606,3 +607,26 @@ def user_list(request, slug):
         prefix='followers_'))
     return render_to_response('projects/project_user_list.html', context,
         context_instance=RequestContext(request))
+
+@login_required
+@organizer_required
+def export_detailed_csv(request, slug):
+    """Display detailed CSV for certain users."""
+    if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
+        response = http.HttpResponse(mimetype='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    
+        csv_data = (
+            ('First row', 'Foo', 'Bar', 'Baz'),
+            ('Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"),
+        )
+    
+        t = loader.get_template('projects/reports/detailed_csv.txt')
+        c = Context({
+            'data': csv_data,
+        })
+        response.write(t.render(c))
+        return response
+    else:
+        response = http.HttpResponseForbidden("Sorry, you don't have access.")
+        return response

@@ -75,4 +75,7 @@ urlpatterns = patterns('',
   url(r'^(?P<slug>[\w-]+)/admin/metrics_detail/$',
       'projects.views.admin_metrics_detail',
       name='projects_admin_metrics_detail'),
+  url(r'^(?P<slug>[\w-]+)/admin/export_detailed_csv/$',
+      'projects.views.export_detailed_csv',
+      name='projects_admin_export_detailed_csv'),
 )
