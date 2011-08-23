@@ -617,12 +617,21 @@ def user_list(request, slug):
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
     if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
+        project = get_object_or_404(Project, slug=slug)
         response = http.HttpResponse(mimetype='text/csv')
         response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
-    
+
         csv_data = (
-            ('First row', 'Foo', 'Bar', 'Baz'),
-            ('Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"),
+            (project.name, ' ', ' ', ' ', ' ', ' ', ' ', ' '),
+            ('Report updated: August 3 2011', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
+            ('Users', 'August 1 2011', ' ', ' ', 'Create a study group or course', 'Design great tasks', 'TOTAL', ' '),
+            (' ', 'Time on course pages', 'Number of comments', 'Number of task edits', 'Min. on page', 'Min. on page', 'Time on course pages', 'Number of comments'),
+            ('Participants', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
+            ('username1', '3', '0', '1', '2', '1', '3', '9'),
+            ('username2', '1', '0', '1', '3', '2', '3', '9'),
+            ('Non-participants', ' ', ' ', ' ', ' ', ' ', ' ', '9'),
+            ('username70', '1', '--', '--', '1', '0', '1', '9'),
+            ('anonymizedip', '1', '--', '--', '1', '0', '1', '9')
         )
     
         t = loader.get_template('projects/reports/detailed_csv.txt')
