@@ -4,11 +4,15 @@
   <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/datatables/media/css/demo_page.css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/datatables/media/css/demo_table.css">
  {% endblock %}
- 
+
 {% block form %}
 <div style="overflow: auto; padding: 1em; min-height: 10em;">
-<h3>{{ _('Organizer Quick View') }} {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser%}(<a href="export_as_csv">{{ _('export data') }} &raquo;</a>) {% endif %}</h3>
-<p><i>{{ _('This table shows the overview of participant data. ') }} {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.</i>') }} {% endif %}</p>
+<h3>{{ _('Organizer Quick View') }} 
+    {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser%}
+        (<a href="{% locale_url projects_admin_export_detailed_csv slug=project.slug %}">{{ _('export data') }} &raquo;</a>) 
+    {% endif %}</h3>
+<p><i>{{ _('This table shows the overview of participant data. ') }} 
+    {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.</i>') }} {% endif %}</p>
 
 <div id="demo">
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
