@@ -17,35 +17,26 @@ ADMIN_PROJECT_CREATE_EMAIL = tuple()
 
 DATABASES = {
 
-    # Uncomment the following lines to run with MySQL.
+    # Uncomment the following lines to run on SQLite for development.
     'default': {
-        'NAME': 'lernanta',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'lernanta',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'lernanta.db',
+        'USER': '',
         'PASSWORD': '',
         'HOST': '',  # An empty string means localhost.
-        'PORT': '',  # An empty string means the default port.
-        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+        'PORT': ''  # An empty string means the default port.
     },
 
-    # Uncomment the following lines to run with SQLite.
+    # Uncomment the following lines to run with MySQL.
+    # Remember to also comment the previous section which enables SQLite.
 #    'default': {
-#        'NAME': 'lernanta.db',
-#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': 'lernanta',
+#        'ENGINE': 'django.db.backends.mysql',
 #        'USER': 'lernanta',
 #        'PASSWORD': '',
-#        'HOST': '',
-#        'PORT': ''
-#    },
-
-    # Uncomment the following lines to run on SQLite for development.
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': 'lernanta.db',
-#        'USER': '',
-#        'PASSWORD': '',
 #        'HOST': '',  # An empty string means localhost.
-#        'PORT': ''  # An empty string means the default port.
+#        'PORT': '',  # An empty string means the default port.
+#        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
 #    },
 
     # Uncomment the following lines to enable integration
