@@ -544,8 +544,11 @@ def edit_status(request, slug):
 @organizer_required
 def admin_metrics(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    participants = project.non_organizer_participants()
+    
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
+            'participants': participants,
             'metrics_tab': True,
     }, context_instance=RequestContext(request))
 
@@ -607,6 +610,7 @@ def user_list(request, slug):
         prefix='followers_'))
     return render_to_response('projects/project_user_list.html', context,
         context_instance=RequestContext(request))
+
 
 @login_required
 @organizer_required

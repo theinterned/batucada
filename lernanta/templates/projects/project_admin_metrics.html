@@ -7,7 +7,7 @@
 
 {% block form %}
 <div style="overflow: auto; padding: 1em; min-height: 10em;">
-<h3>{{ _('Organizer Quick View') }} 
+<h3>{{ _('Organizer Quick View') }}
     {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser%}
         (<a href="{% locale_url projects_admin_export_detailed_csv slug=project.slug %}">{{ _('export data') }} &raquo;</a>) 
     {% endif %}</h3>
@@ -15,92 +15,38 @@
     {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.</i>') }} {% endif %}</p>
 
 <div id="demo">
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+  <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
     <thead style="background-color: #eee;">
-        <tr>
-            <th>Participants</th>
-            <th>Last Login Date</th>
-            <th>Total # of Comments*</th>
-            <th>Total Min. Logged In</th>
-        </tr>
+      <tr>
+        <th>{{ _('Participant') }}</th>
+        <th>{{ _('Last Active Date') }} <sup>1</sup></th>
+        <th>{{ _('Total # of Comments') }} <sup>2</sup></th>
+        <th>{{ _('Total Min. Logged In') }} <sup>3</sup></th>
+      </tr>
     </thead>
     <tbody>
-
-        <tr>
-            <td>username1</td>
-            <td>2011-08-05</td>
-            <td class="center">5</td>
-            <td class="center">1</td>
-        </tr>
-        <tr>
-            <td>username2</td>
-            <td>2011-08-01</td>
-            <td class="center">0</td>
-            <td class="center">2</td>
-
-        </tr>
-        <tr>
-            <td>username3</td>
-            <td>2011-07-31</td>
-            <td class="center">4</td>
-            <td class="center">2</td>
-        </tr>
-        <tr>
-            <td>username4</td>
-            <td>2011-08-02</td>
-            <td class="center">1</td>
-            <td class="center">2</td>
-        </tr>
-        <tr>
-            <td>username5</td>
-            <td>2011-08-02</td>
-            <td class="center">0</td>
-            <td class="center">3</td>
-        </tr>
-        <tr>
-            <td>username6</td>
-            <td>2011-08-03</td>
-            <td class="center">1</td>
-            <td class="center">1</td>
-        </tr>
-        <tr>
-            <td>username7</td>
-            <td>2011-07-30</td>
-            <td class="center">0</td>
-            <td class="center">0</td>
-        </tr>
-        <tr>
-            <td>username17</td>
-            <td>2011-08-01</td>
-            <td class="center">0</td>
-            <td class="center">0</td>
-        </tr>
+	{% for participant in participants %}
+	  <tr><td>{{ participant.user.username }}</td><td>{{ participant.user.last_active }}</td><td class="center"></td><td class="center"></td></tr>
+	 {% endfor %}
     </tbody>
     <tfoot style="background-color: #eee;">
-        <tr>
-            <th>Participants</th>
-            <th>Last Login Date</th>
-            <th>Total # of Comments*</th>
-            <th>Total Min. Logged In</th>
-        </tr>
+      <tr>
+        <th>{{ _('Participant') }}</th>
+        <th>{{ _('Last Active Date') }} <sup>1</sup></th>
+        <th>{{ _('Total # of Comments') }} <sup>2</sup></th>
+        <th>{{ _('Total Min. Logged In') }} <sup>3</sup></th>
+      </tr>
     </tfoot>
-</table>
-<p style="clear:both;"><i>* includes comments on wall and task pages</i></p>
+  </table>
+
+  <p class="hint">
+    <sup>1</sup> {{ _('Active on the site.') }}<br>
+    <sup>2</sup> {{ _('Includes comments on wall and task pages.') }}<br>
+    <sup>3</sup> {{ _('Total of time spent on this course\'s pages.') }}
+  </p>
+
 </div>
 
-
-
-<a href="{% locale_url projects_admin_metrics_detail slug=project.slug %}">Activity as a Graph &raquo;</a>
-<!-- 
-
-organizer data is optional to karen
-start showing data as soon as we start having it and stop showing data when there's no more data (ignore course end date)
-
-- participants (with user names, at least for admins/facilitators)
-- followers (with user names, at least for admins/facilitators)
-- non-participants (and you can decide whether to break this into logged in and not logged in)
-
- -->
 <div style="display: none;">
 <table>
 	<tr>
