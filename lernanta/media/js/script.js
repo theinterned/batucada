@@ -319,6 +319,9 @@ $(document).ready(function() {
     }
 
     prettyPrint();
+    $('.richtext_section').each(function(index, value) {
+       AMprocessNode(value);
+    });
 
     // disable submit button on form submit
     $('form').submit(function(){
