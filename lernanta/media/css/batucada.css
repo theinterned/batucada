@@ -310,7 +310,9 @@ form .small {
     margin-bottom: 1.5em;
     display: block;
 	}	
-
+.clear {
+	clear: both;
+	}
 .start_date input, 
 .end_date input {
     width: 7em !important;
