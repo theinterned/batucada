@@ -25,6 +25,16 @@ class PageViewTrackerMiddleware:
                 pageview.request_url = request.path
                 pageview.referrer_url = utils.u_clean(request.META.get('HTTP_REFERER', 'unknown')[:255])
 
+                try:
+                    oldpageview = PageView.objects.filter(session_key = request.session.session_key).order_by('-access_time')[0]
+                except IndexError, error:
+                    pass
+                else:
+                    time_on_page = (datetime.datetime.now() - oldpageview.access_time)
+                    if time_on_page.seconds < 3600 and time_on_page.days == 0:
+                        oldpageview.time_on_page = time_on_page.seconds
+                        oldpageview.save()
+
             else:
                 log.debug('Not tracking request to: %s' % request.path)
                 return
