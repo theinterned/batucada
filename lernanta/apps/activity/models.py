@@ -152,9 +152,17 @@ class Activity(ModelBase):
     def comment_notification_recipients(self, comment):
         if self.scope_object:
             from users.models import UserProfile
-            user_ids = self.scope_object.participants().filter(
-                no_wall_updates=False).values('user__id')
-            return UserProfile.objects.filter(id__in=user_ids)
+            participants = self.scope_object.participants()
+            from_organizer = self.scope_object.organizers().filter(
+                user=comment.author).exists()
+            if from_organizer:
+                participants = participants.filter(
+                    no_organizers_wall_updates=False)
+            else:
+                participants = participants.filter(
+                    no_participants_wall_updates=False)
+            return UserProfile.objects.filter(
+                id__in=participants.values('user__id'))
         else:
             recipients = {self.actor.username: self.actor}
             while comment.reply_to:

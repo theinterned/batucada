@@ -6,7 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2011-08-28 15:25-0400\n"
+=======
+"POT-Creation-Date: 2011-08-31 12:06-0400\n"
+>>>>>>> master
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,30 +198,30 @@ msgstr "Esa contraseña es muy común. Por favor elija otra."
 msgid "Passwords do not match."
 msgstr "Las contraseñas no coinciden."
 
-#: apps/preferences/views.py:46
+#: apps/preferences/views.py:49
 msgid "Thank you, your settings have been saved."
 msgstr "Gracias, su configuración ha sido guardada."
 
-#: apps/preferences/views.py:69
+#: apps/preferences/views.py:70
 msgid "Email updated"
 msgstr "Correo actualizado"
 
-#: apps/preferences/views.py:93
+#: apps/preferences/views.py:94
 msgid "Password updated"
 msgstr "Contraseña actualizada"
 
-#: apps/preferences/views.py:97 apps/users/views.py:260
+#: apps/preferences/views.py:98 apps/users/views.py:260
 #: apps/users/views.py:399
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
 "Hay errores en este formulario. Por favor corríjalos e intente nuevamente."
 
-#: apps/preferences/views.py:117
+#: apps/preferences/views.py:118
 #, python-format
 msgid "You are the only organizer of %s active "
 msgstr "Usted es el único organizador de %s "
 
-#: apps/preferences/views.py:118
+#: apps/preferences/views.py:119
 msgid "study groups, courses, ..."
 msgstr "grupos de estudio, cursos, ... activos."
 
@@ -721,6 +725,7 @@ msgstr "Usted no terminó de crear su cuenta la última vez."
 msgid "Please register a new account."
 msgstr "Por favor cree una nueva cuenta."
 
+<<<<<<< HEAD
 #: apps/users/models.py:128
 msgid "Anonym"
 msgstr "Anónimo"
@@ -734,6 +739,21 @@ msgid "(participating)"
 msgstr "(participando)"
 
 #: apps/users/models.py:178
+=======
+#: apps/users/models.py:126
+msgid "Anonym"
+msgstr "Anónimo"
+
+#: apps/users/models.py:170
+msgid "(organizing)"
+msgstr "(organizando)"
+
+#: apps/users/models.py:173
+msgid "(participating)"
+msgstr "(participando)"
+
+#: apps/users/models.py:176
+>>>>>>> master
 msgid "(following)"
 msgstr "(siguiendo)"
 
@@ -1100,17 +1120,29 @@ msgstr "Entrar"
 msgid "Home"
 msgstr "Inicio"
 
+<<<<<<< HEAD
 #: templates/base.html:161 templates/drumbeatmail/base.html:52
+=======
+#: templates/base.html:160 templates/drumbeatmail/base.html:52
+>>>>>>> master
 #: templates/projects/contact_organizers.html:49
 #: templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
+<<<<<<< HEAD
 #: templates/base.html:180
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-es.js"
 
 #: templates/base.html:182
+=======
+#: templates/base.html:179
+msgid "jquery.ui.datepicker-en.js"
+msgstr "jquery.ui.datepicker-es.js"
+
+#: templates/base.html:181
+>>>>>>> master
 msgid "js/script-en.js"
 msgstr "js/script-es.js"
 
@@ -1214,7 +1246,7 @@ msgstr "¿Está seguro que desea borrar esta actividad?"
 #: templates/users/profile_edit_main.html:25
 #: templates/users/settings_delete.html:25
 #: templates/users/settings_email.html:18
-#: templates/users/settings_notifications.html:45
+#: templates/users/settings_notifications.html:77
 #: templates/users/settings_password.html:27
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1382,7 +1414,7 @@ msgstr "Actualización menor (no se publica en el muro)."
 #: templates/signups/edit_signup.html:32
 #: templates/users/profile_edit_main.html:26
 #: templates/users/settings_email.html:19
-#: templates/users/settings_notifications.html:46
+#: templates/users/settings_notifications.html:78
 #: templates/users/settings_password.html:28
 msgid "Save"
 msgstr "Guardar"
@@ -1847,10 +1879,6 @@ msgstr "Objetivos de Aprendizaje"
 #: templates/projects/imported_detailed_description.html:15
 msgid "Prerequisites"
 msgstr "Prerequisitos"
-
-#: templates/projects/imported_detailed_description.html:21
-msgid "Sign-Up Task"
-msgstr "Tarea de Inscripción"
 
 #: templates/projects/project.html:23
 #: templates/projects/project_task_list.html:21
@@ -3465,25 +3493,35 @@ msgstr ""
 "Alguien comience a seguir uno de los grupos de estudio, cursos, ... que "
 "estoy organizando."
 
-#: templates/users/settings_notifications.html:34
-msgid "The wall of "
-msgstr "Un mensaje para el grupo de estudio "
+#: templates/users/settings_notifications.html:31
+msgid "An organizer posts or replies to a message on the wall of:"
+msgstr "Un organizador publique o responda un mensaje en el muro de:"
 
-#: templates/users/settings_notifications.html:34
+#: templates/users/settings_notifications.html:41
+msgid "A participant posts or replies to a message on the wall of:"
+msgstr "Un participante publique o responda un mensaje en el muro de:"
+
+#: templates/users/settings_notifications.html:51
 msgid ""
-" is updated (this setting does not include important updates for which "
-"notifications can not be turn off)."
+"An organizer creates, edits, or posts new comments on a task or page of:"
 msgstr ""
-" está actualizado (esta configuración no incluye actualiaciones importante, "
-"cuyas notificaciones no pueden desactivarse)."
+"Un organizador cree, edite o publique nuevos comentarios en una tarea o "
+"página de:"
 
-#: templates/users/settings_notifications.html:40
-msgid "The content (e.g. tasks, comments, ...) of "
-msgstr "El contenido (e.g. tareas, comentarios, ...) de "
+#: templates/users/settings_notifications.html:62
+msgid ""
+"A participant creates, edits, or posts new comments on a task or page of:"
+msgstr ""
+"Un participante cree, edite o publique nuevos comentarios en una tarea o "
+"página de:"
 
-#: templates/users/settings_notifications.html:40
-msgid " is updated."
-msgstr " sea actualizado."
+#: templates/users/settings_notifications.html:73
+msgid ""
+"Does not include important updates for which notifications can not be turn "
+"off."
+msgstr ""
+"No incluye actualizaciones importantes para las cuales las notificaciones no "
+"pueden desactivarse."
 
 #: templates/users/sidebar.html:24
 msgid "Private Message"

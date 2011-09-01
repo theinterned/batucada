@@ -34,9 +34,9 @@ def replace(match):
             embedly_key = getattr(settings, 'EMBEDLY_KEY', False)
             if embedly_key:
                 client = Embedly(embedly_key)
-                obj = client.oembed(url)
+                obj = client.oembed(url, maxwidth=460)
                 embedded_url = EmbeddedUrl(original_url=obj.original_url,
-                    html=obj.html, extra_data=obj.dict)
+                    html=(obj.html or ''), extra_data=obj.dict)
                 embedded_url.save()
         if embedded_url and embedded_url.html:
             return embedded_url.html
@@ -51,6 +51,6 @@ def embed(html):
     """Finds Slideshare [slideshare: ...] tags, and replace them
     with an embeddable HTML snippet.
     """
-    return re.sub(EMBED_RE, replace, html)
+    return '<div class="richtext_section">%s</div>' % re.sub(EMBED_RE, replace, html)
 
 embed.is_safe = True  # Don't escape HTML
