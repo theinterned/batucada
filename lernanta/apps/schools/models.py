@@ -29,8 +29,7 @@ class School(ModelBase):
         null=True, blank=True)
     featured = models.ManyToManyField('projects.Project',
         related_name='school_featured', null=True, blank=True)
-    declined = models.ManyToManyField('projects.Project',
-        related_name='school_declined', null=True, blank=True)
+
     logo = models.ImageField(upload_to=determine_image_upload_path, null=True,
                               storage=storage.ImageStorage(), blank=True)
     groups_icon = models.ImageField(upload_to=determine_image_upload_path,
@@ -39,6 +38,7 @@ class School(ModelBase):
         null=True, storage=storage.ImageStorage(), blank=True)
     site_logo = models.ImageField(upload_to=determine_image_upload_path,
         null=True, storage=storage.ImageStorage(), blank=True)
+
     headers_color = models.CharField(max_length=7, default='#5a6579')
     headers_color_light = models.CharField(max_length=7, default='#f08c00')
     background_color = models.CharField(max_length=7, default='#ffffff')
@@ -50,7 +50,11 @@ class School(ModelBase):
         default='#4cebe2')
     license_info_footnote_color = models.CharField(max_length=7,
         default='#ffde00')
+
     sidebar_width = models.CharField(max_length=5, default='245px')
+    show_school_organizers = models.BooleanField(default=True)
+
+    extra_styles = models.TextField()
 
     # The term names are used to import school courses from the old site.
     OLD_TERM_NAME_CHOICES = YEAR_IN_SCHOOL_CHOICES = (

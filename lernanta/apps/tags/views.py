@@ -23,8 +23,7 @@ def list_tagged_all(request, tag_slug):
     projects = Project.objects.filter(not_listed=False,
         tags__slug=tag_slug).order_by('name')
     if school:
-        projects = projects.filter(school=school).exclude(
-            id__in=school.declined.values('id'))
+        projects = projects.filter(school=school)
     context = {
         'tagged': projects,
         'tag': tag,

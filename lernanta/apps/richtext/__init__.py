@@ -63,7 +63,7 @@ RICH_ALLOWED_TAGS = REDUCED_ALLOWED_TAGS + ('h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 
 
 REDUCED_ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'title', 'name'],
+    'a': ['href', 'title', 'name', 'class', 'target'],
 }
 
 RICH_ALLOWED_ATTRIBUTES = REDUCED_ALLOWED_ATTRIBUTES.copy()
@@ -77,6 +77,7 @@ RICH_ALLOWED_ATTRIBUTES.update({
     'span': ['style'],
     'pre': ['class'],
     'code': ['class'],
+    'h1': ['class'],
 })
 
 

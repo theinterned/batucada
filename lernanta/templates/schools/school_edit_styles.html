@@ -6,6 +6,22 @@
 <fieldset id="school_edit_styles" class="school edit styles tabpane">
 <form action="{% locale_url schools_edit_styles slug=school.slug %}" method="post">
   {% csrf_token %}
+  <h2>{{ _('Sidebar') }}</h2>
+  <div class="field{% if form.show_school_organizers.errors %} error{% endif %}">
+    <label for="id_show_school_organizers">
+      {{ form.show_school_organizers }}
+      {{ _('Show School Organizers.') }}
+    </label>
+    <span class="hint block">{{ _('Hide the list of school organizers if you don\'t want it to appear on the school home page sidebar.') }}</span>
+    {{ form.show_school_organizers.errors }}
+  </div>
+  <div class="field{% if form.sidebar_width.errors %} error{% endif %}">
+    <label for="id_sidebar_width">{{ _('Width') }}</label>
+    <span class="hint block">{{ _('Update this value so the school logo fits nicelly on the school home page sidebar.') }}</span>
+    {{ form.sidebar_width }}
+    {{ form.sidebar_width.errors }}
+  </div>
+  <h2>{{ _('Colors') }}</h2>
   <div class="field{% if form.headers_color.errors %} error{% endif %}">
     <div id="headers_colorpicker"></div>    
     <label for="id_headers_color">{{ _('Headers Color') }}</label>
@@ -63,11 +79,11 @@
     {{ form.license_info_footnote_color.errors }}
   </div>
   <br>
-  <div class="field{% if form.sidebar_width.errors %} error{% endif %}">
-    <label for="id_sidebar_width">{{ _('Sidebar Width') }}</label>
-    <span class="hint block">{{ _('You should update this value so the school logo fits nicelly on the school home page sidebar.') }}</span>
-    {{ form.sidebar_width }}
-    {{ form.sidebar_width.errors }}
+  <div class="field extra_styles{% if form.extra_styles.errors %} error{% endif %}">
+    <label for="id_extra_styles">{{ _('Custom Styles (Advanced)') }}</label>
+    <span class="hint block">{{ _('Customize CSS styles for the school home page and groups.') }}</span>
+    {{ form.extra_styles }}
+    {{ form.extra_styles.errors }}
   </div>
   <p class="buttons">
     <a class="button" href="{{ school.get_absolute_url }}">{{ _('Cancel') }}</a>
