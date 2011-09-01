@@ -1,4 +1,5 @@
-{% extends "projects/project_edit.html" %} {% load l10n_tags %}
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
 
 {% block css %}
   <link rel="stylesheet" href="{{ MEDIA_URL }}js/libs/datatables/media/css/demo_page.css">
@@ -8,11 +9,11 @@
 {% block form %}
 <div style="overflow: auto; padding: 1em; min-height: 10em;">
 <h3>{{ _('Organizer Quick View') }}
-    {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser%}
+    {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser %}
         (<a href="{% locale_url projects_admin_export_detailed_csv slug=project.slug %}">{{ _('export data') }} &raquo;</a>) 
     {% endif %}</h3>
 <p><i>{{ _('This table shows the overview of participant data. ') }} 
-    {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.</i>') }} {% endif %}</p>
+    {% if user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or user.is_superuser %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.') }} {% endif %}</i></p>
 
 <div id="demo">
   <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -20,29 +21,32 @@
       <tr>
         <th>{{ _('Participant') }}</th>
         <th>{{ _('Last Active Date') }} <sup>1</sup></th>
-        <th>{{ _('Total # of Comments') }} <sup>2</sup></th>
-        <th>{{ _('Total Min. Logged In') }} <sup>3</sup></th>
+        <th>{{ _('Comments') }} <sup>2</sup></th>
+        <th>{{ _('Page Views') }} <sup>3</sup></th>
+        <th>{{ _('Time on Course Pages') }} <sup>4</sup></th>
       </tr>
     </thead>
     <tbody>
 	{% for participant in participants %}
-	  <tr><td>{{ participant.user.username }}</td><td>{{ participant.user.last_active }}</td><td class="center"></td><td class="center"></td></tr>
-	 {% endfor %}
+	  <tr><td>{{ participant.user.username }}</td><td>{{ participant.user.last_active }}</td><td class="center"></td><td class="center"></td><td class="center"></td></tr>
+	{% endfor %}
     </tbody>
     <tfoot style="background-color: #eee;">
       <tr>
         <th>{{ _('Participant') }}</th>
         <th>{{ _('Last Active Date') }} <sup>1</sup></th>
-        <th>{{ _('Total # of Comments') }} <sup>2</sup></th>
-        <th>{{ _('Total Min. Logged In') }} <sup>3</sup></th>
+        <th>{{ _('Comments') }} <sup>2</sup></th>
+        <th>{{ _('Page Views') }} <sup>3</sup></th>
+        <th>{{ _('Time on Course Pages') }} <sup>4</sup></th>
       </tr>
     </tfoot>
   </table>
 
   <p class="hint clear">
     <sup>1</sup> {{ _('Active on the site.') }}<br>
-    <sup>2</sup> {{ _('Includes comments on wall and task pages.') }}<br>
-    <sup>3</sup> {{ _('Total of time spent on this course\'s pages. If it's been over an hour since the person last accessed a page in that session, then that time is invalid and not stored.') }}
+    <sup>2</sup> {{ _('Total includes comments on wall and task pages.') }}<br>
+    <sup>3</sup> {{ _('Total number of views of course\'s pages.') }}<br>
+    <sup>4</sup> {{ _('Total time (in minutes) spent on this course\'s pages. If it\'s been over an hour since the person last accessed a page in that session, then that time is invalid and not stored.') }}
   </p>
 
 </div>
