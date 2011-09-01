@@ -88,4 +88,8 @@ Finally, start the development server to take it for a spin. You can register a 
 
    python manage.py runserver 
 
+In order for the server to be accessible from another host. ::
+
+   python manage.py runserver 0.0.0.0:8000
+
 Once you have your development environment running, you can make changes or get the latest from github. See the wiki for more information: https://github.com/p2pu/lernanta/wiki
