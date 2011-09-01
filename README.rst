@@ -74,12 +74,6 @@ To be extra sure you're working from a clean slate, you might find it helps to d
 
     ./sh/rmpyc
 
-If the mysql database doesn't exist yet, create it. You need to `create the user`_ you'll use. You will use the database name, user, and password in the next file (settings_local.py) ::
-
-   mysqladmin -u <user> -p create <database name>
-
-.. _create the user: http://www.debuntu.org/how-to-create-a-mysql-database-and-set-privileges-to-a-user
-
 Create a ``settings_local.py`` based on the template provided in the checkout. Edit the database parameters as needed ::
 
    cp settings_local.dist.py settings_local.py
