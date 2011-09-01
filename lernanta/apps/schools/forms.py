@@ -22,7 +22,8 @@ class SchoolStylesForm(forms.ModelForm):
         fields = ('headers_color', 'headers_color_light', 'background_color',
             'menu_color', 'menu_color_light', 'sidebar_width',
             'about_us_footnote_color', 'contact_us_footnote_color',
-            'license_info_footnote_color')
+            'license_info_footnote_color', 'show_school_organizers',
+            'extra_styles',)
 
 
 class SchoolLogoForm(forms.ModelForm):
@@ -124,31 +125,6 @@ class SchoolAddFeaturedForm(forms.Form):
                 'kind': project.kind.lower()})
         if self.school.featured.filter(slug=slug).exists():
             msg = _('The %(slug)s %(kind)s is already featured.')
-            raise forms.ValidationError(msg % {'slug': slug,
-                'kind': project.kind.lower()})
-        return project
-
-
-class SchoolAddDeclinedForm(forms.Form):
-    project = forms.CharField()
-
-    def __init__(self, school, *args, **kwargs):
-        super(SchoolAddDeclinedForm, self).__init__(*args, **kwargs)
-        self.school = school
-
-    def clean_project(self):
-        slug = self.cleaned_data['project']
-        msg = _('There is no study group, course, ... with short name: %s.')
-        try:
-            project = Project.objects.get(slug=slug)
-        except Project.DoesNotExist:
-            raise forms.ValidationError(msg % slug)
-        if project.school != self.school:
-            msg = _('The %(slug)s %(kind)s is not part of this school.')
-            raise forms.ValidationError(msg % {'slug': slug,
-                'kind': project.kind.lower()})
-        if self.school.declined.filter(slug=slug).exists():
-            msg = _('The %(slug)s %(kind)s was already declined.')
             raise forms.ValidationError(msg % {'slug': slug,
                 'kind': project.kind.lower()})
         return project

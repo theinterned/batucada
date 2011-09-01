@@ -44,11 +44,11 @@
 </section>
 {% endif %}
 
-{% if new %}
+{% if new_groups %}
 <section id="new_projects">
   <h1><span>{{ _('New') }}</span></h1>
   <ul class="project-list">
-    {% for project in new %}
+    {% for project in new_groups %}
       <li>{% include "projects/_project_card.html" %}</li>
     {% endfor %}
   </ul>

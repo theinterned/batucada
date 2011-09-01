@@ -8,13 +8,17 @@
 {% block links %}<link rel="stylesheet" href="{% locale_url multiple_schools_css %}?v=1">{% endblock %}
 
 {% block breadcrumbs %}
+  {% if school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+  {% endif %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  <a href="{% locale_url projects_gallery %}{% if school %}?school={{ school.slug }}{% endif %}">{{ _('Learn') }}</a>
 {% endblock %}
 {% block breadcrumbs_actions %}
-  <a class="button" href="{% locale_url projects_directory %}">{{ _('View All') }}</a>
+  <a class="button" href="{% locale_url projects_directory %}{% if school %}?school={{ school.slug }}{% endif %}">{{ _('View All') }}</a>
   {% if user.is_authenticated %}
-    <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+    {% if not school %}<a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>{% endif %}
   {% endif %}
 {% endblock %}
 
@@ -22,6 +26,6 @@
 <div id="main">
 <h1>{{ _('Browse') }}</h1>
 <br><br>
-{% project_list %}
+{% project_list school %}
 </div>
 {% endblock %}

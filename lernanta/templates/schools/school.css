@@ -62,3 +62,5 @@ footer[role="main"] ul[role="license-info"] > li a {
   background-color: {{ school.license_info_footnote_color }};
 }
 
+{{ school.extra_styles|safe }}
+

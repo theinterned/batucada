@@ -52,8 +52,7 @@ class ProjectManager(caching.base.CachingManager):
                 target_project__not_listed=False,
                 target_project__archived=False).order_by('-id__count')
             if school:
-                rels = rels.filter(target_project__school=school).exclude(
-                    target_project__id__in=school.declined.values('id'))
+                rels = rels.filter(target_project__school=school)
             if limit:
                 rels = rels[:limit]
             popular = [r['target_project'] for r in rels]
@@ -72,8 +71,7 @@ class ProjectManager(caching.base.CachingManager):
                 scope_object__archived=False).order_by('-created_on__max')
             if school:
                 activities = activities.filter(
-                    scope_object__school=school).exclude(
-                    scope_object__id__in=school.declined.values('id'))
+                    scope_object__school=school)
             if limit:
                 activities = activities[:limit]
             active = [a['scope_object'] for a in activities]
@@ -257,10 +255,8 @@ class Project(ModelBase):
                 [admin_email], fail_silently=True)
 
     def accepted_school(self):
-        school = self.school
-        if school and school.declined.filter(id=self.id).exists():
-            school = None
-        return school
+        # Used previously when schools had to decline groups.
+        return self.school
 
     @staticmethod
     def filter_activities(activities):

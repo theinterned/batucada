@@ -39,7 +39,14 @@ log = logging.getLogger(__name__)
 
 
 def project_list(request):
-    return render_to_response('projects/gallery.html', {},
+    school = None
+    project_list_url = reverse('projects_gallery')
+    if 'school' in request.GET:
+        try:
+            school = School.objects.get(slug=request.GET['school'])
+        except School.DoesNotExist:
+            return http.HttpResponseRedirect(project_list_url)
+    return render_to_response('projects/gallery.html', {'school': school},
                               context_instance=RequestContext(request))
 
 
@@ -53,8 +60,7 @@ def list_all(request):
             return http.HttpResponseRedirect(directory_url)
     projects = Project.objects.filter(not_listed=False).order_by('name')
     if school:
-        projects = projects.filter(school=school).exclude(
-            id__in=school.declined.values('id'))
+        projects = projects.filter(school=school)
     context = {'school': school, 'directory_url': directory_url}
     context.update(get_pagination_context(request, projects, 24))
     return render_to_response('projects/directory.html', context,

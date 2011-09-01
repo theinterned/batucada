@@ -14,7 +14,7 @@
     <nav id="school-edit-nav" class="tabs">
       <ul>
 	    <li class="summary {% if summary_tab %}active{% endif %}"><a href="{% locale_url schools_edit slug=school.slug %}">{{ _('Summary') }}</a></li>
-        <li class="styles {% if styles_tab %}active{% endif %}"><a href="{% locale_url schools_edit_styles slug=school.slug %}">{{ _('Styles') }}</a></li>
+        <li class="styles {% if styles_tab %}active{% endif %}"><a href="{% locale_url schools_edit_styles slug=school.slug %}">{{ _('Appearance') }}</a></li>
         <li class="logo {% if logo_tab %}active{% endif %}"><a href="{% locale_url schools_edit_logo slug=school.slug %}">{{ _('Logo') }}</a></li>
         <li class="groups_icon {% if groups_icon_tab %}active{% endif %}"><a href="{% locale_url schools_edit_groups_icon slug=school.slug %}">{{ _('Groups Icon') }}</a></li>
         <li class="background {% if background_tab %}active{% endif %}"><a href="{% locale_url schools_edit_background slug=school.slug %}">{{ _('Background') }}</a></li>

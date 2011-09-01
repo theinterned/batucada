@@ -361,33 +361,6 @@ def edit_featured_delete(request, slug, project_slug):
 
 @login_required
 @school_organizer_required
-def edit_declined(request, slug):
-    school = get_object_or_404(School, slug=slug)
-    if request.method == 'POST':
-        form = school_forms.SchoolAddDeclinedForm(school, request.POST)
-        if form.is_valid():
-            project = form.cleaned_data['project']
-            school.declined.add(project)
-            school.save()
-            msg = _('The %s was declined for this school.')
-            messages.success(request, msg % project.kind.lower())
-            return http.HttpResponseRedirect(reverse('schools_edit_declined',
-                kwargs=dict(slug=school.slug)))
-        else:
-            msg = _("There was an error when declining %s membership.")
-            messages.error(request, msg % slug)
-    else:
-        form = school_forms.SchoolAddDeclinedForm(school)
-    return render_to_response('schools/school_edit_declined.html', {
-        'school': school,
-        'form': form,
-        'declined': school.declined.all(),
-        'declined_tab': True,
-    }, context_instance=RequestContext(request))
-
-
-@login_required
-@school_organizer_required
 def edit_membership(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
@@ -413,20 +386,6 @@ def edit_membership(request, slug):
     }, context_instance=RequestContext(request))
 
 
-def matching_non_declined(request, slug):
-    school = get_object_or_404(School, slug=slug)
-    if len(request.GET['term']) == 0:
-        raise http.Http404
-
-    school_projects = Project.objects.filter(school=school)
-    non_declined = school_projects.exclude(id__in=school.declined.values('id'))
-    matching_projects = non_declined.filter(
-        slug__icontains=request.GET['term'])
-    json = simplejson.dumps([project.slug for project in matching_projects])
-
-    return http.HttpResponse(json, mimetype="application/x-javascript")
-
-
 def matching_non_member(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
@@ -438,20 +397,6 @@ def matching_non_member(request, slug):
     json = simplejson.dumps([project.slug for project in matching_projects])
 
     return http.HttpResponse(json, mimetype="application/x-javascript")
-
-
-@login_required
-@school_organizer_required
-def edit_declined_delete(request, slug, project_slug):
-    school = get_object_or_404(School, slug=slug)
-    project = get_object_or_404(Project, slug=project_slug)
-    if request.method == 'POST':
-        school.declined.remove(project)
-        msg = _('The %s stopped being declined for this school.')
-        messages.success(request, msg % project.kind.lower())
-    return http.HttpResponseRedirect(reverse('schools_edit_declined', kwargs={
-        'slug': school.slug,
-    }))
 
 
 @login_required
