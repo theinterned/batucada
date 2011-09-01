@@ -17,15 +17,27 @@ ADMIN_PROJECT_CREATE_EMAIL = tuple()
 
 DATABASES = {
 
+    # Uncomment the following lines to run on SQLite for development.
     'default': {
-        'NAME': 'lernanta',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'lernanta',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'lernanta.db',
+        'USER': '',
         'PASSWORD': '',
         'HOST': '',  # An empty string means localhost.
-        'PORT': '',  # An empty string means the default port.
-        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+        'PORT': ''  # An empty string means the default port.
     },
+
+    # Uncomment the following lines to run with MySQL.
+    # Remember to also comment the previous section which enables SQLite.
+#    'default': {
+#        'NAME': 'lernanta',
+#        'ENGINE': 'django.db.backends.mysql',
+#        'USER': 'lernanta',
+#        'PASSWORD': '',
+#        'HOST': '',  # An empty string means localhost.
+#        'PORT': '',  # An empty string means the default port.
+#        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+#    },
 
     # Uncomment the following lines to enable integration
     # with the old drupal site.
@@ -114,7 +126,7 @@ BADGE_IMAGES_URL = 'images/pilotbadges/'
 INVALID_USERNAMES = ('webcraft', 'about', 'user', 'sosi', 'get-involved',
     'math-future', 'license', 'contact-us', 'values', 'privacy',
     'terms-of-use', 'news', 'create-draft-course', 'create-draft-course-panel',
-    'supporters', 'about-p2pu', 'tag', 'tags',)
+    'supporters', 'about-p2pu', 'tag', 'tags','school-of-ed',)
 
 # Pagination
 PAGINATION_DEFAULT_ITEMS_PER_PAGE = 20

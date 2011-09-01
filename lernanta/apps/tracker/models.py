@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.contrib.sessions.models import Session
 from django.db import models
 
 

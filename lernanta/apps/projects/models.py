@@ -246,10 +246,7 @@ class Project(ModelBase):
             'projects/emails/project_created_subject.txt',
             'projects/emails/project_created.txt', context)
         for organizer in self.organizers():
-            if not organizer.no_updates:
-                SendUserEmail.apply_async(
-                        (organizer.user, subjects, bodies))
-
+            SendUserEmail.apply_async((organizer.user, subjects, bodies))
         admin_subject = render_to_string(
             "projects/emails/admin_project_created_subject.txt",
             context).strip()
@@ -296,8 +293,8 @@ class Participation(ModelBase):
     joined_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     left_on = models.DateTimeField(blank=True, null=True)
-    # The user can configure this preference but the organizer can by pass
-    # it with the contact participant form.
-    no_wall_updates = models.BooleanField(default=False)
-    # for new pages or comments.
-    no_updates = models.BooleanField(default=False)
+    # Notification Preferences.
+    no_organizers_wall_updates = models.BooleanField(default=False)
+    no_organizers_content_updates = models.BooleanField(default=False)
+    no_participants_wall_updates = models.BooleanField(default=False)
+    no_participants_content_updates = models.BooleanField(default=False)

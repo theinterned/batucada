@@ -18,7 +18,9 @@ class ProjectAdmin(admin.ModelAdmin):
 class ParticipationAdmin(admin.ModelAdmin):
     date_hierarchy = 'joined_on'
     list_display = ('id', 'user', 'project', 'organizing', 'joined_on',
-        'left_on', 'no_wall_updates', 'no_updates')
+        'left_on', 'no_organizers_wall_updates',
+        'no_organizers_content_updates', 'no_participants_wall_updates',
+        'no_participants_content_updates')
     list_filter = list_display[3:]
     search_fields = ('id', 'project__name', 'user__username',
         'user__full_name', 'project__slug')

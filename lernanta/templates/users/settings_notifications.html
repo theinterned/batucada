@@ -27,20 +27,52 @@
           {{ _('Someone starts following one of the study groups, courses, ... that I am organizing.') }}
         </label>
       </p>
-      {% for participation in participations %}
-      <p>
-        <label for="id_no_wall_updates_{{ participation.project.slug }}">
-          <input type="checkbox" id="id_no_wall_updates_{{ participation.project.slug}}" name="no_wall_updates_{{ participation.project.slug }}" {% if not participation.no_wall_updates %}checked="checked"{% endif %} />
-          {{ _('The wall of ') }} {{participation.project.name }} {{ _(' is updated (this setting does not include important updates for which notifications can not be turn off).') }}
-        </label>
-      </p>
-      <p>
-        <label for="id_no_updates_{{ participation.project.slug }}">
-          <input type="checkbox" id="id_no_updates_{{ participation.project.slug}}" name="no_updates_{{ participation.project.slug }}" {% if not participation.no_updates %}checked="checked"{% endif %} />
-          {{ _('The content (e.g. tasks, comments, ...) of ') }} {{participation.project.name }} {{ _(' is updated.') }}
-        </label>
-      </p>
-      {% endfor %}
+      {% if participations %}
+        <h3>{{ _('An organizer posts or replies to a message on the wall of:') }}<sup>1<sup></h3>
+        <br>
+        {% for participation in participations %}
+          <p>
+            <label for="id_no_organizers_wall_updates_{{ participation.project.slug }}">
+              <input type="checkbox" id="id_no_organizers_wall_updates_{{ participation.project.slug }}" name="no_organizers_wall_updates_{{ participation.project.slug }}" {% if not participation.no_organizers_wall_updates %}checked="checked"{% endif %} />
+              {{ participation.project.name }}
+            </label>
+          </p>
+        {% endfor %}
+        <h3>{{ _('A participant posts or replies to a message on the wall of:') }}</h3>
+        <br>
+        {% for participation in participations %}
+          <p>
+            <label for="id_no_participants_wall_updates_{{ participation.project.slug }}">
+              <input type="checkbox" id="id_no_participants_wall_updates_{{ participation.project.slug }}" name="no_participants_wall_updates_{{ participation.project.slug }}" {% if not participation.no_participants_wall_updates %}checked="checked"{% endif %} />
+              {{ participation.project.name }}
+            </label>
+          </p>
+        {% endfor %}
+        <h3>{{ _('An organizer creates, edits, or posts new comments on a task or page of:') }}</h3>
+        <br>
+        {% for participation in participations %}
+          <p>
+            <label for="id_no_organizers_content_updates_{{ participation.project.slug }}">
+              <input type="checkbox" id="id_no_organizers_content_updates_{{ participation.project.slug}}" name="no_organizers_content_updates_{{ participation.project.slug }}" {% if not participation.no_organizers_content_updates %}checked="checked"{% endif %} />
+              {{ participation.project.name }}
+            </label>
+          </p>
+        {% endfor %}
+
+        <h3>{{ _('A participant creates, edits, or posts new comments on a task or page of:') }}</h3>
+        <br>
+        {% for participation in participations %}
+          <p>
+            <label for="id_no_participants_content_updates_{{ participation.project.slug }}">
+              <input type="checkbox" id="id_no_participants_content_updates_{{ participation.project.slug}}" name="no_participants_content_updates_{{ participation.project.slug }}" {% if not participation.no_participants_content_updates %}checked="checked"{% endif %} />
+              {{ participation.project.name }}
+            </label>
+          </p>
+        {% endfor %}
+        <p class="hint">
+          <sup>1</sup>{{ _('Does not include important updates for which notifications can not be turn off.') }}
+        </p>
+      {% endif %}
       <p class="buttons">
         <a class="button" href="{% locale_url dashboard %}">{{ _('Cancel') }}</a>
         <button type="submit" value="{{ _('Save') }}" >{{ _('Save') }}</button>

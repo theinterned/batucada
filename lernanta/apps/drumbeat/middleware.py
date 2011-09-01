@@ -11,6 +11,7 @@ class NotFoundMiddleware(object):
 
     def process_response(self, request, response):
         if response.status_code == 404:
+            # Handle old Drupal URLs
             url = settings.DRUPAL_URL + request.path[4:]
             log.error('Not found %s' % url)
             try:

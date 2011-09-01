@@ -111,9 +111,17 @@ class Page(ModelBase):
 
     def comment_notification_recipients(self, comment):
         from users.models import UserProfile
-        user_ids = self.project.participants().filter(
-            no_updates=False).values('user__id')
-        return UserProfile.objects.filter(id__in=user_ids)
+        participants = self.project.participants()
+        from_organizer = self.project.organizers().filter(
+            user=comment.author).exists()
+        if from_organizer:
+            participants = participants.filter(
+                no_organizers_content_updates=False)
+        else:
+            participants = participants.filter(
+                no_participants_content_updates=False)
+        return UserProfile.objects.filter(
+            id__in=participants.values('user__id'))
 
 
 class PageVersion(ModelBase):
@@ -148,9 +156,15 @@ def send_email_notification(instance):
     subjects, bodies = localize_email(
         'content/emails/content_update_subject.txt',
         'content/emails/content_update.txt', context)
+    from_organizer = project.organizers().filter(
+        user=instance.author).exists()
     for participation in project.participants():
         is_author = (instance.author == participation.user)
-        if not is_author and not participation.no_updates:
+        if from_organizer:
+            unsubscribed = participation.no_organizers_content_updates
+        else:
+            unsubscribed = participation.no_participants_content_updates
+        if not is_author and not unsubscribed:
             SendUserEmail.apply_async(
                     (participation.user, subjects, bodies))
 

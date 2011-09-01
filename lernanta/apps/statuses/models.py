@@ -52,9 +52,16 @@ class Status(ModelBase):
         subjects, bodies = localize_email(
             'statuses/emails/wall_updated_subject.txt',
             'statuses/emails/wall_updated.txt', context)
+        from_organizer = self.project.organizers().filter(
+            user=self.author).exists()
         for participation in self.project.participants():
-            subscribed = (self.important or not participation.no_wall_updates)
-            if self.author != participation.user and subscribed:
+            if self.important:
+                unsubscribed = False
+            elif from_organizer:
+                unsubscribed = participation.no_organizers_wall_updates
+            else:
+                unsubscribed = participation.no_participants_wall_updates
+            if self.author != participation.user and not unsubscribed:
                 SendUserEmail.apply_async(
                     (participation.user, subjects, bodies))
 

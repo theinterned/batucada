@@ -16,11 +16,18 @@ from preferences.models import AccountPreferences
 log = logging.getLogger(__name__)
 
 
+PER_PROJECT_PREFERENCES = (
+    'no_organizers_wall_updates',
+    'no_organizers_content_updates',
+    'no_participants_wall_updates',
+    'no_participants_content_updates',
+)
+
+
 @login_required
 def settings(request):
     profile = request.user.get_profile()
-    participations = profile.participations.filter(left_on__isnull=True,
-        organizing=False)
+    participations = profile.participations.filter(left_on__isnull=True)
     if request.method == 'POST':
         for key in AccountPreferences.preferences:
             if key in request.POST and request.POST[key] == 'on':
@@ -30,30 +37,24 @@ def settings(request):
                 AccountPreferences.objects.get_or_create(
                     user=profile, key=key, value=1)
         for participation in participations:
-            key = 'no_updates_%s' % participation.project.slug
-            if key in request.POST and request.POST[key] == 'on':
-                participation.no_updates = False
-            else:
-                participation.no_updates = True
-            key = 'no_wall_updates_%s' % participation.project.slug
-            if key in request.POST and request.POST[key] == 'on':
-                participation.no_wall_updates = False
-            else:
-                participation.no_wall_updates = True
+            for field in PER_PROJECT_PREFERENCES:
+                key = '%s_%s' % (field, participation.project.slug)
+                if key in request.POST and request.POST[key] == 'on':
+                    setattr(participation, field, False)
+                else:
+                    setattr(participation, field, True)
             participation.save()
         messages.success(
             request,
             _("Thank you, your settings have been saved."))
         return HttpResponseRedirect(reverse('preferences_settings'))
-    preferences = AccountPreferences.objects.filter(
-        user=request.user.get_profile())
-    prefs = {'domain': Site.objects.get_current().domain,
+    context = {
+        'domain': Site.objects.get_current().domain,
         'participations': participations,
-        'profile': profile, 'settings_tab': True}
-    for preference in preferences:
-        log.debug("%s => %s" % (preference.key, preference.value))
-        prefs[preference.key] = preference.value
-    return render_to_response('users/settings_notifications.html', prefs,
+        'profile': profile,
+        'settings_tab': True,
+    }
+    return render_to_response('users/settings_notifications.html', context,
                               context_instance=RequestContext(request))
 
 

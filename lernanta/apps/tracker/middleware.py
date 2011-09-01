@@ -3,9 +3,7 @@ import fnmatch
 import logging
 
 from django.conf import settings
-from django.contrib.sessions.models import Session
 
-from users.models import UserProfile
 from tracker import utils
 from tracker.models import PageView
 
@@ -26,7 +24,7 @@ class PageViewTrackerMiddleware:
                 pageview.referrer_url = utils.u_clean(request.META.get('HTTP_REFERER', 'unknown')[:255])
 
                 try:
-                    oldpageview = PageView.objects.filter(session_key = request.session.session_key).order_by('-access_time')[0]
+                    oldpageview = PageView.objects.filter(session_key=request.session.session_key).order_by('-access_time')[0]
                 except IndexError, error:
                     pass
                 else:

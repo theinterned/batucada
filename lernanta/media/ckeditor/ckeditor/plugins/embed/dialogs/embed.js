@@ -25,8 +25,7 @@ CKEDITOR.dialog.add( 'embed', function( editor )
 					{
 						id : 'url',
 						type : 'text',
-						label : 'URL',
-						'default' : 'http://www.slideshare.net/gya/creative-commons-spectrum-of-rights',
+						label : 'URL (<u><a target="_blank" href="http://embed.ly/providers" style="color:#0000cd;">help</a></u>)',
 						setup : function( element )
 						{
 
