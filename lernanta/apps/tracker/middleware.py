@@ -7,7 +7,7 @@ from django.conf import settings
 from tracker import utils
 from tracker.models import PageView
 
-log = logging.getLogger('tracker.middleware')
+log = logging.getLogger(__name__)
 
 
 class PageViewTrackerMiddleware:
