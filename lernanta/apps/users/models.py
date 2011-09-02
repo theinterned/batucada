@@ -23,7 +23,6 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
-from replies.models import PageComment
 from content.models import Page
 from users import tasks
 from activity.schema import object_types
@@ -261,19 +260,6 @@ class UserProfile(ModelBase):
 
         algo, salt, hsh = self.password.split('$')
         return hsh == get_hexdigest(algo, salt, raw_password)
-
-    def get_project_statistics(self, slug):
-        project = Project(slug=slug)
-        page_ids = Page.objects.filter(project=project) #TODO: Probably ignore deleted and Full Desc? note in notes
-
-        comments = PageComment.objects.filter(scope_id__in=project.values('id')) 
-        comment_count = comments.count()
-
-        statistics = {
-                    'comment_count': comment_count,
-                    'course_activity_minutes': 0
-                }
-        return statistics
 
 
 def create_profile(user, username=None):
