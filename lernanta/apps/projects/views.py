@@ -579,10 +579,10 @@ def admin_metrics(request, slug):
 
     data = []
     for user in participants:
-        comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user)
+        comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
         comment_count = comments.count()
-        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user).aggregate(Sum('time_on_page'))
-        course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user).count()
+        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
+        course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
         course_activity_minutes = pageviews['time_on_page__sum']
 
         data.append({
