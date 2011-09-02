@@ -326,7 +326,7 @@ def edit(request, slug):
         'project': project,
         'school': project.school,
         'summary_tab': True,
-        'can_view_metric_overview': can_view_metric_overview
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -352,6 +352,8 @@ def edit_image_async(request, slug):
 @organizer_required
 def edit_image(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    
     if request.method == 'POST':
         form = project_forms.ProjectImageForm(request.POST, request.FILES,
                                               instance=project)
@@ -370,6 +372,7 @@ def edit_image(request, slug):
         'project': project,
         'form': form,
         'image_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -377,6 +380,7 @@ def edit_image(request, slug):
 @organizer_required
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     profile = request.user.get_profile()
     if request.method == 'POST':
         form = project_forms.ProjectLinksForm(request.POST)
@@ -398,6 +402,7 @@ def edit_links(request, slug):
         'form': form,
         'links': links,
         'links_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -405,6 +410,7 @@ def edit_links(request, slug):
 @organizer_required
 def edit_links_edit(request, slug, link):
     link = get_object_or_404(Link, id=link)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     form = project_forms.ProjectLinksForm(request.POST or None, instance=link)
     profile = get_object_or_404(UserProfile, user=request.user)
     project = get_object_or_404(Project, slug=slug)
@@ -429,6 +435,7 @@ def edit_links_edit(request, slug, link):
         'form': form,
         'link': link,
         'links_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -450,6 +457,7 @@ def edit_links_delete(request, slug, link):
 @organizer_required
 def edit_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     if request.method == 'POST':
         form = project_forms.ProjectAddParticipantForm(project, request.POST)
         if form.is_valid():
@@ -476,6 +484,7 @@ def edit_participants(request, slug):
         'form': form,
         'participations': project.participants().order_by('joined_on'),
         'participants_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -527,6 +536,7 @@ def edit_participants_delete(request, slug, username):
 @organizer_required
 def edit_status(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     if request.method == 'POST':
         form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
@@ -544,6 +554,7 @@ def edit_status(request, slug):
         'form': form,
         'project': project,
         'status_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -559,7 +570,7 @@ def admin_metrics(request, slug):
     project_ct = ContentType.objects.get_for_model(Project)
     page_ct = ContentType.objects.get_for_model(Page)
     pages = Page.objects.filter(project=project)
-
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     
     for page in pages:
@@ -587,6 +598,7 @@ def admin_metrics(request, slug):
             'can_view_metric_detail': can_view_metric_detail,
             'data': data,
             'metrics_tab': True,
+            'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 @login_required
