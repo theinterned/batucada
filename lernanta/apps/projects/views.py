@@ -3,6 +3,7 @@ import datetime
 
 from django import http
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.utils import simplejson
@@ -24,6 +25,7 @@ from projects import drupal
 from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from links.models import Link
+from replies.models import PageComment
 from users.models import UserProfile
 from content.models import Page
 from schools.models import School
@@ -32,6 +34,7 @@ from activity.models import Activity
 from activity.views import filter_activities
 from activity.schema import verbs
 from signups.models import Signup
+from tracker.models import PageView
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -543,12 +546,38 @@ def edit_status(request, slug):
 @login_required
 @organizer_required
 def admin_metrics(request, slug):
+    #TODO: Make sure only runs/returns for those with authority
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
-    
+    project_ct = ContentType.objects.get_for_model(Project)
+    page_ct = ContentType.objects.get_for_model(Page)
+    pages = Page.objects.filter(project=project)
+
+    for page in pages:
+        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
+        pageviews = PageView.objects.filter(request_url__endswith=page_path)
+
+    data = []
+    for user in participants:
+        comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user)
+        comment_count = comments.count()
+        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user)
+        course_page_view_count = pageviews.count()
+
+        #TODO: course_activity_minutes
+        #TODO: more testing
+        data.append({
+            'username': user.user.username,
+            'last_active': user.user.last_active,
+            'comment_count': comment_count,
+            'course_page_view_count': course_page_view_count,
+            'course_activity_minutes': 10
+        })
+
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
             'participants': participants,
+            'data': data,
             'metrics_tab': True,
     }, context_instance=RequestContext(request))
 
