@@ -2,6 +2,7 @@ import logging
 import datetime
 
 from django import http
+from django.db.models import Sum
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render_to_response, get_object_or_404
@@ -546,7 +547,11 @@ def edit_status(request, slug):
 @login_required
 @organizer_required
 def admin_metrics(request, slug):
-    #TODO: Make sure only runs/returns for those with authority
+    """Overview metrics for course organizers.
+    
+    We only are interested in the pages of the course and the participants.
+    CSV is for the non-logged in users and non-participants.
+    """
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
     project_ct = ContentType.objects.get_for_model(Project)
@@ -561,22 +566,20 @@ def admin_metrics(request, slug):
     for user in participants:
         comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user)
         comment_count = comments.count()
-        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user)
-        course_page_view_count = pageviews.count()
+        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user).aggregate(Sum('time_on_page'))
+        course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user).count()
+        course_activity_minutes = pageviews['time_on_page__sum']
 
-        #TODO: course_activity_minutes
-        #TODO: more testing
         data.append({
             'username': user.user.username,
             'last_active': user.user.last_active,
             'comment_count': comment_count,
             'course_page_view_count': course_page_view_count,
-            'course_activity_minutes': 10
+            'course_activity_minutes': course_activity_minutes
         })
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
-            'participants': participants,
             'data': data,
             'metrics_tab': True,
     }, context_instance=RequestContext(request))
