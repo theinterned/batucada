@@ -19,7 +19,7 @@ from links import tasks as links_tasks
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
-from projects.decorators import organizer_required
+from projects.decorators import organizer_required, can_view_metric_overview, can_view_metric_detail
 from projects.models import Project, Participation
 from projects import drupal
 
@@ -319,11 +319,14 @@ def edit(request, slug):
     else:
         form = project_forms.ProjectForm(instance=project)
 
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
         'school': project.school,
         'summary_tab': True,
+        'can_view_metric_overview': can_view_metric_overview
     }, context_instance=RequestContext(request))
 
 
@@ -545,12 +548,11 @@ def edit_status(request, slug):
 
 
 @login_required
-@organizer_required
+@can_view_metric_overview
 def admin_metrics(request, slug):
     """Overview metrics for course organizers.
     
     We only are interested in the pages of the course and the participants.
-    CSV is for the non-logged in users and non-participants.
     """
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
@@ -558,6 +560,8 @@ def admin_metrics(request, slug):
     page_ct = ContentType.objects.get_for_model(Page)
     pages = Page.objects.filter(project=project)
 
+    can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    
     for page in pages:
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
         pageviews = PageView.objects.filter(request_url__endswith=page_path)
@@ -580,12 +584,13 @@ def admin_metrics(request, slug):
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
+            'can_view_metric_detail': can_view_metric_detail,
             'data': data,
             'metrics_tab': True,
     }, context_instance=RequestContext(request))
 
 @login_required
-@organizer_required
+@can_view_metric_detail
 def admin_metrics_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
     return render_to_response('projects/project_admin_metrics_detail.html', {
@@ -645,7 +650,7 @@ def user_list(request, slug):
 
 
 @login_required
-@organizer_required
+@can_view_metric_detail
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
     if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
