@@ -310,7 +310,9 @@ form .small {
     margin-bottom: 1.5em;
     display: block;
 	}	
-
+.clear {
+	clear: both;
+	}
 .start_date input, 
 .end_date input {
     width: 7em !important;
@@ -731,6 +733,12 @@ header {}
       #project-stats .value, #people .value {
 	float:right;
       }
+
+#metric-quick-view td, #metric-quick-view th {
+    padding: 1em;
+    border: 1px solid #ddd;
+}
+
 
 #project-stats .beta-development {
 	text-align:center;
@@ -1414,7 +1422,7 @@ header {}
 			-moz-border-radius:8px;		
 		}
 		.modal.nav{
-			width: 780px;
+			width: 990px;
 		}
 		.modal article{
 			background-color: #fff;
@@ -1462,7 +1470,7 @@ header {}
 			white-space: nowrap;
 		}
 		.modal.nav > article > h1{
-			width: 742px;
+			width: 952px;
 			padding: 18px;
 		}
 		.modal h2{

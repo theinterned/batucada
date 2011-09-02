@@ -34,7 +34,7 @@
   <article>
     <h1>
       {% if project %}
-      {{ _('Edit') }}
+      {{ _('Admin') }}
       <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View') }})</a>
       {% else %}
       {{ _('Create') }}
@@ -48,6 +48,9 @@
     <li class="status {% if signup_tab %}active{% endif %}"><a href="{% locale_url edit_signup slug=project.slug %}">{{ _('Signup') }}</a></li>
 	<li class="participants {% if participants_tab %}active{% endif %}"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
 	<li class="links {% if links_tab %}active{% endif %}"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
+	   {% if can_view_metric_overview %}
+	<li class="metrics {% if metrics_tab %}active{% endif %}"><a href="{% locale_url projects_admin_metrics slug=project.slug %}">{{ _('Metrics') }}</a></li>
+	   {% endif %}
     {% else %}
     <li class="new {% if new_tab %}active{% endif %}"><a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
        {{ _('Create from Scratch') }}</a></li>
