@@ -1,4 +1,5 @@
 from django import http
+from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -20,6 +21,7 @@ from signups.forms import SignupForm, SignupAnswerForm
 def edit_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     project = sign_up.project
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     if request.method == 'POST':
         form = SignupForm(request.POST, instance=sign_up)
         if form.is_valid():
@@ -37,6 +39,7 @@ def edit_signup(request, slug):
         'project': project,
         'sign_up': sign_up,
         'signup_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
