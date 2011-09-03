@@ -583,7 +583,10 @@ def admin_metrics(request, slug):
         comment_count = comments.count()
         pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
         course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
-        course_activity_minutes = pageviews['time_on_page__sum']
+        course_activity_seconds = pageviews['time_on_page__sum']
+        if course_activity_seconds is None:
+            course_activity_seconds = 0
+        course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
 
         data.append({
             'username': user.user.username,
