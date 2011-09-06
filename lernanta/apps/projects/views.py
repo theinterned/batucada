@@ -672,6 +672,23 @@ def export_detailed_csv(request, slug):
     project = get_object_or_404(Project, slug=slug)
     response = http.HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    pages = Page.objects.filter(project=project)
+    page_paths = []
+    start_date = project.created_on
+    end_date = project.created_on
+    delta = datetime.timedelta(days = 1)
+    pageviews = {}
+
+    for page in pages:
+        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
+        page_paths.append(page_path)
+        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
+        try:
+            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+            if current_end_date > end_date:
+                end_date = current_end_date
+        except:
+            log.debug("No pageviews found.")
 
     writer = csv.writer(response)
     writer.writerow(["Course: " + project.name])
