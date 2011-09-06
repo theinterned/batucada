@@ -1,5 +1,6 @@
 import logging
 import datetime
+import csv
 
 from django import http
 from django.db.models import Sum
@@ -672,22 +673,9 @@ def export_detailed_csv(request, slug):
     response = http.HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
 
-    csv_data = (
-            (project.name, ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('Report updated: August 3 2011', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('Users', 'August 1 2011', ' ', ' ', 'Create a study group or course', 'Design great tasks', 'TOTAL', ' '),
-            (' ', 'Time on course pages', 'Number of comments', 'Number of task edits', 'Min. on page', 'Min. on page', 'Time on course pages', 'Number of comments'),
-            ('Participants', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('username1', '3', '0', '1', '2', '1', '3', '9'),
-            ('username2', '1', '0', '1', '3', '2', '3', '9'),
-            ('Non-participants', ' ', ' ', ' ', ' ', ' ', ' ', '9'),
-            ('username70', '1', '--', '--', '1', '0', '1', '9'),
-            ('anonymizedip', '1', '--', '--', '1', '0', '1', '9')
-        )
-    
-    t = loader.get_template('projects/reports/detailed_csv.txt')
-    c = Context({
-            'data': csv_data,
-        })
-    response.write(t.render(c))
+    writer = csv.writer(response)
+    writer.writerow(["Course: " + project.name])
+    writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
+    writer.writerow([])
+
     return response
