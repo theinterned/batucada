@@ -668,12 +668,11 @@ def user_list(request, slug):
 @can_view_metric_detail
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
-    if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
-        project = get_object_or_404(Project, slug=slug)
-        response = http.HttpResponse(mimetype='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    project = get_object_or_404(Project, slug=slug)
+    response = http.HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
 
-        csv_data = (
+    csv_data = (
             (project.name, ' ', ' ', ' ', ' ', ' ', ' ', ' '),
             ('Report updated: August 3 2011', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
             ('Users', 'August 1 2011', ' ', ' ', 'Create a study group or course', 'Design great tasks', 'TOTAL', ' '),
@@ -686,12 +685,9 @@ def export_detailed_csv(request, slug):
             ('anonymizedip', '1', '--', '--', '1', '0', '1', '9')
         )
     
-        t = loader.get_template('projects/reports/detailed_csv.txt')
-        c = Context({
+    t = loader.get_template('projects/reports/detailed_csv.txt')
+    c = Context({
             'data': csv_data,
         })
-        response.write(t.render(c))
-        return response
-    else:
-        response = http.HttpResponseForbidden("Sorry, you don't have access.")
-        return response
+    response.write(t.render(c))
+    return response
