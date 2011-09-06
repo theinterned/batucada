@@ -2,8 +2,11 @@ import logging
 import datetime
 
 from django import http
+from django.db.models import Sum
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
@@ -16,13 +19,14 @@ from links import tasks as links_tasks
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
-from projects.decorators import organizer_required
+from projects.decorators import organizer_required, can_view_metric_overview, can_view_metric_detail
 from projects.models import Project, Participation
 from projects import drupal
 
 from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from links.models import Link
+from replies.models import PageComment
 from users.models import UserProfile
 from content.models import Page
 from schools.models import School
@@ -31,6 +35,7 @@ from activity.models import Activity
 from activity.views import filter_activities
 from activity.schema import verbs
 from signups.models import Signup
+from tracker.models import PageView
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -320,11 +325,14 @@ def edit(request, slug):
     else:
         form = project_forms.ProjectForm(instance=project)
 
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
         'school': project.school,
         'summary_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -350,6 +358,8 @@ def edit_image_async(request, slug):
 @organizer_required
 def edit_image(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    
     if request.method == 'POST':
         form = project_forms.ProjectImageForm(request.POST, request.FILES,
                                               instance=project)
@@ -368,6 +378,7 @@ def edit_image(request, slug):
         'project': project,
         'form': form,
         'image_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -375,6 +386,7 @@ def edit_image(request, slug):
 @organizer_required
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     profile = request.user.get_profile()
     if request.method == 'POST':
         form = project_forms.ProjectLinksForm(request.POST)
@@ -396,6 +408,7 @@ def edit_links(request, slug):
         'form': form,
         'links': links,
         'links_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -403,6 +416,7 @@ def edit_links(request, slug):
 @organizer_required
 def edit_links_edit(request, slug, link):
     link = get_object_or_404(Link, id=link)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     form = project_forms.ProjectLinksForm(request.POST or None, instance=link)
     profile = get_object_or_404(UserProfile, user=request.user)
     project = get_object_or_404(Project, slug=slug)
@@ -427,6 +441,7 @@ def edit_links_edit(request, slug, link):
         'form': form,
         'link': link,
         'links_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -448,6 +463,7 @@ def edit_links_delete(request, slug, link):
 @organizer_required
 def edit_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     if request.method == 'POST':
         form = project_forms.ProjectAddParticipantForm(project, request.POST)
         if form.is_valid():
@@ -474,6 +490,7 @@ def edit_participants(request, slug):
         'form': form,
         'participations': project.participants().order_by('joined_on'),
         'participants_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
 
@@ -525,6 +542,7 @@ def edit_participants_delete(request, slug, username):
 @organizer_required
 def edit_status(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     if request.method == 'POST':
         form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
@@ -542,8 +560,64 @@ def edit_status(request, slug):
         'form': form,
         'project': project,
         'status_tab': True,
+        'can_view_metric_overview': can_view_metric_overview,
     }, context_instance=RequestContext(request))
 
+
+@login_required
+@can_view_metric_overview
+def admin_metrics(request, slug):
+    """Overview metrics for course organizers.
+    
+    We only are interested in the pages of the course and the participants.
+    """
+    project = get_object_or_404(Project, slug=slug)
+    participants = project.non_organizer_participants()
+    project_ct = ContentType.objects.get_for_model(Project)
+    page_ct = ContentType.objects.get_for_model(Page)
+    pages = Page.objects.filter(project=project)
+    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    
+    for page in pages:
+        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
+        pageviews = PageView.objects.filter(request_url__endswith=page_path)
+
+    data = []
+    for user in participants:
+        comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
+        comment_count = comments.count()
+        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
+        course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
+        course_activity_seconds = pageviews['time_on_page__sum']
+        if course_activity_seconds is None:
+            course_activity_seconds = 0
+        course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
+
+        data.append({
+            'username': user.user.username,
+            'last_active': user.user.last_active,
+            'comment_count': comment_count,
+            'course_page_view_count': course_page_view_count,
+            'course_activity_minutes': course_activity_minutes
+        })
+
+    return render_to_response('projects/project_admin_metrics.html', {
+            'project': project,
+            'can_view_metric_detail': can_view_metric_detail,
+            'data': data,
+            'metrics_tab': True,
+            'can_view_metric_overview': can_view_metric_overview,
+    }, context_instance=RequestContext(request))
+
+@login_required
+@can_view_metric_detail
+def admin_metrics_detail(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    return render_to_response('projects/project_admin_metrics_detail.html', {
+            'project': project,
+            'metrics_tab': True,
+    }, context_instance=RequestContext(request))
 
 @login_required
 def contact_organizers(request, slug):
@@ -594,3 +668,36 @@ def user_list(request, slug):
         prefix='followers_'))
     return render_to_response('projects/project_user_list.html', context,
         context_instance=RequestContext(request))
+
+
+@login_required
+@can_view_metric_detail
+def export_detailed_csv(request, slug):
+    """Display detailed CSV for certain users."""
+    if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
+        project = get_object_or_404(Project, slug=slug)
+        response = http.HttpResponse(mimetype='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+
+        csv_data = (
+            (project.name, ' ', ' ', ' ', ' ', ' ', ' ', ' '),
+            ('Report updated: August 3 2011', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
+            ('Users', 'August 1 2011', ' ', ' ', 'Create a study group or course', 'Design great tasks', 'TOTAL', ' '),
+            (' ', 'Time on course pages', 'Number of comments', 'Number of task edits', 'Min. on page', 'Min. on page', 'Time on course pages', 'Number of comments'),
+            ('Participants', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
+            ('username1', '3', '0', '1', '2', '1', '3', '9'),
+            ('username2', '1', '0', '1', '3', '2', '3', '9'),
+            ('Non-participants', ' ', ' ', ' ', ' ', ' ', ' ', '9'),
+            ('username70', '1', '--', '--', '1', '0', '1', '9'),
+            ('anonymizedip', '1', '--', '--', '1', '0', '1', '9')
+        )
+    
+        t = loader.get_template('projects/reports/detailed_csv.txt')
+        c = Context({
+            'data': csv_data,
+        })
+        response.write(t.render(c))
+        return response
+    else:
+        response = http.HttpResponseForbidden("Sorry, you don't have access.")
+        return response
