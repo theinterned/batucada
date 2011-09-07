@@ -29,7 +29,7 @@ from relationships.models import Relationship
 from links.models import Link
 from replies.models import PageComment
 from users.models import UserProfile
-from content.models import Page
+from content.models import Page, PageVersion
 from schools.models import School
 from statuses import forms as statuses_forms
 from activity.models import Activity
@@ -672,6 +672,7 @@ def export_detailed_csv(request, slug):
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
     project_ct = ContentType.objects.get_for_model(Project)
+    page_ct = ContentType.objects.get_for_model(Page)
     response = http.HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
     pages = Page.objects.filter(project=project)
@@ -729,13 +730,13 @@ def export_detailed_csv(request, slug):
 
     for user in participants:
         row = []
-        #total_time_on_pages
         total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
-        #total_task_edits
+        total_task_edits = Activity.objects.filter(actor=user.user, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
 
         row.append(user.user.username)
         for date in dates:
             day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
             day_page_time_minutes = {}
             day_page_view_count = {}
             day_total_time_on_pages = 0
@@ -753,7 +754,7 @@ def export_detailed_csv(request, slug):
             
             row.append(day_total_time_on_pages)
             row.append(day_total_comments.count())
-            row.append("IP task edits")
+            row.append(day_total_task_edits.count())
             
             for page_path in page_paths:
                 row.append(day_page_time_minutes[page_path])
