@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-07 17:21-0400\n"
+"POT-Creation-Date: 2011-09-07 17:44-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,17 +243,17 @@ msgstr "No está autorizado a ver el resumen de las estadísticas."
 msgid "This field is required."
 msgstr "Este campo es requerido."
 
-#: apps/projects/forms.py:81 apps/schools/forms.py:38 apps/schools/forms.py:52
-#: apps/schools/forms.py:66 apps/schools/forms.py:80 apps/users/forms.py:250
+#: apps/projects/forms.py:81 apps/schools/forms.py:36 apps/schools/forms.py:50
+#: apps/schools/forms.py:64 apps/schools/forms.py:78 apps/users/forms.py:250
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/projects/forms.py:111 apps/schools/forms.py:98
+#: apps/projects/forms.py:111 apps/schools/forms.py:96
 msgid "That user account was deleted."
 msgstr "Esa cuenta de usuario fue borrada."
 
-#: apps/projects/forms.py:114 apps/schools/forms.py:101
+#: apps/projects/forms.py:114 apps/schools/forms.py:99
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
@@ -282,8 +282,8 @@ msgstr "Cuerpo"
 msgid "That study group, course, ... does not exist."
 msgstr "Ese grupo de estudio, curso, ... no existe."
 
-#: apps/projects/forms.py:165 apps/schools/forms.py:117
-#: apps/schools/forms.py:142
+#: apps/projects/forms.py:165 apps/schools/forms.py:115
+#: apps/schools/forms.py:140
 #, python-format
 msgid "There is no study group, course, ... with short name: %s."
 msgstr "No hay un grupo de estudio, curso, ... con nombre corto: %s."
@@ -478,27 +478,27 @@ msgstr "¡Comentario restaurado!"
 msgid "You are not school organizer"
 msgstr "Usted no esta organizando esta escuela"
 
-#: apps/schools/forms.py:104
+#: apps/schools/forms.py:102
 #, python-format
 msgid "User %s is organizing the school."
 msgstr "El usuario %s está organizando la escuela."
 
-#: apps/schools/forms.py:123
+#: apps/schools/forms.py:121
 #, python-format
 msgid "The %(slug)s %(kind)s is not part of this school."
 msgstr "El %(kind)s %(slug)s no es parte de esta escuela."
 
-#: apps/schools/forms.py:127
+#: apps/schools/forms.py:125
 #, python-format
 msgid "The %(slug)s %(kind)s is already featured."
 msgstr "El %(kind)s %(slug)s ya está marcado como destacado."
 
-#: apps/schools/forms.py:148
+#: apps/schools/forms.py:146
 #, python-format
 msgid "The %(slug)s %(kind)s is already part of this school."
 msgstr "El %(kind)s %(slug)s ya es parte de esta escuela."
 
-#: apps/schools/forms.py:152
+#: apps/schools/forms.py:150
 #, python-format
 msgid "The %(slug)s %(kind)s is part of: %(school)s."
 msgstr "El %(kind)s %(slug)s es parte de: %(school)s."
@@ -1198,7 +1198,7 @@ msgstr "¿Está seguro que desea borrar esta actividad?"
 #: templates/schools/school_edit_groups_icon.html:23
 #: templates/schools/school_edit_logo.html:23
 #: templates/schools/school_edit_site_logo.html:23
-#: templates/schools/school_edit_styles.html:89
+#: templates/schools/school_edit_styles.html:68
 #: templates/schools/school_edit_summary.html:22
 #: templates/signups/answer_sign_up.html:91
 #: templates/signups/delete_restore_answer.html:30
@@ -1370,7 +1370,7 @@ msgstr "Actualización menor (no se publica en el muro)."
 #: templates/projects/project_edit_status.html:54
 #: templates/projects/project_edit_summary.html:53
 #: templates/replies/comment_page.html:94
-#: templates/schools/school_edit_styles.html:90
+#: templates/schools/school_edit_styles.html:69
 #: templates/schools/school_edit_summary.html:23
 #: templates/signups/answer_sign_up.html:96
 #: templates/signups/edit_signup.html:32
@@ -2834,34 +2834,10 @@ msgid "Lighter variant of the menus color."
 msgstr "Variante más clara del color de los menús."
 
 #: templates/schools/school_edit_styles.html:62
-msgid "About Us Footnote Color"
-msgstr "Color del Pie de Página \"Acerca de Nosotros\""
-
-#: templates/schools/school_edit_styles.html:63
-msgid "Background color of the About Us footnotes."
-msgstr "Color de fondo del pie de página \"Acerca de Nosotros\"."
-
-#: templates/schools/school_edit_styles.html:69
-msgid "Contact Us Footnote Color"
-msgstr "Color del Pie de Página \"Contáctenos\""
-
-#: templates/schools/school_edit_styles.html:70
-msgid "Background color of the Contact Us footnotes."
-msgstr "Color de fondo del pie de página \"Contáctenos\"."
-
-#: templates/schools/school_edit_styles.html:76
-msgid "License Info Footnote Color"
-msgstr "Color del Pie de Página \"Información de Licencia\""
-
-#: templates/schools/school_edit_styles.html:77
-msgid "Background color of the License Info footnotes."
-msgstr "Color de fondo del pie de página \"Información de Licencia\"."
-
-#: templates/schools/school_edit_styles.html:83
 msgid "Custom Styles (Advanced)"
 msgstr "Estilos Personalizados (Avanzado)"
 
-#: templates/schools/school_edit_styles.html:84
+#: templates/schools/school_edit_styles.html:63
 msgid "Customize CSS styles for the school home page and groups."
 msgstr ""
 "Personalize los estilos CSS para la página principal de la escuela y sus "
