@@ -44,12 +44,6 @@ class School(ModelBase):
     background_color = models.CharField(max_length=7, default='#ffffff')
     menu_color = models.CharField(max_length=7, default='#36cdc4')
     menu_color_light = models.CharField(max_length=7, default='#4bd2c9')
-    about_us_footnote_color = models.CharField(max_length=7,
-        default='#cef200')
-    contact_us_footnote_color = models.CharField(max_length=7,
-        default='#4cebe2')
-    license_info_footnote_color = models.CharField(max_length=7,
-        default='#ffde00')
 
     sidebar_width = models.CharField(max_length=5, default='245px')
     show_school_organizers = models.BooleanField(default=True)
