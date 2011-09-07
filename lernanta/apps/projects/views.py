@@ -773,7 +773,7 @@ def export_detailed_csv(request, slug):
     writer.writerow(["Followers"])
     # TODO: followers
 
-    writer.writerow("Non-participants")
+    writer.writerow(["Non-participants"])
     # TODO: non-loggedin users
 
     return response
