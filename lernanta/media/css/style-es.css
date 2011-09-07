@@ -16,17 +16,10 @@
   padding: 4px 6px 8px 0px;
 }
 
-footer[class="main"] ul {
-    float: left;
-    margin-left: 39px;
-    padding-bottom: 50px;
+#footer-wrapper h6 {
+  font-size: 16px;
 }
 
-footer[class="main"] ul[class="supporters"] {
-    font-size: 15px;
-    margin-left: 240px;
-    margin-top: -65px;
-    text-align: center;
-    width: 360px;
+#footer-wrapper a {
+  font-size: 95%;
 }
-
