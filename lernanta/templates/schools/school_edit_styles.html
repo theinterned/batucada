@@ -57,27 +57,6 @@
     {{ form.menu_color_light }}
     {{ form.menu_color_light.errors }}
   </div>
-  <div class="field{% if form.about_us_footnote_color.errors %} error{% endif %}">
-    <div id="about_us_footnote_colorpicker"></div>
-    <label for="id_about_us_footnote_color">{{ _('About Us Footnote Color') }}</label>
-    <span class="hint block">{{ _('Background color of the About Us footnotes.') }}</span>
-    {{ form.about_us_footnote_color }}
-    {{ form.about_us_footnote_color.errors }}
-  </div>
-  <div class="field{% if form.contact_us_footnote_color.errors %} error{% endif %}">
-    <div id="contact_us_footnote_colorpicker"></div>
-    <label for="id_contact_us_footnote_color">{{ _('Contact Us Footnote Color') }}</label>
-    <span class="hint block">{{ _('Background color of the Contact Us footnotes.') }}</span>
-    {{ form.contact_us_footnote_color }}
-    {{ form.contact_us_footnote_color.errors }}
-  </div>
-  <div class="field{% if form.license_info_footnote_color.errors %} error{% endif %}">
-    <div id="license_info_footnote_colorpicker"></div>
-    <label for="id_license_info_footnote_color">{{ _('License Info Footnote Color') }}</label>
-    <span class="hint block">{{ _('Background color of the License Info footnotes.') }}</span>
-    {{ form.license_info_footnote_color }}
-    {{ form.license_info_footnote_color.errors }}
-  </div>
   <br>
   <div class="field extra_styles{% if form.extra_styles.errors %} error{% endif %}">
     <label for="id_extra_styles">{{ _('Custom Styles (Advanced)') }}</label>

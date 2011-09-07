@@ -313,9 +313,6 @@ $(document).ready(function() {
         $.farbtastic('#background_colorpicker', { callback: '#id_background_color', width: 100, heigth: 100 });
         $.farbtastic('#menu_colorpicker', { callback: '#id_menu_color', width: 100, heigth: 100 });
         $.farbtastic('#menu_light_colorpicker', { callback: '#id_menu_color_light', width: 100, heigth: 100 });
-        $.farbtastic('#about_us_footnote_colorpicker', { callback: '#id_about_us_footnote_color', width: 100, heigth: 100 });
-        $.farbtastic('#contact_us_footnote_colorpicker', { callback: '#id_contact_us_footnote_color', width: 100, heigth: 100 });
-        $.farbtastic('#license_info_footnote_colorpicker', { callback: '#id_license_info_footnote_color', width: 100, heigth: 100 });
     }
 
     prettyPrint();
