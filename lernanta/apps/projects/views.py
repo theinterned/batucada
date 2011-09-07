@@ -573,7 +573,7 @@ def admin_metrics(request, slug):
     pages = Page.objects.filter(project=project)
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    
+
     for page in pages:
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
         pageviews = PageView.objects.filter(request_url__endswith=page_path)
@@ -670,12 +670,16 @@ def user_list(request, slug):
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
     project = get_object_or_404(Project, slug=slug)
+    participants = project.non_organizer_participants()
+    project_ct = ContentType.objects.get_for_model(Project)
     response = http.HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
     pages = Page.objects.filter(project=project)
     page_paths = []
+    dates = []
     start_date = project.created_on
     end_date = project.created_on
+    current_end_date = end_date
     delta = datetime.timedelta(days = 1)
     pageviews = {}
 
@@ -683,16 +687,60 @@ def export_detailed_csv(request, slug):
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
         page_paths.append(page_path)
         pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
-        try:
-            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
-            if current_end_date > end_date:
-                end_date = current_end_date
-        except:
-            log.debug("No pageviews found.")
+#        try:
+#            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+#        except:
+#            current_end_date = end_date
+        current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+        if current_end_date > end_date:
+            end_date = current_end_date
+
+
+    while start_date <= end_date:
+        dates.append(start_date.strftime("%Y-%m-%d"))
+        start_date += delta
 
     writer = csv.writer(response)
     writer.writerow(["Course: " + project.name])
     writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
     writer.writerow([])
+
+    row = []
+    row.append("Users")
+    for date in dates:
+        row.append(date)
+        for i in range(2):
+            row.append("")
+        for page in page_paths:
+            row.append(page)
+            row.append("")
+    writer.writerow(row)
+    
+    row = []
+    row.append("")
+    for date in dates:
+        row.append("Time on course pages")
+        row.append("Comments")
+        row.append("Task Edits")
+        for page in page_paths:
+            row.append("Time on Page")
+            row.append("Views")
+    writer.writerow(row)
+
+    for user in participants:
+        row = []
+        #total_time_on_pages
+        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
+        row.append(user.user.username)
+        #total_task_edits
+        for date in dates:
+            row.append("total time on pages")
+            comments_for_day = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            row.append(comments_for_day.count())
+            row.append("total task edits")
+            for page in page_paths:
+                row.append("page min")
+                row.append("page views")
+        writer.writerow(row)
 
     return response
