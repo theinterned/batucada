@@ -1,5 +1,6 @@
 import logging
 import datetime
+import csv
 
 from django import http
 from django.db.models import Sum
@@ -668,30 +669,30 @@ def user_list(request, slug):
 @can_view_metric_detail
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
-    if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
-        project = get_object_or_404(Project, slug=slug)
-        response = http.HttpResponse(mimetype='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    project = get_object_or_404(Project, slug=slug)
+    response = http.HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    pages = Page.objects.filter(project=project)
+    page_paths = []
+    start_date = project.created_on
+    end_date = project.created_on
+    delta = datetime.timedelta(days = 1)
+    pageviews = {}
 
-        csv_data = (
-            (project.name, ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('Report updated: August 3 2011', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('Users', 'August 1 2011', ' ', ' ', 'Create a study group or course', 'Design great tasks', 'TOTAL', ' '),
-            (' ', 'Time on course pages', 'Number of comments', 'Number of task edits', 'Min. on page', 'Min. on page', 'Time on course pages', 'Number of comments'),
-            ('Participants', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('username1', '3', '0', '1', '2', '1', '3', '9'),
-            ('username2', '1', '0', '1', '3', '2', '3', '9'),
-            ('Non-participants', ' ', ' ', ' ', ' ', ' ', ' ', '9'),
-            ('username70', '1', '--', '--', '1', '0', '1', '9'),
-            ('anonymizedip', '1', '--', '--', '1', '0', '1', '9')
-        )
-    
-        t = loader.get_template('projects/reports/detailed_csv.txt')
-        c = Context({
-            'data': csv_data,
-        })
-        response.write(t.render(c))
-        return response
-    else:
-        response = http.HttpResponseForbidden("Sorry, you don't have access.")
-        return response
+    for page in pages:
+        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
+        page_paths.append(page_path)
+        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
+        try:
+            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+            if current_end_date > end_date:
+                end_date = current_end_date
+        except:
+            log.debug("No pageviews found.")
+
+    writer = csv.writer(response)
+    writer.writerow(["Course: " + project.name])
+    writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
+    writer.writerow([])
+
+    return response
