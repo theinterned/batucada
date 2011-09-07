@@ -671,6 +671,7 @@ def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
+    followers = project.non_participant_followers()
     project_ct = ContentType.objects.get_for_model(Project)
     page_ct = ContentType.objects.get_for_model(Page)
     response = http.HttpResponse(mimetype='text/csv')
@@ -728,6 +729,8 @@ def export_detailed_csv(request, slug):
             row.append("Views")
     writer.writerow(row)
 
+    writer.writerow(["Participants"])
+
     for user in participants:
         row = []
         total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
@@ -760,5 +763,11 @@ def export_detailed_csv(request, slug):
                 row.append(day_page_time_minutes[page_path])
                 row.append(day_page_view_count[page_path])
         writer.writerow(row)
+
+    writer.writerow(["Followers"])
+    # TODO: followers
+
+    writer.writerow("Non-participants")
+    # TODO: non-loggedin users
 
     return response
