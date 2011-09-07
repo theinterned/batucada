@@ -337,37 +337,6 @@ header {}
       text-decoration: none;
     }
 
-    #language-nav {
-      background-color: #ffffff;
-      background-image: url("/media/images/icon.world.png");
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      background-position: 5px center;
-      line-height: 18px;
-      overflow-x: visible;
-      overflow-y: visible;
-      text-align: right;
-      position: absolute;
-      z-index: 3;
-      font-size: 12px;
-      margin-left: 635px;
-      padding-top: 5px;
-      padding-right: 7px;
-      padding-bottom: 5px;
-      padding-left: 26px;
-      border-radius: 10px;
-      border: solid 1px #EEE;
-      margin-top: 5px;
-    }
-
-    #language-nav a {
-      margin-top: 0pt;
-      margin-right: 0pt;
-      margin-bottom: 0pt;
-      margin-left: 5px;
-      color: #444;
-    }
-
     #main-nav {
       font-size: 17px;
       position: absolute;
@@ -2813,91 +2782,170 @@ a#beta-tag:hover {
     color: #36cdc4;
 }
 
-footer {
-    clear: both;
-    padding-top: 11px;
+#footer-wrapper {
+	padding-top: 40px;
+	padding-bottom: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    border: solid 1px #EEE;
 }
 
-/*
- * Footer CSS: Brian Brennan 
- * brian@nyhacker.org 
- */
- 
-footer[class="main"] ul {
-  margin-left: 104px;
-  padding-bottom: 50px;
-  float: left;
+#footer-about {
+	width: 267px;
+	float: left;
+	margin-right: 50px;
+    margin-left: 10px;
 }
-footer[class="main"] ul:first-child {
-  margin-left: 0px;
+
+#footer-about p {
+	color: #575757;
 }
-footer[class="main"] ul > li:first-child {
+
+#footer-supporters {
+	float: left;
+	width: 353px;
+	margin-right: 50px;
+}
+
+.supporter {
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: solid 1px #EEE;
+}
+
+a.more-supporters {
+    float: right;
+}
+
+#footer-connect {
+	float: left;
+	width: 260px;
+    margin-bottom: 20px;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li {
+	border-bottom: 1px dotted #EEE;
+	padding: 10px 0 10px 30px;
+    font-size: 15px;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li:last-child {
+	border-bottom: none;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p1 {
+	background: url('/media/images/p1.png') no-repeat 0 10px;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p2 {
+	background: url('/media/images/p2.png') no-repeat 0 10px;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p3 {
+	background: url('/media/images/p3.png') no-repeat 0 10px;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p4 {
+	background: url('/media/images/p4.png') no-repeat 0 10px;
+}
+
+footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p5 {
+	background: url('/media/images/p5.png') no-repeat 0 10px;
+}
+
+
+#footer-wrapper h6 {
   font-weight: normal;
   font-size: 17px;
-  background-color: #fff;
-  line-height: 40px;
-  padding: 0 8px;
-}
-footer[class="main"] ul li {
-  margin: 0 0 8px;
-}
-footer[class="main"] ul li a {
-  font-size: 15px;
-  padding: 0 8px;
-}
-footer[class="main"] ul[class="about-us"] > li a {
-  background-color: #cef200;
-}
-footer[class="main"] ul[class="contact-us"] > li a {
-  background-color: #4cebe2;
-}
-footer[class="main"] ul[class="license-info"] > li a {
-  background-color: #ffde00;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  text-shadow: none;
+  color: #222;
 }
 
-footer[class="main"] ul[class="cc"] {
-   line-height: 30px;
-   font-size: 15px;
+#footer-bottom {
+	clear: both;
+	border-top: 1px solid #EEE;
+	padding-top: 20px;
 }
-footer[class="main"] ul[class="cc"] li[class="icons"] a {
+
+#footer-bottom .icons a {
   display: block;
   background: url('/media/images/cc-icons.png') no-repeat;
   height: 65px;
-  width: 147px;
-  margin: 0px auto;
-  overflow: hidden;
+  width: 167px;
   text-indent: -999em;
+  float: left;
+  margin-right: 20px;
+  margin-left: 10px;
 }
 
-footer[class="main"] ul[class="supporters"] {
-   margin-left: 20px;
-   margin-top: -65px;
-   text-align: center;
-   width: 360px;
-   font-size: 15px;
+footer[id="footer-wrapper"] ul[class="footer-nav"] li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	padding-left: 5px;
+	padding-right: 10px;
+	border-right: 1px solid #EEE;
 }
 
-footer[class="main"] ul[class="supporters"] li[class="hewlett"] a {
-  display: block;
-  background: url('/media/images/hewlett-logo-white.png') no-repeat;
-  height: 53px;
-  width: 139px;
-  overflow: hidden;
-  text-indent: -999em;
-  margin-top: 0px;
-  margin-left: 0px;
+footer[id="footer-wrapper"] ul[class="footer-nav"] li:last-child {
+	border: none;
 }
 
-footer[class="main"] ul[class="supporters"] li[class="shuttleworth"] a {
-  display: block;
-  background: url('/media/images/shuttleworth-funded-small.png') no-repeat;
-  height: 53px;
-  width: 210px;
-  overflow: hidden;
-  text-indent: -999em;
-  position: relative;
-  float: right;
-  margin-top: -61px;
-  margin-right: -15px;
+footer[id="footer-wrapper"] ul[class="license-info"] {
+	margin-top: 10px;
+}
+
+footer[id="footer-wrapper"] ul[class="license-info"] li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	padding-left: 5px;
+	padding-right: 10px;
+	border-right: 1px solid #EEE;
+}
+
+footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
+	border: none;
+}
+
+#language-nav {
+    background-color: #ffffff;
+    background-image: url("/media/images/icon.world.png");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 5px center;
+    line-height: 18px;
+    overflow-x: visible;
+    overflow-y: visible;
+    text-align: right;
+    z-index: 3;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-right: 7px;
+    padding-bottom: 5px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: solid 1px #EEE;
+    width: 173px;
+    height: 20px;
+    float: right;
+}
+
+#language-nav a {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    color: #444;
 }
 
