@@ -771,8 +771,40 @@ def export_detailed_csv(request, slug):
         writer.writerow(row)
 
     writer.writerow(["Followers"])
-    # TODO: followers
-
+    # TODO: Make this a function for participants and followers since follower may have been a participant
+    for follower in followers:
+        row = []
+        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=follower.source)
+        total_task_edits = Activity.objects.filter(actor=follower.source, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+        row.append(follower.source)
+        for date in dates:
+            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_page_time_minutes = {}
+            day_page_view_count = {}
+            day_total_time_on_pages = 0
+            day_total_page_views = 0
+            
+            for page_path in page_paths:
+                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
+                day_page_time_seconds = day_pageviews['time_on_page__sum']
+                print day_page_time_seconds
+                if  day_page_time_seconds is None:
+                    day_page_time_seconds = 0
+                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
+                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
+                day_total_time_on_pages += float(day_page_time_minutes[page_path])
+                day_total_page_views += float(day_page_view_count[page_path])
+            
+            row.append(day_total_time_on_pages)
+            row.append(day_total_comments.count())
+            row.append(day_total_task_edits.count())
+            
+            for page_path in page_paths:
+                row.append(day_page_time_minutes[page_path])
+                row.append(day_page_view_count[page_path])
+        writer.writerow(row)
+        
     writer.writerow(["Non-participants"])
     # TODO: non-loggedin users
 
