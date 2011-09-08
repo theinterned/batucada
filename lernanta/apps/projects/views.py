@@ -577,30 +577,38 @@ def admin_metrics(request, slug):
     project_ct = ContentType.objects.get_for_model(Project)
     page_ct = ContentType.objects.get_for_model(Page)
     pages = Page.objects.filter(project=project)
+    page_paths = []
+    pageviews = {}
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
 
     for page in pages:
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
-        pageviews = PageView.objects.filter(request_url__endswith=page_path)
+        page_paths.append(page_path)
+        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
 
     data = []
     for user in participants:
+        total_course_activity_minutes = 0
+        total_course_page_view_count = 0
         comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
         comment_count = comments.count()
-        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
-        course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
-        course_activity_seconds = pageviews['time_on_page__sum']
-        if course_activity_seconds is None:
-            course_activity_seconds = 0
-        course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
+        for page_path in page_paths:
+            pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
+            course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
+            course_activity_seconds = pageviews['time_on_page__sum']
+            if course_activity_seconds is None:
+                course_activity_seconds = 0
+            course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
+            total_course_activity_minutes += float(course_activity_minutes)
+            total_course_page_view_count += course_page_view_count
 
         data.append({
             'username': user.user.username,
             'last_active': user.user.last_active,
             'comment_count': comment_count,
-            'course_page_view_count': course_page_view_count,
-            'course_activity_minutes': course_activity_minutes
+            'course_page_view_count': total_course_page_view_count,
+            'course_activity_minutes': total_course_activity_minutes
         })
 
     return render_to_response('projects/project_admin_metrics.html', {
