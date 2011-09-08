@@ -815,6 +815,10 @@ def export_detailed_csv(request, slug):
         row = []
         total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=follower.source)
         total_task_edits = Activity.objects.filter(actor=follower.source, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
+
         row.append(follower.source)
         for date in dates:
             day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
@@ -839,8 +843,23 @@ def export_detailed_csv(request, slug):
             row.append(day_total_task_edits.count())
             
             for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
                 row.append(day_page_time_minutes[page_path])
                 row.append(day_page_view_count[page_path])
+        row.append(total_time_minutes)
+        row.append(total_comments.count())
+        row.append(total_task_edits.count())
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
         writer.writerow(row)
         
     writer.writerow(["Non-participants"])
