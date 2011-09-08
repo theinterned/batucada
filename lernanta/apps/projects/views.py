@@ -1,5 +1,6 @@
 import logging
 import datetime
+import csv
 
 from django import http
 from django.db.models import Sum
@@ -28,7 +29,7 @@ from relationships.models import Relationship
 from links.models import Link
 from replies.models import PageComment
 from users.models import UserProfile
-from content.models import Page
+from content.models import Page, PageVersion
 from schools.models import School
 from statuses import forms as statuses_forms
 from activity.models import Activity
@@ -576,30 +577,38 @@ def admin_metrics(request, slug):
     project_ct = ContentType.objects.get_for_model(Project)
     page_ct = ContentType.objects.get_for_model(Page)
     pages = Page.objects.filter(project=project)
+    page_paths = []
+    pageviews = {}
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    
+
     for page in pages:
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
-        pageviews = PageView.objects.filter(request_url__endswith=page_path)
+        page_paths.append(page_path)
+        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
 
     data = []
     for user in participants:
+        total_course_activity_minutes = 0
+        total_course_page_view_count = 0
         comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
         comment_count = comments.count()
-        pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
-        course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
-        course_activity_seconds = pageviews['time_on_page__sum']
-        if course_activity_seconds is None:
-            course_activity_seconds = 0
-        course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
+        for page_path in page_paths:
+            pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
+            course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
+            course_activity_seconds = pageviews['time_on_page__sum']
+            if course_activity_seconds is None:
+                course_activity_seconds = 0
+            course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
+            total_course_activity_minutes += float(course_activity_minutes)
+            total_course_page_view_count += course_page_view_count
 
         data.append({
             'username': user.user.username,
             'last_active': user.user.last_active,
             'comment_count': comment_count,
-            'course_page_view_count': course_page_view_count,
-            'course_activity_minutes': course_activity_minutes
+            'course_page_view_count': total_course_page_view_count,
+            'course_activity_minutes': total_course_activity_minutes
         })
 
     return render_to_response('projects/project_admin_metrics.html', {
@@ -674,30 +683,186 @@ def user_list(request, slug):
 @can_view_metric_detail
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
-    if request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser:
-        project = get_object_or_404(Project, slug=slug)
-        response = http.HttpResponse(mimetype='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    project = get_object_or_404(Project, slug=slug)
+    participants = project.non_organizer_participants()
+    followers = project.non_participant_followers()
+    project_ct = ContentType.objects.get_for_model(Project)
+    page_ct = ContentType.objects.get_for_model(Page)
+    response = http.HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    pages = Page.objects.filter(project=project)
+    page_paths = []
+    dates = []
+    start_date = project.created_on
+    end_date = project.created_on
+    current_end_date = end_date
+    delta = datetime.timedelta(days = 1)
+    pageviews = {}
 
-        csv_data = (
-            (project.name, ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('Report updated: August 3 2011', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('Users', 'August 1 2011', ' ', ' ', 'Create a study group or course', 'Design great tasks', 'TOTAL', ' '),
-            (' ', 'Time on course pages', 'Number of comments', 'Number of task edits', 'Min. on page', 'Min. on page', 'Time on course pages', 'Number of comments'),
-            ('Participants', ' ', ' ', ' ', ' ', ' ', ' ', ' '),
-            ('username1', '3', '0', '1', '2', '1', '3', '9'),
-            ('username2', '1', '0', '1', '3', '2', '3', '9'),
-            ('Non-participants', ' ', ' ', ' ', ' ', ' ', ' ', '9'),
-            ('username70', '1', '--', '--', '1', '0', '1', '9'),
-            ('anonymizedip', '1', '--', '--', '1', '0', '1', '9')
-        )
-    
-        t = loader.get_template('projects/reports/detailed_csv.txt')
-        c = Context({
-            'data': csv_data,
-        })
-        response.write(t.render(c))
-        return response
-    else:
-        response = http.HttpResponseForbidden("Sorry, you don't have access.")
-        return response
+    for page in pages:
+        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
+        page_paths.append(page_path)
+        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
+        try:
+            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+        except:
+            current_end_date = end_date
+        if current_end_date > end_date:
+            end_date = current_end_date
+
+
+    while start_date <= end_date:
+        dates.append(start_date.strftime("%Y-%m-%d"))
+        start_date += delta
+
+    writer = csv.writer(response)
+    writer.writerow(["Course: " + project.name])
+    writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
+    writer.writerow([])
+
+    row = []
+    row.append("Users")
+    for date in dates:
+        row.append(date)
+        for i in range(2):
+            row.append("")
+        for page in page_paths:
+            row.append(page)
+            row.append("")
+    row.append("TOTAL")
+    for i in range(2):
+        row.append("")
+    for page in page_paths:
+        row.append(page)
+        row.append("")
+    writer.writerow(row)
+
+    row = []
+    row.append("")
+    for date in dates:
+        row.append("Time on course pages")
+        row.append("Comments")
+        row.append("Task Edits")
+        for page in page_paths:
+            row.append("Time on Page")
+            row.append("Views")
+    row.append("Time on course pages")
+    row.append("Comments")
+    row.append("Task Edits")
+    for page in page_paths:
+        row.append("Time on Page")
+        row.append("Views")
+
+    writer.writerow(row)
+
+    writer.writerow(["Participants"])
+
+    for user in participants:
+        row = []
+        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
+        total_task_edits = Activity.objects.filter(actor=user.user, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
+
+        row.append(user.user.username)
+        for date in dates:
+            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_page_time_minutes = {}
+            day_page_view_count = {}
+            day_total_time_on_pages = 0
+            day_total_page_views = 0
+            
+            for page_path in page_paths:
+                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
+                day_page_time_seconds = day_pageviews['time_on_page__sum']
+                if  day_page_time_seconds is None:
+                    day_page_time_seconds = 0
+                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
+                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=user.user, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
+                day_total_time_on_pages += float(day_page_time_minutes[page_path])
+                day_total_page_views += int(day_page_view_count[page_path])
+            
+            row.append(day_total_time_on_pages)
+            row.append(day_total_comments.count())
+            row.append(day_total_task_edits.count())
+
+            for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
+                row.append(day_page_time_minutes[page_path])
+                row.append(day_page_view_count[page_path])
+
+        row.append(total_time_minutes)
+        row.append(total_comments.count())
+        row.append(total_task_edits.count())
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
+        writer.writerow(row)
+
+    writer.writerow(["Followers"])
+    # TODO: Make this a function for participants and followers since follower may have been a participant
+    for follower in followers:
+        row = []
+        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=follower.source)
+        total_task_edits = Activity.objects.filter(actor=follower.source, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
+
+        row.append(follower.source)
+        for date in dates:
+            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_page_time_minutes = {}
+            day_page_view_count = {}
+            day_total_time_on_pages = 0
+            day_total_page_views = 0
+            
+            for page_path in page_paths:
+                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
+                day_page_time_seconds = day_pageviews['time_on_page__sum']
+                if  day_page_time_seconds is None:
+                    day_page_time_seconds = 0
+                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
+                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
+                day_total_time_on_pages += float(day_page_time_minutes[page_path])
+                day_total_page_views += float(day_page_view_count[page_path])
+            
+            row.append(day_total_time_on_pages)
+            row.append(day_total_comments.count())
+            row.append(day_total_task_edits.count())
+            
+            for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
+                row.append(day_page_time_minutes[page_path])
+                row.append(day_page_view_count[page_path])
+        row.append(total_time_minutes)
+        row.append(total_comments.count())
+        row.append(total_task_edits.count())
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
+        writer.writerow(row)
+        
+    writer.writerow(["Non-participants"])
+    # TODO: non-loggedin users
+
+    return response
