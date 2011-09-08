@@ -88,15 +88,14 @@ class Project(ModelBase):
     # Select kind of project (study group, course, or other)
     STUDY_GROUP = 'study group'
     COURSE = 'course'
-    OTHER = 'other'
+    CHALLENGE = 'challenge'
     CATEGORY_CHOICES = (
         (STUDY_GROUP, _('Study Group -- group of people working ' \
                         'collaboratively to acquire and share knowledge.')),
         (COURSE, _('Course -- led by one or more organizers with skills on ' \
                    'a field who direct and help participants during their ' \
                    'learning.')),
-        (OTHER, _('Other -- if other, please fill out and describe the ' \
-                  'term you will use to categorize it.'))
+        (CHALLENGE, _('Challenge -- series of tasks peers can engage with to develop skills.'))
     )
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
@@ -156,10 +155,7 @@ class Project(ModelBase):
 
     @property
     def kind(self):
-        if self.category == Project.OTHER:
-            return self.other.lower()
-        else:
-            return self.category.lower()
+        return self.other.lower() if self.other else self.category
 
     def followers(self):
         return Relationship.objects.filter(deleted=False,

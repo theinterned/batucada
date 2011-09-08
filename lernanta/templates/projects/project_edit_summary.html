@@ -34,19 +34,21 @@
   </div>
   <div class="field{% if form.category.errors %} error{% endif %}">
     <label for="id_category">{{ _('Kind') }}</label>
-    <span class="hint block">{{ _('Select if you are creating a study group, a course, or other kind of learning project.') }}</span>
+    <span class="hint block">{{ _('Select if you are creating a study group, course, or challenge.') }}</span>
     {{ form.category }}
-    <div class="field term{% if form.other.errors %} error{% endif %}">
-      <label for="id_other">{{ _('Term') }}</label>
-      {{ form.other }}
-      {{ form.other.errors }}
-    </div> -- <div class="field term_desc{% if form.other_description.errors %} error{% endif %}">
-      <label for="id_other_description">{{ _('Description') }}</label>
-      {{ form.other_description }}
-      {{ form.other_description.errors }}
-    </div>
     {{ form.category.errors }}
   </div>
+  <span class="hint block">{{ _('Optionally provide a term more specific than study group, course, or challenge, and the corresponding description.') }}</span>
+  <div class="field term{% if form.other.errors %} error{% endif %}">
+    <label for="id_other">{{ _('Term') }}</label>
+    {{ form.other }}
+    {{ form.other.errors }}
+  </div> -- <div class="field term_desc{% if form.other_description.errors %} error{% endif %}">
+    <label for="id_other_description">{{ _('Description') }}</label>
+    {{ form.other_description }}
+    {{ form.other_description.errors }}
+  </div>
+  <br><br>
   <p class="buttons">
     {% if project %}
     <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>

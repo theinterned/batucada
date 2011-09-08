@@ -38,20 +38,8 @@ class ProjectForm(forms.ModelForm):
         }
 
     def clean_other(self):
-        data = self.cleaned_data
-        other = data.get('other')
-        other_provided = (other and other.strip())
-        if data.get('category') == Project.OTHER and not other_provided:
-            raise forms.ValidationError(_('This field is required.'))
+        other = self.cleaned_data.get('other')
         return other.strip() if other else other
-
-    def clean(self):
-        super(ProjectForm, self).clean()
-        data = self.cleaned_data
-        if data.get('category') != Project.OTHER:
-            data['other'] = ''
-            data['other_description'] = ''
-        return data
 
     def save(self, commit=True):
         model = super(ProjectForm, self).save(commit=False)
