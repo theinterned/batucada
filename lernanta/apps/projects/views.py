@@ -761,6 +761,9 @@ def export_detailed_csv(request, slug):
         row = []
         total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
         total_task_edits = Activity.objects.filter(actor=user.user, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
 
         row.append(user.user.username)
         for date in dates:
@@ -784,12 +787,26 @@ def export_detailed_csv(request, slug):
             row.append(day_total_time_on_pages)
             row.append(day_total_comments.count())
             row.append(day_total_task_edits.count())
-            
+
             for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
                 row.append(day_page_time_minutes[page_path])
                 row.append(day_page_view_count[page_path])
 
-        
+        row.append(total_time_minutes)
+        row.append(total_comments.count())
+        row.append(total_task_edits.count())
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
         writer.writerow(row)
 
     writer.writerow(["Followers"])
@@ -810,7 +827,6 @@ def export_detailed_csv(request, slug):
             for page_path in page_paths:
                 day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
                 day_page_time_seconds = day_pageviews['time_on_page__sum']
-                print day_page_time_seconds
                 if  day_page_time_seconds is None:
                     day_page_time_seconds = 0
                 day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
