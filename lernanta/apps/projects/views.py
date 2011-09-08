@@ -758,7 +758,7 @@ def export_detailed_csv(request, slug):
                 day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
                 day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=user.user, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
                 day_total_time_on_pages += float(day_page_time_minutes[page_path])
-                day_total_page_views += float(day_page_view_count[page_path])
+                day_total_page_views += int(day_page_view_count[page_path])
             
             row.append(day_total_time_on_pages)
             row.append(day_total_comments.count())
