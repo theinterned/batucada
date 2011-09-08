@@ -95,7 +95,7 @@ class Project(ModelBase):
         (COURSE, _('Course -- led by one or more organizers with skills on ' \
                    'a field who direct and help participants during their ' \
                    'learning.')),
-        (CHALLENGE, _('Challenge -- series of tasks peers can engage with to develop skills.'))
+        (CHALLENGE, _('Challenge -- series of tasks peers can engage in to develop skills.'))
     )
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
