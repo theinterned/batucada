@@ -729,6 +729,12 @@ def export_detailed_csv(request, slug):
         for page in page_paths:
             row.append(page)
             row.append("")
+    row.append("TOTAL")
+    for i in range(2):
+        row.append("")
+    for page in page_paths:
+        row.append(page)
+        row.append("")
     writer.writerow(row)
 
     row = []
@@ -740,6 +746,13 @@ def export_detailed_csv(request, slug):
         for page in page_paths:
             row.append("Time on Page")
             row.append("Views")
+    row.append("Time on course pages")
+    row.append("Comments")
+    row.append("Task Edits")
+    for page in page_paths:
+        row.append("Time on Page")
+        row.append("Views")
+
     writer.writerow(row)
 
     writer.writerow(["Participants"])
@@ -775,6 +788,8 @@ def export_detailed_csv(request, slug):
             for page_path in page_paths:
                 row.append(day_page_time_minutes[page_path])
                 row.append(day_page_view_count[page_path])
+
+        
         writer.writerow(row)
 
     writer.writerow(["Followers"])
