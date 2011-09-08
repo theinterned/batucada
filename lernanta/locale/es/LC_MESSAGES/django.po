@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-07 17:44-0400\n"
+"POT-Creation-Date: 2011-09-08 15:07-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,7 +99,7 @@ msgstr "Esta tarea fue eliminada."
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:75 apps/projects/views.py:322
+#: apps/content/views.py:75 apps/projects/views.py:323
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
@@ -162,7 +162,7 @@ msgid "Can't send email"
 msgstr "No puede enviarse correo"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:630
+#: apps/projects/views.py:639
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -239,56 +239,52 @@ msgstr "No está autorizado a ver las estadísticas detalladas."
 msgid "You are not authorized to view these overview statistics."
 msgstr "No está autorizado a ver el resumen de las estadísticas."
 
-#: apps/projects/forms.py:45 apps/users/forms.py:154
-msgid "This field is required."
-msgstr "Este campo es requerido."
-
-#: apps/projects/forms.py:81 apps/schools/forms.py:36 apps/schools/forms.py:50
+#: apps/projects/forms.py:69 apps/schools/forms.py:36 apps/schools/forms.py:50
 #: apps/schools/forms.py:64 apps/schools/forms.py:78 apps/users/forms.py:250
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
 msgstr "La imagen excede el tamaño máximo: %(max)dk"
 
-#: apps/projects/forms.py:111 apps/schools/forms.py:96
+#: apps/projects/forms.py:99 apps/schools/forms.py:96
 msgid "That user account was deleted."
 msgstr "Esa cuenta de usuario fue borrada."
 
-#: apps/projects/forms.py:114 apps/schools/forms.py:99
+#: apps/projects/forms.py:102 apps/schools/forms.py:99
 #, python-format
 msgid "There is no user with username: %s."
 msgstr "No hay nadie con ese nombre de usuario: %s."
 
-#: apps/projects/forms.py:119
+#: apps/projects/forms.py:107
 #, python-format
 msgid "User %s is already an organizer."
 msgstr "El usuario %s ya es un organizador."
 
-#: apps/projects/forms.py:124
+#: apps/projects/forms.py:112
 #, python-format
 msgid "User %s is already a participant."
 msgstr "El usuario %s ya está participando."
 
-#: apps/projects/forms.py:134 templates/drumbeatmail/base.html:17
+#: apps/projects/forms.py:122 templates/drumbeatmail/base.html:17
 #: templates/messages/inbox.html:12
 #: templates/projects/contact_organizers.html:12
 msgid "Subject"
 msgstr "Asunto"
 
-#: apps/projects/forms.py:136
+#: apps/projects/forms.py:124
 msgid "Body"
 msgstr "Cuerpo"
 
-#: apps/projects/forms.py:146
+#: apps/projects/forms.py:134
 msgid "That study group, course, ... does not exist."
 msgstr "Ese grupo de estudio, curso, ... no existe."
 
-#: apps/projects/forms.py:165 apps/schools/forms.py:115
+#: apps/projects/forms.py:153 apps/schools/forms.py:115
 #: apps/schools/forms.py:140
 #, python-format
 msgid "There is no study group, course, ... with short name: %s."
 msgstr "No hay un grupo de estudio, curso, ... con nombre corto: %s."
 
-#: apps/projects/forms.py:181
+#: apps/projects/forms.py:169
 msgid "There is no course with this short name on the archive."
 msgstr "No hay un curso con ese nombre corto en el archivo."
 
@@ -309,113 +305,109 @@ msgstr ""
 "que dirigen y ayudan a los participantes durente su aprendizaje."
 
 #: apps/projects/models.py:98
-msgid ""
-"Other -- if other, please fill out and describe the term you will use to "
-"categorize it."
-msgstr ""
-"Otro -- si es otro, por favor rellene y describa el término que usted usaría "
-"para categorizarlo."
+msgid "Challenge -- series of tasks peers can engage with to develop skills."
+msgstr "Reto -- serie de tareas que colegas pueden emprender para desarrollar habilidades."
 
-#: apps/projects/models.py:141
+#: apps/projects/models.py:140
 msgid "group"
 msgstr "grupo"
 
-#: apps/projects/models.py:144
+#: apps/projects/models.py:143
 #, python-format
 msgid "%(name)s %(kind)s"
 msgstr "%(kind)s %(name)s"
 
-#: apps/projects/models.py:155
+#: apps/projects/models.py:154
 msgid "created"
 msgstr "creó"
 
-#: apps/projects/views.py:97 apps/projects/views.py:191
-#: apps/projects/views.py:271
+#: apps/projects/views.py:98 apps/projects/views.py:192
+#: apps/projects/views.py:272
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:108
+#: apps/projects/views.py:109
 #, python-format
 msgid "The %s has been created."
 msgstr "El %s ha sido creado."
 
-#: apps/projects/views.py:113
+#: apps/projects/views.py:114
 msgid "Problem creating the study group, course, ..."
 msgstr "Problema creando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:216
+#: apps/projects/views.py:217
 #, python-format
 msgid "The %s has been cloned."
 msgstr "El %s ha sido clonado."
 
-#: apps/projects/views.py:222
+#: apps/projects/views.py:223
 msgid "There was a problem cloning the study group, course, ..."
 msgstr "Ocurrió un problema al clonar el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:289
+#: apps/projects/views.py:290
 #, python-format
 msgid "The %s has been imported."
 msgstr "El %s ha sido importado."
 
-#: apps/projects/views.py:294
+#: apps/projects/views.py:295
 msgid "Problem importing the study group, course, ..."
 msgstr "Problema importando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:367 apps/schools/views.py:126
+#: apps/projects/views.py:368 apps/schools/views.py:126
 #: apps/schools/views.py:168 apps/schools/views.py:210
 #: apps/schools/views.py:252
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:374 apps/schools/views.py:132
+#: apps/projects/views.py:375 apps/schools/views.py:132
 #: apps/schools/views.py:174 apps/schools/views.py:216
 #: apps/schools/views.py:258
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
-#: apps/projects/views.py:398
+#: apps/projects/views.py:399
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:402
+#: apps/projects/views.py:403
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:424 apps/projects/views.py:455
+#: apps/projects/views.py:425 apps/projects/views.py:456
 #: apps/users/views.py:598
 msgid "You can't edit this link"
 msgstr "Usted no puede editar este enlace"
 
-#: apps/projects/views.py:434
+#: apps/projects/views.py:435
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:457
+#: apps/projects/views.py:458
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:479
+#: apps/projects/views.py:480
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:485
+#: apps/projects/views.py:486
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:518
+#: apps/projects/views.py:519
 msgid "You can't make that person an organizer"
 msgstr "Usted no puede convertir ese usuario en organizador"
 
-#: apps/projects/views.py:521
+#: apps/projects/views.py:522
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:534
+#: apps/projects/views.py:535
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:555
+#: apps/projects/views.py:556
 #, python-format
 msgid "There was a problem saving the %s's status."
 msgstr "Ocurrió un problema al guardar el estado del %s."
@@ -684,6 +676,10 @@ msgstr "Su cuenta fue migrada desde el sitio antiguo de P2PU."
 #: apps/users/forms.py:148
 msgid "User profile with this Username already exists."
 msgstr "Ya existe un perfil con este nombre de usuario."
+
+#: apps/users/forms.py:154
+msgid "This field is required."
+msgstr "Este campo es requerido."
 
 #: apps/users/forms.py:157
 msgid "User profile with this Email already exists."
@@ -1189,8 +1185,8 @@ msgstr "¿Está seguro que desea borrar esta actividad?"
 #: templates/projects/project.html:62 templates/projects/project_clone.html:21
 #: templates/projects/project_edit_image.html:24
 #: templates/projects/project_edit_status.html:53
-#: templates/projects/project_edit_summary.html:52
-#: templates/projects/project_edit_summary.html:55
+#: templates/projects/project_edit_summary.html:54
+#: templates/projects/project_edit_summary.html:57
 #: templates/projects/project_import.html:21
 #: templates/replies/comment_page.html:91
 #: templates/replies/delete_restore_comment.html:33
@@ -1344,7 +1340,7 @@ msgstr ""
 #: templates/content/create_page.html:38 templates/projects/directory.html:22
 #: templates/projects/gallery.html:21 templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:40
-#: templates/projects/project_edit_summary.html:56
+#: templates/projects/project_edit_summary.html:58
 #: templates/projects/project_import.html:22 templates/tags/directory.html:22
 msgid "Create"
 msgstr "Crear"
@@ -1368,7 +1364,7 @@ msgstr "Actualización menor (no se publica en el muro)."
 #: templates/content/edit_page.html:47
 #: templates/dashboard/setup_profile.html:9
 #: templates/projects/project_edit_status.html:54
-#: templates/projects/project_edit_summary.html:53
+#: templates/projects/project_edit_summary.html:55
 #: templates/replies/comment_page.html:94
 #: templates/schools/school_edit_styles.html:69
 #: templates/schools/school_edit_summary.html:23
@@ -2268,18 +2264,22 @@ msgid "Kind"
 msgstr "Tipo"
 
 #: templates/projects/project_edit_summary.html:37
-msgid ""
-"Select if you are creating a study group, a course, or other kind of "
-"learning project."
-msgstr ""
-"Indique si esta creando un grupo de estudio, un curso, u otro tipo de "
-"proyecto de aprendizaje."
+msgid "Select if you are creating a study group, course, or challenge."
+msgstr "Indique si esta creando un grupo de estudio, curso, o reto."
 
-#: templates/projects/project_edit_summary.html:40
+#: templates/projects/project_edit_summary.html:41
+msgid ""
+"Optionally provide a term more specific than study group, course, or "
+"challenge, and the corresponding description."
+msgstr ""
+"Opcionalmente proporcione un término más específico que grupo de estudio, "
+"curso o reto, y la descripción correspondiente."
+
+#: templates/projects/project_edit_summary.html:43
 msgid "Term"
 msgstr "Término"
 
-#: templates/projects/project_edit_summary.html:44
+#: templates/projects/project_edit_summary.html:47
 #: templates/schools/school_edit_summary.html:16
 msgid "Description"
 msgstr "Descripción"
