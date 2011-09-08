@@ -17,26 +17,7 @@
 
 <div id="main">
 
-  <div id="task_header">
-  <h2><span>{{ _('Tasks') }}</span></h2>
-    
-  {% if content_pages %}
-
-  <ul>
-    {% for page in content_pages %}
-    <li class="{% cycle 'odd' 'even' %}">
-        <span class="taskNumber">{{forloop.counter}}</span> <a class="taskLink" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-        <span class="action-buttons"><a href="{{ page.get_absolute_url }}">{{ _('View') }}</a></span>
-    </li>
-        {% endfor %}
-      </ul>
-
-  {% else %}
-   {{ _('No tasks have been added.') }}
-    
-  {% endif %}
-  
-  </div>
+  {% task_list project %}
 
 </div> <!-- /#main -->
 

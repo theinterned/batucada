@@ -136,16 +136,14 @@ def show(request, slug):
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
     is_following = project.is_following(request.user)
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
-        deleted=False).order_by('index')
-    content_pages_for_header = content_pages[0:3]
-    content_pages_count = len(content_pages)
     if is_organizing:
         form = statuses_forms.ImportantStatusForm()
     elif is_participating:
         form = statuses_forms.StatusForm()
     else:
         form = None
+
+    show_all_tasks = (project.kind == Project.CHALLENGE)
 
     activities = project.activities()
     activities = filter_activities(request, activities)
@@ -155,8 +153,7 @@ def show(request, slug):
         'participating': is_participating,
         'following': is_following,
         'organizing': is_organizing,
-        'content_pages_for_header': content_pages_for_header,
-        'content_pages_count': content_pages_count,
+        'show_all_tasks': show_all_tasks,
         'form': form,
         'domain': Site.objects.get_current().domain,
     }

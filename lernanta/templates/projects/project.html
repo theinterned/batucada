@@ -17,21 +17,8 @@
 {% sidebar %}
 
 <div id="main">
-  
-  {% if content_pages_for_header %}
-  <div id="task_header">
-  <h2 class="school_header"><span>{{ _('Tasks') }}</span></h2>
-  <ul>
-    {% for page in content_pages_for_header %}
-    <li class="{% cycle 'odd' 'even' %}">
-        <span class="taskNumber">{{forloop.counter}}</span> <a class="taskLink" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-        <span class="action-buttons"><a href="{{ page.get_absolute_url }}">{{ _('View') }}</a></span>
-    </li>
-        {% endfor %}
-      </ul>
-      <p id="more_task_link"><span id="task-count">{{ _('Displaying') }} {% if content_pages_count < 3 %}{{ content_pages_count}} {% else %}3{% endif %} {{ _('of') }} {{ content_pages_count }} {{ _('total tasks') }}</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></p>
-  </div>
-  {% endif %}
+
+  {% task_list project show_all_tasks %}
 
   <div id="activity_header">
   <h2 class="school_header"><span>{{ _('Activity Wall') }}</span></h2>

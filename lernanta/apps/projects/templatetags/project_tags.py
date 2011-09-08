@@ -128,3 +128,18 @@ def featured_list(school=None):
 
 register.inclusion_tag('projects/_project_list.html')(project_list)
 register.inclusion_tag('projects/_project_list.html')(featured_list)
+
+
+def task_list(project, show_all_tasks=True, short_list_length=3):
+    tasks = Page.objects.filter(project__pk=project.pk, listed=True,
+        deleted=False).order_by('index')
+    tasks_count = visible_count = tasks.count()
+    if not show_all_tasks:
+        tasks = tasks[:short_list_length]
+        visible_count = tasks.count()
+    return {'tasks': tasks, 'tasks_count': tasks_count, 'visible_count': visible_count,
+        'show_all': show_all_tasks, 'project': project}
+    
+    
+
+register.inclusion_tag('projects/_task_list.html')(task_list)
