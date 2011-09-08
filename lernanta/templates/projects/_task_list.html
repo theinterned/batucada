@@ -1,0 +1,24 @@
+{% load l10n_tags %}
+{% if tasks_count or show_all %}
+  <div id="task_header">
+    <h2 class="school_header"><span>{{ _('Tasks') }}</span></h2>
+    {% if tasks_count %}
+      <ul>
+        {% for task in tasks %}
+          <li class="{% cycle 'odd' 'even' %}">
+            <span class="taskNumber">{{ forloop.counter }}</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+            <span class="action-buttons"><a href="{{ task.get_absolute_url }}">{{ _('View') }}</a></span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      {{ _('No tasks have been added.') }}
+    {% endif %}
+    {% if visible_count < tasks_count %}
+      <p id="more_task_link">
+        <span id="task-count">{{ _('Displaying') }} {{ visible_count }} {{ _('of') }} {{ tasks_count }} {{ _('total tasks') }}</span>
+        <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a>
+      </p>
+    {% endif %}
+  </div>
+{% endif %}
