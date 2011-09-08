@@ -695,11 +695,10 @@ def export_detailed_csv(request, slug):
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
         page_paths.append(page_path)
         pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
-#        try:
-#            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
-#        except:
-#            current_end_date = end_date
-        current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+        try:
+            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
+        except:
+            current_end_date = end_date
         if current_end_date > end_date:
             end_date = current_end_date
 
