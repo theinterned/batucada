@@ -859,7 +859,61 @@ def export_detailed_csv(request, slug):
             row.append(total_page_view_count[page_path])
         writer.writerow(row)
         
-    writer.writerow(["Non-participants"])
-    # TODO: non-loggedin users
+    writer.writerow(["Non-loggedin Users"])
+    ip_addresses = {}
+    nonloggedin_pageviews = {}
+    for page_path in page_paths:
+        nonloggedin_pageviews[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=None)
+        for ip_address in nonloggedin_pageviews[page_path].values('ip_address'):
+            ip_addresses[ip_address['ip_address']] = True
+
+    ii = 0
+    for ip_address in ip_addresses.keys():
+        row = []
+        ii += 1
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
+        
+        row.append("Non-loggedin User " + str(ii))
+        for date in dates:
+            day_page_time_minutes = {}
+            day_page_view_count = {}
+            day_total_time_on_pages = 0
+            day_total_page_views = 0
+            
+            for page_path in page_paths:
+                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, ip_address=ip_address, user=None, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
+                day_page_time_seconds = day_pageviews['time_on_page__sum']
+                if  day_page_time_seconds is None:
+                    day_page_time_seconds = 0
+                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
+                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, ip_address=ip_address, user=None, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
+                day_total_time_on_pages += float(day_page_time_minutes[page_path])
+                day_total_page_views += float(day_page_view_count[page_path])
+            
+            row.append(day_total_time_on_pages)
+            row.append("--")
+            row.append("--")
+            
+            for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
+                row.append(day_page_time_minutes[page_path])
+                row.append(day_page_view_count[page_path])
+        row.append(total_time_minutes)
+        row.append("--")
+        row.append("--")
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
+        writer.writerow(row)
 
     return response
