@@ -696,6 +696,7 @@ def export_detailed_csv(request, slug):
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
     followers = project.non_participant_followers()
+    all_participants = project.participants()
     project_ct = ContentType.objects.get_for_model(Project)
     page_ct = ContentType.objects.get_for_model(Page)
     response = http.HttpResponse(mimetype='text/csv')
@@ -708,7 +709,18 @@ def export_detailed_csv(request, slug):
     current_end_date = end_date
     delta = datetime.timedelta(days = 1)
     pageviews = {}
-
+    total_users = {}
+    total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct)
+    total_task_edits = Activity.objects.filter(target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+    # find all users but differentiate between those currently a participant or follower and those not
+    for user in total_comments.values('author'):
+        total_users[user['author']] = False
+    for user in total_task_edits.values('actor'):
+        total_users[user['actor']] = False
+    for user in all_participants.values('user'):
+        total_users[user['user']] = True
+    for user in followers.values('source'):
+        total_users[user['source']] = True
     for page in pages:
         page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
         page_paths.append(page_path)
@@ -719,7 +731,6 @@ def export_detailed_csv(request, slug):
             current_end_date = end_date
         if current_end_date > end_date:
             end_date = current_end_date
-
 
     while start_date <= end_date:
         dates.append(start_date.strftime("%Y-%m-%d"))
@@ -872,7 +883,116 @@ def export_detailed_csv(request, slug):
             row.append(total_page_view_count[page_path])
         writer.writerow(row)
         
-    writer.writerow(["Non-participants"])
-    # TODO: non-loggedin users
+    writer.writerow(["Non-Participants"])
+
+    previous_participant_ids = [i for i in total_users.keys() if total_users[i] == False]
+
+    for user_id in previous_participant_ids:
+        row = []
+        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user_id)
+        total_task_edits = Activity.objects.filter(actor=user_id, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
+        profile = get_object_or_404(UserProfile, user=user_id)
+        row.append(profile.username)
+        for date in dates:
+            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
+            day_page_time_minutes = {}
+            day_page_view_count = {}
+            day_total_time_on_pages = 0
+            day_total_page_views = 0
+            
+            for page_path in page_paths:
+                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user_id, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
+                day_page_time_seconds = day_pageviews['time_on_page__sum']
+                if  day_page_time_seconds is None:
+                    day_page_time_seconds = 0
+                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
+                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=user_id, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
+                day_total_time_on_pages += float(day_page_time_minutes[page_path])
+                day_total_page_views += float(day_page_view_count[page_path])
+            
+            row.append(day_total_time_on_pages)
+            row.append(day_total_comments.count())
+            row.append(day_total_task_edits.count())
+            
+            for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
+                row.append(day_page_time_minutes[page_path])
+                row.append(day_page_view_count[page_path])
+        row.append(total_time_minutes)
+        row.append(total_comments.count())
+        row.append(total_task_edits.count())
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
+        writer.writerow(row)
+
+    # Add non-logged in users
+    ip_addresses = {}
+    nonloggedin_pageviews = {}
+    for page_path in page_paths:
+        nonloggedin_pageviews[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=None)
+        for ip_address in nonloggedin_pageviews[page_path].values('ip_address'):
+            ip_addresses[ip_address['ip_address']] = True
+
+    ii = 0
+    for ip_address in ip_addresses.keys():
+        row = []
+        ii += 1
+        total_page_time_minutes = {}
+        total_time_minutes = 0
+        total_page_view_count = {}
+        
+        row.append("Non-loggedin User " + str(ii))
+        for date in dates:
+            day_page_time_minutes = {}
+            day_page_view_count = {}
+            day_total_time_on_pages = 0
+            day_total_page_views = 0
+            
+            for page_path in page_paths:
+                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, ip_address=ip_address, user=None, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
+                day_page_time_seconds = day_pageviews['time_on_page__sum']
+                if  day_page_time_seconds is None:
+                    day_page_time_seconds = 0
+                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
+                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, ip_address=ip_address, user=None, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
+                day_total_time_on_pages += float(day_page_time_minutes[page_path])
+                day_total_page_views += float(day_page_view_count[page_path])
+            
+            row.append(day_total_time_on_pages)
+            row.append("--")
+            row.append("--")
+            
+            for page_path in page_paths:
+                if total_page_time_minutes.has_key(page_path):
+                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
+                else:
+                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
+                if total_page_view_count.has_key(page_path):
+                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
+                else:
+                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
+                total_time_minutes += float(day_page_time_minutes[page_path])
+                row.append(day_page_time_minutes[page_path])
+                row.append(day_page_view_count[page_path])
+        row.append(total_time_minutes)
+        row.append("--")
+        row.append("--")
+        for page_path in page_paths:
+            row.append(total_page_time_minutes[page_path])
+            row.append(total_page_view_count[page_path])
+        writer.writerow(row)
 
     return response
