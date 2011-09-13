@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-08 15:44-0400\n"
+"POT-Creation-Date: 2011-09-13 17:16-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,16 +25,16 @@ msgstr "Bitácora de actividades de %s"
 msgid "Activity feed from %s's dashboard"
 msgstr "Bitácora de actividades que %s está siguiendo"
 
-#: apps/activity/models.py:83
+#: apps/activity/models.py:88
 msgid "activities"
 msgstr "actividades"
 
-#: apps/activity/models.py:90
+#: apps/activity/models.py:95
 #, python-format
 msgid "%(actor)s %(verb)s %(target)s"
 msgstr "%(actor)s %(verb)s %(target)s"
 
-#: apps/activity/models.py:108
+#: apps/activity/models.py:113
 #, python-format
 msgid "wall activity from %s"
 msgstr "actividad de %s"
@@ -63,19 +63,19 @@ msgstr "compartió"
 msgid "received"
 msgstr "recibió"
 
-#: apps/activity/views.py:40
+#: apps/activity/views.py:43
 msgid "This activity was deleted."
 msgstr "Esta actividad fue eliminada."
 
-#: apps/activity/views.py:55
+#: apps/activity/views.py:60
 msgid "You can't edit this activity"
 msgstr "Usted no puede editar esta actividad"
 
-#: apps/activity/views.py:60
+#: apps/activity/views.py:65
 msgid "Activity deleted!"
 msgstr "¡Actividad eliminada!"
 
-#: apps/activity/views.py:62
+#: apps/activity/views.py:67
 msgid "Activity restored!"
 msgstr "¡Actividad restaurada!"
 
@@ -87,57 +87,62 @@ msgstr "Ocurrio un problema. Con suerte es temporario."
 msgid "Please try again in a few minutes."
 msgstr "Por favor intente de nuevo en unos minutos."
 
-#: apps/content/models.py:58
+#: apps/content/models.py:59
 msgid "added"
 msgstr "añadió"
 
-#: apps/content/views.py:28
+#: apps/content/views.py:27 apps/projects/decorators.py:83
+#, python-format
+msgid "This page is not accesible on a %s."
+msgstr "Esta página no es accesible en un %s."
+
+#: apps/content/views.py:31
 msgid "This task was deleted."
 msgstr "Esta tarea fue eliminada."
 
-#: apps/content/views.py:56 apps/content/views.py:63 apps/content/views.py:194
+#: apps/content/views.py:60 apps/content/views.py:67 apps/content/views.py:201
 msgid "You can't edit this page"
 msgstr "Usted no puede editar esta página"
 
-#: apps/content/views.py:75 apps/projects/views.py:323
+#: apps/content/views.py:79 apps/projects/views.py:323
 #, python-format
 msgid "%s updated!"
 msgstr "¡%s actualizado!"
 
-#: apps/content/views.py:81 apps/content/views.py:121
-#: apps/content/views.py:214 apps/replies/views.py:56
+#: apps/content/views.py:85 apps/content/views.py:126
+#: apps/content/views.py:221 apps/replies/views.py:56
 #: apps/replies/views.py:112 apps/replies/views.py:141
-#: apps/signups/views.py:135 apps/signups/views.py:173
+#: apps/signups/views.py:142 apps/signups/views.py:181
 msgid "Please correct errors below."
 msgstr "Por favor corrija los errores mostrados a continuación."
 
-#: apps/content/views.py:101
+#: apps/content/views.py:106
 msgid "You can not create a new task!"
 msgstr "¡Usted no puede crear una nueva tarea!"
 
-#: apps/content/views.py:115
+#: apps/content/views.py:120
 msgid "Task created!"
 msgstr "¡Tarea creada!"
 
-#: apps/content/views.py:137 apps/content/views.py:139
+#: apps/content/views.py:143 apps/content/views.py:145
 msgid "You can't delete this page"
 msgstr "Usted no eliminar esta página"
 
-#: apps/content/views.py:148
+#: apps/content/views.py:155
 #, python-format
 msgid "%s deleted!"
 msgstr "¡%s eliminada!"
 
-#: apps/content/views.py:187
+#: apps/content/views.py:194
 msgid "You can't restore this page"
 msgstr "Usted no puede restaurar esta página"
 
-#: apps/content/views.py:208
+#: apps/content/views.py:215
 #, python-format
 msgid "%s restored!"
 msgstr "¡%s restaurada!"
 
-#: apps/content/views.py:239 apps/content/views.py:268
+#: apps/content/views.py:247 apps/content/views.py:276
 msgid "You can not change tasks order."
 msgstr "Usted no puede modificar el orden de las tareas."
 
@@ -162,7 +167,7 @@ msgid "Can't send email"
 msgstr "No puede enviarse correo"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
-#: apps/projects/views.py:639
+#: apps/projects/views.py:648
 msgid "Message successfully sent."
 msgstr "Mensaje enviado con éxito."
 
@@ -170,7 +175,7 @@ msgstr "Mensaje enviado con éxito."
 msgid "There was an error sending your message. Please try again."
 msgstr "Ocurrió un error al enviar el mensaje. Por favor intente nuevamente."
 
-#: apps/links/views.py:24 apps/links/views.py:48
+#: apps/links/views.py:25 apps/links/views.py:50
 msgid "You can not change links order."
 msgstr "Usted no puede modificar el orden de los enlaces."
 
@@ -223,19 +228,19 @@ msgstr "grupos de estudio, cursos, ... activos."
 
 #: apps/projects/decorators.py:20
 #, python-format
-msgid "You are not organizing this %s"
-msgstr "Usted no está organizando este %s"
+msgid "You are not organizing this %s."
+msgstr "Usted no está organizando este %s."
 
 #: apps/projects/decorators.py:36
 #, python-format
-msgid "You are not participating in this %s"
-msgstr "Usted no está participando en este %s"
+msgid "You are not participating in this %s."
+msgstr "Usted no está participando en este %s."
 
-#: apps/projects/decorators.py:50
+#: apps/projects/decorators.py:51
 msgid "You are not authorized to view these detailed statistics."
 msgstr "No está autorizado a ver las estadísticas detalladas."
 
-#: apps/projects/decorators.py:65
+#: apps/projects/decorators.py:67
 msgid "You are not authorized to view these overview statistics."
 msgstr "No está autorizado a ver el resumen de las estadísticas."
 
@@ -323,17 +328,17 @@ msgstr "%(kind)s %(name)s"
 msgid "created"
 msgstr "creó"
 
-#: apps/projects/views.py:98 apps/projects/views.py:192
+#: apps/projects/views.py:99 apps/projects/views.py:192
 #: apps/projects/views.py:272
 msgid "Full Description"
 msgstr "Descripción Completa"
 
-#: apps/projects/views.py:109
+#: apps/projects/views.py:110
 #, python-format
 msgid "The %s has been created."
 msgstr "El %s ha sido creado."
 
-#: apps/projects/views.py:114
+#: apps/projects/views.py:115
 msgid "Problem creating the study group, course, ..."
 msgstr "Problema creando el grupo de estudio, curso, ..."
 
@@ -355,61 +360,61 @@ msgstr "El %s ha sido importado."
 msgid "Problem importing the study group, course, ..."
 msgstr "Problema importando el grupo de estudio, curso, ..."
 
-#: apps/projects/views.py:368 apps/schools/views.py:126
+#: apps/projects/views.py:369 apps/schools/views.py:126
 #: apps/schools/views.py:168 apps/schools/views.py:210
 #: apps/schools/views.py:252
 msgid "Image updated"
 msgstr "Imagen actualizada"
 
-#: apps/projects/views.py:375 apps/schools/views.py:132
+#: apps/projects/views.py:376 apps/schools/views.py:132
 #: apps/schools/views.py:174 apps/schools/views.py:216
 #: apps/schools/views.py:258
 msgid "There was an error uploading your image"
 msgstr "Ocurrió un error al subir la imagen"
 
-#: apps/projects/views.py:399
+#: apps/projects/views.py:402
 msgid "Link added."
 msgstr "Enlace añadido."
 
-#: apps/projects/views.py:403
+#: apps/projects/views.py:406
 msgid "There was an error adding your link."
 msgstr "Ocurrió un error al añadir el enlace."
 
-#: apps/projects/views.py:425 apps/projects/views.py:456
+#: apps/projects/views.py:429 apps/projects/views.py:461
 #: apps/users/views.py:598
 msgid "You can't edit this link"
 msgstr "Usted no puede editar este enlace"
 
-#: apps/projects/views.py:435
+#: apps/projects/views.py:439
 msgid "Link updated."
 msgstr "Enlace actualizado."
 
-#: apps/projects/views.py:458
+#: apps/projects/views.py:463
 msgid "The link was deleted"
 msgstr "El enlace fue removido"
 
-#: apps/projects/views.py:480
+#: apps/projects/views.py:485
 msgid "Participant added."
 msgstr "Participante añadido."
 
-#: apps/projects/views.py:486
+#: apps/projects/views.py:491
 msgid "There was an error adding the participant."
 msgstr "Ocurrió un error al añadir el participante."
 
-#: apps/projects/views.py:519
+#: apps/projects/views.py:525
 msgid "You can't make that person an organizer"
 msgstr "Usted no puede convertir ese usuario en organizador"
 
-#: apps/projects/views.py:522
+#: apps/projects/views.py:528
 msgid "The participant is now an organizer."
 msgstr "El participante ahora es un organizador."
 
-#: apps/projects/views.py:535
+#: apps/projects/views.py:542
 #, python-format
 msgid "The participant %s has been removed."
 msgstr "El participante %s ha sido removido."
 
-#: apps/projects/views.py:556
+#: apps/projects/views.py:563
 #, python-format
 msgid "There was a problem saving the %s's status."
 msgstr "Ocurrió un problema al guardar el estado del %s."
@@ -418,7 +423,7 @@ msgstr "Ocurrió un problema al guardar el estado del %s."
 msgid "Cannot create self referencing relationship."
 msgstr "No puede crear una relacion consigo mismo."
 
-#: apps/relationships/views.py:51
+#: apps/relationships/views.py:55
 msgid "You can't unfollow"
 msgstr "Usted no puede dejar de seguir"
 
@@ -561,69 +566,75 @@ msgid "the signup answer of %(author)s at %(project)s"
 msgstr ""
 "la respuesta de %(author)s a las preguntas de inscripción en %(project)s"
 
-#: apps/signups/views.py:31
+#: apps/signups/views.py:35
 msgid "Signup updated!"
 msgstr "¡Inscripción actualizada!"
 
-#: apps/signups/views.py:78 templates/signups/sign_up.html:51
+#: apps/signups/views.py:84 templates/signups/sign_up.html:51
 msgid "This answer was deleted."
 msgstr "Esta respuesta fue eliminada."
 
-#: apps/signups/views.py:97
+#: apps/signups/views.py:104
 #, python-format
 msgid "You already joined this %s."
 msgstr "Usted ya se unió a este %s."
 
-#: apps/signups/views.py:100
+#: apps/signups/views.py:107
 #, python-format
 msgid "Sign-up is currently closed.You can clone the %s if is full."
 msgstr ""
 "La inscripción esta cerrada en estos momentos. Usted puede clonar el %s si "
 "está lleno."
 
-#: apps/signups/views.py:109
+#: apps/signups/views.py:116
 msgid "You already posted an answer to the signup questions."
 msgstr "Usted ya envió una respuesta en la página de inscripción."
 
-#: apps/signups/views.py:130
+#: apps/signups/views.py:137
 msgid "You are now a participant!"
 msgstr "¡Ahora es un participante!"
 
-#: apps/signups/views.py:132
+#: apps/signups/views.py:139
 msgid "Answer submitted!"
 msgstr "¡Respuesta enviada!"
 
-#: apps/signups/views.py:158
+#: apps/signups/views.py:166
 msgid "You can't edit this answer"
 msgstr "Usted no puede editar esta respuesta"
 
-#: apps/signups/views.py:170
+#: apps/signups/views.py:178
 msgid "Answer updated!"
 msgstr "¡Respuesta actualizada!"
 
-#: apps/signups/views.py:203
+#: apps/signups/views.py:212
 msgid "Organizer added!"
 msgstr "¡Organizador añadido!"
 
-#: apps/signups/views.py:205
+#: apps/signups/views.py:214
 msgid "Participant added!"
 msgstr "¡Participante añadido!"
 
-#: apps/signups/views.py:215
+#: apps/signups/views.py:225
 msgid "You can not restore this answer."
 msgstr "Usted no puede restaurar esta respuesta."
 
-#: apps/signups/views.py:217
+#: apps/signups/views.py:227
 msgid "You can not delete this answer."
 msgstr "Usted no puede eliminar esta respuesta."
 
-#: apps/signups/views.py:224
+#: apps/signups/views.py:234
 msgid "Answer deleted!"
 msgstr "¡Respuesta eliminada!"
 
-#: apps/signups/views.py:226
+#: apps/signups/views.py:236
 msgid "Answer restored!"
 msgstr "¡Respuesta restaurada!"
+
+#: apps/signups/views.py:259 apps/signups/views.py:262
+msgid "Organizers can't use this page to leave their study group, course, ..."
+msgstr ""
+"Los organizadores no pueden usar esta página para dejar su grupo de estudio, "
+"curso, ..."
 
 #: apps/statuses/models.py:33
 msgid "statuses"
@@ -634,7 +645,7 @@ msgstr "estados"
 msgid "message: %s"
 msgstr "mensaje: %s"
 
-#: apps/statuses/views.py:28 apps/statuses/views.py:53
+#: apps/statuses/views.py:28 apps/statuses/views.py:55
 msgid "There was an error posting your status update"
 msgstr "Ocurrió un error al publicar su mensaje"
 
@@ -642,8 +653,8 @@ msgstr "Ocurrió un error al publicar su mensaje"
 msgid "Tag"
 msgstr "Etiqueta"
 
-#: apps/tags/models.py:10 templates/projects/project_edit_summary.html:30
-#: templates/projects/sidebar.html:41
+#: apps/tags/models.py:10 templates/projects/project_edit_summary.html:33
+#: templates/projects/sidebar.html:73
 msgid "Tags"
 msgstr "Etiquetas"
 
@@ -1021,7 +1032,7 @@ msgid "BETA"
 msgstr "BETA"
 
 #: templates/base.html:59 templates/activity/base.html:16
-#: templates/projects/base.html:17 templates/projects/directory.html:4
+#: templates/projects/base.html:18 templates/projects/directory.html:4
 #: templates/projects/directory.html:16 templates/projects/gallery.html:4
 #: templates/projects/gallery.html.py:16
 #: templates/projects/project_edit.html:25 templates/tags/directory.html:4
@@ -1032,7 +1043,7 @@ msgstr "Aprender"
 #: templates/base.html:60 templates/activity/base.html:20
 #: templates/projects/project_user_list.html:7
 #: templates/projects/project_user_list.html:12
-#: templates/projects/sidebar.html:145
+#: templates/projects/sidebar.html:182
 #: templates/schools/school_edit_statistics.html:16
 #: templates/users/profile.html:18 templates/users/profile_edit.html:11
 #: templates/users/user_list.html:5 templates/users/user_list.html.py:10
@@ -1070,7 +1081,7 @@ msgid "Edit Profile"
 msgstr "Editar Perfil"
 
 #: templates/base.html:96 templates/chat/chat.html:4
-#: templates/chat/chat.html.py:10 templates/projects/sidebar.html:113
+#: templates/chat/chat.html.py:10 templates/projects/sidebar.html:145
 msgid "Chat"
 msgstr "Chat"
 
@@ -1109,7 +1120,7 @@ msgstr "js/script-es.js"
 #: templates/content/page.html:34 templates/drumbeat/report_abuse.html:10
 #: templates/drumbeat/report_received.html:10
 #: templates/drumbeatmail/inbox.html:49 templates/drumbeatmail/inbox.html:96
-#: templates/projects/sidebar.html:61
+#: templates/projects/sidebar.html:93
 #: templates/replies/_comment_threads.html:27
 #: templates/replies/_comment_threads.html:56
 #: templates/signups/sign_up.html:66 templates/users/sidebar.html:82
@@ -1179,16 +1190,16 @@ msgstr "¿Está seguro que desea borrar esta actividad?"
 
 #: templates/activity/delete_restore.html:27
 #: templates/content/confirm_delete_page.html:27
-#: templates/content/create_page.html:36 templates/content/edit_page.html:45
-#: templates/content/restore_version.html:42
+#: templates/content/create_page.html:28 templates/content/edit_page.html:37
+#: templates/content/restore_version.html:34
 #: templates/dashboard/dashboard.html:43
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:38
 #: templates/projects/contact_organizers.html:34
-#: templates/projects/project.html:62 templates/projects/project_clone.html:21
+#: templates/projects/project.html:60 templates/projects/project_clone.html:21
 #: templates/projects/project_edit_image.html:24
-#: templates/projects/project_edit_status.html:53
-#: templates/projects/project_edit_summary.html:54
-#: templates/projects/project_edit_summary.html:57
+#: templates/projects/project_edit_status.html:57
+#: templates/projects/project_edit_summary.html:60
+#: templates/projects/project_edit_summary.html:63
 #: templates/projects/project_import.html:21
 #: templates/replies/comment_page.html:91
 #: templates/replies/delete_restore_comment.html:33
@@ -1211,7 +1222,7 @@ msgstr "Cancelar"
 
 #: templates/activity/delete_restore.html:30
 #: templates/content/restore_version.html:21
-#: templates/content/restore_version.html:44
+#: templates/content/restore_version.html:36
 #: templates/content/version_page.html:23
 #: templates/replies/_comment_threads.html:12
 #: templates/replies/delete_restore_comment.html:36
@@ -1220,7 +1231,7 @@ msgstr "Cancelar"
 msgid "Restore"
 msgstr "Restaurar"
 
-#: templates/activity/index.html:20 templates/content/page.html:42
+#: templates/activity/index.html:20 templates/content/page.html:46
 #: templates/projects/project_admin_metrics.html:26
 #: templates/projects/project_admin_metrics.html:41
 msgid "Comments"
@@ -1281,19 +1292,35 @@ msgstr ""
 "\"%(obi_url)s\" target=\"_blank\">%(obi_url)s</a>. Asegúrese de utilizar la "
 "dirección de correo <strong>%(email)s</strong> cuando entre a ese sitio."
 
-#: templates/content/base_page_form.html:24
+#: templates/content/base_page_form.html:19
+#: templates/replies/comment_page.html:55
+#: templates/signups/answer_sign_up.html:24
+msgid "[Preview]"
+msgstr "[Vista Previa]"
+
+#: templates/content/base_page_form.html:30
 msgid "Title"
 msgstr "Título"
 
-#: templates/content/base_page_form.html:25
+#: templates/content/base_page_form.html:31
 msgid "A good title is short and descriptive."
 msgstr "Un buen título es corto y descriptivo."
 
-#: templates/content/base_page_form.html:36
+#: templates/content/base_page_form.html:38
+#: templates/projects/project_edit_summary.html:18
+msgid "One sentence description"
+msgstr "Descripción de una línea"
+
+#: templates/content/base_page_form.html:39
+msgid "This description will be used as sub header bellow the task title."
+msgstr ""
+"Esta descripción se usará como subcabecera debajo del título de la tarea."
+
+#: templates/content/base_page_form.html:50
 msgid "Collaborative work (editable by all the participants)."
 msgstr "Trabajo colaborativo (editable por todos los participantes)."
 
-#: templates/content/base_page_form.html:42
+#: templates/content/base_page_form.html:56
 #: templates/replies/comment_page.html:98
 #: templates/signups/answer_sign_up.html:98
 msgid "Preview"
@@ -1316,14 +1343,7 @@ msgstr "¿Está seguro que desea eliminar esta tarea?"
 msgid "Create Task"
 msgstr "Crear Tarea"
 
-#: templates/content/create_page.html:20 templates/content/edit_page.html:33
-#: templates/content/restore_version.html:30
-#: templates/replies/comment_page.html:55
-#: templates/signups/answer_sign_up.html:24
-msgid "[Preview]"
-msgstr "[Vista Previa]"
-
-#: templates/content/create_page.html:27 templates/content/edit_page.html:27
+#: templates/content/create_page.html:19 templates/content/edit_page.html:27
 msgid ""
 "Constructing a good task is crucial to the peer learning process. Tasks "
 "should have a clear goal in mind and should be sequential throughout the "
@@ -1339,10 +1359,10 @@ msgstr ""
 "preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
 "una empresa en la que todos trabajen durante un mes."
 
-#: templates/content/create_page.html:38 templates/projects/directory.html:22
+#: templates/content/create_page.html:30 templates/projects/directory.html:22
 #: templates/projects/gallery.html:21 templates/projects/project_edit.html:6
 #: templates/projects/project_edit.html:40
-#: templates/projects/project_edit_summary.html:58
+#: templates/projects/project_edit_summary.html:64
 #: templates/projects/project_import.html:22 templates/tags/directory.html:22
 msgid "Create"
 msgstr "Crear"
@@ -1350,7 +1370,7 @@ msgstr "Crear"
 #: templates/content/edit_page.html:18 templates/content/page.html:21
 #: templates/projects/project_edit.html:6
 #: templates/projects/project_edit_links.html:35
-#: templates/projects/sidebar.html:57
+#: templates/projects/sidebar.html:89
 #: templates/replies/_comment_threads.html:25
 #: templates/replies/_comment_threads.html:54
 #: templates/signups/sign_up.html:64
@@ -1358,15 +1378,15 @@ msgstr "Crear"
 msgid "Edit"
 msgstr "Editar"
 
-#: templates/content/edit_page.html:41
-#: templates/content/restore_version.html:38
+#: templates/content/edit_page.html:33
+#: templates/content/restore_version.html:30
 msgid "Minor update (not posted to the wall)."
 msgstr "Actualización menor (no se publica en el muro)."
 
-#: templates/content/edit_page.html:47
+#: templates/content/edit_page.html:39
 #: templates/dashboard/setup_profile.html:9
-#: templates/projects/project_edit_status.html:54
-#: templates/projects/project_edit_summary.html:55
+#: templates/projects/project_edit_status.html:58
+#: templates/projects/project_edit_summary.html:61
 #: templates/replies/comment_page.html:94
 #: templates/schools/school_edit_styles.html:69
 #: templates/schools/school_edit_summary.html:23
@@ -1508,7 +1528,7 @@ msgstr "lo contacta</a>."
 msgid "Post a message to your followers"
 msgstr "Publicar un mensaje para sus seguidores"
 
-#: templates/dashboard/dashboard.html:45 templates/projects/project.html:64
+#: templates/dashboard/dashboard.html:45 templates/projects/project.html:62
 msgid "Post Update"
 msgstr "Publicar"
 
@@ -1708,7 +1728,7 @@ msgid "next"
 msgstr "siguiente"
 
 #: templates/projects/_project_card.html:23
-#: templates/projects/sidebar.html:117 templates/users/_user_card.html:20
+#: templates/projects/sidebar.html:149 templates/users/_user_card.html:20
 msgid "Updates"
 msgstr "Actualizaciones"
 
@@ -1716,14 +1736,14 @@ msgstr "Actualizaciones"
 #: templates/projects/project_edit.html:49
 #: templates/projects/project_edit_participants.html:7
 #: templates/projects/project_user_list.html:34
-#: templates/projects/sidebar.html:125
+#: templates/projects/sidebar.html:157
 #: templates/schools/school_edit_statistics.html:19
 msgid "Participants"
 msgstr "Participantes"
 
 #: templates/projects/_project_card.html:31
 #: templates/projects/project_user_list.html:52
-#: templates/projects/sidebar.html:129
+#: templates/projects/sidebar.html:161
 #: templates/schools/school_edit_statistics.html:20
 #: templates/users/_user_card.html:12 templates/users/sidebar.html:91
 msgid "Followers"
@@ -1745,17 +1765,56 @@ msgstr "Popular"
 msgid "New"
 msgstr "Nuevo"
 
-#: templates/projects/_project_list.html:60 templates/projects/sidebar.html:81
+#: templates/projects/_project_list.html:60
+#: templates/projects/sidebar.html:113
 msgid "Under Development"
 msgstr "En Desarrollo"
 
-#: templates/projects/_project_list.html:71 templates/projects/sidebar.html:78
+#: templates/projects/_project_list.html:71
+#: templates/projects/sidebar.html:110
 msgid "Archived"
 msgstr "Archivado"
 
 #: templates/projects/_project_list.html:80 templates/projects/gallery.html:19
 msgid "View All"
 msgstr "Ver Todos"
+
+#: templates/projects/_task_list.html:7
+msgid "Completed"
+msgstr "Completadas"
+
+#: templates/projects/_task_list.html:10 templates/projects/sidebar.html:206
+msgid "Tasks"
+msgstr "Tareas"
+
+#: templates/projects/_task_list.html:27
+msgid "View and Discuss"
+msgstr "Ver y Discutir"
+
+#: templates/projects/_task_list.html:30
+#: templates/projects/project_edit.html:38
+msgid "View"
+msgstr "Vista"
+
+#: templates/projects/_task_list.html:36 templates/projects/sidebar.html:225
+msgid "No tasks have been added."
+msgstr "Ninguna tarea ha sido añadida."
+
+#: templates/projects/_task_list.html:40
+msgid "Displaying"
+msgstr "Presentando"
+
+#: templates/projects/_task_list.html:40
+msgid "of"
+msgstr "de"
+
+#: templates/projects/_task_list.html:40
+msgid "total tasks"
+msgstr "total de tareas"
+
+#: templates/projects/_task_list.html:41
+msgid "See All Tasks"
+msgstr "Ver Todas las Tareas"
 
 #: templates/projects/contact_organizers.html:6
 msgid "Contact Organizers of "
@@ -1840,48 +1899,43 @@ msgstr "Objetivos de Aprendizaje"
 msgid "Prerequisites"
 msgstr "Prerequisitos"
 
-#: templates/projects/project.html:23
-#: templates/projects/project_task_list.html:21
-#: templates/projects/sidebar.html:169
-msgid "Tasks"
-msgstr "Tareas"
+#: templates/projects/project.html:18 templates/projects/sidebar.html:230
+msgid "New Task"
+msgstr "Nueva Tarea"
 
-#: templates/projects/project.html:28 templates/projects/project_edit.html:38
-#: templates/projects/project_task_list.html:29
-msgid "View"
-msgstr "Vista"
+#: templates/projects/project.html:19 templates/projects/project_edit.html:37
+msgid "Admin"
+msgstr "Administrar"
 
-#: templates/projects/project.html:32
-msgid "Displaying"
-msgstr "Presentando"
-
-#: templates/projects/project.html:32
-msgid "of"
-msgstr "de"
-
-#: templates/projects/project.html:32
-msgid "total tasks"
-msgstr "total de tareas"
-
-#: templates/projects/project.html:32
-msgid "See All Tasks"
-msgstr "Ver Todas las Tareas"
-
-#: templates/projects/project.html:37
+#: templates/projects/project.html:35
 msgid "Activity Wall"
 msgstr "Muro de Actividades"
 
-#: templates/projects/project.html:44
+#: templates/projects/project.html:42
 msgid "Post a message"
 msgstr "Publicar un mensajes"
 
-#: templates/projects/project.html:49
+#: templates/projects/project.html:47
 msgid ""
 "Important message (participants can not turn off notifications for important "
 "messages)."
 msgstr ""
 "Mensaje importante (los participantes no pueden desactivar notificación de "
 "mensajes importantes)."
+
+#: templates/projects/project.html:86
+msgid ""
+"<strong>Need help?</strong> Peers that can help you with this challenge:"
+msgstr ""
+"<strong>¿Necesita ayuda?</strong> Colegas que pueden ayudarlo con este reto:"
+
+#: templates/projects/project.html:94
+msgid "Peers taking this challenge:"
+msgstr "Colegas emprendiendo este reto:"
+
+#: templates/projects/project.html:101
+msgid "View all"
+msgstr "Ver todas"
 
 #: templates/projects/project_admin_metrics.html:12
 msgid "Organizer Quick View"
@@ -1950,7 +2004,7 @@ msgid "No participants for which to show data."
 msgstr "No hay ningún participante para el cual mostrar los datos."
 
 #: templates/projects/project_clone.html:9
-#: templates/projects/project_edit.html:58
+#: templates/projects/project_edit.html:56
 msgid "Clone Existing"
 msgstr "Clonar Existente"
 
@@ -1972,20 +2026,19 @@ msgstr "Nombre Corto"
 msgid "Clone"
 msgstr "Clonar"
 
-#: templates/projects/project_edit.html:37
-msgid "Admin"
-msgstr "Administrar"
-
 #: templates/projects/project_edit.html:46
 msgid "Image"
 msgstr "Imagen"
 
 #: templates/projects/project_edit.html:47
-#: templates/projects/project_edit_status.html:9
-msgid "Status &amp; Dates"
-msgstr "Estado y Fechas"
+msgid "Status"
+msgstr "Estado"
 
-#: templates/projects/project_edit.html:48 templates/projects/sidebar.html:109
+#: templates/projects/project_edit.html:47
+msgid " &amp; Dates"
+msgstr " y Fechas"
+
+#: templates/projects/project_edit.html:48 templates/projects/sidebar.html:141
 msgid "Signup"
 msgstr "Inscripción"
 
@@ -1994,15 +2047,15 @@ msgstr "Inscripción"
 msgid "Links &amp; Content"
 msgstr "Enlaces y Contenido"
 
-#: templates/projects/project_edit.html:52
+#: templates/projects/project_edit.html:51
 msgid "Metrics"
 msgstr "Métricas"
 
-#: templates/projects/project_edit.html:56
+#: templates/projects/project_edit.html:54
 msgid "Create from Scratch"
 msgstr "Crear desde Cero"
 
-#: templates/projects/project_edit.html:60
+#: templates/projects/project_edit.html:58
 #: templates/projects/project_import.html:9
 msgid "Import from Old Site"
 msgstr "Importa del Sitio Anterior"
@@ -2054,7 +2107,7 @@ msgstr ""
 "github, etc. "
 
 #: templates/projects/project_edit_links.html:7
-#: templates/projects/project_edit_participants.html:22
+#: templates/projects/project_edit_participants.html:28
 #: templates/schools/school_edit_featured.html:19
 #: templates/schools/school_edit_membership.html:19
 #: templates/schools/school_edit_organizers.html:19
@@ -2064,7 +2117,7 @@ msgstr "Añadir"
 
 #: templates/projects/project_edit_links.html:14
 #: templates/projects/project_edit_links_base.html:13
-#: templates/projects/project_edit_participants.html:30
+#: templates/projects/project_edit_participants.html:36
 #: templates/projects/project_edit_summary.html:12
 #: templates/schools/school_edit_featured.html:27
 #: templates/schools/school_edit_membership.html:27
@@ -2087,7 +2140,7 @@ msgid "Subscribed"
 msgstr "Suscrito"
 
 #: templates/projects/project_edit_links.html:17
-#: templates/projects/project_edit_participants.html:32
+#: templates/projects/project_edit_participants.html:38
 #: templates/schools/school_edit_featured.html:28
 #: templates/schools/school_edit_membership.html:28
 #: templates/users/profile_edit_links.html:38
@@ -2101,7 +2154,7 @@ msgid "Subscribed."
 msgstr "Suscrito."
 
 #: templates/projects/project_edit_links.html:27
-#: templates/projects/project_edit_participants.html:41
+#: templates/projects/project_edit_participants.html:47
 #: templates/schools/school_edit_organizers.html:36
 #: templates/users/profile_edit_links.html:48
 msgid "yes"
@@ -2123,7 +2176,7 @@ msgid "Not subscribed."
 msgstr "No suscrito."
 
 #: templates/projects/project_edit_links.html:31
-#: templates/projects/project_edit_participants.html:43
+#: templates/projects/project_edit_participants.html:49
 #: templates/users/profile_edit_links.html:52
 msgid "no"
 msgstr "no"
@@ -2150,37 +2203,45 @@ msgstr "Editar enlaces a sitios web asociados con este "
 msgid "Update"
 msgstr "Actualizar"
 
-#: templates/projects/project_edit_participants.html:8
+#: templates/projects/project_edit_participants.html:10
+msgid "View and add participants."
+msgstr "Ver y añadir participantes."
+
+#: templates/projects/project_edit_participants.html:12
 msgid "View, add and remove participants."
 msgstr "Ver, añadir y remover participantes."
 
-#: templates/projects/project_edit_participants.html:12
+#: templates/projects/project_edit_participants.html:18
 #: templates/schools/school_edit_organizers.html:13
 #: templates/users/profile_form_base.html:19
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: templates/projects/project_edit_participants.html:17
-#: templates/projects/project_edit_participants.html:31
+#: templates/projects/project_edit_participants.html:23
+#: templates/projects/project_edit_participants.html:37
 msgid "Organizer"
 msgstr "Organizador"
 
-#: templates/projects/project_edit_participants.html:41
+#: templates/projects/project_edit_participants.html:47
 msgid "Organizing."
 msgstr "Organizando."
 
-#: templates/projects/project_edit_participants.html:43
+#: templates/projects/project_edit_participants.html:49
 msgid "Participating."
 msgstr "Participando."
 
-#: templates/projects/project_edit_participants.html:50
+#: templates/projects/project_edit_participants.html:56
 #: templates/signups/sign_up.html:102
 msgid "Add Organizer"
 msgstr "Añadir Organizador"
 
-#: templates/projects/project_edit_participants.html:54
+#: templates/projects/project_edit_participants.html:62
 msgid "Remove"
 msgstr "Eliminar"
+
+#: templates/projects/project_edit_status.html:9
+msgid "Status &amp; Dates"
+msgstr "Estado y Fechas"
 
 #: templates/projects/project_edit_status.html:12
 #, python-format
@@ -2203,7 +2264,7 @@ msgstr "No Listado."
 msgid "Archived."
 msgstr "Archivado."
 
-#: templates/projects/project_edit_status.html:34
+#: templates/projects/project_edit_status.html:37
 #, python-format
 msgid ""
 "Optionally, provide the period of time in which you expect the %(kind)s to "
@@ -2213,12 +2274,12 @@ msgstr ""
 "esté activo. Estas fechas son opcionales y aparencerán en la página del "
 "grupo."
 
-#: templates/projects/project_edit_status.html:38
+#: templates/projects/project_edit_status.html:41
 msgid "Active from"
 msgstr "Activo desde el"
 
-#: templates/projects/project_edit_status.html:45
-#: templates/projects/sidebar.html:89
+#: templates/projects/project_edit_status.html:48
+#: templates/projects/sidebar.html:121
 msgid "to"
 msgstr "hasta el"
 
@@ -2229,10 +2290,6 @@ msgid ""
 msgstr ""
 "Un buen nombre es corto y descriptivo. La gente debería saber sobre que es "
 "su grupo de estudio, curso, ... sin leer la descripción."
-
-#: templates/projects/project_edit_summary.html:18
-msgid "One sentence description"
-msgstr "Descripción de una línea"
 
 #: templates/projects/project_edit_summary.html:19
 msgid "This description will be used on search results and listing pages."
@@ -2252,7 +2309,7 @@ msgstr ""
 "Esta descripción se muestra en la página del grupo de estudio, curso, ...  "
 "Puede ser más detallada, pero debe ser breve e ir al grano."
 
-#: templates/projects/project_edit_summary.html:31
+#: templates/projects/project_edit_summary.html:34
 msgid ""
 "Please describe this study group, course, ... by providing a comma-separated "
 "list of tags."
@@ -2260,16 +2317,16 @@ msgstr ""
 "Por favor, describa este grupo de estudio, curso, ... mediante una lista de "
 "etiquetas separadas por comas."
 
-#: templates/projects/project_edit_summary.html:36
-#: templates/projects/sidebar.html:105
+#: templates/projects/project_edit_summary.html:42
+#: templates/projects/sidebar.html:137
 msgid "Kind"
 msgstr "Tipo"
 
-#: templates/projects/project_edit_summary.html:37
+#: templates/projects/project_edit_summary.html:43
 msgid "Select if you are creating a study group, course, or challenge."
 msgstr "Indique si esta creando un grupo de estudio, curso, o reto."
 
-#: templates/projects/project_edit_summary.html:41
+#: templates/projects/project_edit_summary.html:47
 msgid ""
 "Optionally provide a term more specific than study group, course, or "
 "challenge, and the corresponding description."
@@ -2277,11 +2334,11 @@ msgstr ""
 "Opcionalmente proporcione un término más específico que grupo de estudio, "
 "curso o reto, y la descripción correspondiente."
 
-#: templates/projects/project_edit_summary.html:43
+#: templates/projects/project_edit_summary.html:49
 msgid "Term"
 msgstr "Término"
 
-#: templates/projects/project_edit_summary.html:47
+#: templates/projects/project_edit_summary.html:53
 #: templates/schools/school_edit_summary.html:16
 msgid "Description"
 msgstr "Descripción"
@@ -2302,82 +2359,81 @@ msgstr "Curso"
 msgid "Import"
 msgstr "Importar"
 
-#: templates/projects/project_task_list.html:35
-#: templates/projects/sidebar.html:188
-msgid "No tasks have been added."
-msgstr "Ninguna tarea ha sido añadida."
-
 #: templates/projects/project_user_list.html:22
-#: templates/projects/sidebar.html:121
+#: templates/projects/sidebar.html:153
 #: templates/schools/school_edit_statistics.html:18
 msgid "Organizers"
 msgstr "Organizadores"
 
-#: templates/projects/sidebar.html:19 templates/users/sidebar.html:16
+#: templates/projects/sidebar.html:24 templates/users/sidebar.html:16
 msgid "Unfollow"
 msgstr "Dejar de Seguir"
 
-#: templates/projects/sidebar.html:24 templates/users/sidebar.html:21
+#: templates/projects/sidebar.html:29 templates/users/sidebar.html:21
 msgid "Follow"
 msgstr "Seguir"
 
-#: templates/projects/sidebar.html:29
+#: templates/projects/sidebar.html:34
 msgid "Participate"
 msgstr "Participar"
 
-#: templates/projects/sidebar.html:45
+#: templates/projects/sidebar.html:57 templates/projects/sidebar.html.py:60
+msgid "Start Challenge"
+msgstr "Iniciar Reto"
+
+#: templates/projects/sidebar.html:66
+msgid "Leave Challenge"
+msgstr "Dejar Reto"
+
+#: templates/projects/sidebar.html:77
 msgid "View more tagged with "
 msgstr "Vea otros etiquetados como "
 
-#: templates/projects/sidebar.html:54
+#: templates/projects/sidebar.html:86
 msgid "View Full Description"
 msgstr "Ver Descripción Completa"
 
-#: templates/projects/sidebar.html:84
+#: templates/projects/sidebar.html:116
 msgid "Not Listed"
 msgstr "No Listado"
 
-#: templates/projects/sidebar.html:86
+#: templates/projects/sidebar.html:118
 msgid "DATE_FORMAT"
 msgstr "j N Y"
 
-#: templates/projects/sidebar.html:88
+#: templates/projects/sidebar.html:120
 msgid "Runs"
 msgstr "Activo del"
 
-#: templates/projects/sidebar.html:94 templates/projects/sidebar.html:100
+#: templates/projects/sidebar.html:126 templates/projects/sidebar.html:132
 msgid "Based on"
 msgstr "Basado en"
 
-#: templates/projects/sidebar.html:134
+#: templates/projects/sidebar.html:166
 msgid "Pending Applicants"
 msgstr "Aspirantes Pendientes:"
 
-#: templates/projects/sidebar.html:144
+#: templates/projects/sidebar.html:181
 msgid "See All"
 msgstr "Ver Todos"
 
-#: templates/projects/sidebar.html:160
+#: templates/projects/sidebar.html:197
 msgid "Edit Participants"
 msgstr "Editar Participantes"
 
-#: templates/projects/sidebar.html:162
+#: templates/projects/sidebar.html:199
 msgid "Contact Organizer"
 msgstr "Contactar Organizador"
 
-#: templates/projects/sidebar.html:193
-msgid "New Task"
-msgstr "Nueva Tarea"
-
-#: templates/projects/sidebar.html:199
+#: templates/projects/sidebar.html:236
 msgid "External Links"
 msgstr "Enlaces Externos"
 
-#: templates/projects/sidebar.html:217
+#: templates/projects/sidebar.html:254
 msgid "No external links have been added."
 msgstr "Ningún enlace externo ha sido añadido."
 
-#: templates/projects/sidebar.html:222
+#: templates/projects/sidebar.html:259
 msgid "Edit Links"
 msgstr "Editar Enlaces"
 
@@ -2554,7 +2610,7 @@ msgstr ""
 msgid "Edit School"
 msgstr "Editar Escuela"
 
-#: templates/schools/home.html:33 templates/schools/school_edit.html:22
+#: templates/schools/home.html:31 templates/schools/school_edit.html:22
 #: templates/schools/school_edit_organizers.html:7
 msgid "School Organizers"
 msgstr "Organizadores de Escuela"

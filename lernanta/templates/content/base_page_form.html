@@ -18,7 +18,7 @@
             <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">
               {{ _('[Preview]') }} {{ page.title }}
             </h1>
-            {% if is_challenge %}<br>{{ page.sub_header }} {% endif %}
+            {% if is_challenge %}<br>{{ page.sub_header|default:"" }} {% endif %}
             <hr />
             {{ page.content|embed|safe }}
         </div>
