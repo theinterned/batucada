@@ -25,8 +25,6 @@ def splash(request):
     """Splash page we show to users who are not authenticated."""
     project = None
     projects = list(Project.objects.filter(featured=True))
-    for school in School.objects.all():
-        projects.extend(list(school.featured.all()))
     if projects:
         project = random.choice(projects)
     activities = Activity.objects.public()

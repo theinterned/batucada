@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-13 17:29-0400\n"
+"POT-Creation-Date: 2011-09-13 17:32-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,7 +146,7 @@ msgstr "¡%s restaurada!"
 msgid "You can not change tasks order."
 msgstr "Usted no puede modificar el orden de las tareas."
 
-#: apps/dashboard/views.py:73
+#: apps/dashboard/views.py:71
 msgid "Please fill out your profile to finish registration."
 msgstr "Por favor llene su perfil para completar la creación de la cuenta."
 
