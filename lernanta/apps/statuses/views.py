@@ -33,6 +33,8 @@ def create(request):
 @login_required
 def create_project_status(request, project_id):
     project = get_object_or_404(Project, id=project_id)
+    if project.category == Project.CHALLENGE:
+        return HttpResponseRedirect(project.get_absolute_url())
     if request.method != 'POST' or 'status' not in request.POST:
         return HttpResponseRedirect(project.get_absolute_url())
     if not project.is_participating(request.user):

@@ -12,6 +12,15 @@
 
 {% block bodyid %}project_landing{% endblock %}
 
+
+{% block breadcrumbs_actions%}
+  {% if is_challenge and organizing %}
+    <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
+    <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Admin') }} {{ project.kind|title }}</a>
+  {% endif %}
+{% endblock %}
+
+
 {% block body %}
 
 {% sidebar %}
@@ -19,6 +28,8 @@
 <div id="main">
 
   {% task_list project show_all_tasks %}
+
+  {% if not is_challenge %}
 
   <div id="activity_header">
   <h2 class="school_header"><span>{{ _('Activity Wall') }}</span></h2>
@@ -65,7 +76,34 @@
       {% pagination_links %}
     {% endwith %}
 
+  {% endif %}
+
 </div> <!-- /#main -->
+
+{% if is_challenge %}
+  <div id="main-people">
+    <section id="people" class="panel">
+      <h2 class="school_header">{{ _('<strong>Need help?</strong> Peers that can help you with this challenge:') }}</h2>
+      <br>
+      {% for organizer in project.organizers %}
+        <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="40" width="40" alt="{{ organizer.user }} (organizer)"></a>
+      {% endfor %}
+
+      {% if project.non_organizer_participants %}
+        <hr class="break">
+        <h2 class="school_header">{{ _('Peers taking this challenge:') }}</h2>
+        <br>
+        {% for participant in project.non_organizer_participants|slice:":42" %}
+          <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="40" width="40" alt="{{ participant.user }} (participant)"></a>
+        {% endfor %}
+        {% if project.non_organizer_participants.count > 42 %}
+          <p></p>
+          <a id="more_people_link" href="{% locale_url projects_user_list slug=project.slug %}">{{_('View all')}} »</a>
+        {% endif %}
+      {% endif %}
+    </section>
+  </div>
+{% endif %}
 
 {% endblock %}
 

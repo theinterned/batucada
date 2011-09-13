@@ -7,7 +7,7 @@ from django.db.models import Sum
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext, loader, Context
+from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
@@ -20,7 +20,8 @@ from links import tasks as links_tasks
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
-from projects.decorators import organizer_required, can_view_metric_overview, can_view_metric_detail
+from projects.decorators import organizer_required, restrict_project_kind
+from projects.decorators import can_view_metric_overview, can_view_metric_detail
 from projects.models import Project, Participation
 from projects import drupal
 
@@ -29,7 +30,7 @@ from relationships.models import Relationship
 from links.models import Link
 from replies.models import PageComment
 from users.models import UserProfile
-from content.models import Page, PageVersion
+from content.models import Page
 from schools.models import School
 from statuses import forms as statuses_forms
 from activity.models import Activity
@@ -98,7 +99,7 @@ def create(request):
             detailed_description = Page(title=_('Full Description'),
                 slug='full-description', content=detailed_description_content,
                 listed=False, author_id=user.id, project_id=project.id)
-            if project.category == Project.COURSE:
+            if project.category != Project.STUDY_GROUP:
                 detailed_description.collaborative = False
             detailed_description.save()
             project.detailed_description_id = detailed_description.id
@@ -143,7 +144,7 @@ def show(request, slug):
     else:
         form = None
 
-    show_all_tasks = (project.kind == Project.CHALLENGE)
+    show_all_tasks = (project.category == Project.CHALLENGE)
 
     activities = project.activities()
     activities = filter_activities(request, activities)
@@ -155,6 +156,7 @@ def show(request, slug):
         'organizing': is_organizing,
         'show_all_tasks': show_all_tasks,
         'form': form,
+        'is_challenge': (project.category == Project.CHALLENGE),
         'domain': Site.objects.get_current().domain,
     }
     context.update(get_pagination_context(request, activities))
@@ -331,6 +333,7 @@ def edit(request, slug):
         'school': project.school,
         'summary_tab': True,
         'can_view_metric_overview': can_view_metric_overview,
+        'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
@@ -377,11 +380,13 @@ def edit_image(request, slug):
         'form': form,
         'image_tab': True,
         'can_view_metric_overview': can_view_metric_overview,
+        'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
@@ -412,6 +417,7 @@ def edit_links(request, slug):
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links_edit(request, slug, link):
     link = get_object_or_404(Link, id=link)
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
@@ -445,6 +451,7 @@ def edit_links_edit(request, slug, link):
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links_delete(request, slug, link):
     if request.method == 'POST':
         project = get_object_or_404(Project, slug=slug)
@@ -489,6 +496,7 @@ def edit_participants(request, slug):
         'participations': project.participants().order_by('joined_on'),
         'participants_tab': True,
         'can_view_metric_overview': can_view_metric_overview,
+        'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
@@ -523,6 +531,7 @@ def edit_participants_make_organizer(request, slug, username):
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_participants_delete(request, slug, username):
     participation = get_object_or_404(Participation,
             project__slug=slug, user__username=username, left_on__isnull=True)
@@ -559,6 +568,7 @@ def edit_status(request, slug):
         'project': project,
         'status_tab': True,
         'can_view_metric_overview': can_view_metric_overview,
+        'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
@@ -572,7 +582,6 @@ def admin_metrics(request, slug):
     project = get_object_or_404(Project, slug=slug)
     participants = project.non_organizer_participants()
     project_ct = ContentType.objects.get_for_model(Project)
-    page_ct = ContentType.objects.get_for_model(Page)
     pages = Page.objects.filter(project=project)
     page_paths = []
     pageviews = {}
@@ -614,6 +623,7 @@ def admin_metrics(request, slug):
             'data': data,
             'metrics_tab': True,
             'can_view_metric_overview': can_view_metric_overview,
+            'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -626,6 +636,7 @@ def admin_metrics_detail(request, slug):
     }, context_instance=RequestContext(request))
 
 @login_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def contact_organizers(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.method == 'POST':
@@ -646,6 +657,8 @@ def contact_organizers(request, slug):
 
 def task_list(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    if project.category == Project.CHALLENGE:
+        return http.HttpResponseRedirect(project.get_absolute_url())
     tasks = Page.objects.filter(project__pk=project.pk, listed=True,
         deleted=False).order_by('index')
     context = {

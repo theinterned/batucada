@@ -8,6 +8,7 @@ from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
 from pagination.views import get_pagination_context
+from projects.models import Project
 
 from activity.models import Activity, FILTERS
 
@@ -25,6 +26,8 @@ def filter_activities(request, activities, default=None):
 
 def index(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
+    if activity.scope_object.category == Project.CHALLENGE:
+        raise http.Http404
     context = {
         'activity': activity,
         'domain': Site.objects.get_current().domain,
@@ -51,6 +54,8 @@ def index(request, activity_id):
 @login_required
 def delete_restore(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
+    if activity.scope_object.category == Project.CHALLENGE:
+        raise http.Http404
     if not activity.can_edit(request.user):
         return http.HttpResponseForbidden(_("You can't edit this activity"))
     if request.method == 'POST':

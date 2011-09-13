@@ -5,7 +5,13 @@
 {% block form %}
 <fieldset id="project_edit_participants" class="project edit participants tabpane">
 <h2>{{ _('Participants') }}</h2>
-<p class="hint">{{ _('View, add and remove participants.') }}</p>
+<p class="hint">
+  {% if is_challenge %}
+    {{ _('View and add participants.') }}
+  {% else %}
+    {{ _('View, add and remove participants.') }}
+  {% endif %}
+</p>
 <form action="{% locale_url projects_edit_participants slug=project.slug %}" method="post">
   {% csrf_token %}
     <div class="field user{% if form.user.errors %} error{% endif %}">
@@ -49,10 +55,15 @@
           {% csrf_token %}
           <button type="submit" value="{{ _('Add Organizer') }}">{{ _('Add Organizer') }}</button>
         </form>
+
+        {% if not is_challenge %}
         <form action="{% locale_url projects_edit_participants_delete slug=project.slug username=participation.user.username %}" method="post">
           {% csrf_token %}
           <button class="delete" type="submit" value="{{ _('Remove') }}">{{ _('Remove') }}</button>
         </form>
+
+        {% endif %}
+
         {% endif %}
       </td>
     </tr>

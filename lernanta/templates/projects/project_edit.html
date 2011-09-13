@@ -34,7 +34,7 @@
   <article>
     <h1>
       {% if project %}
-      {{ _('Admin') }}
+      {{ _('Admin') }} {{ project.kind|title }}
       <a class="pester back_link" href="{{ project.get_absolute_url }}">({{ _('View') }})</a>
       {% else %}
       {{ _('Create') }}
@@ -44,13 +44,11 @@
     {% if project %}
 	<li class="summary {% if summary_tab %}active{% endif %}"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Summary') }}</a></li>
 	<li class="image {% if image_tab %}active{% endif %}"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Image') }}</a></li>
-	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{{ _('Status &amp; Dates') }}</a></li>
-    <li class="status {% if signup_tab %}active{% endif %}"><a href="{% locale_url edit_signup slug=project.slug %}">{{ _('Signup') }}</a></li>
+	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{{ _('Status')}}{% if not is_challenge %}{{ _(' &amp; Dates') }}{% endif %}</a></li>
+    {% if not is_challenge %}<li class="status {% if signup_tab %}active{% endif %}"><a href="{% locale_url edit_signup slug=project.slug %}">{{ _('Signup') }}</a></li>{% endif %}
 	<li class="participants {% if participants_tab %}active{% endif %}"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
-	<li class="links {% if links_tab %}active{% endif %}"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>
-	   {% if can_view_metric_overview %}
-	<li class="metrics {% if metrics_tab %}active{% endif %}"><a href="{% locale_url projects_admin_metrics slug=project.slug %}">{{ _('Metrics') }}</a></li>
-	   {% endif %}
+	{% if not is_challenge %}<li class="links {% if links_tab %}active{% endif %}"><a href="{% locale_url projects_edit_links slug=project.slug %}">{{ _('Links &amp; Content') }}</a></li>{% endif %}
+	{% if can_view_metric_overview %}<li class="metrics {% if metrics_tab %}active{% endif %}"><a href="{% locale_url projects_admin_metrics slug=project.slug %}">{{ _('Metrics') }}</a></li>{% endif %}
     {% else %}
     <li class="new {% if new_tab %}active{% endif %}"><a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
        {{ _('Create from Scratch') }}</a></li>

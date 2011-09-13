@@ -28,11 +28,13 @@ class ActivityManager(ManagerBase):
         remote_object_ct = ContentType.objects.get_for_model(
             RemoteObject)
         from statuses.models import Status
+        from projects.models import Project
         status_ct = ContentType.objects.get_for_model(
             Status)
         return Activity.objects.filter(deleted=False,
             scope_object__isnull=False,
             scope_object__not_listed=False).exclude(
+            scope_object__category=Project.CHALLENGE).exclude(
             models.Q(target_content_type=remote_object_ct)
             | models.Q(target_content_type=status_ct)
             | models.Q(verb=schema.verbs['follow'])).order_by(
@@ -46,19 +48,22 @@ class ActivityManager(ManagerBase):
         users_following = user.following()
         project_ids = [p.pk for p in projects_following]
         user_ids = [u.pk for u in users_following]
+        from projects.models import Project
         return Activity.objects.filter(deleted=False).select_related(
             'actor', 'target_object', 'scope_object').filter(
             models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
-          | models.Q(scope_object__in=project_ids)).order_by('-created_on')
+          | models.Q(scope_object__in=project_ids)).exclude(
+            scope_object__category=Project.CHALLENGE).order_by('-created_on')
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
+        from projects.models import Project
         return Activity.objects.filter(deleted=False).select_related(
             'actor', 'target_object').filter(
             actor=user).filter(
             models.Q(scope_object__isnull=True)
-            | models.Q(scope_object__not_listed=False)
-        ).order_by('-created_on')
+            | models.Q(scope_object__not_listed=False)).exclude(
+            scope_object__category=Project.CHALLENGE).order_by('-created_on')
 
 
 class Activity(ModelBase):

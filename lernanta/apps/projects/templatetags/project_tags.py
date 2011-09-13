@@ -56,7 +56,7 @@ def sidebar(context, max_people_count=64):
         imported_from = drupal.get_course(project.imported_from)
 
     can_add_task = is_organizing
-    if project.category != Project.COURSE:
+    if project.category == Project.STUDY_GROUP:
         can_add_task = is_participating
     can_change_order = can_add_task
 
@@ -82,6 +82,7 @@ def sidebar(context, max_people_count=64):
         'can_add_task': can_add_task,
         'can_change_order': can_change_order,
         'chat': chat,
+        'is_challenge': (project.category == Project.CHALLENGE),
     })
     return context
 
