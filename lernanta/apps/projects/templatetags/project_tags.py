@@ -90,12 +90,12 @@ register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
 
 def project_list(school=None, only_featured=False, limit=8):
-    listed = Project.objects.filter(under_development=False, not_listed=False,
-        archived=False)
+    listed = Project.objects.filter(not_listed=False, archived=False)
     if school:
         featured = school.featured.filter(not_listed=False, archived=False)
     else:
         featured = listed.filter(featured=True)
+    listed = listed.filter(under_development=False)
     context = {'featured': featured, 'school': school}
     if not only_featured:
         active = Project.objects.get_active(limit=limit, school=school)
