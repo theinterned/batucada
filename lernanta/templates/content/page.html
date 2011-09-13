@@ -35,7 +35,7 @@
 {% endif %}
 <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">{{ page.title }}</h1>
 {% if is_challenge %}
-  <br>{{ page.sub_header }}
+  <br>{{ page.sub_header|default:"" }}
 {% endif %}
 <hr />
 

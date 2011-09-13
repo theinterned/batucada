@@ -29,7 +29,7 @@
 <div id="main" class="content_page">
 <h1>{{ version.title }} [{{ version.date }}]</h1>
 {% if is_challenge %}
-  <br>{{ version.sub_header }}
+  <br>{{ version.sub_header|default:"" }}
 {% endif %}
 <hr />
 {{ version.content|embed|safe }}
