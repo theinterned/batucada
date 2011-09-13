@@ -1,5 +1,7 @@
 {% load l10n_tags %}
 
+<div id="sidebar-wrapper">
+
 <div id="sidebar">
   <section id="project"class="panel">
     <figure class="project_img">
@@ -11,6 +13,9 @@
         {% endif %}
       </a>
     </figure>
+
+    {% if not is_challenge %}
+
     {% if not organizing and not participating and not project.archived %}
       {% if user.is_authenticated %}
         {% if following %}
@@ -29,7 +34,11 @@
         <a href="{% locale_url sign_up_answer slug=project.slug %}">{{ _('Participate')}}</a>
       </p>
     {% endif %}
+
     <br>
+
+    {% endif %}
+
     <div id="project-description">
         {{ project.short_description }}
     </div>
@@ -37,6 +46,29 @@
     <div id="project-summary">
       {{ project.long_description|safe }}
     </div>
+
+    {% if is_challenge %}
+
+      {% if not organizing and not participating %}
+        {% if not archived %}
+          {% if user.is_authenticated %}
+            <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
+              {% csrf_token %}
+              <button id="direct_signup_button">{{ _('Start Challenge') }}</button>
+            </form>
+          {% else %}
+              <a id="direct_signup_button" href="{{ login_with_redirect_url }}">{{ _('Start Challenge')}}</a>
+          {% endif %}
+        {% endif %}
+      {% else %}{% if not organizing %}
+        <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
+          {% csrf_token %}
+          <button id="direct_signup_button">{{ _('Leave Challenge') }}</button>
+        </form>
+      {% endif %}{% endif %}
+
+    {% else %}
+
     {% if tags %}
       <h3><b>{{ _('Tags') }}</b></h3>
       <ul class="tags">
@@ -138,7 +170,12 @@
     </li>
     {% endif %}
     </ul> <!-- /#project-stats -->
+
+    {% endif %}
+
   </section>
+
+{% if not is_challenge %}
 
 <section id="people" class="panel">
   <a id="more_task_link" style="float:right" href="{% locale_url projects_user_list slug=project.slug %}">{{_('See All')}} »</a>
@@ -223,5 +260,9 @@
   {% endif %} 
 </section>
 
+{% endif %}
+
 </div> <!-- /#sidebar -->
+
+</div>
 

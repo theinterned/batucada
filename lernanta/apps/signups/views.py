@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import http
 from django.conf import settings
 from django.utils.translation import ugettext as _
@@ -9,8 +11,9 @@ from drumbeat import messages
 from users.decorators import login_required
 from users.forms import ProfileEditForm, ProfileImageForm
 from relationships.models import Relationship
-from projects.decorators import organizer_required
+from projects.decorators import organizer_required, restrict_project_kind
 from pagination.views import get_pagination_context
+from projects.models import Project, Participation
 
 from signups.models import Signup
 from signups.forms import SignupForm, SignupAnswerForm
@@ -18,6 +21,7 @@ from signups.forms import SignupForm, SignupAnswerForm
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     project = sign_up.project
@@ -43,6 +47,7 @@ def edit_signup(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def show_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     pending_answers = sign_up.answers.filter(deleted=False, accepted=False)
@@ -71,6 +76,7 @@ def show_signup(request, slug):
         context_instance=RequestContext(request))
 
 
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def show_signup_answer(request, slug, answer_id):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     answer = get_object_or_404(sign_up.answers, id=answer_id)
@@ -86,6 +92,7 @@ def show_signup_answer(request, slug, answer_id):
 
 
 @login_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def answer_sign_up(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     project = sign_up.project
@@ -151,6 +158,7 @@ def answer_sign_up(request, slug):
 
 
 @login_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_answer_sign_up(request, slug, answer_id):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     answer = get_object_or_404(sign_up.answers, id=answer_id)
@@ -189,6 +197,7 @@ def edit_answer_sign_up(request, slug, answer_id):
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def accept_sign_up(request, slug, answer_id, as_organizer=False):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     answer = get_object_or_404(sign_up.answers, id=answer_id)
@@ -207,6 +216,7 @@ def accept_sign_up(request, slug, answer_id, as_organizer=False):
 
 
 @login_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def delete_restore_signup_answer(request, slug, answer_id):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     answer = get_object_or_404(sign_up.answers, id=answer_id)
@@ -236,3 +246,34 @@ def delete_restore_signup_answer(request, slug, answer_id):
             'sign_up': sign_up,
             'project': sign_up.project,
         }, context_instance=RequestContext(request))
+
+
+@login_required
+@restrict_project_kind(Project.CHALLENGE)
+def direct_signup(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    profile = request.user.get_profile()
+    is_organizing = project.organizers().filter(user=profile).exists()
+    if is_organizing:
+        return http.HttpResponseForbidden(
+            _('Organizers can\'t use this page to leave their study group, course, ...'))
+    if request.method != 'POST':
+        return http.HttpResponseForbidden(
+            _('Organizers can\'t use this page to leave their study group, course, ...'))
+    participations = Participation.objects.filter(user=profile, project=project, left_on__isnull=True)
+    if participations:
+        for participation in participations:
+            participation.left_on = datetime.today()
+            participation.save()
+        new_rel, created = Relationship.objects.get_or_create(
+            source=profile, target_project=project)
+        new_rel.deleted = True
+    else:
+        participation = Participation(user=profile, project=project)
+        participation.save()
+        new_rel, created = Relationship.objects.get_or_create(
+            source=profile, target_project=project)
+        new_rel.deleted = False
+    new_rel.save()
+    return http.HttpResponseRedirect(project.get_absolute_url())
+

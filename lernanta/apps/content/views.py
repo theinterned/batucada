@@ -23,6 +23,9 @@ log = logging.getLogger(__name__)
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    if not page.listed:
+        msg = _("This page is not accesible on a %s.")
+        return http.HttpResponseForbidden(msg % page.project.kind.lower())
     can_edit = page.can_edit(request.user)
     if page.deleted:
         messages.error(request, _('This task was deleted.'))
@@ -95,13 +98,13 @@ def create_page(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.is_organizing(request.user):
         form_cls = OwnersPageForm
-    elif project.category != Project.COURSE:
+    elif project.category == Project.STUDY_GROUP:
         form_cls = PageForm
     else:
         messages.error(request, _('You can not create a new task!'))
         return http.HttpResponseRedirect(project.get_absolute_url())
     initial = {}
-    if project.category == Project.COURSE:
+    if project.category != Project.STUDY_GROUP:
         initial['collaborative'] = False
     page = None
     if request.method == 'POST':
@@ -235,7 +238,7 @@ def page_index_up(request, slug, counter):
     except ValueError:
         raise http.Http404
     organizing = project.is_organizing(request.user)
-    if not organizing and project.category == Project.COURSE:
+    if not organizing and project.category != Project.STUDY_GROUP:
         messages.error(request, _('You can not change tasks order.'))
         return http.HttpResponseRedirect(project.get_absolute_url())
     content_pages = Page.objects.filter(project__pk=project.pk,
@@ -264,7 +267,7 @@ def page_index_down(request, slug, counter):
     except ValueError:
         raise http.Http404
     organizing = project.is_organizing(request.user)
-    if not organizing and project.category == Project.COURSE:
+    if not organizing and project.category != Project.STUDY_GROUP:
         messages.error(request, _('You can not change tasks order.'))
         return http.HttpResponseRedirect(project.get_absolute_url())
     content_pages = Page.objects.filter(project__pk=project.pk, listed=True,

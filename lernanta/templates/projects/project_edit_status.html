@@ -31,6 +31,9 @@
     </label>
     {{ form.archived.errors }}
   </p>
+
+  {% if not is_challenge %}
+
   <p class="hint">{% blocktrans with kind=project.kind|lower %}Optionally, provide the period of time in which you expect the {{ kind }} to be active. These dates are optional and will be displayed on the home page.{% endblocktrans %}</p>
   <p>
       <span class="field start_date {% if form.start_date.errors %} error{% endif %} "> 
@@ -49,6 +52,7 @@
         {{ form.end_date.errors }}
       </span>
   </p>
+  {% endif %}
   <p class="buttons">
     <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>

@@ -27,6 +27,8 @@ def follow(request, object_type, slug):
         relationship, created = Relationship.objects.get_or_create(
             source=profile, target_project=project)
         url = project.get_absolute_url()
+        if project.category == Project.CHALLENGE:
+            return HttpResponseRedirect(url)
     elif object_type == USER:
         user = get_object_or_404(UserProfile, username=slug)
         relationship, created = Relationship.objects.get_or_create(
@@ -46,6 +48,8 @@ def unfollow(request, object_type, slug):
     if object_type == PROJECT:
         project = get_object_or_404(Project, slug=slug)
         url = project.get_absolute_url()
+        if project.category == Project.CHALLENGE:
+            return HttpResponseRedirect(url)
         # project.participants() includes project.organizers()
         if project.participants().filter(user=profile).exists():
             messages.error(request, _("You can't unfollow"))

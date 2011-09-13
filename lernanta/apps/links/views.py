@@ -5,13 +5,14 @@ from django.shortcuts import get_object_or_404
 from drumbeat import messages
 from users.decorators import login_required
 from projects.models import Project
-from projects.decorators import participation_required
+from projects.decorators import participation_required, restrict_project_kind
 
 from links.models import Link
 
 
 @login_required
 @participation_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def link_index_up(request, slug, counter):
    #Link goes up in the sidebar index (link.index decreases).
     project = get_object_or_404(Project, slug=slug)
@@ -20,7 +21,7 @@ def link_index_up(request, slug, counter):
     except ValueError:
         raise http.Http404
     organizing = project.is_organizing(request.user)
-    if not organizing and project.category == Project.COURSE:
+    if not organizing and project.category != Project.STUDY_GROUP:
         messages.error(request, _('You can not change links order.'))
         return http.HttpResponseRedirect(project.get_absolute_url())
     links = Link.objects.filter(project__pk=project.pk).order_by('index')
@@ -36,6 +37,7 @@ def link_index_up(request, slug, counter):
 
 @login_required
 @participation_required
+@restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def link_index_down(request, slug, counter):
     #Link goes down in the sidebar index (link.index increases).
     project = get_object_or_404(Project, slug=slug)
@@ -44,7 +46,7 @@ def link_index_down(request, slug, counter):
     except ValueError:
         raise http.Http404
     organizing = project.is_organizing(request.user)
-    if not organizing and project.category == Project.COURSE:
+    if not organizing and project.category != Project.STUDY_GROUP:
         messages.error(request, _('You can not change links order.'))
         return http.HttpResponseRedirect(project.get_absolute_url())
     links = Link.objects.filter(project__pk=project.pk).order_by('index')

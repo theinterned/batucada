@@ -45,7 +45,8 @@ class ProjectForm(forms.ModelForm):
         model = super(ProjectForm, self).save(commit=False)
         if commit:
             model.save()
-            model.tags.set(*self.cleaned_data['tags'])
+            if model.category != Project.CHALLENGE:
+                model.tags.set(*self.cleaned_data['tags'])
             model.save()
         return model
 

@@ -3,6 +3,7 @@ from django.conf.urls.defaults import patterns, url
 urlpatterns = patterns('signups.views',
   url(r'^$', 'show_signup', name='sign_up'),
   url(r'^edit/$', 'edit_signup', name='edit_signup'),
+  url(r'^direct/$', 'direct_signup', name='direct_signup'),
   url(r'^answer/$', 'answer_sign_up', name='sign_up_answer'),
   url(r'^answer/(?P<answer_id>\d+)/$',
       'show_signup_answer', name='show_signup_answer'),

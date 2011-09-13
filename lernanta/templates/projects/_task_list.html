@@ -7,12 +7,16 @@
         {% for task in tasks %}
           <li class="{% cycle 'odd' 'even' %}">
             <span class="taskNumber">{{ forloop.counter }}</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+            {% if show_all %}
+	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url page_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
+	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url page_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
+            {% endif %}
             <span class="action-buttons"><a href="{{ task.get_absolute_url }}">{{ _('View') }}</a></span>
           </li>
         {% endfor %}
       </ul>
     {% else %}
-      {{ _('No tasks have been added.') }}
+      <br>{{ _('No tasks have been added.') }}<br><br>
     {% endif %}
     {% if visible_count < tasks_count %}
       <p id="more_task_link">
