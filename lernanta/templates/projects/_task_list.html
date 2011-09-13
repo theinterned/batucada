@@ -1,17 +1,34 @@
 {% load l10n_tags %}
 {% if tasks_count or show_all %}
-  <div id="task_header">
-    <h2 class="school_header"><span>{{ _('Tasks') }}</span></h2>
+  <div id="task_list_section">
+    {% if is_challenge and participating and tasks_count %}
+      <div id="progress">
+        <div id="progressbar" value="{{ progressbar_value }}"></div>
+        <p><span id="completed_count">{{ completed_count }}</span>/<span id="total_count">{{ tasks_count }}</span> {{ _('Completed') }}</p>
+      </div>
+    {% endif %}
+    <h2 class="school_header">{% if not is_challenge %}<span>{% endif %}{{ _('Tasks') }}{% if not is_challenge %}</span>{% endif %}</h2>
     {% if tasks_count %}
       <ul>
         {% for task in tasks %}
-          <li class="{% cycle 'odd' 'even' %}">
-            <span class="taskNumber">{{ forloop.counter }}</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
-            {% if show_all %}
+          <li class="{% cycle 'odd' 'even' %} {% if task.is_done %}taskSelected{% endif %}">
+            {% if is_challenge and participating %}
+              <form method='post' action='{% url toggle_task_completion slug=task.project.slug page_slug=task.slug %}'>
+                {% csrf_token %}
+                <input class="taskCheckbox" type="checkbox" {% if task.is_done %}checked="checked"{% endif%}>
+              </form>
+            {% endif %}
+            <span class="taskNumber">{{ forloop.counter }}{% if is_challenge %}.{% endif %}</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+            {% if organizing and show_all and is_challenge %}
 	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url page_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
 	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url page_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
             {% endif %}
-            <span class="action-buttons"><a href="{{ task.get_absolute_url }}">{{ _('View') }}</a></span>
+            {% if is_challenge %}
+                <a class="taskView" href="{{ task.get_absolute_url }}">{{ _('View and Discuss') }}</a>
+                <span class="taskSubheader">{{ task.sub_header|default:"&nbsp;" }}</span>
+            {% else %}
+              <span class="action-buttons"><a href="{{ task.get_absolute_url }}">{{ _('View') }}</a></span>
+            {% endif %}
           </li>
         {% endfor %}
       </ul>

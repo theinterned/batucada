@@ -25,14 +25,6 @@
   {% locale_url version_restore slug=page.project.slug page_slug=page.slug version_id=version.id %}
 {% endblock %}
 
-{% block content_preview %}
-  <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">
-    {{ _('[Preview]') }} {{ page.title }}
-  </h2>
-  <hr />
-  {{ page.content|embed|safe }}
-{% endblock %}
-
 {% block page_form_buttons %}
   <div class="field{% if form.minor_update.errors %} error{% endif %}">
     {{ form.minor_update }} {{ _('Minor update (not posted to the wall).') }}

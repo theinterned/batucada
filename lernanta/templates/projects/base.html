@@ -3,7 +3,7 @@
 
 {% block description %}{{ project.name }}: {{ project.short_description }}{% endblock %}
 {% block title %}{{ project.name }} | {% block project_title %}{% endblock %}{% endblock %}
-{% block bodyclasses %}project-kind-{{ project.kind|slugify }}{% endblock%}
+{% block bodyclasses %}project-kind-{{ project.category|slugify }}{% endblock%}
 
 {% block links %}
 {% if project.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.accepted_school.slug %}?v=1">{% endif %}

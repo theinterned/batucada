@@ -1,5 +1,6 @@
 {% extends "projects/base.html" %}
 {% load l10n_tags %}
+{% load embed %}
 
 {% block project_title %}{% if page %}{{ page.title }}{% endif %}{% endblock %}
 
@@ -14,7 +15,12 @@
       {% csrf_token %}
       {% if preview %}
         <div class="preview">
-          {% block content_preview %}{% endblock %}
+            <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">
+              {{ _('[Preview]') }} {{ page.title }}
+            </h1>
+            {% if is_challenge %}<br>{{ page.sub_header }} {% endif %}
+            <hr />
+            {{ page.content|embed|safe }}
         </div>
         <br />
       {% endif %}
@@ -25,6 +31,14 @@
           <span class="hint block">{{ _('A good title is short and descriptive.') }}</span>
           {{ form.title }}
           {{ form.title.errors }}
+        </div>
+      {% endif %}
+      {% if is_challenge %}
+        <div class="field{% if form.sub_header.errors %} error{% endif %}">
+          <label for="id_sub_header">{{ _('One sentence description') }}</label>
+          <span class="hint block">{{ _('This description will be used as sub header bellow the task title.') }}</span>
+          {{ form.sub_header }}
+          {{ form.sub_header.errors }}
         </div>
       {% endif %}
       <div class="field{% if form.content.errors %} error{% endif %}">

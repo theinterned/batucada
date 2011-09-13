@@ -290,3 +290,13 @@ class Participation(ModelBase):
     no_organizers_content_updates = models.BooleanField(default=False)
     no_participants_wall_updates = models.BooleanField(default=False)
     no_participants_content_updates = models.BooleanField(default=False)
+
+
+class PerUserTaskCompletion(ModelBase):
+    user = models.ForeignKey('users.UserProfile',
+        related_name='peruser_task_completion')
+    page = models.ForeignKey('content.Page',
+        related_name='peruser_task_completion')
+    checked_on = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now)
+    unchecked_on = models.DateTimeField(blank=True, null=True)

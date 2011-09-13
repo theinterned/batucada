@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
-from projects.decorators import participation_required
+from projects.decorators import participation_required, restrict_project_kind
 from projects.models import Project
 from pagination.views import get_pagination_context
 
@@ -45,6 +45,7 @@ def show_page(request, slug, page_slug):
         'can_edit': can_edit,
         'can_comment': page.can_comment(request.user),
         'new_comment_url': new_comment_url,
+        'is_challenge': (page.project.category == Project.CHALLENGE),
     }
     context.update(get_pagination_context(request, first_level_comments))
     return render_to_response('content/page.html', context,
@@ -89,6 +90,7 @@ def edit_page(request, slug, page_slug):
         'page': page,
         'project': page.project,
         'preview': ('show_preview' in request.POST),
+        'is_challenge': (page.project.category == Project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
@@ -129,6 +131,7 @@ def create_page(request, slug):
         'project': project,
         'page': page,
         'preview': ('show_preview' in request.POST),
+        'is_challenge': (project.category == Project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
@@ -141,8 +144,9 @@ def delete_page(request, slug, page_slug):
     if not page.project.is_organizing(request.user) and not page.collaborative:
         return http.HttpResponseForbidden(_("You can't delete this page"))
     if request.method == 'POST':
-        old_version = PageVersion(title=page.title, content=page.content,
-            author=page.author, date=page.last_update, page=page)
+        old_version = PageVersion(title=page.title, sub_header=page.sub_header,
+            content=page.content, author=page.author, date=page.last_update,
+            page=page)
         old_version.save()
         page.author = request.user.get_profile()
         page.last_update = datetime.datetime.now()
@@ -196,9 +200,9 @@ def restore_version(request, slug, page_slug, version_id):
         # Restrict permissions for non-collaborative pages.
         return http.HttpResponseForbidden(_("You can't edit this page"))
     if request.method == 'POST':
-        old_version = PageVersion(title=page.title, content=page.content,
-            author=page.author, date=page.last_update, page=page,
-            deleted=page.deleted)
+        old_version = PageVersion(title=page.title, sub_header=page.sub_header,
+            content=page.content, author=page.author, date=page.last_update,
+            page=page, deleted=page.deleted)
         form = form_cls(request.POST, instance=page)
         if form.is_valid():
             page = form.save(commit=False)
@@ -225,6 +229,7 @@ def restore_version(request, slug, page_slug, version_id):
         'version': version,
         'project': page.project,
         'preview': ('show_preview' in request.POST),
+        'is_challenge': (page.project.category == Project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
