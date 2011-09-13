@@ -21,7 +21,8 @@ def list_tagged_all(request, tag_slug):
         except School.DoesNotExist:
             return http.HttpResponseRedirect(directory_url)
     projects = Project.objects.filter(not_listed=False,
-        tags__slug=tag_slug).order_by('name')
+        tags__slug=tag_slug).exclude(
+        category=Project.CHALLENGE).order_by('name')
     if school:
         projects = projects.filter(school=school)
     context = {

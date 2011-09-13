@@ -307,6 +307,11 @@ $(document).ready(function() {
     $('#id_start_date').datepicker();
     $('#id_end_date').datepicker();
 
+    if ($('.project-kind-challenge #task_list_section #progressbar').length) {
+        var progressbar_value = $(".project-kind-challenge #task_list_section #progressbar").attr('value');
+        $(".project-kind-challenge #task_list_section #progressbar").progressbar({'value': parseInt(progressbar_value)});
+    }
+
     if ($('#headers_colorpicker').length) {
         $.farbtastic('#headers_colorpicker', { callback: '#id_headers_color', width: 100, heigth: 100 });
         $.farbtastic('#headers_light_colorpicker', { callback: '#id_headers_color_light', width: 100, heigth: 100 });
@@ -344,4 +349,29 @@ $('#recaptcha_audio').click(function(e) {
 $('#recaptcha_help').click(function(e) {
     e.preventDefault();
     Recaptcha.showhelp();
+});
+
+
+$(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
+    var $task_completion_checkbox = $(this);
+    var $task_completion_form = $task_completion_checkbox.parent();
+    $task_completion_form.parent().toggleClass("taskSelected");
+    var url = $task_completion_form.attr('action');
+    $task_completion_checkbox.attr('disabled', 'disabled');
+    $.post(url, $(this).parent().serialize(), function(data) {
+        var total_count = data['total_count'];
+        var completed_count = data['completed_count'];
+        var progressbar_value = data['progressbar_value'];
+        $(".project-kind-challenge #task_list_section #total_count").html(total_count);
+        $(".project-kind-challenge #task_list_section #completed_count").html(completed_count);
+        var $tasks_progressbar = $(".project-kind-challenge #task_list_section #progressbar");
+        $tasks_progressbar.progressbar("option", "value", progressbar_value);
+        $task_completion_checkbox.removeAttr('disabled');
+    });
+});
+
+$('.project-kind-challenge #task_list_section li').hover(function() {
+      $(this).find('.taskView').show();
+}, function() {
+      $(this).find('.taskView').hide();
 });

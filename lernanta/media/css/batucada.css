@@ -1172,7 +1172,7 @@ header {}
   margin-left: 60px;
   margin-top: 20px;
   width: 652px;
-  float: left;
+  float: right;
   padding: 20px;
   border-radius: 10px;
   z-index: -9999;
@@ -2484,6 +2484,7 @@ div.warning h2 {
     border-radius: 4px;
     -moz-border-radius: 4px;
 }
+
 .messages li.success, .messages li.info {
     background-color: green;
 }
@@ -2689,7 +2690,7 @@ ul.ui-autocomplete #ui-active-menuitem {
 	#content-pages .robttn,
 	#project-links .robttn,
 	#member_links .robttn,
-    #task_header .robttn {
+    #task_list_section .robttn {
 	   position:absolute; 
 	   width:20px; 
 	   height:20px; 
@@ -2697,46 +2698,58 @@ ul.ui-autocomplete #ui-active-menuitem {
 	   text-indent:-200px;
 	}
 
-    #task_header .robttn {
+    #task_list_section .robttn {
 	   width:10px;
+    }
+
+    .project-kind-challenge #task_list_section .robttn {
+	   width:20px;
     }
 	
 	#content-pages .up,
 	#project-links .up,
 	#member_links .up,
-    #task_header .up {
+    #task_list_section .up {
 	   right:0px; 
 	   background-image:url('/media/images/arrows.png');
 	}
 
-    #task_header .up {
+    #task_list_section .up {
 	   right: 240px;
+    }
+
+    .project-kind-challenge #task_list_section .up {
+	   right: 180px;
     }
 	
 	#content-pages .dwn,
 	#project-links .dwn,
 	#member_links .dwn,
-    #task_header .dwn {
+    #task_list_section .dwn {
 	   right:20px; 
 	   background-image:url('/media/images/arrows.png'); 
 	   background-position: 20px 0px;
 	}
 
-    #task_header .dwn {
+    #task_list_section .dwn {
 	   right: 260px;
+	}
+
+    .project-kind-challenge #task_list_section .dwn {
+	   right: 200px;
 	}
 	
 	#content-pages .up:hover, 
 	#project-links .up:hover,
 	#member_links .up:hover,
-    #task_header .up:hover {
+    #task_list_section .up:hover {
 	   background-position: 0px 20px;
 	}
 	
 	#content-pages .dwn:hover,
 	#project-links .dwn:hover,
 	#member_links .dwn:hover,
-    #task_header .dwn:hover {
+    #task_list_section .dwn:hover {
         background-position: 20px 20px;
     }
 
@@ -2757,36 +2770,59 @@ div.voting div.score {
     margin: 0;
 }
 
-#challenge_header ul, #task_header {
+#task_list_section {
     padding: 0;
     margin: 0;
 }
 
-#challenge_header li {
-    width: 180px;
-    float: left;
-    list-style-type: none;
-    text-align: center;
-    padding: 0;
-    margin: 0 20px 20px 0;
-}
-
-#challenge_header li img {
-    width: 195px;
-    height: 120px;
-}
-
-#task_header, #activity_header {
+#task_list_section, #wall_section {
     border-top: 1px solid #BEBEBE;
     margin-top: 13px;
     margin-bottom: 5px;
 }
 
-#task_header ul {
+.project-kind-challenge #task_list_section {
+    border-top: none;
+}
+
+.project-kind-challenge #task_list_section #progress {
+    width: 300px;
+    float: right;
+}
+
+.project-kind-challenge #task_list_section #progress #progressbar {
+    width: 290px;
+    height: 20px;
+    background: #999;
+    color: #fff;
+    padding: 2px 0 0 10px;
+}
+
+.ui-progressbar .ui-progressbar-value {
+    margin-left: -5px;
+    margin-top: -2px;
+}
+
+.project-kind-challenge #task_list_section #progress p {
+    margin-top: 5px;
+    float: right;
+    color: #444;
+}
+
+#task_list_section ul {
     margin: 13px 0 5px 2px;
     padding-bottom: 17px;
 }
-#task_header li {
+
+
+.project-kind-challenge #task_list_section ul {
+    border-top: 1px solid #BEBEBE;
+    margin: 26px 0 0 2px;
+    padding-top: 17px;
+    padding-bottom: 0px;
+}
+
+#task_list_section li {
     list-style-type: none;
     padding: 0;
     margin-bottom: 11px;
@@ -2795,26 +2831,40 @@ div.voting div.score {
     background-color: #f8fcff;
     display: inline-block;
 }
-#task_header li.odd {
+
+.project-kind-challenge #task_list_section li {
+    width: 640px;
+}
+
+#task_list_section li.odd {
     background-color: #f3f8fe;
 }
 
-#task_header li a {
+#task_list_section li a {
     color: #5a6579;
     padding-left: 13px;
 }
 
-#task_header li .action-buttons a {
+.project-kind-challenge #task_list_section li a {
+    color: #444;
+    padding-left: 0px;
+}
+
+#task_list_section li .action-buttons a {
     color: #2084ca;
     float: right;
     text-decoration: underline;
 }
 
-#task_header li .action-buttons a:hover {
+#task_list_section li .action-buttons a:hover {
     color: #003366;
 }
 
-#task_header .taskNumber {
+.project-kind-challenge #task_list_section .taskCheckbox {
+    margin-left: 15px;
+}
+
+#task_list_section .taskNumber {
     background-color: #DEEEFB;
     font-size: 14px;
     font-weight: bold;
@@ -2823,6 +2873,41 @@ div.voting div.score {
     text-shadow: none;
     -moz-border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px;
+}
+
+.project-kind-challenge #task_list_section .taskNumber {
+    background-color: transparent;
+    font-size: 18px;
+    padding: 7px 5px 7px 15px;
+    color: #444;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.project-kind-challenge #task_list_section .taskSelected {
+    opacity: 0.7;
+}
+
+.project-kind-challenge #task_list_section form {
+    display:inline;
+}
+
+.project-kind-challenge #task_list_section .taskLink {
+    font-size: 18px;
+}
+
+.project-kind-challenge #task_list_section a.taskView {
+    display: none;
+    color: #999;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.project-kind-challenge #task_list_section .taskSubheader {
+    clear: both;
+    color: #777;
+    margin: 0 0 0 70px;
+    display: block;
 }
 
 #more_task_link {
@@ -2864,6 +2949,13 @@ div.voting div.score {
     text-align: center;
     margin-top: -0.55em;
     font-size: 21px;
+}
+
+.project-kind-challenge #main #task_list_section h2 {
+    color: #222;
+    text-align: left;
+    margin: 10px 0 0 10px;
+    font-style: normal;
 }
 
 #project_landing h2 span {

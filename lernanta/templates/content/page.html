@@ -34,7 +34,11 @@
     <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse model="page" app_label="content" pk=page.id %}">{{_('Report Abuse')}}</a></p>
 {% endif %}
 <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">{{ page.title }}</h1>
+{% if is_challenge %}
+  <br>{{ page.sub_header }}
+{% endif %}
 <hr />
+
 {{ page.content|embed|safe }}
 
 {% if pagination_current_page.object_list %}

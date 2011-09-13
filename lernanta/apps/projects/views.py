@@ -20,9 +20,9 @@ from links import tasks as links_tasks
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
-from projects.decorators import organizer_required, restrict_project_kind
+from projects.decorators import organizer_required, restrict_project_kind, participation_required
 from projects.decorators import can_view_metric_overview, can_view_metric_detail
-from projects.models import Project, Participation
+from projects.models import Project, Participation, PerUserTaskCompletion
 from projects import drupal
 
 from l10n.urlresolvers import reverse
@@ -171,7 +171,8 @@ def clone(request):
         form = project_forms.CloneProjectForm(request.POST)
         if form.is_valid():
             base_project = form.cleaned_data['project']
-            project = Project(name=base_project.name, kind=base_project.kind,
+            project = Project(name=base_project.name, category=base_project.category,
+                other=base_project.other, other_description=base_project.other_description,
                 short_description=base_project.short_description,
                 long_description=base_project.long_description,
                 clone_of=base_project)
@@ -687,6 +688,33 @@ def user_list(request, slug):
         prefix='followers_'))
     return render_to_response('projects/project_user_list.html', context,
         context_instance=RequestContext(request))
+
+@login_required
+@participation_required
+@restrict_project_kind(Project.CHALLENGE)
+def toggle_task_completion(request, slug, page_slug):
+    page = get_object_or_404(Page, project__slug=slug, slug=page_slug,
+        listed=True, deleted=False)
+    profile = request.user.get_profile()
+    if request.method == 'POST':
+        try:
+            task_completion = PerUserTaskCompletion.objects.get(
+                user=profile, page=page, unchecked_on__isnull=True)
+            task_completion.unchecked_on = datetime.datetime.today()
+            task_completion.save()
+        except PerUserTaskCompletion.DoesNotExist:
+            task_completion = PerUserTaskCompletion(user=profile, page=page)
+            task_completion.save()
+        total_count = Page.objects.filter(project__slug=slug, listed=True,
+            deleted=False).count()
+        completed_count = PerUserTaskCompletion.objects.filter(page__project__slug=slug,
+            page__deleted=False, unchecked_on__isnull=True, user=profile).count()
+        progressbar_value = (completed_count * 100 / total_count) if total_count else 0
+        json = simplejson.dumps({
+            'total_count': total_count,
+            'completed_count': completed_count,
+            'progressbar_value': progressbar_value})
+        return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required

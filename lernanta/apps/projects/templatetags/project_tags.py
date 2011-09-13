@@ -5,7 +5,7 @@ from django import template
 from content.models import Page
 from signups.models import Signup
 
-from projects.models import Project
+from projects.models import Project, PerUserTaskCompletion
 from projects import drupal
 
 
@@ -131,15 +131,39 @@ register.inclusion_tag('projects/_project_list.html')(project_list)
 register.inclusion_tag('projects/_project_list.html')(featured_list)
 
 
-def task_list(project, show_all_tasks=True, short_list_length=3):
-    tasks = Page.objects.filter(project__pk=project.pk, listed=True,
+def task_list(project, user, show_all_tasks=True, short_list_length=3):
+    tasks = Page.objects.filter(project=project, listed=True,
         deleted=False).order_by('index')
     tasks_count = visible_count = tasks.count()
     if not show_all_tasks:
         tasks = tasks[:short_list_length]
         visible_count = tasks.count()
-    return {'tasks': tasks, 'tasks_count': tasks_count, 'visible_count': visible_count,
-        'show_all': show_all_tasks, 'project': project}
+    is_challenge = (project.category == Project.CHALLENGE)
+    is_participating = is_organizing = False
+    completed_count = 0
+    if is_challenge and user.is_authenticated():
+        profile = user.get_profile()
+        is_organizing = project.organizers().filter(user=profile).exists()
+        is_participating = project.participants().filter(user=profile).exists()
+        if is_participating:
+            for task in tasks:
+                task.is_done = PerUserTaskCompletion.objects.filter(
+                    user=profile, page=task, unchecked_on__isnull=True)
+        completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
+            page__deleted=False, unchecked_on__isnull=True, user=profile).count()
+    progressbar_value = (completed_count * 100 / tasks_count) if tasks_count else 0
+    return {
+        'tasks': tasks,
+        'tasks_count': tasks_count,
+        'visible_count': visible_count,
+        'show_all': show_all_tasks,
+        'project': project,
+        'is_challenge': is_challenge,
+        'participating': is_participating,
+        'organizing': is_organizing,
+        'completed_count': completed_count,
+        'progressbar_value': progressbar_value,
+    }
     
     
 
