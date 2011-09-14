@@ -14,6 +14,7 @@ class PageView(models.Model):
     ip_address = models.IPAddressField(
                          blank=True, null=True)
     time_on_page = models.IntegerField(blank=True, null=True)
+    user_agent = models.CharField(max_length=255, blank=True, null=True)
 
     def __repr__(self):
         return '<Session: key %s, access time %s, request_url %s, time_on_page %s, user %s>' \
