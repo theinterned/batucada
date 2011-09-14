@@ -717,8 +717,10 @@ def toggle_task_completion(request, slug, page_slug):
         return http.HttpResponse(json, mimetype="application/json")
 
 
+#FIXME: performance issues on production.
 @login_required
 @can_view_metric_detail
+@restrict_project_kind()
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
     project = get_object_or_404(Project, slug=slug)
