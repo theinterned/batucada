@@ -12,12 +12,15 @@ log = logging.getLogger(__name__)
 
 class PageViewTrackerMiddleware:
     def process_request(self, request):
-        BotNames=['Googlebot','Slurp','Twiceler','msnbot','KaloogaBot','YodaoBot','"Baiduspider','googlebot','Speedy Spider','DotBot']
-        user_agent=request.META.get('HTTP_USER_AGENT', None)
-        print user_agent
+        BotNames = ['Googlebot','Slurp','Twiceler','msnbot','KaloogaBot','YodaoBot','"Baiduspider','googlebot','Speedy Spider','DotBot']
+        user_agent = request.META.get('HTTP_USER_AGENT', None)
+        
+        # makes automated tests work
+        if not user_agent:
+            return
+
         # ensure that the request.path begins with any of the prefixes
         for prefix in settings.TRACKING_PREFIXES:
-
             for botname in BotNames:
                 if botname in user_agent:
                     # do not save the page view if the visitor is a known bot
@@ -29,7 +32,8 @@ class PageViewTrackerMiddleware:
                     pageview.ip_address = ip_address
                     pageview.request_url = request.path
                     pageview.referrer_url = utils.u_clean(request.META.get('HTTP_REFERER', 'unknown')[:255])
-    
+                    pageview.user_agent = user_agent
+
                     try:
                         oldpageview = PageView.objects.filter(session_key=request.session.session_key).order_by('-access_time')[0]
                     except IndexError, error:
@@ -39,7 +43,7 @@ class PageViewTrackerMiddleware:
                         if time_on_page.seconds < 3600 and time_on_page.days == 0:
                             oldpageview.time_on_page = time_on_page.seconds
                             oldpageview.save()
-    
+
                 else:
                     return
 
