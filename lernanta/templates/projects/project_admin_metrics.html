@@ -10,11 +10,11 @@
 
 <div style="overflow: auto; padding: 1em; min-height: 10em;">
   <h3>{{ _('Organizer Quick View') }}
-  {% if can_view_metric_detail %}
+  <!--{% if can_view_metric_detail %}
     (<a href="{% locale_url projects_admin_export_detailed_csv slug=project.slug %}">{{ _('export data') }} &raquo;</a>) 
-  {% endif %}</h3>
+  {% endif %}--></h3>
   <p><i>{{ _('This table shows the overview of participant data. ') }} 
-  {% if can_view_metric_detail %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.') }} {% endif %}</i></p>
+  <!--{% if can_view_metric_detail %} {{ _('To see follower data or non-loggedin user data, use export for a <acronym title="Comma Separated Values">CSV</acronym> file.') }} {% endif %}--></i></p>
 
   {% if data %}
 	<div id="demo">
