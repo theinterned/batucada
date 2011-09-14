@@ -48,7 +48,7 @@ class School(ModelBase):
     sidebar_width = models.CharField(max_length=5, default='245px')
     show_school_organizers = models.BooleanField(default=True)
 
-    extra_styles = models.TextField()
+    extra_styles = models.TextField(blank=True)
 
     # The term names are used to import school courses from the old site.
     OLD_TERM_NAME_CHOICES = YEAR_IN_SCHOOL_CHOICES = (
