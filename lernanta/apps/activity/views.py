@@ -26,13 +26,14 @@ def filter_activities(request, activities, default=None):
 
 def index(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
-    if activity.scope_object.category == Project.CHALLENGE:
-        raise http.Http404
     context = {
         'activity': activity,
         'domain': Site.objects.get_current().domain,
     }
     if activity.scope_object:
+        is_challenge = (activity.scope_object.category == Project.CHALLENGE)
+        if is_challenge:
+            raise http.Http404
         scope_url = activity.scope_object.get_absolute_url()
         context['project'] = activity.scope_object
     else:
