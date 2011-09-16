@@ -122,11 +122,11 @@ def update_metrics_cache(project):
         # processing these metrics to add this count * a contant to the time on page counts
         # to give some weight to the zero-length visits).
         unauth_visitor_zero_length_visits_metrics = pageviews.filter(user=None).filter(
-            time_on_page__isnull=True).values('user_id', 'access_time_date').annotate(
+            time_on_page__isnull=True).values('ip_address', 'access_time_date').annotate(
             models.Count('id'))
         for metric in unauth_visitor_zero_length_visits_metrics:
             on_db_metric, created = PageViewMetrics.objects.get_or_create(project=project,
-                user_id=metric['ip_address'], access_date=metric['access_time_date'],
+                ip_address=metric['ip_address'], access_date=metric['access_time_date'],
                 page_path=page_path)
             on_db_metric.zero_length_pageviews = metric['id__count']
             if on_db_metric.non_zero_length_time_on_page == None:
@@ -141,7 +141,7 @@ def get_metrics_axes(project):
     page_ct = ContentType.objects.get_for_model(Page)
     page_paths = PageViewMetrics.objects.filter(
         project=project).distinct().order_by(
-        'page_path').values_list('page_path')
+        'page_path').values_list('page_path', flat=True)
     dates = set(PageViewMetrics.objects.filter(
         project=project).distinct().values_list('access_date', flat=True))
     dates.update(PageComment.objects.filter(scope_id=project.id,
@@ -152,6 +152,8 @@ def get_metrics_axes(project):
             scope_object=project, verb=verbs['update']).extra(
             select={'created_on_date': "date(created_on)"}).distinct().values_list(
             'created_on_date', flat=True))
+    #FIXME: Depends on db backend
+    #dates = sorted(dates, reverse=True)
     dates = sorted(datetime.datetime.strptime(d, '%Y-%m-%d').date() for d in dates)
     return page_paths, dates
 
@@ -221,7 +223,7 @@ def get_user_metrics(project, users, dates, page_paths, overview=False):
         if not overview:
             # Time on Page, Non-Zero Length Views, Zero Length Views
             for page_path in page_paths:
-                metrics = PageViewMetrics.objects.get(project=project,
+                metrics = PageViewMetrics.objects.filter(project=project,
                     user=user, page_path=page_path).aggregate(
                     models.Sum('non_zero_length_time_on_page'),
                     models.Sum('non_zero_length_pageviews'),
@@ -233,6 +235,7 @@ def get_user_metrics(project, users, dates, page_paths, overview=False):
 
 
 def get_unauth_metrics(project, dates, page_paths):
+    #FIXME: Bug http://pastie.org/2541438
     ip_addresses = PageViewMetrics.objects.filter(
         project=project, user=None).distinct().values_list(
         'ip_address')
@@ -274,7 +277,7 @@ def get_unauth_metrics(project, dates, page_paths):
         row.append([0] * 2)
         # Time on Page, Non-Zero Length Views, Zero Length Views
         for page_path in page_paths:
-            metrics = PageViewMetrics.objects.get(project=project,
+            metrics = PageViewMetrics.objects.filter(project=project,
                 user=None, page_path=page_path, ip_address=ip_address).aggregate(
                 models.Sum('non_zero_length_time_on_page'),
                 models.Sum('non_zero_length_pageviews'),
