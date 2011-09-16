@@ -124,6 +124,7 @@ def project_list(school=None, only_featured=False, limit=8):
             'archived': archived})
     return context
 
+
 def featured_list(school=None):
     return project_list(school, True)
 
@@ -164,7 +165,5 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
     }
-    
-    
 
 register.inclusion_tag('projects/_task_list.html')(task_list)

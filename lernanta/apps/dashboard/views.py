@@ -16,7 +16,6 @@ from users.forms import CreateProfileForm
 from projects.models import Project
 from news.models import FeedEntry
 from drumbeat import messages
-from schools.models import School
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
 

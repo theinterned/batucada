@@ -12,10 +12,9 @@ log = logging.getLogger(__name__)
 
 class PageViewTrackerMiddleware:
     def process_request(self, request):
-        BotNames=['Googlebot','Slurp','Twiceler','msnbot','KaloogaBot','YodaoBot','Baiduspider','googlebot','Speedy Spider','DotBot']
         user_agent=request.META.get('HTTP_USER_AGENT', '')
 
-        for botname in BotNames:
+        for botname in settings.BOOT_NAMES:
             if botname in user_agent:
                 # do not save the page view if the visitor is a known bot
                 return
