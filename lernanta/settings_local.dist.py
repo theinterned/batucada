@@ -140,5 +140,8 @@ MOZBADGES = {
     'badge_getter': 'badges.models.get_awarded_badges',
 }
 
-# Statistics permissions
+# Metrics
 STATISTICS_COURSE_CAN_VIEW_CSV = ('kfasimpaur')
+BOOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
+    'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
+    'Speedy Spider', 'DotBot']
