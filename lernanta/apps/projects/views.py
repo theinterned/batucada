@@ -1,6 +1,7 @@
 import logging
 import datetime
 import csv
+import itertools
 
 from django import http
 from django.conf import settings
@@ -623,7 +624,7 @@ def export_detailed_csv(request, slug):
     # Write first row of headers
     row = []
     row.append("Users")
-    page_path_headers = ((page_path, "", "") for page_path in page_paths)
+    page_path_headers = list(itertools.chain(*[(page_path, "", "") for page_path in page_paths]))
     for date in dates:
         row.append(date.strftime("%Y-%m-%d"))
         row.extend([""] * 4)
