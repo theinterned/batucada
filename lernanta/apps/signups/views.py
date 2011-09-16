@@ -276,4 +276,3 @@ def direct_signup(request, slug):
         new_rel.deleted = False
     new_rel.save()
     return http.HttpResponseRedirect(project.get_absolute_url())
-

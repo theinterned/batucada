@@ -23,7 +23,6 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
-from content.models import Page
 from users import tasks
 from activity.schema import object_types
 from users.managers import CategoryTaggableManager

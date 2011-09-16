@@ -161,6 +161,11 @@ class Project(ModelBase):
         return Relationship.objects.filter(deleted=False,
             target_project=self, source__deleted=False)
 
+    def previous_followers(self):
+        """Return a list of users who were followers if this project."""
+        return Relationship.objects.filter(deleted=True,
+            target_project=self, source__deleted=False)
+
     def non_participant_followers(self):
         return self.followers().exclude(
             source__id__in=self.participants().values('user_id'))
