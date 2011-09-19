@@ -165,7 +165,7 @@ def get_user_metrics(project, users, dates, page_paths, overview=False):
     for user in users:
         row = [user.username]
         if overview:
-            row.append(user.last_active)
+            row.append(user.last_active or user.user.last_login)
         user_comments = PageComment.objects.filter(scope_id=project.id,
             scope_content_type=project_ct, author=user.user)
         user_task_edits = Activity.objects.filter(actor=user.user,
@@ -274,7 +274,7 @@ def get_unauth_metrics(project, dates, page_paths):
         row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
         row.append(metrics['non_zero_length_pageviews__sum'] or 0)
         row.append(metrics['zero_length_pageviews__sum'] or 0)
-        row.append([0] * 2)
+        row.extend([0] * 2)
         # Time on Page, Non-Zero Length Views, Zero Length Views
         for page_path in page_paths:
             metrics = PageViewMetrics.objects.filter(project=project,
