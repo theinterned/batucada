@@ -1,6 +1,6 @@
 import logging
 import datetime
-import csv
+import unicodecsv
 import itertools
 
 from django import http
@@ -617,7 +617,7 @@ def export_detailed_csv(request, slug):
     # Create csv response
     response = http.HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
-    writer = csv.writer(response)
+    writer = unicodecsv.writer(response)
     writer.writerow(["Course: " + project.name])
     writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
     writer.writerow([])

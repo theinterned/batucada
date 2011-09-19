@@ -11,6 +11,8 @@ from activity.schema import verbs
 from activity.models import Activity
 from replies.models import PageComment
 
+from tracker.utils import force_date
+
 
 class PageView(ModelBase):
     session_key = models.CharField(max_length=100, db_index=True)
@@ -152,9 +154,8 @@ def get_metrics_axes(project):
             scope_object=project, verb=verbs['update']).extra(
             select={'created_on_date': "date(created_on)"}).distinct().values_list(
             'created_on_date', flat=True))
-    #FIXME: Depends on db backend
-    #dates = sorted(dates, reverse=True)
-    dates = sorted(datetime.datetime.strptime(d, '%Y-%m-%d').date() for d in dates)
+    dates = (force_date(d) for d in dates)
+    dates = sorted(dates, reverse=True)
     return page_paths, dates
 
 
@@ -235,10 +236,9 @@ def get_user_metrics(project, users, dates, page_paths, overview=False):
 
 
 def get_unauth_metrics(project, dates, page_paths):
-    #FIXME: Bug http://pastie.org/2541438
     ip_addresses = PageViewMetrics.objects.filter(
         project=project, user=None).distinct().values_list(
-        'ip_address')
+        'ip_address', flat=True)
 
     for index, ip_address in enumerate(ip_addresses):
         row = ["Non-loggedin User %s" % index]
@@ -253,7 +253,7 @@ def get_unauth_metrics(project, dates, page_paths):
             row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
             row.append(metrics['non_zero_length_pageviews__sum'] or 0)
             row.append(metrics['zero_length_pageviews__sum'] or 0)
-            row.append([0] * 2)
+            row.extend([0] * 2)
             for page_path in page_paths:
                 # Time on Page, Non-Zero Length Views, Zero Length Views
                 try:
