@@ -138,151 +138,249 @@ def update_metrics_cache(project):
             on_db_metric.save()
 
 
-def get_metrics_axes(project):
+def metrics_summary(project, users):
+    """Metrics summary iterator.
+
+    For each user, provides: username, last active date,
+    total time on course pages (estimating a one minute length for visits
+    of unknow/zero legth), total number of comments and
+    total number of page edits."""
     project_ct = ContentType.objects.get_for_model(Project)
     page_ct = ContentType.objects.get_for_model(Page)
-    page_paths = PageViewMetrics.objects.filter(
-        project=project).distinct().order_by(
-        'page_path').values_list('page_path', flat=True)
-    dates = set(PageViewMetrics.objects.filter(
-        project=project).distinct().values_list('access_date', flat=True))
-    dates.update(PageComment.objects.filter(scope_id=project.id,
-        scope_content_type=project_ct).extra(
-            select={'created_on_date': "date(created_on)"}).distinct().values_list(
-            'created_on_date', flat=True))
-    dates.update(Activity.objects.filter(target_content_type=page_ct,
-            scope_object=project, verb=verbs['update']).extra(
-            select={'created_on_date': "date(created_on)"}).distinct().values_list(
-            'created_on_date', flat=True))
-    dates = (force_date(d) for d in dates)
-    dates = sorted(dates, reverse=True)
-    return page_paths, dates
-
-
-def get_user_metrics(project, users, dates, page_paths, overview=False):
-    project_ct = ContentType.objects.get_for_model(Project)
-    page_ct = ContentType.objects.get_for_model(Page)
+    comments = PageComment.objects.filter(scope_id=project.id,
+        scope_content_type=project_ct)
+    task_edits = Activity.objects.filter(scope_object=project,
+        target_content_type=page_ct, verb=verbs['update'])
+    pageviews = PageViewMetrics.objects.filter(project=project)
     for user in users:
         row = [user.username]
-        if overview:
-            row.append(user.last_active or user.user.last_login)
-        user_comments = PageComment.objects.filter(scope_id=project.id,
-            scope_content_type=project_ct, author=user.user)
-        user_task_edits = Activity.objects.filter(actor=user.user,
-            target_content_type=page_ct, scope_object=project,
-            verb=verbs['update'])
-        if not overview:
-            for date in dates:
-                # "Time on Course Pages", "Non-Zero Length Views",
-                # "Zero Length Views", "Comments", "Task Edits"
-                metrics = PageViewMetrics.objects.filter(
-                    user=user, project=project, access_date=date).aggregate(
-                    models.Sum('non_zero_length_time_on_page'),
-                    models.Sum('non_zero_length_pageviews'),
-                    models.Sum('zero_length_pageviews'))
-                row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
-                row.append(metrics['non_zero_length_pageviews__sum'] or 0)
-                row.append(metrics['zero_length_pageviews__sum'] or 0)
-                comments_count = user_comments.filter(created_on__year=date.year,
-                    created_on__month=date.month, created_on__day=date.day).count()
-                row.append(comments_count)
-                task_edits_count = user_task_edits.filter(created_on__year=date.year,
-                    created_on__month=date.month, created_on__day=date.day).count()
-                row.append(task_edits_count)
-                for page_path in page_paths:
-                    # Time on Page, Non-Zero Length Views, Zero Length Views
-                    try:
-                        metrics = PageViewMetrics.objects.get(project=project, user=user,
-                            page_path=page_path, access_date=date)
-                        row.append("%.2f" % (metrics.non_zero_length_time_on_page / 60.0))
-                        row.append(metrics.non_zero_length_pageviews)
-                        row.append(metrics.zero_length_pageviews)
-                    except:
-                        row.extend([0] * 3)
-        # Totals
-        # "Time on Course Pages", "Non-Zero Length Views",
-        # "Zero Length Views", "Comments", "Task Edits"
-        metrics = PageViewMetrics.objects.filter(
-            user=user, project=project).aggregate(
+        row.append(user.last_active or user.user.last_login)
+        metrics = pageviews.filter(user=user).aggregate(
             models.Sum('non_zero_length_time_on_page'),
-            models.Sum('non_zero_length_pageviews'),
             models.Sum('zero_length_pageviews'))
-        if overview:
-            # Sumarize total time on pages by stimating a one minute
-            # for visits of unknow legth (i.e. zero-length visits).
-            total_time_on_pages = (metrics['non_zero_length_time_on_page__sum'] or 0)
-            total_time_on_pages += (metrics['zero_length_pageviews__sum'] or 0) * 60
-            row.append("%.2f" % (total_time_on_pages / 60.0))
-        else:
-            row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
-            row.append(metrics['non_zero_length_pageviews__sum'] or 0)
-            row.append(metrics['zero_length_pageviews__sum'] or 0)
-        total_comments_count = user_comments.count()
-        row.append(total_comments_count)
-        total_task_edits_count = user_task_edits.count()
-        row.append(total_task_edits_count)
-        if not overview:
-            # Time on Page, Non-Zero Length Views, Zero Length Views
-            for page_path in page_paths:
-                metrics = PageViewMetrics.objects.filter(project=project,
-                    user=user, page_path=page_path).aggregate(
-                    models.Sum('non_zero_length_time_on_page'),
-                    models.Sum('non_zero_length_pageviews'),
-                    models.Sum('zero_length_pageviews'))
-                row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
-                row.append(metrics['non_zero_length_pageviews__sum'] or 0)
-                row.append(metrics['zero_length_pageviews__sum'] or 0)
+        total_time_on_pages = (metrics['non_zero_length_time_on_page__sum'] or 0)
+        total_time_on_pages += (metrics['zero_length_pageviews__sum'] or 0) * 60
+        row.append("%.2f" % (total_time_on_pages / 60.0))
+        row.append(comments.filter(author=user).count())
+        row.append(task_edits.filter(actor=user).count())
         yield row
 
 
-def get_unauth_metrics(project, dates, page_paths):
-    ip_addresses = PageViewMetrics.objects.filter(
-        project=project, user=None).distinct().values_list(
-        'ip_address', flat=True)
+def user_total_metrics(project, users):
+    """User's total metrics iterator.
 
-    for index, ip_address in enumerate(ip_addresses):
-        row = ["Non-loggedin User %s" % index]
-        for date in dates:
-            # Time on course pages, comments, task edits
-            metrics = PageViewMetrics.objects.filter(
-                user=None, project=project, access_date=date,
-                ip_address=ip_address).aggregate(
-                models.Sum('non_zero_length_time_on_page'),
-                models.Sum('non_zero_length_pageviews'),
-                models.Sum('zero_length_pageviews'))
-            row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
-            row.append(metrics['non_zero_length_pageviews__sum'] or 0)
-            row.append(metrics['zero_length_pageviews__sum'] or 0)
-            row.extend([0] * 2)
-            for page_path in page_paths:
-                # Time on Page, Non-Zero Length Views, Zero Length Views
-                try:
-                    metrics = PageViewMetrics.objects.get(project=project, user=None,
-                        page_path=page_path, access_date=date, ip_address=ip_address)
-                    row.append("%.2f" % (metrics.non_zero_length_time_on_page / 60.0))
-                    row.append(metrics.non_zero_length_pageviews)
-                    row.append(metrics.zero_length_pageviews)
-                except:
-                    row.extend([0] * 3)
-        # Totals
-        # Time on course pages, comments, task edits
-        metrics = PageViewMetrics.objects.filter(
-            user=None, project=project, ip_address=ip_address).aggregate(
+    For each user, provides: username, totals for the time on course pages,
+    number of non-zero length page views, number of zero-length
+    page views, number of comments and number of page edits"""
+    project_ct = ContentType.objects.get_for_model(Project)
+    page_ct = ContentType.objects.get_for_model(Page)
+    comments = PageComment.objects.filter(scope_id=project.id,
+        scope_content_type=project_ct)
+    task_edits = Activity.objects.filter(scope_object=project,
+        target_content_type=page_ct, verb=verbs['update'])
+    pageviews = PageViewMetrics.objects.filter(project=project)
+    for user in users:
+        row = [user.username]
+        metrics = pageviews.filter(user=user).aggregate(
             models.Sum('non_zero_length_time_on_page'),
             models.Sum('non_zero_length_pageviews'),
             models.Sum('zero_length_pageviews'))
         row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
         row.append(metrics['non_zero_length_pageviews__sum'] or 0)
         row.append(metrics['zero_length_pageviews__sum'] or 0)
-        row.extend([0] * 2)
-        # Time on Page, Non-Zero Length Views, Zero Length Views
-        for page_path in page_paths:
-            metrics = PageViewMetrics.objects.filter(project=project,
-                user=None, page_path=page_path, ip_address=ip_address).aggregate(
+        row.append(comments.filter(author=user).count())
+        row.append(task_edits.filter(actor=user).count())
+        yield row
+
+
+def unauth_total_metrics(project):
+    """Anonymized total metrics iterator for non-authenticated visitors.
+
+    For each ip_address/visitor, provides: an anonym username, and totals for
+    time on course pages, number of non-zero length page visits,
+    and number of zero length page visits."""
+    metrics = PageViewMetrics.objects.filter(
+        user=None, project=project).values('ip_address').annotate(
+        models.Sum('non_zero_length_time_on_page'),
+        models.Sum('non_zero_length_pageviews'),
+        models.Sum('zero_length_pageviews'))
+    for index, metric in enumerate(metrics):
+        row = ["Non-loggedin User %s" % index]
+        row.append("%.2f" % ((metric['non_zero_length_time_on_page__sum'] or 0) / 60.0))
+        row.append(metric['non_zero_length_pageviews__sum'] or 0)
+        row.append(metric['zero_length_pageviews__sum'] or 0)
+        yield row
+
+
+def user_total_per_page_metrics(project, user_ids):
+    """User's page visit metrics iterator.
+
+    For each page a user has visited, provides: total time on page,
+    number of non-zero length visits, and number of zero-length visits.
+
+    The information is sorted first by username and then by page path.
+    """
+    metrics = PageViewMetrics.objects.filter(project=project,
+        user__in=user_ids).values(
+        'user__username', 'page_path').order_by(
+        'user__username', 'page_path').annotate(
+        models.Sum('non_zero_length_time_on_page'),
+        models.Sum('non_zero_length_pageviews'),
+        models.Sum('zero_length_pageviews'))
+    for metric in metrics:
+        row = [metric['user__username'], metric['page_path']]
+        row.append("%.2f" % ((metric['non_zero_length_time_on_page__sum'] or 0) / 60.0))
+        row.append(metric['non_zero_length_pageviews__sum'] or 0)
+        row.append(metric['zero_length_pageviews__sum'] or 0)
+        yield row
+
+
+def unauth_total_per_page_metrics(project):
+    """Anonymized page visits metrics iterator for non-authenticated visitors.
+
+    For each page a non-authenticated user has visited, provides: total time on page,
+    number of non-zero length visits and number of zero-length visits.
+
+    The information is sorted first by ip_address (anonymized) and then by page path.
+    """
+    metrics = PageViewMetrics.objects.filter(project=project,
+        user=None).values('ip_address', 'page_path').order_by(
+        'ip_address', 'page_path').annotate(
+        models.Sum('non_zero_length_time_on_page'),
+        models.Sum('non_zero_length_pageviews'),
+        models.Sum('zero_length_pageviews'))
+    index = 0
+    last_ip_address = None
+    for metric in metrics:
+        ip_address = metric['ip_address']
+        if last_ip_address != ip_address:
+            index += 1
+            last_ip_address = ip_address
+        row = ["Non-loggedin User %s" % index, metric['page_path']]
+        row.append("%.2f" % ((metric['non_zero_length_time_on_page__sum'] or 0) / 60.0))
+        row.append(metric['non_zero_length_pageviews__sum'] or 0)
+        row.append(metric['zero_length_pageviews__sum'] or 0)
+        yield row
+
+
+def chronological_user_metrics(project, users):
+    """User's chronological metrics iterator.
+
+    For each user, provides for each date in which the user was active:
+    the total time on course pages, number of non-zero length page
+    visits, number of zero-length visits, number of comments
+    published, and number of page edits.
+
+    The information is sorted first by username, and then by date."""
+    project_ct = ContentType.objects.get_for_model(Project)
+    page_ct = ContentType.objects.get_for_model(Page)
+    comments = PageComment.objects.filter(scope_id=project.id,
+        scope_content_type=project_ct)
+    task_edits = Activity.objects.filter(scope_object=project,
+        target_content_type=page_ct, verb=verbs['update'])
+    pageviews = PageViewMetrics.objects.filter(project=project)
+    for user in users:
+        user_pageviews = pageviews.filter(user=user)
+        user_comments = comments.filter(author=user)
+        user_task_edits = task_edits.filter(actor=user)
+        # Compute dates for which the user either visited a course page,
+        # posted a comment (can be on the wall), or edited a course page.
+        dates = set(user_pageviews.distinct().values_list('access_date', flat=True))
+        dates.update(user_comments.extra(select={
+            'created_on_date': "date(created_on)"}).distinct().values_list(
+            'created_on_date', flat=True))
+        dates.update(user_task_edits.extra(select={
+            'created_on_date': "date(created_on)"}).distinct().values_list(
+            'created_on_date', flat=True))
+        dates = (force_date(d) for d in dates)
+        dates = sorted(dates, reverse=True)
+        for date in dates:
+            row = [user.username, date.strftime("%Y-%m-%d")]
+            metrics = user_pageviews.filter(access_date=date).aggregate(
                 models.Sum('non_zero_length_time_on_page'),
                 models.Sum('non_zero_length_pageviews'),
                 models.Sum('zero_length_pageviews'))
             row.append("%.2f" % ((metrics['non_zero_length_time_on_page__sum'] or 0) / 60.0))
             row.append(metrics['non_zero_length_pageviews__sum'] or 0)
             row.append(metrics['zero_length_pageviews__sum'] or 0)
+            comments_count = user_comments.filter(created_on__year=date.year,
+                created_on__month=date.month, created_on__day=date.day).count()
+            row.append(comments_count)
+            task_edits_count = user_task_edits.filter(created_on__year=date.year,
+                created_on__month=date.month, created_on__day=date.day).count()
+            row.append(task_edits_count)
+            yield row
+
+
+def chronological_unauth_metrics(project):
+    """Anonymized chronological metrics iterator for non-authenticated users.
+
+    For each non-authenticated visitor, provides for each date in which this visitor was active:
+    the total time on course pages, number of non-zero length page
+    visits, and number of zero-length page visits.
+
+    The information is sorted first by ip_address (anonymized) and then by date."""
+    metrics = PageViewMetrics.objects.filter(
+        user=None, project=project).values('ip_address', 'access_date').order_by(
+        'ip_address', 'access_date').annotate(
+        models.Sum('non_zero_length_time_on_page'),
+        models.Sum('non_zero_length_pageviews'),
+        models.Sum('zero_length_pageviews'))
+    index = 0
+    last_ip_address = None
+    for metric in metrics:
+        ip_address = metric['ip_address']
+        if last_ip_address != ip_address:
+            index += 1
+            last_ip_address = ip_address
+        row = ["Non-loggedin User %s" % index, metric['access_date'].strftime("%Y-%m-%d")]
+        row.append("%.2f" % ((metric['non_zero_length_time_on_page__sum'] or 0) / 60.0))
+        row.append(metric['non_zero_length_pageviews__sum'] or 0)
+        row.append(metric['zero_length_pageviews__sum'] or 0)
+        yield row
+
+
+def chronological_user_per_page_metrics(project, user_ids):
+    """User's chronological page visits metrics iterator.
+
+    For each user, provides for each date in which the user was active, and each page the user
+    visited that day: the total time on page, number of non-zero length visits,
+    and number of zero-length visits.
+
+    The information is sorted first by username, then by date, and finally by page path.
+    """
+    metrics = PageViewMetrics.objects.filter(project=project,
+        user__in=user_ids).order_by('user__username', 'access_date', 'page_path')
+    for metric in metrics:
+        row = [metric.user.username, metric.access_date.strftime("%Y-%m-%d"),
+            metric.page_path]
+        row.append("%.2f" % (metric.non_zero_length_time_on_page / 60.0))
+        row.append(metric.non_zero_length_pageviews)
+        row.append(metric.zero_length_pageviews)
+        yield row
+
+
+def chronological_unauth_per_page_metrics(project):
+    """Anonymized chronological page visits metrics iterator for non-authenticated users.
+
+    For each non-authenticated visitor, provides for each date in which this visitor was active,
+    and each page (s)he visited that day: the total time on page,
+    number of non-zero length visits, and number of zero-length visits.
+
+    The information is sorted first by ip_address (anonymized), then by date,
+    and finally by page path."""
+    metrics = PageViewMetrics.objects.filter(project=project,
+        user=None).order_by('ip_address', 'access_date', 'page_path')
+    index = 0
+    last_ip_address = None
+    for metric in metrics:
+        ip_address = metric.ip_address
+        if last_ip_address != ip_address:
+            index += 1
+            last_ip_address = ip_address
+        row = ["Non-loggedin User %s" % index, metric.access_date.strftime("%Y-%m-%d"),
+            metric.page_path]
+        row.append("%.2f" % (metric.non_zero_length_time_on_page / 60.0))
+        row.append(metric.non_zero_length_pageviews)
+        row.append(metric.zero_length_pageviews)
         yield row
