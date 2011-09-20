@@ -36,8 +36,7 @@ from activity.models import Activity
 from activity.views import filter_activities
 from activity.schema import verbs
 from signups.models import Signup
-from tracker.models import update_metrics_cache, get_metrics_axes
-from tracker.models import get_user_metrics, get_unauth_metrics
+from tracker import models as tracker_models
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -583,18 +582,12 @@ def admin_metrics(request, slug):
     project = get_object_or_404(Project, slug=slug)
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    update_metrics_cache(project)
-    dates, page_paths = get_metrics_axes(project)
-    data = []
     participants = (participant.user for participant in project.non_organizer_participants())
-    for row in get_user_metrics(project, participants, dates, page_paths, overview=True):
-        data.append({
-            'username': row[0],
-            'last_active': row[1],
-            'course_activity_minutes': row[2],
-            'comment_count': row[3],
-            'task_edits_count': row[4],
-        })
+    tracker_models.update_metrics_cache(project)
+    keys = ('username', 'last_active', 'course_activity_minutes',
+        'comment_count','task_edits_count')
+    metrics = tracker_models.metrics_summary(project, participants)
+    data = (dict(itertools.izip(keys, d)) for d in metrics)
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
@@ -610,10 +603,21 @@ def admin_metrics(request, slug):
 @can_view_metric_detail
 def export_detailed_csv(request, slug):
     """Display detailed CSV for certain users."""
-
     project = get_object_or_404(Project, slug=slug)
-    update_metrics_cache(project)
-    page_paths, dates = get_metrics_axes(project)
+    # Preprocessing
+    tracker_models.update_metrics_cache(project)
+    participants = project.non_organizer_participants().order_by(
+        'user__username')
+    participant_profiles = (participant.user for participant in participants)
+    participant_ids = participants.values('user_id')
+    followers = project.non_participant_followers().order_by('source__username')
+    follower_profiles = (follower.source for follower in followers)
+    follower_ids = followers.values('source_id')
+    previous_followers = project.previous_followers()
+    previous_follower_profiles = (previous.source for previous in previous_followers)
+    previous_follower_ids = project.previous_followers().values('source_id')
+    headers = ["Time on Pages", "Non-zero Length Page Views",
+        "Zero-length Page Views", "Comments", "Page Edits"]
     # Create csv response
     response = http.HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
@@ -621,47 +625,83 @@ def export_detailed_csv(request, slug):
     writer.writerow(["Course: " + project.name])
     writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
     writer.writerow([])
-    # Write first row of headers
-    row = []
-    row.append("Users")
-    page_path_headers = list(itertools.chain(*[(page_path, "", "") for page_path in page_paths]))
-    for date in dates:
-        row.append(date.strftime("%Y-%m-%d"))
-        row.extend([""] * 4)
-        row.extend(page_path_headers)
-    row.append("TOTAL")
-    row.extend([""] * 4)
-    row.extend(page_path_headers)
-    writer.writerow(row)
-    # Write sencond row of headers
-    row = []
-    row.append("")
-    peruser_headers = ("Time on Course Pages", "Non-Zero Length Views",
-        "Zero Length Views", "Comments", "Task Edits")
-    pageviews_header = ("Time on Page", "Non-Zero Length Views", "Zero Length Views")
-    pageviews_headers = pageviews_header * len(page_paths)
-    for i in xrange(len(dates)):
-        row.extend(peruser_headers)
-        row.extend(pageviews_headers)
-    row.extend(peruser_headers)
-    row.extend(pageviews_headers)
-    writer.writerow(row)
-    # Write metrics data
-    writer.writerow(["Participants"])
-    participants = (participant.user for participant in project.non_organizer_participants())
-    for row in get_user_metrics(project, participants, dates, page_paths):
+    writer.writerow([])
+    # Write Total Metrics
+    writer.writerow(["TOTALS"])
+    writer.writerow(["Participants"] + headers)
+    for row in tracker_models.user_total_metrics(project, participant_profiles):
         writer.writerow(row)
-    writer.writerow(["Followers"])
-    followers = (follower.source for follower in project.non_participant_followers())
-    for row in get_user_metrics(project, followers, dates, page_paths):
+    writer.writerow([])
+    writer.writerow(["Followers"] + headers)
+    for row in tracker_models.user_total_metrics(project, follower_profiles):
         writer.writerow(row)
-    writer.writerow(["Non-Participants"])
-    # Previous followers (includes previous participants that are no longer followers)
-    previous_followers = (previous.source for previous in project.previous_followers())
-    for row in get_user_metrics(project, previous_followers, dates, page_paths):
+    writer.writerow([])
+    writer.writerow(["Previous Followers"] + headers)
+    for row in tracker_models.user_total_metrics(project, previous_follower_profiles):
         writer.writerow(row)
-    for row in get_unauth_metrics(project, dates, page_paths):
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors"] + headers)
+    for row in tracker_models.unauth_total_metrics(project):
+        writer.writerow(row + ["0"] * 2)
+    writer.writerow([])
+    writer.writerow([])
+    # Write Per Page Total Metrics
+    writer.writerow(["PER PAGE TOTALS"])
+    writer.writerow(["Participants", "Page Paths"] + headers[:-2])
+    for row in tracker_models.user_total_per_page_metrics(project, participant_ids):
         writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers", "Page Paths"] + headers[:-2])
+    for row in tracker_models.user_total_per_page_metrics(project, follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers", "Page Paths"] + headers[:-2])
+    for row in tracker_models.user_total_per_page_metrics(project, previous_follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors", "Page Paths"] + headers[:-2])
+    for row in tracker_models.unauth_total_per_page_metrics(project):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow([])
+    # Write Chronological Metrics
+    writer.writerow(["CHRONOLOGICAL"])
+    writer.writerow(["Participants", "Dates"] + headers)
+    for row in tracker_models.chronological_user_metrics(project, participant_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers", "Dates"] + headers)
+    for row in tracker_models.chronological_user_metrics(project, follower_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers", "Dates"] + headers)
+    for row in tracker_models.chronological_user_metrics(project, previous_follower_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors", "Dates"] + headers)
+    for row in tracker_models.chronological_unauth_metrics(project):
+        writer.writerow(row + ["0"] * 2)
+    writer.writerow([])
+    writer.writerow([])
+    # Write Chronological Per Page Metrics
+    writer.writerow(["CHRONOLOGICAL PER PAGE"])
+    writer.writerow(["Participants", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_user_per_page_metrics(project, participant_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_user_per_page_metrics(project, follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_user_per_page_metrics(project, previous_follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_unauth_per_page_metrics(project):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow([])
 
     return response
 
