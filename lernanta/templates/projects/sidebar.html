@@ -60,12 +60,18 @@
               <a id="direct_signup_button" href="{{ login_with_redirect_url }}">{{ _('Start Challenge')}}</a>
           {% endif %}
         {% endif %}
-      {% else %}{% if not organizing %}
-        <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
-          {% csrf_token %}
-          <button id="direct_signup_button">{{ _('Leave Challenge') }}</button>
-        </form>
-      {% endif %}{% endif %}
+        <br><br><br>
+        <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('See Discussions')}}</a>
+      {% else %}
+        {% if not organizing %}
+          <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
+            {% csrf_token %}
+            <button id="direct_signup_button">{{ _('Leave Challenge') }}</button>
+          </form>
+        {% endif %}
+        <br><br><br>
+        <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('Discuss Challenge')}}</a>
+      {% endif %}
 
     {% else %}
 

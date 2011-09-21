@@ -268,6 +268,41 @@ input[type=submit]:active,
     text-shadow: 0 -1px 0 #4c9021;
     width: 180px;
 }
+
+.project-kind-challenge #sidebar #project button#direct_signup_button {
+    width: 198px;
+}
+
+.project-kind-challenge #sidebar #project a.discuss-button {
+  float: left;
+  margin: 0 0 0 20px;
+  background-color: #52a8e8;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#52a8e8), to(#377ad0));
+  /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #52a8e8, #377ad0);
+  background-image: -moz-linear-gradient(top, #52a8e8, #377ad0);
+  background-image: -ms-linear-gradient(top, #52a8e8, #377ad0);
+  background-image: -o-linear-gradient(top, #52a8e8, #377ad0);
+  background-image: linear-gradient(top, #52a8e8, #377ad0);
+ border: 1px solid #006699;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+ -webkit-box-shadow: inset 0 1px 0 0 #52a8e8;
+ -moz-box-shadow: inset 0 1px 0 0 #52a8e8;
+ -ms-box-shadow: inset 0 1px 0 0 #52a8e8;
+ -o-box-shadow: inset 0 1px 0 0 #52a8e8;
+ box-shadow: inset 0 1px 0 0 #52a8e8;
+ color: #fff;
+ font: bold 17px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+ line-height: 1;
+ padding: 7px 8px 8px 8px;
+ text-align: center;
+ text-shadow: 0 -1px 0 #006699;
+ width: 180px; 
+}
  
 .project-kind-challenge #sidebar #project button#direct_signup_button:hover,
 .project-kind-challenge #sidebar #project a#direct_signup_button:hover {
@@ -288,6 +323,24 @@ input[type=submit]:active,
     text-decoration: none;
 }
 
+.project-kind-challenge #sidebar #project a.discuss-button:hover {
+  background-color: #4C9EDA;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4C9EDA), to(#3271C2));
+  /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #4C9EDA, #3271C2);
+  background-image: -moz-linear-gradient(top, #4C9EDA, #3271C2);
+  background-image: -ms-linear-gradient(top, #4C9EDA, #3271C2);
+  background-image: -o-linear-gradient(top, #4C9EDA, #3271C2);
+  background-image: linear-gradient(top, #4C9EDA, #3271C2);
+ -webkit-box-shadow: inset 0 1px 0 0 #4C9EDA;
+ -moz-box-shadow: inset 0 1px 0 0 #4C9EDA;
+ -ms-box-shadow: inset 0 1px 0 0 #4C9EDA;
+ -o-box-shadow: inset 0 1px 0 0 #4C9EDA;
+ box-shadow: inset 0 1px 0 0 #4C9EDA;
+   cursor: pointer; 
+   text-decoration: none;
+}
+
 .project-kind-challenge #sidebar #project button#direct_signup_button:active,
 .project-kind-challenge #sidebar #project a#direct_signup_button:active {
     border: 1px solid #5b992b;
@@ -298,6 +351,16 @@ input[type=submit]:active,
     -o-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
     box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
 }
+
+.project-kind-challenge #sidebar #project a.discuss-button:active {
+   border: 1px solid #006699;
+ -webkit-box-shadow: inset 0 1px 0 0 #52a8e8;
+ -moz-box-shadow: inset 0 1px 0 0 #52a8e8;
+ -ms-box-shadow: inset 0 1px 0 0 #52a8e8;
+ -o-box-shadow: inset 0 1px 0 0 #52a8e8;
+ box-shadow: inset 0 1px 0 0 #52a8e8;
+}
+
 
 /* FORMS */
 form .field {
