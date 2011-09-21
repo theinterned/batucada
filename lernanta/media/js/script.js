@@ -303,9 +303,11 @@ $(document).ready(function() {
         // prevent the browser to follow the link
         return false;
     });
-    
-    $('#id_start_date').datepicker();
-    $('#id_end_date').datepicker();
+
+    if ($('#id_start_date').length) {
+        $('#id_start_date').datepicker();
+        $('#id_end_date').datepicker();
+    }
 
     if ($('.project-kind-challenge #task_list_section #progressbar').length) {
         var progressbar_value = $(".project-kind-challenge #task_list_section #progressbar").attr('value');
