@@ -88,6 +88,7 @@ def sidebar(context, max_people_count=64):
         'can_add_task': can_add_task,
         'can_change_order': can_change_order,
         'chat': chat,
+        'discussion_area': context.get('discussion_area', False),
         'is_challenge': (project.category == Project.CHALLENGE),
     })
     return context
@@ -175,7 +176,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
 register.inclusion_tag('projects/_task_list.html')(task_list)
 
 
-def project_wall(request, project, only_discussions=False):
+def project_wall(request, project, discussion_area=False):
     is_organizing = project.is_organizing(request.user)
     is_participating = project.is_participating(request.user)
     if is_organizing:
@@ -186,7 +187,7 @@ def project_wall(request, project, only_discussions=False):
         form = None
 
     activities = project.activities()
-    if only_discussions:
+    if discussion_area:
         activities = apply_filter(activities, 'messages')
     else:
         activities = filter_activities(request, activities)
@@ -203,7 +204,7 @@ def project_wall(request, project, only_discussions=False):
         'participating': is_participating,
         'organizing': is_organizing,
         'form': form,
-        'only_discussions': only_discussions,
+        'discussion_area': discussion_area,
         'domain': Site.objects.get_current().domain,
         'wall_url': url,
     }

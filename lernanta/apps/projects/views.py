@@ -724,7 +724,10 @@ def discussion_area(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.category != Project.CHALLENGE:
         return http.HttpResponseRedirect(project.get_absolute_url())
-    context = {'project': project, 'only_discussions': True}
+    context = {
+        'project': project,
+        'discussion_area': True,
+    }
     return render_to_response('projects/project_discussion_area.html', context,
         context_instance=RequestContext(request))
 

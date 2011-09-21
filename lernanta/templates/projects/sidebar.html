@@ -61,7 +61,11 @@
           {% endif %}
         {% endif %}
         <br><br><br>
-        <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('View Discussions')}}</a>
+        {% if discussion_area %}
+          <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
+        {% else %}
+          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('View Discussions')}}</a>
+        {% endif %}
       {% else %}
         {% if not organizing %}
           <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
@@ -70,7 +74,11 @@
           </form>
         {% endif %}
         <br><br><br>
-        <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('Discuss Challenge')}}</a>
+        {% if discussion_area %}
+          <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
+        {% else %}
+          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('Discuss Challenge')}}</a>
+        {% endif %}
       {% endif %}
 
     {% else %}
