@@ -2856,9 +2856,7 @@ div.voting div.score {
 .project-kind-challenge #task_list_section #progress #progressbar {
     width: 290px;
     height: 20px;
-    background: #999;
     color: #fff;
-    padding: 2px 0 0 10px;
 }
 
 .ui-progressbar .ui-progressbar-value {
