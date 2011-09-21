@@ -59,8 +59,8 @@
           {% else %}
               <a id="direct_signup_button" href="{{ login_with_redirect_url }}">{{ _('Start Challenge')}}</a>
           {% endif %}
+          <br><br><br>
         {% endif %}
-        <br><br><br>
         {% if discussion_area %}
           <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
         {% else %}
@@ -72,8 +72,8 @@
             {% csrf_token %}
             <button id="direct_signup_button">{{ _('Leave Challenge') }}</button>
           </form>
+          <br><br><br>
         {% endif %}
-        <br><br><br>
         {% if discussion_area %}
           <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
         {% else %}
