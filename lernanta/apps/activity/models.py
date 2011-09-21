@@ -21,6 +21,13 @@ def register_filter(name, filter_func):
     FILTERS[name] = filter_func
 
 
+def apply_filter(activities, name):
+    if name in FILTERS:
+        return FILTERS[name](activities)
+    else:
+        return activities
+
+
 class ActivityManager(ManagerBase):
 
     def public(self):

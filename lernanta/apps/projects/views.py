@@ -11,7 +11,6 @@ from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
 from django.template.loader import render_to_string
-from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
 
@@ -31,9 +30,7 @@ from links.models import Link
 from users.models import UserProfile
 from content.models import Page
 from schools.models import School
-from statuses import forms as statuses_forms
 from activity.models import Activity
-from activity.views import filter_activities
 from activity.schema import verbs
 from signups.models import Signup
 from tracker import models as tracker_models
@@ -134,33 +131,16 @@ def matching_kinds(request):
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
-    is_participating = project.is_participating(request.user)
-    is_following = project.is_following(request.user)
-    if is_organizing:
-        form = statuses_forms.ImportantStatusForm()
-    elif is_participating:
-        form = statuses_forms.StatusForm()
-    else:
-        form = None
-
-    show_all_tasks = (project.category == Project.CHALLENGE)
-
-    activities = project.activities()
-    activities = filter_activities(request, activities)
+    is_challenge = (project.category == Project.CHALLENGE)
 
     context = {
         'project': project,
-        'participating': is_participating,
-        'following': is_following,
         'organizing': is_organizing,
-        'show_all_tasks': show_all_tasks,
-        'form': form,
-        'is_challenge': (project.category == Project.CHALLENGE),
-        'domain': Site.objects.get_current().domain,
+        'show_all_tasks': is_challenge,
+        'is_challenge': is_challenge,
     }
-    context.update(get_pagination_context(request, activities))
     return render_to_response('projects/project.html', context,
-                              context_instance=RequestContext(request))
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -737,6 +717,15 @@ def task_list(request, slug):
         'tasks': tasks,
     }
     return render_to_response('projects/project_task_list.html', context,
+        context_instance=RequestContext(request))
+
+
+def discussion_area(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if project.category != Project.CHALLENGE:
+        return http.HttpResponseRedirect(project.get_absolute_url())
+    context = {'project': project, 'only_discussions': True}
+    return render_to_response('projects/project_discussion_area.html', context,
         context_instance=RequestContext(request))
 
 

@@ -10,18 +10,14 @@ from drumbeat import messages
 from pagination.views import get_pagination_context
 from projects.models import Project
 
-from activity.models import Activity, FILTERS
+from activity.models import Activity, apply_filter
 
 
 def filter_activities(request, activities, default=None):
     if 'activities_filter' in request.GET:
         filter_name = request.GET['activities_filter']
-        if filter_name in FILTERS:
-            return FILTERS[filter_name](activities)
-    if 'default' in FILTERS:
-        return FILTERS['default'](activities)
-    else:
-        return activities
+        return apply_filter(activities, filter_name)
+    return apply_filter(activities, 'default')
 
 
 def index(request, activity_id):
