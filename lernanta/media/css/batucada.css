@@ -8,14 +8,14 @@ html {
   height: 100%;
 }
 body {
-  font-family: "Arvo", "MuseoSlab 500", "Georgia";
+  font-family: "Helvetica", Arial, Verdana, san-serif;
   color: #5a6579;
   background: url('../images/bg.stripy.png');
   min-height: 101%;
 }
 
 input {
-  font-family: "Arvo", "MuseoSlab 500", "Georgia";
+  font-family: "Helvetica", Arial, Verdana, san-serif;
 }
 
 a, a:active, a:visited {
@@ -198,7 +198,7 @@ input[type=submit]:active,
     background: #36cdc4;
     text-shadow: none;
     padding: 5px;
-    font: bold 12px "Arvo", "MuseoSlab 500", "Georgia";
+    font: bold 12px "Helvetica", Arial, Verdana, san-serif;
     text-transform: uppercase;
     -moz-border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px;
@@ -2022,7 +2022,7 @@ header {}
 #splash #content header h1,
 #splash #content header h2{
 	width: 530px;	
-	font: normal 42px/44px MuseoSans-500, sans-serif;
+	font: normal 42px/44px "Helvetica", Arial, Verdana, san-serif;
 	color: #fff;
 	text-shadow: none;
         padding-top: 30px;
@@ -2306,132 +2306,6 @@ div.warning h2 {
     color: #a00;
 }
 
-/* wmd -- more paul stuff. basically copied from wmd example code. */
-.wmd-panel
-{
-    width: 498px;
-}
-
-#wmd-editor
-{
-    background-color: #fff;
-}
-.wmd {
-	width: 480px;
-}
-.wmd-button-bar 
-{
-    width: 100%;
-}
-
-.wmd-input 
-{ 
-    height: 500px;
-    width: 100%;
-}
-
-.wmd-preview 
-{ 
-    background-color: #ccc;
-}
-
-.wmd-button-row 
-{
-    position: relative; 
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    margin-top: 10px;
-    padding: 0px;  
-    height: 20px;
-}
-
-.wmd-spacer
-{
-    width: 1px; 
-    height: 20px; 
-    margin-left: 14px;
-    
-    position: absolute;
-    background-color: Silver;
-    display: inline-block; 
-    list-style: none;
-}
-
-.wmd-button
-{
-    width: 20px; 
-    height: 20px; 
-    margin-left: 5px;
-    margin-right: 5px;
-    
-    position: absolute;
-    background-image: url(../images/wmd-buttons.png);
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
-    display: inline-block; 
-    list-style: none;
-}
-
-.wmd-button > a
-{
-    width: 20px; 
-    height: 20px; 
-    margin-left: 5px;
-    margin-right: 5px;
-    
-    position: absolute;
-    display: inline-block; 
-}
-
-
-/* sprite button slicing style information */
-.wmd-bold-button    {left: 0px;   background-position: 0px 0;}
-.wmd-italic-button  {left: 25px;  background-position: -20px 0;}
-.wmd-spacer1        {left: 50px;}
-.wmd-link-button    {left: 75px;  background-position: -40px 0;}
-.wmd-quote-button   {left: 100px;  background-position: -60px 0;}
-.wmd-code-button    {left: 125px;  background-position: -80px 0;}
-.wmd-image-button   {left: 150px;  background-position: -100px 0;}
-.wmd-spacer2        {left: 175px;}
-.wmd-olist-button   {left: 200px;  background-position: -120px 0;}
-.wmd-ulist-button   {left: 225px; background-position: -140px 0;}
-.wmd-heading-button {left: 250px; background-position: -160px 0;}
-.wmd-hr-button      {left: 275px; background-position: -180px 0;}
-.wmd-spacer3        {left: 300px;}
-.wmd-undo-button    {left: 325px; background-position: -200px 0;}
-.wmd-redo-button    {left: 350px; background-position: -220px 0;}
-.wmd-help-button    {right: 0px; background-position: -240px 0;}
-
-
-.wmd-prompt-background
-{
-	background-color: Black;
-}
-
-.wmd-prompt-dialog
-{
-    border: 1px solid #999999;
-    background-color: #F5F5F5;
-}
-
-.wmd-prompt-dialog > div {
-    font-size: 0.8em;
-    font-family: arial, helvetica, sans-serif;
-}
-
-
-.wmd-prompt-dialog > form > input[type="text"] {
-    border: 1px solid #999999;
-    color: black;
-}
-
-.wmd-prompt-dialog > form > input[type="button"]{
-    border: 1px solid #888888;
-    font-family: trebuchet MS, helvetica, sans-serif;
-    font-size: 0.8em;
-    font-weight: bold;
-}
 /* Style for errors in forms */
 .errorlist{
     position: absolute;
