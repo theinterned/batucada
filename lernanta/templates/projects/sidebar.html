@@ -61,7 +61,7 @@
           {% endif %}
         {% endif %}
         <br><br><br>
-        <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('See Discussions')}}</a>
+        <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('View Discussions')}}</a>
       {% else %}
         {% if not organizing %}
           <form method="post" action="{% locale_url direct_signup slug=project.slug %}">

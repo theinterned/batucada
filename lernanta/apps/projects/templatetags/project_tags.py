@@ -9,6 +9,7 @@ from statuses import forms as statuses_forms
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
 from activity.models import apply_filter
+from l10n.urlresolvers import reverse
 
 from projects.models import Project, PerUserTaskCompletion
 from projects import drupal
@@ -190,6 +191,12 @@ def project_wall(request, project, only_discussions=False):
     else:
         activities = filter_activities(request, activities)
 
+    if project.category == Project.CHALLENGE:
+        url = reverse('projects_discussion_area',
+            kwargs=dict(slug=project.slug))
+    else:
+        url = project.get_absolute_url()
+
     context = {
         'request': request,
         'project': project,
@@ -198,6 +205,7 @@ def project_wall(request, project, only_discussions=False):
         'form': form,
         'only_discussions': only_discussions,
         'domain': Site.objects.get_current().domain,
+        'wall_url': url,
     }
     context.update(get_pagination_context(request, activities))
     return context
