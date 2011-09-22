@@ -1,3 +1,66 @@
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+from drumbeat import storage
+from drumbeat.utils import get_partition_id, safe_filename
+
+
+def determine_upload_path(instance, filename):
+    chunk_size = 1000  # max files per directory
+    return "images/badges/%(partition)d/%(filename)s" % {
+        'partition': get_partition_id(instance.pk, chunk_size),
+        'filename': safe_filename(filename),
+    }
+
+class Badge(models.Model):
+    SELF, PEER, STEALTH = range(1, 4)
+    type_choices = ((SELF, _('Self')),
+        (PEER, _('Peer')),
+        (STEALTH, _('Stealth')))
+
+    name = models.CharField(max_length=225, blank=False)
+    slug = models.SlugField(unique=True, max_length=110)
+    description = models.CharField(max_length=225, blank=False)
+    image = models.ImageField(
+        upload_to=determine_upload_path, default='', blank=True, null=True,
+        storage=storage.ImageStorage())
+    criteria = models.CharField(max_length=225, blank=False)
+
+    SELF = 'self'
+    PEER = 'peer'
+    STEALTH = 'stealth'
+
+    ASSESSMENT_TYPE_CHOICES = (
+        (SELF, _('Self assessment -- able to get the badge without ' \
+                        'outside assessment')),
+        (PEER, _('Peer assessment -- community or skill badges users ' \
+                        'grant each other')),
+        (STEALTH, _('Stealth assessment -- badges granted by the system '\
+                        'based on supplied logic'))
+    )
+
+    assessment_type = models.CharField(max_length=30, choices=ASSESSMENT_TYPE_CHOICES,
+        default=SELF, null=True, blank=False)
+
+    COMPLETION = 'completion/aggregate'
+    SKILL = 'skill'
+    PEER = 'peer-to-peer/community'
+    STEALTH = 'stealth'
+    OTHER = 'other'
+
+    BADGE_TYPE_CHOICES = (
+        (COMPLETION, _('Completion/aggregate badge -- awarded by self assessments')),
+        (SKILL, _('Skill badge -- badges that are skill based and assessed by peers '\
+                  'with related logic')),
+        (PEER, _('Peer-to-peer/community badge -- badges granted by peers')),
+        (STEALTH, _('Stealth badge -- system awarded badges')),
+        (OTHER, _('Other badges -- badges like course organizer or those staff issued'))
+    )
+
+    badge_type = models.CharField(max_length=30, choices=BADGE_TYPE_CHOICES,
+        default=COMPLETION, null=True, blank=False)
+
+    created_on = models.DateTimeField(auto_now_add=True)
 
 
 def get_awarded_badges(user):
