@@ -142,6 +142,6 @@ MOZBADGES = {
 
 # Metrics
 STATISTICS_COURSE_CAN_VIEW_CSV = ('kfasimpaur')
-BOOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
+BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
     'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
     'Speedy Spider', 'DotBot']
