@@ -1,9 +1,15 @@
 import datetime
 
 from django import template
+from django.contrib.sites.models import Site
 
 from content.models import Page
 from signups.models import Signup
+from statuses import forms as statuses_forms
+from activity.views import filter_activities
+from pagination.views import get_pagination_context
+from activity.models import apply_filter
+from l10n.urlresolvers import reverse
 
 from projects.models import Project, PerUserTaskCompletion
 from projects import drupal
@@ -82,6 +88,7 @@ def sidebar(context, max_people_count=64):
         'can_add_task': can_add_task,
         'can_change_order': can_change_order,
         'chat': chat,
+        'discussion_area': context.get('discussion_area', False),
         'is_challenge': (project.category == Project.CHALLENGE),
     })
     return context
@@ -124,6 +131,7 @@ def project_list(school=None, only_featured=False, limit=8):
             'archived': archived})
     return context
 
+
 def featured_list(school=None):
     return project_list(school, True)
 
@@ -164,7 +172,43 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
     }
-    
-    
 
 register.inclusion_tag('projects/_task_list.html')(task_list)
+
+
+def project_wall(request, project, discussion_area=False):
+    is_organizing = project.is_organizing(request.user)
+    is_participating = project.is_participating(request.user)
+    if is_organizing:
+        form = statuses_forms.ImportantStatusForm()
+    elif is_participating:
+        form = statuses_forms.StatusForm()
+    else:
+        form = None
+
+    activities = project.activities()
+    if discussion_area:
+        activities = apply_filter(activities, 'messages')
+    else:
+        activities = filter_activities(request, activities)
+
+    if project.category == Project.CHALLENGE:
+        url = reverse('projects_discussion_area',
+            kwargs=dict(slug=project.slug))
+    else:
+        url = project.get_absolute_url()
+
+    context = {
+        'request': request,
+        'project': project,
+        'participating': is_participating,
+        'organizing': is_organizing,
+        'form': form,
+        'discussion_area': discussion_area,
+        'domain': Site.objects.get_current().domain,
+        'wall_url': url,
+    }
+    context.update(get_pagination_context(request, activities))
+    return context
+
+register.inclusion_tag('projects/_wall.html')(project_wall)

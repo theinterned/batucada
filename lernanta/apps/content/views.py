@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
-from projects.decorators import participation_required, restrict_project_kind
+from projects.decorators import participation_required
 from projects.models import Project
 from pagination.views import get_pagination_context
 
@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if not page.listed:
+    if page.project.category == Project.CHALLENGE and not page.listed:
         msg = _("This page is not accesible on a %s.")
         return http.HttpResponseForbidden(msg % page.project.kind.lower())
     can_edit = page.can_edit(request.user)

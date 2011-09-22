@@ -1,18 +1,16 @@
 import logging
 import datetime
-import csv
+import unicodecsv
+import itertools
 
 from django import http
-from django.db.models import Sum
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
 from django.template.loader import render_to_string
-from django.contrib.sites.models import Site
 
 from commonware.decorators import xframe_sameorigin
 
@@ -20,24 +18,22 @@ from links import tasks as links_tasks
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
-from projects.decorators import organizer_required, restrict_project_kind, participation_required
+from projects.decorators import organizer_required, participation_required
 from projects.decorators import can_view_metric_overview, can_view_metric_detail
+from projects.decorators import restrict_project_kind
 from projects.models import Project, Participation, PerUserTaskCompletion
 from projects import drupal
 
 from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from links.models import Link
-from replies.models import PageComment
 from users.models import UserProfile
 from content.models import Page
 from schools.models import School
-from statuses import forms as statuses_forms
 from activity.models import Activity
-from activity.views import filter_activities
 from activity.schema import verbs
 from signups.models import Signup
-from tracker.models import PageView
+from tracker import models as tracker_models
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -135,33 +131,16 @@ def matching_kinds(request):
 def show(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
-    is_participating = project.is_participating(request.user)
-    is_following = project.is_following(request.user)
-    if is_organizing:
-        form = statuses_forms.ImportantStatusForm()
-    elif is_participating:
-        form = statuses_forms.StatusForm()
-    else:
-        form = None
-
-    show_all_tasks = (project.category == Project.CHALLENGE)
-
-    activities = project.activities()
-    activities = filter_activities(request, activities)
+    is_challenge = (project.category == Project.CHALLENGE)
 
     context = {
         'project': project,
-        'participating': is_participating,
-        'following': is_following,
         'organizing': is_organizing,
-        'show_all_tasks': show_all_tasks,
-        'form': form,
-        'is_challenge': (project.category == Project.CHALLENGE),
-        'domain': Site.objects.get_current().domain,
+        'show_all_tasks': is_challenge,
+        'is_challenge': is_challenge,
     }
-    context.update(get_pagination_context(request, activities))
     return render_to_response('projects/project.html', context,
-                              context_instance=RequestContext(request))
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -361,7 +340,7 @@ def edit_image_async(request, slug):
 def edit_image(request, slug):
     project = get_object_or_404(Project, slug=slug)
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    
+
     if request.method == 'POST':
         form = project_forms.ProjectImageForm(request.POST, request.FILES,
                                               instance=project)
@@ -577,46 +556,18 @@ def edit_status(request, slug):
 @can_view_metric_overview
 def admin_metrics(request, slug):
     """Overview metrics for course organizers.
-    
+
     We only are interested in the pages of the course and the participants.
     """
     project = get_object_or_404(Project, slug=slug)
-    participants = project.non_organizer_participants()
-    project_ct = ContentType.objects.get_for_model(Project)
-    pages = Page.objects.filter(project=project)
-    page_paths = []
-    pageviews = {}
     can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-
-    for page in pages:
-        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
-        page_paths.append(page_path)
-        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
-
-    data = []
-    for user in participants:
-        total_course_activity_minutes = 0
-        total_course_page_view_count = 0
-        comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
-        comment_count = comments.count()
-        for page_path in page_paths:
-            pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user).aggregate(Sum('time_on_page'))
-            course_page_view_count = PageView.objects.filter(request_url__endswith=page_path, user=user.user).count()
-            course_activity_seconds = pageviews['time_on_page__sum']
-            if course_activity_seconds is None:
-                course_activity_seconds = 0
-            course_activity_minutes = "%.2f" % (course_activity_seconds / 60.0)
-            total_course_activity_minutes += float(course_activity_minutes)
-            total_course_page_view_count += course_page_view_count
-
-        data.append({
-            'username': user.user.username,
-            'last_active': user.user.last_active,
-            'comment_count': comment_count,
-            'course_page_view_count': total_course_page_view_count,
-            'course_activity_minutes': total_course_activity_minutes
-        })
+    participants = (participant.user for participant in project.non_organizer_participants())
+    tracker_models.update_metrics_cache(project)
+    keys = ('username', 'last_active', 'course_activity_minutes',
+        'comment_count','task_edits_count')
+    metrics = tracker_models.metrics_summary(project, participants)
+    data = (dict(itertools.izip(keys, d)) for d in metrics)
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
@@ -627,14 +578,113 @@ def admin_metrics(request, slug):
             'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
+
 @login_required
 @can_view_metric_detail
-def admin_metrics_detail(request, slug):
+def export_detailed_csv(request, slug):
+    """Display detailed CSV for certain users."""
     project = get_object_or_404(Project, slug=slug)
-    return render_to_response('projects/project_admin_metrics_detail.html', {
-            'project': project,
-            'metrics_tab': True,
-    }, context_instance=RequestContext(request))
+    # Preprocessing
+    tracker_models.update_metrics_cache(project)
+    participants = project.non_organizer_participants().order_by(
+        'user__username')
+    participant_profiles = (participant.user for participant in participants)
+    participant_ids = participants.values('user_id')
+    followers = project.non_participant_followers().order_by('source__username')
+    follower_profiles = (follower.source for follower in followers)
+    follower_ids = followers.values('source_id')
+    previous_followers = project.previous_followers()
+    previous_follower_profiles = (previous.source for previous in previous_followers)
+    previous_follower_ids = project.previous_followers().values('source_id')
+    headers = ["Time on Pages", "Non-zero Length Page Views",
+        "Zero-length Page Views", "Comments", "Page Edits"]
+    # Create csv response
+    response = http.HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    writer = unicodecsv.writer(response)
+    writer.writerow(["Course: " + project.name])
+    writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
+    writer.writerow([])
+    writer.writerow([])
+    # Write Total Metrics
+    writer.writerow(["TOTALS"])
+    writer.writerow(["Participants"] + headers)
+    for row in tracker_models.user_total_metrics(project, participant_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers"] + headers)
+    for row in tracker_models.user_total_metrics(project, follower_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers"] + headers)
+    for row in tracker_models.user_total_metrics(project, previous_follower_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors"] + headers)
+    for row in tracker_models.unauth_total_metrics(project):
+        writer.writerow(row + ["0"] * 2)
+    writer.writerow([])
+    writer.writerow([])
+    # Write Per Page Total Metrics
+    writer.writerow(["PER PAGE TOTALS"])
+    writer.writerow(["Participants", "Page Paths"] + headers[:-2])
+    for row in tracker_models.user_total_per_page_metrics(project, participant_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers", "Page Paths"] + headers[:-2])
+    for row in tracker_models.user_total_per_page_metrics(project, follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers", "Page Paths"] + headers[:-2])
+    for row in tracker_models.user_total_per_page_metrics(project, previous_follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors", "Page Paths"] + headers[:-2])
+    for row in tracker_models.unauth_total_per_page_metrics(project):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow([])
+    # Write Chronological Metrics
+    writer.writerow(["CHRONOLOGICAL"])
+    writer.writerow(["Participants", "Dates"] + headers)
+    for row in tracker_models.chronological_user_metrics(project, participant_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers", "Dates"] + headers)
+    for row in tracker_models.chronological_user_metrics(project, follower_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers", "Dates"] + headers)
+    for row in tracker_models.chronological_user_metrics(project, previous_follower_profiles):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors", "Dates"] + headers)
+    for row in tracker_models.chronological_unauth_metrics(project):
+        writer.writerow(row + ["0"] * 2)
+    writer.writerow([])
+    writer.writerow([])
+    # Write Chronological Per Page Metrics
+    writer.writerow(["CHRONOLOGICAL PER PAGE"])
+    writer.writerow(["Participants", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_user_per_page_metrics(project, participant_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Followers", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_user_per_page_metrics(project, follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Previous Followers", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_user_per_page_metrics(project, previous_follower_ids):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow(["Unauthenticated Visitors", "Dates", "Page Paths"] + headers[:-2])
+    for row in tracker_models.chronological_unauth_per_page_metrics(project):
+        writer.writerow(row)
+    writer.writerow([])
+    writer.writerow([])
+
+    return response
+
 
 @login_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -670,6 +720,18 @@ def task_list(request, slug):
         context_instance=RequestContext(request))
 
 
+def discussion_area(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if project.category != Project.CHALLENGE:
+        return http.HttpResponseRedirect(project.get_absolute_url())
+    context = {
+        'project': project,
+        'discussion_area': True,
+    }
+    return render_to_response('projects/project_discussion_area.html', context,
+        context_instance=RequestContext(request))
+
+
 def user_list(request, slug):
     """Display full list of users for the project."""
     project = get_object_or_404(Project, slug=slug)
@@ -688,6 +750,7 @@ def user_list(request, slug):
         prefix='followers_'))
     return render_to_response('projects/project_user_list.html', context,
         context_instance=RequestContext(request))
+
 
 @login_required
 @participation_required
@@ -715,314 +778,3 @@ def toggle_task_completion(request, slug, page_slug):
             'completed_count': completed_count,
             'progressbar_value': progressbar_value})
         return http.HttpResponse(json, mimetype="application/json")
-
-
-#FIXME: performance issues on production.
-@login_required
-@can_view_metric_detail
-@restrict_project_kind()
-def export_detailed_csv(request, slug):
-    """Display detailed CSV for certain users."""
-    project = get_object_or_404(Project, slug=slug)
-    participants = project.non_organizer_participants()
-    followers = project.non_participant_followers()
-    all_participants = project.participants()
-    project_ct = ContentType.objects.get_for_model(Project)
-    page_ct = ContentType.objects.get_for_model(Page)
-    response = http.HttpResponse(mimetype='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
-    pages = Page.objects.filter(project=project)
-    page_paths = []
-    dates = []
-    start_date = project.created_on
-    end_date = project.created_on
-    current_end_date = end_date
-    delta = datetime.timedelta(days = 1)
-    pageviews = {}
-    total_users = {}
-    total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct)
-    total_task_edits = Activity.objects.filter(target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
-    # find all users but differentiate between those currently a participant or follower and those not
-    for user in total_comments.values('author'):
-        total_users[user['author']] = False
-    for user in total_task_edits.values('actor'):
-        total_users[user['actor']] = False
-    for user in all_participants.values('user'):
-        total_users[user['user']] = True
-    for user in followers.values('source'):
-        total_users[user['source']] = True
-    for page in pages:
-        page_path = 'groups/%s/content/%s/' % (project.slug, page.slug)
-        page_paths.append(page_path)
-        pageviews[page_path] = PageView.objects.filter(request_url__endswith = page_path)
-        try:
-            current_end_date = pageviews[page_path].order_by('-access_time')[0].access_time
-        except:
-            current_end_date = end_date
-        if current_end_date > end_date:
-            end_date = current_end_date
-
-    while start_date <= end_date:
-        dates.append(start_date.strftime("%Y-%m-%d"))
-        start_date += delta
-
-    writer = csv.writer(response)
-    writer.writerow(["Course: " + project.name])
-    writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
-    writer.writerow([])
-
-    row = []
-    row.append("Users")
-    for date in dates:
-        row.append(date)
-        for i in range(2):
-            row.append("")
-        for page in page_paths:
-            row.append(page)
-            row.append("")
-    row.append("TOTAL")
-    for i in range(2):
-        row.append("")
-    for page in page_paths:
-        row.append(page)
-        row.append("")
-    writer.writerow(row)
-
-    row = []
-    row.append("")
-    for date in dates:
-        row.append("Time on course pages")
-        row.append("Comments")
-        row.append("Task Edits")
-        for page in page_paths:
-            row.append("Time on Page")
-            row.append("Views")
-    row.append("Time on course pages")
-    row.append("Comments")
-    row.append("Task Edits")
-    for page in page_paths:
-        row.append("Time on Page")
-        row.append("Views")
-
-    writer.writerow(row)
-
-    writer.writerow(["Participants"])
-
-    for user in participants:
-        row = []
-        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user.user)
-        total_task_edits = Activity.objects.filter(actor=user.user, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
-        total_page_time_minutes = {}
-        total_time_minutes = 0
-        total_page_view_count = {}
-
-        row.append(user.user.username)
-        for date in dates:
-            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
-            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
-            day_page_time_minutes = {}
-            day_page_view_count = {}
-            day_total_time_on_pages = 0
-            day_total_page_views = 0
-            
-            for page_path in page_paths:
-                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user.user, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
-                day_page_time_seconds = day_pageviews['time_on_page__sum']
-                if  day_page_time_seconds is None:
-                    day_page_time_seconds = 0
-                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
-                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=user.user, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
-                day_total_time_on_pages += float(day_page_time_minutes[page_path])
-                day_total_page_views += int(day_page_view_count[page_path])
-            
-            row.append(day_total_time_on_pages)
-            row.append(day_total_comments.count())
-            row.append(day_total_task_edits.count())
-
-            for page_path in page_paths:
-                if total_page_time_minutes.has_key(page_path):
-                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
-                else:
-                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
-                if total_page_view_count.has_key(page_path):
-                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
-                else:
-                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
-                total_time_minutes += float(day_page_time_minutes[page_path])
-                row.append(day_page_time_minutes[page_path])
-                row.append(day_page_view_count[page_path])
-
-        row.append(total_time_minutes)
-        row.append(total_comments.count())
-        row.append(total_task_edits.count())
-        for page_path in page_paths:
-            row.append(total_page_time_minutes[page_path])
-            row.append(total_page_view_count[page_path])
-        writer.writerow(row)
-
-    writer.writerow(["Followers"])
-    # TODO: Make this a function for participants and followers since follower may have been a participant
-    for follower in followers:
-        row = []
-        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=follower.source)
-        total_task_edits = Activity.objects.filter(actor=follower.source, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
-        total_page_time_minutes = {}
-        total_time_minutes = 0
-        total_page_view_count = {}
-
-        row.append(follower.source)
-        for date in dates:
-            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
-            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
-            day_page_time_minutes = {}
-            day_page_view_count = {}
-            day_total_time_on_pages = 0
-            day_total_page_views = 0
-            
-            for page_path in page_paths:
-                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
-                day_page_time_seconds = day_pageviews['time_on_page__sum']
-                if  day_page_time_seconds is None:
-                    day_page_time_seconds = 0
-                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
-                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=follower.source, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
-                day_total_time_on_pages += float(day_page_time_minutes[page_path])
-                day_total_page_views += float(day_page_view_count[page_path])
-            
-            row.append(day_total_time_on_pages)
-            row.append(day_total_comments.count())
-            row.append(day_total_task_edits.count())
-            
-            for page_path in page_paths:
-                if total_page_time_minutes.has_key(page_path):
-                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
-                else:
-                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
-                if total_page_view_count.has_key(page_path):
-                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
-                else:
-                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
-                total_time_minutes += float(day_page_time_minutes[page_path])
-                row.append(day_page_time_minutes[page_path])
-                row.append(day_page_view_count[page_path])
-        row.append(total_time_minutes)
-        row.append(total_comments.count())
-        row.append(total_task_edits.count())
-        for page_path in page_paths:
-            row.append(total_page_time_minutes[page_path])
-            row.append(total_page_view_count[page_path])
-        writer.writerow(row)
-        
-    writer.writerow(["Non-Participants"])
-
-    previous_participant_ids = [i for i in total_users.keys() if total_users[i] == False]
-
-    for user_id in previous_participant_ids:
-        row = []
-        total_comments = PageComment.objects.filter(scope_id=project.id, scope_content_type=project_ct, author=user_id)
-        total_task_edits = Activity.objects.filter(actor=user_id, target_content_type=page_ct, remoteobject__in=pages, verb=verbs['update'])
-        total_page_time_minutes = {}
-        total_time_minutes = 0
-        total_page_view_count = {}
-        profile = get_object_or_404(UserProfile, user=user_id)
-        row.append(profile.username)
-        for date in dates:
-            day_total_comments = total_comments.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
-            day_total_task_edits = total_task_edits.filter(created_on__year=date[0:4], created_on__month=date[5:7], created_on__day=date[8:10])
-            day_page_time_minutes = {}
-            day_page_view_count = {}
-            day_total_time_on_pages = 0
-            day_total_page_views = 0
-            
-            for page_path in page_paths:
-                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, user=user_id, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
-                day_page_time_seconds = day_pageviews['time_on_page__sum']
-                if  day_page_time_seconds is None:
-                    day_page_time_seconds = 0
-                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
-                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=user_id, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
-                day_total_time_on_pages += float(day_page_time_minutes[page_path])
-                day_total_page_views += float(day_page_view_count[page_path])
-            
-            row.append(day_total_time_on_pages)
-            row.append(day_total_comments.count())
-            row.append(day_total_task_edits.count())
-            
-            for page_path in page_paths:
-                if total_page_time_minutes.has_key(page_path):
-                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
-                else:
-                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
-                if total_page_view_count.has_key(page_path):
-                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
-                else:
-                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
-                total_time_minutes += float(day_page_time_minutes[page_path])
-                row.append(day_page_time_minutes[page_path])
-                row.append(day_page_view_count[page_path])
-        row.append(total_time_minutes)
-        row.append(total_comments.count())
-        row.append(total_task_edits.count())
-        for page_path in page_paths:
-            row.append(total_page_time_minutes[page_path])
-            row.append(total_page_view_count[page_path])
-        writer.writerow(row)
-
-    # Add non-logged in users
-    ip_addresses = {}
-    nonloggedin_pageviews = {}
-    for page_path in page_paths:
-        nonloggedin_pageviews[page_path] = PageView.objects.filter(request_url__endswith=page_path, user=None)
-        for ip_address in nonloggedin_pageviews[page_path].values('ip_address'):
-            ip_addresses[ip_address['ip_address']] = True
-
-    ii = 0
-    for ip_address in ip_addresses.keys():
-        row = []
-        ii += 1
-        total_page_time_minutes = {}
-        total_time_minutes = 0
-        total_page_view_count = {}
-        
-        row.append("Non-loggedin User " + str(ii))
-        for date in dates:
-            day_page_time_minutes = {}
-            day_page_view_count = {}
-            day_total_time_on_pages = 0
-            day_total_page_views = 0
-            
-            for page_path in page_paths:
-                day_pageviews = PageView.objects.filter(request_url__endswith=page_path, ip_address=ip_address, user=None, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).aggregate(Sum('time_on_page'))
-                day_page_time_seconds = day_pageviews['time_on_page__sum']
-                if  day_page_time_seconds is None:
-                    day_page_time_seconds = 0
-                day_page_time_minutes[page_path] = "%.2f" % (day_page_time_seconds / 60.0)
-                day_page_view_count[page_path] = PageView.objects.filter(request_url__endswith=page_path, ip_address=ip_address, user=None, access_time__year=date[0:4], access_time__month=date[5:7], access_time__day=date[8:10]).count()
-                day_total_time_on_pages += float(day_page_time_minutes[page_path])
-                day_total_page_views += float(day_page_view_count[page_path])
-            
-            row.append(day_total_time_on_pages)
-            row.append("--")
-            row.append("--")
-            
-            for page_path in page_paths:
-                if total_page_time_minutes.has_key(page_path):
-                    total_page_time_minutes[page_path] += float(day_page_time_minutes[page_path])
-                else:
-                    total_page_time_minutes[page_path] = float(day_page_time_minutes[page_path])
-                if total_page_view_count.has_key(page_path):
-                    total_page_view_count[page_path] += int(day_page_view_count[page_path])
-                else:
-                    total_page_view_count[page_path] = int(day_page_view_count[page_path])
-                total_time_minutes += float(day_page_time_minutes[page_path])
-                row.append(day_page_time_minutes[page_path])
-                row.append(day_page_view_count[page_path])
-        row.append(total_time_minutes)
-        row.append("--")
-        row.append("--")
-        for page_path in page_paths:
-            row.append(total_page_time_minutes[page_path])
-            row.append(total_page_view_count[page_path])
-        writer.writerow(row)
-
-    return response

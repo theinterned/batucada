@@ -76,7 +76,6 @@ def restrict_project_kind(*kinds):
     one of the given kinds."""
     def decorator(func):
         def decorated(*args, **kwargs):
-            request = args[0]
             project = kwargs['slug']
             project = get_object_or_404(Project, slug=project)
             if not project.category in kinds:
@@ -85,4 +84,3 @@ def restrict_project_kind(*kinds):
             return func(*args, **kwargs)
         return decorated
     return decorator
-
