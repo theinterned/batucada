@@ -34,11 +34,14 @@ def create(request):
 def create_project_status(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     if project.category == Project.CHALLENGE:
-        return HttpResponseRedirect(project.get_absolute_url())
+        url = reverse('projects_discussion_area',
+            kwargs=dict(slug=project.slug))
+    else:
+        url = project.get_absolute_url()
     if request.method != 'POST' or 'status' not in request.POST:
-        return HttpResponseRedirect(project.get_absolute_url())
+        return HttpResponseRedirect(url)
     if not project.is_participating(request.user):
-        return HttpResponseRedirect(project.get_absolute_url())
+        return HttpResponseRedirect(url)
     if project.is_organizing(request.user):
         form = ImportantStatusForm(data=request.POST)
     else:
@@ -54,5 +57,4 @@ def create_project_status(request, project_id):
         log.debug("form error: %s" % (str(form.errors)))
         messages.error(request, _('There was an error posting '
                                   'your status update'))
-    return HttpResponseRedirect(
-        reverse('projects_show', kwargs=dict(slug=project.slug)))
+    return HttpResponseRedirect(url)

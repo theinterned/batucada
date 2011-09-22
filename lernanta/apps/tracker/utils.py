@@ -1,5 +1,6 @@
 import re
 import unicodedata
+import datetime
 
 # Following from django-tracking utils.py
 # Copyright (c) 2008-2009 Josh VanderLinden
@@ -57,3 +58,10 @@ def u_clean(s):
                         uni += '-'
 
     return uni.encode('ascii', 'xmlcharrefreplace')
+
+
+def force_date(date):
+    if isinstance(date, str) or isinstance(date, unicode):
+        return datetime.datetime.strptime(date, '%Y-%m-%d').date()
+    else:
+        return date
