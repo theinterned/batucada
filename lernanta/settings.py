@@ -230,6 +230,10 @@ CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
 CKEDITOR_UPLOAD_PATH = path("media/uploads/images")
 CKEDITOR_FILE_UPLOAD_PATH = path("media/uploads/files")
 CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_IMAGE_UPLOAD_EXTENSIONS = ['.jpg','.jpeg','.gif','.png','.tif','.tiff']
+CKEDITOR_FILE_UPLOAD_EXTENSIONS = CKEDITOR_IMAGE_UPLOAD_EXTENSIONS + ['.pdf',
+    '.doc','.rtf','.txt','.xls','.csv','.mov','.wmv','.mpeg','.mpg',
+    '.avi','.rm','.mp3','.mp4','.wav','.aiff','.midi','.m4p']
 
 # Where the default image for sending to Gravatar
 DEFAULT_PROFILE_IMAGE = 'http://p2pu.org/media/images/member-missing.png'
