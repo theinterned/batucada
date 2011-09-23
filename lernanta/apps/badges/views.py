@@ -3,6 +3,8 @@ import logging
 from django import http
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
 from django.template.loader import render_to_string
 
 from django_obi.views import send_badges
@@ -11,7 +13,9 @@ from users.decorators import login_required
 from drumbeat import messages
 from l10n.urlresolvers import reverse
 
+from badges import forms as badge_forms
 from badges.pilot import get_badge_url
+from badges.models import Badge
 
 
 log = logging.getLogger(__name__)
@@ -23,6 +27,38 @@ def badge_description(request, slug):
         return http.HttpResponseRedirect(pilot_url)
     else:
         raise http.Http404
+
+
+def show(request, slug):
+    badge = get_object_or_404(Badge, slug=slug)
+
+    context = {
+        'badge': badge,
+    }
+    return render_to_response('badges/badge.html', context,
+        context_instance=RequestContext(request))
+
+
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = badge_forms.BadgeForm(request.POST)
+        if form.is_valid():
+            badge = form.save()
+            badge.create()
+            messages.success(request,
+                _('The %s has been created.') % badge.name)
+            return http.HttpResponseRedirect(reverse('badges_show', kwargs={
+                'slug': badge.slug,
+            }))
+        else:
+            msg = _("Problem creating the badge.")
+            messages.error(request, msg)
+    else:
+        form = badge_forms.BadgeForm()
+    return render_to_response('badges/badge_edit_summary.html', {
+        'form': form, 'new_tab': True,
+    }, context_instance=RequestContext(request))
 
 
 @login_required

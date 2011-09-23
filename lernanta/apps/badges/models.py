@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import slugify
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -62,7 +63,32 @@ class Badge(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True)
 
+    def __unicode__(self):
+        return _('%(name)s') % dict(name=self.name)
+
+    def create(self):
+        self.save()
+
+    def save(self):
+        """Make sure each badge has a unique slug."""
+        count = 1
+        if not self.slug:
+            slug = slugify(self.name)
+            self.slug = slug
+            while True:
+                existing = Badge.objects.filter(slug=self.slug)
+                if len(existing) == 0:
+                    break
+                self.slug = "%s-%s" % (slug, count + 1)
+                count += 1
+        super(Badge, self).save()
+
 
 def get_awarded_badges(user):
     from pilot import get_awarded_badges as get_pilot_badges
     return get_pilot_badges(user)
+
+
+class Rubric(models.Model):
+    question = models.CharField(max_length=200)
+    badge = models.ForeignKey('badges.Badge', related_name='rubrics')
