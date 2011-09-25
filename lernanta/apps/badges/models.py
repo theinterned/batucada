@@ -40,7 +40,7 @@ class Badge(models.Model):
         (PEER, _('Peer assessment -- community or skill badges users ' \
                         'grant each other')),
         (STEALTH, _('Stealth assessment -- badges granted by the system '\
-                        'based on supplied logic'))
+                        'based on supplied logic. Accumulative.'))
     )
 
     assessment_type = models.CharField(max_length=30, choices=ASSESSMENT_TYPE_CHOICES,
@@ -70,7 +70,9 @@ class Badge(models.Model):
     groups = models.ManyToManyField('projects.Project', related_name='badges', 
                                     null=True, blank=True)
 
-    created_on = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey('users.UserProfile', related_name='badges')
+    created_on = models.DateTimeField(auto_now_add=True, blank=False)
+    last_update = models.DateTimeField(auto_now_add=True, blank=False)
 
     def __unicode__(self):
         return self.name
