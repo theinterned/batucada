@@ -27,6 +27,8 @@ class Badge(models.Model):
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())
     criteria = models.CharField(max_length=225, blank=False)
+    prerequisites = models.ManyToManyField('self', symmetrical=False,
+                                            blank=True, null=True)
 
     SELF = 'self'
     PEER = 'peer'
