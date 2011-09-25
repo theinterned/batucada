@@ -64,7 +64,11 @@ class Badge(models.Model):
     badge_type = models.CharField(max_length=30, choices=BADGE_TYPE_CHOICES,
         default=COMPLETION, null=True, blank=False)
 
-    rubrics = models.ManyToManyField('badges.Rubric', related_name='rubrics', null=True, blank=True)
+    rubrics = models.ManyToManyField('badges.Rubric', related_name='rubrics', 
+                                     null=True, blank=True)
+
+    groups = models.ManyToManyField('projects.Project', related_name='badges', 
+                                    null=True, blank=True)
 
     created_on = models.DateTimeField(auto_now_add=True)
 
