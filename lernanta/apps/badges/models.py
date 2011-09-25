@@ -13,6 +13,7 @@ def determine_upload_path(instance, filename):
         'filename': safe_filename(filename),
     }
 
+
 class Badge(models.Model):
     SELF, PEER, STEALTH = range(1, 4)
     type_choices = ((SELF, _('Self')),
@@ -61,10 +62,12 @@ class Badge(models.Model):
     badge_type = models.CharField(max_length=30, choices=BADGE_TYPE_CHOICES,
         default=COMPLETION, null=True, blank=False)
 
+    rubrics = models.ManyToManyField('badges.Rubric', related_name='rubrics', null=True, blank=True)
+
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return _('%(name)s') % dict(name=self.name)
+        return self.name
 
     def create(self):
         self.save()
@@ -91,4 +94,6 @@ def get_awarded_badges(user):
 
 class Rubric(models.Model):
     question = models.CharField(max_length=200)
-    badge = models.ForeignKey('badges.Badge', related_name='rubrics')
+
+    def __unicode__(self):
+        return self.question

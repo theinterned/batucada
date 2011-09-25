@@ -6,7 +6,7 @@ class BadgeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'slug')
 
 class RubricAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question', 'badge')
+    list_display = ('id', 'question')
 
 admin.site.register(Badge, BadgeAdmin)
 admin.site.register(Rubric, RubricAdmin)
