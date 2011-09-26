@@ -28,7 +28,8 @@ class Badge(models.Model):
         storage=storage.ImageStorage())
     prerequisites = models.ManyToManyField('self', symmetrical=False,
                                             blank=True, null=True)
-
+    unique = models.BooleanField(help_text=_('If can only be awarded to the user once.'), 
+                                 default=False)
     SELF = 'self'
     PEER = 'peer'
     STEALTH = 'stealth'
