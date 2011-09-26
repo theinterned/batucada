@@ -115,3 +115,8 @@ class Rubric(models.Model):
     def __unicode__(self):
         return self.question
 
+class Award(models.Model):
+    user = models.ForeignKey('users.UserProfile')
+    badge = models.ForeignKey('badges.Badge', related_name="awards")
+
+    awarded_on = models.DateTimeField(auto_now_add=True, blank=False)
