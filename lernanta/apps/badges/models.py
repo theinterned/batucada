@@ -26,7 +26,6 @@ class Badge(models.Model):
     image = models.ImageField(
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())
-    criteria = models.CharField(max_length=225, blank=False)
     prerequisites = models.ManyToManyField('self', symmetrical=False,
                                             blank=True, null=True)
 
@@ -66,6 +65,12 @@ class Badge(models.Model):
 
     rubrics = models.ManyToManyField('badges.Rubric', related_name='rubrics', 
                                      null=True, blank=True)
+    min_organizer_votes = models.PositiveIntegerField(
+                            help_text=_('Minimum number of organizer votes required to be awarded.'),
+                            default=0)
+    min_peer_votes = models.PositiveIntegerField(
+                        help_text=_('Minimum number of peer votes required to be awarded.'),
+                        default=0)
 
     groups = models.ManyToManyField('projects.Project', related_name='badges', 
                                     null=True, blank=True)
@@ -76,6 +81,9 @@ class Badge(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('badges.views.show', args=(self.slug,))
 
     def create(self):
         self.save()
@@ -105,3 +113,4 @@ class Rubric(models.Model):
 
     def __unicode__(self):
         return self.question
+
