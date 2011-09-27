@@ -13,6 +13,7 @@ from l10n.urlresolvers import reverse
 
 from projects.models import Project, PerUserTaskCompletion
 from projects import drupal
+from badges.models import Badge
 
 
 register = template.Library()
@@ -66,6 +67,8 @@ def sidebar(context, max_people_count=64):
         can_add_task = is_participating
     can_change_order = can_add_task
 
+    badges = Badge.objects.filter(groups__id = project.id)
+
     chat = '#p2pu-%s-%s' % (project.id, project.slug[:10])
     context.update({
         'participating': is_participating,
@@ -90,6 +93,7 @@ def sidebar(context, max_people_count=64):
         'chat': chat,
         'discussion_area': context.get('discussion_area', False),
         'is_challenge': (project.category == Project.CHALLENGE),
+        'badges': badges
     })
     return context
 

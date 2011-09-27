@@ -83,8 +83,11 @@ class Badge(models.Model):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
     def get_absolute_url(self):
-        return reverse('badges.views.show', args=(self.slug,))
+        return ('badges_show', (), {
+            'slug': self.slug,
+        })
 
     def create(self):
         self.save()
@@ -103,6 +106,20 @@ class Badge(models.Model):
                 count += 1
         super(Badge, self).save()
 
+    def is_eligible(self, user):
+        """Is the user eligible for the badge?"""
+        if user is None:
+            return False
+        if user == self.creator:
+            return False
+        for badge in self.prerequisites.all():
+            if not badge.is_awarded_to(user):
+                return False
+        return True
+
+    def is_awarded_to(self, user):
+        """Does the user have the badge?"""
+        return Award.objects.filter(user=user, badge=self).count() > 0
 
 def get_awarded_badges(user):
     from pilot import get_awarded_badges as get_pilot_badges
