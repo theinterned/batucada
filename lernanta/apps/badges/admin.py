@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from badges.models import Badge, Rubric
+from badges.models import Badge, Rubric, Award
 
 class BadgeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'slug')
@@ -8,5 +8,9 @@ class BadgeAdmin(admin.ModelAdmin):
 class RubricAdmin(admin.ModelAdmin):
     list_display = ('id', 'question')
 
+class AwardAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Badge, BadgeAdmin)
 admin.site.register(Rubric, RubricAdmin)
+admin.site.register(Award, AwardAdmin)
