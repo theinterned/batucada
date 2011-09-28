@@ -369,6 +369,13 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
         var $tasks_progressbar = $(".project-kind-challenge #task_list_section #progressbar");
         $tasks_progressbar.progressbar("option", "value", progressbar_value);
         $task_completion_checkbox.removeAttr('disabled');
+        var $tasks_completed_msg = $('.project-kind-challenge .tasks-completed-msg');
+        if( progressbar_value == "100" ) {
+            $tasks_completed_msg.fadeIn('fast');
+            window.scrollTop();
+        } else {
+            $tasks_completed_msg.fadeOut('fast');
+        }
     });
 });
 

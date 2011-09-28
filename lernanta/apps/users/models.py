@@ -166,13 +166,20 @@ class UserProfile(ModelBase):
             if only_public and project.not_listed:
                 count -= 1
                 continue
-            if project.organizers().filter(user=self).exists():
-                project.relation_text = _('(organizing)')
+            is_challenge = (project.category == Project.CHALLENGE)
+            if is_challenge:
+                organizers = project.adopters()
+                participants = project.non_adopter_participants()
+            else:
+                organizers = project.organizers()
+                participants = project.non_organizer_participants()
+            if organizers.filter(user=self).exists():
+                project.relation_text = _('(adopted)') if is_challenge else _('(organizing)')
                 projects_organizing.append(project)
-            elif project.participants().filter(user=self).exists():
+            elif participants.filter(user=self).exists():
                 project.relation_text = _('(participating)')
                 projects_participating.append(project)
-            else:
+            elif not is_challenge:
                 project.relation_text = _('(following)')
                 projects_following.append(project)
         data = {

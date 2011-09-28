@@ -2,6 +2,20 @@
 {% if tasks_count or show_all %}
   <div id="task_list_section">
     {% if is_challenge and participating and tasks_count %}
+
+    <div id="congratulations-msg" class="help-request tasks-completed-msg {% if progressbar_value != 100 %}off{% endif %}">
+      <h3>{{ _('Congratulations!') }}</h3>
+      <p>{{ _('Good job completing all the tasks.') }}</p>
+      {% if not organizing and not adopter %}
+        <h4>{{ _('What to help?') }}</h4>
+        <p>{{ _('You\'ve now unlocked the ability to help others by adopting this challenge.') }}</p>
+        <form method="post" action="{% locale_url direct_signup_adopter slug=project.slug %}">
+          {% csrf_token %}
+          <button class="adopt-button">{{ _('Adopt this Challenge') }}</button>
+        </form>
+      {% endif %}
+    </div>
+
       <div id="progress">
         <div id="progressbar" value="{{ progressbar_value }}"></div>
         <p><span id="completed_count">{{ completed_count }}</span>/<span id="total_count">{{ tasks_count }}</span> {{ _('Completed') }}</p>
@@ -13,7 +27,7 @@
         {% for task in tasks %}
           <li class="{% cycle 'odd' 'even' %} {% if task.is_done %}taskSelected{% endif %}">
             {% if is_challenge and participating %}
-              <form method='post' action='{% url toggle_task_completion slug=task.project.slug page_slug=task.slug %}'>
+              <form method='post' action='{% locale_url toggle_task_completion slug=task.project.slug page_slug=task.slug %}'>
                 {% csrf_token %}
                 <input class="taskCheckbox" type="checkbox" {% if task.is_done %}checked="checked"{% endif%}>
               </form>
