@@ -67,7 +67,7 @@ def sidebar(context, max_people_count=64):
         can_add_task = is_participating
     can_change_order = can_add_task
 
-    badges = Badge.objects.filter(groups__id = project.id)
+    badges = Badge.objects.filter(groups__id=project.id)
 
     chat = '#p2pu-%s-%s' % (project.id, project.slug[:10])
     context.update({

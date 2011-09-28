@@ -28,7 +28,7 @@ class Badge(models.Model):
         storage=storage.ImageStorage())
     prerequisites = models.ManyToManyField('self', symmetrical=False,
                                             blank=True, null=True)
-    unique = models.BooleanField(help_text=_('If can only be awarded to the user once.'), 
+    unique = models.BooleanField(help_text=_('If can only be awarded to the user once.'),
                                  default=False)
     SELF = 'self'
     PEER = 'peer'
@@ -64,16 +64,14 @@ class Badge(models.Model):
     badge_type = models.CharField(max_length=30, choices=BADGE_TYPE_CHOICES,
         default=COMPLETION, null=True, blank=False)
 
-    rubrics = models.ManyToManyField('badges.Rubric', related_name='rubrics', 
+    rubrics = models.ManyToManyField('badges.Rubric', related_name='badges',
                                      null=True, blank=True)
-    min_organizer_votes = models.PositiveIntegerField(
-                            help_text=_('Minimum number of organizer votes required to be awarded.'),
-                            default=0)
-    min_peer_votes = models.PositiveIntegerField(
-                        help_text=_('Minimum number of peer votes required to be awarded.'),
-                        default=0)
+    logic = models.ForeignKey('badges.Logic', related_name='badges',
+                              null=True, blank=True,
+                              help_text=_('If no logic is chosen, no logic required. '\
+                                          ' Example: self-assessment badges.'))
 
-    groups = models.ManyToManyField('projects.Project', related_name='badges', 
+    groups = models.ManyToManyField('projects.Project', related_name='badges',
                                     null=True, blank=True)
 
     creator = models.ForeignKey('users.UserProfile', related_name='badges')
@@ -121,6 +119,7 @@ class Badge(models.Model):
         """Does the user have the badge?"""
         return Award.objects.filter(user=user, badge=self).count() > 0
 
+
 def get_awarded_badges(user):
     from pilot import get_awarded_badges as get_pilot_badges
     return get_pilot_badges(user)
@@ -131,6 +130,26 @@ class Rubric(models.Model):
 
     def __unicode__(self):
         return self.question
+
+
+class Logic(models.Model):
+    """Representation of the logic behind awarding a badge."""
+    min_qualified_adopter_votes = models.PositiveIntegerField(
+                            help_text=_('Minimum number of qualified votes by organizers, mentors, or adopters required to be awarded'),
+                            default=0)
+    min_qualified_votes = models.PositiveIntegerField(
+                        help_text=_('Minimum number of qualified votes required to be awarded. '\
+                                    'Mentor, adopter, or course organizer receives 2 votes per average (min_rating) rating. '\
+                                    'Peers receive 1 vote per average (min_rating) rating.'),
+                        default=1)
+    min_rating = models.PositiveIntegerField(
+                        help_text=_('Minimum average rating required to award the badge.'),
+                        default=3)
+
+    def __unicode__(self):
+        return _('%s adopter votes of %s total votes with at least %s rating') % \
+                 (self.min_qualified_adopter_votes, self.min_qualified_votes, self.min_rating)
+
 
 class Award(models.Model):
     user = models.ForeignKey('users.UserProfile')
