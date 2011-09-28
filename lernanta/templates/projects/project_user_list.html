@@ -15,54 +15,11 @@
 {% block body %}
 {% sidebar %}
 
-<div id="main" class="card-list">
-<br><br>
-{% if organizers %}
-<section id="organizers">
-  <h1><span>{{ _('Organizers') }}</span></h1>
-  <ul class="user-list">
-    {% for participation in organizers %}
-      {% with person=participation.user %}
-        <li>{% include "users/_user_card.html" %}</li>
-      {% endwith %}
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
-{% if participants_pagination_current_page.object_list %}
-  <section id="participants">
-  <h1><span>{{ _('Participants') }}</span></h1>
-  <ul class="user-list">
-    {% for participation in participants_pagination_current_page.object_list %}
-      {% with person=participation.user %}
-        <li>{% include "users/_user_card.html" %}</li>
-      {% endwith %}
-    {% endfor %}
-  </ul>
- 
-  {% with prefix='participants_' page_url=projects_users_url %}
-    {% pagination_links %}
-  {% endwith %}
-
-</section>
-{% endif %}
-
-{% if followers_pagination_current_page.object_list %}
-<section id="followers">
-  <h1><span>{{ _('Followers') }}</span></h1>
-  <ul class="user-list">
-    {% for relationship in followers_pagination_current_page.object_list %}
-      {% with person=relationship.source %}
-        <li>{% include "users/_user_card.html" %}</li>
-      {% endwith %}
-    {% endfor %}
-  </ul>
-
-  {% with prefix='followers_' page_url=projects_users_url %}
-    {% pagination_links %}
-  {% endwith %}
-
-</section>
-{% endif %}
+<div id="main">
+  {% if is_challenge %}
+    {% project_user_list request project 210 "True" "True" projects_users_url %}
+  {% else %}
+    {% project_user_list request project 72 "True" "True" projects_users_url %}
+  {% endif %}
 </div>
 {% endblock %}

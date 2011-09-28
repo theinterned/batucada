@@ -5,7 +5,7 @@ from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.conf import settings
 from django.db import models
-from django.db.models import Count, Max
+from django.db.models import Count, Max, Q
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
@@ -178,6 +178,13 @@ class Project(ModelBase):
     def non_organizer_participants(self):
         return self.participants().filter(organizing=False)
 
+    def adopters(self):
+        return self.participants().filter(Q(adopter=True) | Q(organizing=True))
+
+    def non_adopter_participants(self):
+        return self.non_organizer_participants().filter(
+            adopter=False)
+
     def organizers(self):
         return self.participants().filter(organizing=True)
 
@@ -287,6 +294,7 @@ class Participation(ModelBase):
     project = models.ForeignKey('projects.Project',
         related_name='participations')
     organizing = models.BooleanField(default=False)
+    adopter = models.BooleanField(default=False)
     joined_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
     left_on = models.DateTimeField(blank=True, null=True)

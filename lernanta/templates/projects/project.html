@@ -41,24 +41,7 @@
 {% if is_challenge %}
   <div id="main-people">
     <section id="people" class="panel">
-      <h2 class="school_header">{{ _('<strong>Need help?</strong> Peers that can help you with this challenge:') }}</h2>
-      <br>
-      {% for organizer in project.organizers %}
-        <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="40" width="40" alt="{{ organizer.user }} (organizer)"></a>
-      {% endfor %}
-
-      {% if project.non_organizer_participants %}
-        <hr class="break">
-        <h2 class="school_header">{{ _('Peers taking this challenge:') }}</h2>
-        <br>
-        {% for participant in project.non_organizer_participants|slice:":42" %}
-          <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="40" width="40" alt="{{ participant.user }} (participant)"></a>
-        {% endfor %}
-        {% if project.non_organizer_participants.count > 42 %}
-          <p></p>
-          <a id="more_people_link" href="{% locale_url projects_user_list slug=project.slug %}">{{_('View all')}} »</a>
-        {% endif %}
-      {% endif %}
+      {% project_user_list request project 168 "True" %}
     </section>
   </div>
 {% endif %}

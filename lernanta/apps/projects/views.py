@@ -735,19 +735,13 @@ def discussion_area(request, slug):
 def user_list(request, slug):
     """Display full list of users for the project."""
     project = get_object_or_404(Project, slug=slug)
-    participants = project.non_organizer_participants()
-    followers = project.non_participant_followers()
     projects_users_url = reverse('projects_user_list',
         kwargs=dict(slug=project.slug))
     context = {
         'project': project,
-        'organizers': project.organizers(),
         'projects_users_url': projects_users_url,
+        'is_challenge': (project.category == Project.CHALLENGE),
     }
-    context.update(get_pagination_context(request, participants, 24,
-        prefix='participants_'))
-    context.update(get_pagination_context(request, followers, 24,
-        prefix='followers_'))
     return render_to_response('projects/project_user_list.html', context,
         context_instance=RequestContext(request))
 
