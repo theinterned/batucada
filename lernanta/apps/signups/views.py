@@ -308,5 +308,5 @@ def direct_signup_adopter(request, slug):
             _('You already adopted this challenge.'))
     participation.adopter = True
     participation.save()
-    messages.info(_('Thanks! You are now listed among the peers who offered their help.'))
+    messages.info(request, _('Thanks! You are now listed among the peers who offered their help.'))
     return http.HttpResponseRedirect(project.get_absolute_url())
