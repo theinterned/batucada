@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.signals import post_save
 
 from taggit.managers import TaggableManager
 
@@ -313,3 +314,30 @@ class PerUserTaskCompletion(ModelBase):
     checked_on = models.DateTimeField(auto_now_add=True,
         default=datetime.datetime.now)
     unchecked_on = models.DateTimeField(blank=True, null=True)
+
+
+###########
+# Signals #
+###########
+
+def check_tasks_completion(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+    if isinstance(instance, PerUserTaskCompletion):
+        project = instance.page.project
+        user = instance.user
+        total_count = project.pages.filter(listed=True,
+            deleted=False).count()
+        completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
+            page__deleted=False, unchecked_on__isnull=True,
+            user=user).count()
+        if total_count == completed_count:
+            from badges.models import Badge
+            badges = project.badges.filter(badge_type=Badge.COMPLETION,
+                assessment_type=Badge.SELF)
+            for badge in badges:
+                badge.award_to(user)
+
+
+post_save.connect(check_tasks_completion, sender=PerUserTaskCompletion,
+    dispatch_uid='projects_check_tasks_completion')
