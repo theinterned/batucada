@@ -9,7 +9,7 @@
       {% if awarded_badges %}
         <h4>{{ _('Awarded Badges') }}</h4>
         {% for badge in awarded_badges %}
-          <a href="{{ badge.get_absolute_url }}"><img src="{{ badge.image }}" width="70" height="70" alt="badge image" class="badge-graphic"></a>
+          <a href="{{ badge.get_absolute_url }}"><img src="{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="badge-graphic"></a>
         {% endfor %}
       {% endif %}
       {% if not organizing and not adopter %}
