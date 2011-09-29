@@ -1,0 +1,31 @@
+{% extends "badges/base.html" %}
+
+{% load l10n_tags %}
+
+{% block bodyclasses %}submission edit summary{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.name }}</a>
+  <span class="arrow">&rsaquo;</span>
+  Applications
+{% endblock %}
+
+{% block body %} 
+    <div id="main">
+	    <section class="submission">
+		    <article>
+		    <h1 id="page-title">Application for {{ badge.name }} from {{ submission.author }} </h1>
+		    
+			    <div class="post-details">
+			        {{ submission.content|safe }}
+			    
+			    </div>
+		
+		    </article>
+	    </section>
+	    
+	    <p><a href="">assess this badge application</a></p>
+    </div>
+    
+{% endblock %}

@@ -15,7 +15,7 @@ from l10n.urlresolvers import reverse
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
-from badges.models import Badge
+from badges.models import Badge, Submission
 
 
 log = logging.getLogger(__name__)
@@ -31,9 +31,15 @@ def badge_description(request, slug):
 
 def show(request, slug):
     badge = get_object_or_404(Badge, slug=slug)
-
+    user = request.user
+    is_eligible = False
+    application_pending = False
+    if user is not None:
+        is_eligible = badge.is_eligible(user)
+        #TODO application_pending =
     context = {
         'badge': badge,
+        'is_eligible': is_eligible,
     }
     return render_to_response('badges/badge.html', context,
         context_instance=RequestContext(request))
@@ -89,3 +95,51 @@ def badges_manage(request):
         render_failure=badges_manage_render_failure,
         extra_context=dict(profile=profile, obi_url=settings.MOZBADGES['hub'],
         badges_help_url=badges_help_url, badges_tab=True))
+
+
+@login_required
+def create_submission(request, slug):
+    badge = get_object_or_404(Badge, slug=slug)
+
+    can_apply = badge.is_eligible(request.user)
+
+    if not can_apply:
+        messages.error(request, _('You are lacking one or more of the requirements.'))
+        # TODO: Reason why
+        return http.HttpResponseRedirect(badge.get_absolute_url())
+    user = request.user.get_profile()
+    submission = None
+    if request.method == 'POST':
+        form = badge_forms.SubmissionForm(request.POST)
+        if form.is_valid():
+            submission = form.save(commit=False)
+            submission.badge = badge
+            submission.author = user
+            if 'show_preview' not in request.POST:
+                submission.save()
+                messages.success(request, _('Submission created and out for review!'))
+                return http.HttpResponseRedirect(badge.get_absolute_url())
+        else:
+            messages.error(request, _('Please correct errors below.'))
+    else:
+        form = badge_forms.SubmissionForm(instance=badge)
+
+    context = {
+        'form': form,
+        'badge': badge
+    }
+    return render_to_response('badges/submission_edit.html', context,
+                              context_instance=RequestContext(request))
+
+
+def show_submission(request, slug, submission_id):
+    badge = get_object_or_404(Badge, slug=slug)
+    submission = get_object_or_404(Submission, id=submission_id)
+
+    context = {
+        'badge': badge,
+        'submission': submission,
+    }
+
+    return render_to_response('badges/submission_show.html', context,
+                              context_instance=RequestContext(request))

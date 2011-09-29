@@ -1,6 +1,6 @@
 from django import forms
 
-from badges.models import Badge
+from badges.models import Badge, Submission
 
 
 class BadgeForm(forms.ModelForm):
@@ -13,3 +13,10 @@ class BadgeForm(forms.ModelForm):
             'assessment_type': forms.RadioSelect,
             'badge_type': forms.RadioSelect,
         }
+
+
+class SubmissionForm(forms.ModelForm):
+
+    class Meta:
+        model = Submission
+        fields = ('content',)

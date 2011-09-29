@@ -3,11 +3,23 @@
 
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  {{ badge.name }}
+  <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.name }}</a>
 {% endblock %}
 
 {% block body %}
 	<div id="main">
-	    <p>This will be a badge page.</p>
-	</div>
+	    <p>{{ badge.description }}</p>
+        
+        {% if is_eligible %}
+	        {% if application_open %}
+			  <p><a href="{% locale_url submission_show slug=badge.slug %}" title="{{ badge.name }}" target="_blank">view your application</a></p>
+			{% else %}
+               <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank">apply for badge</a></p>
+	        {% endif %}
+        {% else %}
+            <p>Ineligible to apply at this time.</p>    
+        {% endif %}
+        
+        
+    </div>	
 {% endblock %}

@@ -86,7 +86,7 @@
           {% for badge in badges %}
             <li>
               <a href="{{ badge.get_absolute_url }}" title="{{ badge.name }}" target="_blank">
-                <img src="{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="member-picture"/> {{ badge.is_eligible }}
+                <img src="{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="member-picture"/>
               </a>
             </li>
           {% endfor %}

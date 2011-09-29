@@ -1,0 +1,35 @@
+{% extends "badges/base.html" %}
+
+{% load l10n_tags %}
+
+{% block bodyclasses %}submission edit summary{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.name }}</a>
+
+{% endblock %}
+
+{% block body %} 
+	
+	{% block form %}
+	<fieldset id="submission_edit" class="submission edit tabpane">
+	  <form method="post" action="{% if submission %}{% locale_url submission_edit slug=badge.slug submission_id=submission.pk %}{% else %}{% locale_url submission_create slug=badge.slug%}{% endif %}">
+	    {% csrf_token %}
+	    <div class="field{% if form.title.errors %} error{% endif %}">
+	      <label for="id_title">{{ _('Justification for badge') }}</label>
+	      <span class="hint block">{{ _("This is the reason you feel you are ready for the badge. Link to work done and any essay if necessary so that your peers may assess the work done.") }}</span>
+	      {{ form.content }}
+	      {{ form.content.errors }}
+	    </div>
+	
+	    <p class="buttons">
+	      <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+	    </p>
+	    
+	  </form>
+	</fieldset>
+	
+	{% endblock %}
+
+{% endblock %}
