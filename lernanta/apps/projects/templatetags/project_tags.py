@@ -19,7 +19,7 @@ from badges.models import Badge
 register = template.Library()
 
 
-def sidebar(context, max_people_count=64):
+def sidebar(context):
     user = context['user']
     project = context['project']
     sign_up = Signup.objects.get(project=project)
@@ -38,19 +38,6 @@ def sidebar(context, max_people_count=64):
     participants_count = participants.count()
     followers = project.non_participant_followers()
     followers_count = followers.count()
-
-    # only display a subset of the participants and followers.
-    remaining = max_people_count
-    sidebar_organizers = organizers[:remaining]
-    sidebar_participants = []
-    sidebar_followers = []
-    remaining -= sidebar_organizers.count()
-    if remaining > 0:
-        sidebar_participants = participants[:remaining]
-        remaining -= sidebar_participants.count()
-    if remaining > 0:
-        sidebar_followers = followers[:remaining]
-        remaining -= sidebar_followers.count()
 
     update_count = project.activities().count()
     pending_signup_answers_count = sign_up.pending_answers().count()
@@ -85,9 +72,6 @@ def sidebar(context, max_people_count=64):
         'school': school,
         'imported_from': imported_from,
         'sign_up': sign_up,
-        'sidebar_organizers': sidebar_organizers,
-        'sidebar_participants': sidebar_participants,
-        'sidebar_followers': sidebar_followers,
         'can_add_task': can_add_task,
         'can_change_order': can_change_order,
         'chat': chat,
@@ -216,3 +200,61 @@ def project_wall(request, project, discussion_area=False):
     return context
 
 register.inclusion_tag('projects/_wall.html')(project_wall)
+
+
+def project_user_list(request, project, max_count=64, with_sections=False, paginate_sections=False, user_list_url=''):
+    is_challenge = (project.category == Project.CHALLENGE)
+    context = {
+        'request': request,
+        'project': project,
+        'user_list_url': user_list_url,
+        'with_sections': with_sections,
+        'paginate_sections': paginate_sections,
+        'is_challenge': is_challenge,
+    }
+    if is_challenge:
+        organizers = project.adopters().order_by('-organizing', '-id')
+        participants = project.non_adopter_participants().order_by('-id')
+        # TODO: Add section for people who completed the challenge.
+        followers = project.non_participant_followers().none()
+    else:
+        organizers = project.organizers()
+        participants = project.non_organizer_participants()
+        followers = project.non_participant_followers()
+
+    if with_sections:
+        per_section_max_count = max_count / 3
+        if paginate_sections:
+            context.update(get_pagination_context(request, organizers, per_section_max_count,
+                    prefix='organizers_'))
+            context.update(get_pagination_context(request, participants, per_section_max_count,
+                prefix='participants_'))
+            context.update(get_pagination_context(request, followers, per_section_max_count,
+                prefix='followers_'))
+            context['organizers'] = context['organizers_pagination_current_page'].object_list
+            context['participants'] = context['participants_pagination_current_page'].object_list
+            context['followers'] = context['followers_pagination_current_page'].object_list
+        else:
+            context['organizers'] = organizers[:per_section_max_count]
+            context['participants'] = participants[:per_section_max_count]
+            context['followers'] = followers[:per_section_max_count]
+            show_more_link = (organizers.count() > per_section_max_count)
+            show_more_link = show_more_link or (participants.count() > per_section_max_count)
+            show_more_link = show_more_link or (followers.count() > per_section_max_count)
+            context['show_more_link'] = show_more_link
+    else:
+        remaining = max_count
+        context['organizers'] = organizers[:remaining]
+        remaining -= context['organizers'].count()
+        if remaining > 0:
+            context['participants'] = participants[:remaining]
+            remaining -= context['participants'].count()
+        if remaining > 0:
+            context['followers'] = followers[:remaining]
+            remaining -= context['followers'].count()
+        # It could be equal to (remaining < 0) but the big user list page is not a
+        # has more information than the sidebar section.
+        context['show_more_link'] = True
+    return context
+
+register.inclusion_tag('projects/_user_list.html')(project_user_list)
