@@ -6,6 +6,12 @@
     <div id="congratulations-msg" class="help-request tasks-completed-msg {% if progressbar_value != 100 %}off{% endif %}">
       <h3>{{ _('Congratulations!') }}</h3>
       <p>{{ _('Good job completing all the tasks.') }}</p>
+      {% if awarded_badges %}
+        <h4>{{ _('Awarded Badges') }}</h4>
+        {% for badge in awarded_badges %}
+          <a href="{{ badge.get_absolute_url }}"><img src="{{ badge.image }}" width="70" height="70" alt="badge image" class="badge-graphic"></a>
+        {% endfor %}
+      {% endif %}
       {% if not organizing and not adopter %}
         <h4>{{ _('What to help?') }}</h4>
         <p>{{ _('You\'ve now unlocked the ability to help others by adopting this challenge.') }}</p>

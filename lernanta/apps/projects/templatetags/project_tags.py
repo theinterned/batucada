@@ -148,6 +148,10 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
             page__deleted=False, unchecked_on__isnull=True, user=profile).count()
     progressbar_value = (completed_count * 100 / tasks_count) if tasks_count else 0
+    awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
+        assessment_type=Badge.SELF)
+    if completed_count != tasks_count:
+        awarded_badges = awarded_badges.none()
     return {
         'tasks': tasks,
         'tasks_count': tasks_count,
@@ -159,6 +163,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'organizing': is_organizing,
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
+        'awarded_badges': awarded_badges,
     }
 
 register.inclusion_tag('projects/_task_list.html')(task_list)
