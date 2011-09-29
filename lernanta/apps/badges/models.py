@@ -1,9 +1,13 @@
+import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
+from drumbeat.models import ModelBase
+from richtext.models import RichTextField
 
 
 def determine_upload_path(instance, filename):
@@ -14,12 +18,13 @@ def determine_upload_path(instance, filename):
     }
 
 
-class Badge(models.Model):
-    SELF, PEER, STEALTH = range(1, 4)
-    type_choices = ((SELF, _('Self')),
-        (PEER, _('Peer')),
-        (STEALTH, _('Stealth')))
+def get_awarded_badges(user):
+    from pilot import get_awarded_badges as get_pilot_badges
+    return get_pilot_badges(user)
 
+
+class Badge(models.Model):
+    """Representation of a Badge"""
     name = models.CharField(max_length=225, blank=False)
     slug = models.SlugField(unique=True, max_length=110)
     description = models.CharField(max_length=225, blank=False)
@@ -87,9 +92,6 @@ class Badge(models.Model):
             'slug': self.slug,
         })
 
-    def create(self):
-        self.save()
-
     def save(self):
         """Make sure each badge has a unique slug."""
         count = 1
@@ -119,13 +121,25 @@ class Badge(models.Model):
         """Does the user have the badge?"""
         return Award.objects.filter(user=user, badge=self).count() > 0
 
+    def award_to(self, user):
+        """Award the badge to the user"""
+        if not self.is_eligible(user):
+            return  # TODO: Throw exception?
 
-def get_awarded_badges(user):
-    from pilot import get_awarded_badges as get_pilot_badges
-    return get_pilot_badges(user)
+        if self.unique and self.is_awarded_to(user):
+            # already awarded
+            return Award.objects.filter(user=user, badge=self)[0]
+
+        # TODO: check logic
+        # if passes, award
+        # always awarding for now
+        award = Award.objects.create(user=user, badge=self)
+
+        return award
 
 
 class Rubric(models.Model):
+    """Criteria for which a badge application is judged"""
     question = models.CharField(max_length=200)
 
     def __unicode__(self):
@@ -133,7 +147,7 @@ class Rubric(models.Model):
 
 
 class Logic(models.Model):
-    """Representation of the logic behind awarding a badge."""
+    """Representation of the logic behind awarding a badge"""
     min_qualified_adopter_votes = models.PositiveIntegerField(
                             help_text=_('Minimum number of qualified votes by organizers, mentors, or adopters required to be awarded'),
                             default=0)
@@ -151,8 +165,74 @@ class Logic(models.Model):
                  (self.min_qualified_adopter_votes, self.min_qualified_votes, self.min_rating)
 
 
+class Submission(ModelBase):
+    """Application for a badge"""
+    # TODO Refactor this and PageComment and Assessment? to extend off same base
+    content = RichTextField(config_name='rich', blank=False)
+    author = models.ForeignKey('users.UserProfile', related_name='submissions')
+    badge = models.ForeignKey('badges.Badge', related_name="submissions")
+    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+
+    def __unicode__(self):
+        return _('%s''s application for %s') % (self.author, self.badge)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('badge_submission_show', (), {
+            'submission_id': self.id,
+        })
+
+
+class Assessment(ModelBase):
+    """Assessment for a badge"""
+    ratings = models.ManyToManyField('badges.Rating', related_name='assessments',
+                                    null=True, blank=True)
+    assessor = models.ForeignKey('users.UserProfile', related_name='assessments')
+    assessed = models.ForeignKey('users.UserProfile', related_name='badge_assessments')
+    comment = RichTextField(config_name='rich', blank=False)
+    badge = models.ForeignKey('badges.Badge', related_name="assessments")
+    submission = models.ForeignKey('badges.Submission', related_name="assessments",
+                                   null=True, blank=True,
+                                   help_text=_('If submission is blank, this is a '\
+                                               'peer awarded assessment or superuser granted'))
+
+    def __unicode__(self):
+        return _('%s for %s for %s') \
+            % (self.assessor, self.assessed, self.badge)
+
+
+class Rating(ModelBase):
+    """Assessor's rating for the assessment's rubric(s)"""
+    score = models.PositiveIntegerField(default=1)
+    rubric = models.ForeignKey('badges.Rubric', related_name='ratings')
+    assessor = models.ForeignKey('users.UserProfile',
+        related_name='ratings')
+
+    def __unicode__(self):
+        return _('%s for %s by %s') % (self.score, self.rubric, self.assessor)
+
+
+class Progress(ModelBase):
+    """Progress of a person to getting awarded a badge"""
+    badge = models.ForeignKey('badges.Badge', related_name="progresses")
+    current_qualified_ratings = models.PositiveIntegerField(default=0,
+                                help_text=_('Current number of qualified ratings before next awarding'))
+    user = models.ForeignKey('users.UserProfile')
+    updated_on = models.DateTimeField(help_text=_('Last time this person received a qualified rating for this badge'),
+                                      auto_now_add=True, default=datetime.datetime.now)
+    created_on = models.DateTimeField(help_text=_('First time this person received a qualified rating for this badge'),
+                                      auto_now_add=True, default=datetime.datetime.now)
+
+    def __unicode__(self):
+        return _('%s has %s qualified ratings to get %s') \
+            % (self.user, self.current_qualified_ratings, self.badge)
+
+
 class Award(models.Model):
+    """Representation of a badge a user has received"""
     user = models.ForeignKey('users.UserProfile')
     badge = models.ForeignKey('badges.Badge', related_name="awards")
-
     awarded_on = models.DateTimeField(auto_now_add=True, blank=False)
+
+    def __unicode__(self):
+        return _('%s - %s') % (self.user, self.badge)

@@ -9,5 +9,9 @@ urlpatterns = patterns('',
       name='badges_show'),
   url(r'^(?P<slug>[\w-]+)/$', 'badges.views.badge_description',
       name='badge_description'),
-
+  url(r'^(?P<slug>[\w-]+)/submission/create/$', 'badges.views.create_submission',
+      name='submission_create'),
+  url(r'^(?P<slug>[\w-]+)/submission/(?P<submission_id>\d+)/$',
+      'badges.views.show_submission',
+      name='submission_show'),
 )
