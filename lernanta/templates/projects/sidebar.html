@@ -1,4 +1,5 @@
 {% load l10n_tags %}
+{% load project_tags %}
 
 <div id="sidebar-wrapper">
 
@@ -203,19 +204,7 @@
 {% if not is_challenge %}
 
 <section id="people" class="panel">
-  <a id="more_task_link" style="float:right" href="{% locale_url projects_user_list slug=project.slug %}">{{_('See All')}} »</a>
-  <h2 class="school_header">{{ _('People') }}</h2>
-  <br>
-  {% for organizer in sidebar_organizers %}
-   <a href="{{ organizer.user.get_absolute_url }}" title="{{ organizer.user }} (organizer)"><img class="member-picture" src="{{ organizer.user.image_or_default }}" height="26" width="26" alt="{{ organizer.user }} (organizer)"></a>
-  {% endfor %}
-  {% for participant in sidebar_participants %}
-   <a href="{{ participant.user.get_absolute_url }}" title="{{ participant.user }} (participant)"><img class="member-picture" src="{{ participant.user.image_or_default }}" height="26" width="26" alt="{{ participant.user }} (participant)"></a>
-  {% endfor %}
-  {% for follower in sidebar_followers %}
-   <a href="{{ follower.source.get_absolute_url }}" title="{{ follower.source }} (follower)">
-   <img class="member-picture" src="{{ follower.source.image_or_default }}" height="26" width="26" alt="{{ follower.source }} (follower)"></a>
-  {% endfor %}
+  {% project_user_list request project 64 %}
 
   <br><br>
   {% if organizing %}

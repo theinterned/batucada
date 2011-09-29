@@ -13,7 +13,8 @@ from users.forms import ProfileEditForm, ProfileImageForm
 from relationships.models import Relationship
 from projects.decorators import organizer_required, restrict_project_kind
 from pagination.views import get_pagination_context
-from projects.models import Project, Participation
+from projects.models import Project, Participation, PerUserTaskCompletion
+from content.models import Page
 
 from signups.models import Signup
 from signups.forms import SignupForm, SignupAnswerForm
@@ -259,7 +260,7 @@ def direct_signup(request, slug):
             _('Organizers can\'t use this page to leave their study group, course, ...'))
     if request.method != 'POST':
         return http.HttpResponseForbidden(
-            _('Organizers can\'t use this page to leave their study group, course, ...'))
+            _('This page can not be accessed with a get request.'))
     participations = Participation.objects.filter(user=profile, project=project, left_on__isnull=True)
     if participations:
         for participation in participations:
@@ -275,4 +276,37 @@ def direct_signup(request, slug):
             source=profile, target_project=project)
         new_rel.deleted = False
     new_rel.save()
+    return http.HttpResponseRedirect(project.get_absolute_url())
+
+
+@login_required
+@restrict_project_kind(Project.CHALLENGE)
+def direct_signup_adopter(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    profile = request.user.get_profile()
+    if request.method != 'POST':
+        return http.HttpResponseForbidden(
+            _('This page can not be accessed with a get request.'))
+    try:
+        participation = project.participants().get(user=profile)
+    except Participation.DoesNotExist:
+        return http.HttpResponseForbidden(
+            _('You need to be active in this challenge in order to become an adopter.'))
+    if participation.organizing:
+        return http.HttpResponseForbidden(
+            _('Organizers do not need to adopt the challenges.'))
+    completed_count = PerUserTaskCompletion.objects.filter(
+        page__project=project, page__deleted=False,
+        unchecked_on__isnull=True, user=profile).count()
+    tasks_count = Page.objects.filter(project=project, listed=True,
+        deleted=False).count()
+    if completed_count != tasks_count:
+        return http.HttpResponseForbidden(
+            _('You need to complete all tasks before being able to adopt the challenge.'))
+    if participation.adopter:
+        return http.HttpResponseForbidden(
+            _('You already adopted this challenge.'))
+    participation.adopter = True
+    participation.save()
+    messages.info(_('Thanks! You are now listed among the peers who offered their help.'))
     return http.HttpResponseRedirect(project.get_absolute_url())

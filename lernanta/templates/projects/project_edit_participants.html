@@ -35,6 +35,7 @@
   <tr>
     <th>{{ _('Name') }}</th>
     <th>{{ _('Organizer') }}</th>
+    {% if is_challenge %}<th>{{ _('Adopter') }}</th>{% endif %}
     <th>{{ _('Actions') }}</th>
   </tr>
 </thead>
@@ -46,9 +47,18 @@
         {% if participation.organizing %}
           <span class="yes" title="{{_('Organizing.') }}">{{ _('yes') }}</span>
         {% else %}
-          <span class="no" title="{{_('Participating.') }}">{{ _('no') }}</span>
+          <span class="no" title="{{_('Not Organizing.') }}">{{ _('no') }}</span>
         {% endif %}
       </td>
+      {% if is_challenge %}
+        <td class="adopter">
+          {% if participation.adopter or participation.organizing %}
+            <span class="yes" title="{{_('Adopter.') }}">{{ _('yes') }}</span>
+          {% else %}
+            <span class="no" title="{{_('Participant.') }}">{{ _('no') }}</span>
+          {% endif %}
+        </td>
+      {% endif %}
       <td class="actions">
         {% if not participation.organizing %}
         <form action="{% locale_url projects_edit_participants_make_organizer slug=project.slug username=participation.user.username %}" method="post">
