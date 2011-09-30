@@ -13,7 +13,7 @@ from l10n.urlresolvers import reverse
 
 from projects.models import Project, PerUserTaskCompletion
 from projects import drupal
-from badges.models import Badge
+from badges.models import Badge, Submission
 
 
 register = template.Library()
@@ -140,6 +140,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     if is_challenge and user.is_authenticated():
         profile = user.get_profile()
         is_organizing = project.organizers().filter(user=profile).exists()
+        adopter = project.adopters().filter(user=profile).exists()
         is_participating = project.participants().filter(user=profile).exists()
         if is_participating:
             for task in tasks:
@@ -148,10 +149,17 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
             page__deleted=False, unchecked_on__isnull=True, user=profile).count()
     progressbar_value = (completed_count * 100 / tasks_count) if tasks_count else 0
-    awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
+    self_awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
         assessment_type=Badge.SELF)
+    available_skill_badges = project.badges.filter(badge_type=Badge.SKILL)
+    if available_skill_badges:
+        available_skill_badge = available_skill_badges[0]
+        has_badge = available_skill_badge.is_awarded_to(user)
+        submissions = Submission.objects.filter(author=profile, badge=available_skill_badge)
+        if submissions:
+            submission = submissions[0]
     if completed_count != tasks_count:
-        awarded_badges = awarded_badges.none()
+        self_awarded_badges = self_awarded_badges.none()
     return {
         'tasks': tasks,
         'tasks_count': tasks_count,
@@ -161,13 +169,26 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'is_challenge': is_challenge,
         'participating': is_participating,
         'organizing': is_organizing,
+        'adopter': adopter,
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
-        'awarded_badges': awarded_badges,
+        'self_awarded_badges': self_awarded_badges,
+        'available_skill_badge': available_skill_badge,
+        'submission': submission,
+        'has_badge': has_badge,
+    }
+
+def submission_for_badges(project, user):
+    peer_badges = project.badges.filter(badge_type=Badge.SKILL,
+        assessment_type=Badge.PEER)
+    # submission already exist?
+    
+    return {
+        'peer_badges': peer_badges,
     }
 
 register.inclusion_tag('projects/_task_list.html')(task_list)
-
+register.inclusion_tag('projects/_submit_for_badges.html')(submission_for_badges)
 
 def project_wall(request, project, discussion_area=False):
     is_organizing = project.is_organizing(request.user)

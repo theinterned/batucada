@@ -12,6 +12,7 @@ from django_obi.views import send_badges
 from users.decorators import login_required
 from drumbeat import messages
 from l10n.urlresolvers import reverse
+from projects.models import Project
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url

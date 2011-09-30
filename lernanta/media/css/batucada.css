@@ -2765,6 +2765,7 @@ div.voting div.score {
 .project-kind-challenge #task_list_section .help-request h4 {
     color: #222222;
     font-size: 16px;
+    margin-top: 1em;
 }
 
 .project-kind-challenge #task_list_section .help-request p {
@@ -2841,6 +2842,22 @@ div.voting div.score {
     height: 20px;
     color: #fff;
 }
+
+.project-kind-challenge #task_list_section a.apply-button {
+    -moz-border-radius: 3px 3px 3px 3px;
+    -moz-box-shadow: 0 1px 0 0 #96CA6D inset;
+    background-color: #7FBF4D;
+    background-image: -moz-linear-gradient(center top , #7FBF4D, #63A62F);
+    border-color: #63A62F #63A62F #5B992B;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    font: 12px/1 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+    padding: 7px 8px 8px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #4C9021;
+    width: 260p
+ }
 
 .ui-progressbar .ui-progressbar-value {
     margin-left: -5px;
