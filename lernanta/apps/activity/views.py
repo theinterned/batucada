@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django import http
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -28,7 +29,9 @@ def index(request, activity_id):
     }
     if activity.scope_object:
         is_challenge = (activity.scope_object.category == Project.CHALLENGE)
-        if is_challenge:
+        from statuses.models import Status
+        status_ct = ContentType.objects.get_for_model(Status)
+        if is_challenge and activity.target_content_type != status_ct:
             raise http.Http404
         scope_url = activity.scope_object.get_absolute_url()
         context['project'] = activity.scope_object
@@ -51,8 +54,12 @@ def index(request, activity_id):
 @login_required
 def delete_restore(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
-    if activity.scope_object.category == Project.CHALLENGE:
-        raise http.Http404
+    if activity.scope_object:
+        is_challenge = (activity.scope_object.category == Project.CHALLENGE)
+        from statuses.models import Status
+        status_ct = ContentType.objects.get_for_model(Status)
+        if is_challenge and activity.target_content_type != status_ct:
+            raise http.Http404
     if not activity.can_edit(request.user):
         return http.HttpResponseForbidden(_("You can't edit this activity"))
     if request.method == 'POST':

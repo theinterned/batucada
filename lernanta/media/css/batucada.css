@@ -236,8 +236,8 @@ input[type=submit]:active,
     margin-top: 0px !important
 }
 
-.project-kind-challenge #sidebar #project button#direct_signup_button,
-.project-kind-challenge #sidebar #project a#direct_signup_button {
+.project-kind-challenge #sidebar button#direct_signup_button,
+.project-kind-challenge #sidebar a#direct_signup_button {
     float: left;
     margin: 0 0 0 20px;
     background-color: #7fbf4d;
@@ -269,11 +269,17 @@ input[type=submit]:active,
     width: 180px;
 }
 
-.project-kind-challenge #sidebar #project button#direct_signup_button {
+.project-kind-challenge #sidebar button#direct_signup_button {
     width: 198px;
 }
 
-.project-kind-challenge #sidebar #project a.discuss-button {
+.project-kind-challenge #sidebar a#leave_direct_signup_button, .project-kind-challenge #sidebar a.discuss-link {
+  margin: 0 0 0 65px;
+  padding-top: 40px;
+  display: block;
+}
+
+.project-kind-challenge #sidebar a.discuss-button {
   float: left;
   margin: 0 0 0 20px;
   background-color: #52a8e8;
@@ -304,8 +310,8 @@ input[type=submit]:active,
  width: 180px; 
 }
  
-.project-kind-challenge #sidebar #project button#direct_signup_button:hover,
-.project-kind-challenge #sidebar #project a#direct_signup_button:hover {
+.project-kind-challenge #sidebar button#direct_signup_button:hover,
+.project-kind-challenge #sidebar a#direct_signup_button:hover {
     background-color: #76b347;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
     /* Saf4+, Chrome */
@@ -323,7 +329,7 @@ input[type=submit]:active,
     text-decoration: none;
 }
 
-.project-kind-challenge #sidebar #project a.discuss-button:hover {
+.project-kind-challenge #sidebar a.discuss-button:hover {
   background-color: #4C9EDA;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#4C9EDA), to(#3271C2));
   /* Saf4+, Chrome */
@@ -341,8 +347,8 @@ input[type=submit]:active,
    text-decoration: none;
 }
 
-.project-kind-challenge #sidebar #project button#direct_signup_button:active,
-.project-kind-challenge #sidebar #project a#direct_signup_button:active {
+.project-kind-challenge #sidebar button#direct_signup_button:active,
+.project-kind-challenge #sidebar a#direct_signup_button:active {
     border: 1px solid #5b992b;
     border-bottom: 1px solid #538c27;
     -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
@@ -352,7 +358,7 @@ input[type=submit]:active,
     box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
 }
 
-.project-kind-challenge #sidebar #project a.discuss-button:active {
+.project-kind-challenge #sidebar a.discuss-button:active {
    border: 1px solid #006699;
  -webkit-box-shadow: inset 0 1px 0 0 #52a8e8;
  -moz-box-shadow: inset 0 1px 0 0 #52a8e8;
