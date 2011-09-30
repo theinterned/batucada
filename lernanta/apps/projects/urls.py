@@ -39,6 +39,7 @@ urlpatterns = patterns('',
       'projects.views.toggle_task_completion', name='toggle_task_completion'),
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),
 
+
   # Project Edit URLs
   url(r'^(?P<slug>[\w-]+)/edit/$', 'projects.views.edit',
       name='projects_edit'),

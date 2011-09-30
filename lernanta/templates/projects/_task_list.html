@@ -6,12 +6,27 @@
     <div id="congratulations-msg" class="help-request tasks-completed-msg {% if progressbar_value != 100 %}off{% endif %}">
       <h3>{{ _('Congratulations!') }}</h3>
       <p>{{ _('Good job completing all the tasks.') }}</p>
-      {% if awarded_badges %}
+      {% if self_awarded_badges %}
         <h4>{{ _('Awarded Badges') }}</h4>
-        {% for badge in awarded_badges %}
-          <a href="{{ badge.get_absolute_url }}"><img src="{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="badge-graphic"></a>
+        {% for badge in self_awarded_badges %}
+          <a href="{{ badge.get_absolute_url }}"><img src="/media/{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="badge-graphic"></a>
         {% endfor %}
       {% endif %}
+
+      {% if available_skill_badge %}
+            <p><b>{{ _('Optional:') }}</b> {{ _('Submit your work to be peer assessed for the following badge:') }}</p>
+            <p><a href="{{ available_skill_badge.get_absolute_url }}"><img src="/media/{{ available_skill_badge.image }}" width="70" height="70" alt="{{ available_skill_badge.name }}" class="badge-graphic"></a></p>
+            {% if not has_badge %}
+                {% if submission %}
+                    <a href="{% locale_url submission_show slug=available_skill_badge.slug submission_id=submission.pk %}" class="apply-button">{{ _('Check Progress for Badge') }}</a>
+                {% else %}
+                     <a href="{% locale_url submission_create slug=available_skill_badge.slug %}" class="apply-button">{{ _('Apply for Badge') }}</a>
+                {% endif %}
+            {% else %}
+                <p>{{ _('Since you have the badge, maybe you\'d like to assess others\' work?') }}</p>
+            {% endif %}
+      {% endif %}
+
       {% if not organizing and not adopter %}
         <h4>{{ _('What to help?') }}</h4>
         <p>{{ _('You\'ve now unlocked the ability to help others by adopting this challenge.') }}</p>

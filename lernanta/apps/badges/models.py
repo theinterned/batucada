@@ -168,6 +168,7 @@ class Logic(models.Model):
 class Submission(ModelBase):
     """Application for a badge"""
     # TODO Refactor this and PageComment and Assessment? to extend off same base
+    url = models.URLField(max_length=1023)
     content = RichTextField(config_name='rich', blank=False)
     author = models.ForeignKey('users.UserProfile', related_name='submissions')
     badge = models.ForeignKey('badges.Badge', related_name="submissions")
