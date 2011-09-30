@@ -193,6 +193,7 @@ def project_wall(request, project, discussion_area=False):
 
     context = {
         'request': request,
+        'user': request.user,
         'project': project,
         'participating': is_participating,
         'organizing': is_organizing,

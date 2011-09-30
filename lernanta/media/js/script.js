@@ -379,6 +379,10 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
     });
 });
 
+$('.project-kind-challenge a#leave_direct_signup_button').bind('click', function() {
+    $(this).parent().submit();
+});
+
 $('.project-kind-challenge #task_list_section li').hover(function() {
       $(this).find('.taskView').show();
 }, function() {
