@@ -31,4 +31,5 @@ def pagination_links(context):
         'next_page_url': next_page_url,
     }
 
-register.inclusion_tag('pagination/pagination_links.html', takes_context=True)(pagination_links)
+register.inclusion_tag('pagination/pagination_links.html',
+    takes_context=True)(pagination_links)

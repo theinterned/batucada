@@ -96,7 +96,8 @@ def project_list(school=None, only_featured=False, limit=8):
         active = Project.objects.get_active(limit=limit, school=school)
         popular = Project.objects.get_popular(limit=limit, school=school)
         one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
-        new_groups = listed.filter(created_on__gte=one_week).order_by('-created_on')
+        new_groups = listed.filter(created_on__gte=one_week).order_by(
+            '-created_on')
         open_signup_ids = Signup.objects.exclude(
             status=Signup.CLOSED).values('project')
         open_signup = listed.filter(id__in=open_signup_ids)
@@ -145,9 +146,12 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
             for task in tasks:
                 task.is_done = PerUserTaskCompletion.objects.filter(
                     user=profile, page=task, unchecked_on__isnull=True)
-        completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
-            page__deleted=False, unchecked_on__isnull=True, user=profile).count()
-    progressbar_value = (completed_count * 100 / tasks_count) if tasks_count else 0
+        completed_count = PerUserTaskCompletion.objects.filter(
+            page__project=project, page__deleted=False,
+            unchecked_on__isnull=True, user=profile).count()
+    progressbar_value = 0
+    if tasks_count:
+        progressbar_value = (completed_count * 100 / tasks_count)
     awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
         assessment_type=Badge.SELF)
     if completed_count != tasks_count:
@@ -208,7 +212,8 @@ def project_wall(request, project, discussion_area=False):
 register.inclusion_tag('projects/_wall.html')(project_wall)
 
 
-def project_user_list(request, project, max_count=64, with_sections=False, paginate_sections=False, user_list_url=''):
+def project_user_list(request, project, max_count=64, with_sections=False,
+        paginate_sections=False, user_list_url=''):
     is_challenge = (project.category == Project.CHALLENGE)
     context = {
         'request': request,
@@ -231,22 +236,27 @@ def project_user_list(request, project, max_count=64, with_sections=False, pagin
     if with_sections:
         per_section_max_count = max_count / 3
         if paginate_sections:
-            context.update(get_pagination_context(request, organizers, per_section_max_count,
-                    prefix='organizers_'))
-            context.update(get_pagination_context(request, participants, per_section_max_count,
-                prefix='participants_'))
-            context.update(get_pagination_context(request, followers, per_section_max_count,
-                prefix='followers_'))
-            context['organizers'] = context['organizers_pagination_current_page'].object_list
-            context['participants'] = context['participants_pagination_current_page'].object_list
-            context['followers'] = context['followers_pagination_current_page'].object_list
+            context.update(get_pagination_context(request, organizers,
+                per_section_max_count, prefix='organizers_'))
+            context.update(get_pagination_context(request, participants,
+                per_section_max_count, prefix='participants_'))
+            context.update(get_pagination_context(request, followers,
+                per_section_max_count, prefix='followers_'))
+            context['organizers'] = context[
+                'organizers_pagination_current_page'].object_list
+            context['participants'] = context[
+                'participants_pagination_current_page'].object_list
+            context['followers'] = context[
+                'followers_pagination_current_page'].object_list
         else:
             context['organizers'] = organizers[:per_section_max_count]
             context['participants'] = participants[:per_section_max_count]
             context['followers'] = followers[:per_section_max_count]
             show_more_link = (organizers.count() > per_section_max_count)
-            show_more_link = show_more_link or (participants.count() > per_section_max_count)
-            show_more_link = show_more_link or (followers.count() > per_section_max_count)
+            show_more_link = show_more_link or (
+                participants.count() > per_section_max_count)
+            show_more_link = show_more_link or (
+                followers.count() > per_section_max_count)
             context['show_more_link'] = show_more_link
     else:
         remaining = max_count
@@ -258,8 +268,9 @@ def project_user_list(request, project, max_count=64, with_sections=False, pagin
         if remaining > 0:
             context['followers'] = followers[:remaining]
             remaining -= context['followers'].count()
-        # It could be equal to (remaining < 0) but the big user list page is not a
-        # has more information than the sidebar section.
+        # It could be equal to (remaining < 0) but the big user
+        # list page is not a has more information than the sidebar
+        # section.
         context['show_more_link'] = True
     return context
 

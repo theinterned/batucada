@@ -11,7 +11,8 @@ from pagination.views import get_pagination_context
 
 
 def list_tagged_all(request, tag_slug):
-    """Display a list of non-user objects that are tagged with the tag and tag type. """
+    """Display a list of non-user objects that are tagged with
+    the tag and tag type."""
     school = None
     tag = get_object_or_404(GeneralTag, slug=tag_slug)
     directory_url = reverse('tags_tagged_list', kwargs=dict(tag_slug=tag_slug))

@@ -432,7 +432,8 @@ def edit_statistics(request, slug):
     page_comments_count = comments.filter(page_content_type=page_ct).count()
     statuses_count = Status.objects.filter(project__in=project_ids).count()
     status_ct = ContentType.objects.get_for_model(Activity)
-    activity_comments_count = comments.filter(page_content_type=status_ct).count()
+    activity_comments_count = comments.filter(
+        page_content_type=status_ct).count()
     page_edits_count = Activity.objects.filter(scope_object__in=project_ids,
        target_content_type=page_ct, verb=verbs['update']).count()
     participations = Participation.objects.filter(project__in=project_ids)

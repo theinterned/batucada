@@ -96,7 +96,8 @@ class Project(ModelBase):
         (COURSE, _('Course -- led by one or more organizers with skills on ' \
                    'a field who direct and help participants during their ' \
                    'learning.')),
-        (CHALLENGE, _('Challenge -- series of tasks peers can engage in to develop skills.'))
+        (CHALLENGE, _('Challenge -- series of tasks peers can engage in ' \
+                      'to develop skills.'))
     )
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
@@ -217,7 +218,8 @@ class Project(ModelBase):
             return False
 
     def get_metrics_permissions(self, user):
-        """Provides metrics related permissions for metrics overview and csv download."""
+        """Provides metrics related permissions for metrics overview
+        and csv download."""
         if user.is_authenticated():
             if user.is_superuser:
                 return True, True
@@ -339,15 +341,14 @@ class PerUserTaskCompletion(ModelBase):
 
 def check_tasks_completion(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
     if isinstance(instance, PerUserTaskCompletion):
         project = instance.page.project
         user = instance.user
         total_count = project.pages.filter(listed=True,
             deleted=False).count()
-        completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
-            page__deleted=False, unchecked_on__isnull=True,
-            user=user).count()
+        completed_count = PerUserTaskCompletion.objects.filter(
+            page__project=project, page__deleted=False,
+            unchecked_on__isnull=True, user=user).count()
         if total_count == completed_count:
             from badges.models import Badge
             badges = project.badges.filter(badge_type=Badge.COMPLETION,
