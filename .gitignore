@@ -6,6 +6,7 @@ media/images/profiles/
 media/images/projects/
 media/images/challenges/
 media/videos/projects/
+media/images/badges/
 settings_local.py
 sample_data.py
 sql/
