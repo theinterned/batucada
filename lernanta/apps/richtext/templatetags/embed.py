@@ -51,6 +51,7 @@ def embed(html):
     """Finds Slideshare [slideshare: ...] tags, and replace them
     with an embeddable HTML snippet.
     """
-    return '<div class="richtext_section">%s</div>' % re.sub(EMBED_RE, replace, html)
+    return '<div class="richtext_section">%s</div>' % re.sub(
+        EMBED_RE, replace, html)
 
 embed.is_safe = True  # Don't escape HTML

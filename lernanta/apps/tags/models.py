@@ -12,7 +12,8 @@ class GeneralTag(TagBase):
 
 class GeneralTaggedItem(GenericTaggedItemBase, ItemBase):
 
-    tag = models.ForeignKey(GeneralTag, related_name="%(app_label)s_%(class)s_items")
+    tag = models.ForeignKey(GeneralTag,
+        related_name="%(app_label)s_%(class)s_items")
 
     class Meta:
         verbose_name = _("Tagged Item")

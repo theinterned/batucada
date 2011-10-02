@@ -21,7 +21,8 @@ class OwnersPageForm(forms.ModelForm):
 
     class Meta:
         model = Page
-        fields = ('title', 'sub_header', 'content', 'collaborative', 'minor_update')
+        fields = ('title', 'sub_header', 'content',
+            'collaborative', 'minor_update')
 
 
 class OwnersNotListedPageForm(forms.ModelForm):

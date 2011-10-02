@@ -35,8 +35,10 @@ urlpatterns = patterns('',
   # Project Content URLs
   (r'^(?P<slug>[\w-]+)/links/', include('links.urls')),
   (r'^(?P<slug>[\w-]+)/sign-up/', include('signups.urls')),
-  url(r'^(?P<slug>[\w-]+)/content/(?P<page_slug>[\w-]+)/toggle_task_completion/$',
-      'projects.views.toggle_task_completion', name='toggle_task_completion'),
+  url(r'^(?P<slug>[\w-]+)/content/' +
+      '(?P<page_slug>[\w-]+)/toggle_task_completion/$',
+      'projects.views.toggle_task_completion',
+      name='toggle_task_completion'),
   (r'^(?P<slug>[\w-]+)/content/', include('content.urls')),
 
   # Project Edit URLs

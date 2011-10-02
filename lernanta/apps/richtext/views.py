@@ -38,7 +38,8 @@ def get_file_browse_urls(user=None):
 
     for root, dirs, filenames in os.walk(browse_path):
         for filename in [os.path.join(root, x) for x in filenames]:
-            files.append((get_media_url(filename), filename[len(browse_path):]))
+            files.append((get_media_url(filename),
+                filename[len(browse_path):]))
 
     return files
 
@@ -106,7 +107,8 @@ def upload_file(request, image_upload=False):
 
     if upload_ext in valid_extensions:
         # Open output file in which to store upload.
-        upload_filename = get_upload_filename(upload.name, request.user, image_upload)
+        upload_filename = get_upload_filename(upload.name,
+            request.user, image_upload)
 
         out = open(upload_filename, 'wb+')
 
@@ -126,7 +128,8 @@ def upload_file(request, image_upload=False):
             </script>""" % (func_num, url))
     else:
         # Respond with JavaScript sending error msg to ckeditor dialog.
-        msg = _('Extension %(ext)s is not allowed. Only %(allowed)s are allowed.')
+        msg = _('Extension %(ext)s is not allowed. ')
+        msg += _('Only %(allowed)s are allowed.')
         kwargs = {'ext': upload_ext, 'allowed': ", ".join(valid_extensions)}
         response = HttpResponse("""
             <script type='text/javascript'>

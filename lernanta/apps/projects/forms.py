@@ -24,7 +24,7 @@ class ProjectForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
-        if kwargs.has_key('instance'):
+        if 'instance' in kwargs:
             instance = kwargs['instance']
             self.initial['tags'] = GeneralTaggedItem.objects.filter(
                object_id=instance.id)
