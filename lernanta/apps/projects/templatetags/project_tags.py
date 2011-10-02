@@ -151,10 +151,12 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     progressbar_value = (completed_count * 100 / tasks_count) if tasks_count else 0
     self_awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
         assessment_type=Badge.SELF)
+    available_skill_badge = adopter = submission = None
+    has_skill_badge = False
     available_skill_badges = project.badges.filter(badge_type=Badge.SKILL)
     if available_skill_badges:
-        available_skill_badge = available_skill_badges[0]
-        has_badge = available_skill_badge.is_awarded_to(user)
+        available_skill_badge = available_skill_badges[0] # TODO: Refactor for multiple badges
+        has_skill_badge = available_skill_badge.is_awarded_to(user)
         submissions = Submission.objects.filter(author=profile, badge=available_skill_badge)
         if submissions:
             submission = submissions[0]
@@ -175,7 +177,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'self_awarded_badges': self_awarded_badges,
         'available_skill_badge': available_skill_badge,
         'submission': submission,
-        'has_badge': has_badge,
+        'has_skill_badge': has_skill_badge,
     }
 
 def submission_for_badges(project, user):

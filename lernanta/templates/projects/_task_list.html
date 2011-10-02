@@ -14,9 +14,12 @@
       {% endif %}
 
       {% if available_skill_badge %}
-            <p><b>{{ _('Optional:') }}</b> {{ _('Submit your work to be peer assessed for the following badge:') }}</p>
+            {% if not has_skill_badge %}
+	            <h4>{{ _('Possible Badges') }}</h4>
+	            <p><b>{{ _('Optional:') }}</b> {{ _('Submit your work to be peer assessed for the following badge:') }}</p>
+            {% endif %}
             <p><a href="{{ available_skill_badge.get_absolute_url }}"><img src="/media/{{ available_skill_badge.image }}" width="70" height="70" alt="{{ available_skill_badge.name }}" class="badge-graphic"></a></p>
-            {% if not has_badge %}
+            {% if not has_skill_badge %}
                 {% if submission %}
                     <a href="{% locale_url submission_show slug=available_skill_badge.slug submission_id=submission.pk %}" class="apply-button">{{ _('Check Progress for Badge') }}</a>
                 {% else %}
