@@ -1,0 +1,34 @@
+{% load l10n_tags %}
+<article class="badge-card">
+  <div id="awards">
+	  <figure>
+	    <a href="{{ badge.get_absolute_url }}">
+	      {% if badge.image %}
+	      <img src="/media/{{ badge.image }}" width="80" height="80" alt="{{ badge.name }}"/>
+	      {% else %}
+	      <img src="/media/images/badge-missing.png" width="80" height="80" alt="{{ badge.name }}"/>
+	      {% endif %}
+	    </a>
+	  </figure>
+	  <h3>Awarded</h3>
+	  <a href="">52</a>
+	  <h3>Pending</h3>
+	  <a href="">3</a>
+  </div>
+  
+ 
+  <div id="info">
+      <h1><a href="{{ badge.get_absolute_url }}">{{ badge.name }}</a></h1>
+      <div class="description">{{ badge.description }}</div>
+	  {% if rubrics %}
+	  <h4>Rubrics</h4>
+	  <div class="meta">
+		  <ul>
+			{% for rubric in rubrics %}
+				<li>{{ rubric.question }}</li>
+			{% endfor %}
+		  </ul>
+	  </div>
+	  {% endif %}
+  </div>
+</article>

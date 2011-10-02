@@ -137,6 +137,14 @@ class Badge(models.Model):
 
         return award
 
+    def progress_for(self, user):
+        """Progress for a user for this badge"""
+        progress = Progress.objects.filter(user=user, badge=self)
+        if progress:
+            progress = progress[0]
+        else:
+            progress = Progress(user=user, badge=self)
+        return progress
 
 class Rubric(models.Model):
     """Criteria for which a badge application is judged"""

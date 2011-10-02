@@ -3,7 +3,7 @@ import logging
 from django import http
 from django.utils.translation import ugettext as _
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 
@@ -16,7 +16,7 @@ from projects.models import Project
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
-from badges.models import Badge, Submission
+from badges.models import Badge, Submission, Rubric
 
 
 log = logging.getLogger(__name__)
@@ -35,12 +35,14 @@ def show(request, slug):
     user = request.user
     is_eligible = False
     application_pending = False
+    rubrics = get_list_or_404(Rubric, badges=badge)
     if user is not None:
         is_eligible = badge.is_eligible(user)
         #TODO application_pending =
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
+        'rubrics': rubrics,
     }
     return render_to_response('badges/badge.html', context,
         context_instance=RequestContext(request))
@@ -133,14 +135,17 @@ def create_submission(request, slug):
                               context_instance=RequestContext(request))
 
 
-def show_submission(request, slug, submission_id):
-    badge = get_object_or_404(Badge, slug=slug)
+def show_submission(request, submission_id):
     submission = get_object_or_404(Submission, id=submission_id)
-
+    badge = submission.badge
+    progress = badge.progress_for(submission.author)
+    rubrics = get_list_or_404(Rubric, badges=badge)
     context = {
         'badge': badge,
         'submission': submission,
-    }
+        'progress': progress,
+        'rubrics': rubrics,
+        }
 
     return render_to_response('badges/submission_show.html', context,
                               context_instance=RequestContext(request))
