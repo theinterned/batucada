@@ -216,6 +216,23 @@ class Project(ModelBase):
         else:
             return False
 
+    def get_metrics_permissions(self, user):
+        """Provides metrics related permissions for metrics overview and csv download."""
+        if user.is_authenticated():
+            if user.is_superuser:
+                return True, True
+            allowed_schools = settings.STATISTICS_ENABLED_SCHOOLS
+            if not self.school or self.school.slug not in allowed_schools:
+                return False, False
+            csv_downloaders = settings.STATISTICS_CSV_DOWNLOADERS
+            profile = user.get_profile()
+            csv_permission = profile.username in csv_downloaders
+            is_school_organizer = self.school.organizers.filter(
+                id=user.id).exists()
+            if is_school_organizer or self.is_organizing(user):
+                return True, csv_permission
+        return False, False
+
     def activities(self):
         return Activity.objects.filter(deleted=False,
             scope_object=self).order_by('-created_on')

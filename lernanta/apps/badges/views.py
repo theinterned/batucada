@@ -86,6 +86,8 @@ def badges_manage_render_failure(request, message, status=500):
 
 @login_required
 def badges_manage(request):
+    #FIXME: Re-enable after updating integration with the OBI.
+    raise http.Http404
     profile = request.user.get_profile()
     badges_help_url = reverse('static_page_show', kwargs=dict(
             slug='assessments-and-badges'))
