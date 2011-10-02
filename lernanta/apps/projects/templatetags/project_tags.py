@@ -135,7 +135,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         tasks = tasks[:short_list_length]
         visible_count = tasks.count()
     is_challenge = (project.category == Project.CHALLENGE)
-    is_participating = is_organizing = False
+    is_participating = is_organizing = adopter = False
     completed_count = 0
     if is_challenge and user.is_authenticated():
         profile = user.get_profile()
@@ -151,7 +151,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     progressbar_value = (completed_count * 100 / tasks_count) if tasks_count else 0
     self_awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
         assessment_type=Badge.SELF)
-    available_skill_badge = adopter = submission = None
+    available_skill_badge = submission = None
     has_skill_badge = False
     available_skill_badges = project.badges.filter(badge_type=Badge.SKILL)
     if available_skill_badges:
