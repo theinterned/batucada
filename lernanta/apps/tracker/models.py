@@ -205,7 +205,7 @@ def unauth_total_metrics(project):
         models.Sum('non_zero_length_pageviews'),
         models.Sum('zero_length_pageviews'))
     for index, metric in enumerate(metrics):
-        row = ["Non-loggedin User %s" % index]
+        row = ["Non-loggedin User %s" % (index + 1)]
         row.append("%.2f" % ((metric['non_zero_length_time_on_page__sum'] or 0) / 60.0))
         row.append(metric['non_zero_length_pageviews__sum'] or 0)
         row.append(metric['zero_length_pageviews__sum'] or 0)

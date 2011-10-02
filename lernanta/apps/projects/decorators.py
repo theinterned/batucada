@@ -47,7 +47,9 @@ def can_view_metric_detail(func):
         request = args[0]
         project = kwargs['slug']
         project = get_object_or_404(Project, slug=project)
-        if not (request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser):
+        can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+            request.user)
+        if not can_view_metric_detail:
             msg = _("You are not authorized to view these detailed statistics.")
             return HttpResponseForbidden(msg)
         return func(*args, **kwargs)
@@ -63,7 +65,9 @@ def can_view_metric_overview(func):
         request = args[0]
         project = kwargs['slug']
         project = get_object_or_404(Project, slug=project)
-        if not (request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser):
+        can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+            request.user)
+        if not can_view_metric_overview:
             msg = _("You are not authorized to view these overview statistics.")
             print project.is_organizing(request.user)
             return HttpResponseForbidden(msg)

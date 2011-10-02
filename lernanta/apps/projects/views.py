@@ -304,9 +304,8 @@ def edit(request, slug):
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
         form = project_forms.ProjectForm(instance=project)
-
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
@@ -339,8 +338,8 @@ def edit_image_async(request, slug):
 @organizer_required
 def edit_image(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
     if request.method == 'POST':
         form = project_forms.ProjectImageForm(request.POST, request.FILES,
                                               instance=project)
@@ -369,7 +368,8 @@ def edit_image(request, slug):
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
     profile = request.user.get_profile()
     if request.method == 'POST':
         form = project_forms.ProjectLinksForm(request.POST)
@@ -400,7 +400,8 @@ def edit_links(request, slug):
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links_edit(request, slug, link):
     link = get_object_or_404(Link, id=link)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
     form = project_forms.ProjectLinksForm(request.POST or None, instance=link)
     profile = get_object_or_404(UserProfile, user=request.user)
     project = get_object_or_404(Project, slug=slug)
@@ -448,7 +449,8 @@ def edit_links_delete(request, slug, link):
 @organizer_required
 def edit_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
     if request.method == 'POST':
         form = project_forms.ProjectAddParticipantForm(project, request.POST)
         if form.is_valid():
@@ -560,9 +562,9 @@ def admin_metrics(request, slug):
     We only are interested in the pages of the course and the participants.
     """
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    participants = (participant.user for participant in project.non_organizer_participants())
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
+    participants = (participant.user for participant in project.participants())
     tracker_models.update_metrics_cache(project)
     keys = ('username', 'last_active', 'course_activity_minutes',
         'comment_count','task_edits_count')
@@ -625,6 +627,10 @@ def export_detailed_csv(request, slug):
         writer.writerow(row + ["0"] * 2)
     writer.writerow([])
     writer.writerow([])
+    # Restoring profile iterators
+    participant_profiles = (participant.user for participant in participants)
+    follower_profiles = (follower.source for follower in followers)
+    previous_follower_profiles = (previous.source for previous in previous_followers)
     # Write Per Page Total Metrics
     writer.writerow(["PER PAGE TOTALS"])
     writer.writerow(["Participants", "Page Paths"] + headers[:-2])

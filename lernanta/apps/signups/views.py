@@ -26,7 +26,8 @@ from signups.forms import SignupForm, SignupAnswerForm
 def edit_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     project = sign_up.project
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    can_view_metric_overview, can_view_metric_detail = project.get_metrics_permissions(
+        request.user)
     if request.method == 'POST':
         form = SignupForm(request.POST, instance=sign_up)
         if form.is_valid():
