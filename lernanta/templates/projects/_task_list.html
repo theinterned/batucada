@@ -21,7 +21,7 @@
             <p><a href="{{ available_skill_badge.get_absolute_url }}"><img src="/media/{{ available_skill_badge.image }}" width="70" height="70" alt="{{ available_skill_badge.name }}" class="badge-graphic"></a></p>
             {% if not has_skill_badge %}
                 {% if submission %}
-                    <a href="{% locale_url submission_show slug=available_skill_badge.slug submission_id=submission.pk %}" class="apply-button">{{ _('Check Progress for Badge') }}</a>
+                    <a href="{% locale_url submission_show submission_id=submission.pk %}" class="apply-button">{{ _('Check Progress for Badge') }}</a>
                 {% else %}
                      <a href="{% locale_url submission_create slug=available_skill_badge.slug %}" class="apply-button">{{ _('Apply for Badge') }}</a>
                 {% endif %}
