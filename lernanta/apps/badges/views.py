@@ -12,11 +12,10 @@ from django_obi.views import send_badges
 from users.decorators import login_required
 from drumbeat import messages
 from l10n.urlresolvers import reverse
-from projects.models import Project
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
-from badges.models import Badge, Submission, Rubric
+from badges.models import Badge, Submission, Rubric, Assessment
 
 
 log = logging.getLogger(__name__)
@@ -34,7 +33,6 @@ def show(request, slug):
     badge = get_object_or_404(Badge, slug=slug)
     user = request.user
     is_eligible = False
-    application_pending = False
     rubrics = get_list_or_404(Rubric, badges=badge)
     if user is not None:
         is_eligible = badge.is_eligible(user)
@@ -140,12 +138,27 @@ def show_submission(request, submission_id):
     badge = submission.badge
     progress = badge.progress_for(submission.author)
     rubrics = get_list_or_404(Rubric, badges=badge)
+    assessments = Assessment.objects.filter(submission=submission_id)
     context = {
         'badge': badge,
         'submission': submission,
         'progress': progress,
         'rubrics': rubrics,
+        'assessments': assessments, 
         }
 
     return render_to_response('badges/submission_show.html', context,
+                              context_instance=RequestContext(request))
+
+
+def show_assessment(request, assessment_id):
+    assessment = get_object_or_404(Assessment, id=assessment_id)
+    badge = assessment.badge 
+
+    context = {
+        'assessment': assessment,
+        'badge': badge,
+        }
+
+    return render_to_response('badges/_assessment_body.html', context,
                               context_instance=RequestContext(request))

@@ -11,9 +11,9 @@
 	    </a>
 	  </figure>
 	  <h3>Awarded</h3>
-	  <a href="">52</a>
+	  {{ badge.get_awards.count }}
 	  <h3>Pending</h3>
-	  <a href="">3</a>
+	  {{ badge.get_pending_submissions|length }}
   </div>
   
  

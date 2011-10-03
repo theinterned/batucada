@@ -1,0 +1,13 @@
+		  <li class="post-container">
+			<p>Assessment from <a href="{{ assessment.assessor.get_absolute_url }}">{{ assessment.assessor }}</a> on {{ assessment.created_on }}</p>
+	        <div class="post-body">
+	          <ul>
+			  {% for rating in assessment.ratings.all %}
+			  		<li>{{ rating.rubric.question}}  {{ rating.score }}</li>
+			  {% endfor %}
+			  	<li>Final rating: {{ assessment.final_rating }}</li>
+			  </ul>
+			  <b>Comment:</b><br/>
+	          {{ assessment.comment|safe }}
+	        </div>
+	    </li>

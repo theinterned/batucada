@@ -14,5 +14,4 @@ urlpatterns = patterns('',
   url(r'^award/(?P<submission_id>\d+)/$',
       'badges.views.show_submission',
       name='submission_show'),
-
 )
