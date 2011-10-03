@@ -151,3 +151,10 @@ class SchoolAddProjectForm(forms.Form):
             raise forms.ValidationError(msg % {'slug': slug,
                 'kind': project.kind.lower(), 'school': project.school.name})
         return project
+
+
+class SchoolMentorshipForm(forms.ModelForm):
+
+    class Meta:
+        model = School
+        fields = ('mentor_form_url', 'mentee_form_url',)

@@ -59,6 +59,9 @@ class School(ModelBase):
     old_term_name = models.CharField(max_length=15, blank=True,
         null=True, choices=OLD_TERM_NAME_CHOICES)
 
+    mentor_form_url = models.URLField(blank=True, null=True)
+    mentee_form_url = models.URLField(blank=True, null=True)
+
     def __unicode__(self):
         return self.name
 

@@ -19,6 +19,15 @@
 {% else %}
   {% if organizers %}
     {% if is_challenge %}
+      {% if project.school.mentor_form_url or project.school.mentee_form_url %}
+        <div id="mentorship-section">
+          <h2>{{ project.school }} {{ _('Mentorship Program') }}</h2>
+          <p>{{ _('Don\'t miss the opportunity of becoming a mentor or mentee at')}} {{ project.school }}.</p>
+          {% if project.school.mentee_form_url %}<a class="request-mentor-button" href="{{ project.school.mentee_form_url }}" target="_blank">{{ _('Request a Mentor') }}</a>{% endif %}
+          {% if project.school.mentee_form_url and project.school.mentor_form_url %}<span>{{ _(' or ') }}</span>{% endif %}
+          {% if project.school.mentor_form_url %}<a class="become-mentor-button" href="{{ project.school.mentor_form_url }}" target="_blank">{{ _('Become a Mentor') }}</a>{% endif %}
+        </div>
+      {% endif %}
       <hr class="break">
       <h3 class="peers-help">{{ _('Peers who have offered their help') }}</h3>
       <br>
