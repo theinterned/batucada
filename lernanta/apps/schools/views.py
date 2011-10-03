@@ -474,3 +474,24 @@ def edit_statistics(request, slug):
         'signup_answers_count': signup_answers_count,
         'signup_comments_count': signup_comments_count,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@school_organizer_required
+def edit_mentorship(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolMentorshipForm(request.POST, instance=school)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('School mentorship details updated!'))
+            return http.HttpResponseRedirect(
+                reverse('schools_edit_mentorship', kwargs=dict(slug=school.slug)))
+    else:
+        form = school_forms.SchoolMentorshipForm(instance=school)
+
+    return render_to_response('schools/school_edit_mentorship.html', {
+        'form': form,
+        'school': school,
+        'mentorship_tab': True,
+    }, context_instance=RequestContext(request))
