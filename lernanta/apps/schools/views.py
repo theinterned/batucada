@@ -290,6 +290,8 @@ def edit_organizers(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@school_organizer_required
 def matching_non_organizers(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
@@ -331,6 +333,8 @@ def edit_featured(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@school_organizer_required
 def matching_non_featured(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
@@ -386,6 +390,8 @@ def edit_membership(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@school_organizer_required
 def matching_non_member(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:

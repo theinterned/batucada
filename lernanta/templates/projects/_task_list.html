@@ -8,9 +8,19 @@
       <p>{{ _('Good job completing all the tasks.') }}</p>
       {% if awarded_badges %}
         <h4>{{ _('Awarded Badges') }}</h4>
-        {% for badge in awarded_badges %}
-          <a href="{{ badge.get_absolute_url }}"><img src="{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="badge-graphic"></a>
-        {% endfor %}
+        <div class="badge-list">
+          {% for badge in awarded_badges %}
+            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if uncompleted_next_steps %}
+        <h4>{{ _('More To Do:') }}</h4>
+        <div class="badge-list">
+          {% for step in uncompleted_next_steps %}
+            <a href="{{ step.get_absolute_url }}" title="{{ step|title }}"><img src="{{ step.get_image_url }}" width="70" height="70" alt="{{ step|title }}" class="badge-graphic"/></a>
+          {% endfor %}
+        </div>
       {% endif %}
       {% if not organizing and not adopter %}
         <h4>{{ _('What to help?') }}</h4>
@@ -35,7 +45,7 @@
             {% if is_challenge and participating %}
               <form method='post' action='{% locale_url toggle_task_completion slug=task.project.slug page_slug=task.slug %}'>
                 {% csrf_token %}
-                <input class="taskCheckbox" type="checkbox" {% if task.is_done %}checked="checked"{% endif%}>
+                <input class="taskCheckbox" type="checkbox" {% if task.is_done %}checked="checked"{% endif%} title="Completed">
               </form>
             {% endif %}
             <span class="taskNumber">{{ forloop.counter }}{% if is_challenge %}.{% endif %}</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
@@ -52,6 +62,16 @@
           </li>
         {% endfor %}
       </ul>
+      {% if is_challenge and next_steps %}
+        <div class="next-steps">
+          <h3>{{ _('Next Steps:') }}</h3>
+          <div class="badge-list">
+            {% for step in next_steps %}
+              <a href="{{ step.get_absolute_url }}" title="{{ step|title }}"><img src="{{ step.get_image_url }}" width="70" height="70" alt="{{ step|title }}" class="badge-graphic"/></a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
     {% else %}
       <br>{{ _('No tasks have been added.') }}<br><br>
     {% endif %}

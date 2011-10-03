@@ -1,6 +1,7 @@
 import datetime
 
 from django import template
+from django.db.models import Q
 from django.contrib.sites.models import Site
 
 from content.models import Page
@@ -152,10 +153,15 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     progressbar_value = 0
     if tasks_count:
         progressbar_value = (completed_count * 100 / tasks_count)
-    awarded_badges = project.badges.filter(badge_type=Badge.COMPLETION,
-        assessment_type=Badge.SELF)
-    if completed_count != tasks_count:
-        awarded_badges = awarded_badges.none()
+    uncompleted_next_steps = project.get_uncompleted_next_steps(
+        user)
+    previous_awarded_badges = project.get_awarded_badges(
+        user).values('id')
+    task_completion_badges = project.get_project_badges(
+        only_self_completion=True).values('id')
+    from badges.models import Badge
+    awarded_badges = Badge.objects.filter(Q(id__in=previous_awarded_badges)
+        | Q(id__in=task_completion_badges))
     return {
         'tasks': tasks,
         'tasks_count': tasks_count,
@@ -168,6 +174,8 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
         'awarded_badges': awarded_badges,
+        'next_steps': project.get_next_steps(),
+        'uncompleted_next_steps': uncompleted_next_steps,
     }
 
 register.inclusion_tag('projects/_task_list.html')(task_list)

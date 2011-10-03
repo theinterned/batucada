@@ -50,7 +50,8 @@ a.openid {
 
 img.member-picture,
 img.project.picture,
-img.project.media {
+img.project.media,
+img.badge-graphic {
   border: 1px solid #999;
   box-shadow: #fff 1px 1px 1px;
   -moz-box-shadow: #fff 1px 1px 1px;
@@ -2981,6 +2982,32 @@ div.voting div.score {
     color: #bbb;
     font-weight: normal;
 }
+
+.project-kind-challenge #task_list_section .next-steps {
+    margin-top: 10px;
+    padding: 5px 0 8px 0;
+    border-top: 1px solid #eee;
+}
+
+.project-kind-challenge #task_list_section .next-steps h3 {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 10px;
+    color: #574A39;
+}
+
+.project-kind-challenge div.badge-list {
+    margin-top: 10px;
+}
+
+.project-kind-challenge #task_list_section .next-steps div.badge-list {
+    margin-left: 20px;
+}
+
+.project-kind-challenge #task_list_section .help-request div.badge-list {
+    margin-bottom: 10px;
+}
+
 .notice {
     text-align: center;
     margin-left: auto;

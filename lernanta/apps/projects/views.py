@@ -117,6 +117,7 @@ def create(request):
     }, context_instance=RequestContext(request))
 
 
+@login_required
 def matching_kinds(request):
     if len(request.GET['term']) == 0:
         matching_kinds = Project.objects.values_list('kind').distinct()
@@ -209,6 +210,7 @@ def clone(request):
     }, context_instance=RequestContext(request))
 
 
+@login_required
 def matching_projects(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
@@ -282,6 +284,7 @@ def import_from_old_site(request):
         context_instance=RequestContext(request))
 
 
+@login_required
 def matching_courses(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
@@ -296,6 +299,7 @@ def matching_courses(request):
 @organizer_required
 def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    is_challenge = (project.category == project.CHALLENGE)
     if request.method == 'POST':
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -313,7 +317,7 @@ def edit(request, slug):
         'school': project.school,
         'summary_tab': True,
         'can_view_metric_overview': metric_permissions[0],
-        'is_challenge': (project.category == project.CHALLENGE),
+        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
@@ -479,6 +483,8 @@ def edit_participants(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@organizer_required
 def matching_non_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if len(request.GET['term']) == 0:
@@ -522,6 +528,74 @@ def edit_participants_delete(request, slug, username):
     return http.HttpResponseRedirect(reverse(
         'projects_edit_participants',
         kwargs={'slug': participation.project.slug}))
+
+
+@login_required
+@organizer_required
+@restrict_project_kind(Project.CHALLENGE)
+def edit_next_steps(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    metric_permissions = project.get_metrics_permissions(request.user)
+    if request.method == 'POST':
+        form = project_forms.ProjectAddNextProjectForm(project, request.POST)
+        if form.is_valid():
+            next_project = form.cleaned_data['next_project']
+            project.next_projects.add(next_project)
+            messages.success(request, _('Next step added.'))
+            return http.HttpResponseRedirect(reverse(
+                'projects_edit_next_steps',
+                kwargs=dict(slug=project.slug)))
+        else:
+            messages.error(request,
+                _('There was an error adding that next step.'))
+    else:
+        form = project_forms.ProjectAddNextProjectForm(project)
+    return render_to_response('projects/project_edit_next_steps.html', {
+        'project': project,
+        'form': form,
+        'next_steps': project.next_projects.all(),
+        'next_steps_tab': True,
+        'can_view_metric_overview': metric_permissions[0],
+        'is_challenge': (project.category == project.CHALLENGE),
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@organizer_required
+@restrict_project_kind(Project.CHALLENGE)
+def matching_non_next_steps(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if len(request.GET['term']) == 0:
+        raise http.Http404
+
+    non_next_steps = Project.objects.exclude(
+        slug=slug).exclude(
+        id__in=project.next_projects.values('id'))
+    matching_steps = non_next_steps.filter(
+        slug__icontains=request.GET['term'])
+    json = simplejson.dumps([step.slug for step in matching_steps])
+
+    return http.HttpResponse(json, mimetype="application/x-javascript")
+
+
+@login_required
+@organizer_required
+@restrict_project_kind(Project.CHALLENGE)
+def edit_next_steps_delete(request, slug, step_slug):
+    project = get_object_or_404(Project, slug=slug)
+    next_project = get_object_or_404(project.next_projects,
+        slug=step_slug)
+    if request.method == 'POST':
+        project.next_projects.remove(next_project)
+        kwargs = {
+            'name': next_project.name,
+            'kind': next_project.kind.lower(),
+        }
+        msg = _("The %(name)s %(kind)s is not a next step anymore.")
+        messages.success(request, msg % kwargs)
+    return http.HttpResponseRedirect(reverse(
+        'projects_edit_next_steps',
+        kwargs={'slug': project.slug}))
 
 
 @login_required
