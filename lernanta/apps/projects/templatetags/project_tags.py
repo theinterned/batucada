@@ -155,7 +155,8 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     has_skill_badge = False
     available_skill_badges = project.badges.filter(badge_type=Badge.SKILL)
     if available_skill_badges:
-        available_skill_badge = available_skill_badges[0] # TODO: Refactor for multiple badges
+        available_skill_badge = available_skill_badges[0]
+        # TODO: Refactor for multiple badges
         has_skill_badge = available_skill_badge.is_awarded_to(user)
         submissions = Submission.objects.filter(author=profile, badge=available_skill_badge)
         if submissions:
@@ -179,6 +180,7 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'submission': submission,
         'has_skill_badge': has_skill_badge,
     }
+
 
 def submission_for_badges(project, user):
     peer_badges = project.badges.filter(badge_type=Badge.SKILL,

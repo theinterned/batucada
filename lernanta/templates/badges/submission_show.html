@@ -28,8 +28,16 @@
     		{% include "badges/_badge_card.html" with badge=badge rubrics=rubrics %}
     	</section>
     	    
-       <a href="" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a>
+       <p><a href="" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
 
+	{% if assessments %}
+	   <h2>Assessments</h2>
+	   <ul id="posts">
+	   {% for assessment in assessments %}
+			{% include "badges/_assessment_body.html" with assessment=assessment %}
+	   {% endfor %}
+	   </ul>
+	{% endif %}
     </div>
     
 {% endblock %}
