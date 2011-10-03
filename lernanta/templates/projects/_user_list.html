@@ -94,7 +94,19 @@
     {% endif %}
   {% endif %}
   {% if followers %}
-    {% if not is_challenge %}
+    {% if is_challenge %}
+      <hr class="break">
+      <h3 class="peers-completed">{{ _('Peers who have completed this challenge') }}</h3>
+      <br>
+      {% for follower in followers %}
+        <a href="{{ follower.source.get_absolute_url }}" title="{{ follower.source }}"><img class="member-picture" src="{{ follower.source.image_or_default }}" height="40" width="40" alt="{{ follower.source }}"></a>
+      {% endfor %}
+      {% if paginate_sections %}
+        {% with prefix='followers_' page_url=user_list_url %}
+          {% pagination_links %}
+        {% endwith %}
+      {% endif %}
+    {% else %}
       <div class="card-list">
         <section id="followers">
           <h1><span>{{ _('Followers') }}</span></h1>

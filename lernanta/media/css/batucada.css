@@ -1366,6 +1366,12 @@ header {}
   margin-left: 190px;
 }
 
+.project-kind-challenge #main-people h3.peers-completed,
+#project_user_list.project-kind-challenge #main h3.peers-completed {
+  width: 300px;
+  margin-left: 140px;
+}
+
 #project_gallery #main, #project_directory #main, #school_home #main , #user_list #main, #one-column-page #main {
   width: 970px;
   margin-right: 40px;

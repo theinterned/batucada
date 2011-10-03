@@ -319,6 +319,19 @@ class Project(ModelBase):
             for badge in badges:
                 badge.award_to(user)
 
+    def completed_tasks_users(self):
+        total_count = self.pages.filter(listed=True,
+            deleted=False).count()
+        completed_stats = PerUserTaskCompletion.objects.filter(
+            page__project=self, page__deleted=False,
+            unchecked_on__isnull=True).values(
+            'user__username').annotate(completed_count=Count('page')).filter(
+            completed_count=total_count)
+        usernames = completed_stats.values(
+            'user__username')
+        return Relationship.objects.filter(source__username__in=usernames,
+            target_project=self, source__deleted=False)
+
     def get_project_badges(self, only_self_completion=False, only_peer_skill=False):
         from badges.models import Badge
         assessment_types = []
