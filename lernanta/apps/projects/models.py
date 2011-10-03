@@ -136,6 +136,10 @@ class Project(ModelBase):
 
     imported_from = models.CharField(max_length=150, blank=True, null=True)
 
+    next_projects = models.ManyToManyField('projects.Project',
+        symmetrical=False, related_name='previous_projects', blank=True,
+        null=True)
+
     objects = ProjectManager()
 
     class Meta:
@@ -304,6 +308,68 @@ class Project(ModelBase):
         return activities.filter(
             target_content_type__in=[pages_ct, comments_ct])
 
+    def check_tasks_completion(self, user):
+        total_count = self.pages.filter(listed=True,
+            deleted=False).count()
+        completed_count = PerUserTaskCompletion.objects.filter(
+            page__project=self, page__deleted=False,
+            unchecked_on__isnull=True, user=user).count()
+        if total_count == completed_count:
+            badges = self.get_project_badges(only_self_completion=True)
+            for badge in badges:
+                badge.award_to(user)
+
+    def get_project_badges(self, only_self_completion=False, only_peer_skill=False):
+        from badges.models import Badge
+        assessment_types = []
+        badge_types = []
+        if not only_self_completion:
+            assessment_types.append(Badge.PEER)
+            badge_types.append(Badge.SKILL)
+        if not only_peer_skill:
+            assessment_types.append(Badge.SELF)
+            badge_types.append(Badge.COMPLETION)
+        if assessment_types and badge_types:
+            return self.badges.filter(assessment_type__in=assessment_types,
+                badge_type__in=badge_types)
+        else:
+            return Badge.objects.none()
+
+    def get_next_steps(self):
+        next_steps = list(self.get_project_badges())
+        next_steps.extend(self.next_projects.all())
+        return next_steps
+
+    def get_uncompleted_next_steps(self, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            from badges.models import Award
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            next_steps = list(project_badges.exclude(
+                id__in=awarded_badges))
+            joined = Participation.objects.filter(
+                user=profile).values('project_id')
+            next_steps.extend(self.next_projects.exclude(
+                id__in=joined))
+            return next_steps
+        else:
+            return []
+
+    def get_awarded_badges(self, user):
+        from badges.models import Badge, Award
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            project_badges = self.get_project_badges()
+            return project_badges.filter(
+                id__in=awarded_badges)
+        else:
+            return Badge.objects.none()
+
 register_filter('default', Project.filter_activities)
 register_filter('learning', Project.filter_learning_activities)
 
@@ -344,17 +410,7 @@ def check_tasks_completion(sender, **kwargs):
     if isinstance(instance, PerUserTaskCompletion):
         project = instance.page.project
         user = instance.user
-        total_count = project.pages.filter(listed=True,
-            deleted=False).count()
-        completed_count = PerUserTaskCompletion.objects.filter(
-            page__project=project, page__deleted=False,
-            unchecked_on__isnull=True, user=user).count()
-        if total_count == completed_count:
-            from badges.models import Badge
-            badges = project.badges.filter(badge_type=Badge.COMPLETION,
-                assessment_type=Badge.SELF)
-            for badge in badges:
-                badge.award_to(user)
+        project.check_tasks_completion(user)
 
 
 post_save.connect(check_tasks_completion, sender=PerUserTaskCompletion,
