@@ -290,24 +290,6 @@ class Project(ModelBase):
         # Used previously when schools had to decline groups.
         return self.school
 
-    @staticmethod
-    def filter_activities(activities):
-        from statuses.models import Status
-        content_types = [
-            ContentType.objects.get_for_model(Page),
-            ContentType.objects.get_for_model(PageComment),
-            ContentType.objects.get_for_model(Status),
-            ContentType.objects.get_for_model(Project),
-        ]
-        return activities.filter(target_content_type__in=content_types)
-
-    @staticmethod
-    def filter_learning_activities(activities):
-        pages_ct = ContentType.objects.get_for_model(Page)
-        comments_ct = ContentType.objects.get_for_model(PageComment)
-        return activities.filter(
-            target_content_type__in=[pages_ct, comments_ct])
-
     def check_tasks_completion(self, user):
         total_count = self.pages.filter(listed=True,
             deleted=False).count()
@@ -332,7 +314,8 @@ class Project(ModelBase):
         return Relationship.objects.filter(source__username__in=usernames,
             target_project=self, source__deleted=False)
 
-    def get_project_badges(self, only_self_completion=False, only_peer_skill=False):
+    def get_project_badges(self, only_self_completion=False,
+            only_peer_skill=False):
         from badges.models import Badge
         assessment_types = []
         badge_types = []
@@ -348,40 +331,110 @@ class Project(ModelBase):
         else:
             return Badge.objects.none()
 
-    def get_next_steps(self):
-        next_steps = list(self.get_project_badges())
-        next_steps.extend(self.next_projects.all())
-        return next_steps
-
-    def get_uncompleted_next_steps(self, user):
-        if user.is_authenticated():
-            profile = user.get_profile()
-            from badges.models import Award
-            awarded_badges = Award.objects.filter(
-                user=profile).values('badge_id')
-            project_badges = self.get_project_badges(
-                only_peer_skill=True)
-            next_steps = list(project_badges.exclude(
-                id__in=awarded_badges))
-            joined = Participation.objects.filter(
-                user=profile).values('project_id')
-            next_steps.extend(self.next_projects.exclude(
-                id__in=joined))
-            return next_steps
-        else:
-            return []
-
-    def get_awarded_badges(self, user):
+    def get_awarded_badges(self, user, only_peer_skill=False):
         from badges.models import Badge, Award
         if user.is_authenticated():
             profile = user.get_profile()
             awarded_badges = Award.objects.filter(
                 user=profile).values('badge_id')
-            project_badges = self.get_project_badges()
+            project_badges = self.get_project_badges(only_peer_skill)
             return project_badges.filter(
                 id__in=awarded_badges)
         else:
             return Badge.objects.none()
+
+    def get_badges_in_progress(self, user):
+        from badges.models import Badge, Award, Submission
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            attempted_badges = Submission.objects.filter(
+                author=profile).values('badge_id')
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            return project_badges.filter(
+                id__in=attempted_badges).exclude(
+                id__in=awarded_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_non_attempted_badges(self, user):
+        from badges.models import Badge, Award, Submission
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            attempted_badges = Submission.objects.filter(
+                author=profile).values('badge_id')
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            # Excluding both awarded and attempted badges
+            # In case honorary award do not rely on submissions.
+            return project_badges.exclude(
+                id__in=attempted_badges).exclude(
+                id__in=awarded_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_need_reviews_badges(self, user):
+        from badges.models import Badge, Award, Submission
+        if user.is_authenticated():
+            profile = user.get_profile()
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            peers_submissions = Submission.objects.filter(
+                badge__id__in=project_badges.values('id')).exclude(
+                author=profile)
+            peers_attempted_badges = project_badges.filter(
+                id__in=peers_submissions.values('badge_id'))
+            need_reviews_badges = []
+            for badge in peers_attempted_badges:
+                peers_awards = Award.objects.filter(
+                    badge=badge).exclude(user=profile)
+                pending_submissions = peers_submissions.filter(
+                    badge=badge).exclude(
+                    author__id__in=peers_awards.values('user_id'))
+                if pending_submissions.exists():
+                    need_reviews_badges.append(badge.id)
+            return project_badges.filter(
+                id__in=need_reviews_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_non_started_next_projects(self, user):
+        """To be displayed in the Join Next Challenges section."""
+        if user.is_authenticated():
+            profile = user.get_profile()
+            joined = Participation.objects.filter(
+                user=profile).values('project_id')
+            return self.next_projects.exclude(
+                id__in=joined)
+        else:
+            return Project.objects.none()
+
+    def get_next_steps(self):
+        next_steps = list(self.get_project_badges())
+        next_steps.extend(self.next_projects.all())
+        return next_steps
+
+    @staticmethod
+    def filter_activities(activities):
+        from statuses.models import Status
+        content_types = [
+            ContentType.objects.get_for_model(Page),
+            ContentType.objects.get_for_model(PageComment),
+            ContentType.objects.get_for_model(Status),
+            ContentType.objects.get_for_model(Project),
+        ]
+        return activities.filter(target_content_type__in=content_types)
+
+    @staticmethod
+    def filter_learning_activities(activities):
+        pages_ct = ContentType.objects.get_for_model(Page)
+        comments_ct = ContentType.objects.get_for_model(PageComment)
+        return activities.filter(
+            target_content_type__in=[pages_ct, comments_ct])
 
 register_filter('default', Project.filter_activities)
 register_filter('learning', Project.filter_learning_activities)

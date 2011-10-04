@@ -137,11 +137,12 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         tasks = tasks[:short_list_length]
         visible_count = tasks.count()
     is_challenge = (project.category == Project.CHALLENGE)
-    is_participating = is_organizing = False
+    is_participating = is_organizing = adopter = False
     completed_count = 0
     if is_challenge and user.is_authenticated():
         profile = user.get_profile()
         is_organizing = project.organizers().filter(user=profile).exists()
+        adopter = project.adopters().filter(user=profile).exists()
         is_participating = project.participants().filter(user=profile).exists()
         if is_participating:
             for task in tasks:
@@ -153,15 +154,22 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     progressbar_value = 0
     if tasks_count:
         progressbar_value = (completed_count * 100 / tasks_count)
-    uncompleted_next_steps = project.get_uncompleted_next_steps(
-        user)
-    previous_awarded_badges = project.get_awarded_badges(
-        user).values('id')
+    awarded_peer_skill_badges = project.get_awarded_badges(
+        user, only_peer_skill=True)
     task_completion_badges = project.get_project_badges(
         only_self_completion=True).values('id')
+    # Manually include self+completed badges so they are in the awarded badges
+    # list that is displayed when all tasks are completed (even if the django
+    # post save signal that awards those badges has not run yet).
     from badges.models import Badge
-    awarded_badges = Badge.objects.filter(Q(id__in=previous_awarded_badges)
-        | Q(id__in=task_completion_badges))
+    awarded_badges = Badge.objects.filter(
+        Q(id__in=awarded_peer_skill_badges.values('id'))
+        | Q(id__in=task_completion_badges.values('id')))
+    badges_in_progress = project.get_badges_in_progress(user)
+    non_attempted_badges = project.get_non_attempted_badges(user)
+    need_reviews_badges = project.get_need_reviews_badges(user)
+    non_started_challenges = project.get_non_started_next_projects(
+        user)
     return {
         'tasks': tasks,
         'tasks_count': tasks_count,
@@ -171,11 +179,15 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'is_challenge': is_challenge,
         'participating': is_participating,
         'organizing': is_organizing,
+        'adopter': adopter,
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
         'awarded_badges': awarded_badges,
+        'badges_in_progress': badges_in_progress,
+        'non_attempted_badges': non_attempted_badges,
+        'need_reviews_badges': need_reviews_badges,
+        'non_started_challenges': non_started_challenges,
         'next_steps': project.get_next_steps(),
-        'uncompleted_next_steps': uncompleted_next_steps,
     }
 
 register.inclusion_tag('projects/_task_list.html')(task_list)

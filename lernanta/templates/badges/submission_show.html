@@ -13,19 +13,31 @@
 
 {% block body %} 
     <div id="main">
-	    <section class="submission">
-		    <article>
-		    <h1 id="page-title">Application for {{ badge.name }} from {{ submission.author }} </h1>
-		    
-			    <div class="post-details">
+    	<h1 id="page-title">Application for {{ badge.name }} from {{ submission.author }} </h1>
+	    <section id="submission-details">
+			    	<p><b>Link to work:</b></p>
+			    	{{ submission.url }}
+			        
+			        <p><b>Reason:</b></p>
 			        {{ submission.content|safe }}
-			    
-			    </div>
-		
-		    </article>
+			    	
+			    	{{ progress }}
 	    </section>
-	    
-	    <p><a href="">assess this badge application</a></p>
+	
+	    <section id="badge-details">
+    		{% include "badges/_badge_card.html" with badge=badge rubrics=rubrics %}
+    	</section>
+    	    
+       <p><a href="" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
+
+	{% if assessments %}
+	   <h2>Assessments</h2>
+	   <ul id="posts">
+	   {% for assessment in assessments %}
+			{% include "badges/_assessment_body.html" with assessment=assessment %}
+	   {% endfor %}
+	   </ul>
+	{% endif %}
     </div>
     
 {% endblock %}
