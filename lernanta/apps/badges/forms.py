@@ -19,4 +19,4 @@ class SubmissionForm(forms.ModelForm):
 
     class Meta:
         model = Submission
-        fields = ('content',)
+        fields = ('url', 'content',)

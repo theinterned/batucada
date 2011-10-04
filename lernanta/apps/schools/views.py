@@ -486,7 +486,8 @@ def edit_mentorship(request, slug):
             form.save()
             messages.success(request, _('School mentorship details updated!'))
             return http.HttpResponseRedirect(
-                reverse('schools_edit_mentorship', kwargs=dict(slug=school.slug)))
+                reverse('schools_edit_mentorship',
+                kwargs=dict(slug=school.slug)))
     else:
         form = school_forms.SchoolMentorshipForm(instance=school)
 

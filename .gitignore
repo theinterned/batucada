@@ -2,10 +2,11 @@
 *.db
 *.swp
 *~
-media/images/profiles/
-media/images/projects/
-media/images/challenges/
-media/videos/projects/
+lernanta/media/images/profiles/
+lernanta/media/images/projects/
+lernanta/media/images/challenges/
+lernanta/media/videos/projects/
+lernanta/media/images/badges/
 settings_local.py
 sample_data.py
 sql/

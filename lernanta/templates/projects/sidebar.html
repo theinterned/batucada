@@ -80,17 +80,6 @@
         {% endif %}
       {% endif %}
 
-        <h3 style="padding-top:5em;font-weight:bold;">Testing only: {{ badges|length }} badges</h3>
-        <ul>
-          {% for badge in badges %}
-            <li>
-              <a href="{{ badge.get_absolute_url }}" title="{{ badge.name }}" target="_blank">
-                <img src="{{ badge.image }}" width="70" height="70" alt="{{ badge.name }}" class="member-picture"/>
-              </a>
-            </li>
-          {% endfor %}
-          
-          </ul>
     {% else %}
 
     {% if tags %}

@@ -14,17 +14,40 @@
           {% endfor %}
         </div>
       {% endif %}
-      {% if uncompleted_next_steps %}
-        <h4>{{ _('More To Do:') }}</h4>
+      {% if badges_in_progress %}
+        <h4>{{ _('See Reviews Status for Submitted Work') }}</h4>
         <div class="badge-list">
-          {% for step in uncompleted_next_steps %}
-            <a href="{{ step.get_absolute_url }}" title="{{ step|title }}"><img src="{{ step.get_image_url }}" width="70" height="70" alt="{{ step|title }}" class="badge-graphic"/></a>
+          {% for badge in badges_in_progress %}
+            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if non_attempted_badges %}
+        <h4>{{ _('Earn More Badges') }}</h4>
+        <div class="badge-list">
+          {% for badge in non_attempted_badges %}
+            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if need_reviews_badges %}
+        <h4>{{ _('Assess Others\' Work') }}</h4>
+        <div class="badge-list">
+          {% for badge in need_reviews_badges %}
+            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if non_started_challenges %}
+        <h4>{{ _('Join Next Challenges') }}</h4>
+        <div class="badge-list">
+          {% for project in non_started_challenges %}
+            <a href="{{ project.get_absolute_url }}" title="{{ project|title }}"><img src="{{ project.get_image_url }}" width="70" height="70" alt="{{ project|title }}" class="badge-graphic"></a>
           {% endfor %}
         </div>
       {% endif %}
       {% if not organizing and not adopter %}
-        <h4>{{ _('What to help?') }}</h4>
-        <p>{{ _('You\'ve now unlocked the ability to help others by adopting this challenge.') }}</p>
+        <h4>{{ _('Help Others with this Challenge') }}</h4>
         <form method="post" action="{% locale_url direct_signup_adopter slug=project.slug %}">
           {% csrf_token %}
           <button class="adopt-button">{{ _('Adopt this Challenge') }}</button>

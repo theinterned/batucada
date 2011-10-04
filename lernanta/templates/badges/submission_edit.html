@@ -16,9 +16,14 @@
 	<fieldset id="submission_edit" class="submission edit tabpane">
 	  <form method="post" action="{% if submission %}{% locale_url submission_edit slug=badge.slug submission_id=submission.pk %}{% else %}{% locale_url submission_create slug=badge.slug%}{% endif %}">
 	    {% csrf_token %}
-	    <div class="field{% if form.title.errors %} error{% endif %}">
-	      <label for="id_title">{{ _('Justification for badge') }}</label>
-	      <span class="hint block">{{ _("This is the reason you feel you are ready for the badge. Link to work done and any essay if necessary so that your peers may assess the work done.") }}</span>
+	    <p>{{ _('Submit your work from the challenge below (as a URL) as well as a reflection on your work and what you learned.') }}</p>
+	    <div class="field{% if form.url.errors %} error{% endif %}">
+          <label for="id_url">{{ _('URL to work from Challenge') }}</label>
+          {{ form.url }}
+          {{ form.url.errors }}
+        </div>
+	    <div class="field{% if form.content.errors %} error{% endif %}">
+	      <label for="id_content">{{ _('Reflection/Narrative') }}</label>
 	      {{ form.content }}
 	      {{ form.content.errors }}
 	    </div>

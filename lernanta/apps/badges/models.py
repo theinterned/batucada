@@ -2,8 +2,10 @@ import datetime
 
 from django.db import models
 from django.conf import settings
+from django.db.models import Avg
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
+from django.db.models.signals import post_save
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename
@@ -146,6 +148,27 @@ class Badge(models.Model):
 
         return award
 
+    def get_awards(self):
+        return Award.objects.filter(badge=self)
+
+    def get_pending_submissions(self):
+        """Submissions of users who haven't received the award yet"""
+        all_submissions = Submission.objects.filter(badge=self)
+        pending_submissions = []
+        for submission in all_submissions:
+            if not self.is_awarded_to(submission.author):
+                pending_submissions.append(submission)
+        return pending_submissions
+
+    def progress_for(self, user):
+        """Progress for a user for this badge"""
+        progress = Progress.objects.filter(user=user, badge=self)
+        if progress:
+            progress = progress[0]
+        else:
+            progress = Progress(user=user, badge=self)
+        return progress
+
 
 class Rubric(models.Model):
     """Criteria for which a badge application is judged"""
@@ -177,6 +200,7 @@ class Logic(models.Model):
 class Submission(ModelBase):
     """Application for a badge"""
     # TODO Refactor this and PageComment and Assessment? to extend off same base
+    url = models.URLField(max_length=1023)
     content = RichTextField(config_name='rich', blank=False)
     author = models.ForeignKey('users.UserProfile', related_name='submissions')
     badge = models.ForeignKey('badges.Badge', related_name="submissions")
@@ -194,16 +218,22 @@ class Submission(ModelBase):
 
 class Assessment(ModelBase):
     """Assessment for a badge"""
-    ratings = models.ManyToManyField('badges.Rating', related_name='assessments',
-                                    null=True, blank=True)
+    final_rating = models.FloatField(null=True, blank=True)
     assessor = models.ForeignKey('users.UserProfile', related_name='assessments')
     assessed = models.ForeignKey('users.UserProfile', related_name='badge_assessments')
     comment = RichTextField(config_name='rich', blank=False)
     badge = models.ForeignKey('badges.Badge', related_name="assessments")
+    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     submission = models.ForeignKey('badges.Submission', related_name="assessments",
                                    null=True, blank=True,
                                    help_text=_('If submission is blank, this is a '\
                                                'peer awarded assessment or superuser granted'))
+
+    def update_final_rating(self):
+        ratings = Rating.objects.filter(assessment=self)
+        final_rating = ratings.aggregate(final_rating=Avg('score'))['final_rating']
+        self.final_rating = final_rating
+        self.save()
 
     def __unicode__(self):
         return _('%s for %s for %s') \
@@ -212,13 +242,12 @@ class Assessment(ModelBase):
 
 class Rating(ModelBase):
     """Assessor's rating for the assessment's rubric(s)"""
+    assessment = models.ForeignKey('badges.Assessment', related_name='ratings')
     score = models.PositiveIntegerField(default=1)
     rubric = models.ForeignKey('badges.Rubric', related_name='ratings')
-    assessor = models.ForeignKey('users.UserProfile',
-        related_name='ratings')
 
     def __unicode__(self):
-        return _('%s for %s by %s') % (self.score, self.rubric, self.assessor)
+        return _('%s for %s') % (self.score, self.rubric)
 
 
 class Progress(ModelBase):
@@ -245,3 +274,18 @@ class Award(models.Model):
 
     def __unicode__(self):
         return _('%s - %s') % (self.user, self.badge)
+
+
+###########
+# Signals #
+###########
+
+def update_final_rating(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    if isinstance(instance, Rating):
+        assessment = instance.assessment
+        assessment.update_final_rating()
+
+
+post_save.connect(update_final_rating, sender=Rating,
+    dispatch_uid='badges_update_final_rating')
