@@ -54,6 +54,10 @@ def settings(request):
         'profile': profile,
         'settings_tab': True,
     }
+    preferences = AccountPreferences.objects.filter(
+        user=request.user.get_profile())
+    for preference in preferences:
+        context[preference.key] = preference.value
     return render_to_response('users/settings_notifications.html', context,
                               context_instance=RequestContext(request))
 
