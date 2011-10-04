@@ -2,7 +2,7 @@
 
 {% load l10n_tags %}
 
-{% block bodyclasses %}submission edit summary{% endblock %}
+{% block bodyclasses %}submission-edit summary{% endblock %}
 
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
@@ -11,14 +11,19 @@
 {% endblock %}
 
 {% block body %} 
-	
+	<div id="main">
+	<b>Skill badges available for this challenge:</b>
+	<section id="badge-details">
+    	{% include "badges/_badge_card.html" with badge=badge rubrics=rubrics %}
+    </section>
+    	
 	{% block form %}
 	<fieldset id="submission_edit" class="submission edit tabpane">
 	  <form method="post" action="{% if submission %}{% locale_url submission_edit slug=badge.slug submission_id=submission.pk %}{% else %}{% locale_url submission_create slug=badge.slug%}{% endif %}">
 	    {% csrf_token %}
-	    <p>{{ _('Submit your work from the challenge below (as a URL) as well as a reflection on your work and what you learned.') }}</p>
+	    <p><b>{{ _('Submit your work from the challenge below (as a URL) as well as a reflection on your work and what you learned.') }}</b></p>
 	    <div class="field{% if form.url.errors %} error{% endif %}">
-          <label for="id_url">{{ _('URL to work from Challenge') }}</label>
+          <label for="id_url">{{ _('URL to your work from the challenge') }}</label>
           {{ form.url }}
           {{ form.url.errors }}
         </div>
@@ -34,7 +39,6 @@
 	    
 	  </form>
 	</fieldset>
-	
 	{% endblock %}
-
+    </div>
 {% endblock %}

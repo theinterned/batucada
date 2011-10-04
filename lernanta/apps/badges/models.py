@@ -202,7 +202,7 @@ class Submission(ModelBase):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('badge_submission_show', (), {
+        return ('submission_show', (), {
             'submission_id': self.id,
         })
 
