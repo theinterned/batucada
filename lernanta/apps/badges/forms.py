@@ -1,6 +1,6 @@
 from django import forms
 
-from badges.models import Badge, Submission
+from badges.models import Badge, Submission, Assessment
 
 
 class BadgeForm(forms.ModelForm):
@@ -20,3 +20,10 @@ class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
         fields = ('url', 'content',)
+
+
+class AssessmentForm(forms.ModelForm):
+
+    class Meta:
+        model = Assessment
+        fields = ('comment', )

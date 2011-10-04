@@ -2843,7 +2843,7 @@ div.voting div.score {
     color: #fff;
 }
 
-.project-kind-challenge #task_list_section a.apply-button, .submission  a.assess-button {
+.project-kind-challenge #task_list_section a.apply-button, .submission-show  a.assess-button {
     -moz-border-radius: 3px 3px 3px 3px;
     -moz-box-shadow: 0 1px 0 0 #96CA6D inset;
     background-color: #7FBF4D;
@@ -3233,25 +3233,52 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     color: #444;
 }
 
-.submission #badge-details {
+.submission-show .badge-card #badge-details, .submission-show .badge-card #info {
 	float: left;
-	width: 350px;
+	width: 300px;
 }
 
-.submission #submission-details {
+.submission-show #submission-details {
 	float: left;
 	width:560px;
 	margin-right:21px;
 }
 
-.badge-card #awards {
+.submission-edit #submission_edit {
+	clear: both;
+	padding-top: 2em;
+}
+
+.submission-edit .badge-card #badge-details, .submission-edit .badge-card  #info {
+	width: 900px;
+	margin-left: 90px;
+}
+
+.submission-show .badge-card #awards, .submission-edit .badge-card #awards {
 	float:left;
 	width: 85px;
 	text-align:center;
-
 }
 
-.badge-card #info {
+.submission-show h1#page-title, .submission-show #reason {
+	padding-bottom: 1em;
+}
+
+.assessment .rating {
+	float: right;
+	font-weight: bold;
+}
+
+.assessment .final-rating {
+	font-style: italic;
+}
+
+.assessment ul li {
+	list-style: none;
+	padding-bottom: .3em;
+}
+
+.assessment-edit #submission-details {
 	float:left;
-	width:250px;
+	width:800px;
 }

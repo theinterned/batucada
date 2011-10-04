@@ -1,0 +1,68 @@
+{% extends "badges/base.html" %}
+
+{% load l10n_tags %}
+{% load embed %}
+
+{% block bodyclasses %}assessment-edit summary{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url badges_show slug=submission.badge.slug %}">{{ submission.badge.name }}</a>
+
+{% endblock %}
+
+{% block body %} 
+	<div id="main">
+	<h1>Please review my work for the {{ submission.badge }}</h1>
+	
+	<div id="user" style="width:80px;float:left;">
+	    <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}"><br/>
+	    {{ submission.author }}
+	</div>
+	<section id="submission-details">
+		<div id="work-url"><h3>Link to work:</h3>
+		<p><a href="{{ submission.url }}" target="_blank">{{submission.url}}</a></p>
+		</div>
+
+		<div id="reason"><h3>Reason:</h3>
+		{{ submission.content|embed|safe }}
+		</div>
+	</section>
+    <br class="clear"/>
+	<section id="badge">
+		  {% if badge.image %}
+	      <img src="/media/{{ submission.badge.image }}" width="50" height="50" alt="{{ submission.badge.name }}"/>
+	      {% else %}
+	      <img src="/media/images/badge-missing.png" width="50" height="50" alt="{{ submission.badge.name }}"/>
+	      {% endif %}
+	      {{ submission.badge.description }}
+    </section>
+    <br class="clear"/>
+    
+	{% block form %}
+	<fieldset id="assessment_edit" class="assessment edit tabpane">
+	  <form method="post" action="{% locale_url assess_submission submission_id=submission.id %}">
+	    {% csrf_token %}
+	    <div class="field{% if form.rubrics.errors %} error{% endif %}">
+	      <label for="id_comment">{{ _('Give your overall rating') }}</label>
+  		  <ol>
+			{% for rubric in rubrics %}
+				<li>{{ rubric.question }}</li>
+			{% endfor %}
+		  </ol>
+        </div>
+	    <div class="field{% if form.comment.errors %} error{% endif %}">
+	      <label for="id_comment">{{ _('Add your comments') }}</label>
+	      {{ form.comment }}
+	      {{ form.comment.errors }}
+	    </div>
+	
+	    <p class="buttons">
+	      <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+	    </p>
+	    
+	  </form>
+	</fieldset>
+	{% endblock %}
+    </div>
+{% endblock %}
