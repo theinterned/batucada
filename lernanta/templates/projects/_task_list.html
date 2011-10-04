@@ -1,60 +1,10 @@
 {% load l10n_tags %}
+{% load project_tags %}
 {% if tasks_count or show_all %}
   <div id="task_list_section">
     {% if is_challenge and participating and tasks_count %}
 
-    <div id="congratulations-msg" class="help-request tasks-completed-msg {% if progressbar_value != 100 %}off{% endif %}">
-      <h3>{{ _('Congratulations!') }}</h3>
-      <p>{{ _('Good job completing all the tasks.') }}</p>
-      {% if awarded_badges %}
-        <h4>{{ _('Awarded Badges') }}</h4>
-        <div class="badge-list">
-          {% for badge in awarded_badges %}
-            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
-          {% endfor %}
-        </div>
-      {% endif %}
-      {% if badges_in_progress %}
-        <h4>{{ _('See Reviews Status for Submitted Work') }}</h4>
-        <div class="badge-list">
-          {% for badge in badges_in_progress %}
-            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
-          {% endfor %}
-        </div>
-      {% endif %}
-      {% if non_attempted_badges %}
-        <h4>{{ _('Earn More Badges') }}</h4>
-        <div class="badge-list">
-          {% for badge in non_attempted_badges %}
-            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
-          {% endfor %}
-        </div>
-      {% endif %}
-      {% if need_reviews_badges %}
-        <h4>{{ _('Assess Others\' Work') }}</h4>
-        <div class="badge-list">
-          {% for badge in need_reviews_badges %}
-            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
-          {% endfor %}
-        </div>
-      {% endif %}
-      {% if non_started_challenges %}
-        <h4>{{ _('Join Next Challenges') }}</h4>
-        <div class="badge-list">
-          {% for project in non_started_challenges %}
-            <a href="{{ project.get_absolute_url }}" title="{{ project|title }}"><img src="{{ project.get_image_url }}" width="70" height="70" alt="{{ project|title }}" class="badge-graphic"></a>
-          {% endfor %}
-        </div>
-      {% endif %}
-      {% if not organizing and not adopter %}
-        <h4>{{ _('Help Others with this Challenge') }}</h4>
-        <form method="post" action="{% locale_url direct_signup_adopter slug=project.slug %}">
-          {% csrf_token %}
-          <button class="adopt-button">{{ _('Adopt this Challenge') }}</button>
-        </form>
-      {% endif %}
-    </div>
-
+    {% tasks_completed_msg project user hidde_tasks_complete_msg adopter_request %}
       <div id="progress">
         <div id="progressbar" value="{{ progressbar_value }}"></div>
         <p><span id="completed_count">{{ completed_count }}</span>/<span id="total_count">{{ tasks_count }}</span> {{ _('Completed') }}</p>
@@ -85,16 +35,19 @@
           </li>
         {% endfor %}
       </ul>
-      {% if is_challenge and next_steps %}
+      {% if is_challenge %}{% if next_badges or next_projects %}
         <div class="next-steps">
           <h3>{{ _('Next Steps:') }}</h3>
           <div class="badge-list">
-            {% for step in next_steps %}
-              <a href="{{ step.get_absolute_url }}" title="{{ step|title }}"><img src="{{ step.get_image_url }}" width="70" height="70" alt="{{ step|title }}" class="badge-graphic"/></a>
+            {% for badge in next_badges %}
+              <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"/></a>
+            {% endfor %}
+            {% for next_project in next_projects %}
+              <a href="{{ next_project.get_absolute_url }}" title="{{ next_project|title }}"><img src="{{ next_project.get_image_url }}" width="113.4" height="70" alt="{{ next_project|title }}" class="badge-graphic"/></a>
             {% endfor %}
           </div>
         </div>
-      {% endif %}
+      {% endif %}{% endif %}
     {% else %}
       <br>{{ _('No tasks have been added.') }}<br><br>
     {% endif %}
