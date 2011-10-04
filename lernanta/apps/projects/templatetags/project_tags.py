@@ -154,6 +154,35 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     progressbar_value = 0
     if tasks_count:
         progressbar_value = (completed_count * 100 / tasks_count)
+    hidde_tasks_complete_msg = (progressbar_value != 100)
+    adopter_request = (not is_organizing and not adopter)
+    next_projects = project.next_projects.all()
+    # First self+completion badges and then peer+skill badges.
+    # FIXME: if other types of badges are added to get_project_badges().
+    next_badges = project.get_project_badges().order_by('-assessment_type',
+        'badge_type')
+    return {
+        'project': project,
+        'user': user,
+        'tasks': tasks,
+        'tasks_count': tasks_count,
+        'visible_count': visible_count,
+        'show_all': show_all_tasks,
+        'is_challenge': is_challenge,
+        'participating': is_participating,
+        'organizing': is_organizing,
+        'completed_count': completed_count,
+        'progressbar_value': progressbar_value,
+        'hidde_tasks_complete_msg': hidde_tasks_complete_msg,
+        'adopter_request': adopter_request,
+        'next_projects': next_projects,
+        'next_badges': next_badges,
+    }
+
+register.inclusion_tag('projects/_task_list.html')(task_list)
+
+
+def tasks_completed_msg(project, user, start_hidden=True, adopter_request=True):
     awarded_peer_skill_badges = project.get_awarded_badges(
         user, only_peer_skill=True)
     task_completion_badges = project.get_project_badges(
@@ -171,26 +200,17 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     non_started_challenges = project.get_non_started_next_projects(
         user)
     return {
-        'tasks': tasks,
-        'tasks_count': tasks_count,
-        'visible_count': visible_count,
-        'show_all': show_all_tasks,
         'project': project,
-        'is_challenge': is_challenge,
-        'participating': is_participating,
-        'organizing': is_organizing,
-        'adopter': adopter,
-        'completed_count': completed_count,
-        'progressbar_value': progressbar_value,
+        'start_hidden': start_hidden,
         'awarded_badges': awarded_badges,
         'badges_in_progress': badges_in_progress,
         'non_attempted_badges': non_attempted_badges,
         'need_reviews_badges': need_reviews_badges,
         'non_started_challenges': non_started_challenges,
-        'next_steps': project.get_next_steps(),
+        'adopter_request': adopter_request,
     }
 
-register.inclusion_tag('projects/_task_list.html')(task_list)
+register.inclusion_tag('projects/_tasks_completed_msg.html')(tasks_completed_msg)
 
 
 def project_wall(request, project, discussion_area=False):

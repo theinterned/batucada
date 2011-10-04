@@ -413,11 +413,6 @@ class Project(ModelBase):
         else:
             return Project.objects.none()
 
-    def get_next_steps(self):
-        next_steps = list(self.get_project_badges())
-        next_steps.extend(self.next_projects.all())
-        return next_steps
-
     @staticmethod
     def filter_activities(activities):
         from statuses.models import Status
