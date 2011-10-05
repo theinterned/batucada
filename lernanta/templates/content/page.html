@@ -58,7 +58,7 @@
   </div>
 {% endif %}
 
-{% if pagination_current_page.object_list %}
+{% if pagination_current_page.object_list or is_challenge %}
 
 {% if is_challenge%}
   <div id="main" class="content_page task-discussion">
