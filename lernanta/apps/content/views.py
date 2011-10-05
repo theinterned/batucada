@@ -39,6 +39,8 @@ def show_page(request, slug, page_slug):
         scope_pk=page.project.id, page_app_label='content',
         page_model='page', page_pk=page.id))
     first_level_comments = page.first_level_comments()
+    all_listed_pages = page.project.pages.filter(deleted=False,
+        listed=True).order_by('index')
     context = {
         'page': page,
         'project': page.project,
@@ -46,6 +48,7 @@ def show_page(request, slug, page_slug):
         'can_comment': page.can_comment(request.user),
         'new_comment_url': new_comment_url,
         'is_challenge': (page.project.category == Project.CHALLENGE),
+        'all_listed_pages': all_listed_pages,
     }
     context.update(get_pagination_context(request, first_level_comments))
     return render_to_response('content/page.html', context,
