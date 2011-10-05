@@ -3,6 +3,7 @@
 
 {% block title %}{{ _('Activity') }}{% endblock %}
 {% block bodyid %}activity{% endblock %}
+{% block bodyclasses %}project-kind-{{ activity.scope_object.category|slugify }}{% endblock%}
 
 
 {% block links %}

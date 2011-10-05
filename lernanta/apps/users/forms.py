@@ -203,7 +203,7 @@ class ProfileEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProfileEditForm, self).__init__(*args, **kwargs)
 
-        if kwargs.has_key('instance'):
+        if 'instance' in kwargs:
             instance = kwargs['instance']
             self.initial['interest'] = TaggedProfile.objects.filter(
                 object_id=instance.id)
@@ -282,15 +282,14 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
             except UserProfile.DoesNotExist:
                 user.delete()
         if not profile and not drupal.migrate(email):
+            msg = _("That e-mail address isn't associated to a user account. ")
+            msg2 = _("You didn't finish registering the last time. ")
+            msg2 += _("Please register a new account.")
             if len(self.users_cache) == 0:
-                if is_email:
-                    msg = _("That e-mail address isn't associated to a user account. ")
-                else:
+                if not is_email:
                     msg = _("Username not found. ")
                 msg += _("Are you sure you've registered?")
                 raise forms.ValidationError(msg)
             else:
-                msg = _("You did not finish the registration proccess last time. ")
-                msg += _("Please register a new account.")
-                raise forms.ValidationError(msg)
+                raise forms.ValidationError(msg2)
         return email

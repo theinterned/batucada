@@ -149,7 +149,7 @@ def login(request):
         if redirect_url:
             redirect_url = force_language_in_url(
                 redirect_url, olang, user.preflang
-            )
+)
             return http.HttpResponseRedirect(redirect_url)
 
     elif request.method == 'POST':

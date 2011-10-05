@@ -1,0 +1,122 @@
+[
+    {
+        "pk": 1, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's Introduce Yourself challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "introduce-yourself", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/introduce-yourself.png", 
+            "name": "Introduce Yourself"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's Writing HTML by Hand challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "writing-html-by-hand", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/writing-html-by-hand.png", 
+            "name": "Writing HTML by Hand"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's Choose Your Weapon challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "text-editor", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/text-editor.png", 
+            "name": "Text Editor"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's HTML Hunting in the World Around You challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "html-is-all-around-you", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/html-is-all-around-you.png", 
+            "name": "HTML is All Around You"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's Your Domain challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "domain-name", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/domain-name.png", 
+            "name": "Domain Name"
+        }
+    },
+    {
+        "pk": 6, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's Your Hosting challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "your-webspace", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/your-webspace.png", 
+            "name": "Your Webspace"
+        }
+    }
+]

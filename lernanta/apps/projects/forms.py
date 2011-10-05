@@ -24,7 +24,7 @@ class ProjectForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
-        if kwargs.has_key('instance'):
+        if 'instance' in kwargs:
             instance = kwargs['instance']
             self.initial['tags'] = GeneralTaggedItem.objects.filter(
                object_id=instance.id)
@@ -111,6 +111,30 @@ class ProjectAddParticipantForm(forms.Form):
             raise forms.ValidationError(
                 _('User %s is already a participant.') % username)
         return user
+
+
+class ProjectAddNextProjectForm(forms.Form):
+    next_project = forms.CharField()
+
+    def __init__(self, project, *args, **kwargs):
+        super(ProjectAddNextProjectForm, self).__init__(*args, **kwargs)
+        self.project = project
+
+    def clean_next_project(self):
+        slug = self.cleaned_data['next_project']
+        if slug == self.project.slug:
+            msg = _('A %s can not be its own next step.')
+            raise forms.ValidationError(msg % self.project.kind.lower())
+        msg = _('There is no challenge, study group, ... with short name: %s.')
+        try:
+            next_project = Project.objects.get(slug=slug)
+        except Project.DoesNotExist:
+            raise forms.ValidationError(msg % slug)
+        if self.project.next_projects.filter(slug=slug).exists():
+            msg = _('The %(slug)s %(kind)s is already a next step.')
+            raise forms.ValidationError(msg % {'slug': slug,
+                'kind': next_project.kind.lower()})
+        return next_project
 
 
 class ProjectContactOrganizersForm(forms.Form):

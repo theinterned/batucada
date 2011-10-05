@@ -96,7 +96,8 @@ class Project(ModelBase):
         (COURSE, _('Course -- led by one or more organizers with skills on ' \
                    'a field who direct and help participants during their ' \
                    'learning.')),
-        (CHALLENGE, _('Challenge -- series of tasks peers can engage in to develop skills.'))
+        (CHALLENGE, _('Challenge -- series of tasks peers can engage in ' \
+                      'to develop skills.'))
     )
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES,
         default=STUDY_GROUP, null=True, blank=False)
@@ -134,6 +135,10 @@ class Project(ModelBase):
         related_name='derivated_projects')
 
     imported_from = models.CharField(max_length=150, blank=True, null=True)
+
+    next_projects = models.ManyToManyField('projects.Project',
+        symmetrical=False, related_name='previous_projects', blank=True,
+        null=True)
 
     objects = ProjectManager()
 
@@ -216,6 +221,24 @@ class Project(ModelBase):
         else:
             return False
 
+    def get_metrics_permissions(self, user):
+        """Provides metrics related permissions for metrics overview
+        and csv download."""
+        if user.is_authenticated():
+            if user.is_superuser:
+                return True, True
+            allowed_schools = settings.STATISTICS_ENABLED_SCHOOLS
+            if not self.school or self.school.slug not in allowed_schools:
+                return False, False
+            csv_downloaders = settings.STATISTICS_CSV_DOWNLOADERS
+            profile = user.get_profile()
+            csv_permission = profile.username in csv_downloaders
+            is_school_organizer = self.school.organizers.filter(
+                id=user.id).exists()
+            if is_school_organizer or self.is_organizing(user):
+                return True, csv_permission
+        return False, False
+
     def activities(self):
         return Activity.objects.filter(deleted=False,
             scope_object=self).order_by('-created_on')
@@ -266,6 +289,129 @@ class Project(ModelBase):
     def accepted_school(self):
         # Used previously when schools had to decline groups.
         return self.school
+
+    def check_tasks_completion(self, user):
+        total_count = self.pages.filter(listed=True,
+            deleted=False).count()
+        completed_count = PerUserTaskCompletion.objects.filter(
+            page__project=self, page__deleted=False,
+            unchecked_on__isnull=True, user=user).count()
+        if total_count == completed_count:
+            badges = self.get_project_badges(only_self_completion=True)
+            for badge in badges:
+                badge.award_to(user)
+
+    def completed_tasks_users(self):
+        total_count = self.pages.filter(listed=True,
+            deleted=False).count()
+        completed_stats = PerUserTaskCompletion.objects.filter(
+            page__project=self, page__deleted=False,
+            unchecked_on__isnull=True).values(
+            'user__username').annotate(completed_count=Count('page')).filter(
+            completed_count=total_count)
+        usernames = completed_stats.values(
+            'user__username')
+        return Relationship.objects.filter(source__username__in=usernames,
+            target_project=self, source__deleted=False)
+
+    def get_project_badges(self, only_self_completion=False,
+            only_peer_skill=False):
+        from badges.models import Badge
+        assessment_types = []
+        badge_types = []
+        if not only_self_completion:
+            assessment_types.append(Badge.PEER)
+            badge_types.append(Badge.SKILL)
+        if not only_peer_skill:
+            assessment_types.append(Badge.SELF)
+            badge_types.append(Badge.COMPLETION)
+        if assessment_types and badge_types:
+            return self.badges.filter(assessment_type__in=assessment_types,
+                badge_type__in=badge_types)
+        else:
+            return Badge.objects.none()
+
+    def get_awarded_badges(self, user, only_peer_skill=False):
+        from badges.models import Badge, Award
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            project_badges = self.get_project_badges(only_peer_skill)
+            return project_badges.filter(
+                id__in=awarded_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_badges_in_progress(self, user):
+        from badges.models import Badge, Award, Submission
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            attempted_badges = Submission.objects.filter(
+                author=profile).values('badge_id')
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            return project_badges.filter(
+                id__in=attempted_badges).exclude(
+                id__in=awarded_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_non_attempted_badges(self, user):
+        from badges.models import Badge, Award, Submission
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            attempted_badges = Submission.objects.filter(
+                author=profile).values('badge_id')
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            # Excluding both awarded and attempted badges
+            # In case honorary award do not rely on submissions.
+            return project_badges.exclude(
+                id__in=attempted_badges).exclude(
+                id__in=awarded_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_need_reviews_badges(self, user):
+        from badges.models import Badge, Award, Submission
+        if user.is_authenticated():
+            profile = user.get_profile()
+            project_badges = self.get_project_badges(
+                only_peer_skill=True)
+            peers_submissions = Submission.objects.filter(
+                badge__id__in=project_badges.values('id')).exclude(
+                author=profile)
+            peers_attempted_badges = project_badges.filter(
+                id__in=peers_submissions.values('badge_id'))
+            need_reviews_badges = []
+            for badge in peers_attempted_badges:
+                peers_awards = Award.objects.filter(
+                    badge=badge).exclude(user=profile)
+                pending_submissions = peers_submissions.filter(
+                    badge=badge).exclude(
+                    author__id__in=peers_awards.values('user_id'))
+                if pending_submissions.exists():
+                    need_reviews_badges.append(badge.id)
+            return project_badges.filter(
+                id__in=need_reviews_badges)
+        else:
+            return Badge.objects.none()
+
+    def get_non_started_next_projects(self, user):
+        """To be displayed in the Join Next Challenges section."""
+        if user.is_authenticated():
+            profile = user.get_profile()
+            joined = Participation.objects.filter(
+                user=profile).values('project_id')
+            return self.next_projects.exclude(
+                id__in=joined)
+        else:
+            return Project.objects.none()
 
     @staticmethod
     def filter_activities(activities):
@@ -322,21 +468,10 @@ class PerUserTaskCompletion(ModelBase):
 
 def check_tasks_completion(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
     if isinstance(instance, PerUserTaskCompletion):
         project = instance.page.project
         user = instance.user
-        total_count = project.pages.filter(listed=True,
-            deleted=False).count()
-        completed_count = PerUserTaskCompletion.objects.filter(page__project=project,
-            page__deleted=False, unchecked_on__isnull=True,
-            user=user).count()
-        if total_count == completed_count:
-            from badges.models import Badge
-            badges = project.badges.filter(badge_type=Badge.COMPLETION,
-                assessment_type=Badge.SELF)
-            for badge in badges:
-                badge.award_to(user)
+        project.check_tasks_completion(user)
 
 
 post_save.connect(check_tasks_completion, sender=PerUserTaskCompletion,

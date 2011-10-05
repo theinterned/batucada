@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 class PageViewTrackerMiddleware:
     def process_request(self, request):
-        user_agent=request.META.get('HTTP_USER_AGENT', '')
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
 
         for botname in settings.BOT_NAMES:
             if botname in user_agent:
@@ -27,14 +27,18 @@ class PageViewTrackerMiddleware:
                 pageview.session_key = request.session.session_key
                 pageview.ip_address = ip_address
                 pageview.request_url = request.path
-                pageview.referrer_url = utils.u_clean(request.META.get('HTTP_REFERER', 'unknown')[:255])
+                pageview.referrer_url = utils.u_clean(
+                    request.META.get('HTTP_REFERER', 'unknown')[:255])
                 pageview.user_agent = user_agent
                 try:
-                    oldpageview = PageView.objects.filter(session_key=request.session.session_key).order_by('-access_time')[0]
+                    oldpageview = PageView.objects.filter(
+                        session_key=request.session.session_key).order_by(
+                        '-access_time')[0]
                 except IndexError, error:
                     pass
                 else:
-                    time_on_page = (datetime.datetime.now() - oldpageview.access_time)
+                    time_on_page = datetime.datetime.now()
+                    time_on_page -= oldpageview.access_time
                     if time_on_page.seconds < 3600 and time_on_page.days == 0:
                         oldpageview.time_on_page = time_on_page.seconds
                         oldpageview.save()
@@ -51,9 +55,11 @@ class PageViewTrackerMiddleware:
                 profile.last_active = now
                 profile.save()
             except Exception, error:
-                logging.error('An error occurred saving user record: %s' % error)
+                msg = 'An error occurred saving user record: %s'
+                logging.error(msg % error)
 
         try:
             pageview.save()
         except Exception, error:
-            logging.error('An error occurred saving pageview record: %s' % error)
+            msg = 'An error occurred saving pageview record: %s'
+            logging.error(msg % error)

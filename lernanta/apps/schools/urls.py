@@ -60,4 +60,7 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[\w-]+)/edit/statistics/$',
       'schools.views.edit_statistics',
       name='schools_edit_statistics'),
+    url(r'^(?P<slug>[\w-]+)/edit/mentorship/$',
+      'schools.views.edit_mentorship',
+      name='schools_edit_mentorship'),
 )

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
@@ -47,8 +46,10 @@ def can_view_metric_detail(func):
         request = args[0]
         project = kwargs['slug']
         project = get_object_or_404(Project, slug=project)
-        if not (request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser):
-            msg = _("You are not authorized to view these detailed statistics.")
+        metric_permissions = project.get_metrics_permissions(
+            request.user)
+        if not metric_permissions[1]:
+            msg = _("You are not authorized to view the detailed statistics.")
             return HttpResponseForbidden(msg)
         return func(*args, **kwargs)
     return decorated
@@ -63,8 +64,10 @@ def can_view_metric_overview(func):
         request = args[0]
         project = kwargs['slug']
         project = get_object_or_404(Project, slug=project)
-        if not (request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser):
-            msg = _("You are not authorized to view these overview statistics.")
+        metric_permissions = project.get_metrics_permissions(
+            request.user)
+        if not metric_permissions[0]:
+            msg = _("You aren't authorized to view the statistics' overview.")
             print project.is_organizing(request.user)
             return HttpResponseForbidden(msg)
         return func(*args, **kwargs)

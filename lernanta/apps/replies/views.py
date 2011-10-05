@@ -23,7 +23,8 @@ def show_comment(request, comment_id):
             page_url = comment.page_object.get_absolute_url()
             return http.HttpResponseRedirect(page_url)
     else:
-        comment_url = comment.page_object.get_comment_url(comment, request.user)
+        comment_url = comment.page_object.get_comment_url(comment,
+            request.user)
         return http.HttpResponseRedirect(comment_url)
 
 

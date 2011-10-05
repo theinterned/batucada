@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.conf import settings
 from django.db.models import Avg
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
@@ -81,18 +82,26 @@ class Badge(models.Model):
     groups = models.ManyToManyField('projects.Project', related_name='badges',
                                     null=True, blank=True)
 
-    creator = models.ForeignKey('users.UserProfile', related_name='badges')
+    creator = models.ForeignKey('users.UserProfile', related_name='badges',
+        blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True, blank=False)
     last_update = models.DateTimeField(auto_now_add=True, blank=False)
 
     def __unicode__(self):
-        return self.name
+        return "%s %s" % (self.name, _(' badge'))
 
     @models.permalink
     def get_absolute_url(self):
         return ('badges_show', (), {
             'slug': self.slug,
         })
+
+    def get_image_url(self):
+        # TODO: using project's default image until a default badge
+        # image is added.
+        missing = settings.MEDIA_URL + 'images/project-missing.png'
+        image_path = self.image.url if self.image else missing
+        return image_path
 
     def save(self):
         """Make sure each badge has a unique slug."""
