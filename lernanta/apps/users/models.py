@@ -174,7 +174,10 @@ class UserProfile(ModelBase):
                 organizers = project.organizers()
                 participants = project.non_organizer_participants()
             if organizers.filter(user=self).exists():
-                project.relation_text = _('(adopted)') if is_challenge else _('(organizing)')
+                if is_challenge:
+                    project.relation_text = _('(adopted)')
+                else:
+                    project.relation_text = _('(organizing)')
                 projects_organizing.append(project)
             elif participants.filter(user=self).exists():
                 project.relation_text = _('(participating)')

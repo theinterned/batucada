@@ -60,25 +60,23 @@
           {% else %}
               <a id="direct_signup_button" href="{{ login_with_redirect_url }}">{{ _('Start Challenge')}}</a>
           {% endif %}
-          <br><br><br>
         {% endif %}
         {% if discussion_area %}
-          <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
+          <a href="{{ project.get_absolute_url }}" class="discuss-link">{{ _('View Tasks')}}</a>
         {% else %}
-          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('View Discussions')}}</a>
+          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-link">{{ _('View Discussions')}}</a>
         {% endif %}
       {% else %}
-        {% if not organizing %}
-          <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
-            {% csrf_token %}
-            <button id="direct_signup_button">{{ _('Leave Challenge') }}</button>
-          </form>
-          <br><br><br>
-        {% endif %}
         {% if discussion_area %}
           <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
         {% else %}
           <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('Discuss Challenge')}}</a>
+        {% endif %}
+        {% if not organizing %}
+          <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
+            {% csrf_token %}
+            <a id="leave_direct_signup_button">{{ _('Leave Challenge') }}</a>
+          </form>
         {% endif %}
       {% endif %}
 

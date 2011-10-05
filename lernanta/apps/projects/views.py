@@ -4,7 +4,6 @@ import unicodecsv
 import itertools
 
 from django import http
-from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
@@ -19,7 +18,8 @@ from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
 from projects.decorators import organizer_required, participation_required
-from projects.decorators import can_view_metric_overview, can_view_metric_detail
+from projects.decorators import can_view_metric_overview
+from projects.decorators import can_view_metric_detail
 from projects.decorators import restrict_project_kind
 from projects.models import Project, Participation, PerUserTaskCompletion
 from projects import drupal
@@ -117,6 +117,7 @@ def create(request):
     }, context_instance=RequestContext(request))
 
 
+@login_required
 def matching_kinds(request):
     if len(request.GET['term']) == 0:
         matching_kinds = Project.objects.values_list('kind').distinct()
@@ -150,8 +151,10 @@ def clone(request):
         form = project_forms.CloneProjectForm(request.POST)
         if form.is_valid():
             base_project = form.cleaned_data['project']
-            project = Project(name=base_project.name, category=base_project.category,
-                other=base_project.other, other_description=base_project.other_description,
+            project = Project(name=base_project.name,
+                category=base_project.category,
+                other=base_project.other,
+                other_description=base_project.other_description,
                 short_description=base_project.short_description,
                 long_description=base_project.long_description,
                 clone_of=base_project)
@@ -207,6 +210,7 @@ def clone(request):
     }, context_instance=RequestContext(request))
 
 
+@login_required
 def matching_projects(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
@@ -280,6 +284,7 @@ def import_from_old_site(request):
         context_instance=RequestContext(request))
 
 
+@login_required
 def matching_courses(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
@@ -294,6 +299,7 @@ def matching_courses(request):
 @organizer_required
 def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    is_challenge = (project.category == project.CHALLENGE)
     if request.method == 'POST':
         form = project_forms.ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -304,16 +310,14 @@ def edit(request, slug):
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
         form = project_forms.ProjectForm(instance=project)
-
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-
+    metric_permissions = project.get_metrics_permissions(request.user)
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
         'project': project,
         'school': project.school,
         'summary_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
-        'is_challenge': (project.category == project.CHALLENGE),
+        'can_view_metric_overview': metric_permissions[0],
+        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
@@ -339,8 +343,7 @@ def edit_image_async(request, slug):
 @organizer_required
 def edit_image(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-
+    metric_permissions = project.get_metrics_permissions(request.user)
     if request.method == 'POST':
         form = project_forms.ProjectImageForm(request.POST, request.FILES,
                                               instance=project)
@@ -359,7 +362,7 @@ def edit_image(request, slug):
         'project': project,
         'form': form,
         'image_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
+        'can_view_metric_overview': metric_permissions[0],
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -369,7 +372,7 @@ def edit_image(request, slug):
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    metric_permissions = project.get_metrics_permissions(request.user)
     profile = request.user.get_profile()
     if request.method == 'POST':
         form = project_forms.ProjectLinksForm(request.POST)
@@ -391,7 +394,7 @@ def edit_links(request, slug):
         'form': form,
         'links': links,
         'links_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
+        'can_view_metric_overview': metric_permissions[0],
     }, context_instance=RequestContext(request))
 
 
@@ -400,12 +403,12 @@ def edit_links(request, slug):
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_links_edit(request, slug, link):
     link = get_object_or_404(Link, id=link)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
     form = project_forms.ProjectLinksForm(request.POST or None, instance=link)
     profile = get_object_or_404(UserProfile, user=request.user)
     project = get_object_or_404(Project, slug=slug)
     if link.project != project:
         return http.HttpResponseForbidden(_("You can't edit this link"))
+    metric_permissions = project.get_metrics_permissions(request.user)
     if form.is_valid():
         if link.subscription:
             links_tasks.UnsubscribeFromFeed.apply_async(args=(link,))
@@ -425,7 +428,7 @@ def edit_links_edit(request, slug, link):
         'form': form,
         'link': link,
         'links_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
+        'can_view_metric_overview': metric_permissions[0],
     }, context_instance=RequestContext(request))
 
 
@@ -448,7 +451,7 @@ def edit_links_delete(request, slug, link):
 @organizer_required
 def edit_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    metric_permissions = project.get_metrics_permissions(request.user)
     if request.method == 'POST':
         form = project_forms.ProjectAddParticipantForm(project, request.POST)
         if form.is_valid():
@@ -475,11 +478,13 @@ def edit_participants(request, slug):
         'form': form,
         'participations': project.participants().order_by('joined_on'),
         'participants_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
+        'can_view_metric_overview': metric_permissions[0],
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@organizer_required
 def matching_non_participants(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if len(request.GET['term']) == 0:
@@ -527,9 +532,77 @@ def edit_participants_delete(request, slug, username):
 
 @login_required
 @organizer_required
+@restrict_project_kind(Project.CHALLENGE)
+def edit_next_steps(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    metric_permissions = project.get_metrics_permissions(request.user)
+    if request.method == 'POST':
+        form = project_forms.ProjectAddNextProjectForm(project, request.POST)
+        if form.is_valid():
+            next_project = form.cleaned_data['next_project']
+            project.next_projects.add(next_project)
+            messages.success(request, _('Next step added.'))
+            return http.HttpResponseRedirect(reverse(
+                'projects_edit_next_steps',
+                kwargs=dict(slug=project.slug)))
+        else:
+            messages.error(request,
+                _('There was an error adding that next step.'))
+    else:
+        form = project_forms.ProjectAddNextProjectForm(project)
+    return render_to_response('projects/project_edit_next_steps.html', {
+        'project': project,
+        'form': form,
+        'next_steps': project.next_projects.all(),
+        'next_steps_tab': True,
+        'can_view_metric_overview': metric_permissions[0],
+        'is_challenge': (project.category == project.CHALLENGE),
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@organizer_required
+@restrict_project_kind(Project.CHALLENGE)
+def matching_non_next_steps(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if len(request.GET['term']) == 0:
+        raise http.Http404
+
+    non_next_steps = Project.objects.exclude(
+        slug=slug).exclude(
+        id__in=project.next_projects.values('id'))
+    matching_steps = non_next_steps.filter(
+        slug__icontains=request.GET['term'])
+    json = simplejson.dumps([step.slug for step in matching_steps])
+
+    return http.HttpResponse(json, mimetype="application/x-javascript")
+
+
+@login_required
+@organizer_required
+@restrict_project_kind(Project.CHALLENGE)
+def edit_next_steps_delete(request, slug, step_slug):
+    project = get_object_or_404(Project, slug=slug)
+    next_project = get_object_or_404(project.next_projects,
+        slug=step_slug)
+    if request.method == 'POST':
+        project.next_projects.remove(next_project)
+        kwargs = {
+            'name': next_project.name,
+            'kind': next_project.kind.lower(),
+        }
+        msg = _("The %(name)s %(kind)s is not a next step anymore.")
+        messages.success(request, msg % kwargs)
+    return http.HttpResponseRedirect(reverse(
+        'projects_edit_next_steps',
+        kwargs={'slug': project.slug}))
+
+
+@login_required
+@organizer_required
 def edit_status(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    metric_permissions = project.get_metrics_permissions(request.user)
     if request.method == 'POST':
         form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
@@ -547,7 +620,7 @@ def edit_status(request, slug):
         'form': form,
         'project': project,
         'status_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
+        'can_view_metric_overview': metric_permissions[0],
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -560,21 +633,20 @@ def admin_metrics(request, slug):
     We only are interested in the pages of the course and the participants.
     """
     project = get_object_or_404(Project, slug=slug)
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    can_view_metric_detail = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
-    participants = (participant.user for participant in project.non_organizer_participants())
+    metric_permissions = project.get_metrics_permissions(request.user)
+    participants = (participant.user for participant in project.participants())
     tracker_models.update_metrics_cache(project)
     keys = ('username', 'last_active', 'course_activity_minutes',
-        'comment_count','task_edits_count')
+        'comment_count', 'task_edits_count')
     metrics = tracker_models.metrics_summary(project, participants)
     data = (dict(itertools.izip(keys, d)) for d in metrics)
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
-            'can_view_metric_detail': can_view_metric_detail,
+            'can_view_metric_overview': metric_permissions[0],
+            'can_view_metric_detail': metric_permissions[1],
             'data': data,
             'metrics_tab': True,
-            'can_view_metric_overview': can_view_metric_overview,
             'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -590,26 +662,32 @@ def export_detailed_csv(request, slug):
         'user__username')
     participant_profiles = (participant.user for participant in participants)
     participant_ids = participants.values('user_id')
-    followers = project.non_participant_followers().order_by('source__username')
+    followers = project.non_participant_followers().order_by(
+        'source__username')
     follower_profiles = (follower.source for follower in followers)
     follower_ids = followers.values('source_id')
     previous_followers = project.previous_followers()
-    previous_follower_profiles = (previous.source for previous in previous_followers)
+    previous_follower_profiles = (previous.source for previous
+        in previous_followers)
     previous_follower_ids = project.previous_followers().values('source_id')
     headers = ["Time on Pages", "Non-zero Length Page Views",
         "Zero-length Page Views", "Comments", "Page Edits"]
     # Create csv response
     response = http.HttpResponse(mimetype='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=detailed_report.csv'
+    response['Content-Disposition'] = 'attachment; '
+    response['Content-Disposition'] += 'filename=detailed_report.csv'
     writer = unicodecsv.writer(response)
     writer.writerow(["Course: " + project.name])
-    writer.writerow(["Data generated: " + datetime.datetime.now().strftime("%b %d, %Y")])
+    writer.writerow(["Data generated: " + datetime.datetime.now().strftime(
+        "%b %d, %Y")])
     writer.writerow([])
     writer.writerow([])
     # Write Total Metrics
     writer.writerow(["TOTALS"])
     writer.writerow(["Participants"] + headers)
-    for row in tracker_models.user_total_metrics(project, participant_profiles):
+    metrics = tracker_models.user_total_metrics(project,
+        participant_profiles)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Followers"] + headers)
@@ -617,7 +695,9 @@ def export_detailed_csv(request, slug):
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Previous Followers"] + headers)
-    for row in tracker_models.user_total_metrics(project, previous_follower_profiles):
+    metrics = tracker_models.user_total_metrics(project,
+        previous_follower_profiles)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Unauthenticated Visitors"] + headers)
@@ -625,18 +705,28 @@ def export_detailed_csv(request, slug):
         writer.writerow(row + ["0"] * 2)
     writer.writerow([])
     writer.writerow([])
+    # Restoring profile iterators
+    participant_profiles = (participant.user for participant in participants)
+    follower_profiles = (follower.source for follower in followers)
+    previous_follower_profiles = (previous.source for previous
+        in previous_followers)
     # Write Per Page Total Metrics
     writer.writerow(["PER PAGE TOTALS"])
     writer.writerow(["Participants", "Page Paths"] + headers[:-2])
-    for row in tracker_models.user_total_per_page_metrics(project, participant_ids):
+    metrics = tracker_models.user_total_per_page_metrics(project,
+        participant_ids)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Followers", "Page Paths"] + headers[:-2])
-    for row in tracker_models.user_total_per_page_metrics(project, follower_ids):
+    metrics = tracker_models.user_total_per_page_metrics(project, follower_ids)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Previous Followers", "Page Paths"] + headers[:-2])
-    for row in tracker_models.user_total_per_page_metrics(project, previous_follower_ids):
+    metrics = tracker_models.user_total_per_page_metrics(project,
+        previous_follower_ids)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Unauthenticated Visitors", "Page Paths"] + headers[:-2])
@@ -647,15 +737,21 @@ def export_detailed_csv(request, slug):
     # Write Chronological Metrics
     writer.writerow(["CHRONOLOGICAL"])
     writer.writerow(["Participants", "Dates"] + headers)
-    for row in tracker_models.chronological_user_metrics(project, participant_profiles):
+    metrics = tracker_models.chronological_user_metrics(project,
+        participant_profiles)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Followers", "Dates"] + headers)
-    for row in tracker_models.chronological_user_metrics(project, follower_profiles):
+    metrics = tracker_models.chronological_user_metrics(project,
+        follower_profiles)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Previous Followers", "Dates"] + headers)
-    for row in tracker_models.chronological_user_metrics(project, previous_follower_profiles):
+    metrics = tracker_models.chronological_user_metrics(project,
+        previous_follower_profiles)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Unauthenticated Visitors", "Dates"] + headers)
@@ -666,18 +762,26 @@ def export_detailed_csv(request, slug):
     # Write Chronological Per Page Metrics
     writer.writerow(["CHRONOLOGICAL PER PAGE"])
     writer.writerow(["Participants", "Dates", "Page Paths"] + headers[:-2])
-    for row in tracker_models.chronological_user_per_page_metrics(project, participant_ids):
+    metrics = tracker_models.chronological_user_per_page_metrics(
+        project, participant_ids)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
     writer.writerow(["Followers", "Dates", "Page Paths"] + headers[:-2])
-    for row in tracker_models.chronological_user_per_page_metrics(project, follower_ids):
+    metrics = tracker_models.chronological_user_per_page_metrics(
+        project, follower_ids)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
-    writer.writerow(["Previous Followers", "Dates", "Page Paths"] + headers[:-2])
-    for row in tracker_models.chronological_user_per_page_metrics(project, previous_follower_ids):
+    writer.writerow(["Previous Followers", "Dates",
+        "Page Paths"] + headers[:-2])
+    metrics = tracker_models.chronological_user_per_page_metrics(project,
+        previous_follower_ids)
+    for row in metrics:
         writer.writerow(row)
     writer.writerow([])
-    writer.writerow(["Unauthenticated Visitors", "Dates", "Page Paths"] + headers[:-2])
+    writer.writerow(["Unauthenticated Visitors", "Dates",
+        "Page Paths"] + headers[:-2])
     for row in tracker_models.chronological_unauth_per_page_metrics(project):
         writer.writerow(row)
     writer.writerow([])
@@ -764,9 +868,12 @@ def toggle_task_completion(request, slug, page_slug):
             task_completion.save()
         total_count = Page.objects.filter(project__slug=slug, listed=True,
             deleted=False).count()
-        completed_count = PerUserTaskCompletion.objects.filter(page__project__slug=slug,
-            page__deleted=False, unchecked_on__isnull=True, user=profile).count()
-        progressbar_value = (completed_count * 100 / total_count) if total_count else 0
+        completed_count = PerUserTaskCompletion.objects.filter(
+            page__project__slug=slug, page__deleted=False,
+            unchecked_on__isnull=True, user=profile).count()
+        progressbar_value = 0
+        if total_count:
+            progressbar_value = (completed_count * 100 / total_count)
         json = simplejson.dumps({
             'total_count': total_count,
             'completed_count': completed_count,

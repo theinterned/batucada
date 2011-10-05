@@ -290,6 +290,8 @@ def edit_organizers(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@school_organizer_required
 def matching_non_organizers(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
@@ -331,6 +333,8 @@ def edit_featured(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@school_organizer_required
 def matching_non_featured(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
@@ -386,6 +390,8 @@ def edit_membership(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@login_required
+@school_organizer_required
 def matching_non_member(request, slug):
     school = get_object_or_404(School, slug=slug)
     if len(request.GET['term']) == 0:
@@ -432,7 +438,8 @@ def edit_statistics(request, slug):
     page_comments_count = comments.filter(page_content_type=page_ct).count()
     statuses_count = Status.objects.filter(project__in=project_ids).count()
     status_ct = ContentType.objects.get_for_model(Activity)
-    activity_comments_count = comments.filter(page_content_type=status_ct).count()
+    activity_comments_count = comments.filter(
+        page_content_type=status_ct).count()
     page_edits_count = Activity.objects.filter(scope_object__in=project_ids,
        target_content_type=page_ct, verb=verbs['update']).count()
     participations = Participation.objects.filter(project__in=project_ids)
@@ -466,4 +473,26 @@ def edit_statistics(request, slug):
         'followers_count': followers_count,
         'signup_answers_count': signup_answers_count,
         'signup_comments_count': signup_comments_count,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+@school_organizer_required
+def edit_mentorship(request, slug):
+    school = get_object_or_404(School, slug=slug)
+    if request.method == 'POST':
+        form = school_forms.SchoolMentorshipForm(request.POST, instance=school)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('School mentorship details updated!'))
+            return http.HttpResponseRedirect(
+                reverse('schools_edit_mentorship',
+                kwargs=dict(slug=school.slug)))
+    else:
+        form = school_forms.SchoolMentorshipForm(instance=school)
+
+    return render_to_response('schools/school_edit_mentorship.html', {
+        'form': form,
+        'school': school,
+        'mentorship_tab': True,
     }, context_instance=RequestContext(request))

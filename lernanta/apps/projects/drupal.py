@@ -82,7 +82,8 @@ def get_course(slug, full=False):
             "projects/imported_detailed_description.html", {
             'summary': ct_course.field_course_summary_value,
             'objectives': ct_course.field_course_learning_objectives_value,
-            'prerequisites': ct_course.field_course_prerequisites_value}).strip()
+            'prerequisites': ct_course.field_course_prerequisites_value
+            }).strip()
         course['sign_up'] = ct_course.field_course_sign_up_req_value or ''
         course['tasks'] = []
         tasks = OgAncestry.objects.using(DRUPAL_DB).filter(group_nid=nid)

@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django import http
-from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -26,7 +25,8 @@ from signups.forms import SignupForm, SignupAnswerForm
 def edit_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
     project = sign_up.project
-    can_view_metric_overview = request.user.username in settings.STATISTICS_COURSE_CAN_VIEW_CSV or request.user.is_superuser
+    metrics_permissions = project.get_metrics_permissions(
+        request.user)
     if request.method == 'POST':
         form = SignupForm(request.POST, instance=sign_up)
         if form.is_valid():
@@ -44,7 +44,7 @@ def edit_signup(request, slug):
         'project': project,
         'sign_up': sign_up,
         'signup_tab': True,
-        'can_view_metric_overview': can_view_metric_overview,
+        'can_view_metric_overview': metrics_permissions[0],
     }, context_instance=RequestContext(request))
 
 
@@ -89,7 +89,8 @@ def show_signup_answer(request, slug, answer_id):
         else:
             return http.HttpResponseRedirect(sign_up.get_absolute_url())
     else:
-        return http.HttpResponseRedirect(sign_up.get_answer_url(answer, request.user))
+        return http.HttpResponseRedirect(
+            sign_up.get_answer_url(answer, request.user))
 
 
 @login_required
@@ -257,11 +258,12 @@ def direct_signup(request, slug):
     is_organizing = project.organizers().filter(user=profile).exists()
     if is_organizing:
         return http.HttpResponseForbidden(
-            _('Organizers can\'t use this page to leave their study group, course, ...'))
+            _('Organizers can\'t use this page to leave their group.'))
     if request.method != 'POST':
         return http.HttpResponseForbidden(
             _('This page can not be accessed with a get request.'))
-    participations = Participation.objects.filter(user=profile, project=project, left_on__isnull=True)
+    participations = Participation.objects.filter(user=profile,
+        project=project, left_on__isnull=True)
     if participations:
         for participation in participations:
             participation.left_on = datetime.today()
@@ -291,7 +293,7 @@ def direct_signup_adopter(request, slug):
         participation = project.participants().get(user=profile)
     except Participation.DoesNotExist:
         return http.HttpResponseForbidden(
-            _('You need to be active in this challenge in order to become an adopter.'))
+            _('You need to be active in this challenge to become an adopter.'))
     if participation.organizing:
         return http.HttpResponseForbidden(
             _('Organizers do not need to adopt the challenges.'))
@@ -302,11 +304,13 @@ def direct_signup_adopter(request, slug):
         deleted=False).count()
     if completed_count != tasks_count:
         return http.HttpResponseForbidden(
-            _('You need to complete all tasks before being able to adopt the challenge.'))
+            _('You need to complete all tasks before becoming an adopter.'))
     if participation.adopter:
         return http.HttpResponseForbidden(
             _('You already adopted this challenge.'))
     participation.adopter = True
     participation.save()
-    messages.info(request, _('Thanks! You are now listed among the peers who offered their help.'))
+    msg = _('Thanks! ')
+    msg += _('You are now listed among the peers who offered their help.')
+    messages.info(request, msg)
     return http.HttpResponseRedirect(project.get_absolute_url())

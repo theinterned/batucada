@@ -31,8 +31,8 @@ class JSONField(models.TextField):
     # Extracted from django/trunk/tests/modeltests/field_subclassing/fields.py
     __metaclass__ = models.SubfieldBase
 
-    description = ("JSONField automatically serializes and desializes values to "
-        "and from JSON.")
+    description = ("JSONField automatically serializes and "
+        "desializes values to and from JSON.")
 
     def to_python(self, value):
         if not value:
