@@ -41,9 +41,21 @@
 
 {{ page.content|embed|safe }}
 
+{% if is_challenge %}
+  </div>
+{% endif %}
+
 {% if pagination_current_page.object_list %}
 
-<h1>{{_('Comments')}}</h1>
+{% if is_challenge%}
+  <div id="main" class="content_page task-discussion">
+    {% if can_comment %}
+      <a class="button post-task-comment" href="{{ new_comment_url }}">{{ _('Post Comment') }}</a>
+    {% endif %}
+    <h1 class="tasks-title">{{_('Task Discussion')}}</h1>
+{% else %}
+  <h1>{{_('Comments')}}</h1>
+{% endif %}
 <br>
 <ul id="posts">
   {% with comments=pagination_current_page.object_list %}

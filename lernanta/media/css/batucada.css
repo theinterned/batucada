@@ -2868,6 +2868,25 @@ ul.ui-autocomplete #ui-active-menuitem {
         background-position: 20px 20px;
     }
 
+.project-kind-challenge h1.tasks-title {
+    width: 450px;
+    font-size: 18px;
+    height: 24px;
+    padding-top: 5px;
+}
+
+.project-kind-challenge .task-discussion {
+    margin-top: 20px;
+}
+
+.project-kind-challenge .task-discussion h1 {
+    color: #222;
+}
+
+.project-kind-challenge .task-discussion .post-task-comment {
+    float: right;
+}
+
 div.voting {
     width: 50px;
     float: right;
