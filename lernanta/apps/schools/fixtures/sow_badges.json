@@ -118,5 +118,165 @@
             "image": "images/sow_badges/your-webspace.png", 
             "name": "Your Webspace"
         }
+    },
+    {
+        "pk": 7, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded by peers as a way to say hello (wave) to each other.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "wave", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "peer-to-peer/community", 
+            "logic": 2, 
+            "unique": false, 
+            "image": "", 
+            "name": "Wave"
+        }
+    },
+    {
+        "pk": 8, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The Super Blogger Badge recognizes the ability to consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "super-blogger", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "peer-to-peer/community", 
+            "logic": 2, 
+            "unique": false, 
+            "image": "", 
+            "name": "Super Blogger"
+        }
+    },
+    {
+        "pk": 9, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The Helpful Feedback Badge recognizes the ability to provide helpful and interesting feedback while maintaining a respectful tone.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "helpful-feedback", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "peer-to-peer/community", 
+            "logic": 2, 
+            "unique": false, 
+            "image": "", 
+            "name": "Helpful Feedback"
+        }
+    },
+    {
+        "pk": 10, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
+            "creator": null, 
+            "prerequisites": [9], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "team-player", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "peer-to-peer/community", 
+            "logic": 2, 
+            "unique": false, 
+            "image": "", 
+            "name": "Team Player"
+        }
+    },
+    {
+        "pk": 11, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Learners create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.", 
+            "creator": null, 
+            "prerequisites": [9], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "creative-presentation", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "peer-to-peer/community", 
+            "logic": 2, 
+            "unique": false, 
+            "image": "", 
+            "name": "Creative Presentation"
+        }
+    },
+    {
+        "pk": 12, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The HTML Basic Badge recognizes the ability to write create an html page by making basic use of HTML tags.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "html-basic", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "skill", 
+            "logic": 1, 
+            "unique": true, 
+            "image": "", 
+            "name": "HTML Basic"
+        }
+    },
+    {
+        "pk": 12, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The DNS Badge recognizes the ability to describe what DNS is and how it works.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "dns-basic", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "skill", 
+            "logic": 1, 
+            "unique": true, 
+            "image": "", 
+            "name": "DNS Basic"
+        }
+    },
+    {
+        "pk": 13, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The Hosting Badge recognizes the ability to implement web hosting services to set up your own domain.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "hosting", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "skill", 
+            "logic": 1, 
+            "unique": true, 
+            "image": "", 
+            "name": "Hosting"
+        }
     }
 ]
