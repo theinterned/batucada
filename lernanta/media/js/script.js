@@ -388,3 +388,15 @@ $('.project-kind-challenge #task_list_section li').hover(function() {
 }, function() {
       $(this).find('.taskView').hide();
 });
+
+$('.project-kind-challenge span.first-post').hover(function() {
+      $(this).find('.report').show();
+}, function() {
+      $(this).find('.report').hide();
+});
+
+$('.project-kind-challenge span.post-replies').hover(function() {
+      $(this).find('.report').show();
+}, function() {
+      $(this).find('.report').hide();
+});
