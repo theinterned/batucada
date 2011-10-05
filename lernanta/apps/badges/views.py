@@ -33,7 +33,7 @@ def show(request, slug):
     badge = get_object_or_404(Badge, slug=slug)
     user = request.user
     is_eligible = False
-    rubrics = get_list_or_404(Rubric, badges=badge)
+    rubrics = badge.rubrics.all()
     if user is not None:
         is_eligible = badge.is_eligible(user)
         #TODO application_pending =
