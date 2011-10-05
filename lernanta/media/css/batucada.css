@@ -1393,6 +1393,10 @@ header {}
       float: left;
       width: 630px;
     }
+    .project-kind-challenge .post-container {
+        margin: 0 0 20px;
+        padding: 9px;
+    }
     .modal .post-container {
         width: 550px;
         margin-left: 10px;
@@ -1407,6 +1411,16 @@ header {}
     .post-container.post-replies, #extra-indent-post-replies .post-container {
 	    margin-left: 30px;
 	    width: 575px;
+	}
+
+    .project-kind-challenge .post-replies, .project-kind-challenge #extra-indent-post-replies .post-container {
+      width: 544px;
+      min-height: 56px;
+      margin: 20px 0 0 63px;
+      border-top: 1px solid #c6c6c6;
+      padding: 20px 8px 0 0;
+      behavior: url("/media/css/PIE.htc");
+      float: left;
 	}
 
     .modal .post-container.post-replies {
@@ -1573,6 +1587,9 @@ header {}
 	#page #main .action {
 	    float: right;
 	}
+	#page.project-kind-challenge #main .action.action-bottom {
+	    float: left;
+	}
 
     #posts .post-comments {
        float: right;
@@ -1588,18 +1605,39 @@ header {}
     .supplemental_actions .action:hover {
       color: #777;
     }
-    #posts .reply-to{
+    #posts .reply-to {
 		background: url("/media/images/reply.icon.png") 0 0 no-repeat;
 	}
     #posts .delete {
 		background: url("/media/images/delete-x.png") 0 0 no-repeat;
 	}
-    #posts .restore{
+    .project-kind-challenge #posts .delete {
+		background: url("/media/images/delete-x.png") 3px 0 no-repeat;
+	}
+    #posts .restore {
 		background: url("/media/images/restore.icon.png") 0 0 no-repeat;
 	}
-    #posts .edit{
+    #posts .edit {
 		background: url("/media/images/edit.icon.png") 0 0 no-repeat;
 	}
+    .project-kind-challenge #posts .edit {
+		background: url("/media/images/edit.icon.png") 4px 0 no-repeat;
+	}
+
+    .project-kind-challenge #posts .reply-to.action-bottom, .project-kind-challenge #posts .delete.action-bottom,
+    .project-kind-challenge #posts .restore.action-bottom, .project-kind-challenge #posts .edit.action-bottom {
+        font-size: 14px;
+        float: left;
+        display: block;
+        color: #919191;
+        text-decoration: none;
+        margin: 20px 15px 0 0;
+        padding-left: 20px;
+        left: 1px;
+        height: 16px;
+        line-height: 16px;
+    }
+
     .collaborative {
         background: url("/media/images/collaborative.png") 0 0 no-repeat;
         padding-left: 42px;
@@ -1609,6 +1647,11 @@ header {}
 		background: url("/media/images/report.icon.png") 0 1px no-repeat;
 		padding-left: 15px;		
 	}
+    .project-kind-challenge #posts .report,
+	.project-kind-challenge .supplemental_actions .report,
+    .project-kind-challenge .post-container .report {
+        display: none;
+    }
 	.supplemental_actions .report {
 		background-position: 0 0;
 	}
@@ -1622,6 +1665,13 @@ header {}
     #posts .post-contents {
       padding-left: 64px;
     }
+
+      .project-kind-challenge #posts .post-details h3 {
+        color: #919191;
+        font-weight: 300;
+        font-size: 16px;
+      }
+
       #posts .post-details, #posts .post-details a {
         color: #919191;
       }
@@ -1635,6 +1685,9 @@ header {}
       
       #posts .post-body, #posts .post-body p {
         margin: 10px 0;
+      }
+      .project-kind-challenge #posts .post-body, #posts .post-body p {
+        color: #222;
       }
 
 	/* [Bugzilla - 656893] Styling pagination*/
