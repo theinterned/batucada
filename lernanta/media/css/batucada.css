@@ -1413,7 +1413,7 @@ header {}
 	    width: 575px;
 	}
 
-    .project-kind-challenge .post-replies, .project-kind-challenge #extra-indent-post-replies .post-container {
+    .project-kind-challenge .post-container .post-replies, .project-kind-challenge #extra-indent-post-replies .post-container {
       width: 544px;
       min-height: 56px;
       margin: 20px 0 0 63px;
@@ -1426,6 +1426,10 @@ header {}
     .modal .post-container.post-replies {
        margin-left: 30px;
 	   width: 530px;
+    }
+
+    .project-kind-challenge .modal .post-container .post-replies {
+       width: 480px;
     }
 
     #extra-indent-post-replies .post-container.post-replies {

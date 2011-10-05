@@ -57,6 +57,10 @@ def reply_comment(request, comment_id):
             messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm()
+    from projects.models import Project
+    is_challenge = False
+    if reply_to.scope_object:
+        is_challenge = (reply_to.scope_object.category == Project.CHALLENGE)
     return render_to_response('replies/comment_page.html', {
         'form': form,
         'scope_object': reply_to.scope_object,
@@ -65,6 +69,7 @@ def reply_comment(request, comment_id):
         'comment': comment,
         'create': True,
         'preview': ('show_preview' in request.POST),
+        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
@@ -113,6 +118,10 @@ def comment_page(request, page_model, page_app_label, page_pk,
             messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm()
+    from projects.models import Project
+    is_challenge = False
+    if scope_object:
+        is_challenge = (scope_object.category == Project.CHALLENGE)
     return render_to_response('replies/comment_page.html', {
         'form': form,
         'scope_object': scope_object,
@@ -121,6 +130,7 @@ def comment_page(request, page_model, page_app_label, page_pk,
         'create': True,
         'preview': ('show_preview' in request.POST),
         'new_comment_url': new_comment_url,
+        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
@@ -142,6 +152,10 @@ def edit_comment(request, comment_id):
             messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm(instance=comment)
+    from projects.models import Project
+    is_challenge = False
+    if comment.scope_object:
+        is_challenge = (comment.scope_object.category == Project.CHALLENGE)
     return render_to_response('replies/comment_page.html', {
         'form': form,
         'comment': comment,
@@ -149,6 +163,7 @@ def edit_comment(request, comment_id):
         'scope_object': comment.scope_object,
         'reply_to': comment.reply_to,
         'preview': ('show_preview' in request.POST),
+        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
