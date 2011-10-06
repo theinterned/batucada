@@ -80,6 +80,16 @@ class Page(ModelBase):
                 self.index = 0
         super(Page, self).save()
 
+    def get_next_page(self):
+        if self.listed and not self.deleted:
+            try:
+                return self.project.pages.filter(
+                    deleted=False, index__gt=self.index,
+                    listed=True)[0]
+            except IndexError:
+                pass
+        return None
+
     def can_edit(self, user):
         if self.project.is_organizing(user):
             return True

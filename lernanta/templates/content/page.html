@@ -55,7 +55,21 @@
 {{ page.content|embed|safe }}
 
 {% if is_challenge %}
+  <hr />
+
+  <div id="task-footer-uncompleted" class="{% if page.is_done %}off{% endif %}">
+    <p>{{ _('Are you done with this task?') }}</p>
+    <form class="task-done-button" method='post' action='{% locale_url toggle_task_completion slug=page.project.slug page_slug=page.slug %}'>
+      {% csrf_token %}
+      <button>{{ _('Yes, I\'m done') }}</button>
+    </form>
   </div>
+  <div id="task-footer-completed" class="{% if not page.is_done %}off{% endif %}">
+    <p>{{ _('You\'ve marked this task as completed.') }}</p>
+    {% if next_page %}<a href={{ next_page.get_absolute_url }} title="{{ next_page.title }}">{{ _('Move on to next task') }}</a>{% endif %}
+  </div>
+
+</div>
 {% endif %}
 
 {% if pagination_current_page.object_list or is_challenge %}
