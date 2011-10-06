@@ -360,7 +360,7 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
     $task_completion_form.parent().toggleClass("taskSelected");
     var url = $task_completion_form.attr('action');
     $task_completion_checkbox.attr('disabled', 'disabled');
-    $.post(url, $(this).parent().serialize(), function(data) {
+    $.post(url, $task_completion_form.serialize(), function(data) {
         var total_count = data['total_count'];
         var completed_count = data['completed_count'];
         var progressbar_value = data['progressbar_value'];
@@ -377,6 +377,24 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
             $tasks_completed_msg.fadeOut('fast');
         }
     });
+});
+
+$('.project-kind-challenge #task-footer-uncompleted form').submit(function() {
+    var $task_completion_form = $(this);
+    var url = $task_completion_form.attr('action');
+    $.post(url, $task_completion_form.serialize(), function(data) {
+        var total_count = data['total_count'];
+        var completed_count = data['completed_count'];
+        var progressbar_value = data['progressbar_value'];
+        var upon_completion_redirect = data['upon_completion_redirect'];
+        if( progressbar_value == "100" ) {
+            window.location.href = upon_completion_redirect;
+        } else {
+            $('.project-kind-challenge #task-footer-uncompleted').hide();
+            $('.project-kind-challenge #task-footer-completed').fadeIn('fast');
+        }
+    });
+    return false;
 });
 
 $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function() {
