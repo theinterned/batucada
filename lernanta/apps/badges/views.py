@@ -104,7 +104,7 @@ def badges_manage(request):
 def create_submission(request, slug):
     badge = get_object_or_404(Badge, slug=slug)
     can_apply = badge.is_eligible(request.user)
-    rubrics = get_list_or_404(Rubric, badges=badge)
+    rubrics = badge.rubrics.all()
     if not can_apply:
         messages.error(request, _('You are lacking one or more of the requirements.'))
         # TODO: Reason why
@@ -139,7 +139,7 @@ def show_submission(request, submission_id):
     submission = get_object_or_404(Submission, id=submission_id)
     badge = submission.badge
     progress = badge.progress_for(submission.author)
-    rubrics = get_list_or_404(Rubric, badges=badge)
+    rubrics = badge.rubrics.all()
     assessments = Assessment.objects.filter(submission=submission_id)
     user = request.user.get_profile()
     can_assess = True
@@ -147,7 +147,7 @@ def show_submission(request, submission_id):
     has_assessed = Assessment.objects.filter(assessor=user, submission=submission)
     if has_assessed or user == submission.author:
         can_assess = False
-    
+
     context = {
         'badge': badge,
         'submission': submission,
