@@ -9,7 +9,7 @@ from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
 from projects.decorators import participation_required
-from projects.models import Project
+from projects.models import Project, PerUserTaskCompletion
 from pagination.views import get_pagination_context
 
 from content.forms import PageForm, NotListedPageForm
@@ -23,7 +23,8 @@ log = logging.getLogger(__name__)
 
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    if page.project.category == Project.CHALLENGE and not page.listed:
+    is_challenge = (page.project.category == Project.CHALLENGE)
+    if is_challenge and not page.listed:
         msg = _("This page is not accesible on a %s.")
         return http.HttpResponseForbidden(msg % page.project.kind.lower())
     can_edit = page.can_edit(request.user)
@@ -41,14 +42,19 @@ def show_page(request, slug, page_slug):
     first_level_comments = page.first_level_comments()
     all_listed_pages = page.project.pages.filter(deleted=False,
         listed=True).order_by('index')
+    if is_challenge and request.user.is_authenticated():
+        profile = request.user.get_profile()
+        page.is_done = PerUserTaskCompletion.objects.filter(
+            user=profile, page=page, unchecked_on__isnull=True)
     context = {
         'page': page,
         'project': page.project,
         'can_edit': can_edit,
         'can_comment': page.can_comment(request.user),
         'new_comment_url': new_comment_url,
-        'is_challenge': (page.project.category == Project.CHALLENGE),
+        'is_challenge': is_challenge,
         'all_listed_pages': all_listed_pages,
+        'next_page': page.get_next_page(),
     }
     context.update(get_pagination_context(request, first_level_comments))
     return render_to_response('content/page.html', context,

@@ -877,5 +877,7 @@ def toggle_task_completion(request, slug, page_slug):
         json = simplejson.dumps({
             'total_count': total_count,
             'completed_count': completed_count,
-            'progressbar_value': progressbar_value})
+            'progressbar_value': progressbar_value,
+            'upon_completion_redirect': page.project.get_absolute_url()
+        })
         return http.HttpResponse(json, mimetype="application/json")
