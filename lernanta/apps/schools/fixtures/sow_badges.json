@@ -125,6 +125,26 @@
         "fields": {
             "groups": [], 
             "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101's You're Live challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "you-re-live", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/you-re-live.png", 
+            "name": "Your Webspace"
+        }
+    },
+    {
+        "pk": 8, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded by peers as a way to say hello (wave) to each other.", 
             "creator": null, 
             "prerequisites": [], 
@@ -135,12 +155,12 @@
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "unique": false, 
-            "image": "", 
+            "image": "images/sow_badges/wave.png", 
             "name": "Wave"
         }
     },
     {
-        "pk": 8, 
+        "pk": 9, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -155,12 +175,12 @@
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "unique": false, 
-            "image": "", 
+            "image": "images/sow_badges/super-blogger.png", 
             "name": "Super Blogger"
         }
     },
     {
-        "pk": 9, 
+        "pk": 10, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -175,12 +195,12 @@
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "unique": false, 
-            "image": "", 
+            "image": "images/sow_badges/helpful-feedback.png", 
             "name": "Helpful Feedback"
         }
     },
     {
-        "pk": 10, 
+        "pk": 11, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -195,12 +215,12 @@
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "unique": false, 
-            "image": "", 
+            "image": "images/sow_badges/team-player.png", 
             "name": "Team Player"
         }
     },
     {
-        "pk": 11, 
+        "pk": 12, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -215,12 +235,12 @@
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "unique": false, 
-            "image": "", 
+            "image": "images/sow_badges/creative-presentation.png", 
             "name": "Creative Presentation"
         }
     },
     {
-        "pk": 12, 
+        "pk": 13, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -235,12 +255,12 @@
             "badge_type": "skill", 
             "logic": 1, 
             "unique": true, 
-            "image": "", 
+            "image": "images/sow_badges/html-basic.png", 
             "name": "HTML Basic"
         }
     },
     {
-        "pk": 12, 
+        "pk": 14, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -255,12 +275,12 @@
             "badge_type": "skill", 
             "logic": 1, 
             "unique": true, 
-            "image": "", 
+            "image": "images/sow_badges/dns-basic.png", 
             "name": "DNS Basic"
         }
     },
     {
-        "pk": 13, 
+        "pk": 15, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -275,8 +295,26 @@
             "badge_type": "skill", 
             "logic": 1, 
             "unique": true, 
-            "image": "", 
+            "image": "images/sow_badges/hosting.png", 
             "name": "Hosting"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "badges.logic", 
+        "fields": {
+            "min_qualified_adopter_votes": 0, 
+            "min_qualified_votes": 3, 
+            "min_rating": 3
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "badges.logic", 
+        "fields": {
+            "min_qualified_adopter_votes": 0, 
+            "min_qualified_votes": 1, 
+            "min_rating": 0
         }
     }
 ]
