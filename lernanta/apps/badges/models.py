@@ -242,9 +242,22 @@ class Assessment(ModelBase):
 
 class Rating(ModelBase):
     """Assessor's rating for the assessment's rubric(s)"""
+
+    NEVER = 1
+    SOMETIMES = 2
+    MOST_OF_THE_TIME = 3
+    ALWAYS = 4
+
+    RATING_CHOICES = ((NEVER, 'Never'), 
+                      (SOMETIMES, 'Sometimes'),
+                      (MOST_OF_THE_TIME, 'Most of the time'),
+                      (ALWAYS, 'Always'))
+
+
     assessment = models.ForeignKey('badges.Assessment', related_name='ratings')
     score = models.PositiveIntegerField(default=1)
     rubric = models.ForeignKey('badges.Rubric', related_name='ratings')
+    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('%s for %s') % (self.score, self.rubric)

@@ -103,6 +103,7 @@ button[type=submit],
 .button.submit{
     position: relative;
     color: white;
+    background: #f6f6f6;
     font-weight: bold;
     text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
     border: 1px solid #608dae;
