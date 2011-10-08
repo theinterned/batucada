@@ -3664,3 +3664,22 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	float:left;
 	width:800px;
 }
+
+.rating { 
+    background: url(/media/images/blank.png) transparent 0 0 repeat-x;
+    height: 16px;
+    width:60px;
+    }
+
+.rating div { 
+    background: url(/media/images/circle.png) transparent 0 0 repeat-x; 
+    height: 16px;
+    }
+
+.rating span {
+    display: none;
+    }
+    
+.post-assessment {
+	width: 900px;
+}

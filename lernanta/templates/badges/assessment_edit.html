@@ -8,7 +8,6 @@
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
   <a href="{% locale_url badges_show slug=submission.badge.slug %}">{{ submission.badge.name }}</a>
-
 {% endblock %}
 
 {% block body %} 
@@ -30,11 +29,7 @@
 	</section>
     <br class="clear"/>
 	<section id="badge">
-		  {% if badge.image %}
-	      <img src="/media/{{ submission.badge.image }}" width="50" height="50" alt="{{ submission.badge.name }}"/>
-	      {% else %}
-	      <img src="/media/images/badge-missing.png" width="50" height="50" alt="{{ submission.badge.name }}"/>
-	      {% endif %}
+	      <img src="/media/{{ submission.badge.image_or_default }}" width="50" height="50" alt="{{ submission.badge.name }}"/>
 	      {{ submission.badge.description }}
     </section>
     <br class="clear"/>
@@ -49,8 +44,10 @@
 			{% for rubric in rubrics %}
 				<li>{{ rubric.question }}</li>
 			{% endfor %}
+			
 		  </ol>
         </div>
+        
 	    <div class="field{% if form.comment.errors %} error{% endif %}">
 	      <label for="id_comment">{{ _('Add your comments') }}</label>
 	      {{ form.comment }}
@@ -64,5 +61,4 @@
 	  </form>
 	</fieldset>
 	{% endblock %}
-    </div>
 {% endblock %}
