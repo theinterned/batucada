@@ -6,6 +6,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.forms.models import inlineformset_factory
 
 from django_obi.views import send_badges
 
@@ -15,8 +16,10 @@ from l10n.urlresolvers import reverse
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
-from badges.models import Badge, Submission, Rubric, Assessment
+from badges.models import Badge, Submission, Rubric, Assessment, Rating
 
+from django.utils import simplejson
+from Image import NONE
 
 log = logging.getLogger(__name__)
 
@@ -163,7 +166,8 @@ def show_submission(request, submission_id):
 
 @login_required
 def assess_submission(request, submission_id):
-    submission = get_object_or_404(Submission, id=submission_id) 
+    submission = get_object_or_404(Submission, id=submission_id)
+    RatingInlineFormSet = inlineformset_factory(Assessment, Rating, form=badge_forms.RatingForm)
     rubrics = submission.badge.rubrics.all()
     user = request.user.get_profile()
     already_assessed = Assessment.objects.filter(assessor=user, submission=submission)
@@ -175,12 +179,14 @@ def assess_submission(request, submission_id):
         messages.error(request, _('You have already assessed this submission.'))
         return http.HttpResponseRedirect(submission.get_absolute_url())
     
-    assessment = None
+    assessment = formset = NONE
 
     if request.method == 'POST':
         form = badge_forms.AssessmentForm(request.POST)
-        if form.is_valid():
+        formset = RatingInlineFormSet(request.POST, instance=submission)
+        if form.is_valid() and formset.is_valid():
             assessment = form.save(commit=False)
+            formset.save()
             if 'show_preview' not in request.POST:
                 assessment.assessor = user
                 assessment.assessed = submission.author
@@ -198,6 +204,7 @@ def assess_submission(request, submission_id):
         'form': form,
         'submission': submission,
         'rubrics': rubrics,
+        'formset': formset,
     }
     return render_to_response('badges/assessment_edit.html', context,
                               context_instance=RequestContext(request))
@@ -215,3 +222,15 @@ def show_assessment(request, assessment_id):
     return render_to_response('badges/_assessment_body.html', context,
                               context_instance=RequestContext(request))
 
+
+def quiz_guess(request, fact_id):   
+    message = {"fact_type": "", "fact_note": ""}
+    if request.is_ajax():
+        print "In quiz guess and is ajax"
+        fact = get_object_or_404(Fact, id=fact_id)
+        message['fact_type'] = fact.type
+        message['fact_note'] = fact.note
+    else:
+        message = "You're the lying type, I can just tell."
+    json = simplejson.dumps(message)
+    return HttpResponse(json, mimetype='application/json')
