@@ -40,14 +40,13 @@
 	    {% csrf_token %}
 	    <div class="field{% if form.rubrics.errors %} error{% endif %}">
 	      <label for="id_comment">{{ _('Give your overall rating') }}</label>
-    {{ formset.management_form }}
-    {% for form in formset %}
-        {{ form.id }}
-        {{ form.assessment }}
-        <ul>
-            <li>{{ form.rubric }} {{ form.score }}</li>
-        </ul>
-    {% endfor %}
+	        {% if form.ratings %}
+	          <ul>
+			{% for rating in form.ratings %}
+				<li>{{ rating.rubric }}  {{ rating.score }}</li>
+			{% endfor %}
+			  </ul>
+			{% endif %}
         </div>
         
 	    <div class="field{% if form.comment.errors %} error{% endif %}">
