@@ -6,7 +6,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.forms.models import inlineformset_factory
+from django.forms.models import modelformset_factory
 
 from django_obi.views import send_badges
 
@@ -167,9 +167,10 @@ def show_submission(request, submission_id):
 @login_required
 def assess_submission(request, submission_id):
     submission = get_object_or_404(Submission, id=submission_id)
-    RatingInlineFormSet = inlineformset_factory(Assessment, Rating, form=badge_forms.RatingForm)
     rubrics = submission.badge.rubrics.all()
+    badge = submission.badge
     user = request.user.get_profile()
+    RatingFormSet =  modelformset_factory(Rating)
     already_assessed = Assessment.objects.filter(assessor=user, submission=submission)
 
     if request.user == submission.author:
@@ -183,21 +184,26 @@ def assess_submission(request, submission_id):
 
     if request.method == 'POST':
         form = badge_forms.AssessmentForm(request.POST)
-        formset = RatingInlineFormSet(request.POST, instance=submission)
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid():
             assessment = form.save(commit=False)
-            formset.save()
-            if 'show_preview' not in request.POST:
-                assessment.assessor = user
-                assessment.assessed = submission.author
-                assessment.badge = submission.badge
-                assessment.submission = submission
-                assessment.save()
-                messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
-                return http.HttpResponseRedirect(submission.get_absolute_url())
+            formset = RatingFormSet(request.POST, queryset=Rubric.objects.filter(badges=badge))
+            for form in formset:
+                print form.as_table()
+
+            if formset.is_valid():
+                formset.save()
+                if 'show_preview' not in request.POST:
+                    assessment.assessor = user
+                    assessment.assessed = submission.author
+                    assessment.badge = submission.badge
+                    assessment.submission = submission
+                    assessment.save()
+                    messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
+                    return http.HttpResponseRedirect(submission.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
+        formset = RatingFormSet(queryset=Rubric.objects.filter(badges=badge))
         form = badge_forms.AssessmentForm(instance=submission)
 
     context = {
@@ -222,15 +228,3 @@ def show_assessment(request, assessment_id):
     return render_to_response('badges/_assessment_body.html', context,
                               context_instance=RequestContext(request))
 
-
-def quiz_guess(request, fact_id):   
-    message = {"fact_type": "", "fact_note": ""}
-    if request.is_ajax():
-        print "In quiz guess and is ajax"
-        fact = get_object_or_404(Fact, id=fact_id)
-        message['fact_type'] = fact.type
-        message['fact_note'] = fact.note
-    else:
-        message = "You're the lying type, I can just tell."
-    json = simplejson.dumps(message)
-    return HttpResponse(json, mimetype='application/json')
