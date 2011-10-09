@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.models import inlineformset_factory
 
 from badges.models import Badge, Submission, Assessment, Rating
 
@@ -33,7 +34,7 @@ class RatingForm(forms.ModelForm):
 
     class Meta:
         model = Rating
+        fields = ('score',)
         widgets = {
             'score': forms.RadioSelect,
         }
-
