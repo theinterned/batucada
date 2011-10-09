@@ -170,7 +170,7 @@ def assess_submission(request, submission_id):
     rubrics = submission.badge.rubrics.all()
     badge = submission.badge
     user = request.user.get_profile()
-    RatingFormSet =  modelformset_factory(Rating)
+    #RatingFormSet =  modelformset_factory(Rating)
     already_assessed = Assessment.objects.filter(assessor=user, submission=submission)
 
     if request.user == submission.author:
@@ -186,31 +186,39 @@ def assess_submission(request, submission_id):
         form = badge_forms.AssessmentForm(request.POST)
         if form.is_valid():
             assessment = form.save(commit=False)
-            formset = RatingFormSet(request.POST, queryset=Rubric.objects.filter(badges=badge))
-            for form in formset:
-                print form.as_table()
-
-            if formset.is_valid():
-                formset.save()
-                if 'show_preview' not in request.POST:
-                    assessment.assessor = user
-                    assessment.assessed = submission.author
-                    assessment.badge = submission.badge
-                    assessment.submission = submission
-                    assessment.save()
-                    messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
-                    return http.HttpResponseRedirect(submission.get_absolute_url())
+            #formset = RatingFormSet(request.POST, queryset=Rubric.objects.filter(badges=badge))
+#            for form in formset:
+#                print form.as_table()
+                
+            if 'show_preview' not in request.POST:
+                assessment.assessor = user
+                assessment.assessed = submission.author
+                assessment.badge = submission.badge
+                assessment.submission = submission
+                assessment.save()
+                messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
+                return http.HttpResponseRedirect(submission.get_absolute_url())
+#            if formset.is_valid():
+#                formset.save()
+#                if 'show_preview' not in request.POST:
+#                    assessment.assessor = user
+#                    assessment.assessed = submission.author
+#                    assessment.badge = submission.badge
+#                    assessment.submission = submission
+#                    assessment.save()
+#                    messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
+#                    return http.HttpResponseRedirect(submission.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
-        formset = RatingFormSet(queryset=Rubric.objects.filter(badges=badge))
-        form = badge_forms.AssessmentForm(instance=submission)
+        #formset = RatingFormSet(queryset=Rubric.objects.filter(badges=badge))
+        form = badge_forms.AssessmentForm(submission=submission)
 
     context = {
         'form': form,
         'submission': submission,
         'rubrics': rubrics,
-        'formset': formset,
+        'badge': badge,
     }
     return render_to_response('badges/assessment_edit.html', context,
                               context_instance=RequestContext(request))
