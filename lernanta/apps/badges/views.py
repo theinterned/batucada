@@ -175,7 +175,6 @@ def assess_submission(request, submission_id):
     rubrics = submission.badge.rubrics.all()
     badge = submission.badge
     user = request.user.get_profile()
-    RatingFormSet =  modelformset_factory(Rating)
     already_assessed = Assessment.objects.filter(assessor=user, submission=submission)
 
     if request.user == submission.author:
@@ -185,45 +184,54 @@ def assess_submission(request, submission_id):
         messages.error(request, _('You have already assessed this submission.'))
         return http.HttpResponseRedirect(submission.get_absolute_url())
     
-    assessment = formset = None
+    assessment = None
 
     if request.method == 'POST':
-        form = badge_forms.AssessmentForm(request.POST)
+        form = badge_forms.AssessmentForm(request.POST, prefix='assessment')
         if form.is_valid():
             assessment = form.save(commit=False)
-            formset = RatingFormSet(request.POST, queryset=Rubric.objects.filter(badges=badge))
-            for form in formset:
-                print form.as_table()
-                
-            if 'show_preview' not in request.POST:
+            rating_forms = []
+            ratings = []
+            valid_ratings = True
+            for rubric in rubrics:
+                rating_form = badge_forms.RatingForm(request.POST,
+                    prefix="rubric%s_" % rubric.id)
+                rating = rating_form.save(commit=False)
+                rating.rubric = rubric
+                if not rating_form.is_valid():
+                    valid_ratings = False
+                rating_forms.append((rubric, rating_form))
+                ratings.append(rating)
+            if valid_ratings and 'show_preview' not in request.POST:
                 assessment.assessor = user
                 assessment.assessed = submission.author
                 assessment.badge = submission.badge
                 assessment.submission = submission
                 assessment.save()
+                for rating in ratings:
+                    rating.assessment = assessment
+                    rating.save()
                 messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
                 return http.HttpResponseRedirect(submission.get_absolute_url())
-            if formset.is_valid():
-                formset.save()
-                if 'show_preview' not in request.POST:
-                    assessment.assessor = user
-                    assessment.assessed = submission.author
-                    assessment.badge = submission.badge
-                    assessment.submission = submission
-                    assessment.save()
-                    messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
-                    return http.HttpResponseRedirect(submission.get_absolute_url())
+            if not valid_ratings:
+                messages.error(request, _('Please correct errors below.'))
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
-        formset = RatingFormSet(queryset=Rubric.objects.filter(badges=badge))
-        form = badge_forms.AssessmentForm(submission=submission)
+        form = badge_forms.AssessmentForm(prefix='assessment')
+        rating_forms = []
+        for rubric in rubrics:
+            rating_form = badge_forms.RatingForm(prefix="rubric%s_" % rubric.id)
+            rating_forms.append((rubric, rating_form))
+
+    print form
 
     context = {
         'form': form,
         'submission': submission,
         'rubrics': rubrics,
         'badge': badge,
+        'rating_forms': rating_forms,
     }
     return render_to_response('badges/assessment_edit.html', context,
                               context_instance=RequestContext(request))
@@ -241,7 +249,6 @@ def show_assessment(request, assessment_id):
     return render_to_response('badges/_assessment_body.html', context,
                               context_instance=RequestContext(request))
 
-<<<<<<< HEAD
 
 @login_required
 def assess_peer(request, slug):
@@ -278,6 +285,7 @@ def assess_peer(request, slug):
     return render_to_response('badges/peer_assessment.html', context,
                               context_instance=RequestContext(request))
 
+
 @login_required
 def matching_peers(request, slug):
     badge = get_object_or_404(Badge, slug=slug,
@@ -289,6 +297,7 @@ def matching_peers(request, slug):
     json = simplejson.dumps([peer.username for peer in matching_peers])
 
     return http.HttpResponse(json, mimetype="application/x-javascript")
+
 
 def quiz_guess(request, fact_id):   
     message = {"fact_type": "", "fact_note": ""}

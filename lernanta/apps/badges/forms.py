@@ -28,26 +28,20 @@ class SubmissionForm(forms.ModelForm):
         fields = ('url', 'content',)
 
 
-class AssessmentForm(forms.Form):
-    submission = forms.IntegerField(required=True, widget=forms.HiddenInput())
-    comment = forms.CharField(
-                    label = _(u'Comment'),
-                    widget = forms.Textarea(attrs={'rows': '12', 'cols': '55'}),
-                    )
-    widgets = {
-               'ratings': forms.RadioSelect,
-               }
+class AssessmentForm(forms.ModelForm):
+    class Meta:
+        model = Assessment
+        fields = ('comment',)
 
-    def __init__(self, submission, *args, **kwargs):
-        super(AssessmentForm, self).__init__(*args, **kwargs)
-        self.submission = submission
-        self.badge = submission.badge
-    
-        rubrics = submission.badge.rubrics.all()
-        ratings = []
-        for rubric in rubrics:
-            ratings.append(Rating(rubric=rubric))
-        self.ratings = ratings
+
+class RatingForm(forms.ModelForm):
+
+    class Meta:
+        model = Rating
+        fields = ('score',)
+        widgets = {
+            'score': forms.RadioSelect,
+        }
 
 
 class PeerAssessmentForm(forms.ModelForm):
@@ -80,12 +74,3 @@ class PeerAssessmentForm(forms.ModelForm):
                 _('User %s needs to be your peer.') % username)
         return user
 
-
-class RatingForm(forms.ModelForm):
-
-    class Meta:
-        model = Rating
-        fields = ('score',)
-        widgets = {
-            'score': forms.RadioSelect,
-        }
