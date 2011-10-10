@@ -40,10 +40,15 @@ def show(request, slug):
     if user is not None:
         is_eligible = badge.is_eligible(user)
         #TODO application_pending =
+    peer_assessment = (badge.assessment_type == Badge.PEER)
+    skill_badge = (badge.badge_type == Badge.SKILL)
+    community_badge = (badge.badge_type == Badge.COMMUNITY)
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
         'rubrics': rubrics,
+        'peer_skill': peer_assessment and skill_badge,
+        'peer_community': peer_assessment and community_badge,
     }
     return render_to_response('badges/badge.html', context,
         context_instance=RequestContext(request))
@@ -223,7 +228,6 @@ def show_assessment(request, assessment_id):
                               context_instance=RequestContext(request))
 
 
-<<<<<<< HEAD
 @login_required
 def assess_peer(request, slug):
     badge = get_object_or_404(Badge, slug=slug,
@@ -250,6 +254,7 @@ def assess_peer(request, slug):
         else:
             form = badge_forms.PeerAssessmentForm(
                 badge, user)
+        form = badge_forms.PeerAssessmentForm(badge, user)
     context = {
         'badge': badge,
         'assessment': assessment,
