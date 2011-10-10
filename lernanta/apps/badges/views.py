@@ -149,12 +149,12 @@ def show_submission(request, submission_id):
     progress = badge.progress_for(submission.author)
     rubrics = badge.rubrics.all()
     assessments = Assessment.objects.filter(submission=submission_id)
-    user = request.user.get_profile()
     can_assess = True
-
-    has_assessed = Assessment.objects.filter(assessor=user, submission=submission)
-    if has_assessed or user == submission.author:
-        can_assess = False
+    if request.user.is_authenticated():
+        user = request.user.get_profile()
+        has_assessed = Assessment.objects.filter(assessor=user, submission=submission)
+        if has_assessed or user == submission.author:
+            can_assess = False
 
     context = {
         'badge': badge,
