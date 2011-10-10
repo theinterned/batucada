@@ -1,0 +1,60 @@
+{% extends "badges/base.html" %}
+
+{% load l10n_tags %}
+{% load embed %}
+
+{% block bodyclasses %}peer-assessment summary{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ badge.get_absolute_url }}">{{ badge.name }}</a>
+{% endblock %}
+
+{% block body %} 
+	<div id="main">
+	<h1>{{ _('Give Badge to your Peer') }}</h1>
+
+	<section id="badge">
+	      <img src="{{ badge.get_image_url }}" width="50" height="50" alt="{{ badge.name }}"/>
+	      {{ badge.description }}
+    </section>
+    <br class="clear"/>
+    
+	{% block form %}
+	<fieldset id="peer_assessment" class="peer assessment tabpane">
+	  <form method="post" action="{% locale_url assess_peer slug=badge.slug %}">
+	    {% csrf_token %}
+
+	    <div class="field{% if form.peer.errors %} error{% endif %}">
+	      <label for="id_peer">{{ _('Peer Username') }}</label>
+	      {{ form.peer }}
+	      {{ form.peer.errors }}
+	    </div>
+
+	    <div class="field{% if form.comment.errors %} error{% endif %}">
+	      <label for="id_comment">{{ _('Justification Comment') }}</label>
+	      {{ form.comment }}
+	      {{ form.comment.errors }}
+	    </div>
+	
+	    <p class="buttons">
+	      <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+	    </p>
+	    
+	  </form>
+	</fieldset>
+	{% endblock %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    $('#id_peer').autocomplete({
+        source: function( request, response ) {
+                url = "{% url matching_peers slug=badge.slug %}?term=" + request.term;
+                $.getJSON(url, function(data) {
+                    response(data);
+                });
+            }
+    });
+  </script>
+{% endblock %}

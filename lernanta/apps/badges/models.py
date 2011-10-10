@@ -56,7 +56,7 @@ class Badge(models.Model):
 
     COMPLETION = 'completion/aggregate'
     SKILL = 'skill'
-    PEER = 'peer-to-peer/community'
+    COMMUNITY = 'peer-to-peer/community'
     STEALTH = 'stealth'
     OTHER = 'other'
 
@@ -64,7 +64,7 @@ class Badge(models.Model):
         (COMPLETION, _('Completion/aggregate badge -- awarded by self assessments')),
         (SKILL, _('Skill badge -- badges that are skill based and assessed by peers '\
                   'with related logic')),
-        (PEER, _('Peer-to-peer/community badge -- badges granted by peers')),
+        (COMMUNITY, _('Peer-to-peer/community badge -- badges granted by peers')),
         (STEALTH, _('Stealth badge -- system awarded badges')),
         (OTHER, _('Other badges -- badges like course organizer or those staff issued'))
     )
@@ -168,6 +168,18 @@ class Badge(models.Model):
         else:
             progress = Progress(user=user, badge=self)
         return progress
+
+    def get_peers(self, profile):
+        from projects.models import Participation
+        from users.models import UserProfile
+        badge_projects = self.groups.values('id')
+        user_projects = Participation.objects.filter(
+            user=profile).values('project__id')
+        peers = Participation.objects.filter(
+            project__in=badge_projects).filter(
+            project__in=user_projects).values('user__id')
+        return UserProfile.objects.filter(deleted=False,
+            id__in=peers).exclude(id=profile.id)
 
 
 class Rubric(models.Model):
@@ -310,6 +322,17 @@ def update_final_rating(sender, **kwargs):
         assessment = instance.assessment
         assessment.update_final_rating()
 
-
 post_save.connect(update_final_rating, sender=Rating,
     dispatch_uid='badges_update_final_rating')
+
+def award_peer_community(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    if isinstance(instance, Assessment):
+        badge = instance.badge
+        peer_assessment = (badge.assessment_type == Badge.PEER)
+        community_badge = (badge.badge_type == Badge.COMMUNITY)
+        if peer_assessment and community_badge:
+            badge.award_to(instance.assessed)
+
+post_save.connect(award_peer_community, sender=Assessment,
+    dispatch_uid='badges_award_peer_community')

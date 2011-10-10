@@ -315,16 +315,19 @@ class Project(ModelBase):
             target_project=self, source__deleted=False)
 
     def get_project_badges(self, only_self_completion=False,
-            only_peer_skill=False):
+            only_peer_skill=False, only_peer_community=False):
         from badges.models import Badge
         assessment_types = []
         badge_types = []
-        if not only_self_completion:
+        if not only_self_completion and not only_peer_community:
             assessment_types.append(Badge.PEER)
             badge_types.append(Badge.SKILL)
-        if not only_peer_skill:
+        if not only_peer_skill and not only_peer_community:
             assessment_types.append(Badge.SELF)
             badge_types.append(Badge.COMPLETION)
+        if not only_peer_skill and not only_self_completion:
+            assessment_types.append(Badge.PEER)
+            badge_types.append(Badge.COMMUNITY)
         if assessment_types and badge_types:
             return self.badges.filter(assessment_type__in=assessment_types,
                 badge_type__in=badge_types)

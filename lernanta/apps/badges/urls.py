@@ -16,4 +16,8 @@ urlpatterns = patterns('',
       name='submission_show'),
   url(r'^award/(?P<submission_id>\d+)/assess/$', 'badges.views.assess_submission',
       name='assess_submission'),
+  url(r'(?P<slug>[\w-]+)/assessment/create/$', 'badges.views.assess_peer',
+      name='assess_peer'),
+  url(r'^(?P<slug>[\w-]+)/matching_peers/$', 'badges.views.matching_peers',
+      name='matching_peers'),
 )

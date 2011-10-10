@@ -9,7 +9,8 @@
 {% block body %}
 	<div id="main">
 	    <p>{{ badge.description }}</p>
-        
+
+      {% if peer_skill %}
         {% if is_eligible %}
 	        {% if application_open %}
 			  <p><a href="{% locale_url submission_show slug=badge.slug %}" title="{{ badge.name }}" target="_blank">view your application</a></p>
@@ -19,6 +20,10 @@
         {% else %}
             <p>Ineligible to apply at this time.</p>    
         {% endif %}
+      {% endif %}
+      {% if peer_community %}
+        <p><a href="{% locale_url assess_peer slug=badge.slug %}" title="{{ badge.name }}" target="_blank">{{ _('give badge to your peer')}}</a></p>
+      {% endif %}
         
         
     </div>	
