@@ -32,27 +32,6 @@ class AssessmentForm(forms.ModelForm):
         model = Assessment
         fields = ('comment',)
 
-class ProjectAddOrganizerForm(forms.Form):
-    user = forms.CharField()
-
-    def __init__(self, school, *args, **kwargs):
-        super(ProjectAddOrganizerForm, self).__init__(*args, **kwargs)
-        self.school = school
-
-    def clean_user(self):
-        username = self.cleaned_data['user']
-        try:
-            user = UserProfile.objects.get(username=username)
-            if user.deleted:
-                raise forms.ValidationError(
-                    _('That user account was deleted.'))
-        except UserProfile.DoesNotExist:
-            raise forms.ValidationError(
-                _('There is no user with username: %s.') % username)
-        if self.school.organizers.filter(id=user.id).exists():
-            raise forms.ValidationError(
-                _('User %s is organizing the school.') % username)
-        return user
 
 class PeerAssessmentForm(forms.ModelForm):
     peer = forms.CharField()
