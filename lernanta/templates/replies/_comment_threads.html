@@ -1,6 +1,7 @@
 {% load l10n_tags %}
 {% load comment_threads %}
 {% load embed %}
+{% load badge_tags %}
 
 {% for comment in comments %}
   {% if comment.deleted %}
@@ -55,6 +56,9 @@
               {% if user.is_authenticated %}
                 {% if user|can_reply_comment:comment %}
                   <a class="action reply-to action-bottom" href="{% locale_url comment_reply comment_id=comment.id %}">{{ _('Reply') }}</a>
+                  {% if is_challenge and comment.scope_object and not user|can_edit_comment:comment %}
+                    {% give_badge_action comment.scope_object comment.author %}
+                  {% endif %}
                 {% endif %}
                 {% if user|can_edit_comment:comment %}
                   <a class="action edit action-bottom" href="{% locale_url comment_edit comment_id=comment.id %}">{{ _('Edit') }}</a>
