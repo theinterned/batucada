@@ -38,17 +38,20 @@
 	<fieldset id="assessment_edit" class="assessment edit tabpane">
 	  <form method="post" action="{% locale_url assess_submission submission_id=submission.id %}">
 	    {% csrf_token %}
-	    <div class="field{% if form.rubrics.errors %} error{% endif %}">
-	      <label for="id_comment">{{ _('Give your overall rating') }}</label>
-	        {% if form.ratings %}
-	          <ul>
-			{% for rating in form.ratings %}
-				<li>{{ rating.rubric }}  {{ rating.score }}</li>
-			{% endfor %}
-			  </ul>
-			{% endif %}
-        </div>
-        
+
+
+        <ol>
+          {% for rubric, rating_form in rating_forms %}
+            <li>
+              {{ rubric.question }}
+              <div class="field{% if rating_form.score.errors %} error{% endif %}">
+	            {{ rating_form.score }}
+	            {{ rating_form.score.errors }}
+	          </div>
+            </li>
+          {% endfor %}
+        </ol>
+
 	    <div class="field{% if form.comment.errors %} error{% endif %}">
 	      <label for="id_comment">{{ _('Add your comments') }}</label>
 	      {{ form.comment }}
