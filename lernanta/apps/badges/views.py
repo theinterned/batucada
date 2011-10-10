@@ -184,7 +184,7 @@ def assess_submission(request, submission_id):
         messages.error(request, _('You have already assessed this submission.'))
         return http.HttpResponseRedirect(submission.get_absolute_url())
     
-    assessment = formset = NONE
+    assessment = formset = None
 
     if request.method == 'POST':
         form = badge_forms.AssessmentForm(request.POST)
