@@ -2,7 +2,7 @@ from django import forms
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext as _
 
-from badges.models import Badge, Submission, Assessment
+from badges.models import Badge, Submission, Assessment, Rating
 
 
 class BadgeForm(forms.ModelForm):
@@ -28,4 +28,14 @@ class AssessmentForm(forms.ModelForm):
 
     class Meta:
         model = Assessment
-        fields = ('comment', )
+        fields = ('comment',)
+
+
+class RatingForm(forms.ModelForm):
+
+    class Meta:
+        model = Rating
+        widgets = {
+            'score': forms.RadioSelect,
+        }
+

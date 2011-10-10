@@ -99,7 +99,7 @@ class Badge(models.Model):
     def get_image_url(self):
         # TODO: using project's default image until a default badge
         # image is added.
-        missing = settings.MEDIA_URL + 'images/project-missing.png'
+        missing = settings.MEDIA_URL + 'images/missing-badge.png'
         image_path = self.image.url if self.image else missing
         return image_path
 
@@ -218,7 +218,7 @@ class Submission(ModelBase):
 
 class Assessment(ModelBase):
     """Assessment for a badge"""
-    final_rating = models.FloatField(null=True, blank=True)
+    final_rating = models.FloatField(null=True, blank=True, default=0)
     assessor = models.ForeignKey('users.UserProfile', related_name='assessments')
     assessed = models.ForeignKey('users.UserProfile', related_name='badge_assessments')
     comment = RichTextField(config_name='rich', blank=False)
@@ -228,8 +228,15 @@ class Assessment(ModelBase):
                                    null=True, blank=True,
                                    help_text=_('If submission is blank, this is a '\
                                                'peer awarded assessment or superuser granted'))
+    def final_rating_as_percentage(self):
+        """Return the final rating as a percentage for 
+        styling of assessment view. Max number of ratings
+        is 4"""
+        return (self.final_rating/4.0)*100
 
     def update_final_rating(self):
+        """Used on Rating save signal to update the final
+        rating for the assessment"""
         ratings = Rating.objects.filter(assessment=self)
         final_rating = ratings.aggregate(final_rating=Avg('score'))['final_rating']
         self.final_rating = final_rating
@@ -242,13 +249,30 @@ class Assessment(ModelBase):
 
 class Rating(ModelBase):
     """Assessor's rating for the assessment's rubric(s)"""
+
+    NEVER = 1
+    SOMETIMES = 2
+    MOST_OF_THE_TIME = 3
+    ALWAYS = 4
+
+    RATING_CHOICES = ((NEVER, 'Never'), 
+                      (SOMETIMES, 'Sometimes'),
+                      (MOST_OF_THE_TIME, 'Most of the time'),
+                      (ALWAYS, 'Always'))
+
     assessment = models.ForeignKey('badges.Assessment', related_name='ratings')
-    score = models.PositiveIntegerField(default=1)
+    score = models.PositiveIntegerField(default=1, choices=RATING_CHOICES)
     rubric = models.ForeignKey('badges.Rubric', related_name='ratings')
+    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('%s for %s') % (self.score, self.rubric)
 
+    def score_as_percentage(self):
+        """Return the score as a percentage for 
+        styling of assessment view. Max number of ratings
+        is 4"""
+        return (self.score/4.0)*100
 
 class Progress(ModelBase):
     """Progress of a person to getting awarded a badge"""
