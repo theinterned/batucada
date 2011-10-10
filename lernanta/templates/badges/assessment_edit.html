@@ -40,12 +40,13 @@
 	    {% csrf_token %}
 	    <div class="field{% if form.rubrics.errors %} error{% endif %}">
 	      <label for="id_comment">{{ _('Give your overall rating') }}</label>
-  		  <ol>
-			{% for rubric in rubrics %}
-				<li>{{ rubric.question }}</li>
+	        {% if form.ratings %}
+	          <ul>
+			{% for rating in form.ratings %}
+				<li>{{ rating.rubric }}  {{ rating.score }}</li>
 			{% endfor %}
-			
-		  </ol>
+			  </ul>
+			{% endif %}
         </div>
         
 	    <div class="field{% if form.comment.errors %} error{% endif %}">
