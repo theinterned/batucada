@@ -1626,6 +1626,9 @@ header {}
     #posts .restore {
 		background: url("/media/images/restore.icon.png") 0 0 no-repeat;
 	}
+    #posts .give_badge_action {
+		background: url("/media/images/give-badge.png") 0 0 no-repeat;
+	}
     #posts .edit {
 		background: url("/media/images/edit.icon.png") 0 0 no-repeat;
 	}
@@ -1634,7 +1637,8 @@ header {}
 	}
 
     .project-kind-challenge #posts .reply-to.action-bottom, .project-kind-challenge #posts .delete.action-bottom,
-    .project-kind-challenge #posts .restore.action-bottom, .project-kind-challenge #posts .edit.action-bottom {
+    .project-kind-challenge #posts .restore.action-bottom, .project-kind-challenge #posts .edit.action-bottom,
+    .project-kind-challenge #posts .give_badge_action.action-bottom {
         font-size: 14px;
         float: left;
         display: block;
@@ -3662,4 +3666,27 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 .assessment-edit #submission-details {
 	float:left;
 	width:800px;
+}
+
+.rating { 
+    background: url(/media/images/blank.png) transparent 0 0 repeat-x;
+    height: 16px;
+    width:60px;
+    }
+
+.rating div { 
+    background: url(/media/images/circle.png) transparent 0 0 repeat-x; 
+    height: 16px;
+    }
+
+.rating span {
+    display: none;
+    }
+    
+.post-assessment {
+	width: 900px;
+}
+
+.project-kind-challenge .give_badge .give_badge_dialog {
+    display: none;
 }

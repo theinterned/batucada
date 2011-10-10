@@ -401,6 +401,10 @@ $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function
     $(this).parent().submit();
 });
 
+$('.project-kind-challenge a.give_badge_action').bind('click', function() {
+    $(this).parent().find('div.give_badge_dialog').dialog({modal: true});
+});
+
 $('.project-kind-challenge #task_list_section li').hover(function() {
       $(this).find('.taskView').show();
 }, function() {
