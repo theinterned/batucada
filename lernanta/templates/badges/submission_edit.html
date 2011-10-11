@@ -28,8 +28,9 @@
           {{ form.url.errors }}
         </div>
 	    <div class="field{% if form.content.errors %} error{% endif %}">
-	      <label for="id_content">{{ _('Reflection/Narrative') }}</label>
-	      {{ form.content }}
+	      <label for="id_content">{{ _('Reflection') }}</label>
+	      <textarea id="id_content" cols="75" rows="20" 
+	      placeholder="What did you learn through this challenge work? Why do you feel you deserve these badges?" name="content"></textarea>
 	      {{ form.content.errors }}
 	    </div>
 	
