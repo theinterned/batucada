@@ -3,12 +3,22 @@
 		  <li class="post-container post-assessment">
 			<p>Assessment from <a href="{{ assessment.assessor.get_absolute_url }}">{{ assessment.assessor }}</a> on {{ assessment.created_on }}</p>
 	        <div class="post-body assessment">
-	          <ul>
+	          <ul id="ratings">
 			  {% for rating in assessment.ratings.all %}
-			  		<li>{{ rating.rubric.question}} <div class="rating"><div style="width:{{ rating.score_as_percentage }}%"><span>{{ rating.score }} out of 4</span></div></div></span></li>
+			  		<li><div class="rubric-question">{{ rating.rubric.question}}</div> 
+			  		<div class="right-aligned-rating"><div class="rating"><div style="width:{{ rating.score_as_percentage }}%"><span>{{ rating.score }} out of 4</span></div></div>
+			  		<div class="rating-key">{{ rating.get_score_display }}</div>
+			  		</div>
+			  		<br class="clear"/></li>
 			  {% endfor %}
-			  	<li class="final-rating">Final rating: <div class="rating"><div style="width:{{ assessment.final_rating_as_percentage }}%"><span>{{ assessment.final_rating }} out of 4</span></div></div></li>
+			  	<li><div class="rubric-question final-rating">Final rating</div> 
+			  	<div class="right-aligned-rating">
+			  	<div class="rating"><div style="width:{{ assessment.final_rating_as_percentage }}%"><span>{{ assessment.final_rating }} out of 4</span></div></div>
+			  	
+			  	</div>
+			  	<br class="clear" /></li>
 			  </ul>
+			  <br class="clear" />
 			  <p><b>Comment:</b></p>
 	          {{ assessment.comment|embed|safe }}
 	        </div>
