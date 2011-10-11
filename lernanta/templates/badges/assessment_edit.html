@@ -38,21 +38,20 @@
 	<fieldset id="assessment_edit" class="assessment edit tabpane">
 	  <form method="post" action="{% locale_url assess_submission submission_id=submission.id %}">
 	    {% csrf_token %}
-
-
-        <ol>
+        <ol id="ratings">
           {% for rubric, rating_form in rating_forms %}
-            <li>
+            <li class="clear">
               {{ rubric.question }}
-              <div class="field{% if rating_form.score.errors %} error{% endif %}">
+              <div class="stars field{% if rating_form.score.errors %} error{% endif %}">
 	            {{ rating_form.score }}
 	            {{ rating_form.score.errors }}
+	            <div class="rating-key">{{ rating.get_score_display }}</div>
 	          </div>
             </li>
           {% endfor %}
         </ol>
 
-	    <div class="field{% if form.comment.errors %} error{% endif %}">
+	    <div class="clear field{% if form.comment.errors %} error{% endif %}">
 	      <label for="id_comment">{{ _('Add your comments') }}</label>
 	      {{ form.comment }}
 	      {{ form.comment.errors }}
@@ -65,4 +64,8 @@
 	  </form>
 	</fieldset>
 	{% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/media/js/rating.js"></script> 
 {% endblock %}

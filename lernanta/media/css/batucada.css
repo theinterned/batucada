@@ -442,7 +442,16 @@ input[type="file"] {
 form small,
 form .small {
 	font-size: 11px;
-	}		
+	}
+
+::-webkit-input-placeholder {
+  color: #ddd; !important
+}
+
+:-moz-placeholder {
+  color: #ddd; !important
+}
+		
 .hint {
 	color: #919191;
 	}
@@ -3710,3 +3719,25 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 .project-kind-challenge .give_badge .give_badge_dialog {
     display: none;
 }
+
+
+/* Rating system */
+
+.stars div a {
+  background: transparent url(/media/images/blank.png) 0 0 no-repeat;
+  display: inline-block;
+  height: 23px;
+  width: 17px;
+  text-indent: -999em;
+  overflow: hidden;
+}
+
+.stars a.rating-over {
+  background: transparent url(/media/images/blank.png) 0 0 no-repeat;
+}
+
+
+.stars a.rating {
+  background: transparent url(/media/images/circle.png) 0 0 no-repeat;
+}
+
