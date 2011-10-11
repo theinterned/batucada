@@ -3651,12 +3651,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 .assessment .rating {
-	float: right;
 	font-weight: bold;
 }
 
 .assessment .final-rating {
-	font-style: italic;
+	font-weight: bold;
 }
 
 .assessment ul li {
@@ -3667,6 +3666,16 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 .assessment-edit #submission-details {
 	float:left;
 	width:800px;
+}
+
+.assessment .rubric-question, .assessment .final-rating, .assessment .rating, .assessment .rating-key {
+    float: left;
+}
+
+.assessment .rating-key {
+    margin-left: 1em;
+    font-style: italic;
+    display: none;
 }
 
 .rating { 
@@ -3683,7 +3692,17 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 .rating span {
     display: none;
     }
-    
+
+.right-aligned-rating {
+    float: right; 
+    width: 200px;
+}
+
+.right-aligned-rating .rating-key .active {
+    display: inline;
+    border: 1px solid #f00;
+}
+
 .post-assessment {
 	width: 900px;
 }

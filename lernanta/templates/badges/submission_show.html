@@ -50,4 +50,14 @@
 	{% endif %}
     </div>
     
+    {% block js %}
+    <script>
+    $(".right-aligned-rating").hover(
+	  function () {
+		$("div.rating-key").hide();
+		$(this).find("div.rating-key").show();
+	  }
+	);
+    </script>
+    {% endblock %}
 {% endblock %}
