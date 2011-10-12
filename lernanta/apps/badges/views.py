@@ -13,6 +13,7 @@ from django_obi.views import send_badges
 from users.decorators import login_required
 from drumbeat import messages
 from l10n.urlresolvers import reverse
+from pagination.views import get_pagination_context
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
@@ -35,13 +36,15 @@ def show(request, slug):
     badge = get_object_or_404(Badge, slug=slug)
     user = request.user
     is_eligible = False
-    rubrics = badge.rubrics.all()
-    if user is not None:
+    if user.is_authenticated():
         is_eligible = badge.is_eligible(user)
-        #TODO application_pending =
+    rubrics = badge.rubrics.all()
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
+    submissions = badge.submissions.all().order_by(
+        '-created_on')
+    awards = badge.awards.all().order_by('-awarded_on')
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
@@ -49,6 +52,10 @@ def show(request, slug):
         'peer_skill': peer_assessment and skill_badge,
         'peer_community': peer_assessment and community_badge,
     }
+    context.update(get_pagination_context(request, awards,
+        24, prefix='awards_'))
+    context.update(get_pagination_context(request, submissions,
+        24, prefix='submissions_'))
     return render_to_response('badges/badge.html', context,
         context_instance=RequestContext(request))
 
