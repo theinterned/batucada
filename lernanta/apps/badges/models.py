@@ -93,7 +93,7 @@ class Badge(models.Model):
     last_update = models.DateTimeField(auto_now_add=True, blank=False)
 
     def __unicode__(self):
-        return "%s %s" % (self.name, _(' badge'))
+        return "%s %s" % (self.name, _('Badge'))
 
     @models.permalink
     def get_absolute_url(self):
@@ -123,38 +123,44 @@ class Badge(models.Model):
         super(Badge, self).save()
 
     def is_eligible(self, user):
-        """Is the user eligible for the badge?"""
-        if user is None:
+        """Check if the user eligible for the badge.
+
+        If some prerequisite badges have not being
+        awarded returns False."""
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            return not self.prerequisites.exclude(
+                id__in=awarded_badges).exists()
+        else:
             return False
-        if user == self.creator:
-            return False
-        for badge in self.prerequisites.all():
-            if not badge.is_awarded_to(user):
-                return False
-        return True
 
     def is_awarded_to(self, user):
         """Does the user have the badge?"""
         return Award.objects.filter(user=user, badge=self).count() > 0
 
     def award_to(self, user):
-        """Award the badge to the user"""
-        if not self.is_eligible(user):
-            return  # TODO: Throw exception?
+        """Award the badge to the user.
 
-        if self.unique and self.is_awarded_to(user):
-            # already awarded
-            return Award.objects.filter(user=user, badge=self)[0]
+        Returns None if no badge is awarded."""
+        if not self.is_eligible(user.user):
+            # If the user is not elegible the badge
+            # is not awarded.
+            return None
 
-        # TODO: check logic
-        # if passes, award
-        # always awarding for now
-        award = Award.objects.create(user=user, badge=self)
+        # If logic restrictions are not meet the badge is not awarded.
+        if not self.logic.is_eligible(self, user):
+            return None
 
-        return award
+        if self.unique:
+            # Do not award the badge if the user can not have the badge
+            # more than once and it was already awarded.
+            award, created = Award.objects.get_or_create(user=user,
+                badge=self)
+            return award if created else None
 
-    def get_awards(self):
-        return Award.objects.filter(badge=self)
+        return Award.objects.create(user=user, badge=self)
 
     def get_pending_submissions(self):
         """Submissions of users who haven't received the award yet"""
@@ -216,6 +222,39 @@ class Logic(models.Model):
         return msg % (self.min_qualified_adopter_votes,
             self.min_qualified_votes, self.min_rating)
 
+    def update_progress(self, assessment):
+        badge = assessment.badge
+        progress = badge.progress_for(assessment.assessed)
+        current_date = datetime.datetime.now()
+        participations = Participation.objects.filter(
+            project__in=badge.groups.values('id'),
+            user=assessment.assessor, left_on__isnull=True)
+        is_peer = participations.exists()
+        # TODO: Modify progress taking into account adopter role.
+        # Maybe an extra field will be required in the progress
+        # model to store the current adopter qualified ratings
+        # independently.
+        # Imagine the progress model is mostly used for caching so the
+        # progress does not need to be computed each time.
+        if is_peer:
+            progress.current_qualified_ratings += 1
+            progress.update_date = current_date
+            progress.save()
+        # Try to award badge to user
+        badge.award_to(user)
+
+    def is_eligible(self, badge, user):
+        min_votes = self.min_qualified_votes
+        progress = badge.progress_for(user)
+        if min_votes and min_votes > self.current_qualified_ratings:
+            return False
+        average = Assessment.objects.filter(user=user, badge=badge).aggregate(
+            Avg('final_rating'))['final_rating_avg']
+        min_rating = self.logic.min_rating
+        if min_rating and min_rating > average:
+            return False
+        return True
+
 
 class Submission(ModelBase):
     """Application for a badge"""
@@ -234,6 +273,7 @@ class Submission(ModelBase):
     @models.permalink
     def get_absolute_url(self):
         return ('submission_show', (), {
+            'slug': self.badge.slug,
             'submission_id': self.id,
         })
 
@@ -260,6 +300,17 @@ class Assessment(ModelBase):
         is 4"""
         return (self.final_rating / 4.0) * 100
 
+    def get_final_rating_display(self):
+        rating_position = int(round(self.final_rating)) - 1
+        # Guarantee rating_position does not go above or bellow
+        # the boundaries.
+        if rating_position < 0:
+            rating_position = 0
+        max_index = len(Rating.RATING_CHOICES) - 1
+        if rating_position > max_index:
+            rating_position = max_index
+        return Rating.RATING_CHOICES[rating_position][1]
+
     def update_final_rating(self):
         """Used on Rating save signal to update the final
         rating for the assessment"""
@@ -283,10 +334,10 @@ class Rating(ModelBase):
     ALWAYS = 4
 
     RATING_CHOICES = (
-        (NEVER, 'Never'),
-        (SOMETIMES, 'Sometimes'),
-        (MOST_OF_THE_TIME, 'Most of the time'),
-        (ALWAYS, 'Always')
+        (NEVER, _('Never')),
+        (SOMETIMES, _('Sometimes')),
+        (MOST_OF_THE_TIME, _('Most of the time')),
+        (ALWAYS, _('Always'))
     )
 
     assessment = models.ForeignKey('badges.Assessment', related_name='ratings')
@@ -309,7 +360,7 @@ class Progress(ModelBase):
     """Progress of a person to getting awarded a badge"""
     badge = models.ForeignKey('badges.Badge', related_name="progresses")
     current_qualified_ratings = models.PositiveIntegerField(default=0,
-        help_text=_('Current number of qualified ratings before awarding'))
+        help_text=_('Current number of qualified ratings'))
     user = models.ForeignKey('users.UserProfile')
     updated_on = models.DateTimeField(
         help_text=_('Last time this person received a qualified rating'),
@@ -337,24 +388,29 @@ class Award(models.Model):
 # Signals #
 ###########
 
-def update_final_rating(sender, **kwargs):
+def post_rating_save(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    if isinstance(instance, Rating):
+    created = kwargs.get('created', False)
+    if created and isinstance(instance, Rating):
         assessment = instance.assessment
         assessment.update_final_rating()
+        # if all the ratings where created.
+        if badge.rubrics.count() == assessment.ratings.count():
+             badge.logic.update_progress(assessment)
 
-post_save.connect(update_final_rating, sender=Rating,
-    dispatch_uid='badges_update_final_rating')
+post_save.connect(post_rating_save, sender=Rating,
+    dispatch_uid='badges_post_rating_save')
 
 
-def award_peer_community(sender, **kwargs):
+def post_assessment_save(sender, **kwargs):
     instance = kwargs.get('instance', None)
-    if isinstance(instance, Assessment):
+    created = kwargs.get('created', False)
+    if created and isinstance(instance, Assessment):
         badge = instance.badge
-        peer_assessment = (badge.assessment_type == Badge.PEER)
-        community_badge = (badge.badge_type == Badge.COMMUNITY)
-        if peer_assessment and community_badge:
-            badge.award_to(instance.assessed)
+        # No need to wait for ratings to be created if
+        # there is no rubric.
+        if badge.rubrics.count() == 0 and badge.logic:
+            badge.logic.update_progress(assessment)
 
-post_save.connect(award_peer_community, sender=Assessment,
-    dispatch_uid='badges_award_peer_community')
+post_save.connect(post_assessment_save, sender=Assessment,
+    dispatch_uid='badges_post_assessment_save')

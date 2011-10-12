@@ -3,7 +3,7 @@
 		  <li class="post-container post-assessment">
 			<p>Assessment from <a href="{{ assessment.assessor.get_absolute_url }}">{{ assessment.assessor }}</a> on {{ assessment.created_on }}</p>
 	        <div class="post-body assessment">
-	          <ul id="ratings">
+	          <ol id="ratings">
 			  {% for rating in assessment.ratings.all %}
 			  		<li><div class="rubric-question">{{ rating.rubric.question}}</div> 
 			  		<div class="right-aligned-rating"><div class="rating"><div style="width:{{ rating.score_as_percentage }}%"><span>{{ rating.score }} out of 4</span></div></div>
@@ -11,10 +11,13 @@
 			  		</div>
 			  		<br class="clear"/></li>
 			  {% endfor %}
+              </ol>
+              <br>
+              <ul>
 			  	<li><div class="rubric-question final-rating">Final rating</div> 
 			  	<div class="right-aligned-rating">
-			  	<div class="rating"><div style="width:{{ assessment.final_rating_as_percentage }}%"><span>{{ assessment.final_rating }} out of 4</span></div></div>
-			  	
+			  	  <div class="rating"><div style="width:{{ assessment.final_rating_as_percentage }}%"><span>{{ assessment.final_rating }} out of 4</span></div></div>
+			  	  <div class="rating-key">{{ assessment.get_final_rating_display }}</div>
 			  	</div>
 			  	<br class="clear" /></li>
 			  </ul>

@@ -4,40 +4,53 @@
 
 {% block bodyclasses %}submission-edit summary{% endblock %}
 
-{% block breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.name }}</a>
-
-{% endblock %}
-
 {% block body %} 
 	<div id="main">
-	<b>Skill badges available for this challenge:</b>
-	<section id="badge-details">
-    	{% include "badges/_badge_card.html" with badge=badge rubrics=rubrics %}
-    </section>
-    	
+	<h1>{{ _('Apply for ') }}{{ badge }}</h1>
+    <br>
+    <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" class="left-badge-image"/>
+    <p>{{ badge.description }}
+    {% if rubrics %}
+      <h2>{{ _('Rubric') }}</h2>
+      <ol>
+        {% for rubric in rubrics %}
+          <li>{{ rubric.question }}</li>
+        {% endfor %}
+      </ol>
+    {% endif %}</p>
+
+    {% if related_projects %}
+      <br><br>
+      <h1>{{ _('Submit your Work from') }}</h1>
+      <br>
+      {% for related_project in related_projects %}
+        <a href="{{ related_project.get_absolute_url }}" title="{{ related_project|title }}"><img src="{{ related_project.get_image_url }}" width="113.4" height="70" alt="{{ related_project|title }}" class="badge-graphic"></a>
+      {% endfor %}
+    {% else %}
+        <h1>{{ _('Submit your Work') }}</h1>
+    {% endif %}
+
 	{% block form %}
 	<fieldset id="submission_edit" class="submission edit tabpane">
 	  <form method="post" action="{% if submission %}{% locale_url submission_edit slug=badge.slug submission_id=submission.pk %}{% else %}{% locale_url submission_create slug=badge.slug%}{% endif %}">
 	    {% csrf_token %}
-	    <p><b>{{ _('Submit your work from the challenge below (as a URL) as well as a reflection on your work and what you learned.') }}</b></p>
 	    <div class="field{% if form.url.errors %} error{% endif %}">
-          <label for="id_url">{{ _('URL to your work from the challenge') }}</label>
+          <label for="id_url">{{ _('URL') }}</label>
+          <p class="hint">{{ _('Link to the work you are submitting.') }}</p>
           {{ form.url }}
           {{ form.url.errors }}
         </div>
 	    <div class="field{% if form.content.errors %} error{% endif %}">
 	      <label for="id_content">{{ _('Reflection') }}</label>
-	      <textarea id="id_content" cols="75" rows="20" 
-	      placeholder="What did you learn through this challenge work? Why do you feel you deserve these badges?" name="content"></textarea>
+          <p class="hint">{{ _('What did you learn through this work? Why do you feel you deserve this badge?') }}</p>
+	      {{ form.content }}
 	      {{ form.content.errors }}
 	    </div>
 	
 	    <p class="buttons">
 	      <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
 	    </p>
-	    
+
 	  </form>
 	</fieldset>
 	{% endblock %}

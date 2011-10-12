@@ -1,6 +1,62 @@
 [
     {
         "pk": 1, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Can use the Mozilla Developer Network HTML reference to identify and use basic HTML tags"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Can translate HTML tags like <div>, <p> into real world structures"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Understands and communicates what DNS is by using  different types of media"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Has a domain name that they can use to further their exploration of DNS"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Configured a DNS to point at a personal hosting account"
+        }
+    },
+    {
+        "pk": 6, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Provides information on web hosting services"
+        }
+    },
+    {
+        "pk": 7, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Installed an FTP or SFTP client"
+        }
+    },
+    {
+        "pk": 8, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "Uploaded content that is visible live in a browser"
+        }
+    },
+    {
+        "pk": 1, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -136,11 +192,31 @@
             "logic": null, 
             "unique": true, 
             "image": "images/sow_badges/you-re-live.png", 
-            "name": "Your Webspace"
+            "name": "You're LIVE"
         }
     },
     {
         "pk": 8, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all Webmaking101 challenge tasks as completed.", 
+            "creator": null, 
+            "prerequisites": [1,2,3,4,5,6,7], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "webmaking101-basic", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/webmaking101-basic.png", 
+            "name": "Webmaking101 Basic"
+        }
+    },
+    {
+        "pk": 9, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -160,7 +236,7 @@
         }
     },
     {
-        "pk": 9, 
+        "pk": 10, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -180,7 +256,7 @@
         }
     },
     {
-        "pk": 10, 
+        "pk": 11, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -200,14 +276,14 @@
         }
     },
     {
-        "pk": 11, 
+        "pk": 12, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
             "last_update": "2011-10-02 22:28:29", 
             "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
             "creator": null, 
-            "prerequisites": [9], 
+            "prerequisites": [11], 
             "assessment_type": "peer", 
             "rubrics": [], 
             "slug": "team-player", 
@@ -220,7 +296,7 @@
         }
     },
     {
-        "pk": 12, 
+        "pk": 13, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -240,7 +316,7 @@
         }
     },
     {
-        "pk": 13, 
+        "pk": 14, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -249,7 +325,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [1,2], 
             "slug": "html-basic", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
@@ -260,7 +336,7 @@
         }
     },
     {
-        "pk": 14, 
+        "pk": 15, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -269,7 +345,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [3,4], 
             "slug": "dns-basic", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
@@ -280,7 +356,7 @@
         }
     },
     {
-        "pk": 15, 
+        "pk": 16, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -289,7 +365,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [5,6], 
             "slug": "hosting", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
@@ -297,6 +373,26 @@
             "unique": true, 
             "image": "images/sow_badges/hosting.png", 
             "name": "Hosting"
+        }
+    },
+    {
+        "pk": 17, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
+            "description": "The Publishing Badge recognizes the ability to take content from a local computer, publish it live on the web and be able to view it in a browser.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [7,8], 
+            "slug": "publishing", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "skill", 
+            "logic": 1, 
+            "unique": true, 
+            "image": "images/sow_badges/publishing.png", 
+            "name": "Publishing"
         }
     },
     {

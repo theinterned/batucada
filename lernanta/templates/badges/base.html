@@ -1,21 +1,16 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 
-{% block title %}{{ badge.title }}{% endblock %}
+{% block title %}{{ badge }}{% endblock %}
 
-{% block bodyid %}one-column-page{% endblock %}
-{% block bodyclasses %}page{% endblock %}
+{% block bodyid %}badges-page{% endblock %}
 
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.title }}</a>
+  <a href="{% locale_url badges_list %}">{{ _('Badges') }}</a>
+  {% if badge %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge }}</a>
+  {% endif %}
 {% endblock %}
 
-{% block body %} 
-    <div id="main">
-        <h1>{{ badge.title }}</h1>
-        <hr />
-        {{ badge.description|safe }}
-    </div>
-
-{% endblock %}

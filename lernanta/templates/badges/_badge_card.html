@@ -7,7 +7,7 @@
 	    </a>
 	  </figure>
 	  <h3>Awarded</h3>
-	  {{ badge.get_awards.count }}
+	  {{ badge.awards.count }}
 	  <h3>Pending</h3>
 	  {{ badge.get_pending_submissions|length }}
   </div>
@@ -19,11 +19,11 @@
 	  {% if rubrics %}
 	  <h4>Rubrics</h4>
 	  <div class="meta">
-		  <ul>
+		  <ol>
 			{% for rubric in rubrics %}
 				<li>{{ rubric.question }}</li>
 			{% endfor %}
-		  </ul>
+		  </ol>
 	  </div>
 	  {% endif %}
   </div>

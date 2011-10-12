@@ -24,7 +24,7 @@ from django.utils import simplejson
 log = logging.getLogger(__name__)
 
 
-def badge_description(request, slug):
+def pilot_badge_redirect(request, slug):
     pilot_url = get_badge_url(slug)
     if pilot_url:
         return http.HttpResponseRedirect(pilot_url)
@@ -32,56 +32,19 @@ def badge_description(request, slug):
         raise http.Http404
 
 
-def show(request, slug):
-    badge = get_object_or_404(Badge, slug=slug)
-    user = request.user
-    is_eligible = False
-    if user.is_authenticated():
-        is_eligible = badge.is_eligible(user)
-    rubrics = badge.rubrics.all()
-    peer_assessment = (badge.assessment_type == Badge.PEER)
-    skill_badge = (badge.badge_type == Badge.SKILL)
-    community_badge = (badge.badge_type == Badge.COMMUNITY)
-    submissions = badge.submissions.all().order_by(
-        '-created_on')
-    awards = badge.awards.all().order_by('-awarded_on')
-    context = {
-        'badge': badge,
-        'is_eligible': is_eligible,
-        'rubrics': rubrics,
-        'peer_skill': peer_assessment and skill_badge,
-        'peer_community': peer_assessment and community_badge,
-    }
-    context.update(get_pagination_context(request, awards,
-        24, prefix='awards_'))
-    context.update(get_pagination_context(request, submissions,
-        24, prefix='submissions_'))
-    return render_to_response('badges/badge.html', context,
-        context_instance=RequestContext(request))
-
-
 @login_required
-def create(request):
-    if not request.user.is_superuser:
-        raise http.Http404
-    if request.method == 'POST':
-        form = badge_forms.BadgeForm(request.POST)
-        if form.is_valid():
-            badge = form.save()
-            badge.create()
-            messages.success(request,
-                _('The %s has been created.') % badge.name)
-            return http.HttpResponseRedirect(reverse('badges_show', kwargs={
-                'slug': badge.slug,
-            }))
-        else:
-            msg = _("Problem creating the badge.")
-            messages.error(request, msg)
-    else:
-        form = badge_forms.BadgeForm()
-    return render_to_response('badges/badge_edit_summary.html', {
-        'form': form, 'new_tab': True,
-    }, context_instance=RequestContext(request))
+def badges_manage(request):
+    #FIXME: Re-enable after updating integration with the OBI.
+    raise http.Http404
+    profile = request.user.get_profile()
+    badges_help_url = reverse('static_page_show', kwargs=dict(
+            slug='assessments-and-badges'))
+    return send_badges(request,
+        template_name='badges/profile_badges_manage.html',
+        send_badges_complete_view='users_badges_manage_done',
+        render_failure=badges_manage_render_failure,
+        extra_context=dict(profile=profile, obi_url=settings.MOZBADGES['hub'],
+        badges_help_url=badges_help_url, badges_tab=True))
 
 
 @login_required
@@ -101,32 +64,77 @@ def badges_manage_render_failure(request, message, status=500):
     return http.HttpResponseRedirect(reverse('users_badges_manage'))
 
 
+def show(request, slug):
+    try:
+        badge = Badge.objects.get(slug=slug)
+    except Badge.DoesNotExist:
+        return pilot_badge_redirect(request, slug)
+    is_eligible = badge.is_eligible(request.user)
+    rubrics = badge.rubrics.all()
+    peer_assessment = (badge.assessment_type == Badge.PEER)
+    skill_badge = (badge.badge_type == Badge.SKILL)
+    community_badge = (badge.badge_type == Badge.COMMUNITY)
+    submissions = badge.submissions.all().order_by(
+        '-created_on')
+    awards = badge.awards.all().order_by('-awarded_on')
+    related_projects = badge.groups.all()
+    context = {
+        'badge': badge,
+        'is_eligible': is_eligible,
+        'rubrics': rubrics,
+        'peer_skill': peer_assessment and skill_badge,
+        'peer_community': peer_assessment and community_badge,
+        'related_projects': related_projects,
+    }
+    context.update(get_pagination_context(request, awards,
+        24, prefix='awards_'))
+    context.update(get_pagination_context(request, submissions,
+        24, prefix='submissions_'))
+    return render_to_response('badges/badge.html', context,
+        context_instance=RequestContext(request))
+
+
+def badges_list(request):
+    badges = Badge.objects.all()
+    return render_to_response('badges/badges_list.html',
+        {'badges': badges},
+        context_instance=RequestContext(request))
+
+
 @login_required
-def badges_manage(request):
-    #FIXME: Re-enable after updating integration with the OBI.
-    raise http.Http404
-    profile = request.user.get_profile()
-    badges_help_url = reverse('static_page_show', kwargs=dict(
-            slug='assessments-and-badges'))
-    return send_badges(request,
-        template_name='badges/profile_badges_manage.html',
-        send_badges_complete_view='users_badges_manage_done',
-        render_failure=badges_manage_render_failure,
-        extra_context=dict(profile=profile, obi_url=settings.MOZBADGES['hub'],
-        badges_help_url=badges_help_url, badges_tab=True))
+def create(request):
+    if not request.user.is_superuser:
+        raise http.Http404
+    if request.method == 'POST':
+        form = badge_forms.BadgeForm(request.POST)
+        if form.is_valid():
+            badge = form.save()
+            messages.success(request,
+                _('The %s has been created.') % badge.name)
+            return http.HttpResponseRedirect(reverse('badges_show', kwargs={
+                'slug': badge.slug,
+            }))
+        else:
+            msg = _("Problem creating the badge.")
+            messages.error(request, msg)
+    else:
+        form = badge_forms.BadgeForm()
+    return render_to_response('badges/badge_edit_summary.html', {
+        'form': form, 'new_tab': True,
+    }, context_instance=RequestContext(request))
 
 
 @login_required
 def create_submission(request, slug):
-    badge = get_object_or_404(Badge, slug=slug)
-    can_apply = badge.is_eligible(request.user)
-    rubrics = badge.rubrics.all()
-    if not can_apply:
+    badge = get_object_or_404(Badge, slug=slug,
+        assessment_type=Badge.PEER, badge_type=Badge.SKILL)
+    if not badge.is_eligible(request.user):
         messages.error(request,
             _('You are lacking one or more of the requirements.'))
-        # TODO: Reason why
         return http.HttpResponseRedirect(badge.get_absolute_url())
     user = request.user.get_profile()
+    rubrics = badge.rubrics.all()
+    related_projects = badge.groups.all()
     submission = None
     if request.method == 'POST':
         form = badge_forms.SubmissionForm(request.POST)
@@ -138,7 +146,7 @@ def create_submission(request, slug):
                 submission.save()
                 messages.success(request,
                     _('Submission created and out for review!'))
-                return http.HttpResponseRedirect(badge.get_absolute_url())
+                return http.HttpResponseRedirect(submission.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
@@ -148,13 +156,15 @@ def create_submission(request, slug):
         'form': form,
         'badge': badge,
         'rubrics': rubrics,
+        'related_projects': related_projects,
     }
     return render_to_response('badges/submission_edit.html', context,
-                              context_instance=RequestContext(request))
+        context_instance=RequestContext(request))
 
 
-def show_submission(request, submission_id):
-    submission = get_object_or_404(Submission, id=submission_id)
+def show_submission(request, slug, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id,
+        badge__slug=slug)
     badge = submission.badge
     progress = badge.progress_for(submission.author)
     rubrics = badge.rubrics.all()
@@ -181,8 +191,9 @@ def show_submission(request, submission_id):
 
 
 @login_required
-def assess_submission(request, submission_id):
-    submission = get_object_or_404(Submission, id=submission_id)
+def assess_submission(request, slug, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id,
+        badge__slug=slug)
     rubrics = submission.badge.rubrics.all()
     badge = submission.badge
     user = request.user.get_profile()
@@ -266,7 +277,7 @@ def show_assessment(request, assessment_id):
 
 
 @login_required
-def assess_peer(request, slug):
+def create_assessment(request, slug):
     badge = get_object_or_404(Badge, slug=slug,
         assessment_type=Badge.PEER, badge_type=Badge.COMMUNITY)
     user = request.user.get_profile()
@@ -313,3 +324,7 @@ def matching_peers(request, slug):
     json = simplejson.dumps([peer.username for peer in matching_peers])
 
     return http.HttpResponse(json, mimetype="application/x-javascript")
+
+
+def show_user_awards(request, slug, username):
+    pass

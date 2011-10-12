@@ -5,11 +5,6 @@
 
 {% block bodyclasses %}peer-assessment summary{% endblock %}
 
-{% block breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{{ badge.get_absolute_url }}">{{ badge.name }}</a>
-{% endblock %}
-
 {% block body %} 
 	<div id="main">
 	<h1>{{ _('Give Badge to your Peer') }}</h1>
@@ -22,7 +17,7 @@
     
 	{% block form %}
 	<fieldset id="peer_assessment" class="peer assessment tabpane">
-	  <form method="post" action="{% locale_url assess_peer slug=badge.slug %}">
+	  <form method="post" action="{% locale_url assessment_create slug=badge.slug %}">
 	    {% csrf_token %}
 
 	    <div class="field{% if form.peer.errors %} error{% endif %}">
