@@ -3,10 +3,10 @@ import logging
 from django import http
 from django.utils.translation import ugettext as _
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
+from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.forms.models import modelformset_factory
 
 from django_obi.views import send_badges
 
@@ -16,10 +16,9 @@ from l10n.urlresolvers import reverse
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
-from badges.models import Badge, Submission, Rubric, Assessment, Rating
+from badges.models import Badge, Submission, Assessment
 
 from django.utils import simplejson
-from Image import NONE
 
 log = logging.getLogger(__name__)
 
@@ -114,7 +113,8 @@ def create_submission(request, slug):
     can_apply = badge.is_eligible(request.user)
     rubrics = badge.rubrics.all()
     if not can_apply:
-        messages.error(request, _('You are lacking one or more of the requirements.'))
+        messages.error(request,
+            _('You are lacking one or more of the requirements.'))
         # TODO: Reason why
         return http.HttpResponseRedirect(badge.get_absolute_url())
     user = request.user.get_profile()
@@ -127,7 +127,8 @@ def create_submission(request, slug):
             submission.author = user
             if 'show_preview' not in request.POST:
                 submission.save()
-                messages.success(request, _('Submission created and out for review!'))
+                messages.success(request,
+                    _('Submission created and out for review!'))
                 return http.HttpResponseRedirect(badge.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
@@ -152,7 +153,8 @@ def show_submission(request, submission_id):
     can_assess = True
     if request.user.is_authenticated():
         user = request.user.get_profile()
-        has_assessed = Assessment.objects.filter(assessor=user, submission=submission)
+        has_assessed = Assessment.objects.filter(assessor=user,
+            submission=submission)
         if has_assessed or user == submission.author:
             can_assess = False
 
@@ -161,7 +163,7 @@ def show_submission(request, submission_id):
         'submission': submission,
         'progress': progress,
         'rubrics': rubrics,
-        'assessments': assessments, 
+        'assessments': assessments,
         'can_assess': can_assess,
         }
 
@@ -175,15 +177,17 @@ def assess_submission(request, submission_id):
     rubrics = submission.badge.rubrics.all()
     badge = submission.badge
     user = request.user.get_profile()
-    already_assessed = Assessment.objects.filter(assessor=user, submission=submission)
+    already_assessed = Assessment.objects.filter(assessor=user,
+        submission=submission)
 
     if request.user == submission.author:
         messages.error(request, _('You cannot assess your own work.'))
         return http.HttpResponseRedirect(submission.get_absolute_url())
     if already_assessed:
-        messages.error(request, _('You have already assessed this submission.'))
+        messages.error(request,
+            _('You have already assessed this submission.'))
         return http.HttpResponseRedirect(submission.get_absolute_url())
-    
+
     assessment = None
 
     if request.method == 'POST':
@@ -211,7 +215,8 @@ def assess_submission(request, submission_id):
                 for rating in ratings:
                     rating.assessment = assessment
                     rating.save()
-                messages.success(request, _('Assessment saved. Thank you for giving your feedback to your peer!'))
+                messages.success(request,
+                    _('Assessment saved. Thank you for your feedback!'))
                 return http.HttpResponseRedirect(submission.get_absolute_url())
             if not valid_ratings:
                 messages.error(request, _('Please correct errors below.'))
@@ -221,7 +226,8 @@ def assess_submission(request, submission_id):
         form = badge_forms.AssessmentForm(prefix='assessment')
         rating_forms = []
         for rubric in rubrics:
-            rating_form = badge_forms.RatingForm(prefix="rubric%s_" % rubric.id)
+            rating_form = badge_forms.RatingForm(
+                prefix="rubric%s_" % rubric.id)
             rating_forms.append((rubric, rating_form))
 
     print form
@@ -239,7 +245,7 @@ def assess_submission(request, submission_id):
 
 def show_assessment(request, assessment_id):
     assessment = get_object_or_404(Assessment, id=assessment_id)
-    badge = assessment.badge 
+    badge = assessment.badge
 
     context = {
         'assessment': assessment,
@@ -265,7 +271,8 @@ def assess_peer(request, slug):
                 assessment.assessed = form.cleaned_data['peer']
                 assessment.badge = badge
                 assessment.save()
-                messages.success(request, _('Thank you for giving a badge to your peer!'))
+                messages.success(request,
+                    _('Thank you for giving a badge to your peer!'))
                 return http.HttpResponseRedirect(badge.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
@@ -297,16 +304,3 @@ def matching_peers(request, slug):
     json = simplejson.dumps([peer.username for peer in matching_peers])
 
     return http.HttpResponse(json, mimetype="application/x-javascript")
-
-
-def quiz_guess(request, fact_id):   
-    message = {"fact_type": "", "fact_note": ""}
-    if request.is_ajax():
-        print "In quiz guess and is ajax"
-        fact = get_object_or_404(Fact, id=fact_id)
-        message['fact_type'] = fact.type
-        message['fact_note'] = fact.note
-    else:
-        message = "You're the lying type, I can just tell."
-    json = simplejson.dumps(message)
-    return HttpResponse(json, mimetype='application/json')

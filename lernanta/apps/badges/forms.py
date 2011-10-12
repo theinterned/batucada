@@ -1,10 +1,7 @@
 from django import forms
-from django.db import models
-from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext as _
 
 from users.models import UserProfile
-from richtext.models import RichTextField
 
 from badges.models import Badge, Submission, Assessment, Rating
 
@@ -73,4 +70,3 @@ class PeerAssessmentForm(forms.ModelForm):
             raise forms.ValidationError(
                 _('User %s needs to be your peer.') % username)
         return user
-

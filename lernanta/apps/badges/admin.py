@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from badges.models import Badge, Rubric, Award, Logic, Submission, Assessment, Rating, Progress
+from badges.models import Badge, Rubric, Award, Logic
+from badges.models import Submission, Assessment, Rating, Progress
 
 
 class BadgeAdmin(admin.ModelAdmin):

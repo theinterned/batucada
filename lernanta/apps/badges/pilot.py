@@ -70,6 +70,8 @@ def get_awarded_badges(username):
                     url = settings.BADGE_EVIDENCE_URL % dict(badge_id=badge.id,
                         badge_tag=tag.name, username=username)
                     image_url = pilot_image(tag, badge)
+                    description_url = reverse('badge_description',
+                         kwargs=dict(slug=tag.name))
                     data = {
                         'name': custom_badge.name,
                         'type': badge.type,
@@ -78,7 +80,7 @@ def get_awarded_badges(username):
                         'image': image_url,
                         'count': 1,
                         'description': custom_badge.description,
-                        'template': reverse('badge_description', kwargs=dict(slug=tag.name)),
+                        'template': description_url,
                     }
                     badges[tag.name] = data
     except User.DoesNotExist:
