@@ -1387,7 +1387,8 @@ header {}
   margin-left: 140px;
 }
 
-#project_gallery #main, #project_directory #main, #school_home #main , #user_list #main, #one-column-page #main {
+#project_gallery #main, #project_directory #main, #school_home #main , #user_list #main, #one-column-page #main,
+.badge-show #main {
   width: 970px;
   margin-right: 40px;
   margin-left: 0;

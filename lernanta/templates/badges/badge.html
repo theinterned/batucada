@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 
+{% block bodyclasses %}badge-show{% endblock %}
+
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
   <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.name }}</a>
 {% endblock %}
 
 {% block body %}
-	<div id="main">
-	    <p>{{ badge.description }}</p>
+  <div id="main">
+    <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" style="margin-left: 10px; margin-right: 10px; float: left;"/>
+    <h1>{{ badge }}</h1>
+    <p>{{ badge.description }}</p>
 
       {% if peer_skill %}
         {% if is_eligible %}
