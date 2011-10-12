@@ -150,7 +150,7 @@ class Badge(models.Model):
             return None
 
         # If logic restrictions are not meet the badge is not awarded.
-        if not self.logic.is_eligible(self, user):
+        if self.logic and not self.logic.is_eligible(self, user):
             return None
 
         if self.unique:
@@ -323,6 +323,13 @@ class Assessment(ModelBase):
     def __unicode__(self):
         return _('%s for %s for %s') \
             % (self.assessor, self.assessed, self.badge)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('assessment_show', (), {
+            'slug': self.badge.slug,
+            'assessment_id': self.id,
+        })
 
 
 class Rating(ModelBase):

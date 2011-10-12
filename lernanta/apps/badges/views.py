@@ -78,6 +78,7 @@ def show(request, slug):
         '-created_on')
     awards = badge.awards.all().order_by('-awarded_on')
     related_projects = badge.groups.all()
+    prerequisites = badge.prerequisites.all()
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
@@ -85,6 +86,7 @@ def show(request, slug):
         'peer_skill': peer_assessment and skill_badge,
         'peer_community': peer_assessment and community_badge,
         'related_projects': related_projects,
+        'prerequisites': prerequisites,
     }
     context.update(get_pagination_context(request, awards,
         24, prefix='awards_'))
@@ -293,7 +295,7 @@ def create_assessment(request, slug):
                 assessment.save()
                 messages.success(request,
                     _('Thank you for giving a badge to your peer!'))
-                return http.HttpResponseRedirect(badge.get_absolute_url())
+                return http.HttpResponseRedirect(assessment.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
     else:

@@ -7,7 +7,7 @@
 
 {% block body %} 
 	<div id="main">
-	<h1>{{ _('Please Review ') }} {{ submission.author }}{{ _('\'s my work for the ') }} {{ submission.badge }}</h1>
+	<h1>{{ _('Please Review ') }} {{ submission.author }}{{ _('\'s work for the ') }} {{ submission.badge }}</h1>
 	<br>
     <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" class="left-badge-image"/>
     <p>{{ badge.description }}

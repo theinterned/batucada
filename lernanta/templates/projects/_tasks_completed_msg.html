@@ -30,7 +30,7 @@
     <h4>{{ _('Assess Others\' Work') }}</h4>
     <div class="badge-list">
       {% for badge in need_reviews_badges %}
-        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+        <a href="{{ badge.get_absolute_url }}#submissions" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
       {% endfor %}
     </div>
   {% endif %}
