@@ -7,12 +7,10 @@
 
 {% block body %} 
 	<div id="main">
-	<h1>{{ _('Give Badge to your Peer') }}</h1>
-
-	<section id="badge">
-	      <img src="{{ badge.get_image_url }}" width="50" height="50" alt="{{ badge.name }}"/>
-	      {{ badge.description }}
-    </section>
+	<h1>{{ _('Give') }} {{ badge }} {{ _('to your Peer') }}</h1>
+    <br>
+    <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" class="left-badge-image"/>
+    <p>{{ badge.description }}
     <br class="clear"/>
     
 	{% block form %}
