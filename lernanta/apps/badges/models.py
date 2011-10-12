@@ -35,9 +35,10 @@ class Badge(models.Model):
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())
     prerequisites = models.ManyToManyField('self', symmetrical=False,
-                                            blank=True, null=True)
-    unique = models.BooleanField(help_text=_('If can only be awarded to the user once.'),
-                                 default=False)
+        blank=True, null=True)
+    unique = models.BooleanField(
+        help_text=_('If can only be awarded to the user once.'),
+        default=False)
     SELF = 'self'
     PEER = 'peer'
     STEALTH = 'stealth'
@@ -51,7 +52,8 @@ class Badge(models.Model):
                         'based on supplied logic. Accumulative.'))
     )
 
-    assessment_type = models.CharField(max_length=30, choices=ASSESSMENT_TYPE_CHOICES,
+    assessment_type = models.CharField(max_length=30,
+        choices=ASSESSMENT_TYPE_CHOICES,
         default=SELF, null=True, blank=False)
 
     COMPLETION = 'completion/aggregate'
@@ -61,26 +63,29 @@ class Badge(models.Model):
     OTHER = 'other'
 
     BADGE_TYPE_CHOICES = (
-        (COMPLETION, _('Completion/aggregate badge -- awarded by self assessments')),
-        (SKILL, _('Skill badge -- badges that are skill based and assessed by peers '\
-                  'with related logic')),
-        (COMMUNITY, _('Peer-to-peer/community badge -- badges granted by peers')),
+        (COMPLETION, _('Completion/aggregate badge -- awarded by self '\
+            'assessments')),
+        (SKILL, _('Skill badge -- badges that are skill based and assessed '\
+            'by peers with related logic')),
+        (COMMUNITY, _('Peer-to-peer/community badge -- badges granted by '\
+            'peers')),
         (STEALTH, _('Stealth badge -- system awarded badges')),
-        (OTHER, _('Other badges -- badges like course organizer or those staff issued'))
+        (OTHER, _('Other badges -- badges like course organizer or those '\
+            'staff issued'))
     )
 
     badge_type = models.CharField(max_length=30, choices=BADGE_TYPE_CHOICES,
         default=COMPLETION, null=True, blank=False)
 
     rubrics = models.ManyToManyField('badges.Rubric', related_name='badges',
-                                     null=True, blank=True)
+        null=True, blank=True)
     logic = models.ForeignKey('badges.Logic', related_name='badges',
-                              null=True, blank=True,
-                              help_text=_('If no logic is chosen, no logic required. '\
-                                          ' Example: self-assessment badges.'))
+        null=True, blank=True,
+        help_text=_('If no logic is chosen, no logic required. '\
+        ' Example: self-assessment badges.'))
 
     groups = models.ManyToManyField('projects.Project', related_name='badges',
-                                    null=True, blank=True)
+        null=True, blank=True)
 
     creator = models.ForeignKey('users.UserProfile', related_name='badges',
         blank=True, null=True)
@@ -193,30 +198,35 @@ class Rubric(models.Model):
 class Logic(models.Model):
     """Representation of the logic behind awarding a badge"""
     min_qualified_adopter_votes = models.PositiveIntegerField(
-                            help_text=_('Minimum number of qualified votes by organizers, mentors, or adopters required to be awarded'),
-                            default=0)
+        help_text=_('Minimum number of qualified votes by organizers, '\
+        'mentors, or adopters required to be awarded'),
+        default=0)
     min_qualified_votes = models.PositiveIntegerField(
-                        help_text=_('Minimum number of qualified votes required to be awarded. '\
-                                    'Mentor, adopter, or course organizer receives 2 votes per average (min_rating) rating. '\
-                                    'Peers receive 1 vote per average (min_rating) rating.'),
-                        default=1)
+        help_text=_('Minimum number of qualified votes required to be '\
+        'awarded. Mentor, adopter, or course organizer receives 2 votes '\
+        'per average (min_rating) rating. Peers receive 1 vote per average '\
+        '(min_rating) rating.'),
+        default=1)
     min_rating = models.PositiveIntegerField(
-                        help_text=_('Minimum average rating required to award the badge.'),
-                        default=3)
+        help_text=_('Minimum average rating required to award the badge.'),
+        default=3)
 
     def __unicode__(self):
-        return _('%s adopter votes of %s total votes with at least %s rating') % \
-                 (self.min_qualified_adopter_votes, self.min_qualified_votes, self.min_rating)
+        msg = _('%s adopter votes of %s total votes with at least %s rating')
+        return msg % (self.min_qualified_adopter_votes,
+            self.min_qualified_votes, self.min_rating)
 
 
 class Submission(ModelBase):
     """Application for a badge"""
-    # TODO Refactor this and PageComment and Assessment? to extend off same base
+    # TODO Refactor this and PageComment and Assessment?
+    # to extend off same base
     url = models.URLField(max_length=1023)
     content = RichTextField(config_name='rich', blank=False)
     author = models.ForeignKey('users.UserProfile', related_name='submissions')
     badge = models.ForeignKey('badges.Badge', related_name="submissions")
-    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    created_on = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('%s''s application for %s') % (self.author, self.badge)
@@ -231,26 +241,31 @@ class Submission(ModelBase):
 class Assessment(ModelBase):
     """Assessment for a badge"""
     final_rating = models.FloatField(null=True, blank=True, default=0)
-    assessor = models.ForeignKey('users.UserProfile', related_name='assessments')
-    assessed = models.ForeignKey('users.UserProfile', related_name='badge_assessments')
+    assessor = models.ForeignKey('users.UserProfile',
+        related_name='assessments')
+    assessed = models.ForeignKey('users.UserProfile',
+        related_name='badge_assessments')
     comment = RichTextField(config_name='rich', blank=False)
     badge = models.ForeignKey('badges.Badge', related_name="assessments")
-    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
-    submission = models.ForeignKey('badges.Submission', related_name="assessments",
-                                   null=True, blank=True,
-                                   help_text=_('If submission is blank, this is a '\
-                                               'peer awarded assessment or superuser granted'))
+    created_on = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now)
+    submission = models.ForeignKey('badges.Submission',
+        related_name="assessments", null=True, blank=True,
+        help_text=_('If submission is blank, this is a '\
+        'peer awarded assessment or superuser granted'))
+
     def final_rating_as_percentage(self):
-        """Return the final rating as a percentage for 
+        """Return the final rating as a percentage for
         styling of assessment view. Max number of ratings
         is 4"""
-        return (self.final_rating/4.0)*100
+        return (self.final_rating / 4.0) * 100
 
     def update_final_rating(self):
         """Used on Rating save signal to update the final
         rating for the assessment"""
         ratings = Rating.objects.filter(assessment=self)
-        final_rating = ratings.aggregate(final_rating=Avg('score'))['final_rating']
+        final_rating = ratings.aggregate(
+            final_rating=Avg('score'))['final_rating']
         self.final_rating = final_rating
         self.save()
 
@@ -267,35 +282,41 @@ class Rating(ModelBase):
     MOST_OF_THE_TIME = 3
     ALWAYS = 4
 
-    RATING_CHOICES = ((NEVER, 'Never'), 
-                      (SOMETIMES, 'Sometimes'),
-                      (MOST_OF_THE_TIME, 'Most of the time'),
-                      (ALWAYS, 'Always'))
+    RATING_CHOICES = (
+        (NEVER, 'Never'),
+        (SOMETIMES, 'Sometimes'),
+        (MOST_OF_THE_TIME, 'Most of the time'),
+        (ALWAYS, 'Always')
+    )
 
     assessment = models.ForeignKey('badges.Assessment', related_name='ratings')
     score = models.PositiveIntegerField(default=1, choices=RATING_CHOICES)
     rubric = models.ForeignKey('badges.Rubric', related_name='ratings')
-    created_on = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    created_on = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('%s for %s') % (self.score, self.rubric)
 
     def score_as_percentage(self):
-        """Return the score as a percentage for 
+        """Return the score as a percentage for
         styling of assessment view. Max number of ratings
         is 4"""
-        return (self.score/4.0)*100
+        return (self.score / 4.0) * 100
+
 
 class Progress(ModelBase):
     """Progress of a person to getting awarded a badge"""
     badge = models.ForeignKey('badges.Badge', related_name="progresses")
     current_qualified_ratings = models.PositiveIntegerField(default=0,
-                                help_text=_('Current number of qualified ratings before next awarding'))
+        help_text=_('Current number of qualified ratings before awarding'))
     user = models.ForeignKey('users.UserProfile')
-    updated_on = models.DateTimeField(help_text=_('Last time this person received a qualified rating for this badge'),
-                                      auto_now_add=True, default=datetime.datetime.now)
-    created_on = models.DateTimeField(help_text=_('First time this person received a qualified rating for this badge'),
-                                      auto_now_add=True, default=datetime.datetime.now)
+    updated_on = models.DateTimeField(
+        help_text=_('Last time this person received a qualified rating'),
+        auto_now_add=True, default=datetime.datetime.now)
+    created_on = models.DateTimeField(
+        help_text=_('First time this person received a qualified rating'),
+        auto_now_add=True, default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('%s has %s qualified ratings to get %s') \
@@ -324,6 +345,7 @@ def update_final_rating(sender, **kwargs):
 
 post_save.connect(update_final_rating, sender=Rating,
     dispatch_uid='badges_update_final_rating')
+
 
 def award_peer_community(sender, **kwargs):
     instance = kwargs.get('instance', None)

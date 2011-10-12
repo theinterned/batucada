@@ -182,7 +182,8 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
 register.inclusion_tag('projects/_task_list.html')(task_list)
 
 
-def tasks_completed_msg(project, user, start_hidden=True, adopter_request=True):
+def tasks_completed_msg(project, user, start_hidden=True,
+        adopter_request=True):
     awarded_peer_skill_badges = project.get_awarded_badges(
         user, only_peer_skill=True)
     task_completion_badges = project.get_project_badges(
@@ -210,7 +211,8 @@ def tasks_completed_msg(project, user, start_hidden=True, adopter_request=True):
         'adopter_request': adopter_request,
     }
 
-register.inclusion_tag('projects/_tasks_completed_msg.html')(tasks_completed_msg)
+register.inclusion_tag('projects/_tasks_completed_msg.html')(
+    tasks_completed_msg)
 
 
 def project_wall(request, project, discussion_area=False):
