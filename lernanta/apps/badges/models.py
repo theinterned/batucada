@@ -226,6 +226,7 @@ class Logic(models.Model):
         badge = assessment.badge
         progress = badge.progress_for(assessment.assessed)
         current_date = datetime.datetime.now()
+        from projects.models import Participation
         participations = Participation.objects.filter(
             project__in=badge.groups.values('id'),
             user=assessment.assessor, left_on__isnull=True)
@@ -241,11 +242,10 @@ class Logic(models.Model):
             progress.update_date = current_date
             progress.save()
         # Try to award badge to user
-        badge.award_to(user)
+        badge.award_to(assessment.assessed)
 
     def is_eligible(self, badge, user):
         min_votes = self.min_qualified_votes
-        progress = badge.progress_for(user)
         if min_votes and min_votes > self.current_qualified_ratings:
             return False
         average = Assessment.objects.filter(user=user, badge=badge).aggregate(
@@ -400,10 +400,11 @@ def post_rating_save(sender, **kwargs):
     created = kwargs.get('created', False)
     if created and isinstance(instance, Rating):
         assessment = instance.assessment
+        badge = assessment.badge
         assessment.update_final_rating()
         # if all the ratings where created.
         if badge.rubrics.count() == assessment.ratings.count():
-             badge.logic.update_progress(assessment)
+            badge.logic.update_progress(assessment)
 
 post_save.connect(post_rating_save, sender=Rating,
     dispatch_uid='badges_post_rating_save')
@@ -417,7 +418,7 @@ def post_assessment_save(sender, **kwargs):
         # No need to wait for ratings to be created if
         # there is no rubric.
         if badge.rubrics.count() == 0 and badge.logic:
-            badge.logic.update_progress(assessment)
+            badge.logic.update_progress(instance)
 
 post_save.connect(post_assessment_save, sender=Assessment,
     dispatch_uid='badges_post_assessment_save')
