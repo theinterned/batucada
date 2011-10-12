@@ -3,41 +3,47 @@
 {% load l10n_tags %}
 {% load embed %}
 
-{% block bodyclasses %}assessment-edit summary{% endblock %}
-
-{% block breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url badges_show slug=submission.badge.slug %}">{{ submission.badge.name }}</a>
-{% endblock %}
+{% block bodyclasses %}assessment-edit summary assess-submission{% endblock %}
 
 {% block body %} 
 	<div id="main">
-	<h1>Please review my work for the {{ submission.badge }}</h1>
-	
-	<div id="user" style="width:80px;float:left;">
+	<h1>{{ _('Please Review ') }} {{ submission.author }}{{ _('\'s my work for the ') }} {{ submission.badge }}</h1>
+	<br>
+    <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" class="left-badge-image"/>
+    <p>{{ badge.description }}
+    {% if rubrics %}
+      <h2>{{ _('Rubric') }}</h2>
+      <ol>
+        {% for rubric in rubrics %}
+          <li>{{ rubric.question }}</li>
+        {% endfor %}
+      </ol>
+    {% endif %}</p>
+
+    <h1>{{ _('Submitted Work') }}</h1>
+    <br>
+	<div id="user" class="submission-author">
 	    <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}"><br/>
 	    {{ submission.author }}
 	</div>
 	<section id="submission-details">
-		<div id="work-url"><h3>Link to work:</h3>
-		<p><a href="{{ submission.url }}" target="_blank">{{submission.url}}</a></p>
+		<div id="work-url"><h3>{{ _('Link to work:') }}</h3>
+		<p><a href="{{ submission.url }}" target="_blank">{{ submission.url }}</a></p>
 		</div>
 
-		<div id="reason"><h3>Reason:</h3>
+		<div id="reason"><h3>{{ _('Reason:') }}</h3>
 		{{ submission.content|embed|safe }}
 		</div>
 	</section>
     <br class="clear"/>
-	<section id="badge">
-	      <img src="/media/{{ submission.badge.image_or_default }}" width="50" height="50" alt="{{ submission.badge.name }}"/>
-	      {{ submission.badge.description }}
-    </section>
-    <br class="clear"/>
-    
+    <h1>{{ _('Review') }}</h1>
+    <br>
 	{% block form %}
 	<fieldset id="assessment_edit" class="assessment edit tabpane">
-	  <form method="post" action="{% locale_url assess_submission submission_id=submission.id %}">
+	  <form method="post" action="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}">
 	    {% csrf_token %}
+        <label>{{ _('Rating') }}</label>
+        <p class="hint">{{ _('Provide a rating of Never, Sometimes, Most or the time, or Always for each of the following rubric items.') }}</p>
         <ol id="ratings">
           {% for rubric, rating_form in rating_forms %}
             <li class="clear">
@@ -52,7 +58,8 @@
         </ol>
 
 	    <div class="clear field{% if form.comment.errors %} error{% endif %}">
-	      <label for="id_comment">{{ _('Add your comments') }}</label>
+	      <label for="id_comment">{{ _('Comments') }}</label>
+          <p class="hint">{{ _('Add feedback and other comments to your review.') }}</p>
 	      {{ form.comment }}
 	      {{ form.comment.errors }}
 	    </div>

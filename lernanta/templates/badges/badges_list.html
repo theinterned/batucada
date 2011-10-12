@@ -1,0 +1,19 @@
+{% extends "badges/base.html" %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+
+{% block bodyclasses %}badges-list{% endblock %}
+
+{% block body %}
+  <div id="main">
+    <h1>{{ _('Badges') }}</h1>
+    <br>
+    <div class="badge-list">
+      {% for badge in badges %}
+        <a href="{{ badge.get_absolute_url }}" title="{{ badge }}">
+          <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge }}"/>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

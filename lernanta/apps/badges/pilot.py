@@ -70,7 +70,7 @@ def get_awarded_badges(username):
                     url = settings.BADGE_EVIDENCE_URL % dict(badge_id=badge.id,
                         badge_tag=tag.name, username=username)
                     image_url = pilot_image(tag, badge)
-                    description_url = reverse('badge_description',
+                    description_url = reverse('badges_show',
                          kwargs=dict(slug=tag.name))
                     data = {
                         'name': custom_badge.name,

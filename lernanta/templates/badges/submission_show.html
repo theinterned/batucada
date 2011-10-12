@@ -7,13 +7,6 @@
 
 {% block bodyclasses %}submission-show summary{% endblock %}
 
-{% block breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge.name }}</a>
-  <span class="arrow">&rsaquo;</span>
-  Applications
-{% endblock %}
-
 {% block body %} 
     <div id="main">
     	<h1 id="page-title">Application for {{ badge.name }} from {{ submission.author }} </h1>
@@ -37,7 +30,7 @@
     <br class="clear"/>
     
     {% if can_assess %}
-       <p><a href="{% locale_url assess_submission submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
+       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
     {% endif %}
 
 	{% if assessments %}
