@@ -221,6 +221,26 @@
         "fields": {
             "groups": [], 
             "last_update": "2011-10-02 22:28:29", 
+            "description": "Badge awarded upon marking all tasks as completed in at least one Webmaking101's challenge.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "beta-hero", 
+            "created_on": "2011-10-02 22:28:29", 
+            "badge_type": "completion/aggregate", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/beta-hero.png", 
+            "name": "Beta Hero"
+        }
+    },
+    {
+        "pk": 10, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded by peers as a way to say hello (wave) to each other.", 
             "creator": null, 
             "prerequisites": [], 
@@ -236,7 +256,7 @@
         }
     },
     {
-        "pk": 10, 
+        "pk": 11, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -256,7 +276,7 @@
         }
     },
     {
-        "pk": 11, 
+        "pk": 12, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -276,14 +296,14 @@
         }
     },
     {
-        "pk": 12, 
+        "pk": 13, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
             "last_update": "2011-10-02 22:28:29", 
             "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
             "creator": null, 
-            "prerequisites": [11], 
+            "prerequisites": [12], 
             "assessment_type": "peer", 
             "rubrics": [], 
             "slug": "team-player", 
@@ -296,14 +316,14 @@
         }
     },
     {
-        "pk": 13, 
+        "pk": 14, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
             "last_update": "2011-10-02 22:28:29", 
             "description": "Learners create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.", 
             "creator": null, 
-            "prerequisites": [9], 
+            "prerequisites": [], 
             "assessment_type": "peer", 
             "rubrics": [], 
             "slug": "creative-presentation", 
@@ -316,12 +336,12 @@
         }
     },
     {
-        "pk": 14, 
+        "pk": 15, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
             "last_update": "2011-10-02 22:28:29", 
-            "description": "The HTML Basic Badge recognizes the ability to write create an html page by making basic use of HTML tags.", 
+            "description": "The HTML Basic Badge recognizes the ability to write an html page by making basic use of HTML tags.", 
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
@@ -336,7 +356,7 @@
         }
     },
     {
-        "pk": 15, 
+        "pk": 16, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -356,7 +376,7 @@
         }
     },
     {
-        "pk": 16, 
+        "pk": 17, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
@@ -376,7 +396,7 @@
         }
     },
     {
-        "pk": 17, 
+        "pk": 18, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
