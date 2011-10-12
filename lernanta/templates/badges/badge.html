@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load pagination_tags %}
 
 {% block bodyclasses %}badge-show{% endblock %}
 
@@ -14,21 +15,51 @@
     <h1>{{ badge }}</h1>
     <p>{{ badge.description }}</p>
 
-      {% if peer_skill %}
-        {% if is_eligible %}
-	        {% if application_open %}
-			  <p><a href="{% locale_url submission_show slug=badge.slug %}" title="{{ badge.name }}" target="_blank">view your application</a></p>
-			{% else %}
-               <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank">apply for badge</a></p>
-	        {% endif %}
+    {% if peer_skill %}
+      {% if is_eligible %}
+        {% if application_open %}
+          <p><a href="{% locale_url submission_show slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
         {% else %}
-            <p>Ineligible to apply at this time.</p>    
+          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
         {% endif %}
+      {% else %}
+        <p>{{ _('Ineligible to apply at this time.') }}</p>
       {% endif %}
-      {% if peer_community %}
-        <p><a href="{% locale_url assess_peer slug=badge.slug %}" title="{{ badge.name }}" target="_blank">{{ _('give badge to your peer')}}</a></p>
-      {% endif %}
-        
-        
-    </div>	
+    {% endif %}
+    {% if peer_community %}
+      <p><a href="{% locale_url assess_peer slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Give Badge to your Peer')}}</a></p>
+    {% endif %}
+
+    {% if awards_pagination_current_page.object_list %}
+      <h2>{{ _('Awarded To') }}</h2>
+      {% for award in awards_pagination_current_page.object_list %}
+        <a href="{{ award.user.get_absolute_url }}" title="{{ award.user }}"><img class="member-picture" src="{{ award.user.image_or_default }}" height="40" width="40" alt="{{ award.user }}"></a>
+      {% endfor %}
+      {% with prefix='awards_' page_url=badge.get_absolute_url %}
+        {% pagination_links %}
+      {% endwith %}
+    {% endif %}
+    {% if peer_skill and submissions_pagination_current_page.object_list %}
+      <h2>{{ _('Submissions') }}</h2>
+      <ul id="posts">
+        {% for submission in submissions_pagination_current_page.object_list %}
+          <li class="post-container">
+            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author }}"><img class="member-picture" src="{{ submission.author.image_or_default }}" height="40" width="40" alt="{{ submission.author }}"></a>
+            <div class="post-contents">
+              <div class="post-details">
+                <a class="member-name" href="{{ submission.author.get_absolute_url }}">{{ submission.author }}</a>
+              </div>
+              <div class="post-body">
+                {{ _('Submitted work on ') }} <a href="{{ submission.get_absolute_url }}">{{ submission.created_on }}</a>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+      {% with prefix='submissions_' page_url=badge.get_absolute_url %}
+        {% pagination_links %}
+      {% endwith %}
+    {% endif %}
+    
+  </div>	
 {% endblock %}
