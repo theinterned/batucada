@@ -62,6 +62,8 @@ def show(request, slug):
 
 @login_required
 def create(request):
+    if not request.user.is_superuser:
+        raise http.Http404
     if request.method == 'POST':
         form = badge_forms.BadgeForm(request.POST)
         if form.is_valid():
