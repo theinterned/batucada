@@ -334,6 +334,25 @@ class Project(ModelBase):
         else:
             return Badge.objects.none()
 
+    def get_upon_completion_badges(self, user):
+        from badges.models import Badge, Award
+        if user.is_authenticated():
+            profile = user.get_profile()
+            awarded_badges = Award.objects.filter(
+                user=profile).values('badge_id')
+            self_completion_badges = self.get_project_badges(
+                only_self_completion=True)
+            upon_completion_badges = []
+            for badge in self_completion_badges:
+                missing_prerequisites = badge.prerequisites.exclude(
+                    id__in=awarded_badges).exclude(
+                    id__in=self_completion_badges.values('id'))
+                if not missing_prerequisites.exists():
+                    upon_completion_badges.append(badge.id)
+            return Badge.objects.filter(id__in=upon_completion_badges)
+        else:
+            return Badge.objects.none()
+
     def get_awarded_badges(self, user, only_peer_skill=False):
         from badges.models import Badge, Award
         if user.is_authenticated():

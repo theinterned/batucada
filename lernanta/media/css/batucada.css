@@ -3643,12 +3643,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     float: left;
 }
 
-#badges-page.assess-submission .submission-author {
+#badges-page.assess_submission .submission-author {
     width:80px;
     float:left;
 }
 
-.submission-show .badge-card #badge-details, .submission-show .badge-card #info {
+.submission-show .badge-card #badge-details, .submission-show .badge-card #info,
+.assessment-show .badge-card #badge-details {
 	float: left;
 	width: 300px;
 }
@@ -3669,7 +3670,8 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	margin-left: 90px;
 }
 
-.submission-show .badge-card #awards, .submission-edit .badge-card #awards {
+.submission-show .badge-card #awards, .submission-edit .badge-card #awards,
+.assessment-show .badge-card #awards {
 	float:left;
 	width: 85px;
 	text-align:center;
@@ -3734,6 +3736,10 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 
 .post-assessment {
 	width: 900px;
+}
+
+#posts.no-submission .post-assessment {
+	width: 600px;
 }
 
 .project-kind-challenge .give_badge .give_badge_dialog {

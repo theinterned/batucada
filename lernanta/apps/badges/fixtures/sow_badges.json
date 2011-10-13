@@ -419,18 +419,18 @@
         "pk": 1, 
         "model": "badges.logic", 
         "fields": {
-            "min_qualified_adopter_votes": 0, 
-            "min_qualified_votes": 3, 
-            "min_rating": 3
+            "min_adopter_votes": 0, 
+            "min_votes": 3, 
+            "min_weighted_avg_rating": 3
         }
     },
     {
         "pk": 2, 
         "model": "badges.logic", 
         "fields": {
-            "min_qualified_adopter_votes": 0, 
-            "min_qualified_votes": 1, 
-            "min_rating": 0
+            "min_adopter_votes": 0, 
+            "min_votes": 1, 
+            "min_weighted_avg_rating": 0
         }
     }
 ]

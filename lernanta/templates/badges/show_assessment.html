@@ -23,7 +23,7 @@
         {% endif %}
       </h1>
 
-	   <ul id="posts" class="{% if peer_community %}peer-community{% endif %}">
+	   <ul id="posts" class="{% if not submission %}no-submission{% endif %}">
 	    {% include "badges/_assessment_body.html" with assessment=assessment %}
 	   </ul>
 

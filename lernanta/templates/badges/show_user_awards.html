@@ -22,7 +22,7 @@
     {% if not badge.unique %}
         <p><b>{{'Number of Awards to '}} {{ profile }}:</b> {{ awards_count }}</p>
     {% endif%}
-    <br><br>
+    {% if not rubrics %}<br><br>{% endif %}
 
     {% if prerequisites %}
       <br><br>
@@ -51,6 +51,20 @@
         {% for submission in submissions %}
           {% include "badges/_submission_item.html" %}
         {% endfor %}
+      </ul>
+      <br clear="both"><br>
+      <h1>{{ _('Assessment Results:') }}</h1>
+      <br>
+      <ul>
+        {% if badge.logic.min_votes %}
+          <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews from the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
+        {% endif %}
+        {% if badge.logic.min_adopter_votes %}
+          <li>{{ _('Received') }} {{ progress.current_adopter_votes }} {{ _(' reviews from the') }} {{ badge.logic.min_adopter_votes }} {{ _('reviews needed from challenge adopters.') }}</li>
+        {% endif %}
+        {% if badge.logic.min_weighted_avg_rating %}
+          <li>{{ _('The posted reviews are giving this work submission a total score of') }} {{ progress.current_weighted_avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_weighted_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
+        {% endif %}
       </ul>
     {% endif %}
 

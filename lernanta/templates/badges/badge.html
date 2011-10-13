@@ -53,14 +53,14 @@
       {% endfor %}
     {% endif %}
 
-    {% if awards_pagination_current_page.object_list %}
+    {% if awarded_users_pagination_current_page.object_list %}
       <br><br>
       <h1>{{ _('Awarded To') }}</h1>
       <br>
-      {% for award in awards_pagination_current_page.object_list %}
-        <a href="{{ award.user.get_absolute_url }}" title="{{ award.user }}"><img class="member-picture" src="{{ award.user.image_or_default }}" height="40" width="40" alt="{{ award.user }}"></a>
+      {% for awarded_user in awarded_users_pagination_current_page.object_list %}
+        <a href="{% locale_url user_awards_show slug=badge.slug username=awarded_user.username %}" title="{{ awarded_user }}"><img class="member-picture" src="{{ awarded_user.image_or_default }}" height="40" width="40" alt="{{ awarded_user }}"></a>
       {% endfor %}
-      {% with prefix='awards_' page_url=badge.get_absolute_url %}
+      {% with prefix='awarded_users_' page_url=badge.get_absolute_url %}
         {% pagination_links %}
       {% endwith %}
     {% endif %}
@@ -68,30 +68,10 @@
       <br><a name="submissions"></a><br>
       <h1>{{ _('Submissions') }}</h1>
       <br>
+      <p>{{ badge.awards.count }} {{ _('Awarded') }}, {{ badge.get_pending_submissions|length }} {{ _('Pending') }}</p>
       <ul id="posts">
         {% for submission in submissions_pagination_current_page.object_list %}
-          <li class="post-container">
-            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author }}"><img class="member-picture" src="{{ submission.author.image_or_default }}" height="40" width="40" alt="{{ submission.author }}"></a>
-            <div class="post-contents">
-              <div class="post-details">
-                <a class="member-name" href="{{ submission.author.get_absolute_url }}">{{ submission.author }}</a>
-              </div>
-              <div class="post-body">
-                {{ _('Submitted work on ') }} <a href="{{ submission.get_absolute_url }}">{{ submission.created_on }}</a>
-              </div>
-              <div class="post-details">
-                <div class="post-comments">
-                  <a href="{{ submission.get_absolute_url }}#assessments">
-                    {% blocktrans count counter=submission.assessments.count %}
-                      {{ counter }} Review
-                    {% plural %}
-                      {{ counter }} Reviews
-                    {% endblocktrans %}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
+          {% include "badges/_submission_item.html" %}
         {% endfor %}
       </ul>
       {% with prefix='submissions_' page_url=badge.get_absolute_url %}

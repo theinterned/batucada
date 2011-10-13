@@ -422,3 +422,9 @@ $('.project-kind-challenge span.post-replies').hover(function() {
 }, function() {
       $(this).find('.report').hide();
 });
+
+$(".right-aligned-rating").hover(
+    function () {
+        $("div.rating-key").hide();
+        $(this).find("div.rating-key").show();
+});
