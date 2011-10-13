@@ -1,6 +1,24 @@
 [
     {
         "pk": 1, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "administrator", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2011-10-13 02:01:05", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "", 
+            "email": "address1@example.com", 
+            "date_joined": "2011-10-13 02:01:04"
+        }
+    }, 
+    {
+        "pk": 1, 
         "model": "users.userprofile", 
         "fields": {
             "username": "administrator", 
@@ -3694,24 +3712,6 @@
             "codename": "delete_resource", 
             "name": "Can delete resource", 
             "content_type": 12
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "auth.user", 
-        "fields": {
-            "username": "administrator", 
-            "first_name": "", 
-            "last_name": "", 
-            "is_active": true, 
-            "is_superuser": true, 
-            "is_staff": true, 
-            "last_login": "2011-10-13 02:01:05", 
-            "groups": [], 
-            "user_permissions": [], 
-            "password": "", 
-            "email": "address1@example.com", 
-            "date_joined": "2011-10-13 02:01:04"
         }
     }, 
     {
