@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.conf import settings
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
@@ -203,57 +203,94 @@ class Rubric(models.Model):
 
 class Logic(models.Model):
     """Representation of the logic behind awarding a badge"""
-    min_qualified_adopter_votes = models.PositiveIntegerField(
-        help_text=_('Minimum number of qualified votes by organizers, '\
-        'mentors, or adopters required to be awarded'),
+    # TODO: Mentors are not part of p2pu yet so they can not
+    # be considered in the badges functionality yet.
+    min_adopter_votes = models.PositiveIntegerField(
+        help_text=_('Minimum number of votes by challenge adopters.'),
         default=0)
-    min_qualified_votes = models.PositiveIntegerField(
-        help_text=_('Minimum number of qualified votes required to be '\
-        'awarded. Mentor, adopter, or course organizer receives 2 votes '\
-        'per average (min_rating) rating. Peers receive 1 vote per average '\
-        '(min_rating) rating.'),
+    min_votes = models.PositiveIntegerField(
+        help_text=_('Minimum number of votes.'),
         default=1)
-    min_rating = models.PositiveIntegerField(
-        help_text=_('Minimum average rating required to award the badge.'),
+    min_weighted_avg_rating = models.PositiveIntegerField(
+        help_text=_('Minimum weighted average rating.'),
         default=3)
 
     def __unicode__(self):
-        msg = _('%s adopter votes of %s total votes with at least %s rating')
-        return msg % (self.min_qualified_adopter_votes,
-            self.min_qualified_votes, self.min_rating)
+        msg = _('%s adopter votes of %s total votes with at least %s'\
+            'weighted average rating')
+        return msg % (self.min_adopter_votes,
+            self.min_votes, self.min_weighted_avg_rating)
+
+    def is_eligible(self, badge, user):
+        progress = badge.progress_for(user)
+        if self.min_votes and self.min_votes > progress.current_votes:
+            return False
+        min_adopter_votes = self.min_adopter_votes
+        current_adopter_votes = progress.current_adopter_votes
+        if min_adopter_votes and min_adopter_votes > current_adopter_votes:
+            return False
+        min_weighted_avg = self.min_weighted_avg_rating
+        current_weighted_avg = progress.current_weighted_avg_rating
+        if min_weighted_avg and min_weighted_avg > current_weighted_avg:
+            return False
+        return True
+
+
+class Progress(ModelBase):
+    """Progress of a person to getting awarded a badge"""
+    badge = models.ForeignKey('badges.Badge', related_name="progresses")
+    current_adopter_votes = models.PositiveIntegerField(default=0,
+        help_text=_('Current number of adopter votes'))
+    current_votes = models.PositiveIntegerField(default=0,
+        help_text=_('Current number of votes'))
+    current_weighted_rating = models.FloatField(default=0,
+        help_text=_('Current total weighted rating'))
+    user = models.ForeignKey('users.UserProfile')
+    updated_on = models.DateTimeField(
+        help_text=_('Last time this person received a qualified rating'),
+        auto_now_add=True, default=datetime.datetime.now)
+    created_on = models.DateTimeField(
+        help_text=_('First time this person received a qualified rating'),
+        auto_now_add=True, default=datetime.datetime.now)
+
+    @property
+    def current_weighted_avg_rating(self):
+        if self.current_votes == 0:
+            return 0
+        weight_one_votes = self.current_votes - self.current_adopter_votes
+        weight_two_votes = self.current_adopter_votes
+        avg_denominator = (weight_one_votes + 2 * weight_two_votes)
+        return self.current_weighted_rating / avg_denominator
+
+    def __unicode__(self):
+        return _('%(user)s progress for %(badge)s') % {
+            'user': self.user, 'badge': self.badge}
 
     def update_progress(self, assessment):
+        """Progress should be updated only once after the assessment
+        and all its ratings are saved, and the assessment final_rating
+        updated."""
         badge = assessment.badge
-        progress = badge.progress_for(assessment.assessed)
-        current_date = datetime.datetime.now()
+        self.current_votes += 1
+        # check if the assessor is an adopter by the time the assessment
+        # is created.
         from projects.models import Participation
         participations = Participation.objects.filter(
             project__in=badge.groups.values('id'),
             user=assessment.assessor, left_on__isnull=True)
-        is_peer = participations.exists()
-        # TODO: Modify progress taking into account adopter role.
-        # Maybe an extra field will be required in the progress
-        # model to store the current adopter qualified ratings
-        # independently.
-        # Imagine the progress model is mostly used for caching so the
-        # progress does not need to be computed each time.
-        if is_peer:
-            progress.current_qualified_ratings += 1
-            progress.update_date = current_date
-            progress.save()
+        # In challenges organizers are a special case of adopters that
+        # have the extra permissions to edit the challenge and its tasks.
+        is_adopter = participations.filter(
+            Q(organizing=True) | Q(adopter=True)).exists()
+        if is_adopter:
+            self.current_adopter_votes += 1
+            self.current_weighted_rating += assessment.final_rating * 2
+        else:
+            self.current_weighted_rating += assessment.final_rating
+        self.update_date = datetime.datetime.now()
+        self.save()
         # Try to award badge to user
         badge.award_to(assessment.assessed)
-
-    def is_eligible(self, badge, user):
-        min_votes = self.min_qualified_votes
-        if min_votes and min_votes > self.current_qualified_ratings:
-            return False
-        average = Assessment.objects.filter(user=user, badge=badge).aggregate(
-            Avg('final_rating'))['final_rating_avg']
-        min_rating = self.logic.min_rating
-        if min_rating and min_rating > average:
-            return False
-        return True
 
 
 class Submission(ModelBase):
@@ -363,24 +400,6 @@ class Rating(ModelBase):
         return (self.score / 4.0) * 100
 
 
-class Progress(ModelBase):
-    """Progress of a person to getting awarded a badge"""
-    badge = models.ForeignKey('badges.Badge', related_name="progresses")
-    current_qualified_ratings = models.PositiveIntegerField(default=0,
-        help_text=_('Current number of qualified ratings'))
-    user = models.ForeignKey('users.UserProfile')
-    updated_on = models.DateTimeField(
-        help_text=_('Last time this person received a qualified rating'),
-        auto_now_add=True, default=datetime.datetime.now)
-    created_on = models.DateTimeField(
-        help_text=_('First time this person received a qualified rating'),
-        auto_now_add=True, default=datetime.datetime.now)
-
-    def __unicode__(self):
-        return _('%s has %s qualified ratings to get %s') \
-            % (self.user, self.current_qualified_ratings, self.badge)
-
-
 class Award(models.Model):
     """Representation of a badge a user has received"""
     user = models.ForeignKey('users.UserProfile')
@@ -389,6 +408,15 @@ class Award(models.Model):
 
     def __unicode__(self):
         return _('%s - %s') % (self.user, self.badge)
+
+    @models.permalink
+    def get_absolute_url(self):
+        # All the awards of the same badge to the same user
+        # share one awards page.
+        return ('user_awards_show', (), {
+            'slug': self.badge.slug,
+            'username': self.user.username,
+        })
 
 
 ###########
@@ -404,7 +432,8 @@ def post_rating_save(sender, **kwargs):
         assessment.update_final_rating()
         # if all the ratings where created.
         if badge.rubrics.count() == assessment.ratings.count():
-            badge.logic.update_progress(assessment)
+            progress = badge.progress_for(assessment.assessed)
+            progress.update_progress(assessment)
 
 post_save.connect(post_rating_save, sender=Rating,
     dispatch_uid='badges_post_rating_save')
@@ -418,7 +447,8 @@ def post_assessment_save(sender, **kwargs):
         # No need to wait for ratings to be created if
         # there is no rubric.
         if badge.rubrics.count() == 0 and badge.logic:
-            badge.logic.update_progress(instance)
+            progress = badge.progress_for(instance.assessed)
+            progress.update_progress(instance)
 
 post_save.connect(post_assessment_save, sender=Assessment,
     dispatch_uid='badges_post_assessment_save')

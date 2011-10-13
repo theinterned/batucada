@@ -6,10 +6,12 @@
 	      <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}"/>
 	    </a>
 	  </figure>
-	  <h3>Awarded</h3>
+	  <h3>{{ _('Awarded') }}</h3>
 	  {{ badge.awards.count }}
-	  <h3>Pending</h3>
-	  {{ badge.get_pending_submissions|length }}
+	  {% if badge.badge_type == 'skill' %}
+      <h3>{{ _('Pending') }}</h3>
+	    {{ badge.get_pending_submissions|length }}
+      {% endif %}
   </div>
   
  

@@ -11,6 +11,7 @@ from django.template.loader import render_to_string
 from django_obi.views import send_badges
 
 from users.decorators import login_required
+from users.models import UserProfile
 from drumbeat import messages
 from l10n.urlresolvers import reverse
 from pagination.views import get_pagination_context
@@ -76,7 +77,9 @@ def show(request, slug):
     community_badge = (badge.badge_type == Badge.COMMUNITY)
     submissions = badge.submissions.all().order_by(
         '-created_on')
-    awards = badge.awards.all().order_by('-awarded_on')
+    awarded_user_ids = badge.awards.all().values('user_id')
+    awarded_users = UserProfile.objects.filter(
+        deleted=False, id__in=awarded_user_ids)
     related_projects = badge.groups.all()
     prerequisites = badge.prerequisites.all()
     context = {
@@ -88,8 +91,8 @@ def show(request, slug):
         'related_projects': related_projects,
         'prerequisites': prerequisites,
     }
-    context.update(get_pagination_context(request, awards,
-        24, prefix='awards_'))
+    context.update(get_pagination_context(request, awarded_users,
+        24, prefix='awarded_users_'))
     context.update(get_pagination_context(request, submissions,
         24, prefix='submissions_'))
     return render_to_response('badges/badge.html', context,
@@ -265,16 +268,17 @@ def assess_submission(request, slug, submission_id):
                               context_instance=RequestContext(request))
 
 
-def show_assessment(request, assessment_id):
-    assessment = get_object_or_404(Assessment, id=assessment_id)
-    badge = assessment.badge
+def show_assessment(request, slug, assessment_id):
+    assessment = get_object_or_404(Assessment, id=assessment_id,
+        badge__slug=slug)
 
     context = {
         'assessment': assessment,
-        'badge': badge,
-        }
+        'badge': assessment.badge,
+        'submission': assessment.submission,
+    }
 
-    return render_to_response('badges/_assessment_body.html', context,
+    return render_to_response('badges/show_assessment.html', context,
                               context_instance=RequestContext(request))
 
 
@@ -329,4 +333,34 @@ def matching_peers(request, slug):
 
 
 def show_user_awards(request, slug, username):
-    pass
+    badge = get_object_or_404(Badge, slug=slug)
+    profile = get_object_or_404(UserProfile, username=username)
+    awards_count = badge.awards.filter(user=profile).count()
+
+    rubrics = badge.rubrics.all()
+    peer_assessment = (badge.assessment_type == Badge.PEER)
+    skill_badge = (badge.badge_type == Badge.SKILL)
+    community_badge = (badge.badge_type == Badge.COMMUNITY)
+    submissions = badge.submissions.all().order_by(
+        '-created_on')
+    progress = badge.progress_for(profile) if skill_badge else None
+    assessments = badge.assessments.all().order_by(
+        '-created_on')
+    related_projects = badge.groups.all()
+    prerequisites = badge.prerequisites.all()
+
+    context = {
+        'badge': badge,
+        'profile': profile,
+        'awards_count': awards_count,
+        'rubrics': rubrics,
+        'peer_skill': peer_assessment and skill_badge,
+        'peer_community': peer_assessment and community_badge,
+        'related_projects': related_projects,
+        'prerequisites': prerequisites,
+        'submissions': submissions,
+        'assessments': assessments,
+        'progress': progress,
+    }
+    return render_to_response('badges/show_user_awards.html', context,
+                              context_instance=RequestContext(request))
