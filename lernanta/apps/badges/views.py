@@ -65,7 +65,7 @@ def badges_manage_render_failure(request, message, status=500):
     return http.HttpResponseRedirect(reverse('users_badges_manage'))
 
 
-def show(request, slug):
+def show_badge(request, slug):
     try:
         badge = Badge.objects.get(slug=slug)
     except Badge.DoesNotExist:
@@ -107,7 +107,7 @@ def badges_list(request):
 
 
 @login_required
-def create(request):
+def create_badge(request):
     if not request.user.is_superuser:
         raise http.Http404
     if request.method == 'POST':
@@ -193,6 +193,22 @@ def show_submission(request, slug, submission_id):
 
     return render_to_response('badges/submission_show.html', context,
                               context_instance=RequestContext(request))
+
+
+def submissions_list(request):
+    submissions = Submission.objects.all()
+    return render_to_response('badges/submissions_list.html',
+        {'submissions': submissions},
+        context_instance=RequestContext(request))
+
+
+def matching_submissions(request, slug):
+    badge = get_object_or_404(Badge, slug=slug)
+    submissions = Submission.objects.filter(badge=badge)
+    return render_to_response('badges/submissions_list.html',
+        {'submissions': submissions,
+         'badge': badge},
+        context_instance=RequestContext(request))
 
 
 @login_required

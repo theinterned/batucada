@@ -1,0 +1,43 @@
+{% extends "badges/base.html" %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+
+{% block bodyclasses %}submissions-list{% endblock %}
+
+{% block body %}
+  <div id="main">
+    {% if badge %}
+    <h1>{{ _('All Submissions for ') }} {{ badge }}</h1>
+    {% else %}
+    <h1>{{ _('All Submissions') }}</h1>
+    {% endif %}
+    <br>
+    <div id="submission-list">
+      <ul>
+      {% for submission in submissions %}
+        <li>
+        <div class="user">
+            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author.username }}">
+	          <img src="{{ submission.author.image_or_default }}" width="50" height="50" alt="{{ submission.author.username }}"/>
+	          <br/>
+	          {{ submission.author.username }}
+	        </a>
+        </div>
+        
+        <div class="submission">
+            <p><a href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('review this submission') }}</a>
+            <br/><i>submitted {{ submission.created_on|timesince }} ago</i></p>
+        </div>
+        <div class="badge">
+            <p><a href="{% locale_url badges_show slug=submission.badge.slug %}" 
+            title="{{ submission.badge }}"><img src="{{ submission.badge.get_image_url }}" 
+            width="50" height="50" alt="{{ submission.badge.name }}"/></a></p>
+             
+        </div>
+        <br class="clear"/>
+      </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
