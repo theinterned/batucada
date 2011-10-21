@@ -204,13 +204,23 @@ def submissions_list(request):
 
 def matching_submissions(request, slug):
     badge = get_object_or_404(Badge, slug=slug)
-    submissions = Submission.objects.filter(badge=badge)
+    submissions = []
+    pending = False
+    if 'filter' in request.GET:
+        filter_name = request.GET['filter']
+        if filter_name == 'pending':
+            submissions = badge.get_pending_submissions
+            pending = True
+        #TODO add more filters
+    else:
+        submissions = Submission.objects.filter(badge=badge)
     return render_to_response('badges/submissions_list.html',
         {'submissions': submissions,
-         'badge': badge},
+         'badge': badge,
+         'pending': pending},
         context_instance=RequestContext(request))
 
-
+ 
 @login_required
 def assess_submission(request, slug, submission_id):
     submission = get_object_or_404(Submission, id=submission_id,

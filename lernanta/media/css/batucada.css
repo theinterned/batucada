@@ -467,6 +467,10 @@ form .small {
     margin-bottom: 1.5em;
     display: block;
 	}	
+.small {
+    font-size: 11px;
+}
+ 
 .clear {
 	clear: both;
 	}
@@ -3756,19 +3760,22 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     border: none;
 }
 
-#submission-list ul li div.submission, #submission-list ul li div.badge, #submission-list ul li div.user {
-    width: 250px;
+#submission-list ul li div.submission, #submission-list ul li div.badge, #submission-list ul li div.user, #submission-list ul li div.action {
+    width: 180px;
     height: 5em;
     display: table-cell;
     vertical-align: middle;
 }
 
 #submission-list ul li div.user {
-    width: 100px;
-    text-align: center;
+    width: 60px;
 }
 
-#submission-list ul li div.submission p, #submission-list ul li div.badge p  {
+#submission-list ul li div.submission {
+    width: 470px;
+}
+
+#submission-list ul li div.submission p, #submission-list ul li div.badge p, #submission-list ul li div.action p  {
     margin: 0;
 }
 
