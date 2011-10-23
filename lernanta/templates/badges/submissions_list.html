@@ -33,13 +33,13 @@
       {% for submission in submissions %}
         <li>
         <div class="user">
-            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author.username }}">
-	          <img src="{{ submission.author.image_or_default }}" width="50" height="50" alt="{{ submission.author.username }}"/>
+            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author }}">
+	          <img src="{{ submission.author.image_or_default }}" width="50" height="50" alt="{{ submission.author }}"/>
 	        </a>
         </div>
         
         <div class="submission">
-            <p><span class="username">{{ submission.author.username }}</span><br>
+            <p><span class="username">{{ submission.author }}</span><br>
             {{ submission.content|truncatechars:65|removetags:"b span ul li p" }} <a href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('read more') }}</a>
         </div>
         <div class="action">
