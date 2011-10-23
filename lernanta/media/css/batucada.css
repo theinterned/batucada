@@ -3786,6 +3786,12 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     padding-right: 40px;
 }
 
+#submission-list ul li div.badge {
+    width: 100px;
+    text-align: center;
+    padding-right: 40px;
+}
+
 #submission-list ul li div.submission p, #submission-list ul li div.badge p, #submission-list ul li div.action p  {
     margin: 0;
 }
