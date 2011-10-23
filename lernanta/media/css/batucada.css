@@ -3750,6 +3750,12 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     display: none;
 }
 
+.submissions-list #badge-image {
+    text-align: center;
+    width:200px; 
+    float:left;
+}
+
 #submission-list ul li { 
     border-bottom: 1px solid #ddd;
     padding: 1em 0 0 0;
@@ -3772,11 +3778,25 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 #submission-list ul li div.submission {
-    width: 470px;
+    width: 450px;
+    padding-right: 40px;
 }
 
 #submission-list ul li div.submission p, #submission-list ul li div.badge p, #submission-list ul li div.action p  {
     margin: 0;
+}
+
+.submissions-list .has-badge {
+    border-left: #ccc 1px solid; 
+    float: left;
+}
+
+#submission-list div.submission .username {
+    font-size: 18px;
+}
+
+.back-nav {
+    padding-bottom: 1em;
 }
 
 /* Rating system */
