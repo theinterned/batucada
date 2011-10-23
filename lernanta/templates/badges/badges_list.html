@@ -9,11 +9,14 @@
     <h1>{{ _('Badges') }}</h1>
     <br>
     <div class="badge-list">
+    <ul class="badges">
       {% for badge in badges %}
-        <a href="{{ badge.get_absolute_url }}" title="{{ badge }}">
+        <li><a href="{{ badge.get_absolute_url }}" class="badge" title="{{ badge }}">
           <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge }}"/>
-        </a>
+          <span class="badge-name">{{ badge }}</span>
+        </a></li>
       {% endfor %}
+    </ul>
     </div>
   </div>
 {% endblock %}

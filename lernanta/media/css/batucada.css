@@ -3831,6 +3831,24 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     margin: 0;
 }
 
+.badges-list .badge-list ul {
+    margin: 0;
+    list-style: none;
+}
+
+.badges-list .badge-list .badges li {
+    width: 150px;
+    display: inline-block;
+    padding-bottom: 2em;
+    text-align: center;
+    vertical-align: top;
+}
+
+.badges-list .badge-list .badges li .badge-name {
+    display: block;
+    padding: 5px;
+}
+
 /* Rating system */
 
 .stars div a {
