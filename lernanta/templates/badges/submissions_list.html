@@ -1,11 +1,13 @@
 {% extends "badges/base.html" %}
 {% load l10n_tags %}
 {% load pagination_tags %}
+{% load truncate_chars %}
 
 {% block bodyclasses %}submissions-list{% endblock %}
 
 {% block body %}
   <div id="main">
+    {% if badge %}<div class="back-nav"><a href="{% locale_url submissions_list %}">← <span>{{ _('Go back to all badge submissions') }}</span></a></div>{% endif %}
     <h1>
     {% if badge %}
         {{ badge }}
@@ -17,30 +19,32 @@
    </h1>
     <br>
     {% if badge %}
-    <div id="badge-image" style="width:200px; float:left;">
+    <div id="badge-image">
 	     <a href="{% locale_url badges_show slug=badge.slug %}" 
 	     title="{{ badge }}"><img src="{{ badge.get_image_url }}" 
-	     width="155" height="155" alt="{{ badge.name }}"/></a>
+	     width="155" height="155" alt="{{ badge.name }}"/><br>
+	     {{ badge.name }} {{ _('Badge') }}
+	     </a>
     </div>
    
     {% endif %}
-    <div id="submission-list" {% if badge %} style="border-left: #ccc 1px solid; float:left;" {% endif %}>
+    <div id="submission-list" {% if badge %} class="has-badge" {% endif %}>
       <ul>
       {% for submission in submissions %}
         <li>
         <div class="user">
-            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author }}">
-	          <img src="{{ submission.author.image_or_default }}" width="50" height="50" alt="{{ submission.author }}"/>
+            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author.username }}">
+	          <img src="{{ submission.author.image_or_default }}" width="50" height="50" alt="{{ submission.author.username }}"/>
 	        </a>
         </div>
         
         <div class="submission">
-            <p><span style="font-size: 18px;">{{ submission.author }}</span><br>
-            {{ submission.content|truncatewords:14|removetags:"b span ul li p" }} <a href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('read more') }}</a>
+            <p><span class="username">{{ submission.author.username }}</span><br>
+            {{ submission.content|truncatechars:65|removetags:"b span ul li p" }} <a href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('read more') }}</a>
         </div>
         <div class="action">
             <p><a class="button" href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('Give this badge') }}</a><br>
-            <span class="hint small">submitted {{ submission.created_on|timesince }} ago</span></p>
+            <span class="hint small">{{ _('submitted') }} {{ submission.created_on|timesince }} {{ _('ago') }}</span></p>
         </div>
         {% if not badge %}
         <div class="badge">
