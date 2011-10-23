@@ -3810,6 +3810,27 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     padding-bottom: 1em;
 }
 
+.badge-show #badge-image {
+    float: left;
+    width: 250px;
+    text-align: center;
+}
+
+.badge-show #badge-description {
+    border-left: #ccc 1px solid; 
+    float: left;
+    padding-left: 39px;
+    width: 650px;
+}
+
+.badge-show #badge-more {
+    padding-top: 2em;
+}
+
+.badge-show .badge-call-to-action-button {
+    margin: 0;
+}
+
 /* Rating system */
 
 .stars div a {
