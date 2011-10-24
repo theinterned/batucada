@@ -55,7 +55,7 @@
 	            {{ submission.content|truncatechars:65|removetags:"b span ul li p" }} <a href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('read more') }}</a>
 	        </div>
 	        <div class="action">
-	            <p><a class="button" href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('Give this badge') }}</a><br>
+	            <p><a class="button" href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('Review This') }}</a><br>
 	            <span class="hint small">{{ _('submitted') }} {{ submission.created_on|timesince }} {{ _('ago') }}</span></p>
 	        </div>
 	        <br class="clear"/>
