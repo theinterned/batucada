@@ -77,6 +77,7 @@ def show_badge(request, slug):
     community_badge = (badge.badge_type == Badge.COMMUNITY)
     submissions = badge.submissions.all().order_by(
         '-created_on')
+    applications = submissions.filter(author=request.user)
     awarded_user_ids = badge.awards.all().values('user_id')
     awarded_users = UserProfile.objects.filter(
         deleted=False, id__in=awarded_user_ids)
@@ -90,6 +91,7 @@ def show_badge(request, slug):
         'peer_community': peer_assessment and community_badge,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
+        'applications': applications
     }
     context.update(get_pagination_context(request, awarded_users,
         24, prefix='awarded_users_'))
