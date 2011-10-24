@@ -7,7 +7,7 @@ var starRating = {
   create: function(selector) {
     // loop over every element matching the selector
     $(selector).each(function() {
-      var $list = $('<div style=\'margin-top: -2.3em;\' class=\'right-aligned-rating \'></div>');
+      var $list = $('<div class=\'right-aligned-rating \'></div>');
       // loop over every radio button in each container
       $(this)
         .find('input:radio')

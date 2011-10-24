@@ -7,49 +7,37 @@
 
 {% block body %} 
 	<div id="main">
-	<h1>{{ _('Please Review ') }} {{ submission.author }}{{ _('\'s Work for the ') }} {{ submission.badge }}</h1>
+	<h1>{{ _('Review this submission') }}</h1>
 	<br>
-    <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" class="left-badge-image"/>
-    <p>{{ badge.description }}
-    {% if rubrics %}
-      <h2>{{ _('Rubric') }}</h2>
-      <ol>
-        {% for rubric in rubrics %}
-          <li>{{ rubric.question }}</li>
-        {% endfor %}
-      </ol>
-    {% endif %}</p>
-
-    <h1>{{ _('Submitted Work') }}</h1>
-    <br>
-	<div id="user" class="submission-author">
-	    <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}"><br/>
-	    {{ submission.author }}
-	</div>
-    <br>
-	<section id="submission-details">
-		<div id="work-url"><h3>{{ _('Link to work:') }}</h3>
-		<p><a href="{{ submission.url }}" target="_blank">{{ submission.url }}</a></p>
-		</div>
-
-		<div id="reason"><h3>{{ _('Reason:') }}</h3>
-		{{ submission.content|embed|safe }}
-		</div>
-	</section>
+    <div id="badge-image">
+        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>        
+    </div>
+    <div id="submission">
+        <h1>{{ badge }}</h1>
+        <p>{{ badge.description }}</p>
+	   <div id="submission-details">
+		   
+		   <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
+		   
+		   <div id="submission-detail">
+			   <h2>{{ submission.author }}</h2>
+			   {{ submission.content|embed|safe }}
+			   <a href="{{ submission.url }}" target="_blank">{{ _('Link to work submitted') }}</a>
+			</div>
+	   </div>
     <br class="clear"/>
-    <h1>{{ _('Review') }}</h1>
+    <br>
+    <h2>{{ _('Based on the submission above, please provide a rating on how well this peer was able to:') }}</h2>
     <br>
 	{% block form %}
 	<fieldset id="assessment_edit" class="assessment edit tabpane">
 	  <form method="post" action="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}">
 	    {% csrf_token %}
-        <label>{{ _('Rating') }}</label>
-        <p class="hint">{{ _('Provide a rating of Never, Sometimes, Most or the Time, or Always for each of the following rubric items.') }}</p>
         <ol id="ratings">
           {% for rubric, rating_form in rating_forms %}
-            <li class="clear">
-              {{ rubric.question }}
-              <div class="stars field{% if rating_form.score.errors %} error{% endif %}">
+            <li class="clear rating-row">
+              <div class="question">{{ rubric.question }}</div>
+              <div class="stars {% if rating_form.score.errors %} error{% endif %}">
 	            {{ rating_form.score }}
 	            {{ rating_form.score.errors }}
 	            <div class="rating-key">{{ rating.get_score_display }}</div>
@@ -59,8 +47,8 @@
         </ol>
 
 	    <div class="clear field{% if form.comment.errors %} error{% endif %}">
-	      <label for="id_comment">{{ _('Comments') }}</label>
-          <p class="hint">{{ _('Add feedback and other comments to your review.') }}</p>
+	      <label for="id_comment">{{ _('Please explain your ratings.') }}</label>
+          <p class="hint">{{ _('What aspects of the challenge did this peer do well? What advice or suggestions would you give to help them improve this work?') }}</p>
 	      {{ form.comment }}
 	      {{ form.comment.errors }}
 	    </div>
@@ -71,6 +59,7 @@
 	    
 	  </form>
 	</fieldset>
+	</div>
 	{% endblock %}
 {% endblock %}
 
