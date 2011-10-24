@@ -145,7 +145,7 @@ class Badge(models.Model):
 
         Returns None if no badge is awarded."""
         if not self.is_eligible(user.user):
-            # If the user is not elegible the badge
+            # If the user is not eligible the badge
             # is not awarded.
             return None
 
@@ -203,35 +203,24 @@ class Rubric(models.Model):
 
 class Logic(models.Model):
     """Representation of the logic behind awarding a badge"""
-    # TODO: Mentors are not part of p2pu yet so they can not
-    # be considered in the badges functionality yet.
-    min_adopter_votes = models.PositiveIntegerField(
-        help_text=_('Minimum number of votes by challenge adopters.'),
-        default=0)
     min_votes = models.PositiveIntegerField(
         help_text=_('Minimum number of votes.'),
         default=1)
-    min_weighted_avg_rating = models.PositiveIntegerField(
-        help_text=_('Minimum weighted average rating.'),
+    min_avg_rating = models.PositiveIntegerField(
+        help_text=_('Minimum average rating.'),
         default=3)
 
     def __unicode__(self):
-        msg = _('%s adopter votes of %s total votes with at least %s'\
-            'weighted average rating')
-        return msg % (self.min_adopter_votes,
-            self.min_votes, self.min_weighted_avg_rating)
+        msg = _('%s total votes with at least %s average rating')
+        return msg % (self.min_votes, self.min_avg_rating)
 
     def is_eligible(self, badge, user):
         progress = badge.progress_for(user)
         if self.min_votes and self.min_votes > progress.current_votes:
             return False
-        min_adopter_votes = self.min_adopter_votes
-        current_adopter_votes = progress.current_adopter_votes
-        if min_adopter_votes and min_adopter_votes > current_adopter_votes:
-            return False
-        min_weighted_avg = self.min_weighted_avg_rating
-        current_weighted_avg = progress.current_weighted_avg_rating
-        if min_weighted_avg and min_weighted_avg > current_weighted_avg:
+        min_avg = self.min_avg_rating
+        current_avg = progress.current_avg_rating
+        if min_avg and min_avg > current_avg:
             return False
         return True
 
@@ -239,12 +228,10 @@ class Logic(models.Model):
 class Progress(ModelBase):
     """Progress of a person to getting awarded a badge"""
     badge = models.ForeignKey('badges.Badge', related_name="progresses")
-    current_adopter_votes = models.PositiveIntegerField(default=0,
-        help_text=_('Current number of adopter votes'))
     current_votes = models.PositiveIntegerField(default=0,
         help_text=_('Current number of votes'))
-    current_weighted_rating = models.FloatField(default=0,
-        help_text=_('Current total weighted rating'))
+    current_rating = models.FloatField(default=0,
+        help_text=_('Current total rating'))
     user = models.ForeignKey('users.UserProfile')
     updated_on = models.DateTimeField(
         help_text=_('Last time this person received a qualified rating'),
@@ -254,13 +241,10 @@ class Progress(ModelBase):
         auto_now_add=True, default=datetime.datetime.now)
 
     @property
-    def current_weighted_avg_rating(self):
+    def current_avg_rating(self):
         if self.current_votes == 0:
             return 0
-        weight_one_votes = self.current_votes - self.current_adopter_votes
-        weight_two_votes = self.current_adopter_votes
-        avg_denominator = (weight_one_votes + 2 * weight_two_votes)
-        return self.current_weighted_rating / avg_denominator
+        return self.current_rating / self.current_votes
 
     def __unicode__(self):
         return _('%(user)s progress for %(badge)s') % {
@@ -272,21 +256,7 @@ class Progress(ModelBase):
         updated."""
         badge = assessment.badge
         self.current_votes += 1
-        # check if the assessor is an adopter by the time the assessment
-        # is created.
-        from projects.models import Participation
-        participations = Participation.objects.filter(
-            project__in=badge.groups.values('id'),
-            user=assessment.assessor, left_on__isnull=True)
-        # In challenges organizers are a special case of adopters that
-        # have the extra permissions to edit the challenge and its tasks.
-        is_adopter = participations.filter(
-            Q(organizing=True) | Q(adopter=True)).exists()
-        if is_adopter:
-            self.current_adopter_votes += 1
-            self.current_weighted_rating += assessment.final_rating * 2
-        else:
-            self.current_weighted_rating += assessment.final_rating
+        self.current_rating += assessment.final_rating
         self.update_date = datetime.datetime.now()
         self.save()
         # Try to award badge to user
@@ -339,7 +309,7 @@ class Assessment(ModelBase):
 
     def get_final_rating_display(self):
         rating_position = int(round(self.final_rating)) - 1
-        # Guarantee rating_position does not go above or bellow
+        # Guarantee rating_position does not go above or below
         # the boundaries.
         if rating_position < 0:
             rating_position = 0
