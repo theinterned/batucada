@@ -125,7 +125,7 @@ class Badge(models.Model):
     def is_eligible(self, user):
         """Check if the user eligible for the badge.
 
-        If some prerequisite badges have not being
+        If some prerequisite badges have not been
         awarded returns False."""
         if user.is_authenticated():
             profile = user.get_profile()
@@ -211,7 +211,7 @@ class Logic(models.Model):
         default=3)
 
     def __unicode__(self):
-        msg = _('%s total votes with at least %s average rating')
+        msg = _('%s peers -- by an average rating of %s -- ')
         return msg % (self.min_votes, self.min_avg_rating)
 
     def is_eligible(self, badge, user):

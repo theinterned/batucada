@@ -12,8 +12,8 @@
         <br><br>
 	    {% if peer_skill %}
 	      {% if is_eligible %}
-	        {% if application_open %}
-	          <p><a href="{% locale_url submission_show slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
+	        {% if applications %}
+	          <p><a href="{% locale_url matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
 	        {% else %}
 	          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
 	        {% endif %}

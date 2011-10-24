@@ -3847,13 +3847,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     padding-bottom: 1em;
 }
 
-.badge-show #badge-image, .assessment-edit #badge-image {
+.badge-show #badge-image, .assessment-edit #badge-image, .submission-edit #badge-image {
     float: left;
     width: 250px;
     text-align: center;
 }
 
-.badge-show #badge-description, .assessment-edit #submission {
+.badge-show #badge-description, .assessment-edit #submission, .submission-edit #badge-description {
     border-left: #ccc 1px solid; 
     float: left;
     padding-left: 39px;
