@@ -3685,6 +3685,10 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	padding-bottom: 1em;
 }
 
+.assessment .question {
+    width: 415px;
+}
+
 .assessment .rating {
 	font-weight: bold;
 }
@@ -3695,12 +3699,44 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 
 .assessment ul li {
 	list-style: none;
-	padding-bottom: .3em;
 }
 
 .assessment-edit #submission-details {
-	float:left;
-	width:800px;
+	float: left;
+	padding: 1em;
+	border: 1px solid #525252;
+    -moz-border-radius: 3px 3px 3px 3px;
+	width: 607px;
+}
+
+.assessment-edit #submission-details .member-picture {
+    float: left;
+}
+
+.assessment-edit #submission-detail {
+    margin-left: 70px;
+}
+
+#assessment_edit ol#ratings {
+    list-style-type: none;
+    margin: 0;
+    width: 650px;
+}
+
+#assessment_edit ol#ratings li.rating-row {
+    list-style-type: none;
+    margin: 0;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border: 1px solid #525252;
+    padding: 8px;
+    margin-bottom: 1em;
+    display: table;
+}
+
+#assessment_edit label {
+    color: #5A6579;
+    font-weight: bold;
+    font-size: 100%;
 }
 
 .assessment .rubric-question, .assessment .final-rating, .assessment .rating, .assessment .rating-key {
@@ -3731,6 +3767,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 .right-aligned-rating {
     float: right; 
     width: 200px;
+    display:table-cell; vertical-align:middle;
 }
 
 .right-aligned-rating .rating-key .active {
@@ -3810,13 +3847,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     padding-bottom: 1em;
 }
 
-.badge-show #badge-image {
+.badge-show #badge-image, .assessment-edit #badge-image {
     float: left;
     width: 250px;
     text-align: center;
 }
 
-.badge-show #badge-description {
+.badge-show #badge-description, .assessment-edit #submission {
     border-left: #ccc 1px solid; 
     float: left;
     padding-left: 39px;
@@ -3850,6 +3887,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 /* Rating system */
+
+.stars {
+    display: table-cell;
+    vertical-align: middle;
+}
 
 .stars div a {
   background: transparent url(/media/images/blank.png) 0 0 no-repeat;
