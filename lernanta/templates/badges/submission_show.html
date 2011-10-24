@@ -40,7 +40,7 @@
 	</div>
     {% if can_assess %}
        <br class="clear"><br>
-       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
+       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Review This') }}</a></p>
     {% endif %}
 </div>
 
@@ -50,7 +50,7 @@
 
 	{% if assessments %}
        <br><br>
-	   <h1>{{ _('Assessments') }}</h1>
+	   <h1>{{ _('Reviews') }}</h1>
 	   <ul id="posts">
 	   {% for assessment in assessments %}
 			{% include "badges/_assessment_body.html" with assessment=assessment %}
