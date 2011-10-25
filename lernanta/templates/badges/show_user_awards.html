@@ -7,41 +7,49 @@
 
 {% block body %}
   <div id="main">
+  <div id="main">
     <h1>{{ badge }}{{ _('\'s Awards to') }} {{ profile }}</h1>
     <br>
-    <img src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge.name }}" class="left-badge-image"/>
-    <p>{{ badge.description }}
-    {% if rubrics %}
-      <h2>{{ _('Rubric') }}</h2>
-      <ol>
-        {% for rubric in rubrics %}
-          <li>{{ rubric.question }}</li>
-        {% endfor %}
-      </ol>
-    {% endif %}</p>
-    {% if not badge.unique %}
-        <p><b>{{'Number of Awards to '}} {{ profile }}:</b> {{ awards_count }}</p>
-    {% endif%}
-    {% if not rubrics %}<br><br>{% endif %}
+    <div id="badge-image">
+        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge }}"/>        
+    </div>
+    <div id="badge-description">
+        <h1>{{ badge }}</h1>
+        <p>{{ badge.description }}</p>
+        <h2>{{ _('Requirements:') }}</h2> 
+        {% if rubrics or badge.logic %}
+              {% if badge.logic %}
+              {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }} 
+              {% endif %}
+              {{ rubrics|join:", " }} 
+        {% else %}
+           <p>{{ _('There are no requirements for this badge.') }}</p>
+        {% endif %}
 
-    {% if prerequisites %}
-      <br><br>
-      <h1>{{ _('Prerequisites') }}</h1>
-      <br>
-      {% for prerequisite in prerequisites %}
-        <a href="{{ prerequisite.get_absolute_url }}" title="{{ prerequisite }}">
-          <img src="{{ prerequisite.get_image_url }}" width="80" height="80" alt="{{ prerequisite }}"/>
-        </a>
-      {% endfor %}
-    {% endif %}
-    {% if related_projects %}
-      <br><br>
-      <h1>{{ _('Awarded At') }}</h1>
-      <br>
-      {% for related_project in related_projects %}
-        <a href="{{ related_project.get_absolute_url }}" title="{{ related_project|title }}"><img src="{{ related_project.get_image_url }}" width="113.4" height="70" alt="{{ related_project|title }}" class="badge-graphic"></a>
-      {% endfor %}
-    {% endif %}
+	    {% if not badge.unique %}
+	        <p><b>{{'Number of Awards to '}} {{ profile }}:</b> {{ awards_count }}</p>
+	    {% endif%} 
+
+	    {% if prerequisites %}
+	      <br><br>
+	      <h1>{{ _('Prerequisites') }}</h1>
+	      <br>
+	      {% for prerequisite in prerequisites %}
+	        <a href="{{ prerequisite.get_absolute_url }}" title="{{ prerequisite }}">
+	          <img src="{{ prerequisite.get_image_url }}" width="80" height="80" alt="{{ prerequisite }}"/>
+	        </a>
+	      {% endfor %}
+	    {% endif %}
+	    {% if related_projects %}
+	      <br><br>
+	      <h1>{{ _('Awarded At') }}</h1>
+	      <br>
+	      {% for related_project in related_projects %}
+	        <a href="{{ related_project.get_absolute_url }}" title="{{ related_project|title }}"><img src="{{ related_project.get_image_url }}" width="113.4" height="70" alt="{{ related_project|title }}" class="badge-graphic"></a>
+	      {% endfor %}
+	    {% endif %}
+  </div>
+    <br class="clear"/>
 
     {% if peer_skill and submissions %}
       <br><br>
@@ -57,7 +65,7 @@
       <br>
       <ul>
         {% if badge.logic.min_votes %}
-          <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews from the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
+          <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
         {% endif %}
         {% if badge.logic.min_adopter_votes %}
           <li>{{ _('Received') }} {{ progress.current_adopter_votes }} {{ _(' reviews from the') }} {{ badge.logic.min_adopter_votes }} {{ _('reviews needed from challenge adopters.') }}</li>
