@@ -70,14 +70,18 @@ def show_badge(request, slug):
         badge = Badge.objects.get(slug=slug)
     except Badge.DoesNotExist:
         return pilot_badge_redirect(request, slug)
-    is_eligible = badge.is_eligible(request.user)
+    is_eligible = False
+    applications = []
+    if request.user.is_authenticated():
+    	user = request.user.get_profile()
+    	is_eligible = badge.is_eligible(user)
+    	applications = submissions.filter(author=user)
     rubrics = badge.rubrics.all()
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
     submissions = badge.submissions.all().order_by(
         '-created_on')
-    applications = submissions.filter(author=request.user)
     awarded_user_ids = badge.awards.all().values('user_id')
     awarded_users = UserProfile.objects.filter(
         deleted=False, id__in=awarded_user_ids)
