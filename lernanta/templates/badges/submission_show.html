@@ -9,35 +9,43 @@
 
 {% block body %} 
     <div id="main">
-    	<h1 id="page-title">{{ _('Application for') }} {{ badge.name }} {{ _('from') }} {{ submission.author }} </h1>
-	    <section id="submission-details">
-	    	<div id="work-url"><h3>{{ _('Link to work:') }}</h3>
-	    	<p><a href="{{ submission.url }}" target="_blank">{{ submission.url }}</a></p>
-	        </div>
-	        
-	        <div id="reason"><h3>{{ _('Reflection:') }}</h3>
-	        {{ submission.content|embed|safe }}
-	    	</div>
+    <h1>{{ _('Application for') }} {{ badge }} {{ _('from') }} {{ submission.author }}</h1>
+    <br>
+    <div id="badge-image">
+        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge }}"/>        
+    </div>
+    <div id="submission">
+        <h1>{{ badge }}</h1>
+        <p>{{ badge.description }}</p>
+       <div id="submission-details">
+           
+           <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
+           
+           <div id="submission-detail">
+               <h2>{{ submission.author }}</h2>
+               {{ submission.content|embed|safe }}
+               <a href="{{ submission.url }}" target="_blank">{{ _('Link to work submitted') }}</a>
+            </div>
+            <br><br>
+		    <div id="progress"><h3>{{ _('Progress:') }}</h3>
+				<ul>
+			         {% if badge.logic.min_votes %}
+			           <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
+			         {% endif %}
+			         {% if badge.logic.min_avg_rating %}
+			           <li>{{ _('The posted reviews give this work submission a total average score of') }} {{ progress.current_avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
+			         {% endif %}
+			    </ul>
+			</div>
+	</div>
+    {% if can_assess %}
+       <br class="clear"><br>
+       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
+    {% endif %}
+</div>
 
-            {% if can_assess %}
-               <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Assess for Badge') }}</a></p>
-            {% endif %}
-	    	
-	    	<div id="progress"><h3>{{ _('Progress:') }}</h3>
-	    	<ul>
-              {% if badge.logic.min_votes %}
-                <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
-              {% endif %}
-              {% if badge.logic.min_avg_rating %}
-                <li>{{ _('The posted reviews give this work submission a total average score of') }} {{ progress.current_avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
-              {% endif %}
-            </ul>
-	    	</div>
-	    </section>
+
 	
-	    <section id="badge-details">
-    		{% include "badges/_badge_card.html" with badge=badge rubrics=rubrics %}
-    	</section>
     <br class="clear"/>
 
 	{% if assessments %}
