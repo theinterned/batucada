@@ -369,7 +369,7 @@ def show_user_awards(request, slug, username):
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
-    submissions = badge.submissions.all().order_by(
+    submissions = badge.submissions.filter(author=profile).order_by(
         '-created_on')
     progress = badge.progress_for(profile) if skill_badge else None
     assessments = badge.assessments.all().order_by(
