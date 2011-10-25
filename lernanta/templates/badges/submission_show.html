@@ -3,13 +3,13 @@
 {% load l10n_tags %}
 {% load embed %}
 
-{% block title %}{{ _('Application for') }} {{ badge.name }}{% endblock %}
+{% block title %}{{ _('Submission for') }} {{ badge.name }}{% endblock %}
 
 {% block bodyclasses %}submission-show summary{% endblock %}
 
 {% block body %} 
     <div id="main">
-    <h1>{{ _('Application for') }} {{ badge }} {{ _('from') }} {{ submission.author }}</h1>
+    <h1>{{ _('Submission for') }} {{ badge }} {{ _('from') }} {{ submission.author }}</h1>
     <br>
     <div id="badge-image">
         <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge }}"/>        
