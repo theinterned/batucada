@@ -3701,7 +3701,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	list-style: none;
 }
 
-.assessment-edit #submission-details {
+.assessment-edit #submission-details, .submission-show #submission-details {
 	float: left;
 	padding: 1em;
 	border: 1px solid #525252;
@@ -3709,11 +3709,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	width: 607px;
 }
 
-.assessment-edit #submission-details .member-picture {
+.assessment-edit #submission-details .member-picture, .submission-show #submission-details .member-picture {
     float: left;
 }
 
-.assessment-edit #submission-detail {
+.assessment-edit #submission-detail, .submission-show #submission-detail {
     margin-left: 70px;
 }
 
@@ -3847,13 +3847,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     padding-bottom: 1em;
 }
 
-.badge-show #badge-image, .assessment-edit #badge-image, .submission-edit #badge-image {
+.badge-show #badge-image, .assessment-edit #badge-image, .submission-edit #badge-image, .submission-show #badge-image {
     float: left;
     width: 250px;
     text-align: center;
 }
 
-.badge-show #badge-description, .assessment-edit #submission, .submission-edit #badge-description {
+.badge-show #badge-description, .assessment-edit #submission, .submission-edit #badge-description, .submission-show #submission {
     border-left: #ccc 1px solid; 
     float: left;
     padding-left: 39px;
