@@ -2,51 +2,53 @@
 <div id="congratulations-msg" class="help-request tasks-completed-msg {% if start_hidden %}off{% endif %}">
   <h3>{{ _('Congratulations!') }}</h3>
   <p>{{ _('Good job completing all the tasks.') }}</p>
-  {% if awarded_badges %}
-    <h4>{{ _('Awarded Badges') }}</h4>
-    <div class="badge-list">
+  {% if awarded_badges or badges_in_progress or non_attempted_badges or non_started_challenges %}
+  <ul class="congrats-blocks">
+  <li>
+    <h4>{{ _('Badges Awarded') }}</h4>
+    <br>
+    {% if awarded_badges %}
       {% for badge in awarded_badges %}
-        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}"></a>
       {% endfor %}
-    </div>
-  {% endif %}
-  {% if badges_in_progress %}
-    <h4>{{ _('See Reviews Status for Submitted Work') }}</h4>
-    <div class="badge-list">
+    {% endif %}
+  </li>
+  <li>
+    <h4>{{ _('Awaiting Review') }}</h4>
+    <br>
+    {% if badges_in_progress %}
       {% for badge in badges_in_progress %}
-        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}"></a>
       {% endfor %}
-    </div>
-  {% endif %}
-  {% if non_attempted_badges %}
+    {% endif %}
+  </li>
+  <li>
     <h4>{{ _('Earn More Badges') }}</h4>
-    <div class="badge-list">
+    <br>
+    {% if non_attempted_badges %}
       {% for badge in non_attempted_badges %}
-        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
+        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}"></a>
       {% endfor %}
-    </div>
-  {% endif %}
-  {% if need_reviews_badges %}
-    <h4>{{ _('Assess Others\' Work') }}</h4>
-    <div class="badge-list">
-      {% for badge in need_reviews_badges %}
-        <a href="{{ badge.get_absolute_url }}#submissions" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"></a>
-      {% endfor %}
-    </div>
-  {% endif %}
-  {% if non_started_challenges %}
-    <h4>{{ _('Join Next Challenges') }}</h4>
-    <div class="badge-list">
+    {% endif %}
+  </li>
+  <li>
+    <h4>{{ _('Next Challenges') }}</h4>
+    <br>
+    {% if non_started_challenges %}
       {% for next_project in non_started_challenges %}
-        <a href="{{ next_project.get_absolute_url }}" title="{{ next_project|title }}"><img src="{{ next_project.get_image_url }}" width="113.4" height="70" alt="{{ next_project|title }}" class="badge-graphic"></a>
+        <a href="{{ next_project.get_absolute_url }}" title="{{ next_project|title }}"><img src="{{ next_project.get_image_url }}" width="113.4" height="70" alt="{{ next_project|title }}"></a>
       {% endfor %}
-    </div>
+    {% endif %}
+  </li>
+  </ul>
   {% endif %}
   {% if adopter_request %}
+  <div class="help-others">
     <h4>{{ _('Help Others with this Challenge') }}</h4>
     <form method="post" action="{% locale_url direct_signup_adopter slug=project.slug %}">
       {% csrf_token %}
       <button class="adopt-button">{{ _('Adopt this Challenge') }}</button>
     </form>
+  </div>
   {% endif %}
 </div>
