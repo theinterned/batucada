@@ -3,6 +3,7 @@
 {% load project_tags %}
 {% load activity_tags %}
 {% load pagination_tags %}
+{% load join_p2pu_tags %}
 
 {% block title %}{{ project.name }}{% endblock %}
 
@@ -12,6 +13,8 @@
 
 {% block bodyid %}project_landing{% endblock %}
 
+
+{% block join_p2pu_section %}{% join_p2pu request %}{% endblock %}
 
 {% block breadcrumbs_actions%}
   {% if is_challenge and organizing %}
