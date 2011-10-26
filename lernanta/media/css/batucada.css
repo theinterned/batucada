@@ -492,46 +492,55 @@ form .small {
  
 header {}
   #masthead {
-    height: 110px;
+    height: 80px;
+    background: #ffffff;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
   }
     #masthead a:hover {
       text-decoration: none;
     }
 
     #main-nav {
-      font-size: 17px;
+      font-size: 20px;
       position: absolute;
-      margin-top: 48px;
-      height: 42px;
-      width: 840px;
-      background-color: #fff;
-      z-index: 1;
-      border-radius: 10px;
-      border: solid 1px #EEE;
-      padding: 3px 3px 3px 159px;
+      margin-top: 18px;
+      height: 24px;
+      padding: 0 3px 3px 179px;
+    }
+
+    #main-nav li {
+      border-right: 1px solid #eee;
+      padding: 0 8px 0 0;
+    }
+
+    #main-nav li:last-child {
+      border: none;
+      padding: 0 0 6px 4px;
     }
 
     #user-nav {
-      height: 37px;
-      position: relative;
-      z-index: 2;
+      height: 48px;
+      z-index: 1000;
       float: right;
-      margin-top: 8px;
-      margin-left: 825px;
+      min-width: 256px;
+      margin-top: -10px;
     }
     
     #cse-search-form {
-        float: right;
-        margin-top: 5px;
-        width: 181px;
+      margin-top: -10px;
+      margin-right: 300px;
+      width: 161px;
+      float: right;
     }
 
     #cse-search-form input {
-      background: #fafafa url('/media/images/icon.loupe.png') no-repeat 187px center;
-      border: 0;
+      background: #ccc;
+      border: 1px solid #aaa;
+      border-radius: 20px;
       color: #5A6579;
-      height: 28px;
-      width: 181px;
+      height: 22px;
+      width: 161px;
       padding: 0 17px;
       float: right;
     }
@@ -550,45 +559,70 @@ header {}
         width: 960px;
      }
 
-      #user-nav a, #main-nav a {
-        color: #444;
-        font-size: 17px;
+      #user-nav a {
+        color: #777;
+        font-size: 14px;
+        display: block;
+        padding: 12px 12px;
+      }
+
+      #main-nav a {
+        color: #555;
+        font-size: 20px;
         display: block;
         padding: 10px 12px;
       }
+
 	  #user-nav a.sub-level, #main-nav a.sub-level{
-	    color: #444;
-        font-size: 14px;
-        display: block;
-        padding: 10px 12px;
+	        color: #fff;
+            font-size: 14px;
+            display: block;
+            padding: 5px 12px 10px 12px;
 	  }
       
-      #user-nav a.top-level, #main-nav a.top-level {
+      #main-nav a.top-level {
         display: block;
-        height: 14px;
-        padding: 4px 10px 8px 10px;
+        height: 24px;
+        padding: 10px;
+        margin-top: 0;
+      }
+
+      #user-nav a.top-level {
+        height: 51px;
+        padding: 33px 10px 2px 10px;
+        margin: 0;
       }
 
       #user-nav a:hover, #main-nav a:hover {
-        background: #36cdc4;
-        color: #fff;
+        color: #2184ca;
       }
+
       .no-rgba #user-nav .menu a:hover, .no-rgba #main-nav .menu a:hover {
         background: url("/media/images/user-nav.bg.png");
 		color: #fff;
+      }
+
+      #user-nav a.login {
+        font-weight: bold;
+        color: #2184ca;
+      }
+
+      #user-nav a.login:hover {
+        font-weight: bold;
+        color: #000;
       }
 
       #user-link {}
 
         #user-picture {
           position: relative;
-		  float:left;
+          float:left;
           top: 0px;
-          box-shadow: #000 -1px -1px 1px;
-          -moz-box-shadow: #000 -1px -1px 1px;
-          -webkit-box-shadow: #000 -1px -1px 1px;
-          behavior: url("/media/css/PIE.htc");
           margin-right: 5px;
+          width: 19px;
+          height: 19px;
+          border: 1px solid #ccc;
+          background: #fff;
         }
 
         #user-name {
@@ -599,11 +633,17 @@ header {}
       #user-nav ul, #main-nav ul {
         list-style: none;
       }
-        #user-nav > ul > li, #main-nav > ul > li {
-          float: left;
+        #user-nav > ul > li {
+          float: right;
           margin-left: 7px;
           margin-top: 7px;
           padding: 0;
+        }
+
+        #main-nav > ul > li {
+          float: left;
+          padding-left: 7px;
+          margin-top: 0;
         }
       
       #user-nav .separator, #main-nav .separator {
@@ -612,6 +652,25 @@ header {}
         background: url("/media/images/separator.bg.png") no-repeat left center;
         height: 37px;
       }
+
+			#user {
+				min-width: 120px;
+				z-index: 1000;
+				display: block;
+			}
+
+			#user:hover {
+				background: #000;
+				height: 290px;
+				z-index: 9999;
+        -webkit-border-bottom-right-radius: 7px;
+        -webkit-border-bottom-left-radius: 7px;
+        -moz-border-radius-bottomright: 7px;
+        -moz-border-radius-bottomleft: 7px;
+        border-bottom-right-radius: 7px;
+        border-bottom-left-radius: 7px;
+		  }
+
       
       .dropdown {
         background: url("/media/images/arrow-down.png") no-repeat scroll transparent;
@@ -621,59 +680,72 @@ header {}
         margin-left: 1px;
         margin-top: 8px;
         vertical-align: top;
-        
+      }
+
+      .dropdown:hover {
+        background: url("/media/images/arrow-down-over.png") no-repeat scroll transparent;
+        display: inline-block;
+        height: 7px;
+        width: 7px;
+        margin-left: 1px;
+        margin-top: 8px;
+        vertical-align: top;   
       }
       
       .menu ul {
         position: absolute;
-        z-index: 0;
+        z-index: 9999;
         display: none;
         margin: 0;
         padding: 0;
-        background: -webkit-gradient(linear,0 top,0 bottom,from(#48a4e3),to(#1f84ca));
-        background: -moz-linear-gradient(top,#48a4e3,#1f84ca);
-        -pie-background: linear-gradient(top,#48a4e3,#1f84ca);
       }
       .no-cssgradients .menu ul {
-        background: #48a4e3;
-        border: 1px solid #666;
-        border-top: 0 none;
-        border-left: 0 none;
+        background: #666;
       }
 
       .menu.open {
-        background: #36cdc4;
+        background: #000;
+        position: relative;
       }
         .menu.open a {
-          border-top: 1px solid #76bae9;
           display: block;
-          background: #28c0b7;
         }
+
+        .menu.open a:hover {
+          display: block;
+          color: #fff;
+        }
+
         .menu.open span {
           color: #fff;
         }
         .menu.open ul {
-          z-index: 2;
+          z-index: 1000;
           display: block;
-          box-shadow: #777 2px 4px 6px;
-          -webkit-box-shadow: #777 2px 4px 6px;
-          -moz-box-shadow: #777 2px 4px 6px;
-          -webkit-border-bottom-right-radius: 7px;
-          -webkit-border-bottom-left-radius: 7px;
-          -moz-border-radius-bottomright: 7px;
-          -moz-border-radius-bottomleft: 7px;
-          border-bottom-right-radius: 7px;
-          border-bottom-left-radius: 7px;
-          behavior: url("/media/css/PIE.htc");
+          padding-bottom: 5px;
         }
 
-          #user.open ul a, #schools.open ul a, #help.open ul a  {
+          #user.open ul li {
+            color: #fff;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 14px;
+          }
+
+          #user.open ul li:last-child {
             border: 0 none;
             color: #fff;
+            margin-bottom: 0;
+            padding-bottom: 0;
           }
-          #user-actions, #school-menu-items, #help-menu-items {
-            min-width: 146px;
-            color: #fff;
+
+          #user.open ul a:hover {
+            border: 0 none;
+            color: #2184ca;
+          }
+
+          #user-actions {
+            color: #222;
           }
       
       #inbox {}
@@ -3452,28 +3524,15 @@ div.voting div.score {
 
 
 #logo {
-    background-position: 13px 51px;
-    width: 155px; 
+    background-position: 13px 17px;
+    width: 165px; 
     background-image: url("/media/images/logo.png");
     height: 120px;
+    margin-top: 2px;
     margin-right: 20px;
     position: absolute;
     z-index: 2;
 }
-
-#beta-tag {
-    color: #F08C00;
-    font-size: 18px;
-    margin-left: 105px;
-    margin-top: 29px;
-    position: absolute;
-    z-index: 5;
-}
-
-a#beta-tag:hover {
-    color: #36cdc4;
-}
-
 
 #footer-schools-wrapper {
   margin-top: 40px;
