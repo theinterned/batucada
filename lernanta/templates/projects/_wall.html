@@ -2,6 +2,7 @@
 {% load activity_tags %}
 {% load pagination_tags %}
 
+<div id="project_wall_section">
 {% if participating %}  
   <div id="create-post">
     <div class="post-container">
@@ -38,3 +39,5 @@
 {% with prefix='' page_url=wall_url %}
   {% pagination_links %}
 {% endwith %}
+<br clear="both">
+</div>

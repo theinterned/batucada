@@ -2,15 +2,7 @@
 {% load project_tags %}
 {% if tasks_count or show_all %}
   <div id="task_list_section">
-    {% if is_challenge and participating and tasks_count %}
-
-    {% tasks_completed_msg project user hidde_tasks_complete_msg adopter_request %}
-      <div id="progress">
-        <div id="progressbar" value="{{ progressbar_value }}"></div>
-        <p><span id="completed_count">{{ completed_count }}</span>/<span id="total_count">{{ tasks_count }}</span> {{ _('Completed') }}</p>
-      </div>
-    {% endif %}
-    <h2 class="school_header">{% if not is_challenge %}<span>{% endif %}{{ _('Tasks') }}{% if not is_challenge %}</span>{% endif %}</h2>
+    {% if not is_challenge %}<h2 class="school_header"><span>{{ _('Tasks') }}</span></h2>{% endif %}
     {% if tasks_count %}
       <ul>
         {% for task in tasks %}
@@ -35,19 +27,6 @@
           </li>
         {% endfor %}
       </ul>
-      {% if is_challenge %}{% if next_badges or next_projects %}
-        <div class="next-steps">
-          <h3>{{ _('Next Steps:') }}</h3>
-          <div class="badge-list">
-            {% for badge in next_badges %}
-              <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" class="badge-graphic"/></a>
-            {% endfor %}
-            {% for next_project in next_projects %}
-              <a href="{{ next_project.get_absolute_url }}" title="{{ next_project|title }}"><img src="{{ next_project.get_image_url }}" width="113.4" height="70" alt="{{ next_project|title }}" class="badge-graphic"/></a>
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}{% endif %}
     {% else %}
       <br>{{ _('No tasks have been added.') }}<br><br>
     {% endif %}

@@ -2919,6 +2919,7 @@ ul.ui-autocomplete #ui-active-menuitem {
 
     #task_list_section .robttn {
 	   width:10px;
+       margin-right: 20px;
     }
 
     .project-kind-challenge #task_list_section .robttn {
@@ -3194,7 +3195,19 @@ div.voting div.score {
     border-top: none;
 }
 
-.project-kind-challenge #task_list_section .help-request {
+.project-kind-challenge #project_wall_section {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #bebebe;
+    margin-top: 26px;
+    margin-right: 0pt;
+    margin-bottom: 0pt;
+    margin-left: 2px;
+    padding-top: 17px;
+    padding-bottom: 0px;
+}
+
+.project-kind-challenge #task_list_wall .help-request {
     background: none repeat scroll 0 0 #FBFBFB;
     border: 1px solid #EEEEEE;
     border-radius: 3px 3px 3px 3px;
@@ -3209,7 +3222,7 @@ div.voting div.score {
     display: none;
 }
 
-.project-kind-challenge #task_list_section .help-request ul.congrats-blocks {
+.project-kind-challenge #task_list_wall .help-request ul.congrats-blocks {
     width: 730px;
     margin: 20px 0 240px 0;
     clear: both;
@@ -3217,7 +3230,7 @@ div.voting div.score {
     padding: 0;
 }
 
-.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li {
+.project-kind-challenge #task_list_wall .help-request ul.congrats-blocks li {
     float: left;
     display: inline-block;
     border-right: 1px solid #eee;
@@ -3229,41 +3242,41 @@ div.voting div.score {
     background: none;
 }
 
-.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li img {
+.project-kind-challenge #task_list_wall .help-request ul.congrats-blocks li img {
     float: left;
     padding: 3px;
 }
 
-.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li:first-child {
+.project-kind-challenge #task_list_wall .help-request ul.congrats-blocks li:first-child {
     padding: 0 4px 0 0;
 }
 
-.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li:last-child {
+.project-kind-challenge #task_list_wall .help-request ul.congrats-blocks li:last-child {
     border-right: none;
     padding: 0 0 0 4px;
 }
 
-.project-kind-challenge #task_list_section .help-request .help-others {
+.project-kind-challenge #task_list_wall .help-request .help-others {
     text-align: center;
     clear: both;
     border-top: 1px solid #eeeeee;
     padding: 10px 0 10px 0;
 }
 
-.project-kind-challenge #task_list_section .help-request .help-others h4 {
+.project-kind-challenge #task_list_wall .help-request .help-others h4 {
     margin: 10px 0 0 0;
     font-size: 16px;
 }
 
-.project-kind-challenge #task_list_section .help-request h3 {
+.project-kind-challenge #task_list_wall .help-request h3 {
     font-size: 24px;
 }
 
-.project-kind-challenge #task_list_section .help-request p {
+.project-kind-challenge #task_list_wall .help-request p {
     color: #000;
 }
 
-.project-kind-challenge #task_list_section .help-request button.adopt-button {
+.project-kind-challenge #task_list_wall .help-request button.adopt-button {
  margin: 0;
  background-color: #7fbf4d;
  background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
@@ -3295,7 +3308,7 @@ div.voting div.score {
  margin-top: 10px;
 }
  
-.project-kind-challenge #task_list_section .help-request button.adopt-button:hover {
+.project-kind-challenge #task_list_wall .help-request button.adopt-button:hover {
  background-color: #76b347;
  background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
  /* Saf4+, Chrome */
@@ -3313,7 +3326,7 @@ div.voting div.score {
  text-decoration: none;
 }
 
-.project-kind-challenge #task_list_section .help-request button.adopt-button:active {
+.project-kind-challenge #task_list_wall .help-request button.adopt-button:active {
  border: 1px solid #5b992b;
  border-bottom: 1px solid #538c27;
  -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
@@ -3323,18 +3336,29 @@ div.voting div.score {
  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
 }
 
-.project-kind-challenge #task_list_section #progress {
-    width: 300px;
-    float: right;
+.project-kind-challenge #task_list_wall #task_list_wall_toogle {
+    width: 200px;
 }
 
-.project-kind-challenge #task_list_section #progress #progressbar {
+.project-kind-challenge #task_list_wall.toggled_tasks #project_wall_section,
+.project-kind-challenge #task_list_wall.toggled_discussions #task_list_section,
+.project-kind-challenge #task_list_wall.toggled_discussions #progress {
+    display: none;
+}
+
+.project-kind-challenge #task_list_wall #progress {
+    width: 300px;
+    float: right;
+    margin-top: -33px;
+}
+
+.project-kind-challenge #task_list_wall #progress #progressbar {
     width: 290px;
     height: 20px;
     color: #fff;
 }
 
-.project-kind-challenge #task_list_section a.apply-button, .submission-show  a.assess-button {
+.project-kind-challenge a.apply-button, .submission-show  a.assess-button {
     -moz-border-radius: 3px 3px 3px 3px;
     -moz-box-shadow: 0 1px 0 0 #96CA6D inset;
     background-color: #7FBF4D;
@@ -3350,14 +3374,14 @@ div.voting div.score {
     width: 260p
  }
 
-.project-kind-challenge #task_list_section #progress p {
+.project-kind-challenge #task_list_wall #progress p {
     margin-top: 5px;
     float: right;
     color: #444;
 }
 
 
-.project-kind-challenge #task_list_section #progress .ui-widget-header {
+.project-kind-challenge #task_list_wall #progress .ui-widget-header {
     background: url("/media/images/ui-bg_highlight-soft_75_81a810_1x100.png") repeat-x scroll 50% 50% #81A810;
 }
 
@@ -3484,13 +3508,13 @@ div.voting div.score {
     font-weight: normal;
 }
 
-.project-kind-challenge #task_list_section .next-steps {
+.project-kind-challenge #task_list_wall .next-steps {
     margin-top: 10px;
     padding: 5px 0 8px 0;
     border-top: 1px solid #eee;
 }
 
-.project-kind-challenge #task_list_section .next-steps h3 {
+.project-kind-challenge #task_list_wall .next-steps h3 {
     font-size: 18px;
     margin-top: 10px;
     margin-left: 10px;
@@ -3501,11 +3525,11 @@ div.voting div.score {
     margin-top: 10px;
 }
 
-.project-kind-challenge #task_list_section .next-steps div.badge-list {
+.project-kind-challenge #task_list_wall .next-steps div.badge-list {
     margin-left: 20px;
 }
 
-.project-kind-challenge #task_list_section .help-request div.badge-list {
+.project-kind-challenge #task_list_wall .help-request div.badge-list {
     margin-bottom: 10px;
 }
 
