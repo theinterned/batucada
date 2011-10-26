@@ -20,7 +20,8 @@
             "menu_color": "#F57D1F", 
             "background_color": "#dce7e9", 
             "slug": "school-of-social-innovation", 
-            "name": "School of Social Innovation"
+            "name": "School of Social Innovation",
+            "short_name": "SOCIAL INNOVATION"
         }
     }, 
     {
@@ -44,7 +45,8 @@
             "menu_color": "#fbcd47", 
             "background_color": "#f1f1f1", 
             "slug": "school-of-the-mathematical-future", 
-            "name": "School of the Mathematical Future"
+            "name": "School of the Mathematical Future",
+            "short_name": "MATHEMATICAL FUTURE"
         }
     }, 
     {
@@ -68,7 +70,8 @@
             "menu_color": "#60a3ef", 
             "background_color": "#ffffff", 
             "slug": "school-of-webcraft", 
-            "name": "School of Webcraft"
+            "name": "School of Webcraft",
+            "short_name": "WEBCRAFT"
         }
     },
     {
@@ -92,7 +95,8 @@
             "menu_color": "#36cdc4", 
             "background_color": "#ffffff", 
             "slug": "school-of-ed-pilot", 
-            "name": "School of Ed (pilot)"
+            "name": "School of Ed (pilot)",
+            "short_name": "EDUCATION"
         }
     }
 ]

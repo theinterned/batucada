@@ -109,13 +109,14 @@
     {% endif %}
     <ul id="project-stats">
       {% if project.accepted_school %}
-        <li>
+        <li class="school-small-icon {{ project.accepted_school.slug }}-small-icon">
           <a href="{{ project.accepted_school.get_absolute_url }}" title="{{ project.accepted_school.name }}">
             {% if project.accepted_school.groups_icon %}
-  	          <img src="{{ MEDIA_URL }}{{ project.accepted_school.groups_icon }}" width="118" height="32" alt="{{ project.accepted_school.name }}"/>
+  	          <img class="school-small-icon" src="{{ MEDIA_URL }}{{ project.accepted_school.groups_icon }}" width="41" height="50" alt="{{ project.accepted_school.name }}"/>
             {% else %}
-              <img src="/media/images/school-missing.png" width="118" height="32" alt="{{ project.accepted_school.name }}"/>
+              <img src="/media/images/school-small-missing.png" width="41" height="50" alt="{{ project.accepted_school.name }}"/>
             {% endif %}
+            <p>{{ project.accepted_school.short_name|upper }}</p>
           </a>
       </li>
       {% endif %}
