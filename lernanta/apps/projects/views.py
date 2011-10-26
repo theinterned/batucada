@@ -129,7 +129,7 @@ def matching_kinds(request):
     return http.HttpResponse(json, mimetype="application/x-javascript")
 
 
-def show(request, slug):
+def show(request, slug, toggled_tasks=True):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
     is_challenge = (project.category == Project.CHALLENGE)
@@ -139,6 +139,7 @@ def show(request, slug):
         'organizing': is_organizing,
         'show_all_tasks': is_challenge,
         'is_challenge': is_challenge,
+        'toggled_tasks': toggled_tasks,
     }
     return render_to_response('projects/project.html', context,
         context_instance=RequestContext(request))
@@ -828,12 +829,8 @@ def discussion_area(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.category != Project.CHALLENGE:
         return http.HttpResponseRedirect(project.get_absolute_url())
-    context = {
-        'project': project,
-        'discussion_area': True,
-    }
-    return render_to_response('projects/project_discussion_area.html', context,
-        context_instance=RequestContext(request))
+    else:
+        return show(request, slug, False)
 
 
 def user_list(request, slug):

@@ -154,13 +154,6 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     progressbar_value = 0
     if tasks_count:
         progressbar_value = (completed_count * 100 / tasks_count)
-    hidde_tasks_complete_msg = (progressbar_value != 100)
-    adopter_request = (not is_organizing and not adopter)
-    next_projects = project.next_projects.all()
-    # First self+completion badges and then peer+skill badges.
-    # FIXME: if other types of badges are added to get_project_badges().
-    next_badges = project.get_project_badges().order_by('-assessment_type',
-        'badge_type')
     return {
         'project': project,
         'user': user,
@@ -173,10 +166,6 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
         'organizing': is_organizing,
         'completed_count': completed_count,
         'progressbar_value': progressbar_value,
-        'hidde_tasks_complete_msg': hidde_tasks_complete_msg,
-        'adopter_request': adopter_request,
-        'next_projects': next_projects,
-        'next_badges': next_badges,
     }
 
 register.inclusion_tag('projects/_task_list.html')(task_list)
@@ -252,6 +241,50 @@ def project_wall(request, project, discussion_area=False):
     return context
 
 register.inclusion_tag('projects/_wall.html')(project_wall)
+
+
+def tasks_list_wall(request, project, user, toggled_tasks=True):
+    tasks = Page.objects.filter(project=project, listed=True,
+        deleted=False).order_by('index')
+    tasks_count = tasks.count()
+    is_participating = is_organizing = adopter = False
+    completed_count = 0
+    if user.is_authenticated():
+        profile = user.get_profile()
+        is_organizing = project.organizers().filter(user=profile).exists()
+        adopter = project.adopters().filter(user=profile).exists()
+        is_participating = project.participants().filter(user=profile).exists()
+        completed_count = PerUserTaskCompletion.objects.filter(
+            page__project=project, page__deleted=False,
+            unchecked_on__isnull=True, user=profile).count()
+    progressbar_value = 0
+    if tasks_count:
+        progressbar_value = (completed_count * 100 / tasks_count)
+    hidde_tasks_complete_msg = (progressbar_value != 100)
+    adopter_request = (not is_organizing and not adopter)
+    next_projects = project.next_projects.all()
+    # First self+completion badges and then peer+skill badges.
+    # FIXME: if other types of badges are added to get_project_badges().
+    next_badges = project.get_project_badges().order_by('-assessment_type',
+        'badge_type')
+    context = {
+        'tasks_count': tasks_count,
+        'completed_count': completed_count,
+        'progressbar_value': progressbar_value,
+        'participating': is_participating,
+        'request': request,
+        'project': project,
+        'user': user,
+        'toggled_tasks': toggled_tasks,
+        'discussion_area': True,
+        'adopter_request': adopter_request,
+        'hidde_tasks_complete_msg': hidde_tasks_complete_msg,
+        'next_projects': next_projects,
+        'next_badges': next_badges,
+    }
+    return context
+
+register.inclusion_tag('projects/_tasks_list_wall.html')(tasks_list_wall)
 
 
 def project_user_list(request, project, max_count=64, with_sections=False,

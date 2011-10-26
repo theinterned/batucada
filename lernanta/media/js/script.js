@@ -320,9 +320,9 @@ $(document).ready(function() {
         $('#id_end_date').datepicker();
     }
 
-    if ($('.project-kind-challenge #task_list_section #progressbar').length) {
-        var progressbar_value = $(".project-kind-challenge #task_list_section #progressbar").attr('value');
-        $(".project-kind-challenge #task_list_section #progressbar").progressbar({'value': parseInt(progressbar_value)});
+    if ($('.project-kind-challenge #task_list_wall #progressbar').length) {
+        var progressbar_value = $(".project-kind-challenge #task_list_wall #progressbar").attr('value');
+        $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});
     }
 
     if ($('#headers_colorpicker').length) {
@@ -344,6 +344,10 @@ $(document).ready(function() {
         $(this).find('button[type=submit]').attr('disabled', 'disabled');
         $(this).find('#previewButton').removeAttr('disabled');
     });
+
+    if ($('#task_list_wall_toogle').length) {
+        $( "#task_list_wall_toogle" ).buttonset();
+    }
 });
 
 // Recaptcha
@@ -364,6 +368,17 @@ $('#recaptcha_help').click(function(e) {
     Recaptcha.showhelp();
 });
 
+$(".project-kind-challenge #task_list_wall #task_list_wall_toogle #radio1").click(function(){
+    $('.project-kind-challenge #task_list_wall #project_wall_section').hide();
+    $('.project-kind-challenge #task_list_wall #task_list_section').show();
+    $('.project-kind-challenge #task_list_wall #progress').show();
+});
+
+$(".project-kind-challenge #task_list_wall #task_list_wall_toogle #radio2").click(function(){
+    $('.project-kind-challenge #task_list_wall #task_list_section').hide();
+    $('.project-kind-challenge #task_list_wall #progress').hide();
+    $('.project-kind-challenge #task_list_wall #project_wall_section').show();
+});
 
 $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
     var $task_completion_checkbox = $(this);
@@ -375,9 +390,9 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
         var total_count = data['total_count'];
         var completed_count = data['completed_count'];
         var progressbar_value = data['progressbar_value'];
-        $(".project-kind-challenge #task_list_section #total_count").html(total_count);
-        $(".project-kind-challenge #task_list_section #completed_count").html(completed_count);
-        var $tasks_progressbar = $(".project-kind-challenge #task_list_section #progressbar");
+        $(".project-kind-challenge #task_list_wall #total_count").html(total_count);
+        $(".project-kind-challenge #task_list_wall #completed_count").html(completed_count);
+        var $tasks_progressbar = $(".project-kind-challenge #task_list_wall #progressbar");
         $tasks_progressbar.progressbar("option", "value", progressbar_value);
         $task_completion_checkbox.removeAttr('disabled');
         var $tasks_completed_msg = $('.project-kind-challenge .tasks-completed-msg');
