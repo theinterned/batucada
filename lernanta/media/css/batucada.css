@@ -3474,19 +3474,84 @@ a#beta-tag:hover {
     color: #36cdc4;
 }
 
+
+#footer-schools-wrapper {
+  margin-top: 40px;
+  background: #fff;
+  height: 150px;
+  border-top: 1px solid #ccc;
+}
+
+#footer-schools-wrapper h5 {
+  color: #ccc;
+  width: 100%;
+  display: block;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 15px 0 15px 60px;
+}
+
+.school-small-icon {
+    width: 193px;
+    float: right;
+    margin-right: 35px;
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+
+#footer-schools-wrapper .school-small-icon.school-of-ed-pilot-small-icon {
+  width: 186px;
+  margin-right: 45px;
+}
+
+#footer-schools-wrapper .school-small-icon.school-of-webcraft-small-icon {
+  width: 155px;
+}
+
+#footer-schools-wrapper .school-small-icon.school-of-the-mathematical-future-small-icon {
+  width: 193px;
+}
+
+#footer-schools-wrapper .school-small-icon.school-of-social-innovation-small-icon {
+  width: 179px;
+}
+
+.school-small-icon a {
+  color: #555;
+}
+
+.school-small-icon a:hover {
+  color: #2184ca;
+  text-decoration: underline;
+}
+
+.school-small-icon img {
+    width: 41px;
+    float: left;
+    margin-right: 10px;
+}
+
+.school-small-icon p {
+    font-size: 18px;
+}
+
+.school-small-icon.school-of-webcraft-small-icon p,
+.school-small-icon.school-of-ed-pilot-small-icon p {
+    margin-top: 10px;
+}
+
 #footer-wrapper {
+	width: 100%;
 	padding-top: 40px;
-	padding-bottom: 0;
-    background: #ffffff;
-    border-radius: 10px;
-    border: solid 1px #EEE;
+	padding-bottom: 0px;
+	background: #e9e9e9;
+	border-top: 1px solid #ccc;
 }
 
 #footer-about {
 	width: 267px;
 	float: left;
 	margin-right: 50px;
-    margin-left: 10px;
 }
 
 #footer-about p {
@@ -3500,9 +3565,7 @@ a#beta-tag:hover {
 }
 
 .supporter {
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: solid 1px #EEE;
+    padding-bottom: 15px;
 }
 
 a.more-supporters {
@@ -3511,7 +3574,7 @@ a.more-supporters {
 
 #footer-connect {
 	float: left;
-	width: 260px;
+	width: 280px;
     margin-bottom: 20px;
 }
 
@@ -3522,7 +3585,7 @@ footer[id="footer-wrapper"] ul[class="connect-with-us"] {
 }
 
 footer[id="footer-wrapper"] ul[class="connect-with-us"] li {
-	border-bottom: 1px dotted #EEE;
+	border-bottom: 1px dotted #fff;
 	padding: 10px 0 10px 30px;
     font-size: 15px;
 }
@@ -3563,7 +3626,7 @@ footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p5 {
 
 #footer-bottom {
 	clear: both;
-	border-top: 1px solid #EEE;
+	border-top: 1px solid #fff;
 	padding-top: 20px;
 }
 
@@ -3575,7 +3638,6 @@ footer[id="footer-wrapper"] ul[class="connect-with-us"] li.p5 {
   text-indent: -999em;
   float: left;
   margin-right: 20px;
-  margin-left: 10px;
 }
 
 footer[id="footer-wrapper"] ul[class="footer-nav"] li {
@@ -3585,7 +3647,7 @@ footer[id="footer-wrapper"] ul[class="footer-nav"] li {
 	display: inline;
 	padding-left: 5px;
 	padding-right: 10px;
-	border-right: 1px solid #EEE;
+	border-right: 1px solid #fff;
 }
 
 footer[id="footer-wrapper"] ul[class="footer-nav"] li:last-child {
@@ -3603,7 +3665,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li {
 	display: inline;
 	padding-left: 5px;
 	padding-right: 10px;
-	border-right: 1px solid #EEE;
+	border-right: 1px solid #fff;
 }
 
 footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
@@ -3999,15 +4061,15 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 #join-p2pu-section .cta-button-second {
-font-size: 12px;
-font-weight: normal;
+    font-size: 12px;
+    font-weight: normal;
 }
 
 #join-p2pu-section img {
-width: 360px;
-opacity: 0.4;
-float: right;
-clear: both;
-margin-top: 20px;
+    width: 360px;
+    opacity: 0.4;
+    float: right;
+    clear: both;
+    margin-top: 20px;
 }
 

@@ -12,7 +12,7 @@ class SchoolForm(forms.ModelForm):
 
     class Meta:
         model = School
-        fields = ('name', 'description',)
+        fields = ('name', 'short_name', 'description',)
 
 
 class SchoolStylesForm(forms.ModelForm):

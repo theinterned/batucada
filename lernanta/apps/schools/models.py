@@ -24,6 +24,7 @@ class School(ModelBase):
 
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
+    short_name = models.CharField(max_length=20)
     description = RichTextField(config_name='rich')
     organizers = models.ManyToManyField('users.UserProfile',
         null=True, blank=True)
