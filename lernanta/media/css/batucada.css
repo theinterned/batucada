@@ -3195,14 +3195,13 @@ div.voting div.score {
 }
 
 .project-kind-challenge #task_list_section .help-request {
-    background: #fbfbfb;
+    background: none repeat scroll 0 0 #FBFBFB;
+    border: 1px solid #EEEEEE;
+    border-radius: 3px 3px 3px 3px;
+    color: #222222;
     padding: 20px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #eee;
+    padding-bottom: 10px;
+    text-align: center;
     margin-bottom: 30px;
 }
 
@@ -3210,20 +3209,58 @@ div.voting div.score {
     display: none;
 }
 
-.project-kind-challenge #task_list_section .help-request h3 {
-    color: #222222;
-    font-size: 22px;
+.project-kind-challenge #task_list_section .help-request ul.congrats-blocks {
+    width: 730px;
+    margin: 20px 0 240px 0;
+    clear: both;
+    border: none;
+    padding: 0;
 }
 
-.project-kind-challenge #task_list_section .help-request h4 {
-    color: #222222;
+.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li {
+    float: left;
+    display: inline-block;
+    border-right: 1px solid #eee;
+    list-style: none;
+    margin: 0;
+    padding: 0 4px;
+    width: 154px;
+    min-height: 200px;
+    background: none;
+}
+
+.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li img {
+    float: left;
+    padding: 3px;
+}
+
+.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li:first-child {
+    padding: 0 4px 0 0;
+}
+
+.project-kind-challenge #task_list_section .help-request ul.congrats-blocks li:last-child {
+    border-right: none;
+    padding: 0 0 0 4px;
+}
+
+.project-kind-challenge #task_list_section .help-request .help-others {
+    text-align: center;
+    clear: both;
+    border-top: 1px solid #eeeeee;
+    padding: 10px 0 10px 0;
+}
+
+.project-kind-challenge #task_list_section .help-request .help-others h4 {
+    margin: 10px 0 0 0;
     font-size: 16px;
-    margin-top: 1em;
+}
+
+.project-kind-challenge #task_list_section .help-request h3 {
+    font-size: 24px;
 }
 
 .project-kind-challenge #task_list_section .help-request p {
-    color: #777;
-    margin-top: 5px;
+    color: #000;
 }
 
 .project-kind-challenge #task_list_section .help-request button.adopt-button {
