@@ -1,4 +1,6 @@
 import logging
+import urllib2
+import datetime
 
 from django import http
 from django.conf import settings
@@ -20,6 +22,7 @@ from django.contrib.sites.models import Site
 from django_openid_auth import views as openid_views
 from django_openid_auth.models import UserOpenID
 from commonware.decorators import xframe_sameorigin
+import tender_multipass
 
 from l10n.urlresolvers import reverse
 from urlparse import urlparse, urlunparse
@@ -78,11 +81,23 @@ def render_openid_login_failure(request, message, status=403):
         request, message, status, 'users/login_openid.html')
 
 
-def _clean_redirect_url(request):
-    """Taken from zamboni. Prevent us from redirecting outside of drumbeat."""
+def _process_redirect(request):
+    redirect_field_names = [REDIRECT_FIELD_NAME] + list(
+        settings.SSO_REDIRECT_FIELD_NAMES)
+    for field_name in redirect_field_names:
+        if field_name in request.GET:
+            request = _clean_redirect_url(request, field_name)
+            request.session[REDIRECT_FIELD_NAME] = request.GET[REDIRECT_FIELD_NAME]
+            break
+    return request
+
+
+def _clean_redirect_url(request, field_name):
+    """Prevent us from redirecting unauthorized external urls."""
     gets = request.GET.copy()
-    url = gets[REDIRECT_FIELD_NAME]
-    if url and '://' in url:
+    url = urllib2.unquote(gets[field_name])
+    if (url and '://' in url \
+            and url not in settings.SSO_EXTERNAL_REDIRECTS):
         url = None
     gets[REDIRECT_FIELD_NAME] = url
     request.GET = gets
@@ -95,15 +110,33 @@ def _get_redirect_url(request):
         url = reverse('dashboard')
     if url:
         del request.session[REDIRECT_FIELD_NAME]
-        if not url.startswith('/'):
+        if not url.startswith('/') and '://' not in url:
             url = '/%s' % (url,)
         return url
+
+def _after_login_redirect(redirect_url, profile):
+    if redirect_url not in settings.SSO_EXTERNAL_REDIRECTS:
+        return http.HttpResponseRedirect(redirect_url)
+    site_key = settings.SSO_EXTERNAL_REDIRECTS[redirect_url]['site_key']
+    api_key = settings.SSO_EXTERNAL_REDIRECTS[redirect_url]['api_key']
+    multipass = tender_multipass.MultiPass(site_key, api_key)
+    expires = datetime.datetime.now() + datetime.timedelta(days=14)
+    data = {
+        "unique_id": profile.username,
+        "name": str(profile),
+        "email": profile.email,
+        "expires": expires.strftime("%Y-%m-%dT%H:%M"),
+    }
+    token = multipass.encode(data)
+    return http.HttpResponseRedirect(redirect_url + '?sso=%s' % token)
 
 
 def force_language_in_url(url, oldlang, newlang):
     """Rewrite url to use newlang instead of oldlang"""
     # Use when activate(newlang) is not enough
     # see https://docs.djangoproject.com/en/dev/topics/i18n/deployment/
+    if '://' in url:
+	return url
     p = urlparse(url)
     if (p.path.startswith('/' + oldlang + '/')):
         npath = p.path.replace('/' + oldlang + '/', '/' + newlang + '/', 1)
@@ -117,10 +150,7 @@ def force_language_in_url(url, oldlang, newlang):
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
 
-    if REDIRECT_FIELD_NAME in request.GET:
-        request = _clean_redirect_url(request)
-        request.session[REDIRECT_FIELD_NAME] = request.GET[REDIRECT_FIELD_NAME]
-
+    request = _process_redirect(request)
     logout(request)
 
     r = auth_views.login(request, template_name='users/signin.html',
@@ -150,7 +180,7 @@ def login(request):
             redirect_url = force_language_in_url(
                 redirect_url, olang, user.preflang
 )
-            return http.HttpResponseRedirect(redirect_url)
+            return _after_login_redirect(redirect_url, user)
 
     elif request.method == 'POST':
         messages.error(request, _('Incorrect username, email or password.'))
@@ -223,9 +253,7 @@ def logout(request):
 def register(request):
     """Present user registration form and handle registrations."""
 
-    if REDIRECT_FIELD_NAME in request.GET:
-        request = _clean_redirect_url(request)
-        request.session[REDIRECT_FIELD_NAME] = request.GET[REDIRECT_FIELD_NAME]
+    request = _process_redirect(request)
 
     if request.method == 'POST':
         form = forms.RegisterForm(data=request.POST)

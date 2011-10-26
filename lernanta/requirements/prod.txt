@@ -13,6 +13,7 @@ markdown==2.0.3
 bleach==1.0.1
 lxml==2.3
 django-maintenancemode==0.9.2
+tender_multipass==0.2.1
 
 -e git://github.com/jbalogh/django-cache-machine.git#egg=python_xrd-dev
 -e git://github.com/jsocol/commonware.git#egg=commonware
