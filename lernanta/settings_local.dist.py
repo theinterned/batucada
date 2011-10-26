@@ -146,3 +146,12 @@ STATISTICS_ENABLED_SCHOOLS = ('school-of-ed-pilot',)
 BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
     'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
     'Speedy Spider', 'DotBot']
+
+# Single Sign On (with multipass tender tokens)
+SSO_REDIRECT_FIELD_NAMES = ['to']
+SSO_EXTERNAL_REDIRECTS = {
+    'http://help.p2pu.org/': {
+        'site_key': 'p2pu',
+        'api_key': ''
+    },
+}
