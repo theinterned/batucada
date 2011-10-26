@@ -61,17 +61,19 @@
               <a id="direct_signup_button" href="{{ login_with_redirect_url }}">{{ _('Start Challenge')}}</a>
           {% endif %}
         {% endif %}
-        {% if discussion_area %}
+        {% if not toggled_tasks %}
           <a href="{{ project.get_absolute_url }}" class="discuss-link">{{ _('View Tasks')}}</a>
         {% else %}
           <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-link">{{ _('View Discussions')}}</a>
         {% endif %}
       {% else %}
-        {% if discussion_area %}
+        {% if project.school.mentee_form_url %}
+          <a href="{{ project.school.mentee_form_url }}" class="discuss-button" target="_blank">{{ _('Request a Mentor')}}</a>
+        {% else %}{% if not toggled_tasks %}
           <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
         {% else %}
           <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('Discuss Challenge')}}</a>
-        {% endif %}
+        {% endif %}{% endif %}
         {% if not organizing %}
           <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
             {% csrf_token %}
@@ -266,5 +268,14 @@
 
 </div> <!-- /#sidebar -->
 
+{% if is_challenge and project.school.mentee_form_url %}
+  <div class="bottom-sidebar">
+    <div class="become-a-mentor">
+      <h3>{{ _('Help your peers') }}</h3>
+      <p>{{ _('Would you be interested in becoming a Mentor? Your peers are going to run into road blocks and they could really use your help.') }}</p>
+      <a class="become-a-mentor-button" href="{{ project.school.mentee_form_url }}">{{ _('Become a Mentor') }}</a>
+    </div>
+  </div>
+{% endif %}
 </div>
 
