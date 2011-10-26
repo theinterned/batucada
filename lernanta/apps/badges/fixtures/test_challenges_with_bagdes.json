@@ -1517,61 +1517,141 @@
         }
     }, 
     {
+        "pk": 19, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-25 22:28:29", 
+            "description": "The Organizer badge recognizes anyone at P2PU who has organized a course or a study group with at least one person completing it.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "organizer", 
+            "created_on": "2011-10-25 22:28:29", 
+            "badge_type": "other", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/organizer.png", 
+            "name": "Organizer"
+        }
+    },
+    {
+        "pk": 20, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-25 22:28:29", 
+            "description": "The challenge creator recognizes anyone who has authored a challenge.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "challenge-creator", 
+            "created_on": "2011-10-25 22:28:29", 
+            "badge_type": "other", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/challenge-creator.png", 
+            "name": "Challenge Creator"
+        }
+    },
+    {
+        "pk": 21, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-25 22:28:29", 
+            "description": "The Mentor badge recognizes peers who have signed up to help others learn on a one-on-one basis.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "peer", 
+            "rubrics": [], 
+            "slug": "mentor", 
+            "created_on": "2011-10-25 22:28:29", 
+            "badge_type": "other", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/mentor.png", 
+            "name": "Mentor"
+        }
+    },
+    {
+        "pk": 22, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "last_update": "2011-10-25 22:28:29", 
+            "description": "The Adopter Badge recognizes community members who have adopted a challenge.", 
+            "creator": null, 
+            "prerequisites": [], 
+            "assessment_type": "self", 
+            "rubrics": [], 
+            "slug": "adopter", 
+            "created_on": "2011-10-25 22:28:29", 
+            "badge_type": "other", 
+            "logic": null, 
+            "unique": true, 
+            "image": "images/sow_badges/adopter.png", 
+            "name": "Adopter"
+        }
+    },
+    {
         "pk": 1, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Can use the Mozilla Developer Network HTML reference to identify and use basic HTML tags"
+            "question": "use the Mozilla Developer Network HTML reference [0] to identify and use basic HTML tags "
         }
-    }, 
+    },
     {
         "pk": 2, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Can translate HTML tags like <div>, <p> into real world structures"
+            "question": "translate HTML tags like <div>, <p> into real world structures"
         }
-    }, 
+    },
     {
         "pk": 3, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Understands and communicates what DNS is by using  different types of media"
+            "question": "communicate what DNS is by using  different types of media"
         }
-    }, 
+    },
     {
         "pk": 4, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Has a domain name that they can use to further their exploration of DNS"
+            "question": "have a domain name that can be used to further explore DNS"
         }
-    }, 
+    },
     {
         "pk": 5, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Configured a DNS to point at a personal hosting account"
+            "question": "configure a DNS to point at a personal hosting account"
         }
-    }, 
+    },
     {
         "pk": 6, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Provides information on web hosting services"
+            "question": "provide valuable information on web hosting services"
         }
-    }, 
+    },
     {
         "pk": 7, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Installed an FTP or SFTP client"
+            "question": "install an FTP or SFTP client"
         }
-    }, 
+    },
     {
         "pk": 8, 
         "model": "badges.rubric", 
         "fields": {
-            "question": "Uploaded content that is visible live in a browser"
+            "question": "upload content that is visible live in a browser"
         }
-    }, 
+    },
     {
         "pk": 1, 
         "model": "badges.logic", 
