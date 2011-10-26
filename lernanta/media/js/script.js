@@ -304,6 +304,17 @@ $(document).ready(function() {
         return false;
     });
 
+    
+    $('li.contribute-nav').click(function(){
+    	var number = $(this).index();
+    	$('li.contribute-item').hide().eq(number).fadeIn('slow');
+    	$(this).toggleClass('active inactive');
+    	$('li.contribute-nav').not(this).removeClass('active').addClass('inactive');
+    });
+    if ($('li.contribute-item').length) {
+    	$('li.contribute-item').not(':first').hide();
+    }
+
     if ($('#id_start_date').length) {
         $('#id_start_date').datepicker();
         $('#id_end_date').datepicker();
