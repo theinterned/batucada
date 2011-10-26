@@ -3241,15 +3241,15 @@ div.voting div.score {
     width: 260p
  }
 
-.ui-progressbar .ui-progressbar-value {
-    margin-left: -5px;
-    margin-top: -2px;
-}
-
 .project-kind-challenge #task_list_section #progress p {
     margin-top: 5px;
     float: right;
     color: #444;
+}
+
+
+.project-kind-challenge #task_list_section #progress .ui-widget-header {
+    background: url("/media/images/ui-bg_highlight-soft_75_81a810_1x100.png") repeat-x scroll 50% 50% #81A810;
 }
 
 #task_list_section ul {
