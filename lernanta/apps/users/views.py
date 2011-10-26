@@ -245,7 +245,10 @@ def login_openid_complete(request):
 @login_required(profile_required=False)
 def logout(request):
     """Destroy user session."""
+    mark_registered = request.user.is_authenticated()
     auth.logout(request)
+    if mark_registered:
+        request.session['mark_registered'] = True
     return http.HttpResponseRedirect(reverse('splash'))
 
 
