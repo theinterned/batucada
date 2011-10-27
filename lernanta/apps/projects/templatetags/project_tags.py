@@ -267,7 +267,7 @@ def tasks_list_wall(request, project, user, toggled_tasks=True):
     # First self+completion badges and then peer+skill badges.
     # FIXME: if other types of badges are added to get_project_badges().
     next_badges = project.get_project_badges().order_by('-assessment_type',
-        'badge_type')
+        'badge_type', 'id')
     context = {
         'tasks_count': tasks_count,
         'completed_count': completed_count,
