@@ -2971,6 +2971,19 @@ ul.ui-autocomplete #ui-active-menuitem {
 	#member_links ul li .externalLink {
 	   display:inline-block; width:200px
 	}
+
+
+.project-kind-challenge #task_list_section .taskActivity {
+    width: 130px;
+    height: 40px;
+    float: right;
+    text-align: center;
+    margin: 0 0 0 0;
+}
+
+.project-kind-challenge #task_list_section .subtaskActivity {
+    font-size: 10px;
+}
 	
 	#content-pages .robttn,
 	#project-links .robttn,
@@ -2985,11 +2998,11 @@ ul.ui-autocomplete #ui-active-menuitem {
 
     #task_list_section .robttn {
 	   width:10px;
-       margin-right: 20px;
     }
 
     .project-kind-challenge #task_list_section .robttn {
 	   width:20px;
+       margin-right: 160px;
     }
 	
 	#content-pages .up,
