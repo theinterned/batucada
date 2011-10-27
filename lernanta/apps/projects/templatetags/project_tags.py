@@ -55,9 +55,10 @@ def sidebar(context):
         can_add_task = is_participating
     can_change_order = can_add_task
 
-    badges = Badge.objects.filter(groups__id=project.id)
-
     chat = '#p2pu-%s-%s' % (project.id, project.slug[:10])
+
+    peer_skill_badges = project.get_project_badges(only_peer_skill=True)
+
     context.update({
         'participating': is_participating,
         'participants_count': participants_count,
@@ -78,7 +79,7 @@ def sidebar(context):
         'chat': chat,
         'discussion_area': context.get('discussion_area', False),
         'is_challenge': (project.category == Project.CHALLENGE),
-        'badges': badges
+        'peer_skill_badges': peer_skill_badges,
     })
     return context
 

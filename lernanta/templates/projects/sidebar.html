@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load l10n_tags %}
 {% load project_tags %}
 
@@ -277,5 +278,35 @@
     </div>
   </div>
 {% endif %}
-</div>
 
+{% if is_challenge and peer_skill_badges %}
+  <div class="bottom-sidebar">
+    {% for skill_badge in peer_skill_badges %}
+      {% if not forloop.first %}<hr class="badge-break">{% endif %}
+      <div class="badge">
+        {% with awards_count=skill_badge.awards.count pending_count=skill_badge.get_pending_submissions|length %}
+          <div class="badge-top">
+            <a href="{{ skill_badge.get_absolute_url }}" title="{{ skill_badge|title }}"><img class="badge-graphic" src="{{ skill_badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
+            <div class="badge-awarded">
+              <a class="badge-awarded-header" href="{{ skill_badge.get_absolute_url }}">{{ _('Awarded') }}</a>
+              <a class="badge-awarded-number" href="{{ skill_badge.get_absolute_url }}">{{ awards_count }}</a>
+            </div>
+            <div class="badge-pending">
+              <a class="badge-pending-header" href="{{ skill_badge.get_absolute_url }}">{{ _('Pending') }}</a>
+              <a class="badge-pending-number" href="{{ skill_badge.get_absolute_url }}">{{ pending_count }}</a>
+            </div>
+          </div>
+          {% if pending_count %}
+            <div class="badge-bottom">
+              <a href="{{ skill_badge.get_absolute_url }}">
+                {% blocktrans count counter=pending_count %}{{ counter }} peer needs your review!{% plural %}{{ counter }} peers need your review!{% endblocktrans %} {{ _('Go') }} →
+              </a>
+            </div>
+          {% endif %}
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+</div>
