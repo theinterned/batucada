@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load l10n_tags %}
 {% load project_tags %}
 {% if tasks_count or show_all %}
@@ -14,6 +15,19 @@
               </form>
             {% endif %}
             <span class="taskNumber">{{ forloop.counter }}{% if is_challenge %}.{% endif %}</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+            {% if is_challenge %}
+              {% with task_activity=task.recent_activity %}
+                <span class="taskActivity">
+                  {% if task_activity.0 %}
+                    <a href="#">{{task_activity.0}} {{ _('new') }}
+                      <br>
+                      <span class="subtaskActivity">
+                      {% blocktrans count counter=task_activity.0 %}comment{% plural %}comments{% endblocktrans %} {{ task_activity.1 }}</span>
+                    </a>
+                  {% endif %}
+                </span>
+              {% endwith %}
+            {% endif %}
             {% if organizing and show_all and is_challenge %}
 	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url page_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
 	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url page_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}

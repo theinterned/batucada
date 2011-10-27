@@ -134,6 +134,37 @@ class Page(ModelBase):
         return UserProfile.objects.filter(
             id__in=participants.values('user__id'))
 
+    def recent_activity(self, min_count=2):
+        comments = self.comments.filter(deleted=False)
+        today = datetime.date.today()
+        day = today.day
+        month = today.month
+        year = today.year
+        # get today's commments count
+        today_comments_count = comments.filter(created_on__day=day,
+            created_on__month=month, created_on__year=year).count()
+        if today_comments_count >= min_count:
+            return today_comments_count, _('today')
+        # get this week comments count
+        week = today.isocalendar()[1]
+        first_day = datetime.date(year, 1, 1)    
+        delta_days = first_day.isoweekday() - 1
+        delta_weeks = week
+        if year == first_day.isocalendar()[0]:
+            delta_weeks -= 1
+        week_start_delta = datetime.timedelta(days=-delta_days, weeks=delta_weeks)
+        week_start = first_day + week_start_delta
+        week_end_delta = datetime.timedelta(days=7-delta_days, weeks=delta_weeks)
+        week_end = first_day + week_end_delta
+        this_week_comments_count = comments.filter(created_on__gte=week_start,
+            created_on__lt=week_end).count()
+        if this_week_comments_count >= min_count:
+            return this_week_comments_count, _('this week')
+        # get this month comments count
+        this_month_comments_count = comments.filter(created_on__month=month,
+            created_on__year=year).count()
+        return this_month_comments_count, _('this month') 
+
 
 class PageVersion(ModelBase):
 
