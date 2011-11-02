@@ -76,6 +76,7 @@ def show_badge(request, slug):
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
+    other_badge = (badge.badge_type == Badge.OTHER)
     submissions = badge.submissions.all().order_by(
         '-created_on')
     if request.user.is_authenticated():
@@ -92,6 +93,7 @@ def show_badge(request, slug):
         'rubrics': rubrics,
         'peer_skill': peer_assessment and skill_badge,
         'peer_community': peer_assessment and community_badge,
+        'other_badge': other_badge,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
         'applications': applications

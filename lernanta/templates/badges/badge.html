@@ -29,11 +29,20 @@
 	    <p>{{ badge.description }}</p>
         <h2>{{ _('Requirements:') }}</h2> 
 	    {% if rubrics or badge.logic %}
-	          {% if badge.logic %}
-	          {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }} 
-	          {% endif %}
-	          {{ rubrics|join:", " }} 
-	    {% else %}
+              {% if peer_skill %}
+                {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }}
+              {% endif %}
+              {% if peer_community %}
+                {{ _('You need at least 1 peer to say that you ') }}
+              {% endif %}
+              {% if other_badge %}
+                {{ _('You have ') }}
+              {% endif %}
+              {{ rubrics|join:", " }}{{ _('.') }}
+              {% if other_badge %}
+                {{ _('This is a manually awarded badge.') }}
+              {% endif %}
+        {% else %}
 	       <p>{{ _('There are no requirements for this badge.') }}</p>
 	    {% endif %}
 		{% if prerequisites %}
