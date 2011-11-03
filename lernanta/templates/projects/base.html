@@ -17,6 +17,10 @@
   <span class="arrow">&rsaquo;</span>
   <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
   <span class="arrow">&rsaquo;</span>
+  {% if is_challenge and project.accepted_school %}
+  <a href="{{ project.accepted_school.get_absolute_url }}">{{ project.accepted_school }}</a>
+  <span class="arrow">&rsaquo;</span>
+  {% endif %}
   <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
   {% block project_breadcrumbs %}{% endblock %}
 {% endblock %}
