@@ -56,6 +56,62 @@
         }
     },
     {
+        "pk": 9, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "said hello to other"
+        }
+    },
+    {
+        "pk": 10, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences"
+        }
+    },
+    {
+        "pk": 11, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "provide helpful and interesting feedback while maintaining a respectful tone"
+        }
+    },
+    {
+        "pk": 12, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "help push work forward within the community and motivate other team members to do so"
+        }
+    },
+    {
+        "pk": 13, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways"
+        }
+    },
+    {
+        "pk": 14, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "organized a course or a study group with at least one person completing it"
+        }
+    },
+    {
+        "pk": 15, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "authored a challenge"
+        }
+    },
+    {
+        "pk": 16, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "signed up to help others learn on a one-on-one basis"
+        }
+    },
+    {
         "pk": 1, 
         "model": "badges.badge", 
         "fields": {
@@ -245,7 +301,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [9], 
             "slug": "wave", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -265,7 +321,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [10], 
             "slug": "super-blogger", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -285,7 +341,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [11], 
             "slug": "helpful-feedback", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -305,7 +361,7 @@
             "creator": null, 
             "prerequisites": [12], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [12], 
             "slug": "team-player", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -325,7 +381,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [13], 
             "slug": "creative-presentation", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -425,7 +481,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [14], 
             "slug": "organizer", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
@@ -445,7 +501,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [15], 
             "slug": "challenge-creator", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
@@ -465,7 +521,7 @@
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [], 
+            "rubrics": [16], 
             "slug": "mentor", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
