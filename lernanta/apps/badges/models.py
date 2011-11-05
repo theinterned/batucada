@@ -211,8 +211,8 @@ class Logic(models.Model):
         default=3)
 
     def __unicode__(self):
-        msg = _('%s peers -- by an average rating of %s -- ')
-        return msg % (self.min_votes, self.min_avg_rating)
+        msg = _('%(min_votes)s peers -- by an average rating of %(min_avg)s -- ')
+        return msg % {'min_votes': self.min_votes, 'min_avg': self.min_avg_rating}
 
     def is_eligible(self, badge, user):
         progress = badge.progress_for(user)
@@ -275,7 +275,8 @@ class Submission(ModelBase):
         default=datetime.datetime.now)
 
     def __unicode__(self):
-        return _('%s''s application for %s') % (self.author, self.badge)
+        return _('%(author)s\'s application for %(badge)s') % {
+            'author': self.author, 'badge': self.badge}
 
     @models.permalink
     def get_absolute_url(self):
@@ -328,8 +329,9 @@ class Assessment(ModelBase):
         self.save()
 
     def __unicode__(self):
-        return _('%s for %s for %s') \
-            % (self.assessor, self.assessed, self.badge)
+        return _('%(assessor)s for %(assessed)s for %(badge)s') % {
+            'assessor': self.assessor, 'assessed': self.assessed,
+            'badge': self.badge}
 
     @models.permalink
     def get_absolute_url(self):
@@ -361,7 +363,10 @@ class Rating(ModelBase):
         default=datetime.datetime.now)
 
     def __unicode__(self):
-        return _('%s for %s') % (self.score, self.rubric)
+        return _('%(score)s for %(rubric)s') % {
+            'score': self.score,
+            'rubric': self.rubric
+        }
 
     def score_as_percentage(self):
         """Return the score as a percentage for
@@ -377,7 +382,8 @@ class Award(models.Model):
     awarded_on = models.DateTimeField(auto_now_add=True, blank=False)
 
     def __unicode__(self):
-        return _('%s - %s') % (self.user, self.badge)
+        return _('%(user)s - %(badge)s') % {'user': self.user,
+            'badge': self.badge}
 
     @models.permalink
     def get_absolute_url(self):
