@@ -3,19 +3,19 @@
 
 {{ _('Welcome to P2PU! We are excited to help you develop and promote') }} {{ project.name }}{{ _('.') }}
 
-{{ _('Important first steps:') }}
+{{ _('What are the next steps?') }}
 
 {{ _('* Provide a meaningful description, title and image for your ') }} {{ project.kind|lower }}{{ _('. (If the image isn\'t yours, make sure it\'s licensed for reuse!)') }}
 
-{{ _('* Update your profile with information about yourself and a picture (can be anything).') }}
+{{ _('* Update your profile with information about yourself and a picture so learners can know more about you.') }}
 
-{{ _('* Join the Help Desk to receive support during the development process:') }} http://{{ domain }}/en/groups/p2pu-help-desk')
+{{ _('* Set a timeline for yourself. When can participants expect to sign-up and begin learning? Would having a co-organizer help you share the workload? Do you need help promoting?') }}
 
-{{ _('You can also ask general questions at: http://qa.p2pu.org') }}
+{{ _('Find answers to your questions and wisdom from the community at help.p2pu.org.') }}
 
-{{ _('P2PU has a large community of learners and people willing to help along the way! All questions, ideas and challenges are most welcome.') }}
+{{ _('We look forward to learning with and from you!') }}
 
-{{ _('Look forward to working with you,') }}
-Alison [http://{{ domain }}/en/alison/]
+{{ _('Alison, John & Bekka') }}
+{{ _('P2PU Support Team') }}
 
 {{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/

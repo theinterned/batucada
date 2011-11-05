@@ -412,7 +412,7 @@ def edit_links_edit(request, slug, link):
     metric_permissions = project.get_metrics_permissions(request.user)
     if form.is_valid():
         if link.subscription:
-            links_tasks.UnsubscribeFromFeed.apply_async(args=(link,))
+            #links_tasks.UnsubscribeFromFeed.apply_async(args=(link,))
             link.subscription = None
             link.save()
         link = form.save(commit=False)

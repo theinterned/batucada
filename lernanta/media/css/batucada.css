@@ -4,6 +4,15 @@
 	http://0.0.0.0:8000/media/css/batucada.css?v=1
 */
 
+@font-face{
+        font-family: 'WebSymbolsRegular';
+        src: url('/media/fonts/websymbols-regular-webfont.eot');
+        src: url('/media/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
+             url('/media/fonts/websymbols-regular-webfont.woff') format('woff'),
+             url('/media/fonts/websymbols-regular-webfont.ttf') format('truetype'),
+             url('/media/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
+        }
+
 html {
   height: 100%;
 }
@@ -1322,7 +1331,7 @@ header {}
 		font-style: italic;
 	}
 	.card-list section h1 span{
-		background: #F3F4F6;
+		background: #FFFFFF;
 		-webkit-box-shadow: 0 0 5px #f7f7f7 ;
 		padding:  0 6px;
 	}
@@ -2335,8 +2344,7 @@ header {}
   float: right;
   text-align: left;
   width: 275px;
-  padding-right: 20px;
-  padding-top: 20px;
+  padding: 20px 20px 20px 0;
 }
 #intro-links a {
   display: block;
@@ -2412,9 +2420,9 @@ header {}
 	right: 81px; bottom: -105px;
 	}
 #splash #main {
-        width: 980px;
-        padding: 36px 10px 0 10px;
-	margin: 0;
+    width: 980px;
+    padding: 36px 10px 0 10px;
+	margin: 20px 0 0;
 	float: none;
 	border-top: 1px solid #fff;
 	}
@@ -2758,32 +2766,87 @@ div.warning h2 {
 .messages {
     list-style: none;
 }
+
 .messages li {
-    margin: 0px 0px 25px -23px;
-    width: 982px;
-    padding: 9px;
+    margin: 0px 0px 25px -40px;
+    width: 912px;
+    padding: 9px 40px;
     font-size: 14px;
     text-align: center;
     color: #fff;
     text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     -moz-border-radius: 4px;
+    border: 2px solid #f1f1f1;
 }
 
 .messages li.success, .messages li.info {
-    background-color: green;
+ background-color: #7fbf4d;
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
+ /* Saf4+, Chrome */
+ background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: linear-gradient(top, #7fbf4d, #63a62f);
+ border: 1px solid #63a62f;
+ border-bottom: 1px solid #5b992b;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+ -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -ms-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -o-box-shadow: inset 0 1px 0 0 #96ca6d;
+ box-shadow: inset 0 1px 0 0 #96ca6d;
+ color: #fff;
+ line-height: 1;
+ text-shadow: 0 -1px 0 #4c9021;
 }
+
 .messages li.error {
-    background-color: #a00;
+    background-color: #C43C35;
+    background-image: -webkit-linear-gradient(top, #EE5F5B, #C43C35);
+    background-image: -moz-linear-gradient(center top , #EE5F5B, #C43C35);
+    background-image: -ms-linear-gradient(top, #EE5F5B, #C43C35);
+    background-image: -o-linear-gradient(top, #EE5F5B, #C43C35);
+    background-image: linear-gradient(top, #EE5F5B, #C43C35);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
+
+.messages .closeNotification {
+    font-family: 'WebSymbolsRegular';
+    width: 10px;
+    height: 10px;
+    float: right;
+    color: #fff;
+    display: block;
+    text-shadow: 0 1px -1px #000;
+    cursor: pointer;
+}
+
 .signin .messages {
     margin-top: -56px;
     margin-bottom: 18px;
     width: 412px;
 }
+
 .messages li p:last-child {
     margin: 0;
 }
+
+.messages li img {
+   width: 20px;
+   height: 20px;
+   display: block;
+   float: left;
+   margin: 0 0 0 6px;
+}
+
 /* End of messages */
 
 /* Welcome to profile page */
@@ -3426,9 +3489,9 @@ div.voting div.score {
 }
 
 .project-kind-challenge #task_list_wall #progress {
-    width: 300px;
     float: right;
     margin-top: -33px;
+    width: 290px;
 }
 
 .project-kind-challenge #task_list_wall #progress #progressbar {
@@ -3554,15 +3617,18 @@ div.voting div.score {
 .project-kind-challenge #task_list_section a.taskView {
     display: none;
     color: #999;
-    font-size: 14px;
     margin-left: 10px;
+    font-size: 12px;
+    padding-left: 6px;
 }
 
 .project-kind-challenge #task_list_section .taskSubheader {
     clear: both;
-    color: #777;
     margin: 0 0 0 70px;
-    display: block;
+    color: #666666;
+    display: inline-block;
+    font-size: 12px;
+    width: 440px;
 }
 
 #more_task_link, #sidebar .more_people_link {
@@ -4135,11 +4201,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 .badges-list .badge-list .badges li {
-    width: 150px;
     display: inline-block;
     padding-bottom: 2em;
     text-align: center;
     vertical-align: top;
+    width:158px;
 }
 
 .badges-list .badge-list .badges li .badge-name {
@@ -4273,7 +4339,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 .pages-get-involved #main a {
-  color: #2084CA;
+  color: #000000;
 }
 
 .pages-get-involved #main #contribute-wrapper {
@@ -4298,7 +4364,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
   font-family: helvetica, tahoma, Sans-serif;
   font-size: 13px;
   line-height: 25px;
-  color: #000;
+  color: #666666;
 }
 
 .pages-get-involved #main #contribute-navbar {
@@ -4433,11 +4499,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
  color: #fff;
  font: bold 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
  line-height: 1;
- padding: 7px 8px 8px 8px;
  text-align: center;
  text-shadow: 0 -1px 0 #4c9021;
- width: 170px; 
  text-decoration: none;
+ padding: 7px 26px 8px;
+ width: 200px;
 }
  
 .pages-get-involved #main #contribute-slider a.contribute-button:hover {

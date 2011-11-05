@@ -288,8 +288,6 @@ def assess_submission(request, slug, submission_id):
                 prefix="rubric%s_" % rubric.id)
             rating_forms.append((rubric, rating_form))
 
-    print form
-
     context = {
         'form': form,
         'submission': submission,
