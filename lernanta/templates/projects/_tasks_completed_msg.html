@@ -2,7 +2,7 @@
 <div id="congratulations-msg" class="help-request tasks-completed-msg {% if start_hidden %}off{% endif %}">
   <h3>{{ _('Congratulations!') }}</h3>
   <p>{{ _('Good job completing all the tasks.') }}</p>
-  {% if awarded_badges or badges_in_progress or non_attempted_badges or non_started_challenges %}
+  {% if awarded_badges or badges_in_progress or non_attempted_badges or next_challenges %}
   <ul class="congrats-blocks">
   <li>
     <h4>{{ _('Badges Awarded') }}</h4>
@@ -34,8 +34,8 @@
   <li>
     <h4>{{ _('Next Challenges') }}</h4>
     <br>
-    {% if non_started_challenges %}
-      {% for next_project in non_started_challenges %}
+    {% if next_challenges %}
+      {% for next_project in next_challenges %}
         <a href="{{ next_project.get_absolute_url }}" title="{{ next_project|title }}"><img src="{{ next_project.get_image_url }}" width="113.4" height="70" alt="{{ next_project|title }}"></a>
       {% endfor %}
     {% endif %}

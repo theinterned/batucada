@@ -10,6 +10,9 @@
       <div id="footer-about">
         <h6 class="footer-header">{{ _('What is P2PU?') }}</h6>
         <p>{{ _('The Peer 2 Peer University is a grassroots open education project that organizes learning outside of institutional walls and gives learners recognition for their achievements. P2PU creates a model for lifelong learning alongside traditional formal higher education. Leveraging the internet and educational materials openly available online, P2PU enables high-quality low-cost education opportunities.') }}</p>
+        {% if not user.is_authenticated %}
+          <p><a href="{% locale_url users_register %}">{{ _('Join P2PU Today! It\'s free.') }} &#8594;</a></p>
+        {% endif %}
       </div>
       <div id="footer-supporters">
         <h6 class="footer-header">{{ _('Some of our supporters') }}</h6>

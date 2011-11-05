@@ -105,14 +105,15 @@ def _clean_redirect_url(request, field_name):
 
 
 def _get_redirect_url(request):
-    url = request.session.get(REDIRECT_FIELD_NAME, None)
+    url = request.session.get(REDIRECT_FIELD_NAME, reverse('dashboard'))
     if url == reverse('splash'):
         url = reverse('dashboard')
     if url:
-        del request.session[REDIRECT_FIELD_NAME]
+        if REDIRECT_FIELD_NAME in request.session:
+            del request.session[REDIRECT_FIELD_NAME]
         if not url.startswith('/') and '://' not in url:
             url = '/%s' % (url,)
-        return url
+    return url
 
 def _after_login_redirect(redirect_url, profile):
     if redirect_url not in settings.SSO_EXTERNAL_REDIRECTS:
@@ -146,11 +147,16 @@ def force_language_in_url(url, oldlang, newlang):
         p.params, p.query, p.fragment])
 
 
-@anonymous_only
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
 
     request = _process_redirect(request)
+
+    if request.user.is_authenticated():
+        user = request.user.get_profile()
+        redirect_url = _get_redirect_url(request)
+        return _after_login_redirect(redirect_url, user)
+
     logout(request)
 
     r = auth_views.login(request, template_name='users/signin.html',

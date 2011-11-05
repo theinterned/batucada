@@ -190,6 +190,7 @@ def tasks_completed_msg(project, user, start_hidden=True,
     need_reviews_badges = project.get_need_reviews_badges(user)
     non_started_challenges = project.get_non_started_next_projects(
         user)
+    next_challenges = project.next_projects.all()
     return {
         'project': project,
         'start_hidden': start_hidden,
@@ -199,6 +200,7 @@ def tasks_completed_msg(project, user, start_hidden=True,
         'need_reviews_badges': need_reviews_badges,
         'non_started_challenges': non_started_challenges,
         'adopter_request': adopter_request,
+        'next_challenges': next_challenges,
     }
 
 register.inclusion_tag('projects/_tasks_completed_msg.html')(

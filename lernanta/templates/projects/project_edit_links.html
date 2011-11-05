@@ -13,7 +13,7 @@
   <tr>
     <th>{{ _('Name') }}</th>
     <th>{{ _('URL') }}</th>
-    <th>{{ _('Subscribed') }}</th>
+    <!--<th>{{ _('Subscribed') }}</th>-->
     <th>{{ _('Actions') }}</th>
   </tr>
 </thead>
@@ -22,14 +22,14 @@
     <tr>
       <td class="name">{{ link.name }}</td>
       <td class="url"><a href="{{ link.url }}" title="{{ link.url }}">{{ link.url }}</a></td>
-      <td class="subscription">
+      <!--<td class="subscription">
 	      {% if link.subscribe %}
 	        {% if link.subscription.verified %}<span class="yes" title="{{_('Subscribed.') }}">{{ _('yes') }}</span>
 	        {% else %}<span class="error" title="{{_('Error saving subscription.') }}">{{ _('error') }}</span>
 	        {% endif %}
           {% else %}
             <span class="no" title="{{_('Not subscribed.') }}">{{ _('no') }}</span>
-          {% endif %}</td>
+          {% endif %}</td>-->
       <td class="actions">
         <form action="{% locale_url projects_edit_links_edit slug=project.slug link=link.id %}" method="get">
           <button type="submit" value="{{ _('Edit') }}">{{ _('Edit') }}</button>
