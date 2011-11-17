@@ -32,18 +32,19 @@
         
         <!-- 
             ...then run the rest of the browsers in parallel to catch everything else.
+            FIXME: Figure out why the tests fail when they are run in parallel.
          -->
-        <!-- parallel>
+        <!--parallel-->
             <echo>Running tests on Internet Explorer 8</echo>         
             <exec dir="${sauce.test.dir}" executable="phpunit" failonerror="true">
-                <arg line="-/-bootstrap bootstrap-ie8.php -/-log-junit ${reports.build.dir}/sauce-report-ie8.xml" />
+                <arg line="--bootstrap bootstrap-ie8.php --log-junit ${reports.build.dir}/sauce-report-ie8.xml" />
             </exec>
 
             <echo>Running tests on Internet Explorer 7</echo>         
             <exec dir="${sauce.test.dir}" executable="phpunit" failonerror="true">
-                <arg line="-/-bootstrap bootstrap-ie7.php -/-log-junit ${reports.build.dir}/sauce-report-ie7.xml" />
+                <arg line="--bootstrap bootstrap-ie7.php --log-junit ${reports.build.dir}/sauce-report-ie7.xml" />
             </exec>
-        </parallel -->
+        <!--/parallel-->
         <echo>Finished running Sauce tests!</echo>
     </target>
 </project>
