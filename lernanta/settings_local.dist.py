@@ -155,3 +155,8 @@ SSO_EXTERNAL_REDIRECTS = {
         'api_key': ''
     },
 }
+
+# Statsd
+STATSD_HOST = 'stats.p2pu.org'
+STATSD_PORT = 8125
+
