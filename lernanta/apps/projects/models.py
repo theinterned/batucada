@@ -28,6 +28,7 @@ from richtext.models import RichTextField
 from content.models import Page
 from replies.models import PageComment
 from tags.models import GeneralTaggedItem
+from tracker import statsd
 
 import caching.base
 
@@ -498,3 +499,27 @@ def check_tasks_completion(sender, **kwargs):
 
 post_save.connect(check_tasks_completion, sender=PerUserTaskCompletion,
     dispatch_uid='projects_check_tasks_completion')
+
+
+def post_save_project(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+    is_project = isinstance(instance, Project)
+    if created and is_project:
+        statsd.Statsd.increment('project_creation')
+
+
+post_save.connect(post_save_project, sender=Project,
+    dispatch_uid='projects_post_save_project')
+
+
+def post_save_participation(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+    is_participation = isinstance(instance, Participation)
+    if created and is_participation:
+        statsd.Statsd.increment('participation_creation')
+
+
+post_save.connect(post_save_participation, sender=Participation,
+    dispatch_uid='projects_post_save_participation')

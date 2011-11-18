@@ -14,6 +14,7 @@ from django.utils.http import urlquote_plus
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.utils.safestring import mark_safe
+from django.db.models.signals import post_save
 
 from taggit.models import GenericTaggedItemBase, Tag
 from south.modelsinspector import add_ignored_fields
@@ -28,6 +29,7 @@ from activity.schema import object_types
 from users.managers import CategoryTaggableManager
 from richtext.models import RichTextField
 from l10n.models import localize_email
+from tracker import statsd
 
 import caching.base
 
@@ -287,3 +289,20 @@ def create_profile(user, username=None):
     profile.email = user.email
     profile.save()
     return profile
+
+
+###########
+# Signals #
+###########
+
+
+def post_save_userprofile(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+    is_profile = isinstance(instance, UserProfile)
+    if created and is_profile:
+        statsd.Statsd.increment('userprofile_creation')
+
+
+post_save.connect(post_save_userprofile, sender=UserProfile,
+    dispatch_uid='users_post_save_userprofile')
