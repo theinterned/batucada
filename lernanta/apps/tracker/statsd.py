@@ -12,9 +12,12 @@ import random
 import sys
 from pprint import pprint
 from socket import socket, AF_INET, SOCK_DGRAM
+import logging
 
 from django.conf import settings
 from django.contrib.sites.models import Site
+
+log = logging.getLogger(__name__)
 
 
 # Sends statistics to the stats daemon over UDP
@@ -72,8 +75,8 @@ class Statsd(object):
             port = settings.STATSD_PORT
             addr=(host, port)
         except AttributeError:
-            raise
-            exit(1)
+            log.debug('statsd not configured properly')
+            return
         
         sampled_data = {}
         
@@ -95,6 +98,5 @@ class Statsd(object):
                 print send_data, addr
                 udp_sock.sendto(send_data, addr)
         except:
-            raise
-            print "Unexpected error:", pprint(sys.exc_info())
-            pass # we don't care
+            log.error("Unexpected error at statsd: %s" % pprint(sys.exc_info()))
+
