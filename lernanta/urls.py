@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     (r'^comments/',      include('replies.urls')),
     (r'^badges/',        include('badges.urls')),
     (r'^tags/',          include('tags.urls')),
+    (r'metrics/',        include('tracker.urls')),
     (r'',                include('users.urls')),
 )
 

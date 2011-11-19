@@ -4534,3 +4534,46 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
 }
 
+#one-column-page.scoreboard h1 {
+  text-align: center;
+  font-size: 60px;
+  color: #262626;
+  font-weight: normal;
+}
+
+table#metrics-scoreboard {
+  margin-top: 30px;
+  margin-left: 30px;
+  border: 0;
+  text-align: center;
+  color: #262626;
+  font-weight: normal;
+}
+
+table#metrics-scoreboard th span {
+  font-size: 32px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-style:solid;
+  border-width:2px;
+  font-weight: normal;
+}
+
+table#metrics-scoreboard th span.scoreboard-status-green {
+  background-color: #00FF00;
+}
+
+table#metrics-scoreboard th span.scoreboard-status-red {
+  background-color: #FF0000;
+}
+
+table#metrics-scoreboard td {
+  font-size: 14px;
+}
+
+table#metrics-scoreboard td.todays-count {
+  font-size: 86px;
+}

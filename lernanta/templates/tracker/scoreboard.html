@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+ 
+{% block title %}{{ _('Scoreboard') }}{% endblock %}
+ 
+{% block bodyid %}one-column-page{% endblock %}
+{% block bodyclasses %}scoreboard{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url metrics_scoreboard %}">{{ _('Scoreboard') }}</a>
+{% endblock %}
+
+{% block body %} 
+  <div id="main">
+    <h1>{{ _('Scoreboard') }}</h1>
+    <table id="metrics-scoreboard">
+      <tr>
+        {% for stat in stats %}
+          <th colspan="3"><span class="scoreboard-status-{{ stat.status_color }}">{{ stat.name|title }}</span></th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for stat in stats %}
+          <td colspan="3" class="todays-count">{{ stat.today }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for stat in stats %}
+          <td>actual</td>
+          <td>pace</td>
+          <td>last</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for stat in stats %}
+          <td>{{ stat.this_month }}</td>
+          <td>{{ stat.pace }}</td>
+          <td>{{ stat.prev_month }}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+
+{% endblock %}
