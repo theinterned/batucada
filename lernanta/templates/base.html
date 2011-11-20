@@ -182,6 +182,12 @@
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-5757664-8']);
+    _gaq.push(['_setCustomVar',
+      1, 
+      'logged_in_status', 
+      {% if user.is_authenticated %}'logged_in'{% else %}'anonymous'{% endif %}, 
+      2
+    ]);
     _gaq.push(['_trackPageview']);
 
     _gaq.push(['hewlett._setAccount', 'UA-5033010-1']);
