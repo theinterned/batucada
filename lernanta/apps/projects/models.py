@@ -506,7 +506,7 @@ def post_save_project(sender, **kwargs):
     created = kwargs.get('created', False)
     is_project = isinstance(instance, Project)
     if created and is_project:
-        statsd.Statsd.increment('project_creation')
+        statsd.Statsd.increment('groups')
 
 
 post_save.connect(post_save_project, sender=Project,
@@ -518,7 +518,7 @@ def post_save_participation(sender, **kwargs):
     created = kwargs.get('created', False)
     is_participation = isinstance(instance, Participation)
     if created and is_participation:
-        statsd.Statsd.increment('participation_creation')
+        statsd.Statsd.increment('joins')
 
 
 post_save.connect(post_save_participation, sender=Participation,

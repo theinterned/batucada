@@ -301,7 +301,7 @@ def post_save_userprofile(sender, **kwargs):
     created = kwargs.get('created', False)
     is_profile = isinstance(instance, UserProfile)
     if created and is_profile:
-        statsd.Statsd.increment('userprofile_creation')
+        statsd.Statsd.increment('users')
 
 
 post_save.connect(post_save_userprofile, sender=UserProfile,

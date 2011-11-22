@@ -92,7 +92,7 @@ def fire_activity(sender, **kwargs):
     created = kwargs.get('created', False)
     is_comment = isinstance(instance, PageComment)
     if created and is_comment:
-        statsd.Statsd.increment('pagecomment_creation')
+        statsd.Statsd.increment('comments')
         instance.send_comment_notification()
         if instance.page_object.comments_fire_activity():
             from activity.models import Activity
