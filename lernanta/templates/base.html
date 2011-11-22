@@ -73,7 +73,7 @@
 				<li><a href="{% locale_url users_logout %}" class="sub-level">{{ _('Logout') }}</a></li>
 		      </ul>
 		    </li> <!-- /#user -->
-            <li><a href="http://help.p2pu.org" id="help-link" class="top-level" target="_blank"><span>{{ _('Help') }}</span></a></li>
+            <li><a href="{% locale_url users_login %}?to=http%3A%2F%2Fhelp.p2pu.org%2F" id="help-link" class="top-level" target="_blank"><span>{{ _('Help') }}</span></a></li>
             <li><a href="http://blog.p2pu.org" class="top-level" target="_blank"><span>{{ _('Blog') }}</span></a></li>
 		  </ul>
 		  {% else %} {# user not logged in #}

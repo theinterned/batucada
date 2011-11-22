@@ -96,8 +96,11 @@ def _clean_redirect_url(request, field_name):
     """Prevent us from redirecting unauthorized external urls."""
     gets = request.GET.copy()
     url = urllib2.unquote(gets[field_name])
-    if (url and '://' in url \
-            and url not in settings.SSO_EXTERNAL_REDIRECTS):
+    invalid_redirect = (url and '://' in url)
+    for sso_redirect in settings.SSO_EXTERNAL_REDIRECTS:
+        if url.startswith(sso_redirect):
+            invalid_redirect = False
+    if invalid_redirect:
         url = None
     gets[REDIRECT_FIELD_NAME] = url
     request.GET = gets
@@ -106,7 +109,7 @@ def _clean_redirect_url(request, field_name):
 
 def _get_redirect_url(request):
     url = request.session.get(REDIRECT_FIELD_NAME, reverse('dashboard'))
-    if url == reverse('splash'):
+    if not url or url == reverse('splash'):
         url = reverse('dashboard')
     if url:
         if REDIRECT_FIELD_NAME in request.session:
@@ -116,10 +119,14 @@ def _get_redirect_url(request):
     return url
 
 def _after_login_redirect(redirect_url, profile):
-    if redirect_url not in settings.SSO_EXTERNAL_REDIRECTS:
+    sso_url = None
+    for sso_redirect in settings.SSO_EXTERNAL_REDIRECTS:
+        if redirect_url.startswith(sso_redirect):
+            sso_url = sso_redirect
+    if not sso_url:
         return http.HttpResponseRedirect(redirect_url)
-    site_key = settings.SSO_EXTERNAL_REDIRECTS[redirect_url]['site_key']
-    api_key = settings.SSO_EXTERNAL_REDIRECTS[redirect_url]['api_key']
+    site_key = settings.SSO_EXTERNAL_REDIRECTS[sso_url]['site_key']
+    api_key = settings.SSO_EXTERNAL_REDIRECTS[sso_url]['api_key']
     multipass = tender_multipass.MultiPass(site_key, api_key)
     expires = datetime.datetime.now() + datetime.timedelta(days=14)
     data = {

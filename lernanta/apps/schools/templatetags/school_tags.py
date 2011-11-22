@@ -15,7 +15,8 @@ register.inclusion_tag('schools/menu.html')(schools_menu)
 
 
 def schools_footer():
-    schools = School.objects.all().order_by('short_name')
+    schools = School.objects.all().order_by(
+        'short_name').exclude(id__gt=4)
     return {'schools': schools}
 
 
