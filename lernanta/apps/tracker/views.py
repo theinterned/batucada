@@ -44,10 +44,7 @@ def get_stats(name, model_cls, date_field_name, time_details):
         date_field_name + '__year': time_details['year']
         }).count()
 
-    pace = this_month_count * time_details['number_days_month']
-    days_passed = time_details['day'] - 1
-    if days_passed > 0:
-        pace = pace / days_passed
+    pace = this_month_count * time_details['number_days_month'] / time_details['day']
 
     prev_month_count = model_cls.objects.filter(**{
         date_field_name + '__month': time_details['prev_month'],
