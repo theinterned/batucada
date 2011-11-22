@@ -4541,6 +4541,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
   font-weight: normal;
 }
 
+#one-column-page.scoreboard p {
+  text-align: center;
+  font-size: 18px;
+  color: #262626;
+  font-weight: normal;
+}
+
 table#metrics-scoreboard {
   margin-top: 30px;
   margin-left: 30px;
