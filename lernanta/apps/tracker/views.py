@@ -14,7 +14,8 @@ log = logging.getLogger(__name__)
 
 
 def get_time_details():
-    today = datetime.date.today()
+    stats_date = datetime.datetime.now()
+    today = stats_date.date()
     number_days_month = calendar.monthrange(
         today.year, today.month)[1]
     prev_month = (today.month - 1) if today.month > 1 else 12
@@ -27,6 +28,7 @@ def get_time_details():
         'number_days_month': number_days_month,
         'prev_month': prev_month,
         'prev_month_year': prev_month_year,
+        'stats_date': stats_date,
     }
 
 
@@ -70,7 +72,6 @@ def get_stats(name, model_cls, date_field_name, time_details):
         'prev_month': prev_month_count,
         'status_color': status_color,
     }
-        
 
 
 def scoreboard(request):
@@ -83,6 +84,7 @@ def scoreboard(request):
     groups_stats = get_stats('groups', Project, 'created_on', time_details)
     context = {
         'stats': [users_stats, comments_stats, joins_stats, groups_stats],
+        'stats_date': time_details['stats_date'],
     }
     return render_to_response(
         'tracker/scoreboard.html', context,
