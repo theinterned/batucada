@@ -247,12 +247,12 @@ def assess_submission(request, slug, submission_id):
         return http.HttpResponseRedirect(submission.get_absolute_url())
 
     assessment = None
+    rating_forms = []
 
     if request.method == 'POST':
         form = badge_forms.AssessmentForm(request.POST, prefix='assessment')
         if form.is_valid():
             assessment = form.save(commit=False)
-            rating_forms = []
             ratings = []
             valid_ratings = True
             for rubric in rubrics:
@@ -282,7 +282,6 @@ def assess_submission(request, slug, submission_id):
             messages.error(request, _('Please correct errors below.'))
     else:
         form = badge_forms.AssessmentForm(prefix='assessment')
-        rating_forms = []
         for rubric in rubrics:
             rating_form = badge_forms.RatingForm(
                 prefix="rubric%s_" % rubric.id)

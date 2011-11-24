@@ -5,6 +5,7 @@ import calendar
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import http
+from django.contrib.contenttypes.models import ContentType
 
 from users.models import UserProfile
 from replies.models import PageComment
@@ -32,21 +33,21 @@ def get_time_details():
     }
 
 
-def get_stats(name, model_cls, date_field_name, time_details):
-    todays_count = model_cls.objects.filter(**{
+def get_stats(name, objects_list, date_field_name, time_details):
+    todays_count = objects_list.filter(**{
         date_field_name + '__day': time_details['day'],
         date_field_name + '__month': time_details['month'],
         date_field_name + '__year': time_details['year']
         }).count()
 
-    this_month_count = model_cls.objects.filter(**{
+    this_month_count = objects_list.filter(**{
         date_field_name + '__month': time_details['month'],
         date_field_name + '__year': time_details['year']
         }).count()
 
     pace = this_month_count * time_details['number_days_month'] / time_details['day']
 
-    prev_month_count = model_cls.objects.filter(**{
+    prev_month_count = objects_list.filter(**{
         date_field_name + '__month': time_details['prev_month'],
         date_field_name + '__year': time_details['prev_month_year']
         }).count()
@@ -75,10 +76,16 @@ def scoreboard(request):
     if not request.user.is_authenticated() or not request.user.is_staff:
         raise http.Http404
     time_details = get_time_details()
-    users_stats = get_stats('users', UserProfile, 'user__date_joined', time_details)
-    comments_stats = get_stats('comments', PageComment, 'created_on', time_details)
-    joins_stats = get_stats('joins', Participation, 'joined_on', time_details)
-    groups_stats = get_stats('groups', Project, 'created_on', time_details)
+    users_stats = get_stats('users', UserProfile.objects.all(),
+        'user__date_joined', time_details)
+    from signups.models import SignupAnswer
+    ct = ContentType.objects.get_for_model(SignupAnswer)
+    comments = PageComment.objects.exclude(page_content_type=ct)
+    comments_stats = get_stats('comments', comments, 'created_on', time_details)
+    joins_stats = get_stats('joins', Participation.objects.all(),
+        'joined_on', time_details)
+    groups_stats = get_stats('groups', Project.objects.all(),
+        'created_on', time_details)
     context = {
         'stats': [users_stats, comments_stats, joins_stats, groups_stats],
         'stats_date': time_details['stats_date'],

@@ -95,7 +95,6 @@ class Statsd(object):
             for stat in sampled_data.keys():
                 value = data[stat]
                 send_data = "%s.%s:%s" % (domain, stat, value)
-                print send_data, addr
                 udp_sock.sendto(send_data, addr)
         except:
             log.error("Unexpected error at statsd: %s" % pprint(sys.exc_info()))

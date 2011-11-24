@@ -92,7 +92,10 @@ def fire_activity(sender, **kwargs):
     created = kwargs.get('created', False)
     is_comment = isinstance(instance, PageComment)
     if created and is_comment:
-        statsd.Statsd.increment('comments')
+        from signups.models import SignupAnswer
+        ct = ContentType.objects.get_for_model(SignupAnswer)
+        if instance.page_content_type != ct:
+            statsd.Statsd.increment('comments')
         instance.send_comment_notification()
         if instance.page_object.comments_fire_activity():
             from activity.models import Activity
