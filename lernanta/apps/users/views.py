@@ -25,6 +25,7 @@ from commonware.decorators import xframe_sameorigin
 import tender_multipass
 
 from l10n.urlresolvers import reverse
+from l10n import locales
 from urlparse import urlparse, urlunparse
 from links.models import Link
 from drumbeat import messages
@@ -144,7 +145,9 @@ def force_language_in_url(url, oldlang, newlang):
     # Use when activate(newlang) is not enough
     # see https://docs.djangoproject.com/en/dev/topics/i18n/deployment/
     if '://' in url:
-	return url
+        return url
+    if oldlang in locales.INTERNAL_MAP:
+        oldlang = locales.INTERNAL_MAP[oldlang]
     p = urlparse(url)
     if (p.path.startswith('/' + oldlang + '/')):
         npath = p.path.replace('/' + oldlang + '/', '/' + newlang + '/', 1)
@@ -162,6 +165,9 @@ def login(request):
     if request.user.is_authenticated():
         user = request.user.get_profile()
         redirect_url = _get_redirect_url(request)
+        olang = get_language()
+        force_language_in_url(
+                redirect_url, olang, user.preflang)
         return _after_login_redirect(redirect_url, user)
 
     logout(request)
@@ -191,8 +197,7 @@ def login(request):
         redirect_url = _get_redirect_url(request)
         if redirect_url:
             redirect_url = force_language_in_url(
-                redirect_url, olang, user.preflang
-)
+                redirect_url, olang, user.preflang)
             return _after_login_redirect(redirect_url, user)
 
     elif request.method == 'POST':

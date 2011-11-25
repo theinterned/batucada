@@ -59,7 +59,8 @@ class TestLocaleURLs(test_utils.TestCase):
     def test_normalized_case(self):
         """Accept-Language header is case insensitive."""
         response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='en-us')
-        self.assertRedirects(response, '/en/', status_code=301)
+        self.assertRedirects(response, '/en/', status_code=301,
+            target_status_code=200)
 
     def test_login_post_redirect(self):
         """Test that post requests are treated properly."""
@@ -76,5 +77,5 @@ class TestLocaleURLs(test_utils.TestCase):
             'username': user.username,
             'password': 'testpass',
         })
-        self.assertRedirects(response, '/dashboard/', status_code=302,
-                             target_status_code=301)
+        self.assertRedirects(response, '/en/dashboard/', status_code=302,
+                             target_status_code=200)

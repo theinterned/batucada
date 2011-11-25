@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 from drumbeat import messages
 from users.models import UserProfile
+from l10n.urlresolvers import reverse
 
 
 def anonymous_only(func):
@@ -19,7 +20,7 @@ def anonymous_only(func):
         if request.user.is_authenticated():
             messages.info(request,
                           _("You are already logged into an account."))
-            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+            return HttpResponseRedirect(reverse('dashboard'))
         return func(*args, **kwargs)
     return decorator
 

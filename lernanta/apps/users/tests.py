@@ -42,9 +42,8 @@ class TestLogins(TestCase):
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
-            print response
-            self.assertRedirects(response, '/dashboard/', status_code=302,
-                                 target_status_code=301)
+            self.assertRedirects(response, '/en/dashboard/', status_code=302,
+                                 target_status_code=200)
         self.client.logout()
 
     def test_unauthenticated_redirects(self):
@@ -65,12 +64,10 @@ class TestLogins(TestCase):
             'username': self.test_username,
             'password': self.test_password,
         })
-        self.assertRedirects(response, '/dashboard/', status_code=302,
-                             target_status_code=301)
-        # TODO - Improve this so it doesn't take so many redirects to get a 200
+        self.assertRedirects(response, '/en/dashboard/', status_code=302,
+                             target_status_code=200)
         response2 = self.client.get(response["location"])
-        response3 = self.client.get(response2["location"])
-        self.assertContains(response3, 'id="dashboard"')
+        self.assertContains(response2, 'id="dashboard"')
         self.client.logout()
 
         response5 = self.client.post(path, {
