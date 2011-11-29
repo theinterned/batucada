@@ -164,36 +164,47 @@ class Project(ModelBase):
     def kind(self):
         return self.other.lower() if self.other else self.category
 
-    def followers(self):
-        return Relationship.objects.filter(deleted=False,
-            target_project=self, source__deleted=False)
+    def followers(self, include_deleted=False):
+        relationships = Relationship.objects.all()
+        if not include_deleted:
+            relationships = relationships.filter(
+                source__deleted=False)
+        return relationships.filter(target_project=self,
+            deleted=False)
 
-    def previous_followers(self):
+    def previous_followers(self, include_deleted=False):
         """Return a list of users who were followers if this project."""
-        return Relationship.objects.filter(deleted=True,
-            target_project=self, source__deleted=False)
+        relationships = Relationship.objects.all()
+        if not include_deleted:
+            relationships = relationships.filter(
+                 source__deleted=False)
+        return relationships.filter(target_project=self,
+            deleted=True)
 
-    def non_participant_followers(self):
-        return self.followers().exclude(
-            source__id__in=self.participants().values('user_id'))
+    def non_participant_followers(self, include_deleted=False):
+        return self.followers(include_deleted).exclude(
+            source__id__in=self.participants(include_deleted).values('user_id'))
 
-    def participants(self):
+    def participants(self, include_deleted=False):
         """Return a list of users participating in this project."""
-        return Participation.objects.filter(project=self,
-            left_on__isnull=True, user__deleted=False)
+        participations = Participation.objects.all()
+        if not include_deleted:
+            participations = participations.filter(user__deleted=False)
+        return participations.filter(project=self,
+            left_on__isnull=True)
 
-    def non_organizer_participants(self):
-        return self.participants().filter(organizing=False)
+    def non_organizer_participants(self, include_deleted=False):
+        return self.participants(include_deleted).filter(organizing=False)
 
-    def adopters(self):
-        return self.participants().filter(Q(adopter=True) | Q(organizing=True))
+    def adopters(self, include_deleted=False):
+        return self.participants(include_deleted).filter(Q(adopter=True) | Q(organizing=True))
 
-    def non_adopter_participants(self):
-        return self.non_organizer_participants().filter(
+    def non_adopter_participants(self, include_deleted=False):
+        return self.non_organizer_participants(include_deleted).filter(
             adopter=False)
 
-    def organizers(self):
-        return self.participants().filter(organizing=True)
+    def organizers(self, include_deleted=False):
+        return self.participants(include_deleted).filter(organizing=True)
 
     def is_organizing(self, user):
         if user.is_authenticated():
