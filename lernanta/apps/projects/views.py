@@ -635,11 +635,13 @@ def admin_metrics(request, slug):
     """
     project = get_object_or_404(Project, slug=slug)
     metric_permissions = project.get_metrics_permissions(request.user)
-    participants = (participant.user for participant in project.participants())
+    participants = project.participants(
+        include_deleted=True).order_by('user__username')
+    participant_profiles = (participant.user for participant in participants)
     tracker_models.update_metrics_cache(project)
     keys = ('username', 'last_active', 'course_activity_minutes',
         'comment_count', 'task_edits_count')
-    metrics = tracker_models.metrics_summary(project, participants)
+    metrics = tracker_models.metrics_summary(project, participant_profiles)
     data = (dict(itertools.izip(keys, d)) for d in metrics)
 
     return render_to_response('projects/project_admin_metrics.html', {
@@ -659,15 +661,19 @@ def export_detailed_csv(request, slug):
     project = get_object_or_404(Project, slug=slug)
     # Preprocessing
     tracker_models.update_metrics_cache(project)
-    participants = project.non_organizer_participants().order_by(
+    organizers = project.organizers(include_deleted=True).order_by('user__username')
+    organizer_profiles = (organizer.user for organizer in organizers)
+    organizer_ids = organizers.values('user_id')
+    participants = project.non_organizer_participants(include_deleted=True).order_by(
         'user__username')
     participant_profiles = (participant.user for participant in participants)
     participant_ids = participants.values('user_id')
-    followers = project.non_participant_followers().order_by(
+    followers = project.non_participant_followers(include_deleted=True).order_by(
         'source__username')
     follower_profiles = (follower.source for follower in followers)
     follower_ids = followers.values('source_id')
-    previous_followers = project.previous_followers()
+    previous_followers = project.previous_followers(include_deleted=True).order_by(
+        'source__username')
     previous_follower_profiles = (previous.source for previous
         in previous_followers)
     previous_follower_ids = project.previous_followers().values('source_id')
@@ -685,6 +691,12 @@ def export_detailed_csv(request, slug):
     writer.writerow([])
     # Write Total Metrics
     writer.writerow(["TOTALS"])
+    writer.writerow(["Organizers"] + headers)
+    metrics = tracker_models.user_total_metrics(project,
+        organizer_profiles)
+    for row in metrics:
+        writer.writerow(row)
+    writer.writerow([])
     writer.writerow(["Participants"] + headers)
     metrics = tracker_models.user_total_metrics(project,
         participant_profiles)
@@ -707,12 +719,19 @@ def export_detailed_csv(request, slug):
     writer.writerow([])
     writer.writerow([])
     # Restoring profile iterators
+    organizer_profiles = (organizer.user for organizer in organizers)
     participant_profiles = (participant.user for participant in participants)
     follower_profiles = (follower.source for follower in followers)
     previous_follower_profiles = (previous.source for previous
         in previous_followers)
     # Write Per Page Total Metrics
     writer.writerow(["PER PAGE TOTALS"])
+    writer.writerow(["Organizers", "Page Paths"] + headers[:-2])
+    metrics = tracker_models.user_total_per_page_metrics(project,
+        organizer_ids)
+    for row in metrics:
+        writer.writerow(row)
+    writer.writerow([])
     writer.writerow(["Participants", "Page Paths"] + headers[:-2])
     metrics = tracker_models.user_total_per_page_metrics(project,
         participant_ids)
@@ -737,6 +756,12 @@ def export_detailed_csv(request, slug):
     writer.writerow([])
     # Write Chronological Metrics
     writer.writerow(["CHRONOLOGICAL"])
+    writer.writerow(["Organizers", "Dates"] + headers)
+    metrics = tracker_models.chronological_user_metrics(project,
+        organizer_profiles)
+    for row in metrics:
+        writer.writerow(row)
+    writer.writerow([])
     writer.writerow(["Participants", "Dates"] + headers)
     metrics = tracker_models.chronological_user_metrics(project,
         participant_profiles)
@@ -762,6 +787,12 @@ def export_detailed_csv(request, slug):
     writer.writerow([])
     # Write Chronological Per Page Metrics
     writer.writerow(["CHRONOLOGICAL PER PAGE"])
+    writer.writerow(["Organizers", "Dates", "Page Paths"] + headers[:-2])
+    metrics = tracker_models.chronological_user_per_page_metrics(
+        project, organizer_ids)
+    for row in metrics:
+        writer.writerow(row)
+    writer.writerow([])
     writer.writerow(["Participants", "Dates", "Page Paths"] + headers[:-2])
     metrics = tracker_models.chronological_user_per_page_metrics(
         project, participant_ids)

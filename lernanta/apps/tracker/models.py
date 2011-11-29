@@ -10,6 +10,7 @@ from projects.models import Project
 from activity.schema import verbs
 from activity.models import Activity
 from replies.models import PageComment
+from users.models import UserProfile
 
 from tracker.utils import force_date
 
@@ -164,10 +165,21 @@ def metrics_summary(project, users):
     task_edits = Activity.objects.filter(scope_object=project,
         target_content_type=page_ct, verb=verbs['update'])
     pageviews = PageViewMetrics.objects.filter(project=project)
+    index = 0
+    last_username = None
     for user in users:
-        row = [user.username]
-        row.append(user.last_active or user.user.last_login)
-        metrics = pageviews.filter(user=user).aggregate(
+        if last_username != user.username:
+            index += 1
+            last_username = user.username
+        user_pageviews = pageviews.filter(user=user)
+        last_active = None
+        if user_pageviews.exists():
+            last_active = user_pageviews.order_by(
+                '-access_date')[0].access_date
+        row = [
+            'anonymous%s' % index if user.deleted else user.username,
+            last_active]
+        metrics = user_pageviews.aggregate(
             models.Sum('non_zero_length_time_on_page'),
             models.Sum('zero_length_pageviews'))
         total_time_on_pages = (
@@ -193,8 +205,13 @@ def user_total_metrics(project, users):
     task_edits = Activity.objects.filter(scope_object=project,
         target_content_type=page_ct, verb=verbs['update'])
     pageviews = PageViewMetrics.objects.filter(project=project)
+    index = 0
+    last_username = None
     for user in users:
-        row = [user.username]
+        if last_username != user.username:
+            index += 1
+            last_username = user.username
+        row = ['anonymous%s' % index if user.deleted else user.username]
         metrics = pageviews.filter(user=user).aggregate(
             models.Sum('non_zero_length_time_on_page'),
             models.Sum('non_zero_length_pageviews'),
@@ -243,8 +260,19 @@ def user_total_per_page_metrics(project, user_ids):
         models.Sum('non_zero_length_time_on_page'),
         models.Sum('non_zero_length_pageviews'),
         models.Sum('zero_length_pageviews'))
+    index = 0
+    last_username = None
     for metric in metrics:
-        row = [metric['user__username'], metric['page_path']]
+        username = metric['user__username']
+        if username != last_username:
+            index += 1
+            last_username = username
+        user_deleted = UserProfile.objects.filter(
+            username=username,
+            deleted=True).exists()
+        row = [
+            'anonymous%s' % index if user_deleted else username,
+            metric['page_path']]
         row.append("%.2f" % (
             (metric['non_zero_length_time_on_page__sum'] or 0) / 60.0))
         row.append(metric['non_zero_length_pageviews__sum'] or 0)
@@ -299,6 +327,8 @@ def chronological_user_metrics(project, users):
     task_edits = Activity.objects.filter(scope_object=project,
         target_content_type=page_ct, verb=verbs['update'])
     pageviews = PageViewMetrics.objects.filter(project=project)
+    index = 0
+    last_username = None
     for user in users:
         user_pageviews = pageviews.filter(user=user)
         user_comments = comments.filter(author=user)
@@ -315,8 +345,13 @@ def chronological_user_metrics(project, users):
             'created_on_date', flat=True))
         dates = (force_date(d) for d in dates)
         dates = sorted(dates, reverse=True)
+        username = user.username
+        if last_username != username:
+            index += 1
+            last_username = username
+        anonymized_username = 'anonymous%s' % index if user.deleted else username
         for date in dates:
-            row = [user.username, date.strftime("%Y-%m-%d")]
+            row = [anonymized_username, date.strftime("%Y-%m-%d")]
             metrics = user_pageviews.filter(access_date=date).aggregate(
                 models.Sum('non_zero_length_time_on_page'),
                 models.Sum('non_zero_length_pageviews'),
@@ -382,8 +417,17 @@ def chronological_user_per_page_metrics(project, user_ids):
     metrics = PageViewMetrics.objects.filter(project=project,
         user__in=user_ids).order_by('user__username',
         'access_date', 'page_path')
+    index = 0
+    last_username = None
     for metric in metrics:
-        row = [metric.user.username, metric.access_date.strftime("%Y-%m-%d"),
+        if last_username != metric.user.username:
+            index += 1
+            last_username = metric.user.username
+        user_deleted = UserProfile.objects.filter(
+            user=metric.user, deleted=True).exists()
+        row = [
+            'anonymous%s' % index if user_deleted else metric.user.username,
+            metric.access_date.strftime("%Y-%m-%d"),
             metric.page_path]
         row.append("%.2f" % (metric.non_zero_length_time_on_page / 60.0))
         row.append(metric.non_zero_length_pageviews)
