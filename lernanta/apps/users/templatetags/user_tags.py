@@ -3,6 +3,7 @@ from django import template
 from badges.models import get_awarded_badges
 from projects import drupal as projects_drupal
 from links.models import Link
+from badges.models import Badge, Award
 
 register = template.Library()
 
@@ -33,7 +34,11 @@ def user_sidebar(context, max_people_count=64):
         past_drupal_courses = projects_drupal.get_past_courses(
             profile.username)
         past_involvement_count = len(past_projects) + len(past_drupal_courses)
-        badges = get_awarded_badges(profile.user).values()
+        pilot_badges = get_awarded_badges(profile.user).values()
+        badge_awards = Award.objects.filter(
+            user=profile).values('badge_id')
+        badges = Badge.objects.filter(id__in=badge_awards)
+        badges_count = len(pilot_badges) + badges.count()
 
     context.update({
         'current_projects': current_projects,
@@ -47,6 +52,8 @@ def user_sidebar(context, max_people_count=64):
         'past_drupal_courses': past_drupal_courses,
         'past_involvement_count': past_involvement_count,
         'badges': badges,
+        'pilot_badges': pilot_badges,
+        'badges_count': badges_count,
     })
     return context
 
