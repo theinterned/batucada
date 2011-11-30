@@ -298,7 +298,8 @@ input[type=submit]:active,
 
 .badge-show .badge-call-to-action-button {
     float: none;
-    font-size: 14px;
+    font: normal 12px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    padding: 7px 12px 8px 12px;
 }
 
 .project-kind-challenge #sidebar a.discuss-button {
@@ -3513,7 +3514,8 @@ div.voting div.score {
     padding: 7px 8px 8px;
     text-align: center;
     text-shadow: 0 -1px 0 #4C9021;
-    width: 260p
+    width: 260px;
+    margin-bottom: 10px;
  }
 
 .project-kind-challenge #task_list_wall #progress p {
@@ -3993,7 +3995,6 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 
 .submission-edit #submission_edit {
 	clear: both;
-	padding-top: 2em;
 }
 
 .submission-edit .badge-card #badge-details, .submission-edit .badge-card  #info {
@@ -4013,7 +4014,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 .assessment .question {
-    width: 415px;
+    width: 535px;
 }
 
 .assessment .rating {
@@ -4031,9 +4032,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 .assessment-edit #submission-details, .submission-show #submission-details {
 	float: left;
 	padding: 1em;
-	border: 1px solid #525252;
+	border: 1px solid #eee;
     -moz-border-radius: 3px 3px 3px 3px;
 	width: 607px;
+    background: #fff;
+    margin-bottom: 10px;
 }
 
 .assessment-edit #submission-details .member-picture, .submission-show #submission-details .member-picture {
@@ -4054,10 +4057,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     list-style-type: none;
     margin: 0;
     -moz-border-radius: 3px 3px 3px 3px;
-    border: 1px solid #525252;
-    padding: 8px;
+    border: 1px solid #eee;
+    padding: 10px 8px 0 12px;
     margin-bottom: 1em;
     display: table;
+    background: #fff;
 }
 
 #assessment_edit label {
@@ -4093,7 +4097,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 
 .right-aligned-rating {
     float: right; 
-    width: 200px;
+    width: 80px;
     display:table-cell; vertical-align:middle;
 }
 
@@ -4125,18 +4129,20 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 #submission-list ul li { 
-    border-bottom: 1px solid #ddd;
-    padding: 1em 0 0 0;
+    padding: 20px 15px 0 15px;
     list-style: none;
-}
-
-#submission-list ul li:last-child { 
-    border: none;
+    background: #fbfbfb;
+    margin-bottom: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #eee;
 }
 
 #submission-list ul li div.submission, #submission-list ul li div.badge, #submission-list ul li div.user, #submission-list ul li div.action {
-    width: 180px;
-    height: 5em;
+    width: 140px;
     display: table-cell;
     vertical-align: middle;
 }
@@ -4146,7 +4152,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 #submission-list ul li div.submission {
-    width: 450px;
+    width: 470px;
     padding-right: 40px;
 }
 
@@ -4161,13 +4167,70 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 .submissions-list .has-badge {
-    border-left: #ccc 1px solid; 
     float: left;
-    padding-left: 39px;
 }
 
 #submission-list div.submission .username {
     font-size: 18px;
+}
+
+#submission-list ul li a.button {
+	margin: 0 0 1px 0;
+	background-color: #7fbf4d;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
+	/* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
+	background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
+	background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
+	background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
+	background-image: linear-gradient(top, #7fbf4d, #63a62f);
+	border: 1px solid #63a62f;
+	border-bottom: 1px solid #5b992b;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+	-moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+	-ms-box-shadow: inset 0 1px 0 0 #96ca6d;
+	-o-box-shadow: inset 0 1px 0 0 #96ca6d;
+	box-shadow: inset 0 1px 0 0 #96ca6d;
+	color: #fff;
+	font: bold 10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	line-height: 1;
+	padding: 6px 4px 0 4px;
+	text-align: center;
+	text-shadow: 0 -1px 0 #4c9021;
+	width: 140px;
+}
+
+#submission-list ul li a.button:hover {
+	background-color: #76b347;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
+	/* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
+	background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
+	background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
+	background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
+	background-image: linear-gradient(top, #76b347, #5e9e2e);
+	-webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
+	-moz-box-shadow: inset 0 1px 0 0 #8dbf67;
+	-ms-box-shadow: inset 0 1px 0 0 #8dbf67;
+	-o-box-shadow: inset 0 1px 0 0 #8dbf67;
+	box-shadow: inset 0 1px 0 0 #8dbf67;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+#submission-list ul li a.button:active {
+	border: 1px solid #5b992b;
+	border-bottom: 1px solid #538c27;
+	-webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+	-moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+	-ms-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+	-o-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+	box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee
 }
 
 .back-nav {
@@ -4180,11 +4243,16 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     text-align: center;
 }
 
+#badge-image a:hover {
+	text-decoration: none;
+}
+
 .badge-show #badge-description, .assessment-edit #submission, .submission-edit #badge-description, .submission-show #submission, .badge-show-user-awards #badge-description {
-    border-left: #ccc 1px solid; 
     float: left;
     padding-left: 39px;
-    width: 650px;
+    width: 640px;
+    height: 100%;
+    position: relative;
 }
 
 .badge-show #badge-more {
@@ -4205,7 +4273,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     padding-bottom: 2em;
     text-align: center;
     vertical-align: top;
-    width:158px;
+    width: 150px;
 }
 
 .badges-list .badge-list .badges li .badge-name {
@@ -4583,4 +4651,61 @@ table#metrics-scoreboard td {
 
 table#metrics-scoreboard td.todays-count {
   font-size: 86px;
+}
+
+
+#badge-top {
+     width: 930px;
+     float: left;
+     padding: 20px;
+     border: 1px solid #eee;
+     background: #fbfbfb url('/media/images/border.gif') repeat-y 270px 0;
+     -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+     -ms-border-radius: 3px;
+     -o-border-radius: 3px;
+     border-radius: 3px;
+}
+
+
+#peer-assessment-left, #submission-edit-left {
+    width: 185px;
+    float: left;
+    margin: 35px 35px 35px 0;
+    padding-left: 35px;
+    text-align: center;
+}
+
+#peer-assessment-left a:hover, #submission-edit-left a:hover {
+    text-decoration: none;
+}
+
+#peer-assessment-right, #submission-edit-right {
+    float: left;
+    border: 1px solid #eee;
+    padding: 25px 35px 15px 35px;
+    margin-top: 20px;
+    margin-bottom: 35px;
+    background: #fbfbfb;
+     -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+     -ms-border-radius: 3px;
+     -o-border-radius: 3px;
+     border-radius: 3px;
+    width: 570px;
+}
+
+#peer-assessment-right label, #submission-edit-right label {
+    padding-bottom: 5px;
+}
+
+#submission {
+    background: #fbfbfb;
+    border: 1px solid #eee;
+     -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+     -ms-border-radius: 3px;
+     -o-border-radius: 3px;
+     border-radius: 3px;
+    padding: 20px;
 }

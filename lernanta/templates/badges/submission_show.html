@@ -8,19 +8,23 @@
 {% block bodyclasses %}submission-show summary{% endblock %}
 
 {% block body %} 
-    <div id="main">
-    <h1>{{ _('Submission for') }} {{ badge }} {{ _('from') }} {{ submission.author }}</h1>
-    <br>
+  <div id="main">
     <div id="badge-image">
-        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge }}"/>        
+      <p>
+        <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+          <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
+          <br>
+          {{ badge.name }}
+        </a>
+        <br>
+        {{ _('Submission') }}
+      </p>
     </div>
     <div id="submission">
-        <h1>{{ badge }}</h1>
-        <p>{{ badge.description }}</p>
        <div id="submission-details">
-           
+
            <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
-           
+
            <div id="submission-detail">
                <h2>{{ submission.author }}</h2>
                {{ submission.content|embed|safe }}
@@ -40,7 +44,7 @@
 	</div>
     {% if can_assess %}
        <br class="clear"><br>
-       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Review This') }}</a></p>
+       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Review This Submission') }}</a></p>
     {% endif %}
 </div>
 
