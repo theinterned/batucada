@@ -141,10 +141,17 @@
           {% endfor %}
         </ul>
       {% endif %}
-      {% if badges %}
-        <h3>{{ _('Badges') }} <span class="projects count">{{ badges|length }}</span></h3>
+      {% if badges_count %}
+        <h3>{{ _('Badges') }} <span class="projects count">{{ badges_count }}</span></h3>
         <ul class="users following">
           {% for badge in badges %}
+            <li>
+              <a href="{% locale_url user_awards_show slug=badge.slug username=profile.username %}" title="{{ badge.name }}">
+                <img src="{{ badge.get_image_url }}" width="70" height="70" alt="badge image" class="member-picture"/>
+              </a>
+            </li>
+          {% endfor %}
+          {% for badge in pilot_badges %}
             <li>
               <a href="{{ badge.evidence }}" title="{{ badge.name }} {% if badge.count > 1 %}(x{{ badge.count }}){% endif %}" target="_blank">
                 <img src="{{ badge.image }}" width="70" height="70" alt="badge image" class="member-picture"/>
