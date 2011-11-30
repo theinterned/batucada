@@ -7,14 +7,17 @@
 
 {% block body %} 
 	<div id="main">
-	<h1>{{ _('Review this submission') }}</h1>
 	<br>
     <div id="badge-image">
-        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>        
+      <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+        <img src="{{ badge.get_image_url }}" width="155" height="155" alt="{{ badge.name }}"/>
+        <br>
+        {{ badge.name }}
+      </a>
     </div>
     <div id="submission">
-        <h1>{{ badge }}</h1>
-        <p>{{ badge.description }}</p>
+      <h1>{{ _('Review this submission:') }}</h1>
+      <br>
 	   <div id="submission-details">
 		   
 		   <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
@@ -27,7 +30,7 @@
 	   </div>
     <br class="clear"/>
     <br>
-    <h2>{{ _('Based on the submission above, please provide a rating on how well this peer was able to:') }}</h2>
+    <h2>{{ _('How well is this peer was able to:') }}</h2>
     <br>
 	{% block form %}
 	<fieldset id="assessment_edit" class="assessment edit tabpane">
@@ -48,7 +51,7 @@
 
 	    <div class="clear field{% if form.comment.errors %} error{% endif %}">
 	      <label for="id_comment">{{ _('Please explain your ratings.') }}</label>
-          <p class="hint">{{ _('What aspects of the challenge did this peer do well? What advice or suggestions would you give to help them improve this work?') }}</p>
+          <p class="hint">{{ _('What did this peer do well? What advice or suggestions would you give?') }}</p>
 	      {{ form.comment }}
 	      {{ form.comment.errors }}
 	    </div>

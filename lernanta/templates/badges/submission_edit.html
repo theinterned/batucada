@@ -6,73 +6,41 @@
 
 {% block body %} 
 <div id="main">
-    <h1>{{ _('Apply for ') }}{{ badge }}</h1>
-    <div id="badge-image">
-        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
-        <br><br>
-        {% if peer_skill %}
-          {% if is_eligible %}
-            {% if application_open %}
-              <p><a href="{% locale_url submission_show slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
-            {% else %}
-              <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
-            {% endif %}
-          {% endif %}
-        {% endif %}
-        {% if peer_community %}
-          <p><a href="{% locale_url assessment_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Award Badge to Peer')}}</a></p>
-        {% endif %}
-        
-    </div>
-    <div id="badge-description">
-        <h1>{{ badge }}</h1>
-        <p>{{ badge.description }}</p>
-        <h2>{{ _('Requirements:') }}</h2> 
-        {% if rubrics or badge.logic %}
-              {% if badge.logic %}
-              {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }} 
-              {% endif %}
-              {{ rubrics|join:", " }} 
-        {% else %}
-           <p>{{ _('There are no requirements for this badge.') }}</p>
-        {% endif %}
-        {% if prerequisites %}
-          <br><br>
-          <h3>{{ _('You need to have these badges:') }}</h3>
-          <br>
-          {% for prerequisite in prerequisites %}
-            <a href="{{ prerequisite.get_absolute_url }}" title="{{ prerequisite }}">
-              <img src="{{ prerequisite.get_image_url }}" width="60" height="60" alt="{{ prerequisite }}"/>
-            </a>
-          {% endfor %}
-        {% endif %}
-    
-        <br><br>
-        <h1>{{ _('Badge Application Form') }}</h1>
-        
-	{% block form %}
-	<fieldset id="submission_edit" class="submission edit tabpane">
-	  <form method="post" action="{% if submission %}{% locale_url submission_edit slug=badge.slug submission_id=submission.pk %}{% else %}{% locale_url submission_create slug=badge.slug%}{% endif %}">
-	    {% csrf_token %}
-	    <div class="field{% if form.url.errors %} error{% endif %}">
-          <label for="id_url">{{ _('URL to the work you are submitting:') }}</label>
-          {{ form.url }}
-          {{ form.url.errors }}
-        </div>
-	    <div class="field{% if form.content.errors %} error{% endif %}">
-	      <label for="id_content">{{ _('What did you learn? Why do you feel you deserve this badge?') }}</label>
-	      {{ form.content }}
-	      {{ form.content.errors }}
-	    </div>
-	
-	    <p class="buttons">
-	      <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
-	    </p>
 
-	  </form>
-	</fieldset>
-	{% endblock %}
-    </div>
-    </div>
+  <div id="submission-edit-left">
+    <p>
+      <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
+        <br>
+        {{ badge.name }}
+      </a>
+    </p>
+  </div>
+
+  <div id="submission-edit-right">
+    <h1>{{ _('Apply for this badge.') }}</h1>
+    <p>
+      {% block form %}
+        <fieldset id="submission_edit" class="submission edit tabpane">
+          <form method="post" action="{% if submission %}{% locale_url submission_edit slug=badge.slug submission_id=submission.pk %}{% else %}{% locale_url submission_create slug=badge.slug%}{% endif %}">
+	        {% csrf_token %}
+	        <div class="field{% if form.url.errors %} error{% endif %}">
+              <label for="id_url">{{ _('URL to the work you are submitting:') }}</label>
+              {{ form.url }}
+              {{ form.url.errors }}
+            </div>
+	        <div class="field{% if form.content.errors %} error{% endif %}">
+	          <label for="id_content">{{ _('What did you learn? Why do you feel you deserve this badge?') }}</label>
+	          {{ form.content }}
+	          {{ form.content.errors }}
+	        </div>
+	        <p class="buttons">
+	          <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+	        </p>
+	      </form>
+	    </fieldset>
+	  {% endblock %}
+    </p>
+  </div>
 </div>
 {% endblock %}

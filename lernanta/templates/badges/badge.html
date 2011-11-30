@@ -7,24 +7,24 @@
 
 {% block body %}
   <div id="main">
-    <div id="badge-image">
+    <div id="badge-top">
+      <div id="badge-image">
         <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
         <br><br>
 	    {% if peer_skill %}
 	      {% if is_eligible %}
 	        {% if applications %}
-	          <p><a href="{% locale_url matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
+	          <p><a href="{% locale_url matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
 	        {% else %}
-	          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
+	          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
 	        {% endif %}
 	      {% endif %}
 	    {% endif %}
 	    {% if peer_community %}
-	      <p><a href="{% locale_url assessment_create slug=badge.slug %}" title="{{ badge.name }}" target="_blank" class="badge-call-to-action-button">{{ _('Award Badge to Peer')}}</a></p>
+	      <p><a href="{% locale_url assessment_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Award Badge to Peer')}}</a></p>
 	    {% endif %}
-        
-    </div>
-    <div id="badge-description">
+      </div>
+      <div id="badge-description">
 	    <h1>{{ badge }}</h1>
 	    <p>{{ badge.description }}</p>
         <h2>{{ _('Requirements:') }}</h2> 
@@ -56,7 +56,7 @@
 	      {% endfor %}
 	    {% endif %}
     
-	    <br><br>
+	  </div>
     </div>
 
     <div class="clear" id="badge-more">
