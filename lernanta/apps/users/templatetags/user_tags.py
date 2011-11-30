@@ -26,7 +26,7 @@ def user_sidebar(context, max_people_count=64):
 
     # only display non actionable items on the profile.
     skills = past_projects = past_drupal_courses = badges = pilot_badges = []
-    past_involvement_count = 0
+    past_involvement_count = badges_count = 0
     if profile_view:
         skills = profile.tags.filter(category='skill').exclude(
             slug='').order_by('name')
