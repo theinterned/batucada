@@ -432,7 +432,7 @@ $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function
 
 $('.project-kind-challenge a.give_badge_action').each(function() {
 
-    var $dialog_div = $(this).parent().find('div.give_badge_dialog')
+    var $dialog_div = $(this).parent().find('div.give_badge_dialog');
     var $dialog = $dialog_div.dialog({
         modal: true,
         autoOpen: false
