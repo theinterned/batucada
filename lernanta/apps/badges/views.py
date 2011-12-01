@@ -87,6 +87,12 @@ def show_badge(request, slug):
         deleted=False, id__in=awarded_user_ids)
     related_projects = badge.groups.all()
     prerequisites = badge.prerequisites.all()
+    related_badges = Badge.objects.filter(
+        groups__in=badge.groups.values('id')).exclude(
+        id=badge.id).distinct().order_by('-id')
+    non_related_badges = Badge.objects.exclude(
+        groups__in=badge.groups.values('id')).exclude(
+        id=badge.id).distinct().order_by('-id')
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
@@ -96,7 +102,9 @@ def show_badge(request, slug):
         'other_badge': other_badge,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
-        'applications': applications
+        'applications': applications,
+        'related_badges': related_badges,
+        'non_related_badges': non_related_badges
     }
     context.update(get_pagination_context(request, awarded_users,
         24, prefix='awarded_users_'))
