@@ -59,6 +59,27 @@
 	  </div>
     </div>
 
+  {% if related_badges or non_related_badges %}
+    <br clear="both"><br>
+    <div id="other-badges">
+      <h3>{{ _('Other badges you can apply for:') }}</h2>
+      <ul id="other-badges-carousel" class="jcarousel-skin-tango">
+        {% for badge in related_badges %}
+          <li><a href="{{ badge.get_absolute_url }}" class="badge" title="{{ badge.name }}">
+            <img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge.name }}"/>
+            <span class="badge-name">{{ badge.name }}</span>
+          </a></li>
+        {% endfor %}
+        {% for badge in non_related_badges %}
+          <li><a href="{{ badge.get_absolute_url }}" class="badge" title="{{ badge.name }}">
+            <img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge.name }}"/>
+            <span class="badge-name">{{ badge.name }}</span>
+          </a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
     <div class="clear" id="badge-more">
 
     {% if awarded_users_pagination_current_page.object_list %}

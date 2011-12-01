@@ -325,6 +325,10 @@ $(document).ready(function() {
         $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});
     }
 
+    if ( $('#other-badges-carousel').length ) {
+        $('#other-badges-carousel').jcarousel();
+    }
+
     if ($('#headers_colorpicker').length) {
         $.farbtastic('#headers_colorpicker', { callback: '#id_headers_color', width: 100, heigth: 100 });
         $.farbtastic('#headers_light_colorpicker', { callback: '#id_headers_color_light', width: 100, heigth: 100 });
