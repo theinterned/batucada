@@ -1,4 +1,3 @@
-
 var createPostTextArea = function() {
     var counter = $('#create-post').find('div.post-char-count');
     $('#create-post').find('textarea').bind('keyup', function() {
@@ -435,8 +434,19 @@ $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function
     $(this).parent().submit();
 });
 
-$('.project-kind-challenge a.give_badge_action').bind('click', function() {
-    $(this).parent().find('div.give_badge_dialog').dialog({modal: true});
+$('.project-kind-challenge a.give_badge_action').each(function() {
+
+    var $dialog_div = $(this).parent().find('div.give_badge_dialog');
+    var $dialog = $dialog_div.dialog({
+        modal: true,
+        autoOpen: false
+    });
+
+    $(this).click(function() {
+        $dialog.dialog('open');
+        return false;
+    });
+
 });
 
 $('.project-kind-challenge #task_list_section li').hover(function() {
