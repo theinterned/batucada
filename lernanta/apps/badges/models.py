@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
 
 from drumbeat import storage
-from drumbeat.utils import get_partition_id, safe_filename
+from drumbeat.utils import get_partition_id, safe_filename, MultiQuerySet
 from drumbeat.models import ModelBase
 from richtext.models import RichTextField
 
@@ -192,6 +192,19 @@ class Badge(models.Model):
         return UserProfile.objects.filter(deleted=False,
             id__in=peers).exclude(id=profile.id)
 
+    def other_badges_can_apply_for(self):
+        badges = Badge.objects.exclude(
+            id=self.id).filter(
+            Q(badge_type=Badge.SKILL) 
+            | Q(badge_type=Badge.COMMUNITY)).filter(
+            assessment_type=Badge.PEER).order_by(
+            '-id')
+        badge_groups = self.groups.values('id')
+        related_badges = badges.filter(
+            groups__in=badge_groups).distinct()
+        non_related_badges = badges.exclude(
+            groups__in=badge_groups).distinct()
+        return MultiQuerySet(related_badges, non_related_badges)
 
 class Rubric(models.Model):
     """Criteria for which a badge application is judged"""

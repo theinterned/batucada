@@ -4737,3 +4737,7 @@ table#metrics-scoreboard td.todays-count {
     width: 100%;
     height: 100%;
 }
+
+.carousel-callback {
+    display: none;
+}

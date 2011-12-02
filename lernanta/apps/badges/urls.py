@@ -36,4 +36,7 @@ urlpatterns = patterns('',
     url(r'(?P<slug>[\w-]+)/awards/(?P<username>[\w\-\. ]+)/$',
         'badges.views.show_user_awards',
         name='user_awards_show'),
+    url(r'(?P<slug>[\w-]+)/other_badges/$',
+        'badges.views.other_badges',
+        name='other_badges'),
 )
