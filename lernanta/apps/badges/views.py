@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils import simplejson
 
 from django_obi.views import send_badges
 
@@ -87,12 +88,7 @@ def show_badge(request, slug):
         deleted=False, id__in=awarded_user_ids)
     related_projects = badge.groups.all()
     prerequisites = badge.prerequisites.all()
-    related_badges = Badge.objects.filter(
-        groups__in=badge.groups.values('id')).exclude(
-        id=badge.id).distinct().order_by('-id')
-    non_related_badges = Badge.objects.exclude(
-        groups__in=badge.groups.values('id')).exclude(
-        id=badge.id).distinct().order_by('-id')
+    other_badges_can_apply_for = badge.other_badges_can_apply_for()[:5]
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
@@ -103,8 +99,7 @@ def show_badge(request, slug):
         'related_projects': related_projects,
         'prerequisites': prerequisites,
         'applications': applications,
-        'related_badges': related_badges,
-        'non_related_badges': non_related_badges
+        'other_badges_can_apply_for': other_badges_can_apply_for,
     }
     context.update(get_pagination_context(request, awarded_users,
         24, prefix='awarded_users_'))
@@ -402,3 +397,29 @@ def show_user_awards(request, slug, username):
     }
     return render_to_response('badges/show_user_awards.html', context,
                               context_instance=RequestContext(request))
+
+
+def other_badges(request, slug):
+    badge = get_object_or_404(Badge, slug=slug);
+    try:
+        first = max(1, int(request.GET['first']))
+    except:
+        first = 1
+    try:
+        last = max(first + 1, int(request.GET['last']))
+    except:
+        last = first + 1
+    other_badges_can_apply = badge.other_badges_can_apply_for()
+    total = other_badges_can_apply.count()
+    items = other_badges_can_apply[first - 1: last]
+    items_html = []
+    for item in items:
+        item_html = render_to_string('badges/_badge_item.html',
+            {'badge': item}).strip()
+        items_html.append(item_html)
+    data = {
+        'total': total,
+        'items': items_html,
+    }
+    json = simplejson.dumps(data)
+    return http.HttpResponse(json, mimetype="application/json")

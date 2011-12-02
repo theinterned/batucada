@@ -59,23 +59,13 @@
 	  </div>
     </div>
 
-  {% if related_badges or non_related_badges %}
+  {% if other_badges_can_apply_for %}
     <br clear="both"><br>
     <div id="other-badges">
       <h3>{{ _('Other badges you can apply for:') }}</h2>
-      <ul id="other-badges-carousel" class="jcarousel-skin-tango">
-        {% for badge in related_badges %}
-          <li><a href="{{ badge.get_absolute_url }}" class="badge" title="{{ badge.name }}">
-            <img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge.name }}"/>
-            <span class="badge-name">{{ badge.name }}</span>
-          </a></li>
-        {% endfor %}
-        {% for badge in non_related_badges %}
-          <li><a href="{{ badge.get_absolute_url }}" class="badge" title="{{ badge.name }}">
-            <img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge.name }}"/>
-            <span class="badge-name">{{ badge.name }}</span>
-          </a></li>
-        {% endfor %}
+      <a class="carousel-callback" href={% locale_url other_badges slug=badge.slug %}></a>
+      <ul class="carousel jcarousel-skin-tango">
+        <!-- The content will be dynamically loaded in here -->
       </ul>
     </div>
   {% endif %}

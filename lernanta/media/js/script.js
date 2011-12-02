@@ -143,6 +143,25 @@ var attachFileUploadHandler = function($inputs) {
     });
 };
 
+function carousel_itemLoadCallback(url, carousel, state) {
+
+    if (carousel.has(carousel.first, carousel.last)) {
+        return;
+    }
+
+    $.get(url, {first: carousel.first, last: carousel.last}, function(data) {
+        carousel_itemAddCallback(carousel, carousel.first, carousel.last, data);
+    });
+};
+
+function carousel_itemAddCallback(carousel, first, last, data) {
+    carousel.size(data['total']);
+
+    $.each(data['items'], function(index, item) {
+        carousel.add(first + index, item);
+    });
+};
+
 var batucada = {
     splash: {
         onload: function() {
@@ -324,8 +343,21 @@ $(document).ready(function() {
         $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});
     }
 
-    if ( $('#other-badges-carousel').length ) {
-        $('#other-badges-carousel').jcarousel();
+    if ( $('#other-badges').length ) {
+        var $carousel_list = $(this).find('.carousel');
+        var carousel_callback_url = $(this).find('.carousel-callback').attr('href');
+        function other_badges_carousel_itemLoadCallback (carousel, state) {
+            carousel_itemLoadCallback(carousel_callback_url, carousel, state);
+        };
+        $carousel_list.jcarousel({
+            // Uncomment the following option if you want items
+            // which are outside the visible range to be removed
+            // from the DOM.
+            // Useful for carousels with MANY items.
+
+            // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
+            itemLoadCallback: other_badges_carousel_itemLoadCallback
+        });
     }
 
     if ($('#headers_colorpicker').length) {
