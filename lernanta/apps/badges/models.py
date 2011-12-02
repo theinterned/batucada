@@ -194,9 +194,7 @@ class Badge(models.Model):
 
     def other_badges_can_apply_for(self):
         badges = Badge.objects.exclude(
-            id=self.id).filter(
-            Q(badge_type=Badge.SKILL) 
-            | Q(badge_type=Badge.COMMUNITY)).filter(
+            id=self.id).filter(badge_type=Badge.SKILL).filter(
             assessment_type=Badge.PEER)
         badge_groups = self.groups.values('id')
         related_badges = badges.filter(
