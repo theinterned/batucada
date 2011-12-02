@@ -18,6 +18,14 @@
       </div>
       <div id="peer-assessment-right">
         <h1>{{ _('Give this badge to your peer.') }}</h1>
+        <div id="badge-description-box">
+          <p>{{ badge.description }}</p>
+          {% if rubrics %}
+            <h2>{{ _('Requirements:') }}</h2>
+            {{ _('You need at least 1 peer to say that you ') }}
+            {{ rubrics|join:", " }}
+          {% endif %}          
+        </div>
         <p>
           {% block form %}
             <fieldset id="peer_assessment" class="peer assessment tabpane">
