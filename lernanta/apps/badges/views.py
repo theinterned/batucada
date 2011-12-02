@@ -320,6 +320,7 @@ def create_assessment(request, slug):
     badge = get_object_or_404(Badge, slug=slug,
         assessment_type=Badge.PEER, badge_type=Badge.COMMUNITY)
     user = request.user.get_profile()
+    rubrics = badge.rubrics.all()
     assessment = None
     if request.method == 'POST':
         form = badge_forms.PeerAssessmentForm(badge, user, request.POST)
@@ -347,6 +348,7 @@ def create_assessment(request, slug):
         'badge': badge,
         'assessment': assessment,
         'form': form,
+        'rubrics': rubrics,
     }
     return render_to_response('badges/peer_assessment.html', context,
                               context_instance=RequestContext(request))

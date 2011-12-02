@@ -4029,7 +4029,8 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	list-style: none;
 }
 
-.assessment-edit #submission-details, .submission-show #submission-details {
+.assessment-edit #submission-details, .submission-show #submission-details,
+#submission-edit-right #badge-description-box, #peer-assessment-right #badge-description-box {
 	float: left;
 	padding: 1em;
 	border: 1px solid #eee;
@@ -4037,6 +4038,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 	width: 607px;
     background: #fff;
     margin-bottom: 10px;
+}
+
+#submission-edit-right #badge-description-box, #peer-assessment-right #badge-description-box {
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
 .assessment-edit #submission-details .member-picture, .submission-show #submission-details .member-picture {
@@ -4692,7 +4698,7 @@ table#metrics-scoreboard td.todays-count {
      -ms-border-radius: 3px;
      -o-border-radius: 3px;
      border-radius: 3px;
-    width: 570px;
+    width: 640px;
 }
 
 #peer-assessment-right label, #submission-edit-right label {
