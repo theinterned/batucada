@@ -197,8 +197,7 @@ class Badge(models.Model):
             id=self.id).filter(
             Q(badge_type=Badge.SKILL) 
             | Q(badge_type=Badge.COMMUNITY)).filter(
-            assessment_type=Badge.PEER).order_by(
-            '-id')
+            assessment_type=Badge.PEER)
         badge_groups = self.groups.values('id')
         related_badges = badges.filter(
             groups__in=badge_groups).distinct()
