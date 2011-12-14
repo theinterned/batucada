@@ -3,7 +3,7 @@
 {% load l10n_tags %}
 {% load embed %}
 
-{% block title %}{{ _('Submission for') }} {{ badge.name }}{% endblock %}
+{% block title %}{{ _('Award Justification for') }} {{ badge.name }}{% endblock %}
 
 {% block bodyclasses %}submission-show summary{% endblock %}
 
@@ -19,35 +19,24 @@
         <br>
       </p>
     </div>
+
     <div id="submission">
        <div id="submission-details">
-
-           <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
+ 
+           <img class="member-picture" width="54" height="54" src="{{ assessment.assessed.image_or_default }}">
 
            <div id="submission-detail">
-               <h2>{{ submission.author }}</h2>
-               {{ submission.content|embed|safe }}
+               <h2>{{ assessment.assessed }}</h2>
+               {{ _('Received') }} {{ badge }}.
             </div>
-            <br><br>
+        </div>
 		   
 	</div>
-    {% if can_assess %}
-       <br class="clear"><br>
-       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Review This Submission') }}</a></p>
-    {% endif %}
-</div>
-
 
 	
     <br class="clear"/>
 
-	 <h1>
-        {% if submission %}
-          {{ _('Review of') }} {{ assessment.assessed }} {{ _('\'s Work for ') }} {{ badge }}
-        {% else %}
-          {{ _('Justification of') }} {{ badge }} {{ _('Award to') }} {{ assessment.assessed }}
-        {% endif %}
-      </h1>
+	 <h1>{{ _('Award Justification') }}</h1>
 	   <ul id="posts">
 	    {% include "badges/_assessment_body.html" with assessment=assessment %}
 	   </ul>
