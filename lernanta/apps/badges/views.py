@@ -304,11 +304,12 @@ def assess_submission(request, slug, submission_id):
 def show_assessment(request, slug, assessment_id):
     assessment = get_object_or_404(Assessment, id=assessment_id,
         badge__slug=slug)
+    if assessment.submission:
+        return http.HttpResponseRedirect(assessment.submission.get_absolute_url())
 
     context = {
         'assessment': assessment,
         'badge': assessment.badge,
-        'submission': assessment.submission,
     }
 
     return render_to_response('badges/show_assessment.html', context,
