@@ -44,6 +44,12 @@ class Page(ModelBase):
         content_type_field='page_content_type',
         object_id_field='page_id')
 
+    # Badges to which the user can submit their work to.
+    # Used to facilitate both posting a comment to the task with
+    # a link to the work they did on the task and apply for skills badges
+    badges_to_apply = models.ManyToManyField('badges.Badge',
+        null=True, blank=False, related_name='tasks_accepting_submissions')
+
     def __unicode__(self):
         return self.title
 

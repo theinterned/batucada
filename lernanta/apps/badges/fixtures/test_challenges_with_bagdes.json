@@ -1683,7 +1683,8 @@
             "last_update": "2011-10-13 02:01:35", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1701,7 +1702,8 @@
             "last_update": "2011-10-13 02:02:13", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1719,7 +1721,8 @@
             "last_update": "2011-10-13 02:02:49", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1737,7 +1740,8 @@
             "last_update": "2011-10-13 02:03:27", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1755,7 +1759,8 @@
             "last_update": "2011-10-13 02:03:51", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1773,7 +1778,8 @@
             "last_update": "2011-10-13 02:03:52", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1791,7 +1797,8 @@
             "last_update": "2011-10-13 02:03:52", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1809,7 +1816,8 @@
             "last_update": "2011-10-13 02:03:52", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1827,7 +1835,8 @@
             "last_update": "2011-10-13 02:05:55", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1845,7 +1854,8 @@
             "last_update": "2011-10-13 02:05:55", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1863,7 +1873,8 @@
             "last_update": "2011-10-13 02:05:56", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1881,7 +1892,8 @@
             "last_update": "2011-10-13 02:05:56", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1899,7 +1911,8 @@
             "last_update": "2011-10-13 02:23:47", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1917,7 +1930,8 @@
             "last_update": "2011-10-13 02:23:48", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1935,7 +1949,8 @@
             "last_update": "2011-10-13 02:23:48", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1953,7 +1968,8 @@
             "last_update": "2011-10-13 02:23:49", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": [15]
         }
     }, 
     {
@@ -1971,7 +1987,8 @@
             "last_update": "2011-10-13 02:24:43", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -1989,7 +2006,8 @@
             "last_update": "2011-10-13 02:24:44", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2007,7 +2025,8 @@
             "last_update": "2011-10-13 02:24:44", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2025,7 +2044,8 @@
             "last_update": "2011-10-13 02:24:44", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": [16]
         }
     }, 
     {
@@ -2043,7 +2063,8 @@
             "last_update": "2011-10-13 02:26:12", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2061,7 +2082,8 @@
             "last_update": "2011-10-13 02:26:13", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2079,7 +2101,8 @@
             "last_update": "2011-10-13 02:26:13", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2097,7 +2120,8 @@
             "last_update": "2011-10-13 02:26:13", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": [17]
         }
     }, 
     {
@@ -2115,7 +2139,8 @@
             "last_update": "2011-10-13 02:26:35", 
             "content": "\n\n\n<p><strong>Please fill out the  's full description.</strong> In this page you could:</p>\n\n<ul>\n    <li>Describe the purpose of the  and the learning goals for the tasks within.</li>\n\t<li>Describe your role in this  . What made you interested in this topic? What do you hope to achieve by organizing this  ? Are you an expert, enthusiastic or a novice?</li>\n\t<li>Include any prerequisite knowledge or skills needed to participate in the  , the intended start date, estimated pace, commitment, amount of work, and the length of time the participants can expect to work together (a few days, a few weeks, or forever).</li>\n\t<li>Provided any other information that could be useful for people interested in joining the  . In what ways can participants expect to contribute to the creation of tasks and assessing each others\\' contributions? What will the final task comprise?</li>\n</ul>\n", 
             "listed": false, 
-            "slug": "full-description"
+            "slug": "full-description",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2133,7 +2158,8 @@
             "last_update": "2011-10-13 02:26:35", 
             "content": "<p>\n\ttask1</p>", 
             "listed": true, 
-            "slug": "task1"
+            "slug": "task1",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2151,7 +2177,8 @@
             "last_update": "2011-10-13 02:26:36", 
             "content": "<p>\n\ttask2</p>", 
             "listed": true, 
-            "slug": "task2"
+            "slug": "task2",
+            "badges_to_apply": []
         }
     }, 
     {
@@ -2169,7 +2196,8 @@
             "last_update": "2011-10-13 02:26:36", 
             "content": "<p>\n\ttask3</p>", 
             "listed": true, 
-            "slug": "task3"
+            "slug": "task3",
+            "badges_to_apply": [18]
         }
     }, 
     {
