@@ -70,6 +70,14 @@
       {% if next_page %}<a href={{ next_page.get_absolute_url }} title="{{ next_page.title }}">{{ _('Move on to next task') }}</a>{% endif %}
     </div>
   {% endif %}
+  {% if page.badges_to_apply.count %}
+    <hr>
+    <h2>{{ _('Badges:') }}</h2>
+    <br>
+      {% for badge in page.badges_to_apply.all %}
+        <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" /></a>
+      {% endfor %}
+   {% endif %}
 </div>
 {% endif %}
 
