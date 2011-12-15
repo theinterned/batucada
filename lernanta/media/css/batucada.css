@@ -3306,6 +3306,42 @@ ul.ui-autocomplete #ui-active-menuitem {
 }
 
 
+.project-kind-challenge .task-footer-badge-list {
+background: #f9f9f9;
+border: 1px solid #eee;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+margin-top: 30px;
+padding: 20px;
+text-shadow: 0 -1px 0 #fff;
+}
+
+.project-kind-challenge .task-footer-badge-list ul {
+list-style: none;
+padding: 0;
+margin: 10px 0 0 0;
+}
+
+.project-kind-challenge .task-footer-badge-list ul li {
+display: inline-block;
+width: 160px;
+margin: 10px 20px 0 0;
+}
+
+.project-kind-challenge .task-footer-badge-list ul li img {
+margin: 0 auto 0 auto;
+display: block;
+}
+
+.project-kind-challenge .task-footer-badge-list ul li span.badge-name {
+text-align: center;
+display: block;
+margin-top: 3px;
+}
+
 div.voting {
     width: 50px;
     float: right;
