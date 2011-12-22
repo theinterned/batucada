@@ -303,7 +303,7 @@ def matching_non_organizers(request, slug):
         username__icontains=request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
@@ -346,7 +346,7 @@ def matching_non_featured(request, slug):
         slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
@@ -402,7 +402,7 @@ def matching_non_member(request, slug):
         id__in=school.projects.all().values('id'))
     json = simplejson.dumps([project.slug for project in matching_projects])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required

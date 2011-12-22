@@ -494,6 +494,7 @@ class PerUserTaskCompletion(ModelBase):
     checked_on = models.DateTimeField(auto_now_add=True,
         default=datetime.datetime.now)
     unchecked_on = models.DateTimeField(blank=True, null=True)
+    url = models.URLField(max_length=1023, blank=True, null=True)
 
 
 ###########

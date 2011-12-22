@@ -29,6 +29,7 @@ from relationships.models import Relationship
 from links.models import Link
 from users.models import UserProfile
 from content.models import Page
+from content.templatetags.content_tags import task_toggle_completion
 from schools.models import School
 from activity.models import Activity
 from activity.schema import verbs
@@ -126,7 +127,7 @@ def matching_kinds(request):
             kind__icontains=request.GET['term']).values_list('kind').distinct()
     json = simplejson.dumps([kind[0] for kind in matching_kinds])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 def show(request, slug, toggled_tasks=True):
@@ -220,7 +221,7 @@ def matching_projects(request):
         slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
@@ -293,7 +294,7 @@ def matching_courses(request):
     matching_nodes = drupal.get_matching_courses(term=request.GET['term'])
     json = simplejson.dumps(matching_nodes)
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
@@ -497,7 +498,7 @@ def matching_non_participants(request, slug):
         username__icontains=request.GET['term'])
     json = simplejson.dumps([user.username for user in matching_users])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
@@ -576,7 +577,7 @@ def matching_non_next_steps(request, slug):
         slug__icontains=request.GET['term'])
     json = simplejson.dumps([step.slug for step in matching_steps])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
@@ -894,18 +895,10 @@ def toggle_task_completion(request, slug, page_slug):
         except PerUserTaskCompletion.DoesNotExist:
             task_completion = PerUserTaskCompletion(user=profile, page=page)
             task_completion.save()
-        total_count = Page.objects.filter(project__slug=slug, listed=True,
-            deleted=False).count()
-        completed_count = PerUserTaskCompletion.objects.filter(
-            page__project__slug=slug, page__deleted=False,
-            unchecked_on__isnull=True, user=profile).count()
-        progressbar_value = 0
-        if total_count:
-            progressbar_value = (completed_count * 100 / total_count)
-        json = simplejson.dumps({
-            'total_count': total_count,
-            'completed_count': completed_count,
-            'progressbar_value': progressbar_value,
-            'upon_completion_redirect': page.project.get_absolute_url()
-        })
+        context = task_toggle_completion(request, page, ignore_post_data=True)
+        data = context['ajax_data']
+        data['toggle_task_completion_form_html'] = render_to_string(
+            'content/_toggle_completion.html',
+            context, context_instance=RequestContext(request)).strip()
+        json = simplejson.dumps(data)
         return http.HttpResponse(json, mimetype="application/json")

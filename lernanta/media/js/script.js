@@ -444,23 +444,66 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
     });
 });
 
-$('.project-kind-challenge #task-footer-uncompleted form').submit(function() {
+
+var submitTaskFooterToggleTaskCompletion = function() {
     var $task_completion_form = $(this);
+    var $task_footer = $task_completion_form.parent();
     var url = $task_completion_form.attr('action');
     $.post(url, $task_completion_form.serialize(), function(data) {
-        var total_count = data['total_count'];
-        var completed_count = data['completed_count'];
         var progressbar_value = data['progressbar_value'];
         var upon_completion_redirect = data['upon_completion_redirect'];
-        if( progressbar_value == "100" ) {
+        var stay_on_page = data['stay_on_page'];
+        var toggle_task_completion_form_html = data['toggle_task_completion_form_html'];
+        $task_footer.html(data['toggle_task_completion_form_html']);
+        if( !stay_on_page && progressbar_value == "100" ) {
             window.location.href = upon_completion_redirect;
-        } else {
-            $('.project-kind-challenge #task-footer-uncompleted').hide();
-            $('.project-kind-challenge #task-footer-completed').fadeIn('fast');
         }
+        $task_footer.find('button').removeAttr('disabled');
+        $new_task_completion_form = $task_footer.find('form#task-footer-toggle-task-completion-form');
+        $new_task_completion_form.submit(submitTaskFooterToggleTaskCompletion);
+        $new_link_submit_form = $task_footer.find('#task-footer-after-completed form');
+        $new_link_submit_form.submit(submitTaskFooterAfterCompletionForm);
     });
     return false;
-});
+};
+
+var submitTaskFooterAfterCompletionForm = function() {
+    var $link_submit_form = $(this);
+    var url = $link_submit_form.attr('action');
+    var $task_footer = $link_submit_form.parent().parent();
+    var $content_textarea = $link_submit_form.find('textarea')
+    if ($content_textarea.length && CKEDITOR.instances['id_content']) {
+        $content_textarea.text(CKEDITOR.instances['id_content'].getData());
+    }
+    var post_data = $link_submit_form.serialize();
+    $.post(url, post_data, function(data) {
+        if ( 'posted_link_comment_html' in data ) {
+            var $comment_placeholder = $('.project-kind-challenge #task-link-submit-jquery-comment-placeholder');
+            $comment_placeholder.html(data['posted_link_comment_html']);
+        }
+        var progressbar_value = data['progressbar_value'];
+        var upon_completion_redirect = data['upon_completion_redirect'];
+        var stay_on_page = data['stay_on_page'];
+        var toggle_task_completion_form_html = data['toggle_task_completion_form_html'];
+        if (CKEDITOR.instances['id_content']) {
+            CKEDITOR.instances['id_content'].destroy();
+        }
+        $task_footer.html(data['toggle_task_completion_form_html']);
+        if( !stay_on_page && progressbar_value == "100" ) {
+            window.location.href = upon_completion_redirect;
+        }
+        $task_footer.find('button').removeAttr('disabled');
+        $new_task_completion_form = $task_footer.find('form#task-footer-toggle-task-completion-form');
+        $new_task_completion_form.submit(submitTaskFooterToggleTaskCompletion);
+        $new_link_submit_form = $task_footer.find('#task-footer-after-completed form');
+        $new_link_submit_form.submit(submitTaskFooterAfterCompletionForm);
+    });
+    return false;
+};
+
+$('.project-kind-challenge form#task-footer-toggle-task-completion-form').submit(submitTaskFooterToggleTaskCompletion);
+$('.project-kind-challenge #task-footer-after-completed form').submit(submitTaskFooterAfterCompletionForm);
+
 
 $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function() {
     $(this).parent().submit();

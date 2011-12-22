@@ -15,4 +15,6 @@ urlpatterns = patterns('content.views',
       'version_page', name='page_version'),
   url(r'^(?P<page_slug>[\w-]+)/history/(?P<version_id>\d+)/restore/$',
       'restore_version', name='version_restore'),
+  url(r'^(?P<page_slug>[\w-]+)/link_submit/$', 'link_submit',
+      name='task_link_submit'),
 )

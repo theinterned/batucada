@@ -365,7 +365,7 @@ def matching_peers(request, slug):
     matching_peers = peers.filter(username__icontains=request.GET['term'])
     json = simplejson.dumps([peer.username for peer in matching_peers])
 
-    return http.HttpResponse(json, mimetype="application/x-javascript")
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 def show_user_awards(request, slug, username):

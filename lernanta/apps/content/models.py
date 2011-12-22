@@ -17,6 +17,7 @@ from users.tasks import SendUserEmail
 from l10n.models import localize_email
 from richtext.models import RichTextField
 from replies.models import PageComment
+from badges.models import Submission, Award
 
 
 log = logging.getLogger(__name__)
@@ -95,6 +96,23 @@ class Page(ModelBase):
             except IndexError:
                 pass
         return None
+
+    def get_next_badge_can_apply(self, profile):
+        next_badges = self.badges_to_apply.order_by('id')
+        next_badges_can_apply = []
+        for badge in next_badges:
+            awarded = Award.objects.filter(user=profile,
+                badge=badge).exists()
+            applied = Submission.objects.filter(author=profile,
+                badge=badge).exists()
+            elegible = badge.is_eligible(profile.user)
+            if not awarded and not applied and elegible:
+                next_badges_can_apply.append(badge)
+            if len(next_badges_can_apply) > 1:
+                break
+        next_badge = next_badges_can_apply[0] if next_badges_can_apply else None
+        is_last_badge = not next_badges_can_apply[1:]
+        return next_badge, is_last_badge
 
     def can_edit(self, user):
         if self.project.is_organizing(user):

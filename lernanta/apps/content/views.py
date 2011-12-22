@@ -4,17 +4,21 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django import http
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.template.loader import render_to_string
+from django.utils import simplejson
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
 from projects.decorators import participation_required
-from projects.models import Project, PerUserTaskCompletion
+from projects.models import Project
 from pagination.views import get_pagination_context
+from projects.decorators import restrict_project_kind
 
 from content.forms import PageForm, NotListedPageForm
 from content.forms import OwnersPageForm, OwnersNotListedPageForm
 from content.models import Page, PageVersion
+from content.templatetags.content_tags import task_toggle_completion
 
 
 import logging
@@ -42,10 +46,7 @@ def show_page(request, slug, page_slug):
     first_level_comments = page.first_level_comments()
     all_listed_pages = page.project.pages.filter(deleted=False,
         listed=True).order_by('index')
-    if is_challenge and request.user.is_authenticated():
-        profile = request.user.get_profile()
-        page.is_done = PerUserTaskCompletion.objects.filter(
-            user=profile, page=page, unchecked_on__isnull=True)
+
     context = {
         'page': page,
         'project': page.project,
@@ -54,11 +55,25 @@ def show_page(request, slug, page_slug):
         'new_comment_url': new_comment_url,
         'is_challenge': is_challenge,
         'all_listed_pages': all_listed_pages,
-        'next_page': page.get_next_page(),
     }
     context.update(get_pagination_context(request, first_level_comments))
     return render_to_response('content/page.html', context,
         context_instance=RequestContext(request))
+
+
+@login_required
+@participation_required
+@restrict_project_kind(Project.CHALLENGE)
+def link_submit(request, slug, page_slug):
+    page = get_object_or_404(Page, slug=page_slug, project__slug=slug,
+        listed=True, deleted=False)
+    context = task_toggle_completion(request, page)
+    data = context['ajax_data']
+    data['toggle_task_completion_form_html'] = render_to_string(
+        'content/_toggle_completion.html',
+        context, context_instance=RequestContext(request)).strip()
+    json = simplejson.dumps(data)
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @login_required
