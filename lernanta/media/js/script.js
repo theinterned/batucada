@@ -454,7 +454,7 @@ var submitTaskFooterToggleTaskCompletion = function() {
         var upon_completion_redirect = data['upon_completion_redirect'];
         var stay_on_page = data['stay_on_page'];
         var toggle_task_completion_form_html = data['toggle_task_completion_form_html'];
-        $task_footer.html(data['toggle_task_completion_form_html']);
+        $task_footer.html(toggle_task_completion_form_html);
         if( !stay_on_page && progressbar_value == "100" ) {
             window.location.href = upon_completion_redirect;
         }
@@ -488,7 +488,7 @@ var submitTaskFooterAfterCompletionForm = function() {
         if (CKEDITOR.instances['id_content']) {
             CKEDITOR.instances['id_content'].destroy();
         }
-        $task_footer.html(data['toggle_task_completion_form_html']);
+        $task_footer.html(toggle_task_completion_form_html);
         if( !stay_on_page && progressbar_value == "100" ) {
             window.location.href = upon_completion_redirect;
         }
