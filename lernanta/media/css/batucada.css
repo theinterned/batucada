@@ -1485,7 +1485,7 @@ header {}
 }    
 
   
-#main {
+#main, #task-discussion {
   margin-left: 40px;
   width: 652px;
   float: left;
@@ -1495,7 +1495,7 @@ header {}
   border: solid 1px #EEE;
 }
 
-.project-kind-challenge #main {
+.project-kind-challenge #main,.project-kind-challenge #task-discussion {
   margin-left: 60px;
   padding: 20px;
   z-index: -9999;
@@ -3226,58 +3226,56 @@ ul.ui-autocomplete #ui-active-menuitem {
     border-bottom: none;
 }
 
-.project-kind-challenge #main.task-discussion {
+.project-kind-challenge #task-discussion {
     margin-top: 20px;
     float: right;
 }
 
-.project-kind-challenge #main.task-discussion h1 {
+.project-kind-challenge #task-discussion h1 {
     color: #222;
 }
 
-.project-kind-challenge #main.task-discussion .post-task-comment {
+.project-kind-challenge #task-discussion .post-task-comment {
     float: right;
 }
 
-.project-kind-challenge #task-footer-completed.off,
-.project-kind-challenge #task-footer-uncompleted.off {
-    display: none;
+.project-kind-challenge #task-footer-toggle-task-completion-form button {
+ margin: 0 0 0 10px;
+ background-color: #7fbf4d;
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
+ /* Saf4+, Chrome */
+ background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: linear-gradient(top, #7fbf4d, #63a62f);
+ border: 1px solid #63a62f;
+ border-bottom: 1px solid #5b992b;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+ -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -ms-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -o-box-shadow: inset 0 1px 0 0 #96ca6d;
+ box-shadow: inset 0 1px 0 0 #96ca6d;
+ color: #fff;
+ font: bold 12px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+ line-height: 1;
+ padding: 3px 8px 4px 8px;
+ text-align: center;
+ text-shadow: 0 -1px 0 #4c9021;
+ width: 120px; 
+ text-decoration: none;
 }
 
-.project-kind-challenge #task-footer-uncompleted button {
-    display: block;
-    float: left;
-    margin: 0 20px 3px 0;
-    background-color: #7fbf4d;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
-    /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: linear-gradient(top, #7fbf4d, #63a62f);
-    border: 1px solid #63a62f;
-    border-bottom: 1px solid #5b992b;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
-    -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
-    -ms-box-shadow: inset 0 1px 0 0 #96ca6d;
-    -o-box-shadow: inset 0 1px 0 0 #96ca6d;
-    box-shadow: inset 0 1px 0 0 #96ca6d;
-    color: #fff;
-    font: bold 13px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    line-height: 1;
-    padding: 8px 8px 9px 8px;
-    text-align: center;
-    text-shadow: 0 -1px 0 #4c9021;
-    width: 130px; 
+.project-kind-challenge #task-footer-toggle-task-completion-form button#task-footer-toggle-task-completion-cancel-button {
+  width: 80px;
 }
 
-.project-kind-challenge #task-footer-uncompleted button:hover {
+.project-kind-challenge #task-footer-toggle-task-completion-form button:hover {
  background-color: #76b347;
  background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
  /* Saf4+, Chrome */
@@ -3295,7 +3293,7 @@ ul.ui-autocomplete #ui-active-menuitem {
  text-decoration: none;
 }
 
-.project-kind-challenge #task-footer-uncompleted button:active {
+.project-kind-challenge #task-footer-toggle-task-completion-form button:active {
  border: 1px solid #5b992b;
  border-bottom: 1px solid #538c27;
  -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
@@ -3305,6 +3303,22 @@ ul.ui-autocomplete #ui-active-menuitem {
  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
 }
 
+.project-kind-challenge #task-footer-after-completed input[placeholder] {
+  color: #777 !important;
+}
+
+.project-kind-challenge #task-footer-after-completed label[for=id_post_link] { 
+  float: left;
+  margin-right: 10px;
+}
+
+.project-kind-challenge #task-footer-after-completed button {
+  margin-top: 10px;
+}
+
+.project-kind-challenge #task-footer-after-completed .errorlist{
+    top: -9px;
+}
 
 .project-kind-challenge .task-footer-badge-list {
 background: #f9f9f9;
@@ -3340,6 +3354,131 @@ display: block;
 text-align: center;
 display: block;
 margin-top: 3px;
+}
+
+.project-kind-challenge .task-footer-badge-list ul li a.task-badge-apply-button {
+ margin: 5px auto 0 auto;
+ background-color: #7fbf4d;
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
+ /* Saf4+, Chrome */
+ background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
+ background-image: linear-gradient(top, #7fbf4d, #63a62f);
+ border: 1px solid #63a62f;
+ border-bottom: 1px solid #5b992b;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+ -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -ms-box-shadow: inset 0 1px 0 0 #96ca6d;
+ -o-box-shadow: inset 0 1px 0 0 #96ca6d;
+ box-shadow: inset 0 1px 0 0 #96ca6d;
+ color: #fff;
+ font: normal 10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+ line-height: 1;
+ padding: 4px 8px 4px 8px;
+ text-align: center;
+ text-shadow: 0 -1px 0 #4c9021;
+ width: 70px; 
+ text-decoration: none;
+display: block;
+}
+ 
+.project-kind-challenge .task-footer-badge-list ul li a.task-badge-apply-button:hover {
+ background-color: #76b347;
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
+ /* Saf4+, Chrome */
+ background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
+ background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
+ background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
+ background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
+ background-image: linear-gradient(top, #76b347, #5e9e2e);
+ -webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
+ -moz-box-shadow: inset 0 1px 0 0 #8dbf67;
+ -ms-box-shadow: inset 0 1px 0 0 #8dbf67;
+ -o-box-shadow: inset 0 1px 0 0 #8dbf67;
+ box-shadow: inset 0 1px 0 0 #8dbf67;
+ cursor: pointer; 
+ text-decoration: none;
+}
+
+.project-kind-challenge .task-footer-badge-list ul li a.task-badge-apply-button:active {
+ border: 1px solid #5b992b;
+ border-bottom: 1px solid #538c27;
+ -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+ -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+ -ms-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+ -o-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+ box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
+}
+
+.project-kind-challenge .task-footer-badge-list ul li a.task-badge-submitted-button {
+margin: 5px auto 0 auto;
+background: #596775;
+background-image: -webkit-gradient(linear, left top, left bottom, from(#596775), to(#39414a));
+/* Saf4+, Chrome */
+background-image: -webkit-linear-gradient(top, #596775, #39414a);
+background-image: -moz-linear-gradient(top, #596775, #39414a);
+background-image: -ms-linear-gradient(top, #596775, #39414a);
+background-image: -o-linear-gradient(top, #596775, #39414a);
+background-image: linear-gradient(top, #596775, #39414a);
+ border: 1px solid #ccc;
+ border-bottom: 1px solid #aaa;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+ -webkit-box-shadow: inset 0 1px 0 0 #39414a;
+ -moz-box-shadow: inset 0 1px 0 0 #39414a;
+ -ms-box-shadow: inset 0 1px 0 0 #39414a;
+ -o-box-shadow: inset 0 1px 0 0 #39414a;
+ box-shadow: inset 0 1px 0 0 #39414a;
+ color: #fff;
+ font: normal 10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+ line-height: 1;
+ padding: 4px 8px 4px 8px;
+ text-align: center;
+ text-shadow: 0 -1px 0 #000;
+ width: 70px; 
+ text-decoration: none;
+display: block;
+}
+
+.project-kind-challenge .task-footer-badge-list ul li a.task-badge-received-button {
+margin: 5px auto 0 auto;
+  background: #f9f9f9;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f1f1f1), to(#d9d9d9));
+  /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: -moz-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: -o-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: linear-gradient(top, #f1f1f1, #d9d9d9);
+  border: 1px solid #ccc;
+ border: 1px solid #ccc;
+ border-bottom: 1px solid #aaa;
+ -webkit-border-radius: 3px;
+ -moz-border-radius: 3px;
+ -ms-border-radius: 3px;
+ -o-border-radius: 3px;
+ border-radius: 3px;
+ color: #222;
+ font: normal 10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+ line-height: 1;
+ padding: 4px 8px 4px 8px;
+ text-align: center;
+  text-shadow: #fff 1px 1px 0;
+  -moz-text-shadow: #fff 1px 1px 0px;
+  -webkit-text-shadow: #fff 1px 1px 0px;
+ width: 70px; 
+ text-decoration: none;
+display: block;
 }
 
 div.voting {
@@ -4081,6 +4220,12 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     margin-bottom: 25px;
 }
 
+.project-kind-challenge #task-footer-after-completed #badge-description-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 540px;
+}
+
 .assessment-edit #submission-details .member-picture, .submission-show #submission-details .member-picture {
     float: left;
 }
@@ -4718,6 +4863,12 @@ table#metrics-scoreboard td.todays-count {
     text-align: center;
 }
 
+.project-kind-challenge #task-footer-after-completed #submission-edit-left {
+    width: 70px;
+    padding: 0px;
+    margin: 0px;
+}
+
 #peer-assessment-left a:hover, #submission-edit-left a:hover {
     text-decoration: none;
 }
@@ -4735,6 +4886,27 @@ table#metrics-scoreboard td.todays-count {
      -o-border-radius: 3px;
      border-radius: 3px;
     width: 640px;
+}
+
+.project-kind-challenge #task-footer-after-completed #submission-edit-right {
+    width: 538px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top:10px;
+    margin: 0px;
+}
+
+.project-kind-challenge #task-footer-after-completed #submission-edit-right h1 {
+    font-size: 22px;
+}
+
+.project-kind-challenge #task-footer-after-completed #submission-edit-right h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.project-kind-challenge #task-footer-after-completed #submission-edit-right h3 {
+    font-size: 12px;
 }
 
 #peer-assessment-right label, #submission-edit-right label {
