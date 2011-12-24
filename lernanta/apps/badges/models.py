@@ -90,7 +90,6 @@ class Badge(models.Model):
     creator = models.ForeignKey('users.UserProfile', related_name='badges',
         blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True, blank=False)
-    last_update = models.DateTimeField(auto_now_add=True, blank=False)
 
     def __unicode__(self):
         return "%s %s" % (self.name, _('Badge'))
