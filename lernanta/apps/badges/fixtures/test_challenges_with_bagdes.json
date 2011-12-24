@@ -1087,7 +1087,6 @@
             "groups": [
                 1
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's Introduce Yourself challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1109,7 +1108,6 @@
             "groups": [
                 2
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's Writing HTML by Hand challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1131,7 +1129,6 @@
             "groups": [
                 3
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's Choose Your Weapon challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1153,7 +1150,6 @@
             "groups": [
                 4
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's HTML Hunting in the World Around You challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1175,7 +1171,6 @@
             "groups": [
                 5
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's Your Domain challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1197,7 +1192,6 @@
             "groups": [
                 6
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's Your Hosting challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1219,7 +1213,6 @@
             "groups": [
                 7
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101's You're Live challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1247,7 +1240,6 @@
                 6, 
                 7
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all Webmaking101 challenge tasks as completed.", 
             "creator": null, 
             "prerequisites": [
@@ -1283,7 +1275,6 @@
                 6, 
                 7
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded upon marking all tasks as completed in at least one Webmaking101's challenge.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1305,7 +1296,6 @@
             "groups": [
                 1
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Badge awarded by peers as a way to say hello (wave) to each other.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1331,7 +1321,6 @@
                 6, 
                 7
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The Super Blogger Badge recognizes the ability to consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1354,7 +1343,6 @@
                 2, 
                 3
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The Helpful Feedback Badge recognizes the ability to provide helpful and interesting feedback while maintaining a respectful tone.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1376,7 +1364,6 @@
             "groups": [
                 4
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
             "creator": null, 
             "prerequisites": [
@@ -1401,7 +1388,6 @@
                 4, 
                 5
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "Learners create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1423,7 +1409,6 @@
             "groups": [
                 4
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The HTML Basic Badge recognizes the ability to write an html page by making basic use of HTML tags.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1448,7 +1433,6 @@
             "groups": [
                 5
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The DNS Badge recognizes the ability to describe what DNS is and how it works.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1473,7 +1457,6 @@
             "groups": [
                 6
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The Hosting Badge recognizes the ability to implement web hosting services to set up your own domain.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1498,7 +1481,6 @@
             "groups": [
                 7
             ], 
-            "last_update": "2011-10-02 22:28:29", 
             "description": "The Publishing Badge recognizes the ability to take content from a local computer, publish it live on the web and be able to view it in a browser.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1521,7 +1503,6 @@
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
-            "last_update": "2011-10-25 22:28:29", 
             "description": "The Organizer badge recognizes anyone at P2PU who has organized a course or a study group with at least one person completing it.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1541,7 +1522,6 @@
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
-            "last_update": "2011-10-25 22:28:29", 
             "description": "The challenge creator recognizes anyone who has authored a challenge.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1561,7 +1541,6 @@
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
-            "last_update": "2011-10-25 22:28:29", 
             "description": "The Mentor badge recognizes peers who have signed up to help others learn on a one-on-one basis.", 
             "creator": null, 
             "prerequisites": [], 
@@ -1581,7 +1560,6 @@
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
-            "last_update": "2011-10-25 22:28:29", 
             "description": "The Adopter Badge recognizes community members who have adopted a challenge.", 
             "creator": null, 
             "prerequisites": [], 
