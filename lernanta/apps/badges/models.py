@@ -31,6 +31,7 @@ class Badge(models.Model):
     name = models.CharField(max_length=225, blank=False)
     slug = models.SlugField(unique=True, max_length=110)
     description = models.CharField(max_length=225, blank=False)
+    requirements = RichTextField(blank=True, null=True)
     image = models.ImageField(
         upload_to=determine_upload_path, default='', blank=True, null=True,
         storage=storage.ImageStorage())

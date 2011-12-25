@@ -21,10 +21,9 @@
     <h1>{{ _('Apply for this badge.') }}</h1>
     <div id="badge-description-box">
        <p>{{ badge.description }}</p>
-       {% if rubrics %}
+       {% if badge.requirements %}
          <h2>{{ _('Requirements:') }}</h2> 
-         {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }} 
-         {{ rubrics|join:", " }}
+         {{ badge.requirements }}
        {% endif %}
     </div>
     <p>

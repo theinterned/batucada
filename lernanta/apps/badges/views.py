@@ -73,7 +73,6 @@ def show_badge(request, slug):
         return pilot_badge_redirect(request, slug)
     is_eligible = badge.is_eligible(request.user)
     applications = []
-    rubrics = badge.rubrics.all()
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
@@ -92,7 +91,6 @@ def show_badge(request, slug):
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
-        'rubrics': rubrics,
         'peer_skill': peer_assessment and skill_badge,
         'peer_community': peer_assessment and community_badge,
         'other_badge': other_badge,
@@ -148,7 +146,6 @@ def create_submission(request, slug):
             _('You are lacking one or more of the requirements.'))
         return http.HttpResponseRedirect(badge.get_absolute_url())
     user = request.user.get_profile()
-    rubrics = badge.rubrics.all()
     related_projects = badge.groups.all()
     submission = None
     if request.method == 'POST':
@@ -170,7 +167,6 @@ def create_submission(request, slug):
     context = {
         'form': form,
         'badge': badge,
-        'rubrics': rubrics,
         'related_projects': related_projects,
     }
     return render_to_response('badges/submission_edit.html', context,
@@ -182,7 +178,6 @@ def show_submission(request, slug, submission_id):
         badge__slug=slug)
     badge = submission.badge
     progress = badge.progress_for(submission.author)
-    rubrics = badge.rubrics.all()
     assessments = Assessment.objects.filter(submission=submission_id)
     can_assess = True
     if request.user.is_authenticated():
@@ -196,7 +191,6 @@ def show_submission(request, slug, submission_id):
         'badge': badge,
         'submission': submission,
         'progress': progress,
-        'rubrics': rubrics,
         'assessments': assessments,
         'can_assess': can_assess,
         }
@@ -321,7 +315,6 @@ def create_assessment(request, slug):
     badge = get_object_or_404(Badge, slug=slug,
         assessment_type=Badge.PEER, badge_type=Badge.COMMUNITY)
     user = request.user.get_profile()
-    rubrics = badge.rubrics.all()
     assessment = None
     if request.method == 'POST':
         form = badge_forms.PeerAssessmentForm(badge, user, request.POST)
@@ -349,7 +342,6 @@ def create_assessment(request, slug):
         'badge': badge,
         'assessment': assessment,
         'form': form,
-        'rubrics': rubrics,
     }
     return render_to_response('badges/peer_assessment.html', context,
                               context_instance=RequestContext(request))
@@ -373,7 +365,6 @@ def show_user_awards(request, slug, username):
     profile = get_object_or_404(UserProfile, username=username)
     awards_count = badge.awards.filter(user=profile).count()
 
-    rubrics = badge.rubrics.all()
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
@@ -389,7 +380,6 @@ def show_user_awards(request, slug, username):
         'badge': badge,
         'profile': profile,
         'awards_count': awards_count,
-        'rubrics': rubrics,
         'peer_skill': peer_assessment and skill_badge,
         'peer_community': peer_assessment and community_badge,
         'related_projects': related_projects,
