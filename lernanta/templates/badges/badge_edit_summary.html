@@ -17,40 +17,17 @@
     {{ form.description }}
     {{ form.description.errors }}
   </div>
-  <div class="field criteria{% if form.criteria.errors %} error{% endif %}">
-    <label for="id_criteria">{{ _('Criteria to get badge') }}</label>
-    <span class="hint block">{{ _('This is what is sent to OBI for the criteria information. Note: Thinking about replacing this just generating text for OBI from rubric and type.') }}</span>
-    {{ form.criteria }}
-    {{ form.criteria.errors }}
-  </div>
   <div class="field requirements{% if form.requirements.errors %} error{% endif %}">
     <label for="id_requirements">{{ _('Requirements to get badge') }}</label>
     <span class="hint block">{{ _('Description of any requirements that must be satisfied to award the badge.') }}</span>
     {{ form.requirements }}
     {{ form.requirements.errors }}
-  <div class="field{% if form.assessment_type.errors %} error{% endif %}">
-    <label for="id_assessment_type">{{ _('Assessment type') }}</label>
-    <span class="hint block">{{ _('Depending on the type, more options will show.') }}</span>
-    {{ form.assessment_type }}
-    {{ form.assessment_type.errors }}
   </div>
-  <div id="id_logic" class="field{% if form.logic.errors %} error{% endif %}">
-    <label for="id_logic">{{ _('Badge logic') }}</label>
-    <span class="hint block">{{ _('Only valid for certain assessment types. Badge logic is pulled from pre-made logic statements.') }}</span>
+  <div class="field{% if form.logic.errors %} error{% endif %}">
+    <label for="id_logic">{{ _('Badge Type') }}</label>
+    <span class="hint block">{{ _('The logic behind badge awarding will change depending on the badge type.') }}</span>
     {{ form.logic }}
     {{ form.logic.errors }}
-  </div>
-  <div id="id_rubric" class="field{% if form.rubric.errors %} error{% endif %}">
-    <label for="id_rubric">{{ _('Badge rubric') }}</label>
-    <span class="hint block">{{ _('Only valid for certain assessment types. Badge rubric is pulled from pre-made rubric statements.') }}</span>
-    {{ form.rubric }}
-    {{ form.rubric.errors }}
-  </div>
-  <div class="field{% if form.badge_type.errors %} error{% endif %}">
-    <label for="id_badge_type">{{ _('Badge type') }}</label>
-    <span class="hint block">{{ _('Based on assessment type, the badge type is pre-selected.') }}</span>
-    {{ form.badge_type }}
-    {{ form.badge_type.errors }}
   </div>
   <br><br>
   <p class="buttons">
@@ -65,26 +42,3 @@
 </form>
 </fieldset>
 {% endblock %}
-
-
-{% block js %}
-  <script type="text/javascript">
-  $(document).ready(function(){
-	    $("#id_logic").css("display","none");
-        $("#id_rubric").css("display","none");
-	    $("#id_assessment_type_0").click(function(){
-	        $("#id_logic").hide();
-	        $("#id_rubric").hide();
-	    });
-	    $("#id_assessment_type_1").click(function(){
-	        $("#id_logic").show();
-	        $("#id_rubric").show();
-	     });
-	    $("#id_assessment_type_2").click(function(){
-		    $("#id_logic").show();
-	        $("#id_rubric").hide();
-	    });
-  });
-  </script>
-{% endblock %}
-
