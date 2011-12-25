@@ -1654,22 +1654,6 @@
     },
     {
         "pk": 1, 
-        "model": "badges.logic", 
-        "fields": {
-            "min_avg_rating": 3, 
-            "min_votes": 3
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "badges.logic", 
-        "fields": {
-            "min_avg_rating": 0,
-            "min_votes": 1
-        }
-    }, 
-    {
-        "pk": 1, 
         "model": "content.page", 
         "fields": {
             "sub_header": null, 
