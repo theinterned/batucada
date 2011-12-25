@@ -216,10 +216,10 @@ class Logic(models.Model):
     name = models.CharField(max_length=30)
     min_votes = models.PositiveIntegerField(
         help_text=_('Minimum number of votes.'),
-        default=1)
+        default=0)
     min_avg_rating = models.PositiveIntegerField(
         help_text=_('Minimum average rating.'),
-        default=3)
+        default=0)
 
     def __unicode__(self):
         msg = _('%(min_votes)s peers -- by an average rating of %(min_avg)s -- ')
