@@ -1,0 +1,18 @@
+[
+    {
+        "pk": 1, 
+        "model": "badges.logic", 
+        "fields": { 
+            "min_votes": 3, 
+            "min_avg_rating": 3
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "badges.logic", 
+        "fields": {
+            "min_votes": 1, 
+            "min_avg_rating": 0
+        }
+    }
+]
