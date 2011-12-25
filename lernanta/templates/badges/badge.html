@@ -27,24 +27,10 @@
       <div id="badge-description">
 	    <h1>{{ badge }}</h1>
 	    <p>{{ badge.description }}</p>
-        <h2>{{ _('Requirements:') }}</h2> 
-	    {% if rubrics or badge.logic %}
-              {% if peer_skill %}
-                {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }}
-              {% endif %}
-              {% if peer_community %}
-                {{ _('You need at least 1 peer to say that you ') }}
-              {% endif %}
-              {% if other_badge %}
-                {{ _('You have ') }}
-              {% endif %}
-              {{ rubrics|join:", " }}{{ _('.') }}
-              {% if other_badge %}
-                {{ _('This is a manually awarded badge.') }}
-              {% endif %}
-        {% else %}
-	       <p>{{ _('There are no requirements for this badge.') }}</p>
-	    {% endif %}
+        {% if badge.requirements %}
+          <h2>{{ _('Requirements:') }}</h2> 
+          {{ badge.requirements }}
+        {% endif %}
 		{% if prerequisites %}
 		  <br><br>
 	      <h3>{{ _('You need to have these badges:') }}</h3>

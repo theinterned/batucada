@@ -56,67 +56,12 @@
         }
     },
     {
-        "pk": 9, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "said hello to other"
-        }
-    },
-    {
-        "pk": 10, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences"
-        }
-    },
-    {
-        "pk": 11, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "provide helpful and interesting feedback while maintaining a respectful tone"
-        }
-    },
-    {
-        "pk": 12, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "help push work forward within the community and motivate other team members to do so"
-        }
-    },
-    {
-        "pk": 13, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways"
-        }
-    },
-    {
-        "pk": 14, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "organized a course or a study group with at least one person completing it"
-        }
-    },
-    {
-        "pk": 15, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "authored a challenge"
-        }
-    },
-    {
-        "pk": 16, 
-        "model": "badges.rubric", 
-        "fields": {
-            "question": "signed up to help others learn on a one-on-one basis"
-        }
-    },
-    {
         "pk": 1, 
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's Introduce Yourself challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -136,6 +81,7 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's Writing HTML by Hand challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -155,6 +101,7 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's Choose Your Weapon challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -174,6 +121,7 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's HTML Hunting in the World Around You challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -193,6 +141,7 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's Your Domain challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -212,6 +161,7 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's Your Hosting challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -231,6 +181,7 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded upon marking all Webmaking101's You're Live challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -249,7 +200,8 @@
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
-            "description": "Badge awarded upon marking all Webmaking101 challenge tasks as completed.", 
+            "description": "This Badge is automatically awarded to you upon marking all Webmaking101 challenge tasks as completed.", 
+            "requirements": "",
             "creator": null, 
             "prerequisites": [1,2,3,4,5,6,7], 
             "assessment_type": "self", 
@@ -268,7 +220,8 @@
         "model": "badges.badge", 
         "fields": {
             "groups": [], 
-            "description": "Badge awarded upon marking all tasks as completed in at least one Webmaking101's challenge.", 
+            "description": "This Badge is automatically awarded to you for helping us test the Beta Webmaking101 challenges!", 
+            "requirements": "You need to mark all tasks as completed in at least one Webmaking101's challenge.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 
@@ -288,10 +241,11 @@
         "fields": {
             "groups": [], 
             "description": "Badge awarded by peers as a way to say hello (wave) to each other.", 
+            "requirements": "You need at least 1 peer to award you this badge.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [9], 
+            "rubrics": [], 
             "slug": "wave", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -307,10 +261,11 @@
         "fields": {
             "groups": [], 
             "description": "The Super Blogger Badge recognizes the ability to consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences.", 
+            "requirements": "You need at least 1 peer to say that you consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [10], 
+            "rubrics": [], 
             "slug": "super-blogger", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -326,10 +281,11 @@
         "fields": {
             "groups": [], 
             "description": "The Helpful Feedback Badge recognizes the ability to provide helpful and interesting feedback while maintaining a respectful tone.", 
+            "requirements": "You need at least 1 peer to say that you provide helpful and interesting feedback while maintaining a respectful tone.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [11], 
+            "rubrics": [], 
             "slug": "helpful-feedback", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -345,10 +301,11 @@
         "fields": {
             "groups": [], 
             "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
+            "requirements": "You need at least 1 peer to say that you help push work forward within the community and motivate other team members to do so.",
             "creator": null, 
             "prerequisites": [12], 
             "assessment_type": "peer", 
-            "rubrics": [12], 
+            "rubrics": [], 
             "slug": "team-player", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -364,10 +321,11 @@
         "fields": {
             "groups": [], 
             "description": "Learners create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.", 
+            "requirements": "You need at least 1 peer to say that you create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [13], 
+            "rubrics": [], 
             "slug": "creative-presentation", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
@@ -383,6 +341,7 @@
         "fields": {
             "groups": [], 
             "description": "The HTML Basic Badge recognizes the ability to write an html page by making basic use of HTML tags.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can use the Mozilla Developer Network HTML reference [0] to identify and use basic HTML tags , translate HTML tags like <div>, <p> into real world structures.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
@@ -402,6 +361,7 @@
         "fields": {
             "groups": [], 
             "description": "The DNS Badge recognizes the ability to describe what DNS is and how it works.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can communicate what DNS is by using different types of media, have a domain name that can be used to further explore DNS.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
@@ -421,6 +381,7 @@
         "fields": {
             "groups": [], 
             "description": "The Hosting Badge recognizes the ability to implement web hosting services to set up your own domain.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can configure a DNS to point at a personal hosting account, provide valuable information on web hosting services.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
@@ -440,6 +401,7 @@
         "fields": {
             "groups": [], 
             "description": "The Publishing Badge recognizes the ability to take content from a local computer, publish it live on the web and be able to view it in a browser.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can install an FTP or SFTP client, upload content that is visible live in a browser.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
@@ -459,10 +421,11 @@
         "fields": {
             "groups": [], 
             "description": "The Organizer badge recognizes anyone at P2PU who has organized a course or a study group with at least one person completing it.", 
+            "requirements": "You have organized a course or a study group with at least one person completing it. This is a manually awarded badge. ",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [14], 
+            "rubrics": [], 
             "slug": "organizer", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
@@ -478,10 +441,11 @@
         "fields": {
             "groups": [], 
             "description": "The challenge creator recognizes anyone who has authored a challenge.", 
+            "requirements": "You have authored a challenge. This is a manually awarded badge.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [15], 
+            "rubrics": [], 
             "slug": "challenge-creator", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
@@ -497,10 +461,11 @@
         "fields": {
             "groups": [], 
             "description": "The Mentor badge recognizes peers who have signed up to help others learn on a one-on-one basis.", 
+            "requirements": "You have signed up to help others learn on a one-on-one basis. This is a manually awarded badge.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "peer", 
-            "rubrics": [16], 
+            "rubrics": [], 
             "slug": "mentor", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
@@ -516,6 +481,7 @@
         "fields": {
             "groups": [], 
             "description": "The Adopter Badge recognizes community members who have adopted a challenge.", 
+            "requirements": "You have offered your help in a challenge after completing all its tasks. This is a manually awarded badge.",
             "creator": null, 
             "prerequisites": [], 
             "assessment_type": "self", 

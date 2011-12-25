@@ -23,6 +23,11 @@
     {{ form.criteria }}
     {{ form.criteria.errors }}
   </div>
+  <div class="field requirements{% if form.requirements.errors %} error{% endif %}">
+    <label for="id_requirements">{{ _('Requirements to get badge') }}</label>
+    <span class="hint block">{{ _('Description of any requirements that must be satisfied to award the badge.') }}</span>
+    {{ form.requirements }}
+    {{ form.requirements.errors }}
   <div class="field{% if form.assessment_type.errors %} error{% endif %}">
     <label for="id_assessment_type">{{ _('Assessment type') }}</label>
     <span class="hint block">{{ _('Depending on the type, more options will show.') }}</span>

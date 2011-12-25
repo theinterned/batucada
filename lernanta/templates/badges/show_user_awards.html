@@ -15,14 +15,9 @@
     <div id="badge-description">
         <h1>{{ badge }}</h1>
         <p>{{ badge.description }}</p>
-        <h2>{{ _('Requirements:') }}</h2> 
-        {% if rubrics or badge.logic %}
-              {% if badge.logic %}
-              {{ _('More than ') }} {{ badge.logic }} {{ _(' have said that you can ') }} 
-              {% endif %}
-              {{ rubrics|join:", " }} 
-        {% else %}
-           <p>{{ _('There are no requirements for this badge.') }}</p>
+        {% if badge.requirements %}
+          <h2>{{ _('Requirements:') }}</h2> 
+          {{ badge.requirements }}
         {% endif %}
 
 	    {% if not badge.unique %}

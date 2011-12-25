@@ -20,11 +20,10 @@
         <h1>{{ _('Give this badge to your peer.') }}</h1>
         <div id="badge-description-box">
           <p>{{ badge.description }}</p>
-          {% if rubrics %}
-            <h2>{{ _('Requirements:') }}</h2>
-            {{ _('You need at least 1 peer to say that you ') }}
-            {{ rubrics|join:", " }}
-          {% endif %}          
+          {% if badge.requirements %}
+            <h2>{{ _('Requirements:') }}</h2> 
+            {{ badge.requirements }}
+          {% endif %}
         </div>
         <p>
           {% block form %}
