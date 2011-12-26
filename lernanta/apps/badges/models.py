@@ -312,6 +312,8 @@ class Assessment(ModelBase):
         related_name="assessments", null=True, blank=True,
         help_text=_('If submission is blank, this is a '\
         'peer awarded assessment or superuser granted'))
+    ready = models.BooleanField(default=False,
+        help_text=_("If all rubric ratings were provided."))
 
     def final_rating_as_percentage(self):
         """Return the final rating as a percentage for
@@ -334,9 +336,10 @@ class Assessment(ModelBase):
         """Used on Rating save signal to update the final
         rating for the assessment"""
         ratings = Rating.objects.filter(assessment=self)
-        final_rating = ratings.aggregate(
+        self.final_rating = ratings.aggregate(
             final_rating=Avg('score'))['final_rating']
-        self.final_rating = final_rating
+        if ratings.count() == self.badge.rubrics.count():
+            self.ready = True
         self.save()
 
     def __unicode__(self):
@@ -417,8 +420,7 @@ def post_rating_save(sender, **kwargs):
         assessment = instance.assessment
         badge = assessment.badge
         assessment.update_final_rating()
-        # if all the ratings where created.
-        if badge.rubrics.count() == assessment.ratings.count():
+        if assessment.ready:
             progress = badge.progress_for(assessment.assessed)
             progress.update_progress(assessment)
 
@@ -431,9 +433,7 @@ def post_assessment_save(sender, **kwargs):
     created = kwargs.get('created', False)
     if created and isinstance(instance, Assessment):
         badge = instance.badge
-        # No need to wait for ratings to be created if
-        # there is no rubric.
-        if badge.rubrics.count() == 0 and badge.logic:
+        if instance.ready:
             progress = badge.progress_for(instance.assessed)
             progress.update_progress(instance)
 
