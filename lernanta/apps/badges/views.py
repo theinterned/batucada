@@ -178,7 +178,8 @@ def show_submission(request, slug, submission_id):
         badge__slug=slug)
     badge = submission.badge
     progress = badge.progress_for(submission.author)
-    assessments = Assessment.objects.filter(submission=submission_id)
+    assessments = Assessment.objects.filter(submission=submission_id,
+        ready=True)
     can_assess = True
     if request.user.is_authenticated():
         user = request.user.get_profile()

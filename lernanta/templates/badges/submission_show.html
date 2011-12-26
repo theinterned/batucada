@@ -34,7 +34,7 @@
 		    <div id="progress"><h3>{{ _('Progress:') }}</h3>
 				<ul>
 			         {% if badge.logic.min_votes %}
-			           <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
+			           <li>{{ _('Received') }} {{ assessments.count }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
 			         {% endif %}
 			         {% if badge.logic.min_avg_rating %}
 			           <li>{{ _('The posted reviews give this work submission a total average score of') }} {{ progress.current_avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
