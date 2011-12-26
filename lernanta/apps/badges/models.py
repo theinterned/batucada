@@ -299,7 +299,9 @@ class Submission(ModelBase):
 
 class Assessment(ModelBase):
     """Assessment for a badge"""
-    final_rating = models.FloatField(null=True, blank=True, default=0)
+    final_rating = models.FloatField(default=0)
+    weight = models.FloatField(default=1,
+        help_text=_("Allows to give more or less weight to the assessor's vote."))
     assessor = models.ForeignKey('users.UserProfile',
         related_name='assessments')
     assessed = models.ForeignKey('users.UserProfile',
@@ -314,6 +316,18 @@ class Assessment(ModelBase):
         'peer awarded assessment or superuser granted'))
     ready = models.BooleanField(default=False,
         help_text=_("If all rubric ratings were provided."))
+
+    def __unicode__(self):
+        return _('%(assessor)s for %(assessed)s for %(badge)s') % {
+            'assessor': self.assessor, 'assessed': self.assessed,
+            'badge': self.badge}
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('assessment_show', (), {
+            'slug': self.badge.slug,
+            'assessment_id': self.id,
+        })
 
     def final_rating_as_percentage(self):
         """Return the final rating as a percentage for
@@ -342,17 +356,14 @@ class Assessment(ModelBase):
             self.ready = True
         self.save()
 
-    def __unicode__(self):
-        return _('%(assessor)s for %(assessed)s for %(badge)s') % {
-            'assessor': self.assessor, 'assessed': self.assessed,
-            'badge': self.badge}
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('assessment_show', (), {
-            'slug': self.badge.slug,
-            'assessment_id': self.id,
-        })
+    @classmethod
+    def compute_average_rating(cls, assessments):
+        ratings_sum = 0
+        weights_sum = 0
+        for assessment in assessments:
+            ratings_sum += assessment.final_rating
+            weights_sum += assessment.weight
+        return ratings_sum / weights_sum if weights_sum > 0 else 0 
 
 
 class Rating(ModelBase):
