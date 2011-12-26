@@ -180,6 +180,7 @@ def show_submission(request, slug, submission_id):
     progress = badge.progress_for(submission.author)
     assessments = Assessment.objects.filter(submission=submission_id,
         ready=True)
+    avg_rating = Assessment.compute_average_rating(assessments)
     can_assess = True
     if request.user.is_authenticated():
         user = request.user.get_profile()
@@ -193,6 +194,7 @@ def show_submission(request, slug, submission_id):
         'submission': submission,
         'progress': progress,
         'assessments': assessments,
+        'avg_rating': avg_rating,
         'can_assess': can_assess,
         }
 
