@@ -251,33 +251,30 @@ def assess_submission(request, slug, submission_id):
 
     if request.method == 'POST':
         form = badge_forms.AssessmentForm(request.POST, prefix='assessment')
-        if form.is_valid():
+        valid_ratings = True
+        ratings = []
+        for rubric in rubrics:
+            rating_form = badge_forms.RatingForm(request.POST,
+                prefix="rubric%s_" % rubric.id)
+            rating = rating_form.save(commit=False)
+            rating.rubric = rubric
+            if not rating_form.is_valid():
+                valid_ratings = False
+            rating_forms.append((rubric, rating_form))
+            ratings.append(rating)
+        if form.is_valid() and valid_ratings:
             assessment = form.save(commit=False)
-            ratings = []
-            valid_ratings = True
-            for rubric in rubrics:
-                rating_form = badge_forms.RatingForm(request.POST,
-                    prefix="rubric%s_" % rubric.id)
-                rating = rating_form.save(commit=False)
-                rating.rubric = rubric
-                if not rating_form.is_valid():
-                    valid_ratings = False
-                rating_forms.append((rubric, rating_form))
-                ratings.append(rating)
-            if valid_ratings and 'show_preview' not in request.POST:
-                assessment.assessor = user
-                assessment.assessed = submission.author
-                assessment.badge = submission.badge
-                assessment.submission = submission
-                assessment.save()
-                for rating in ratings:
-                    rating.assessment = assessment
-                    rating.save()
-                messages.success(request,
-                    _('Assessment saved. Thank you for your feedback!'))
-                return http.HttpResponseRedirect(submission.get_absolute_url())
-            if not valid_ratings:
-                messages.error(request, _('Please correct errors below.'))
+            assessment.assessor = user
+            assessment.assessed = submission.author
+            assessment.badge = submission.badge
+            assessment.submission = submission
+            assessment.save()
+            for rating in ratings:
+                rating.assessment = assessment
+                rating.save()
+            messages.success(request,
+                _('Assessment saved. Thank you for your feedback!'))
+            return http.HttpResponseRedirect(submission.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
