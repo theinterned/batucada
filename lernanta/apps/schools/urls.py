@@ -1,13 +1,13 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-    url(r'^css/$', 'schools.views.multiple_school_css',
+    url(r'^/media/css/$', 'schools.views.multiple_school_css',
       name='multiple_schools_css'),
     url(r'^(?P<slug>[\w-]+)/$', 'schools.views.home',
       name='school_home'),
     url(r'^(?P<slug>[\w-]+)/sets/(?P<set_slug>[\w-]+)/$', 'schools.views.projectset',
       name='school_projectset'),
-    url(r'^(?P<slug>[\w-]+)/css/$', 'schools.views.school_css',
+    url(r'^(?P<slug>[\w-]+)/media/css/$', 'schools.views.school_css',
       name='schools_css'),
     url(r'^(?P<slug>[\w-]+)/edit/$', 'schools.views.edit',
       name='schools_edit'),
