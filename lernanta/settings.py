@@ -285,4 +285,9 @@ LOGGING = {
     }
 }
 
-TRACKING_PREFIXES = ['/??/groups/*/content/*',]
+TRACKING_PREFIXES = [
+    r'^/\w{2}/groups/[\w-]+/content/[\w-]+/$',
+    r'^/\w{2}/groups/[\w-]+/$',
+    r'^/\w{2}/schools/[\w-]+/sets/[\w-]+/$',
+    r'^/\w{2}/schools/[\w-]+/$',
+]
