@@ -302,7 +302,9 @@ input[type=submit]:active,
     padding: 7px 12px 8px 12px;
 }
 
-.project-kind-challenge #sidebar a.discuss-button {
+.project-kind-challenge #sidebar a.discuss-button,
+.project-kind-challenge #task-body a.external-task,
+.project-kind-challenge #task-body-preview a.external-task {
   float: left;
   margin: 0 0 0 20px;
   background-color: #52a8e8;
@@ -353,7 +355,9 @@ input[type=submit]:active,
     text-decoration: none;
 }
 
-.project-kind-challenge #sidebar a.discuss-button:hover {
+.project-kind-challenge #sidebar a.discuss-button:hover,
+.project-kind-challenge #task-body a.external-task:hover,
+.project-kind-challenge #task-body-preview a.external-task:hover {
   background-color: #4C9EDA;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#4C9EDA), to(#3271C2));
   /* Saf4+, Chrome */
@@ -383,13 +387,28 @@ input[type=submit]:active,
     box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
 }
 
-.project-kind-challenge #sidebar a.discuss-button:active {
+.project-kind-challenge #sidebar a.discuss-button:active,
+.project-kind-challenge #task-body a.external-task:active,
+.project-kind-challenge #task-body-preview a.external-task:active {
    border: 1px solid #006699;
  -webkit-box-shadow: inset 0 1px 0 0 #52a8e8;
  -moz-box-shadow: inset 0 1px 0 0 #52a8e8;
  -ms-box-shadow: inset 0 1px 0 0 #52a8e8;
  -o-box-shadow: inset 0 1px 0 0 #52a8e8;
  box-shadow: inset 0 1px 0 0 #52a8e8;
+}
+
+.project-kind-challenge #task-body a.external-task,
+.project-kind-challenge #task-body-preview a.external-task {
+    float: none;
+    display: none;
+    font: bold 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+}
+
+.project-kind-challenge #task-body a.external-task span.external-task-text,
+.project-kind-challenge #task-body-preview a.external-task span.external-task-text {
+    background: transparent url("/media/images/external.task.icon.png") no-repeat center right;
+    padding-right: 20px;
 }
 
 .project-kind-challenge .bottom-sidebar {

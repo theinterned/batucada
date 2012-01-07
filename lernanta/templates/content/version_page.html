@@ -32,7 +32,9 @@
   <br>{{ version.sub_header|default:"" }}
 {% endif %}
 <hr />
-{{ version.content|embed|safe }}
+<div id="task-body-preview">
+  {{ version.content|embed|safe }}
+</div>
 </div>
 {% endblock %}
 

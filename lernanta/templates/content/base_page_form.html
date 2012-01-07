@@ -20,7 +20,9 @@
             </h1>
             {% if is_challenge %}<br>{{ page.sub_header|default:"" }} {% endif %}
             <hr />
-            {{ page.content|embed|safe }}
+            <div id="task-body-preview">
+              {{ page.content|embed|safe }}
+            </div>
         </div>
         <br />
       {% endif %}

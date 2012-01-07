@@ -6,6 +6,7 @@ from django import template
 from django.conf import settings
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.template.loader import render_to_string
 
 from embedly import Embedly
 
@@ -15,15 +16,19 @@ from richtext.models import EmbeddedUrl
 register = template.Library()
 
 
-EMBED_RE = (r"\[(?:slideshare|youtube|embed):(?P<url>[^\]]+)]")
-DEFAULT_EMBED = '<a href="%s">%s</a>'
+EMBED_RE = (r"\[(?P<kind>slideshare|youtube|embed|externaltask):(?P<url>[^\]]+)]")
 url_validate = URLValidator(verify_exists=True)
 
 
 def replace(match):
     url = match.group('url')
+    kind = match.group('kind')
+    external_task = (match.group('kind') == 'externaltask')
     try:
         url_validate(url)
+    except ValidationError:
+        return '[%s:Invalid Url]' % kind
+    if not external_task:
         expiration_date = datetime.now() - settings.EMBEDLY_CACHE_EXPIRES
         embedded_urls = EmbeddedUrl.objects.filter(original_url=url,
             created_on__gte=expiration_date).order_by('-created_on')
@@ -40,9 +45,8 @@ def replace(match):
                 embedded_url.save()
         if embedded_url and embedded_url.html:
             return embedded_url.html
-    except ValidationError:
-        return '[embed:Invalid Url]'
-    return DEFAULT_EMBED % (url, url)
+    context = {'url': url, 'external_task': external_task}
+    return render_to_string('richtext/_external_link.html', context)
 
 
 @register.filter

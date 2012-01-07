@@ -360,6 +360,18 @@ $(document).ready(function() {
         });
     }
 
+    if ( $('.project-kind-challenge #task-body a.external-task').length ) {
+        var $external_task = $('.project-kind-challenge #task-body a.external-task');
+        $external_task.find('span.external-task-text').text($external_task.attr('title'));
+        $external_task.show();
+    }
+
+    if ( $('.project-kind-challenge #task-body-preview a.external-task').length ) {
+        var $external_task = $('.project-kind-challenge #task-body-preview a.external-task');
+        $external_task.find('span.external-task-text').text($external_task.attr('title'));
+        $external_task.show();
+    }
+
     if ($('#headers_colorpicker').length) {
         $.farbtastic('#headers_colorpicker', { callback: '#id_headers_color', width: 100, heigth: 100 });
         $.farbtastic('#headers_light_colorpicker', { callback: '#id_headers_color_light', width: 100, heigth: 100 });
@@ -453,7 +465,6 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
     });
 });
 
-
 var submitTaskFooterToggleTaskCompletion = function() {
     var $task_completion_form = $(this);
     var $task_footer = $task_completion_form.parent();
@@ -516,6 +527,39 @@ $('.project-kind-challenge #task-footer-after-completed form').submit(submitTask
 
 $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function() {
     $(this).parent().submit();
+});
+
+var getSourceFromUrl = function(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    var source = a.hostname;
+    if ( a.protocol) {
+        source = a.protocol + '//' + source;
+    }
+    if ( a.port ) {
+        source = source + ':' + a.port;
+    }
+    return source;
+};
+
+$('.project-kind-challenge #task-body a.external-task').click(function() {
+    var url = $(this).attr('href');
+    var origin = getSourceFromUrl(url);
+    var opened = window.open(url);
+    function onMessage(event) {
+        event = event.originalEvent;
+        if (event.source == opened && event.origin == origin && event.data == 'task-complete') {
+            $(window).unbind('message', onMessage);
+            $(window).focus();
+            opened.close();
+            var $task_completion_form = $('.project-kind-challenge form#task-footer-toggle-task-completion-form');
+            if ( $task_completion_form.find('#task-footer-toggle-task-completion-cancel-button').length == 0 ) {
+                $task_completion_form.submit();
+            }
+        }
+    }
+    $(window).bind('message', onMessage);
+    return false;
 });
 
 $('.project-kind-challenge a.give_badge_action').each(function() {
