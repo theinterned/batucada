@@ -142,6 +142,7 @@ def show(request, slug, toggled_tasks=True):
         'is_challenge': is_challenge,
         'toggled_tasks': toggled_tasks,
     }
+    context.update(tracker_models.get_google_tracking_context(project))
     return render_to_response('projects/project.html', context,
         context_instance=RequestContext(request))
 

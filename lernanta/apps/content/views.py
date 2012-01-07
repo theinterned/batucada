@@ -14,6 +14,7 @@ from projects.decorators import participation_required
 from projects.models import Project
 from pagination.views import get_pagination_context
 from projects.decorators import restrict_project_kind
+from tracker.models import get_google_tracking_context
 
 from content.forms import PageForm, NotListedPageForm
 from content.forms import OwnersPageForm, OwnersNotListedPageForm
@@ -57,6 +58,7 @@ def show_page(request, slug, page_slug):
         'all_listed_pages': all_listed_pages,
     }
     context.update(get_pagination_context(request, first_level_comments))
+    context.update(get_google_tracking_context(page.project))
     return render_to_response('content/page.html', context,
         context_instance=RequestContext(request))
 
