@@ -20,6 +20,7 @@ from activity.models import Activity
 from activity.schema import verbs
 from relationships.models import Relationship
 from signups.models import SignupAnswer
+from tracker.models import get_google_tracking_context
 
 from schools.decorators import school_organizer_required
 from schools.models import School, ProjectSet
@@ -38,12 +39,14 @@ def home(request, slug):
         'school': school,
         'is_organizer': is_organizer,
     }
+    context.update(get_google_tracking_context(school))
     return render_to_response('schools/home.html', context,
         context_instance=RequestContext(request))
 
 def projectset(request, slug, set_slug):
     projectset = get_object_or_404(ProjectSet, slug=set_slug,
         school__slug=slug)
+    context.update(get_google_tracking_context(projectset))
     return render_to_response('schools/projectset_home.html',
         {'projectset': projectset, 'school': projectset.school},
         context_instance=RequestContext(request))

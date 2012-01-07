@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 from drumbeat.models import ModelBase
 from content.models import Page
@@ -13,6 +14,34 @@ from replies.models import PageComment
 from users.models import UserProfile
 
 from tracker.utils import force_date
+
+
+def get_google_tracking_context(instance):
+    ct = ContentType.objects.get_for_model(
+        instance)
+    trackings = GoogleAnalyticsTracking.objects.filter(
+        target_content_type=ct, target_id=instance.pk)
+    codes = GoogleAnalyticsTrackingCode.objects.filter(
+        id__in=trackings.values('tracking_code_id'))
+    return {'google_analytics_tracking_codes': codes}
+
+
+class GoogleAnalyticsTrackingCode(ModelBase):
+    key = models.SlugField(unique=True)
+    code = models.SlugField(unique=True)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.key, self.code)
+
+
+class GoogleAnalyticsTracking(ModelBase):
+    """Associates a google analytics tracking code with a project, school, ..."""
+    tracking_code = models.ForeignKey('tracker.GoogleAnalyticsTrackingCode',
+        related_name="trackings")
+    target_content_type = models.ForeignKey(ContentType, null=True)
+    target_id = models.PositiveIntegerField(null=True)
+    target_object = generic.GenericForeignKey('target_content_type',
+        'target_id')
 
 
 class PageView(ModelBase):
