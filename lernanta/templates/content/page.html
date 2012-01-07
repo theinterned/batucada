@@ -53,7 +53,9 @@
   {% endif %}
   <hr />
 
-  {{ page.content|embed|safe }}
+  <div id="task-body">
+    {{ page.content|embed|safe }}
+  </div>
 
   {% if is_challenge %}
     <div id="task-footer-toggle-completion">
