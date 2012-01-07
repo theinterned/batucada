@@ -4967,7 +4967,7 @@ table#metrics-scoreboard td.todays-count {
     zoom:1;
     width: 418px;
     vertical-align: top;
-    margin: 0 28px 28px 20px;
+    margin: 0 28px 28px 28px;
     padding: 3px;
     border: 1px solid #eeeeee;
     border-radius:6px;
@@ -5256,7 +5256,7 @@ table#metrics-scoreboard td.todays-count {
     background: #fff;
     padding: 10px;
     float: left;
-    width: 600px;
+    width:902px;
 }
 
 #challenge-set .left .details ul {
@@ -5268,7 +5268,7 @@ table#metrics-scoreboard td.todays-count {
 
 #challenge-set .left .details ul li {
     display: inline-block;
-    margin: 0 20px 0 0;
+    margin: 0 80px 0 0;
     padding: 0;
 }
 
