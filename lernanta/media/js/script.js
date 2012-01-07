@@ -553,7 +553,8 @@ $('.project-kind-challenge #task-body a.external-task').click(function() {
             $(window).focus();
             opened.close();
             var $task_completion_form = $('.project-kind-challenge form#task-footer-toggle-task-completion-form');
-            if ( $task_completion_form.find('#task-footer-toggle-task-completion-cancel-button').length == 0 ) {
+            var $task_completion_cancel = $task_completion_form.find('#task-footer-toggle-task-completion-cancel-button');
+            if ( $task_completion_form.length && $task_completion_cancel.length == 0 ) {
                 $task_completion_form.submit();
             }
         }
