@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('',
-    url(r'^/media/css/$', 'schools.views.multiple_school_css',
+    url(r'^media/css/$', 'schools.views.multiple_school_css',
       name='multiple_schools_css'),
     url(r'^(?P<slug>[\w-]+)/$', 'schools.views.home',
       name='school_home'),
