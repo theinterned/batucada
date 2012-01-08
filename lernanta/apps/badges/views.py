@@ -370,7 +370,6 @@ def show_user_awards(request, slug, username):
         '-created_on')
     assessments = badge.assessments.filter(assessed=profile,
         ready=True).order_by('-created_on')
-    avg_rating = Assessment.compute_average_rating(assessments)
     related_projects = badge.groups.all()
     prerequisites = badge.prerequisites.all()
 
@@ -384,7 +383,6 @@ def show_user_awards(request, slug, username):
         'prerequisites': prerequisites,
         'submissions': submissions,
         'assessments': assessments,
-        'avg_rating': avg_rating,
     }
     return render_to_response('badges/show_user_awards.html', context,
                               context_instance=RequestContext(request))
