@@ -26,7 +26,7 @@ def get_awarded_badges(user):
     return get_pilot_badges(user)
 
 
-class Badge(models.Model):
+class Badge(ModelBase):
     """Representation of a Badge"""
     name = models.CharField(max_length=225, blank=False)
     slug = models.SlugField(unique=True, max_length=110)
@@ -203,7 +203,7 @@ class Badge(models.Model):
             groups__in=badge_groups).distinct()
         return MultiQuerySet(related_badges, non_related_badges)
 
-class Rubric(models.Model):
+class Rubric(ModelBase):
     """Criteria for which a badge application is judged"""
     question = models.CharField(max_length=200)
 
@@ -211,7 +211,7 @@ class Rubric(models.Model):
         return self.question
 
 
-class Logic(models.Model):
+class Logic(ModelBase):
     """Representation of the logic behind awarding a badge"""
     name = models.CharField(max_length=30)
     min_votes = models.PositiveIntegerField(
@@ -400,7 +400,7 @@ class Rating(ModelBase):
         return (self.score / 4.0) * 100
 
 
-class Award(models.Model):
+class Award(ModelBase):
     """Representation of a badge a user has received"""
     user = models.ForeignKey('users.UserProfile')
     badge = models.ForeignKey('badges.Badge', related_name="awards")
