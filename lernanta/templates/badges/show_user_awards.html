@@ -55,16 +55,6 @@
         {% endfor %}
       </ul>
       <br clear="both"><br>
-      <h1>{{ _('Review Results:') }}</h1>
-      <br>
-      <ul>
-        {% if badge.logic.min_votes %}
-          <li>{{ _('Received') }} {{ assessments.count }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
-        {% endif %}
-        {% if badge.logic.min_avg_rating %}
-          <li>{{ _('The posted reviews give this work submission a total average score of') }} {{ avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
-        {% endif %}
-      </ul>
     {% endif %}
 
     {% if peer_community and assessments %}
