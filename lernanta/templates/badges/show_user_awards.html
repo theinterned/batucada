@@ -59,13 +59,10 @@
       <br>
       <ul>
         {% if badge.logic.min_votes %}
-          <li>{{ _('Received') }} {{ progress.current_votes }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
+          <li>{{ _('Received') }} {{ assessments.count }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
         {% endif %}
-        {% if badge.logic.min_adopter_votes %}
-          <li>{{ _('Received') }} {{ progress.current_adopter_votes }} {{ _(' reviews from the') }} {{ badge.logic.min_adopter_votes }} {{ _('reviews needed from challenge adopters.') }}</li>
-        {% endif %}
-        {% if badge.logic.min_weighted_avg_rating %}
-          <li>{{ _('The posted reviews are giving this work submission a total score of') }} {{ progress.current_weighted_avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_weighted_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
+        {% if badge.logic.min_avg_rating %}
+          <li>{{ _('The posted reviews give this work submission a total average score of') }} {{ avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
         {% endif %}
       </ul>
     {% endif %}

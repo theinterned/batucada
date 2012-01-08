@@ -177,7 +177,6 @@ def show_submission(request, slug, submission_id):
     submission = get_object_or_404(Submission, id=submission_id,
         badge__slug=slug)
     badge = submission.badge
-    progress = badge.progress_for(submission.author)
     assessments = Assessment.objects.filter(submission=submission_id,
         ready=True)
     avg_rating = Assessment.compute_average_rating(assessments)
@@ -192,7 +191,6 @@ def show_submission(request, slug, submission_id):
     context = {
         'badge': badge,
         'submission': submission,
-        'progress': progress,
         'assessments': assessments,
         'avg_rating': avg_rating,
         'can_assess': can_assess,
@@ -370,9 +368,9 @@ def show_user_awards(request, slug, username):
     community_badge = (badge.badge_type == Badge.COMMUNITY)
     submissions = badge.submissions.filter(author=profile).order_by(
         '-created_on')
-    progress = badge.progress_for(profile) if skill_badge else None
-    assessments = badge.assessments.all().order_by(
-        '-created_on')
+    assessments = badge.assessments.filter(assessed=profile,
+        ready=True).order_by('-created_on')
+    avg_rating = Assessment.compute_average_rating(assessments)
     related_projects = badge.groups.all()
     prerequisites = badge.prerequisites.all()
 
@@ -386,7 +384,7 @@ def show_user_awards(request, slug, username):
         'prerequisites': prerequisites,
         'submissions': submissions,
         'assessments': assessments,
-        'progress': progress,
+        'avg_rating': avg_rating,
     }
     return render_to_response('badges/show_user_awards.html', context,
                               context_instance=RequestContext(request))
