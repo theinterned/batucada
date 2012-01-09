@@ -93,7 +93,7 @@ def task_toggle_completion(request, page, ignore_post_data=False):
                     badge=badge)[0]
             except IndexError:
                 badge.applied = False
-            elegible = badge.is_eligible(request.user)
+            elegible = badge.is_eligible(profile)
             badge.show_apply = (not badge.awarded and not badge.applied and elegible)
 
     ajax_data.update({

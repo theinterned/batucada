@@ -140,6 +140,9 @@ class Project(ModelBase):
     next_projects = models.ManyToManyField('projects.Project',
         symmetrical=False, related_name='previous_projects', blank=True,
         null=True)
+    # Stealth Badges awarded upon completion of all tasks.
+    completion_badges = models.ManyToManyField('badges.Badge',
+        null=True, blank=False, related_name='projects_completion')
 
     objects = ProjectManager()
 
@@ -309,9 +312,10 @@ class Project(ModelBase):
             page__project=self, page__deleted=False,
             unchecked_on__isnull=True, user=user).count()
         if total_count == completed_count:
-            badges = self.get_project_badges(only_self_completion=True)
-            for badge in badges:
-                badge.award_to(user)
+            from badges.models import Award
+            for badge in self.completion_badges.all():
+                if badge.is_eligible(user):
+                    Award.objects.get_or_create(user=user, badge=badge)
 
     def completed_tasks_users(self):
         total_count = self.pages.filter(listed=True,
@@ -352,8 +356,7 @@ class Project(ModelBase):
             profile = user.get_profile()
             awarded_badges = Award.objects.filter(
                 user=profile).values('badge_id')
-            self_completion_badges = self.get_project_badges(
-                only_self_completion=True)
+            self_completion_badges = self.completion_badges.all()
             upon_completion_badges = []
             for badge in self_completion_badges:
                 missing_prerequisites = badge.prerequisites.exclude(

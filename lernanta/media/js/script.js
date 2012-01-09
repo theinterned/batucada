@@ -458,7 +458,7 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
         var $tasks_completed_msg = $('.project-kind-challenge .tasks-completed-msg');
         if( progressbar_value == "100" ) {
             $tasks_completed_msg.fadeIn('fast');
-            window.scrollTop();
+            $(window).scrollTop();
         } else {
             $tasks_completed_msg.fadeOut('fast');
         }

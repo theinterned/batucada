@@ -105,7 +105,7 @@ class Page(ModelBase):
                 badge=badge).exists()
             applied = Submission.objects.filter(author=profile,
                 badge=badge).exists()
-            elegible = badge.is_eligible(profile.user)
+            elegible = badge.is_eligible(profile)
             if not awarded and not applied and elegible:
                 next_badges_can_apply.append(badge)
             if len(next_badges_can_apply) > 1:

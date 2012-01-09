@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.conf import settings
-from django.db.models import Avg, Q
+from django.db.models import Avg
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
@@ -127,14 +127,10 @@ class Badge(ModelBase):
 
         If some prerequisite badges have not been
         awarded returns False."""
-        if user.is_authenticated():
-            profile = user.get_profile()
-            awarded_badges = Award.objects.filter(
-                user=profile).values('badge_id')
-            return not self.prerequisites.exclude(
-                id__in=awarded_badges).exists()
-        else:
-            return False
+        awarded_badges = Award.objects.filter(
+            user=user).values('badge_id')
+        return not self.prerequisites.exclude(
+            id__in=awarded_badges).exists()
 
     def is_awarded_to(self, user):
         """Does the user have the badge?"""
@@ -144,7 +140,7 @@ class Badge(ModelBase):
         """Award the badge to the user.
 
         Returns None if no badge is awarded."""
-        if not self.is_eligible(user.user):
+        if not self.is_eligible(user):
             # If the user is not eligible the badge
             # is not awarded.
             return None
