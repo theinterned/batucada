@@ -21,7 +21,6 @@ class PageViewTrackerMiddleware:
 
         # ensure that the request.path begins with any of the prefixes
         for prefix in settings.TRACKING_PREFIXES:
-            print request.path, prefix
             if re.match(prefix, request.path):
                 ip_address = utils.get_ip(request)
                 pageview = PageView()
