@@ -1,10 +1,10 @@
 import logging
 
 from django.db import models
-from django.db.models.signals import post_save, post_delete
+# from django.db.models.signals import post_save, post_delete
 
 from django_push.subscriber.models import Subscription
-from django_push.subscriber.signals import updated
+# from django_push.subscriber.signals import updated
 from django.db.models import Max
 from links import tasks
 
@@ -44,8 +44,8 @@ def link_create_handler(sender, **kwargs):
     if link.subscribe:
         tasks.SubscribeToFeed.apply_async(args=(link,))
 
-#post_save.connect(link_create_handler, sender=Link,
-#    dispatch_uid='links_link_create_handler')
+# post_save.connect(link_create_handler, sender=Link,
+#     dispatch_uid='links_link_create_handler')
 
 
 def link_delete_handler(sender, **kwargs):
@@ -63,8 +63,8 @@ def link_delete_handler(sender, **kwargs):
 
     tasks.UnsubscribeFromFeed.apply_async(args=(link,))
 
-#post_delete.connect(link_delete_handler, sender=Link,
-#    dispatch_uid='links_link_delete_handler')
+# post_delete.connect(link_delete_handler, sender=Link,
+#     dispatch_uid='links_link_delete_handler')
 
 
 def listener(notification, **kwargs):

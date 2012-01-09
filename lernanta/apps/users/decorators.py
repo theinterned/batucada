@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test

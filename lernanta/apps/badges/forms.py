@@ -69,7 +69,7 @@ class PeerAssessmentForm(forms.ModelForm):
         if not self.badge.get_peers(self.profile).filter(id=user.id).exists():
             raise forms.ValidationError(
                 _('User %s needs to be your peer.') % username)
-        if not self.badge.is_eligible(user.user):
+        if not self.badge.is_eligible(user):
             raise forms.ValidationError(
                 _('User %s has not received all the prerequisite badges.') % username)
         return user

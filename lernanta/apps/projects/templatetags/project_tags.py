@@ -148,7 +148,6 @@ def task_list(project, user, show_all_tasks=True, short_list_length=3):
     if is_challenge and user.is_authenticated():
         profile = user.get_profile()
         is_organizing = project.organizers().filter(user=profile).exists()
-        adopter = project.adopters().filter(user=profile).exists()
         is_participating = project.participants().filter(user=profile).exists()
         if is_participating:
             for task in tasks:
@@ -186,7 +185,6 @@ def tasks_completed_msg(project, user, start_hidden=True,
     # Manually include self+completed badges so they are in the awarded badges
     # list that is displayed when all tasks are completed (even if the django
     # post save signal that awards those badges has not run yet).
-    from badges.models import Badge
     awarded_badges = Badge.objects.filter(
         Q(id__in=awarded_peer_skill_badges.values('id'))
         | Q(id__in=awarded_task_completion_badges.values('id')))

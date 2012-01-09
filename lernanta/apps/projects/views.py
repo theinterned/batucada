@@ -13,7 +13,7 @@ from django.template.loader import render_to_string
 
 from commonware.decorators import xframe_sameorigin
 
-from links import tasks as links_tasks
+# from links import tasks as links_tasks
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms

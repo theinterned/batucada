@@ -59,6 +59,9 @@
             "next_projects": [
                 2
             ], 
+            "completion_badges": [
+                1, 8, 9
+            ],
             "detailed_description": 1, 
             "short_description": "test", 
             "archived": false, 
@@ -86,6 +89,9 @@
             "other": "", 
             "next_projects": [
                 3
+            ], 
+            "completion_badges": [
+                2, 8, 9
             ], 
             "detailed_description": 5, 
             "short_description": "test", 
@@ -115,6 +121,9 @@
             "next_projects": [
                 4
             ], 
+            "completion_badges": [
+                3, 8, 9
+            ], 
             "detailed_description": 9, 
             "short_description": "test", 
             "archived": false, 
@@ -142,6 +151,9 @@
             "other": "", 
             "next_projects": [
                 5
+            ], 
+            "completion_badges": [
+                4, 8, 9
             ], 
             "detailed_description": 13, 
             "short_description": "test", 
@@ -171,6 +183,9 @@
             "next_projects": [
                 6
             ], 
+            "completion_badges": [
+                5, 8, 9
+            ], 
             "detailed_description": 17, 
             "short_description": "test", 
             "archived": false, 
@@ -199,6 +214,9 @@
             "next_projects": [
                 7
             ], 
+            "completion_badges": [
+                6, 8, 9
+            ], 
             "detailed_description": 21, 
             "short_description": "test", 
             "archived": false, 
@@ -225,6 +243,9 @@
             "featured": false, 
             "other": "", 
             "next_projects": [], 
+            "completion_badges": [
+                7, 8, 9
+            ], 
             "detailed_description": 25, 
             "short_description": "test", 
             "archived": false, 

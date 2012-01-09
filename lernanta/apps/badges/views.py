@@ -21,8 +21,6 @@ from badges import forms as badge_forms
 from badges.pilot import get_badge_url
 from badges.models import Badge, Submission, Assessment
 
-from django.utils import simplejson
-
 log = logging.getLogger(__name__)
 
 
@@ -71,7 +69,7 @@ def show_badge(request, slug):
         badge = Badge.objects.get(slug=slug)
     except Badge.DoesNotExist:
         return pilot_badge_redirect(request, slug)
-    is_eligible = badge.is_eligible(request.user)
+    is_eligible = False
     applications = []
     peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
@@ -80,8 +78,9 @@ def show_badge(request, slug):
     submissions = badge.submissions.all().order_by(
         '-created_on')
     if request.user.is_authenticated():
-    	user = request.user.get_profile()
-    	applications = submissions.filter(author=user)
+        user = request.user.get_profile()
+        is_eligible = badge.is_eligible(user)
+        applications = submissions.filter(author=user)
     awarded_user_ids = badge.awards.all().values('user_id')
     awarded_users = UserProfile.objects.filter(
         deleted=False, id__in=awarded_user_ids)
@@ -141,11 +140,11 @@ def create_badge(request):
 def create_submission(request, slug):
     badge = get_object_or_404(Badge, slug=slug,
         assessment_type=Badge.PEER, badge_type=Badge.SKILL)
-    if not badge.is_eligible(request.user):
+    user = request.user.get_profile()
+    if not badge.is_eligible(user):
         messages.error(request,
             _('You are lacking one or more of the requirements.'))
         return http.HttpResponseRedirect(badge.get_absolute_url())
-    user = request.user.get_profile()
     related_projects = badge.groups.all()
     submission = None
     if request.method == 'POST':
