@@ -16,5 +16,32 @@
             "min_votes": 1, 
             "min_avg_rating": 0
         }
+    },
+    {
+        "pk": 3, 
+        "model": "badges.logic", 
+        "fields": { 
+            "name": "submission-enabled community badge",
+            "min_votes": 1, 
+            "min_avg_rating": 0
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "badges.logic", 
+        "fields": {
+            "name": "stealth badge",
+            "min_votes": 0, 
+            "min_avg_rating": 0
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "badges.logic", 
+        "fields": {
+            "name": "staff awarded badge",
+            "min_votes": 0, 
+            "min_avg_rating": 0
+        }
     }
 ]

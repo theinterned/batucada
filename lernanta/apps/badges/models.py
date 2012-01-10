@@ -81,9 +81,7 @@ class Badge(ModelBase):
     rubrics = models.ManyToManyField('badges.Rubric', related_name='badges',
         null=True, blank=True)
     logic = models.ForeignKey('badges.Logic', related_name='badges',
-        null=True, blank=True,
-        help_text=_('If no logic is chosen, no logic required. '\
-        ' Example: self-assessment badges.'))
+        help_text=_('Regulates how the badge is awarded to users.'))
 
     groups = models.ManyToManyField('projects.Project', related_name='badges',
         null=True, blank=True)
@@ -146,7 +144,7 @@ class Badge(ModelBase):
             return None
 
         # If logic restrictions are not meet the badge is not awarded.
-        if self.logic and not self.logic.is_eligible(self, user):
+        if self.logic.is_eligible(self, user):
             return None
 
         if self.unique:
