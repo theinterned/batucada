@@ -69,7 +69,7 @@
             "slug": "introduce-yourself", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/introduce-yourself.png", 
             "name": "Introduce Yourself"
@@ -89,7 +89,7 @@
             "slug": "writing-html-by-hand", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/writing-html-by-hand.png", 
             "name": "Writing HTML by Hand"
@@ -109,7 +109,7 @@
             "slug": "text-editor", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/text-editor.png", 
             "name": "Text Editor"
@@ -129,7 +129,7 @@
             "slug": "html-is-all-around-you", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/html-is-all-around-you.png", 
             "name": "HTML is All Around You"
@@ -149,7 +149,7 @@
             "slug": "domain-name", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/domain-name.png", 
             "name": "Domain Name"
@@ -169,7 +169,7 @@
             "slug": "your-webspace", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/your-webspace.png", 
             "name": "Your Webspace"
@@ -189,7 +189,7 @@
             "slug": "you-re-live", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/you-re-live.png", 
             "name": "You're LIVE"
@@ -209,7 +209,7 @@
             "slug": "webmaking101-basic", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/webmaking101-basic.png", 
             "name": "Webmaking101 Basic"
@@ -229,7 +229,7 @@
             "slug": "beta-hero", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 4, 
             "unique": true, 
             "image": "images/sow_badges/beta-hero.png", 
             "name": "Beta Hero"
@@ -269,7 +269,7 @@
             "slug": "super-blogger", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
-            "logic": 2, 
+            "logic": 3, 
             "unique": false, 
             "image": "images/sow_badges/super-blogger.png", 
             "name": "Super Blogger"
@@ -329,7 +329,7 @@
             "slug": "creative-presentation", 
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
-            "logic": 2, 
+            "logic": 3, 
             "unique": false, 
             "image": "images/sow_badges/creative-presentation.png", 
             "name": "Creative Presentation"
@@ -429,7 +429,7 @@
             "slug": "organizer", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
-            "logic": null, 
+            "logic": 5, 
             "unique": true, 
             "image": "images/sow_badges/organizer.png", 
             "name": "Organizer"
@@ -449,7 +449,7 @@
             "slug": "challenge-creator", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
-            "logic": null, 
+            "logic": 5, 
             "unique": true, 
             "image": "images/sow_badges/challenge-creator.png", 
             "name": "Challenge Creator"
@@ -469,7 +469,7 @@
             "slug": "mentor", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
-            "logic": null, 
+            "logic": 5, 
             "unique": true, 
             "image": "images/sow_badges/mentor.png", 
             "name": "Mentor"
@@ -489,7 +489,7 @@
             "slug": "adopter", 
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "completion/aggregate", 
-            "logic": null, 
+            "logic": 5, 
             "unique": true, 
             "image": "images/sow_badges/adopter.png", 
             "name": "Adopter"
