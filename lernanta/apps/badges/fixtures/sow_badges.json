@@ -70,7 +70,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/introduce-yourself.png", 
             "name": "Introduce Yourself"
         }
@@ -90,7 +89,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/writing-html-by-hand.png", 
             "name": "Writing HTML by Hand"
         }
@@ -110,7 +108,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/text-editor.png", 
             "name": "Text Editor"
         }
@@ -130,7 +127,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/html-is-all-around-you.png", 
             "name": "HTML is All Around You"
         }
@@ -150,7 +146,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/domain-name.png", 
             "name": "Domain Name"
         }
@@ -170,7 +165,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/your-webspace.png", 
             "name": "Your Webspace"
         }
@@ -190,7 +184,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/you-re-live.png", 
             "name": "You're LIVE"
         }
@@ -210,7 +203,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/webmaking101-basic.png", 
             "name": "Webmaking101 Basic"
         }
@@ -230,7 +222,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 4, 
-            "unique": true, 
             "image": "images/sow_badges/beta-hero.png", 
             "name": "Beta Hero"
         }
@@ -250,7 +241,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
-            "unique": false, 
             "image": "images/sow_badges/wave.png", 
             "name": "Wave"
         }
@@ -270,7 +260,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
             "logic": 3, 
-            "unique": false, 
             "image": "images/sow_badges/super-blogger.png", 
             "name": "Super Blogger"
         }
@@ -290,7 +279,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
-            "unique": false, 
             "image": "images/sow_badges/helpful-feedback.png", 
             "name": "Helpful Feedback"
         }
@@ -310,7 +298,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
             "logic": 2, 
-            "unique": false, 
             "image": "images/sow_badges/team-player.png", 
             "name": "Team Player"
         }
@@ -330,7 +317,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "peer-to-peer/community", 
             "logic": 3, 
-            "unique": false, 
             "image": "images/sow_badges/creative-presentation.png", 
             "name": "Creative Presentation"
         }
@@ -350,7 +336,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
             "logic": 1, 
-            "unique": true, 
             "image": "images/sow_badges/html-basic.png", 
             "name": "HTML Basic"
         }
@@ -370,7 +355,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
             "logic": 1, 
-            "unique": true, 
             "image": "images/sow_badges/dns-basic.png", 
             "name": "DNS Basic"
         }
@@ -390,7 +374,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
             "logic": 1, 
-            "unique": true, 
             "image": "images/sow_badges/hosting.png", 
             "name": "Hosting"
         }
@@ -410,7 +393,6 @@
             "created_on": "2011-10-02 22:28:29", 
             "badge_type": "skill", 
             "logic": 1, 
-            "unique": true, 
             "image": "images/sow_badges/publishing.png", 
             "name": "Publishing"
         }
@@ -430,7 +412,6 @@
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
             "logic": 5, 
-            "unique": true, 
             "image": "images/sow_badges/organizer.png", 
             "name": "Organizer"
         }
@@ -450,7 +431,6 @@
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
             "logic": 5, 
-            "unique": true, 
             "image": "images/sow_badges/challenge-creator.png", 
             "name": "Challenge Creator"
         }
@@ -470,7 +450,6 @@
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "other", 
             "logic": 5, 
-            "unique": true, 
             "image": "images/sow_badges/mentor.png", 
             "name": "Mentor"
         }
@@ -490,7 +469,6 @@
             "created_on": "2011-10-25 22:28:29", 
             "badge_type": "completion/aggregate", 
             "logic": 5, 
-            "unique": true, 
             "image": "images/sow_badges/adopter.png", 
             "name": "Adopter"
         }

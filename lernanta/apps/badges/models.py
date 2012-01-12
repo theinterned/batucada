@@ -37,9 +37,7 @@ class Badge(ModelBase):
         storage=storage.ImageStorage())
     prerequisites = models.ManyToManyField('self', symmetrical=False,
         blank=True, null=True)
-    unique = models.BooleanField(
-        help_text=_('If can only be awarded to the user once.'),
-        default=False)
+
     SELF = 'self'
     PEER = 'peer'
     STEALTH = 'stealth'
@@ -138,16 +136,17 @@ class Badge(ModelBase):
         """Award the badge to the user.
 
         Returns None if no badge is awarded."""
+
         if not self.is_eligible(user):
             # If the user is not eligible the badge
             # is not awarded.
             return None
 
         # If logic restrictions are not meet the badge is not awarded.
-        if self.logic.is_eligible(self, user):
+        if not self.logic.is_eligible(self, user):
             return None
 
-        if self.unique:
+        if self.logic.unique:
             # Do not award the badge if the user can not have the badge
             # more than once and it was already awarded.
             award, created = Award.objects.get_or_create(user=user,
@@ -214,6 +213,9 @@ class Logic(ModelBase):
     min_avg_rating = models.PositiveIntegerField(
         help_text=_('Minimum average rating.'),
         default=0)
+    unique = models.BooleanField(
+        help_text=_('If the badge can only be awarded to the user once.'),
+        default=False)
 
     def __unicode__(self):
         msg = _('%(min_votes)s peers -- by an average rating of %(min_avg)s -- ')
@@ -345,7 +347,7 @@ class Assessment(ModelBase):
         rating for the assessment"""
         ratings = Rating.objects.filter(assessment=self)
         self.final_rating = ratings.aggregate(
-            final_rating=Avg('score'))['final_rating']
+            final_rating=Avg('score'))['final_rating'] or 0
         if ratings.count() == self.badge.rubrics.count():
             self.ready = True
         self.save()
@@ -438,6 +440,7 @@ def post_assessment_save(sender, **kwargs):
     created = kwargs.get('created', False)
     if created and isinstance(instance, Assessment):
         badge = instance.badge
+        instance.update_final_rating()
         if instance.ready:
             progress = badge.progress_for(instance.assessed)
             progress.update_progress(instance)
