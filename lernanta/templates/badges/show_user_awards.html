@@ -20,7 +20,7 @@
           {{ badge.requirements }}
         {% endif %}
 
-	    {% if not badge.unique %}
+	    {% if not badge.logic.unique %}
 	        <p><b>{{'Number of Awards to '}} {{ profile }}:</b> {{ awards_count }}</p>
 	    {% endif%} 
 
