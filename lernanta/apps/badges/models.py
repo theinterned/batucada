@@ -115,7 +115,7 @@ class Badge(ModelBase):
         """Does the user have the badge?"""
         return Award.objects.filter(user=user, badge=self).count() > 0
 
-    def award_to(self, user):
+    def award_to(self, user, submission=None):
         """Award the badge to the user.
 
         Returns None if no badge is awarded."""
@@ -125,8 +125,9 @@ class Badge(ModelBase):
             # is not awarded.
             return None
 
-        # If logic restrictions are not meet the badge is not awarded.
-        if not self.logic.is_eligible(self, user):
+        if self.pending_peer_reviews(user, submission):
+            # The user has not received the necessary satisfactory reviews
+            # for the badge to be awarded.
             return None
 
         if self.logic.unique:
@@ -138,6 +139,25 @@ class Badge(ModelBase):
 
         return Award.objects.create(user=user, badge=self)
 
+    def pending_peer_reviews(self, user, submission):
+        if not self.logic.min_votes:
+            return False
+        assessments = Assessment.objects.filter(badge=self,
+            assessed=user, ready=True)
+        if submission:
+            assessments = assessments.filter(submission=submission)
+        else:
+            assessments = assessments.filter(submission__isnull=True)
+        if assessments.count() < self.logic.min_votes:
+            # More votes needed.
+            return True
+        if not self.logic.min_avg_rating:
+            return False
+        avg_rating = Assessment.compute_average_rating(assessments)
+        if avg_rating < self.logic.min_avg_rating:
+            # Rating too low.
+            return True
+
     def get_pending_submissions(self):
         """Submissions of users who haven't received the award yet"""
         all_submissions = Submission.objects.filter(badge=self)
@@ -146,15 +166,6 @@ class Badge(ModelBase):
             if not self.is_awarded_to(submission.author):
                 pending_submissions.append(submission)
         return pending_submissions
-
-    def progress_for(self, user):
-        """Progress for a user for this badge"""
-        progress = Progress.objects.filter(user=user, badge=self)
-        if progress:
-            progress = progress[0]
-        else:
-            progress = Progress(user=user, badge=self)
-        return progress
 
     def get_peers(self, profile):
         from projects.models import Participation
@@ -202,54 +213,6 @@ class Logic(ModelBase):
     def __unicode__(self):
         msg = _('%(min_votes)s peers -- by an average rating of %(min_avg)s -- ')
         return msg % {'min_votes': self.min_votes, 'min_avg': self.min_avg_rating}
-
-    def is_eligible(self, badge, user):
-        progress = badge.progress_for(user)
-        if self.min_votes and self.min_votes > progress.current_votes:
-            return False
-        min_avg = self.min_avg_rating
-        current_avg = progress.current_avg_rating
-        if min_avg and min_avg > current_avg:
-            return False
-        return True
-
-
-class Progress(ModelBase):
-    """Progress of a person to getting awarded a badge"""
-    badge = models.ForeignKey('badges.Badge', related_name="progresses")
-    current_votes = models.PositiveIntegerField(default=0,
-        help_text=_('Current number of votes'))
-    current_rating = models.FloatField(default=0,
-        help_text=_('Current total rating'))
-    user = models.ForeignKey('users.UserProfile')
-    updated_on = models.DateTimeField(
-        help_text=_('Last time this person received a qualified rating'),
-        auto_now_add=True, default=datetime.datetime.now)
-    created_on = models.DateTimeField(
-        help_text=_('First time this person received a qualified rating'),
-        auto_now_add=True, default=datetime.datetime.now)
-
-    @property
-    def current_avg_rating(self):
-        if self.current_votes == 0:
-            return 0
-        return self.current_rating / self.current_votes
-
-    def __unicode__(self):
-        return _('%(user)s progress for %(badge)s') % {
-            'user': self.user, 'badge': self.badge}
-
-    def update_progress(self, assessment):
-        """Progress should be updated only once after the assessment
-        and all its ratings are saved, and the assessment final_rating
-        updated."""
-        badge = assessment.badge
-        self.current_votes += 1
-        self.current_rating += assessment.final_rating
-        self.update_date = datetime.datetime.now()
-        self.save()
-        # Try to award badge to user
-        badge.award_to(assessment.assessed)
 
 
 class Submission(ModelBase):
@@ -327,12 +290,16 @@ class Assessment(ModelBase):
     def update_final_rating(self):
         """Used on Rating save signal to update the final
         rating for the assessment"""
+        if self.ready:
+            return
         ratings = Rating.objects.filter(assessment=self)
         self.final_rating = ratings.aggregate(
             final_rating=Avg('score'))['final_rating'] or 0
         if ratings.count() == self.badge.rubrics.count():
             self.ready = True
         self.save()
+        if self.ready:
+            self.badge.award_to(self.assessed, self.submission)
 
     @classmethod
     def compute_average_rating(cls, assessments):
@@ -404,12 +371,7 @@ def post_rating_save(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     if created and isinstance(instance, Rating):
-        assessment = instance.assessment
-        badge = assessment.badge
-        assessment.update_final_rating()
-        if assessment.ready:
-            progress = badge.progress_for(assessment.assessed)
-            progress.update_progress(assessment)
+        instance.assessment.update_final_rating()
 
 post_save.connect(post_rating_save, sender=Rating,
     dispatch_uid='badges_post_rating_save')
@@ -419,11 +381,7 @@ def post_assessment_save(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     if created and isinstance(instance, Assessment):
-        badge = instance.badge
         instance.update_final_rating()
-        if instance.ready:
-            progress = badge.progress_for(instance.assessed)
-            progress.update_progress(instance)
 
 post_save.connect(post_assessment_save, sender=Assessment,
     dispatch_uid='badges_post_assessment_save')

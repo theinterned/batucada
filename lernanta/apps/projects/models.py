@@ -312,10 +312,8 @@ class Project(ModelBase):
             page__project=self, page__deleted=False,
             unchecked_on__isnull=True, user=user).count()
         if total_count == completed_count:
-            from badges.models import Award
             for badge in self.completion_badges.all():
-                if badge.is_eligible(user):
-                    Award.objects.get_or_create(user=user, badge=badge)
+                badge.award_to(user)
 
     def completed_tasks_users(self):
         total_count = self.pages.filter(listed=True,
