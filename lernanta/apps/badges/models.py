@@ -362,8 +362,6 @@ class Rating(ModelBase):
     assessment = models.ForeignKey('badges.Assessment', related_name='ratings')
     score = models.PositiveIntegerField(default=1, choices=RATING_CHOICES)
     rubric = models.ForeignKey('badges.Rubric', related_name='ratings')
-    created_on = models.DateTimeField(auto_now_add=True,
-        default=datetime.datetime.now)
 
     def __unicode__(self):
         return _('%(score)s for %(rubric)s') % {
