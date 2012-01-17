@@ -38,23 +38,6 @@ class Badge(ModelBase):
     prerequisites = models.ManyToManyField('self', symmetrical=False,
         blank=True, null=True)
 
-    SELF = 'self'
-    PEER = 'peer'
-    STEALTH = 'stealth'
-
-    ASSESSMENT_TYPE_CHOICES = (
-        (SELF, _('Self assessment -- able to get the badge without ' \
-                        'outside assessment')),
-        (PEER, _('Peer assessment -- community or skill badges users ' \
-                        'grant each other')),
-        (STEALTH, _('Stealth assessment -- badges granted by the system '\
-                        'based on supplied logic. Accumulative.'))
-    )
-
-    assessment_type = models.CharField(max_length=30,
-        choices=ASSESSMENT_TYPE_CHOICES,
-        default=SELF, null=True, blank=False)
-
     COMPLETION = 'completion/aggregate'
     SKILL = 'skill'
     COMMUNITY = 'peer-to-peer/community'
@@ -187,8 +170,7 @@ class Badge(ModelBase):
 
     def other_badges_can_apply_for(self):
         badges = Badge.objects.exclude(
-            id=self.id).filter(badge_type=Badge.SKILL).filter(
-            assessment_type=Badge.PEER)
+            id=self.id).filter(badge_type=Badge.SKILL)
         badge_groups = self.groups.values('id')
         related_badges = badges.filter(
             groups__in=badge_groups).distinct()
