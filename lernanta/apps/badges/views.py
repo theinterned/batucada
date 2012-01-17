@@ -71,7 +71,7 @@ def show_badge(request, slug):
         return pilot_badge_redirect(request, slug)
     is_eligible = False
     applications = []
-    peer_assessment = (badge.assessment_type == Badge.PEER)
+
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
     other_badge = (badge.badge_type == Badge.OTHER)
@@ -90,8 +90,8 @@ def show_badge(request, slug):
     context = {
         'badge': badge,
         'is_eligible': is_eligible,
-        'peer_skill': peer_assessment and skill_badge,
-        'peer_community': peer_assessment and community_badge,
+        'peer_skill': skill_badge,
+        'peer_community': community_badge,
         'other_badge': other_badge,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
@@ -138,8 +138,7 @@ def create_badge(request):
 
 @login_required
 def create_submission(request, slug):
-    badge = get_object_or_404(Badge, slug=slug,
-        assessment_type=Badge.PEER, badge_type=Badge.SKILL)
+    badge = get_object_or_404(Badge, slug=slug, badge_type=Badge.SKILL)
     user = request.user.get_profile()
     if not badge.is_eligible(user):
         messages.error(request,
@@ -309,8 +308,7 @@ def show_assessment(request, slug, assessment_id):
 
 @login_required
 def create_assessment(request, slug):
-    badge = get_object_or_404(Badge, slug=slug,
-        assessment_type=Badge.PEER, badge_type=Badge.COMMUNITY)
+    badge = get_object_or_404(Badge, slug=slug, badge_type=Badge.COMMUNITY)
     user = request.user.get_profile()
     assessment = None
     if request.method == 'POST':
@@ -346,8 +344,7 @@ def create_assessment(request, slug):
 
 @login_required
 def matching_peers(request, slug):
-    badge = get_object_or_404(Badge, slug=slug,
-        assessment_type=Badge.PEER, badge_type=Badge.COMMUNITY)
+    badge = get_object_or_404(Badge, slug=slug, badge_type=Badge.COMMUNITY)
     if len(request.GET['term']) == 0:
         raise http.Http404
     peers = badge.get_peers(request.user.get_profile())
@@ -362,7 +359,6 @@ def show_user_awards(request, slug, username):
     profile = get_object_or_404(UserProfile, username=username)
     awards_count = badge.awards.filter(user=profile).count()
 
-    peer_assessment = (badge.assessment_type == Badge.PEER)
     skill_badge = (badge.badge_type == Badge.SKILL)
     community_badge = (badge.badge_type == Badge.COMMUNITY)
     submissions = badge.submissions.filter(author=profile).order_by(
@@ -376,8 +372,8 @@ def show_user_awards(request, slug, username):
         'badge': badge,
         'profile': profile,
         'awards_count': awards_count,
-        'peer_skill': peer_assessment and skill_badge,
-        'peer_community': peer_assessment and community_badge,
+        'peer_skill': skill_badge,
+        'peer_community': community_badge,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
         'submissions': submissions,

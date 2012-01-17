@@ -269,10 +269,7 @@ def tasks_list_wall(request, project, user, toggled_tasks=True):
     hidde_tasks_complete_msg = (progressbar_value != 100)
     adopter_request = (not is_organizing and not adopter)
     next_projects = project.next_projects.all()
-    # First self+completion badges and then peer+skill badges.
-    # FIXME: if other types of badges are added to get_project_badges().
-    next_badges = project.get_project_badges().order_by('-assessment_type',
-        'badge_type', 'id')
+    next_badges = project.get_project_badges().order_by('id')
     context = {
         'tasks_count': tasks_count,
         'completed_count': completed_count,
