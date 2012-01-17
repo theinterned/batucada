@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from badges.models import Badge, Rubric, Award, Logic
-from badges.models import Submission, Assessment, Rating, Progress
+from badges.models import Submission, Assessment, Rating
 
 
 class BadgeAdmin(admin.ModelAdmin):
@@ -31,11 +31,6 @@ class AssessmentAdmin(admin.ModelAdmin):
 class RatingAdmin(admin.ModelAdmin):
     pass
 
-
-class ProgressAdmin(admin.ModelAdmin):
-    pass
-
-
 admin.site.register(Badge, BadgeAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(Award, AwardAdmin)
@@ -43,4 +38,3 @@ admin.site.register(Logic, LogicAdmin)
 admin.site.register(Submission, SubmissionAdmin)
 admin.site.register(Assessment, AssessmentAdmin)
 admin.site.register(Rating, RatingAdmin)
-admin.site.register(Progress, ProgressAdmin)
