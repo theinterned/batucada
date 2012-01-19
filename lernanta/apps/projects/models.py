@@ -366,13 +366,17 @@ class Project(ModelBase):
         else:
             return Badge.objects.none()
 
-    def get_awarded_badges(self, user, only_peer_skill=False):
+    def get_awarded_badges(self, user, exclude_completion_badges=False):
         from badges.models import Badge, Award
         if user.is_authenticated():
             profile = user.get_profile()
+            project_badges = self.badges.all()
+            if exclude_completion_badges:
+                completion_badges = self.completion_badges.all()
+                project_badges = project_badges.exclude(
+                    id__in=completion_badges.values('id'))
             awarded_badges = Award.objects.filter(
                 user=profile).values('badge_id')
-            project_badges = self.get_project_badges(only_peer_skill)
             return project_badges.filter(
                 id__in=awarded_badges)
         else:

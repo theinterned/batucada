@@ -178,16 +178,16 @@ register.inclusion_tag('projects/_task_list.html')(task_list)
 
 def tasks_completed_msg(project, user, start_hidden=True,
         adopter_request=True):
-    awarded_peer_skill_badges = project.get_awarded_badges(
-        user, only_peer_skill=True)
-    awarded_task_completion_badges = project.get_upon_completion_badges(
+    awarded_non_completion_badges = project.get_awarded_badges(
+        user, exclude_completion_badges=True)
+    awarded_completion_badges = project.get_upon_completion_badges(
         user)
     # Manually include self+completed badges so they are in the awarded badges
     # list that is displayed when all tasks are completed (even if the django
     # post save signal that awards those badges has not run yet).
     awarded_badges = Badge.objects.filter(
-        Q(id__in=awarded_peer_skill_badges.values('id'))
-        | Q(id__in=awarded_task_completion_badges.values('id')))
+        Q(id__in=awarded_non_completion_badges.values('id'))
+        | Q(id__in=awarded_completion_badges.values('id')))
     badges_in_progress = project.get_badges_in_progress(user)
     non_attempted_badges = project.get_non_attempted_badges(user)
     non_started_challenges = project.get_non_started_next_projects(
