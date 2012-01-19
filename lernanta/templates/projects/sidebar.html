@@ -284,7 +284,7 @@
     {% for skill_badge in peer_skill_badges %}
       {% if not forloop.first %}<hr class="badge-break">{% endif %}
       <div class="badge">
-        {% with awards_count=skill_badge.awards.count pending_count=skill_badge.get_pending_submissions|length %}
+        {% with awards_count=skill_badge.awards.count pending_count=skill_badge.get_pending_submissions.count %}
           <div class="badge-top">
             <a href="{{ skill_badge.get_absolute_url }}" title="{{ skill_badge|title }}"><img class="badge-graphic" src="{{ skill_badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
             <div class="badge-awarded">

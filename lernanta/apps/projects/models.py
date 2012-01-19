@@ -380,7 +380,7 @@ class Project(ModelBase):
             awarded_badges = Award.objects.filter(
                 user=profile).values('badge_id')
             attempted_badges = Submission.objects.filter(
-                author=profile).values('badge_id')
+                author=profile, pending=True).values('badge_id')
             project_badges = self.get_project_badges(
                 only_peer_skill=True)
             return project_badges.filter(
@@ -404,31 +404,6 @@ class Project(ModelBase):
             return project_badges.exclude(
                 id__in=attempted_badges).exclude(
                 id__in=awarded_badges)
-        else:
-            return Badge.objects.none()
-
-    def get_need_reviews_badges(self, user):
-        from badges.models import Badge, Award, Submission
-        if user.is_authenticated():
-            profile = user.get_profile()
-            project_badges = self.get_project_badges(
-                only_peer_skill=True)
-            peers_submissions = Submission.objects.filter(
-                badge__id__in=project_badges.values('id')).exclude(
-                author=profile)
-            peers_attempted_badges = project_badges.filter(
-                id__in=peers_submissions.values('badge_id'))
-            need_reviews_badges = []
-            for badge in peers_attempted_badges:
-                peers_awards = Award.objects.filter(
-                    badge=badge).exclude(user=profile)
-                pending_submissions = peers_submissions.filter(
-                    badge=badge).exclude(
-                    author__id__in=peers_awards.values('user_id'))
-                if pending_submissions.exists():
-                    need_reviews_badges.append(badge.id)
-            return project_badges.filter(
-                id__in=need_reviews_badges)
         else:
             return Badge.objects.none()
 

@@ -190,7 +190,6 @@ def tasks_completed_msg(project, user, start_hidden=True,
         | Q(id__in=awarded_task_completion_badges.values('id')))
     badges_in_progress = project.get_badges_in_progress(user)
     non_attempted_badges = project.get_non_attempted_badges(user)
-    need_reviews_badges = project.get_need_reviews_badges(user)
     non_started_challenges = project.get_non_started_next_projects(
         user)
     next_challenges = project.next_projects.all()

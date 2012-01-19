@@ -130,6 +130,10 @@ class Badge(ModelBase):
             # for the badge to be awarded.
             return None
 
+        if submission:
+            submission.pending = False
+            submission.save()
+
         if self.logic.unique:
             # Do not award the badge if the user can not have the badge
             # more than once and it was already awarded.
@@ -160,12 +164,7 @@ class Badge(ModelBase):
 
     def get_pending_submissions(self):
         """Submissions of users who haven't received the award yet"""
-        all_submissions = Submission.objects.filter(badge=self)
-        pending_submissions = []
-        for submission in all_submissions:
-            if not self.is_awarded_to(submission.author):
-                pending_submissions.append(submission)
-        return pending_submissions
+        return Submission.objects.filter(badge=self, pending=True)
 
     def get_peers(self, profile):
         from projects.models import Participation
@@ -225,6 +224,7 @@ class Submission(ModelBase):
     badge = models.ForeignKey('badges.Badge', related_name="submissions")
     created_on = models.DateTimeField(auto_now_add=True,
         default=datetime.datetime.now)
+    pending = models.BooleanField(default=True)
 
     def __unicode__(self):
         return _('%(author)s\'s application for %(badge)s') % {
