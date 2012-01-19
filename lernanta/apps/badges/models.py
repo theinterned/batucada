@@ -309,6 +309,8 @@ class Assessment(ModelBase):
         if ratings.count() == self.badge.rubrics.count():
             self.ready = True
         self.save()
+        if self.submission and not self.submission.pending:
+            return
         if self.ready:
             self.badge.award_to(self.assessed, self.submission)
 
