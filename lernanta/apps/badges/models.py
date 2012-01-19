@@ -208,6 +208,17 @@ class Logic(ModelBase):
     unique = models.BooleanField(
         help_text=_('If the badge can only be awarded to the user once.'),
         default=False)
+    SUBMISSION_REQUIRED = 'submission_required'
+    SUBMISSION_OPTIONAL = 'submission_optional'
+    NO_SUBMISSIONS = 'no_submissions'
+    SUBMISSION_STYLE_CHOICES = (
+        (SUBMISSION_REQUIRED, _('Submission Required')),
+        (SUBMISSION_OPTIONAL, _('Submission Optional')),
+        (NO_SUBMISSIONS, _('No submissions'))
+    )
+    submission_style = models.CharField(max_length=30,
+        choices=SUBMISSION_STYLE_CHOICES,
+        default=NO_SUBMISSIONS)
 
     def __unicode__(self):
         msg = _('%(min_votes)s peers -- by an average rating of %(min_avg)s -- ')

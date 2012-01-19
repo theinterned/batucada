@@ -6,7 +6,8 @@
             "name": "skill badge",
             "min_votes": 3, 
             "min_avg_rating": 3, 
-            "unique": true
+            "unique": true,
+            "submission_style": "submission_required"
         }
     },
     {
@@ -16,7 +17,8 @@
             "name": "community badge",
             "min_votes": 1, 
             "min_avg_rating": 0, 
-            "unique": false
+            "unique": false,
+            "submission_style": "no_submissions"
         }
     },
     {
@@ -26,7 +28,8 @@
             "name": "submission-enabled community badge",
             "min_votes": 1, 
             "min_avg_rating": 0, 
-            "unique": false
+            "unique": false,
+            "submission_style": "submission_optional"
         }
     },
     {
@@ -36,7 +39,8 @@
             "name": "stealth badge",
             "min_votes": 0, 
             "min_avg_rating": 0, 
-            "unique": true
+            "unique": true,
+            "submission_style": "no_submissions"
         }
     },
     {
@@ -46,7 +50,8 @@
             "name": "staff awarded badge",
             "min_votes": 0, 
             "min_avg_rating": 0, 
-            "unique": true
+            "unique": true,
+            "submission_style": "no_submissions"
         }
     }
 ]
