@@ -328,6 +328,11 @@ class Project(ModelBase):
         return Relationship.objects.filter(source__username__in=usernames,
             target_project=self, source__deleted=False)
 
+    def get_submission_enabled_badges(self):
+        from badges.models import Logic
+        return self.badges.exclude(
+            logic__submission_style=Logic.NO_SUBMISSIONS)
+
     def get_project_badges(self, only_self_completion=False,
             only_peer_skill=False, only_peer_community=False):
         from badges.models import Badge

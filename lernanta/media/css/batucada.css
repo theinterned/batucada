@@ -560,9 +560,9 @@ text-shadow: 0 1px 1px #fff;
 }
 
 .project-kind-challenge .bottom-sidebar .badge-break {
-border-top: 1px solid #eee;
-margin-top: 20px;
-margin-bottom: 20px;
+  border-top: 1px solid #eee; 
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 
