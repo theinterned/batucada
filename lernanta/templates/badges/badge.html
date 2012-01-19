@@ -84,7 +84,7 @@
       <br><a name="submissions"></a><br>
       <h2>{{ _('Peers that are applying for this badge:') }}</h2>
       <br>
-      <p>{{ badge.awards.count }} {{ _('Awarded') }}, {{ badge.get_pending_submissions|length }} {{ _('Pending') }}</p>
+      <p>{{ badge.awards.count }} {{ _('Awarded') }}, {{ badge.get_pending_submissions.count }} {{ _('Pending') }}</p>
       <ul id="posts">
         {% for submission in submissions_pagination_current_page.object_list %}
           {% include "badges/_submission_item.html" %}

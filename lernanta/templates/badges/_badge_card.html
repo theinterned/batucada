@@ -10,7 +10,7 @@
 	  {{ badge.awards.count }}
 	  {% if badge.badge_type == 'skill' %}
       <h3>{{ _('Pending') }}</h3>
-	    {{ badge.get_pending_submissions|length }}
+	    {{ badge.get_pending_submissions.count }}
       {% endif %}
   </div>
   
