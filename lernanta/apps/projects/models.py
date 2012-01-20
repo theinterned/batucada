@@ -338,21 +338,6 @@ class Project(ModelBase):
         return self.badges.filter(logic__min_votes=1).exclude(
             logic__submission_style=Logic.SUBMISSION_REQUIRED)
 
-    def get_project_badges(self, only_self_completion=False,
-            only_peer_skill=False, only_peer_community=False):
-        from badges.models import Badge
-        badge_types = []
-        if not only_self_completion and not only_peer_community:
-            badge_types.append(Badge.SKILL)
-        if not only_peer_skill and not only_peer_community:
-            badge_types.append(Badge.COMPLETION)
-        if not only_peer_skill and not only_self_completion:
-            badge_types.append(Badge.COMMUNITY)
-        if badge_types:
-            return self.badges.filter(badge_type__in=badge_types)
-        else:
-            return Badge.objects.none()
-
     def get_upon_completion_badges(self, user):
         from badges.models import Badge, Award
         if user.is_authenticated():
@@ -395,9 +380,7 @@ class Project(ModelBase):
                 user=profile).values('badge_id')
             attempted_badges = Submission.objects.filter(
                 author=profile, pending=True).values('badge_id')
-            project_badges = self.get_project_badges(
-                only_peer_skill=True)
-            return project_badges.filter(
+            return self.badges.filter(
                 id__in=attempted_badges).exclude(
                 id__in=awarded_badges)
         else:
@@ -411,8 +394,7 @@ class Project(ModelBase):
                 user=profile).values('badge_id')
             attempted_badges = Submission.objects.filter(
                 author=profile).values('badge_id')
-            project_badges = self.get_project_badges(
-                only_peer_skill=True)
+            project_badges = self.get_submission_enabled_badges()
             # Excluding both awarded and attempted badges
             # In case honorary award do not rely on submissions.
             return project_badges.exclude(
