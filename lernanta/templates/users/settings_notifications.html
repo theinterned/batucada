@@ -27,6 +27,12 @@
           {{ _('Someone starts following one of the study groups, courses, ... that I am organizing.') }}
         </label>
       </p>
+      <p>
+        <label for="id_no_email_new_badge_submission">
+          <input type="checkbox" id="id_no_email_new_badge_submission" name="no_email_new_badge_submission" {% if not no_email_new_badge_submission %}checked="checked"{% endif %} />
+          {{ _('Someone posts a submission for the badges of one of the challenges I adopted.') }}
+        </label>
+      </p>
       {% if participations %}
         <h3>{{ _('An organizer posts or replies to a message on the wall of:') }}<sup>1<sup></h3>
         <br>

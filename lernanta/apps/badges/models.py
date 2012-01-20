@@ -2,15 +2,18 @@ import datetime
 
 from django.db import models
 from django.conf import settings
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
+from django.contrib.sites.models import Site
 
 from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename, MultiQuerySet
 from drumbeat.models import ModelBase
 from richtext.models import RichTextField
+from users.tasks import SendUserEmail
+from l10n.models import localize_email
 
 
 def determine_upload_path(instance, filename):
@@ -199,6 +202,13 @@ class Badge(ModelBase):
         else:
             return False
 
+    def get_adopters(self):
+        from projects.models import Participation
+        return Participation.objects.filter(
+            project__in=self.groups.values('id'),
+            left_on__isnull=True).filter(
+            Q(adopter=True) | Q(organizing=True))
+
 
 class Rubric(ModelBase):
     """Criteria for which a badge application is judged"""
@@ -258,6 +268,18 @@ class Submission(ModelBase):
             'slug': self.badge.slug,
             'submission_id': self.id,
         })
+
+    def send_notification(self):
+        """Send notification when a new submission is posted."""
+        context = {
+            'submission': self,
+            'domain': Site.objects.get_current().domain,
+        }
+        subjects, bodies = localize_email(
+            'badges/emails/new_submission_subject.txt',
+            'badges/emails/new_submission.txt', context)
+        for adopter in self.badge.get_adopters():
+            SendUserEmail.apply_async((adopter.user, subjects, bodies))
 
 
 class Assessment(ModelBase):
@@ -409,3 +431,13 @@ def post_assessment_save(sender, **kwargs):
 
 post_save.connect(post_assessment_save, sender=Assessment,
     dispatch_uid='badges_post_assessment_save')
+
+
+def post_submission_save(sender, **kwargs):
+    instance = kwargs.get('instance', None)
+    created = kwargs.get('created', False)
+    if created and isinstance(instance, Submission):
+        instance.send_notification()
+
+post_save.connect(post_submission_save, sender=Submission,
+    dispatch_uid='badges_post_submission_save')

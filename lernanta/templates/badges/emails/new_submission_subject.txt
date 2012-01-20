@@ -1,0 +1,2 @@
+{% load l10n_tags %}
+[P2PU] {{ _('New submission for the') }} {{ submission.badge }}!
