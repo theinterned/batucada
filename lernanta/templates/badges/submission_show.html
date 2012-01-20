@@ -42,7 +42,7 @@
 			    </ul>
 			</div>
 	</div>
-    {% if can_assess %}
+    {% if can_review_submission %}
        <br class="clear"><br>
        <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Review This Submission') }}</a></p>
     {% endif %}

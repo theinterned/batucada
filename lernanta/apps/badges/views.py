@@ -19,7 +19,7 @@ from pagination.views import get_pagination_context
 
 from badges import forms as badge_forms
 from badges.pilot import get_badge_url
-from badges.models import Badge, Submission, Assessment
+from badges.models import Badge, Submission, Assessment, Logic
 
 log = logging.getLogger(__name__)
 
@@ -173,50 +173,69 @@ def show_submission(request, slug, submission_id):
     assessments = Assessment.objects.filter(submission=submission_id,
         ready=True)
     avg_rating = Assessment.compute_average_rating(assessments)
-    can_assess = True
-    if request.user.is_authenticated():
-        user = request.user.get_profile()
-        has_assessed = Assessment.objects.filter(assessor=user,
-            submission=submission)
-        if has_assessed or user == submission.author:
-            can_assess = False
+    can_review_submission = badge.can_review_submission(submission, request.user)
 
     context = {
         'badge': badge,
         'submission': submission,
         'assessments': assessments,
         'avg_rating': avg_rating,
-        'can_assess': can_assess,
+        'can_review_submission': can_review_submission,
         }
 
     return render_to_response('badges/submission_show.html', context,
                               context_instance=RequestContext(request))
 
 
-def submissions_list(request):
-    submissions = Submission.objects.all()
+def submissions_list(request, toggled_awards=False, toggled_mine=False):
+    pending_page_url = reverse('submissions_list')
+    awarded_page_url = reverse('awarded_submissions_list')
+    mine_page_url = reverse('mine_submissions_list')
+    context = {
+        'badge': None,
+        'toggled_awards': toggled_awards,
+        'toggled_mine': toggled_mine,
+        'pending_page_url': pending_page_url,
+        'awarded_page_url': awarded_page_url,
+        'mine_page_url': mine_page_url,
+    }
     return render_to_response('badges/submissions_list.html',
-        {'submissions': submissions},
-        context_instance=RequestContext(request))
+        context, context_instance=RequestContext(request))
 
 
-def matching_submissions(request, slug):
+def awarded_submissions_list(request):
+    return submissions_list(request, toggled_awards=True)
+
+def mine_submissions_list(request):
+    return submissions_list(request, toggled_mine=True)
+
+
+def matching_submissions(request, slug, toggled_awards=False, toggled_mine=False):
     badge = get_object_or_404(Badge, slug=slug)
-    submissions = []
-    pending = False
-    if 'filter' in request.GET:
-        filter_name = request.GET['filter']
-        if filter_name == 'pending':
-            submissions = badge.get_pending_submissions
-            pending = True
-        #TODO add more filters
-    else:
-        submissions = Submission.objects.filter(badge=badge)
+    if badge.logic.submission_style == Logic.NO_SUBMISSIONS:
+        raise http.Http404
+    kwargs = dict(slug=slug)
+    pending_page_url = reverse('matching_submissions', kwargs=kwargs)
+    awarded_page_url = reverse('awarded_matching_submissions', kwargs=kwargs)
+    mine_page_url = reverse('mine_matching_submissions', kwargs=kwargs)
+    context = {
+        'badge': badge,
+        'toggled_awards': toggled_awards,
+        'toggled_mine': toggled_mine,
+        'pending_page_url': pending_page_url,
+        'awarded_page_url': awarded_page_url,
+        'mine_page_url': mine_page_url,
+    }
     return render_to_response('badges/submissions_list.html',
-        {'submissions': submissions,
-         'badge': badge,
-         'pending': pending},
-        context_instance=RequestContext(request))
+        context, context_instance=RequestContext(request))
+
+
+def awarded_matching_submissions(request, slug):
+    return matching_submissions(request, slug, toggled_awards=True)
+
+
+def mine_matching_submissions(request, slug):
+    return matching_submissions(request, slug, toggled_mine=True)
 
  
 @login_required

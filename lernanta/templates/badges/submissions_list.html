@@ -1,64 +1,32 @@
 {% extends "badges/base.html" %}
 {% load l10n_tags %}
-{% load pagination_tags %}
-{% load truncate_chars %}
+{% load badge_tags %}
 
 {% block bodyclasses %}submissions-list{% endblock %}
 
+{% block title %}{% if badge %}{{ badge }} {% endif %} {{ _('Submissions') }}{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url submissions_list %}">{{ _('Submissions') }}</a>
+  {% if badge %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url matching_submissions slug=badge.slug %}">{{ badge }}</a>
+  {% endif %}
+{% endblock %}
+
 {% block body %}
   <div id="main">
-    {% if badge %}<div class="back-nav"><a href="{% locale_url submissions_list %}">← <span>{{ _('Go back to all badge submissions') }}</span></a></div>{% endif %}
     <br>
     {% if badge %}
-    <div id="badge-image">
-	   <a href="{% locale_url badges_show slug=badge.slug %}" 
-	     title="{{ badge }}"><img src="{{ badge.get_image_url }}" 
-	     width="155" height="155" alt="{{ badge.name }}"/><br>
-	     {{ badge.name }}
-	   </a>
-       <br>
-       {% if pending %}
-         {{ _('Pending ') }}
-       {% endif %}
-       {{ _('Submissions')}}
-    </div>
-   
+      <div id="badge-image">
+        <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+          <img src="{{ badge.get_image_url }}" width="155" height="155" alt="{{ badge.name }}"/>
+          <br>
+          {{ badge.name }}
+        </a>
+      </div>
     {% endif %}
-    <div id="submission-list" {% if badge %} class="has-badge" {% endif %}>
-      {% if submissions %}
-	      <ul>
-	      {% for submission in submissions %}
-	        <li>
-	        {% if not badge %}
-            <div class="badge">
-                <p><a href="{% locale_url badges_show slug=submission.badge.slug %}" 
-                title="{{ submission.badge }}"><img src="{{ submission.badge.get_image_url }}" 
-                width="50" height="50" alt="{{ submission.badge.name }}"/><br>
-                {{ submission.badge.name }} {{ _('Badge') }}</a>
-                </p>
-            </div>
-            {% endif %}
-	        <div class="user">
-	            <a href="{{ submission.author.get_absolute_url }}" title="{{ submission.author }}">
-		          <img src="{{ submission.author.image_or_default }}" width="50" height="50" alt="{{ submission.author }}"/>
-		        </a>
-	        </div>
-	        
-	        <div class="submission">
-	            <p><span class="username">{{ submission.author }}</span><br>
-	            {{ submission.content|truncatechars:75|removetags:"b span ul li p" }} <a href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('read more') }}</a>
-	        </div>
-	        <div class="action">
-	            <p><a class="button" href="{% locale_url submission_show slug=submission.badge.slug submission_id=submission.id %}">{{ _('Review This Submission') }}</a><br>
-	            <span class="hint small">{{ _('submitted') }} {{ submission.created_on|timesince }} {{ _('ago') }}</span></p>
-	        </div>
-	        <br class="clear"/>
-	      </li>
-	      {% endfor %}
-	      </ul>
-	  {% else %}
-	     <p>{{ _('No submissions available.') }}</p>
-      {% endif %}
-    </div>
+    {% badge_submissions request pending_page_url awarded_page_url mine_page_url toggled_awards toggled_mine badge %}
   </div>
 {% endblock %}

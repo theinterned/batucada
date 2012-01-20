@@ -188,6 +188,17 @@ class Badge(ModelBase):
             return False
         return True
 
+    def can_review_submission(self, submission, user):
+        if user.is_authenticated():
+            profile = user.get_profile()
+            if not submission.pending or profile == submission.author:
+                return False
+            assessments = submission.assessments.filter(
+                assessor=profile)
+            return not assessments.exists()
+        else:
+            return False
+
 
 class Rubric(ModelBase):
     """Criteria for which a badge application is judged"""

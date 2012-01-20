@@ -4325,17 +4325,50 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     display: none;
 }
 
+#submissions-list.has-badge {
+    width: 750px;
+    float: right;
+}
+
+#submissions-list #awarded-submission-list,
+#submissions-list #my-submissions-list,
+#submissions-list.toggled-awards #pending-submission-list,
+#submissions-list.toggled-mine #pending-submission-list {
+    display: none;
+}
+
+#submissions-list.toggled-awards #awarded-submission-list,
+#submissions-list.toggled-mine #my-submissions-list {
+    display: inline;
+}
+
 .submissions-list #badge-image {
     text-align: center;
     width:200px; 
     float:left;
 }
 
-#submission-list ul {
+#submissions-list .submissionListHeader {
+    width: 500px;
+}
+
+#submissions-list .submissionListSubeader {
+    width: 500px;
+    margin-bottom: 20px;
+}
+
+#submissions-list #submissions_list_toogle {
+   float: right;
+   margin: -55px 0 0 0;
+   display: block;
+   clear: both;
+}
+
+#submissions-list ul {
     margin-left: 0px;
 }
 
-#submission-list ul li { 
+#submissions-list ul li { 
     padding: 20px 15px 0 15px;
     list-style: none;
     background: #fbfbfb;
@@ -4348,96 +4381,96 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     border: 1px solid #eee;
 }
 
-#submission-list ul li div.submission, #submission-list ul li div.badge, #submission-list ul li div.user, #submission-list ul li div.action {
+#submissions-list ul li div.submission, #submissions-list ul li div.badge, #submissions-list ul li div.user, #submissions-list ul li div.action {
     width: 140px;
     display: table-cell;
     vertical-align: middle;
 }
 
-#submission-list ul li div.user {
+#submissions-list ul li div.user {
     width: 60px;
 }
 
-#submission-list ul li div.submission {
+#submissions-list ul li div.submission {
     width: 470px;
     padding-right: 40px;
 }
 
-#submission-list ul li div.badge {
+#submissions-list ul li div.badge {
     width: 100px;
     text-align: center;
     padding-right: 40px;
 }
 
-#submission-list ul li div.submission p, #submission-list ul li div.badge p, #submission-list ul li div.action p  {
+#submissions-list ul li div.submission p, #submissions-list ul li div.badge p, #submissions-list ul li div.action p  {
     margin: 0;
 }
 
-.submissions-list .has-badge {
+#submissions-list .has-badge {
     float: left;
 }
 
-#submission-list div.submission .username {
+#submissions-list div.submission .username {
     font-size: 18px;
 }
 
-#submission-list ul li a.button {
-	margin: 0 0 1px 0;
-	background-color: #7fbf4d;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
-	/* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
-	background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
-	background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
-	background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
-	background-image: linear-gradient(top, #7fbf4d, #63a62f);
-	border: 1px solid #63a62f;
-	border-bottom: 1px solid #5b992b;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-o-border-radius: 3px;
-	border-radius: 3px;
-	-webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
-	-moz-box-shadow: inset 0 1px 0 0 #96ca6d;
-	-ms-box-shadow: inset 0 1px 0 0 #96ca6d;
-	-o-box-shadow: inset 0 1px 0 0 #96ca6d;
-	box-shadow: inset 0 1px 0 0 #96ca6d;
-	color: #fff;
-	font: bold 10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	line-height: 1;
-	padding: 6px 4px 0 4px;
-	text-align: center;
-	text-shadow: 0 -1px 0 #4c9021;
-	width: 140px;
+#submissions-list ul li a.button {
+    margin: 0 0 1px 0;
+    background-color: #7fbf4d;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
+    /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
+    background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
+    background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
+    background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
+    background-image: linear-gradient(top, #7fbf4d, #63a62f);
+    border: 1px solid #63a62f;
+    border-bottom: 1px solid #5b992b;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+    -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+    -ms-box-shadow: inset 0 1px 0 0 #96ca6d;
+    -o-box-shadow: inset 0 1px 0 0 #96ca6d;
+    box-shadow: inset 0 1px 0 0 #96ca6d;
+    color: #fff;
+    font: bold 10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    line-height: 1;
+    padding: 6px 4px 0 4px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #4c9021;
+    width: 140px;
 }
 
-#submission-list ul li a.button:hover {
-	background-color: #76b347;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
-	/* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
-	background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
-	background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
-	background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
-	background-image: linear-gradient(top, #76b347, #5e9e2e);
-	-webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
-	-moz-box-shadow: inset 0 1px 0 0 #8dbf67;
-	-ms-box-shadow: inset 0 1px 0 0 #8dbf67;
-	-o-box-shadow: inset 0 1px 0 0 #8dbf67;
-	box-shadow: inset 0 1px 0 0 #8dbf67;
-	cursor: pointer;
-	text-decoration: none;
+#submissions-list ul li a.button:hover {
+    background-color: #76b347;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
+    /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
+    background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
+    background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
+    background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
+    background-image: linear-gradient(top, #76b347, #5e9e2e);
+    -webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
+    -moz-box-shadow: inset 0 1px 0 0 #8dbf67;
+    -ms-box-shadow: inset 0 1px 0 0 #8dbf67;
+    -o-box-shadow: inset 0 1px 0 0 #8dbf67;
+    box-shadow: inset 0 1px 0 0 #8dbf67;
+    cursor: pointer; 
+    text-decoration: none;
 }
 
-#submission-list ul li a.button:active {
-	border: 1px solid #5b992b;
-	border-bottom: 1px solid #538c27;
-	-webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
-	-moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
-	-ms-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
-	-o-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
-	box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee
+#submissions-list ul li a.button:active {
+    border: 1px solid #5b992b;
+    border-bottom: 1px solid #538c27;
+    -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+    -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+    -ms-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+    -o-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
 }
 
 .back-nav {
