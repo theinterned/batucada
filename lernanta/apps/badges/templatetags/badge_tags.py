@@ -5,8 +5,7 @@ register = template.Library()
 
 
 def give_badge_action(project, peer):
-    project_badges = project.get_project_badges(
-        only_peer_community=True)
+    project_badges = project.get_badges_peers_can_give()
     context = {'badges': project_badges, 'peer': peer}
     return context
 

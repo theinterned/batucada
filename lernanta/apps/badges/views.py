@@ -332,7 +332,6 @@ def create_assessment(request, slug):
         else:
             form = badge_forms.PeerAssessmentForm(
                 badge, user)
-        form = badge_forms.PeerAssessmentForm(badge, user)
     context = {
         'badge': badge,
         'assessment': assessment,

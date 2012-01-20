@@ -333,6 +333,11 @@ class Project(ModelBase):
         return self.badges.exclude(
             logic__submission_style=Logic.NO_SUBMISSIONS)
 
+    def get_badges_peers_can_give(self):
+        from badges.models import Logic
+        return self.badges.filter(logic__min_votes=1).exclude(
+            logic__submission_style=Logic.SUBMISSION_REQUIRED)
+
     def get_project_badges(self, only_self_completion=False,
             only_peer_skill=False, only_peer_community=False):
         from badges.models import Badge
