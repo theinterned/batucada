@@ -8,6 +8,7 @@ class AccountPreferences(ModelBase):
         'no_email_message_received',
         'no_email_new_follower',
         'no_email_new_project_follower',
+        'no_email_new_badge_submission',
     )
     key = models.CharField(max_length=50)
     value = models.CharField(max_length=100)
