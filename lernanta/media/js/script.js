@@ -395,7 +395,11 @@ $(document).ready(function() {
     if ($('#task_list_wall_toogle').length) {
         $( "#task_list_wall_toogle" ).buttonset();
     }
-    
+
+    if ($('#submissions-list-toogle').length) {
+        $( "#submissions-list-toogle" ).buttonset();
+    }
+
     if ($(".challenge-set-modal-action").length) {
         $(".challenge-set-modal-action").fancybox({
           'titlePosition'       : 'inside',
@@ -438,6 +442,24 @@ $(".project-kind-challenge #task_list_wall #task_list_wall_toogle #radio2").clic
     $('.project-kind-challenge #task_list_wall #task_list_section').hide();
     $('.project-kind-challenge #task_list_wall #progress').hide();
     $('.project-kind-challenge #task_list_wall #project_wall_section').show();
+});
+
+$("#submissions-list-toogle #radio1").click(function(){
+    $('#submissions-list #awarded-submission-list').hide();
+    $('#submissions-list #my-submissions-list').hide();
+    $('#submissions-list #pending-submission-list').show();
+});
+
+$("#submissions-list-toogle #radio2").click(function(){
+    $('#submissions-list #pending-submission-list').hide();
+    $('#submissions-list #my-submissions-list').hide();
+    $('#submissions-list #awarded-submission-list').show();
+});
+
+$("#submissions-list-toogle #radio3").click(function(){
+    $('#submissions-list #pending-submission-list').hide();
+    $('#submissions-list #awarded-submission-list').hide();
+    $('#submissions-list #my-submissions-list').show();
 });
 
 $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
