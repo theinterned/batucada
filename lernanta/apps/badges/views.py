@@ -69,18 +69,15 @@ def show_badge(request, slug):
         badge = Badge.objects.get(slug=slug)
     except Badge.DoesNotExist:
         return pilot_badge_redirect(request, slug)
-    is_eligible = False
-    applications = []
-
-    skill_badge = (badge.badge_type == Badge.SKILL)
-    community_badge = (badge.badge_type == Badge.COMMUNITY)
-    other_badge = (badge.badge_type == Badge.OTHER)
+    can_post_submission = badge.can_post_submission(request.user)
+    can_give_to_peer = badge.can_give_to_peer(request.user)
     submissions = badge.submissions.all().order_by(
         '-created_on')
     if request.user.is_authenticated():
         user = request.user.get_profile()
-        is_eligible = badge.is_eligible(user)
-        applications = submissions.filter(author=user)
+        user_submissions = submissions.filter(author=user)
+    else:
+        user_submissions = Submission.objects.none()
     awarded_user_ids = badge.awards.all().values('user_id')
     awarded_users = UserProfile.objects.filter(
         deleted=False, id__in=awarded_user_ids)
@@ -89,13 +86,11 @@ def show_badge(request, slug):
     other_badges_can_apply_for = badge.other_badges_can_apply_for()[:5]
     context = {
         'badge': badge,
-        'is_eligible': is_eligible,
-        'peer_skill': skill_badge,
-        'peer_community': community_badge,
-        'other_badge': other_badge,
+        'can_post_submission': can_post_submission,
+        'can_give_to_peer': can_give_to_peer,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
-        'applications': applications,
+        'user_submissions': user_submissions,
         'other_badges_can_apply_for': other_badges_can_apply_for,
     }
     context.update(get_pagination_context(request, awarded_users,
@@ -138,12 +133,12 @@ def create_badge(request):
 
 @login_required
 def create_submission(request, slug):
-    badge = get_object_or_404(Badge, slug=slug, badge_type=Badge.SKILL)
-    user = request.user.get_profile()
-    if not badge.is_eligible(user):
+    badge = get_object_or_404(Badge, slug=slug)
+    if not badge.can_post_submission(request.user):
         messages.error(request,
-            _('You are lacking one or more of the requirements.'))
+            _('You can not apply for this badge.'))
         return http.HttpResponseRedirect(badge.get_absolute_url())
+    user = request.user.get_profile()
     related_projects = badge.groups.all()
     submission = None
     if request.method == 'POST':
@@ -308,7 +303,11 @@ def show_assessment(request, slug, assessment_id):
 
 @login_required
 def create_assessment(request, slug):
-    badge = get_object_or_404(Badge, slug=slug, badge_type=Badge.COMMUNITY)
+    badge = get_object_or_404(Badge, slug=slug)
+    if not badge.can_give_to_peer(request.user):
+        messages.error(request,
+            _('You can not give this badge to a peer.'))
+        return http.HttpResponseRedirect(badge.get_absolute_url())
     user = request.user.get_profile()
     assessment = None
     if request.method == 'POST':
@@ -343,7 +342,7 @@ def create_assessment(request, slug):
 
 @login_required
 def matching_peers(request, slug):
-    badge = get_object_or_404(Badge, slug=slug, badge_type=Badge.COMMUNITY)
+    badge = get_object_or_404(Badge, slug=slug)
     if len(request.GET['term']) == 0:
         raise http.Http404
     peers = badge.get_peers(request.user.get_profile())
@@ -358,12 +357,10 @@ def show_user_awards(request, slug, username):
     profile = get_object_or_404(UserProfile, username=username)
     awards_count = badge.awards.filter(user=profile).count()
 
-    skill_badge = (badge.badge_type == Badge.SKILL)
-    community_badge = (badge.badge_type == Badge.COMMUNITY)
     submissions = badge.submissions.filter(author=profile).order_by(
         '-created_on')
     assessments = badge.assessments.filter(assessed=profile,
-        ready=True).order_by('-created_on')
+        ready=True, submission__isnull=True).order_by('-created_on')
     related_projects = badge.groups.all()
     prerequisites = badge.prerequisites.all()
 
@@ -371,8 +368,6 @@ def show_user_awards(request, slug, username):
         'badge': badge,
         'profile': profile,
         'awards_count': awards_count,
-        'peer_skill': skill_badge,
-        'peer_community': community_badge,
         'related_projects': related_projects,
         'prerequisites': prerequisites,
         'submissions': submissions,

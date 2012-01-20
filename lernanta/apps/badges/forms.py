@@ -11,10 +11,7 @@ class BadgeForm(forms.ModelForm):
     class Meta:
         model = Badge
         fields = ('name', 'description', 'image',
-            'badge_type', 'rubrics')
-        widgets = {
-            'badge_type': forms.RadioSelect,
-        }
+            'rubrics')
 
 
 class SubmissionForm(forms.ModelForm):

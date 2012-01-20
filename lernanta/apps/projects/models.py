@@ -335,7 +335,8 @@ class Project(ModelBase):
 
     def get_badges_peers_can_give(self):
         from badges.models import Logic
-        return self.badges.filter(logic__min_votes=1).exclude(
+        return self.badges.filter(logic__min_votes=1,
+            logic__min_avg_rating=0).exclude(
             logic__submission_style=Logic.SUBMISSION_REQUIRED)
 
     def get_upon_completion_badges(self, user):

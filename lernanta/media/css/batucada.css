@@ -4224,7 +4224,8 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 }
 
 .assessment-edit #submission-details, .submission-show #submission-details,
-#submission-edit-right #badge-description-box, #peer-assessment-right #badge-description-box {
+#submission-edit-right #badge-description-box, #peer-assessment-right #badge-description-box,
+.assess-submission #badge-description-box {
 	float: left;
 	padding: 1em;
 	border: 1px solid #eee;
@@ -4973,6 +4974,10 @@ table#metrics-scoreboard td.todays-count {
 
 .carousel-callback {
     display: none;
+}
+
+.jcarousel-skin-tango .jcarousel-item-placeholder {
+    background: #fbfbfb;
 }
 
 #challenge-sets ul.challenge-set-list {

@@ -30,7 +30,9 @@
 	   </div>
     <br class="clear"/>
     <br>
-    <h2>{{ _('How well is this peer was able to:') }}</h2>
+    {% if rating_forms %}
+      <h2>{{ _('How well is this peer was able to:') }}</h2>
+    {% endif %}
     <br>
 	{% block form %}
 	<fieldset id="assessment_edit" class="assessment edit tabpane">
@@ -50,8 +52,12 @@
         </ol>
 
 	    <div class="clear field{% if form.comment.errors %} error{% endif %}">
-	      <label for="id_comment">{{ _('Please explain your ratings.') }}</label>
-          <p class="hint">{{ _('What did this peer do well? What advice or suggestions would you give?') }}</p>
+          {% if rating_forms %}
+	        <label for="id_comment">{{ _('Please explain your ratings.') }}</label>
+            <p class="hint">{{ _('What did this peer do well? What advice or suggestions would you give?') }}</p>
+          {% else %}
+            <label for="id_comment">{{ _('Why do you feel this person deserves this badge? Any additional comments?') }}</label>
+          {% endif %}
 	      {{ form.comment }}
 	      {{ form.comment.errors }}
 	    </div>

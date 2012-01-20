@@ -37,36 +37,12 @@ class Badge(ModelBase):
         storage=storage.ImageStorage())
     prerequisites = models.ManyToManyField('self', symmetrical=False,
         blank=True, null=True)
-
-    COMPLETION = 'completion/aggregate'
-    SKILL = 'skill'
-    COMMUNITY = 'peer-to-peer/community'
-    STEALTH = 'stealth'
-    OTHER = 'other'
-
-    BADGE_TYPE_CHOICES = (
-        (COMPLETION, _('Completion/aggregate badge -- awarded by self '\
-            'assessments')),
-        (SKILL, _('Skill badge -- badges that are skill based and assessed '\
-            'by peers with related logic')),
-        (COMMUNITY, _('Peer-to-peer/community badge -- badges granted by '\
-            'peers')),
-        (STEALTH, _('Stealth badge -- system awarded badges')),
-        (OTHER, _('Other badges -- badges like course organizer or those '\
-            'staff issued'))
-    )
-
-    badge_type = models.CharField(max_length=30, choices=BADGE_TYPE_CHOICES,
-        default=COMPLETION, null=True, blank=False)
-
     rubrics = models.ManyToManyField('badges.Rubric', related_name='badges',
         null=True, blank=True)
     logic = models.ForeignKey('badges.Logic', related_name='badges',
         help_text=_('Regulates how the badge is awarded to users.'))
-
     groups = models.ManyToManyField('projects.Project', related_name='badges',
         null=True, blank=True)
-
     creator = models.ForeignKey('users.UserProfile', related_name='badges',
         blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True, blank=False)
@@ -180,13 +156,38 @@ class Badge(ModelBase):
 
     def other_badges_can_apply_for(self):
         badges = Badge.objects.exclude(
-            id=self.id).filter(badge_type=Badge.SKILL)
+            id=self.id).exclude(
+            logic__submission_style=Logic.NO_SUBMISSIONS)
         badge_groups = self.groups.values('id')
         related_badges = badges.filter(
             groups__in=badge_groups).distinct()
         non_related_badges = badges.exclude(
             groups__in=badge_groups).distinct()
         return MultiQuerySet(related_badges, non_related_badges)
+
+    def can_post_submission(self, user):
+        if self.logic.submission_style == Logic.NO_SUBMISSIONS:
+            return False
+        if user.is_authenticated():
+            profile = user.get_profile()
+            if not self.is_eligible(profile):
+                return False
+            awards = Award.objects.filter(user=profile, badge=self)
+            if self.logic.unique and awards.exists():
+                return False
+            return True
+        else:
+            return False
+
+    def can_give_to_peer(self, user):
+        if not user.is_authenticated():
+            return False
+        if self.logic.submission_style == Logic.SUBMISSION_REQUIRED:
+            return False
+        if self.logic.min_votes != 1 or self.logic.min_avg_rating > 0:
+            return False
+        return True
+
 
 class Rubric(ModelBase):
     """Criteria for which a badge application is judged"""
@@ -221,8 +222,7 @@ class Logic(ModelBase):
         default=NO_SUBMISSIONS)
 
     def __unicode__(self):
-        msg = _('%(min_votes)s peers -- by an average rating of %(min_avg)s -- ')
-        return msg % {'min_votes': self.min_votes, 'min_avg': self.min_avg_rating}
+        return self.name
 
 
 class Submission(ModelBase):
