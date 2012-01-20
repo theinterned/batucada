@@ -68,7 +68,6 @@ def can_view_metric_overview(func):
             request.user)
         if not metric_permissions[0]:
             msg = _("You aren't authorized to view the statistics' overview.")
-            print project.is_organizing(request.user)
             return HttpResponseForbidden(msg)
         return func(*args, **kwargs)
     return decorated

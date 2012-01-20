@@ -45,28 +45,19 @@
   </div>
     <br class="clear"/>
 
-    {% if peer_skill and submissions %}
+    {% if submissions or assessments %}
       <br><br>
-      <h1>{{ _('Submissions') }}</h1>
+      <h1>{{ _('Evidence') }}</h1>
       <br>
       <ul id="posts">
         {% for submission in submissions %}
           {% include "badges/_submission_item.html" %}
         {% endfor %}
-      </ul>
-      <br clear="both"><br>
-    {% endif %}
-
-    {% if peer_community and assessments %}
-      <br><br>
-      <h1>{{ _('Reviews') }}</h1>
-      <br>
-      <ul id="posts">
         {% for assessment in assessments %}
           {% include "badges/_assessment_item.html" %}
         {% endfor %}
       </ul>
     {% endif %}
-    
+
   </div>	
 {% endblock %}

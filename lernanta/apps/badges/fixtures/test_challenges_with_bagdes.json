@@ -1115,7 +1115,6 @@
             "rubrics": [], 
             "slug": "introduce-yourself", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/introduce-yourself.png", 
             "name": "Introduce Yourself"
@@ -1135,7 +1134,6 @@
             "rubrics": [], 
             "slug": "writing-html-by-hand", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/writing-html-by-hand.png", 
             "name": "Writing HTML by Hand"
@@ -1155,7 +1153,6 @@
             "rubrics": [], 
             "slug": "text-editor", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/text-editor.png", 
             "name": "Text Editor"
@@ -1175,7 +1172,6 @@
             "rubrics": [], 
             "slug": "html-is-all-around-you", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/html-is-all-around-you.png", 
             "name": "HTML is All Around You"
@@ -1195,7 +1191,6 @@
             "rubrics": [], 
             "slug": "domain-name", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/domain-name.png", 
             "name": "Domain Name"
@@ -1215,7 +1210,6 @@
             "rubrics": [], 
             "slug": "your-webspace", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/your-webspace.png", 
             "name": "Your Webspace"
@@ -1235,7 +1229,6 @@
             "rubrics": [], 
             "slug": "you-re-live", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/you-re-live.png", 
             "name": "You're LIVE"
@@ -1269,7 +1262,6 @@
             "rubrics": [], 
             "slug": "webmaking101-basic", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/webmaking101-basic.png", 
             "name": "Webmaking101 Basic"
@@ -1295,7 +1287,6 @@
             "rubrics": [], 
             "slug": "beta-hero", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "completion/aggregate", 
             "logic": 4, 
             "image": "images/sow_badges/beta-hero.png", 
             "name": "Beta Hero"
@@ -1315,7 +1306,6 @@
             "rubrics": [], 
             "slug": "wave", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "image": "images/sow_badges/wave.png", 
             "name": "Wave"
@@ -1339,7 +1329,6 @@
             "rubrics": [], 
             "slug": "super-blogger", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "peer-to-peer/community", 
             "logic": 3, 
             "image": "images/sow_badges/super-blogger.png", 
             "name": "Super Blogger"
@@ -1360,7 +1349,6 @@
             "rubrics": [], 
             "slug": "helpful-feedback", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "image": "images/sow_badges/helpful-feedback.png", 
             "name": "Helpful Feedback"
@@ -1382,7 +1370,6 @@
             "rubrics": [], 
             "slug": "team-player", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "peer-to-peer/community", 
             "logic": 2, 
             "image": "images/sow_badges/team-player.png", 
             "name": "Team Player"
@@ -1403,7 +1390,6 @@
             "rubrics": [], 
             "slug": "creative-presentation", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "peer-to-peer/community", 
             "logic": 3, 
             "image": "images/sow_badges/creative-presentation.png", 
             "name": "Creative Presentation"
@@ -1426,7 +1412,6 @@
             ], 
             "slug": "html-basic", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "skill", 
             "logic": 1, 
             "image": "images/sow_badges/html-basic.png", 
             "name": "HTML Basic"
@@ -1449,7 +1434,6 @@
             ], 
             "slug": "dns-basic", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "skill", 
             "logic": 1, 
             "image": "images/sow_badges/dns-basic.png", 
             "name": "DNS Basic"
@@ -1472,7 +1456,6 @@
             ], 
             "slug": "hosting", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "skill", 
             "logic": 1, 
             "image": "images/sow_badges/hosting.png", 
             "name": "Hosting"
@@ -1495,7 +1478,6 @@
             ], 
             "slug": "publishing", 
             "created_on": "2011-10-02 22:28:29", 
-            "badge_type": "skill", 
             "logic": 1, 
             "image": "images/sow_badges/publishing.png", 
             "name": "Publishing"
@@ -1513,7 +1495,6 @@
             "rubrics": [], 
             "slug": "organizer", 
             "created_on": "2011-10-25 22:28:29", 
-            "badge_type": "other", 
             "logic": 5, 
             "image": "images/sow_badges/organizer.png", 
             "name": "Organizer"
@@ -1531,7 +1512,6 @@
             "rubrics": [], 
             "slug": "challenge-creator", 
             "created_on": "2011-10-25 22:28:29", 
-            "badge_type": "other", 
             "logic": 5, 
             "image": "images/sow_badges/challenge-creator.png", 
             "name": "Challenge Creator"
@@ -1549,7 +1529,6 @@
             "rubrics": [], 
             "slug": "mentor", 
             "created_on": "2011-10-25 22:28:29", 
-            "badge_type": "other", 
             "logic": 5, 
             "image": "images/sow_badges/mentor.png", 
             "name": "Mentor"
@@ -1567,7 +1546,6 @@
             "rubrics": [], 
             "slug": "adopter", 
             "created_on": "2011-10-25 22:28:29", 
-            "badge_type": "other", 
             "logic": 5, 
             "image": "images/sow_badges/adopter.png", 
             "name": "Adopter"

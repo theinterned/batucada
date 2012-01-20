@@ -11,16 +11,13 @@
       <div id="badge-image">
         <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
         <br><br>
-	    {% if peer_skill %}
-	      {% if is_eligible %}
-	        {% if applications %}
-	          <p><a href="{% locale_url matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('View your Application') }}</a></p>
-	        {% else %}
-	          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
-	        {% endif %}
-	      {% endif %}
-	    {% endif %}
-	    {% if peer_community %}
+        {% if user_submissions %}
+          <p><a href="{% locale_url matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('View your Submissions') }}</a></p>
+        {% endif %}
+        {% if can_post_submission %}
+          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
+        {% endif %}
+	    {% if can_give_to_peer %}
 	      <p><a href="{% locale_url assessment_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Award Badge to Peer')}}</a></p>
 	    {% endif %}
       </div>
@@ -79,7 +76,7 @@
       {% endfor %}
     {% endif %}
 
-    {% if peer_skill and submissions_pagination_current_page.object_list %}
+    {% if submissions_pagination_current_page.object_list %}
       <hr>
       <br><a name="submissions"></a><br>
       <h2>{{ _('Peers that are applying for this badge:') }}</h2>
