@@ -220,7 +220,7 @@ class Rubric(ModelBase):
 
 class Logic(ModelBase):
     """Representation of the logic behind awarding a badge"""
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=40)
     min_votes = models.PositiveIntegerField(
         help_text=_('Minimum number of votes.'),
         default=0)
