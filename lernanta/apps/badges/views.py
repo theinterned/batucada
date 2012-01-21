@@ -170,7 +170,7 @@ def show_submission(request, slug, submission_id):
     submission = get_object_or_404(Submission, id=submission_id,
         badge__slug=slug)
     badge = submission.badge
-    assessments = Assessment.objects.filter(submission=submission_id,
+    assessments = Assessment.objects.filter(submission=submission,
         ready=True)
     avg_rating = Assessment.compute_average_rating(assessments)
     can_review_submission = badge.can_review_submission(submission, request.user)
