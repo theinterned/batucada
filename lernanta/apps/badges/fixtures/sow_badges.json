@@ -367,7 +367,7 @@
         "fields": {
             "groups": [], 
             "description": "The Organizer badge recognizes anyone at P2PU who has organized a course or a study group with at least one person completing it.", 
-            "requirements": "You have organized a course or a study group with at least one person completing it. This is a manually awarded badge. ",
+            "requirements": "You have organized a course or a study group with at least one person completing it. This is a manually awarded badge.",
             "creator": null, 
             "prerequisites": [], 
             "rubrics": [], 
