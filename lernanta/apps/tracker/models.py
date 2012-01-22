@@ -16,13 +16,16 @@ from users.models import UserProfile
 from tracker.utils import force_date
 
 
-def get_google_tracking_context(instance):
-    ct = ContentType.objects.get_for_model(
-        instance)
-    trackings = GoogleAnalyticsTracking.objects.filter(
-        target_content_type=ct, target_id=instance.pk)
-    codes = GoogleAnalyticsTrackingCode.objects.filter(
-        id__in=trackings.values('tracking_code_id'))
+def get_google_tracking_context(instance=None):
+    if instance:
+        ct = ContentType.objects.get_for_model(
+            instance)
+        trackings = GoogleAnalyticsTracking.objects.filter(
+            target_content_type=ct, target_id=instance.pk)
+        codes = GoogleAnalyticsTrackingCode.objects.filter(
+            id__in=trackings.values('tracking_code_id'))
+    else:
+        codes = GoogleAnalyticsTrackingCode.objects.all()
     return {'google_analytics_tracking_codes': codes}
 
 
