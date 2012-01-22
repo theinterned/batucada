@@ -18,6 +18,7 @@ from news.models import FeedEntry
 from drumbeat import messages
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
+from tracker import models as tracker_models
 
 
 def splash(request):
@@ -30,13 +31,16 @@ def splash(request):
     feed_entries = FeedEntry.objects.filter(
         page='splash').order_by('-created_on')[0:4]
     feed_url = settings.FEED_URLS['splash']
-    return render_to_response('dashboard/splash.html', {
+    context = {
         'activities': activities,
         'featured_project': project,
         'feed_entries': feed_entries,
         'feed_url': feed_url,
         'domain': Site.objects.get_current().domain,
-    }, context_instance=RequestContext(request))
+    }
+    context.update(tracker_models.get_google_tracking_context())
+    return render_to_response('dashboard/splash.html',
+        context, context_instance=RequestContext(request))
 
 
 @login_required
