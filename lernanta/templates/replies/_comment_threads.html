@@ -56,7 +56,7 @@
               {% if user.is_authenticated %}
                 {% if user|can_reply_comment:comment %}
                   <a class="action reply-to action-bottom" href="{% locale_url comment_reply comment_id=comment.id %}">{{ _('Reply') }}</a>
-                  {% if is_challenge and comment.scope_object and not user|can_edit_comment:comment %}
+                  {% if comment.scope_object and not user|can_edit_comment:comment %}
                     {% give_badge_action comment.scope_object comment.author %}
                   {% endif %}
                 {% endif %}
@@ -119,6 +119,9 @@
             {% if user.is_authenticated %}
               {% if user|can_reply_comment:reply %}
                 <a class="action reply-to action-bottom" href="{% locale_url comment_reply comment_id=reply.id %}">{{ _('Reply') }}</a>
+                {% if reply.scope_object and not user|can_edit_comment:reply %}
+                  {% give_badge_action reply.scope_object reply.author %}
+                {% endif %}
               {% endif %}
               {% if user|can_edit_comment:reply %}
                 <a class="action delete action-bottom" href="{% locale_url comment_delete comment_id=reply.id %}">{{ _('Delete') }}</a>
