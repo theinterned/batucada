@@ -41,11 +41,11 @@ def badge_submissions(request, pending_page_url, awarded_page_url,
         'toggled_mine': toggled_mine,
     }
     context.update(get_pagination_context(request, pending_submissions,
-        3, prefix='pending_submissions_'))
+        24, prefix='pending_submissions_'))
     context.update(get_pagination_context(request, awarded_submissions,
-        3, prefix='awarded_submissions_'))
+        24, prefix='awarded_submissions_'))
     context.update(get_pagination_context(request, my_submissions,
-        3, prefix='my_submissions_'))
+        24, prefix='my_submissions_'))
     return context
 
 register.inclusion_tag('badges/_submissions_list.html')(
