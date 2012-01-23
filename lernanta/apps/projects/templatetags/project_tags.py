@@ -223,8 +223,8 @@ def project_wall(request, project, discussion_area=False):
         activities = apply_filter(activities, 'messages')
     else:
         activities = filter_activities(request, activities)
-
-    if project.category == Project.CHALLENGE:
+    is_challenge = (project.category == Project.CHALLENGE)
+    if is_challenge:
         url = reverse('projects_discussion_area',
             kwargs=dict(slug=project.slug))
     else:
@@ -240,6 +240,7 @@ def project_wall(request, project, discussion_area=False):
         'discussion_area': discussion_area,
         'domain': Site.objects.get_current().domain,
         'wall_url': url,
+        'is_challenge': is_challenge,
     }
     context.update(get_pagination_context(request, activities))
     return context
