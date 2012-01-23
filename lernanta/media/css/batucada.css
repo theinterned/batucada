@@ -1841,6 +1841,15 @@ header {}
         line-height: 16px;
     }
 
+    .project-kind-challenge #posts .action-top .give_badge_action.action-bottom {
+        float: right;
+        margin-left: 18px;
+        margin-top: 0px;
+        margin-right: 0px;
+        font-size: 100%;
+
+    }
+
     .collaborative {
         background: url("/media/images/collaborative.png") 0 0 no-repeat;
         padding-left: 42px;
