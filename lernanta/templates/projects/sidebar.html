@@ -288,12 +288,12 @@
           <div class="badge-top">
             <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img class="badge-graphic" src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
             <div class="badge-awarded">
-              <a class="badge-awarded-header" href="{{ badge.get_absolute_url }}">{{ _('Awarded') }}</a>
-              <a class="badge-awarded-number" href="{{ badge.get_absolute_url }}">{{ awards_count }}</a>
+              <a class="badge-awarded-header" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ _('Awarded') }}</a>
+              <a class="badge-awarded-number" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ awards_count }}</a>
             </div>
             <div class="badge-pending">
-              <a class="badge-pending-header" href="{{ badge.get_absolute_url }}">{{ _('Pending') }}</a>
-              <a class="badge-pending-number" href="{{ badge.get_absolute_url }}">{{ pending_count }}</a>
+              <a class="badge-pending-header" href="{% locale_url matching_submissions slug=badge.slug %}">{{ _('Pending') }}</a>
+              <a class="badge-pending-number" href="{% locale_url matching_submissions slug=badge.slug %}">{{ pending_count }}</a>
             </div>
           </div>
           <div class="badge-bottom">
