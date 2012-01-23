@@ -298,7 +298,7 @@
           </div>
           <div class="badge-bottom">
             {% if pending_count %}
-              <a href="{{ badge.get_absolute_url }}">
+              <a href="{% locale_url matching_submissions slug=badge.slug %}">
                 {% blocktrans count counter=pending_count %}{{ counter }} peer needs your review!{% plural %}{{ counter }} peers need your review!{% endblocktrans %} {{ _('Go') }} →
               </a>
             {% endif %}
