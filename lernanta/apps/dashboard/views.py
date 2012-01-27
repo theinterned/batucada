@@ -19,6 +19,7 @@ from drumbeat import messages
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
 from tracker import models as tracker_models
+from links.models import Link
 
 
 def splash(request):
@@ -60,6 +61,15 @@ def dashboard(request):
     """Personalized dashboard for authenticated users."""
     try:
         profile = request.user.get_profile()
+        current_projects = profile.get_current_projects(only_public=False)
+        users_following = profile.following()
+        users_followers = profile.followers()
+        interests = profile.tags.filter(category='interest').exclude(
+            slug='').order_by('name')
+        desired_topics = profile.tags.exclude(slug='').filter(
+            category='desired_topic').order_by('name')
+        links = Link.objects.filter(user=profile,
+            project__isnull=True).order_by('index')
     except UserProfile.DoesNotExist:
         user = request.user
         username = ''
@@ -81,7 +91,12 @@ def dashboard(request):
     activities = filter_activities(request, activities)
     context = {
         'profile': profile,
-        'profile_view': False,
+        'current_projects': current_projects,
+        'users_following': users_following,
+        'users_followers': users_followers,
+        'interests': interests,
+        'desired_topics': desired_topics,
+        'links': links,
         'show_welcome': show_welcome,
         'domain': Site.objects.get_current().domain,
         'dashboard_url': reverse('dashboard'),
