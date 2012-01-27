@@ -1095,7 +1095,7 @@ header {}
 		border-bottom: 1px solid #ccc;
 	    box-shadow:  0 1px 0 rgba(255,255,255,0.8);
 	    -moz-box-shadow:  0 1px 0 rgba(255,255,255,0.8);
-	    -webkit-box-shadow:  0 1px 0 rgba(255,255,255,0.8);	    
+	    -webkit-box-shadow:  0 1px 0 rgba(255,255,255,0.8);
 	}
 
     .project-kind-challenge #sidebar .panel {
@@ -1214,9 +1214,7 @@ header {}
         #project-lead .member-picture,
         #dashboard #sidebar .vcard .member-picture {
           float: left;
-          
         }
-        #user_profile .member-details,
         #project-lead .member-details,
         #dashboard #sidebar .vcard .member-details {
           padding-left: 67px;
@@ -5392,4 +5390,180 @@ table#metrics-scoreboard td.todays-count {
 #challenge-set .right {
     width: 266px;
     float: left;
+}
+
+#user_profile #sidebar img.member-picture {
+   border: none;
+}
+
+#user_profile #sidebar .member-details {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+#user_profile #sidebar .vcard .member-details h1 {
+    margin-top: 250px;
+    color: #333333;
+}
+
+#user_profile #sidebar .member-bio {
+    color: #aaaaaa;
+    margin-bottom: 0pt;#
+}
+
+#user_profile #sidebar .member-location {
+    margin-top: 0pt;
+    margin-right: 0pt;
+    margin-bottom: 10px;
+    margin-left: 0pt;
+}
+
+#user_profile #sidebar .member-location dt,
+#user_profile #sidebar .member-location dd {
+    font-size: 10px;
+    color: #666666;
+}
+
+#user_profile #sidebar .panel{
+    border-bottom: none;
+}
+
+#user_profile #sidebar #member_links ul li {
+    width: 246px;
+}
+
+#user_profile .profile-wrapper {
+    float: right;
+    width: 652px;
+}
+
+#user_profile .profile-wrapper .profile-top {
+    width: 652px;
+    float: right;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: solid 1px #EEE;
+    display: block;
+    margin-bottom: 20px;
+}
+
+#user_profile .profile-wrapper .profile-top ul.followers-following {
+    list-style: none;
+    padding: 10px 10px 10px 30px;
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    background: #fbfbfb;
+    border: 1px solid #eee;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#user_profile .profile-wrapper .profile-top ul.followers-following li {
+    display: inline-block;
+    width: 148px;
+}
+
+#user_profile .profile-wrapper .profile-top ul.followers-following li span.title {
+    font-weight: bold;
+    display: inline-block;
+}
+
+#user_profile .profile-wrapper .profile-top ul.followers-following li span.number {
+    width: 40px;
+    display: inline-block;
+    text-align: right;
+}
+
+#user_profile .profile-wrapper .profile-top ul.followers-following li:last-child {
+    margin-right: 0;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-courses {
+    margin-top: 20px;
+    height: 130px;
+    overflow: hidden;
+    background: #fbfbfb;
+    border: 1px solid #eee;
+     -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+     -ms-border-radius: 3px;
+     -o-border-radius: 3px;
+     border-radius: 3px;
+    padding: 10px;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-courses img {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-badges {
+    height: 100px;
+    overflow: hidden;
+    display: block;
+    background: #fbfbfb;
+    border: 1px solid #eee;
+     -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+     -ms-border-radius: 3px;
+     -o-border-radius: 3px;
+     border-radius: 3px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-badges h3,
+#user_profile .profile-wrapper .profile-top .profile-courses h3 {
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-badges a.show-all-badges,
+#user_profile .profile-wrapper .profile-top .profile-courses a.show-all-courses {
+    font-size: 12px;
+    margin-left: 5px;
+    font-weight: 500;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-badges ul,
+#user_profile .profile-wrapper .profile-top .profile-courses ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-badges ul li {
+    display: inline-block;
+    margin-right: 16px;
+    margin-bottom: 10px;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-courses ul li {
+    display: inline-block;
+    margin-right: 2px;
+    margin-bottom: 10px;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-badges ul li:last-child,
+#user_profile .profile-wrapper .profile-top .profile-courses ul li:last-child {
+    margin-right: 0;
+}
+
+#user_profile .profile-wrapper .profile-top .profile-interests h3 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#user_profile #main {
+    float: right;
 }

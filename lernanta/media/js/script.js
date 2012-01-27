@@ -551,6 +551,18 @@ $('.project-kind-challenge a#leave_direct_signup_button').bind('click', function
     $(this).parent().submit();
 });
 
+$('#user_profile .profile-wrapper a.show-all-badges').click(function(){
+    $('#user_profile .profile-wrapper div.profile-badges').animate({height: '100%'}, 'slow');
+    $('#user_profile .profile-wrapper div.profile-badges li').fadeIn('slow');
+    $('#user_profile .profile-wrapper a.show-all-badges').toggle();
+});
+
+$('#user_profile .profile-wrapper a.show-all-courses').click(function(){
+    $('#user_profile .profile-wrapper div.profile-courses').animate({height: '100%'}, 'slow');
+    $('#user_profile .profile-wrapper div.profile-courses li').fadeIn('slow');
+    $('#user_profile .profile-wrapper a.show-all-courses').toggle();
+});
+
 var getSourceFromUrl = function(url) {
     var a = document.createElement('a');
     a.href = url;
