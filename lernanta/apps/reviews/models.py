@@ -18,6 +18,7 @@ class Reviewer(ModelBase):
 class Review(ModelBase):
 
     project = models.ForeignKey('projects.Project', related_name='reviews')
+    author = models.ForeignKey('users.UserProfile', related_name='reviews')
     accepted = models.BooleanField(default=True)
     content = RichTextField(config_name='rich', blank='False')
 
