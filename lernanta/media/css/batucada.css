@@ -4540,12 +4540,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     margin: 0;
 }
 
-.badges-list .badge-list ul {
+.badges-list .badge-list ul, .challenge-set-modal-data ul {
     margin: 0;
     list-style: none;
 }
 
-.badges-list .badge-list .badges li, #other-badges li {
+.badges-list .badge-list .badges li, #other-badges li,
+.challenge-set-modal-data li {
     display: inline-block;
     padding-bottom: 2em;
     text-align: center;
@@ -4553,7 +4554,13 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     width: 150px;
 }
 
-.badges-list .badge-list .badges li .badge-name, #other-badges .badge-name {
+.challenge-set-modal-data li {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.badges-list .badge-list .badges li .badge-name, #other-badges .badge-name,
+.challenge-set-modal-data .project-name {
     display: block;
     padding: 5px;
 }
