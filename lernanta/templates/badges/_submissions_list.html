@@ -2,6 +2,10 @@
 {% load pagination_tags %}
 
 <div id="submissions-list" class="{% if badge %}has-badge{% endif %} {% if toggled_awards %}toggled-awards{% endif %}{% if toggled_mine %}toggled-mine{% endif %}">
+  <h1 class="submissionListHeader">
+    <strong><i>{{ _('WOW!') }}</i></strong> {{ _('Check out all these submissions!') }}
+  </h1>
+  <p class="submissionListSubheader">{{ _('Please take a few minutes and help a fellow peer.') }}</p>
   <div id="submissions-list-toogle">
     <input type="radio" id="radio1" name="radio" {% if not toggled_awards and not toggled_mine %}checked="checked"{% endif %} /><label for="radio1">{{ _('Awaiting Review') }}</label>
     <input type="radio" id="radio2" name="radio" {% if toggled_awards %}checked="checked"{% endif %}/><label for="radio2">{{ _('Previously Awarded') }}</label>
