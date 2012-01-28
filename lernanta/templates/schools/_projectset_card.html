@@ -56,13 +56,16 @@
       <ul>
         {% for project in projectset.projects.all|slice:":6" %}
           <li>
-            {% if project.image %}
-              <img src="/media/{{ project.image }}" width="200" height="123" alt="{{ project.name }}"/>
-            {% else %}
-              <img src="/media/images/project-missing.png" width="200" height="123" alt="{{ project.name }}"/>
-            {% endif %}
-        </li>
-       {% endfor %} 
+            <a href="{{ project.get_absolute_url }}" title="{{ project }}">
+              {% if project.image %}
+                <img src="/media/{{ project.image }}" width="200" height="123" alt="{{ project.name }}"/>
+              {% else %}
+                <img src="/media/images/project-missing.png" width="200" height="123" alt="{{ project.name }}"/>
+              {% endif %}
+              <span class="project-name">{{ project.name }}</span>
+            </a>
+          </li>
+        {% endfor %} 
       </ul>
       <div class="challenge-set-button"><a href="{{ projectset.get_absolute_url }}">{{ _('View All Challenges') }}</a></div>
     </div>
