@@ -1,0 +1,53 @@
+{% extends "reviews/base.html" %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+
+{% block bodyclasses %}projects-reviews-list{% endblock %}
+
+{% block body %}
+  <div id="main">
+    <div id="projects-reviews-list" class="{% if toggled_under_review %}toggled-under-review{% endif %}{% if toggled_accepted %}toggled-accepted{% endif %}">
+      <div id="projects-reviews-list-toggle">
+        <input type="radio" id="radio1" name="radio" {% if not toggled_under_review and not toggled_accepted %}checked="checked"{% endif %} /><label for="radio1">{{ _('Pending') }}</label>
+        <input type="radio" id="radio2" name="radio" {% if toggled_under_review %}checked="checked"{% endif %}/><label for="radio2">{{ _('Under Review') }}</label>
+        <input type="radio" id="radio3" name="radio" {% if toggled_accepted %}checked="checked"{% endif %}/><label for="radio3">{{ _('Accepted') }}</label>
+      </div>
+      <div id="pending-projects-reviews-list">
+        <ul>
+          {% for project in pending_pagination_current_page.object_list %}
+            <li>
+              {% include "reviews/_projects_reviews_list_item.html" %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% with prefix='pending_' page_url=pending_page_url %}
+          {% pagination_links %}
+        {% endwith %}
+      </div>
+      <div id="under-review-projects-reviews-list">
+        <ul>
+          {% for project in under_review_pagination_current_page.object_list %}
+            <li>
+              {% include "reviews/_projects_reviews_list_item.html" %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% with prefix='under_review_' page_url=under_review_page_url %}
+          {% pagination_links %}
+        {% endwith %}
+      </div>
+      <div id="accepted-projects-reviews-list">
+        <ul>
+          {% for project in accepted_pagination_current_page.object_list %}
+            <li>
+              {% include "reviews/_projects_reviews_list_item.html" %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% with prefix='accepted_' page_url=accepted_page_url %}
+          {% pagination_links %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

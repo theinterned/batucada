@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from django.db import models
 
@@ -19,9 +20,17 @@ class Review(ModelBase):
 
     project = models.ForeignKey('projects.Project', related_name='reviews')
     author = models.ForeignKey('users.UserProfile', related_name='reviews')
-    accepted = models.BooleanField(default=True)
-    content = RichTextField(config_name='rich', blank='False')
+    accepted = models.BooleanField(default=False)
+    content = RichTextField(config_name='rich', blank=False)
+    created_on = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now)
 
     def __unicode__(self):
         return 'Review for %s' % self.project.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('show_project_reviews', (), {
+            'slug': self.project.slug,
+        })
 
