@@ -400,6 +400,10 @@ $(document).ready(function() {
         $( "#submissions-list-toogle" ).buttonset();
     }
 
+        if ($('#projects-reviews-list-toggle').length) {
+        $( "#projects-reviews-list-toggle" ).buttonset();
+    }
+
     if ($(".challenge-set-modal-action").length) {
         $(".challenge-set-modal-action").fancybox({
           'titlePosition'       : 'inside',
@@ -460,6 +464,24 @@ $("#submissions-list-toogle #radio3").click(function(){
     $('#submissions-list #pending-submission-list').hide();
     $('#submissions-list #awarded-submission-list').hide();
     $('#submissions-list #my-submissions-list').show();
+});
+
+$("#projects-reviews-list-toggle #radio1").click(function(){
+    $('#projects-reviews-list #under-review-projects-reviews-list').hide();
+    $('#projects-reviews-list #accepted-projects-reviews-list').hide();
+    $('#projects-reviews-list #pending-projects-reviews-list').show();
+});
+
+$("#projects-reviews-list-toggle #radio2").click(function(){
+    $('#projects-reviews-list #pending-projects-reviews-list').hide();
+    $('#projects-reviews-list #accepted-projects-reviews-list').hide();
+    $('#projects-reviews-list #under-review-projects-reviews-list').show();
+});
+
+$("#projects-reviews-list-toggle #radio3").click(function(){
+    $('#projects-reviews-list #pending-projects-reviews-list').hide();
+    $('#projects-reviews-list #under-review-projects-reviews-list').hide();
+    $('#projects-reviews-list #accepted-projects-reviews-list').show();
 });
 
 $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){

@@ -1568,7 +1568,7 @@ header {}
 }
 
 #project_gallery #main, #project_directory #main, #school_home #main , #user_list #main, #one-column-page #main,
-#badges-page #main, #projectset_home #main {
+#badges-page #main, #projectset_home #main, #project-reviews #main {
   width: 970px;
   margin-right: 40px;
   margin-left: 0;
@@ -4343,12 +4343,18 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 #submissions-list #awarded-submission-list,
 #submissions-list #my-submissions-list,
 #submissions-list.toggled-awards #pending-submission-list,
-#submissions-list.toggled-mine #pending-submission-list {
+#submissions-list.toggled-mine #pending-submission-list,
+#projects-reviews-list #under-review-projects-reviews-list,
+#projects-reviews-list #accepted-projects-reviews-list,
+#projects-reviews-list.toggled-under-review #pending-projects-reviews-list,
+#projects-reviews-list.toggled-accepted #pending-projects-reviews-list {
     display: none;
 }
 
 #submissions-list.toggled-awards #awarded-submission-list,
-#submissions-list.toggled-mine #my-submissions-list {
+#submissions-list.toggled-mine #my-submissions-list,
+#projects-reviews-list.toggled-under-review #under-review-projects-reviews-list,
+#projects-reviews-list.toggled-accepted #accepted-projects-reviews-list {
     display: inline;
 }
 
@@ -4374,11 +4380,17 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
    clear: both;
 }
 
-#submissions-list ul {
+#submissions-list ul,
+#projects-reviews-list ul {
     margin-left: 0px;
 }
 
-#submissions-list ul li { 
+#projects-reviews-list #projects-reviews-list-toggle {
+    margin-bottom: 10px;
+}
+
+#submissions-list ul li,
+#projects-reviews-list ul li {
     padding: 20px 15px 0 15px;
     list-style: none;
     background: #fbfbfb;
@@ -4389,6 +4401,10 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     -o-border-radius: 3px;
     border-radius: 3px;
     border: 1px solid #eee;
+}
+
+#projects-reviews-list ul li {
+    padding: 20px 15px 20px 15px;
 }
 
 #submissions-list ul li div.submission, #submissions-list ul li div.badge, #submissions-list ul li div.user, #submissions-list ul li div.action {
@@ -4424,7 +4440,9 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     font-size: 18px;
 }
 
-#submissions-list ul li a.button {
+#submissions-list ul li a.button,
+#projects-reviews-list ul li a.button,
+#project-reviews.show-project-reviews a.button {
     margin: 0 0 1px 0;
     background-color: #7fbf4d;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
@@ -4455,7 +4473,9 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     width: 140px;
 }
 
-#submissions-list ul li a.button:hover {
+#submissions-list ul li a.button:hover,
+#projects-reviews-list ul li a.button:hover,
+#project-reviews.show-project-reviews a.button:hover {
     background-color: #76b347;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#76b347), to(#5e9e2e));
     /* Saf4+, Chrome */
@@ -4473,7 +4493,9 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     text-decoration: none;
 }
 
-#submissions-list ul li a.button:active {
+#submissions-list ul li a.button:active,
+#projects-reviews-list ul li a.button:active,
+#project-reviews.show-project-reviews a.button:hover {
     border: 1px solid #5b992b;
     border-bottom: 1px solid #538c27;
     -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
@@ -4481,6 +4503,11 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
     -ms-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
     -o-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
     box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+}
+
+#projects-reviews-list ul li a.button {
+    margin-top: -5px;
+    float: right;
 }
 
 .back-nav {
@@ -4936,7 +4963,8 @@ table#metrics-scoreboard td.todays-count {
     text-decoration: none;
 }
 
-#peer-assessment-right, #submission-edit-right {
+#peer-assessment-right, #submission-edit-right,
+#project-reviews.review-project fieldset#review-project {
     float: left;
     border: 1px solid #eee;
     padding: 25px 35px 15px 35px;
@@ -4949,6 +4977,10 @@ table#metrics-scoreboard td.todays-count {
      -o-border-radius: 3px;
      border-radius: 3px;
     width: 640px;
+}
+
+#project-reviews.show-project-reviews #posts li {
+    background: #ffffff;
 }
 
 .project-kind-challenge #task-footer-after-completed #submission-edit-right {
@@ -4972,7 +5004,8 @@ table#metrics-scoreboard td.todays-count {
     font-size: 12px;
 }
 
-#peer-assessment-right label, #submission-edit-right label {
+#peer-assessment-right label, #submission-edit-right label,
+#project-reviews.review-project fieldset#review-project label {
     padding-bottom: 5px;
 }
 
