@@ -15,7 +15,7 @@
         <li class="post-container">
           <p>{{ _('Review from') }} <a href="{{ review.author.get_absolute_url }}">{{ review.author }}</a> {{ _('on') }} {{ review.created_on }}</p>
           <div class="post-body assessment">
-          {% if review.accepted %}<p>{{ _('Project Accepted!') }}</p>{% endif %}
+          {% if review.accepted %}<p>{{ _('Accepted!') }}</p>{% endif %}
           <p><b>{{ _('Feedback:') }}</b></p>
           {{ review.content|embed|safe }}
           </div>
