@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 10:34-0500\n"
+"POT-Creation-Date: 2012-01-28 12:22-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3337,7 +3337,7 @@ msgid "Review from"
 msgstr ""
 
 #: templates/reviews/show_project_reviews.html:18
-msgid "Project Accepted!"
+msgid "Accepted!"
 msgstr ""
 
 #: templates/reviews/show_project_reviews.html:19

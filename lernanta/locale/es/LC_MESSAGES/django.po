@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 10:34-0500\n"
+"POT-Creation-Date: 2012-01-28 12:22-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr "El usuario %s no ha recibido todas las medallas pre-requisito."
 
 #: apps/badges/models.py:46
 msgid "Regulates how the badge is awarded to users."
-msgstr ""
+msgstr "Regula como la medalla es otorgada a los usuarios."
 
 #: apps/badges/models.py:54 templates/badges/_submissions_list_item.html:11
 msgid "Badge"
@@ -119,24 +119,20 @@ msgid "Minimum average rating."
 msgstr "Calificación promedio mínima."
 
 #: apps/badges/models.py:231
-#, fuzzy
 msgid "If the badge can only be awarded to the user once."
-msgstr "Si solo puede ser otorgada una vez al usuario."
+msgstr "Si la medalla solo puede ser otorgada una vez al usuario."
 
 #: apps/badges/models.py:237
-#, fuzzy
 msgid "Submission Required"
-msgstr "Respuestas a"
+msgstr "Respuesta Requerida"
 
 #: apps/badges/models.py:238
-#, fuzzy
 msgid "Submission Optional"
-msgstr "Respuestas a"
+msgstr "Respuesta Opcional"
 
 #: apps/badges/models.py:239
-#, fuzzy
 msgid "No submissions"
-msgstr "Respuestas"
+msgstr "Sin Respuesta"
 
 #: apps/badges/models.py:262
 #, python-format
@@ -145,7 +141,7 @@ msgstr "aplicación de %(author)s para %(badge)s"
 
 #: apps/badges/models.py:289
 msgid "Allows to give more or less weight to the assessor's vote."
-msgstr ""
+msgstr "Permite dar más o menos peso a los votos."
 
 #: apps/badges/models.py:300
 msgid ""
@@ -157,7 +153,7 @@ msgstr ""
 
 #: apps/badges/models.py:303
 msgid "If all rubric ratings were provided."
-msgstr ""
+msgstr "Si ya tiene las evaluaciones para todas las rubricas."
 
 #: apps/badges/models.py:306
 #, python-format
@@ -208,9 +204,8 @@ msgid "Problem creating the badge."
 msgstr "Problema creando la medalla."
 
 #: apps/badges/views.py:139
-#, fuzzy
 msgid "You can not apply for this badge."
-msgstr "Usted no puede responder a este comentario"
+msgstr "Usted no puede aplicar por esta medalla."
 
 #: apps/badges/views.py:153
 msgid "Submission created and out for review!"
@@ -238,18 +233,16 @@ msgid "Assessment saved. Thank you for your feedback!"
 msgstr "Revisión salvada. Gracias por sus comentarios!"
 
 #: apps/badges/views.py:328
-#, fuzzy
 msgid "You can not give this badge to a peer."
-msgstr "Usted no puede darse una medalla a sí mismo."
+msgstr "Usted no puede darle esta medalla a un colega."
 
 #: apps/badges/views.py:342
 msgid "Thank you for giving a badge to your peer!"
 msgstr "Gracias por darle una medalla a su colega!"
 
 #: apps/content/forms.py:45
-#, fuzzy
 msgid "Post a link to your work."
-msgstr "Publicar un mensaje para sus seguidores"
+msgstr "Publicar el enlace a su trabajo."
 
 #: apps/content/models.py:66
 msgid "added"
@@ -657,14 +650,12 @@ msgid "Comment restored!"
 msgstr "¡Comentario restaurado!"
 
 #: apps/reviews/decorators.py:14
-#, fuzzy
 msgid "You need to be a reviewer."
-msgstr "Necesita tener estas medallas:"
+msgstr "Necesita tener los permisos para revisar cursos."
 
 #: apps/reviews/views.py:80
-#, fuzzy
 msgid "Review posted!"
-msgstr "Revisión del Trabajo de"
+msgstr "Evaluación publicada!"
 
 #: apps/richtext/views.py:131
 #, python-format
@@ -1523,9 +1514,8 @@ msgstr "Medallas"
 
 #: templates/badges/_review_submission_action.html:4
 #: templates/badges/submission_show.html:47
-#, fuzzy
 msgid "Review This Submission"
-msgstr "Revise esta respuesta"
+msgstr "Revise Esta Respuesta"
 
 #: templates/badges/_submission_item.html:11
 msgid "Submitted work on "
@@ -1552,16 +1542,15 @@ msgstr[1] ""
 
 #: templates/badges/_submissions_list.html:6
 msgid "WOW!"
-msgstr ""
+msgstr "¡Vaya!"
 
 #: templates/badges/_submissions_list.html:6
-#, fuzzy
 msgid "Check out all these submissions!"
-msgstr "Regrese a la lista de respuestas"
+msgstr "¡Échele un vistazo a todas estas respuestas!"
 
 #: templates/badges/_submissions_list.html:8
 msgid "Please take a few minutes and help a fellow peer."
-msgstr ""
+msgstr "Por favor, tómese unos minutos y ayude a un colega."
 
 #: templates/badges/_submissions_list.html:10
 #: templates/projects/_tasks_completed_msg.html:17
@@ -1569,14 +1558,12 @@ msgid "Awaiting Review"
 msgstr "Esperando Revisión"
 
 #: templates/badges/_submissions_list.html:11
-#, fuzzy
 msgid "Previously Awarded"
-msgstr "Medallas Otorgadas"
+msgstr "Previamente Otorgadas"
 
 #: templates/badges/_submissions_list.html:12
-#, fuzzy
 msgid "My Submissions"
-msgstr "Respuestas"
+msgstr "Mis Respuestas"
 
 #: templates/badges/_submissions_list_item.html:29
 msgid "read more"
@@ -1591,9 +1578,8 @@ msgid "ago"
 msgstr "atrás"
 
 #: templates/badges/assessment_edit.html:19
-#, fuzzy
 msgid "Review this submission:"
-msgstr "Revise esta respuesta"
+msgstr "Revise esta respuesta:"
 
 #: templates/badges/assessment_edit.html:28
 #: templates/badges/submission_show.html:31
@@ -1602,25 +1588,23 @@ msgstr "Enlace al trabajo presentado"
 
 #: templates/badges/assessment_edit.html:34
 msgid "How well is this peer was able to:"
-msgstr ""
+msgstr "Cuan bien el colega fue capaz de:"
 
 #: templates/badges/assessment_edit.html:56
 msgid "Please explain your ratings."
 msgstr "Por favor explique su calificación."
 
 #: templates/badges/assessment_edit.html:57
-#, fuzzy
 msgid "What did this peer do well? What advice or suggestions would you give?"
 msgstr ""
-"¿Qué aspectos de este reto hizo bien este colega? ¿Qué consejos o "
-"sugerencias daría usted para ayudarlo(a) a mejorar este trabajo?"
+"¿Qué hizo bien este colega? ¿Qué consejos o sugerencias le daría usted?"
 
 #: templates/badges/assessment_edit.html:59
 #: templates/badges/peer_assessment.html:40
-#, fuzzy
 msgid ""
 "Why do you feel this person deserves this badge? Any additional comments?"
-msgstr "¿Por qué piensa que esta persona merece esta medalla?"
+msgstr ""
+"¿Por qué piensa que esta persona merece esta medalla? ¿Algún otro comentario?"
 
 #: templates/badges/assessment_edit.html:66
 #: templates/badges/peer_assessment.html:46
@@ -1632,9 +1616,8 @@ msgid "Submit"
 msgstr "Enviar"
 
 #: templates/badges/badge.html:15
-#, fuzzy
 msgid "View your Submissions"
-msgstr "Respuestas"
+msgstr "Vea sus Respuestas"
 
 #: templates/badges/badge.html:18
 msgid "Apply for Badge"
@@ -1657,7 +1640,7 @@ msgstr "Necesita tener estas medallas:"
 
 #: templates/badges/badge.html:48
 msgid "Other badges you can apply for:"
-msgstr ""
+msgstr "Otras medallas a las que puede aplicar:"
 
 #: templates/badges/badge.html:60
 msgid "Peers that have received this badge:"
@@ -1711,24 +1694,25 @@ msgstr ""
 "Esto es usado tanto en P2PU como en la Open Badges Infrastructure (OBI)"
 
 #: templates/badges/badge_edit_summary.html:21
-#, fuzzy
 msgid "Requirements to get badge"
-msgstr "Criterios para obtener la medalla"
+msgstr "Requisitos para obtener la medalla"
 
 #: templates/badges/badge_edit_summary.html:22
 msgid ""
 "Description of any requirements that must be satisfied to award the badge."
 msgstr ""
+"Descripción de los requisitos que deben cumplirse para otorgar la medalla."
 
 #: templates/badges/badge_edit_summary.html:27
-#, fuzzy
 msgid "Badge Type"
-msgstr "Tipo de medalla"
+msgstr "Tipo de Medalla"
 
 #: templates/badges/badge_edit_summary.html:28
 msgid ""
 "The logic behind badge awarding will change depending on the badge type."
 msgstr ""
+"La lógica detrás de la concesión de la medalla cambia dependiendo del tipo "
+"de medalla."
 
 #: templates/badges/badge_edit_summary.html:36
 #: templates/content/edit_page.html:39
@@ -1759,14 +1743,12 @@ msgid "Create"
 msgstr "Crear"
 
 #: templates/badges/peer_assessment.html:20
-#, fuzzy
 msgid "Give this badge to your peer."
-msgstr "El usuario %s debe ser su colega."
+msgstr "Dele esta medalla a su colega."
 
 #: templates/badges/peer_assessment.html:34
-#, fuzzy
 msgid "Peer Username:"
-msgstr "Nombre de Usuario del Colega"
+msgstr "Nombre de Usuario del Colega:"
 
 #: templates/badges/profile_badges_manage.html:6
 #: templates/badges/profile_badges_manage.html:9
@@ -1799,9 +1781,8 @@ msgid "You don't have any badges."
 msgstr "No tiene ninguna insignia."
 
 #: templates/badges/show_assessment.html:6
-#, fuzzy
 msgid "Award Justification for"
-msgstr "Justificación de"
+msgstr "Justificación para Otorgar"
 
 #: templates/badges/show_assessment.html:30
 #: templates/badges/submission_show.html:37 templates/messages/inbox.html:13
@@ -1809,9 +1790,8 @@ msgid "Received"
 msgstr "Recibido"
 
 #: templates/badges/show_assessment.html:39
-#, fuzzy
 msgid "Award Justification"
-msgstr "Justificación de"
+msgstr "Justificación"
 
 #: templates/badges/show_user_awards.html:10
 msgid "'s Awards to"
@@ -1828,12 +1808,11 @@ msgstr "Otorgada En"
 
 #: templates/badges/show_user_awards.html:50
 msgid "Evidence"
-msgstr ""
+msgstr "Evidencia"
 
 #: templates/badges/submission_edit.html:21
-#, fuzzy
 msgid "Apply for this badge."
-msgstr "Aplicar para la Medalla"
+msgstr "Aplicar para esta medalla."
 
 #: templates/badges/submission_edit.html:35
 msgid "URL to the work you are submitting:"
@@ -1849,9 +1828,8 @@ msgid "Submission for"
 msgstr "Respuestas a"
 
 #: templates/badges/submission_show.html:20
-#, fuzzy
 msgid "Submission"
-msgstr "Respuestas"
+msgstr "Respuesta"
 
 #: templates/badges/submission_show.html:34
 msgid "Progress:"
@@ -1909,23 +1887,21 @@ msgstr "¡Hola!"
 
 #: templates/badges/emails/new_submission.txt:4
 msgid "A new peer is waiting for you to review their submission for the"
-msgstr ""
+msgstr "Un colega esta esperando por usted para que revise su respuesta a"
 
 #: templates/badges/emails/new_submission.txt:4
 msgid "Go ahead and take a look at their work here"
-msgstr ""
+msgstr "Échele un vistazo a su trabajo en"
 
 #: templates/badges/emails/new_submission.txt:4
 msgid "They will love you!"
-msgstr ""
+msgstr "¡Ellos te lo van a agradecer!"
 
 #: templates/badges/emails/new_submission.txt:6
-#, fuzzy
 msgid "Thanks,"
-msgstr "¡Gracias!"
+msgstr "Gracias,"
 
 #: templates/badges/emails/new_submission.txt:8
-#, fuzzy
 msgid "The P2PU team"
 msgstr "El Equipo de P2PU"
 
@@ -1940,13 +1916,12 @@ msgid "Manage your subscriptions:"
 msgstr "Configure sus notificaciones:"
 
 #: templates/badges/emails/new_submission_subject.txt:2
-#, fuzzy
 msgid "New submission for the"
-msgstr "Respuestas a"
+msgstr "Nueva respuestas para"
 
 #: templates/content/_post_link_comment.html:2
 msgid "This is a link to my work:"
-msgstr ""
+msgstr "Este es el enlace a mi trabajo:"
 
 #: templates/content/_toggle_completion.html:8
 msgid "You've marked this task as completed."
@@ -1961,31 +1936,28 @@ msgid "Yes, I'm done"
 msgstr "Sí, ya terminé"
 
 #: templates/content/_toggle_completion.html:30
-#, fuzzy
 msgid "Post to Discussion Wall"
-msgstr "Discusión de la Tarea"
+msgstr "Publicar en la página de Debates"
 
 #: templates/content/_toggle_completion.html:36
 msgid "Submit this link to apply for the badges below"
-msgstr ""
+msgstr "Usar este enlace para aplicar a las medallas a continuación"
 
 #: templates/content/_toggle_completion.html:51
-#, fuzzy
 msgid "Apply for this badge"
-msgstr "Aplicar para la Medalla"
+msgstr "Aplicar para esta medalla"
 
 #: templates/content/_toggle_completion.html:60
 msgid "Badge Application Form"
 msgstr "Formulario de Aplicación"
 
 #: templates/content/_toggle_completion.html:62
-#, fuzzy
 msgid "Url to the work you are submitting"
-msgstr "URL al trabajo que esta presentando:"
+msgstr "Enlace al trabajo que esta presentando"
 
 #: templates/content/_toggle_completion.html:70
 msgid "Submit and move to the next badge application"
-msgstr ""
+msgstr "Enviar y pasar a la siguiente aplicación para una medalla"
 
 #: templates/content/_toggle_completion.html:75
 msgid "Move on to next task"
@@ -1993,22 +1965,19 @@ msgstr "Ir a la siguiente tarea"
 
 #: templates/content/_toggle_completion.html:83
 msgid "Did you know that you can apply for these badges in this task?"
-msgstr ""
+msgstr "¿Sabías que puedes aplicar para las siguientes medallas en esta tarea?"
 
 #: templates/content/_toggle_completion.html:92
-#, fuzzy
 msgid "Received!"
-msgstr "Recibido"
+msgstr "¡Recibido!"
 
 #: templates/content/_toggle_completion.html:95
-#, fuzzy
 msgid "Apply"
-msgstr "Aplicar por "
+msgstr "Aplicar"
 
 #: templates/content/_toggle_completion.html:98
-#, fuzzy
 msgid "Submitted"
-msgstr "enviada"
+msgstr "¡Enviada!"
 
 #: templates/content/base_page_form.html:19
 #: templates/replies/comment_page.html:77
@@ -2030,7 +1999,6 @@ msgid "One sentence description"
 msgstr "Descripción de una línea"
 
 #: templates/content/base_page_form.html:41
-#, fuzzy
 msgid "This description will be used as sub header below the task title."
 msgstr ""
 "Esta descripción se usará como subcabecera debajo del título de la tarea."
@@ -2511,9 +2479,8 @@ msgid "Participants"
 msgstr "Participantes"
 
 #: templates/projects/_project_list.html:5
-#, fuzzy
 msgid "Challenge Sets"
-msgstr "Siguientes Retos"
+msgstr "Conjuntos de Retos"
 
 #: templates/projects/_project_list.html:27
 msgid "Open for Sign-Up"
@@ -2808,16 +2775,15 @@ msgid "No participants for which to show data."
 msgstr "No hay ningún participante para el cual mostrar los datos."
 
 #: templates/projects/project_admin_metrics.html:52
-#, fuzzy
 msgid ""
 "The information about course page visits is not available on the same day."
 msgstr ""
-"La información sobre visitas a páginas del curso no estará disponible en el "
+"La información sobre visitas a páginas del curso no está disponible en el "
 "mismo día."
 
 #: templates/projects/project_admin_metrics.html:53
 msgid "Last date the user visited a course page."
-msgstr ""
+msgstr "Última fecha en la que visitó una página del curso."
 
 #: templates/projects/project_admin_metrics.html:54
 msgid "Total includes comments on wall and task pages."
@@ -2893,7 +2859,7 @@ msgstr "Inscripción"
 #: templates/projects/project_edit.html:50
 #: templates/projects/project_edit_next_steps.html:7
 msgid "Associated Courses"
-msgstr ""
+msgstr "Cursos"
 
 #: templates/projects/project_edit.html:51
 #: templates/projects/project_edit_links_base.html:7
@@ -3050,13 +3016,12 @@ msgid "Update"
 msgstr "Actualizar"
 
 #: templates/projects/project_edit_next_steps.html:8
-#, fuzzy
 msgid ""
 "View, add and remove associated study groups and courses that a learner "
 "might want to visit after completing the challenge."
 msgstr ""
-"Ver, añadir y remover retos, grupos de estudio, cursos, ... a los que el "
-"usuario debería unirse luego de completar las tareas de este reto."
+"Ver, añadir y remover retos, grupos de estudio y cursos que el usuario "
+"podría querer visitar luego de completar las tareas de este reto."
 
 #: templates/projects/project_edit_next_steps.html:26
 #: templates/projects/sidebar.html:154
@@ -3117,7 +3082,7 @@ msgid "Status &amp; Dates"
 msgstr "Estado y Fechas"
 
 #: templates/projects/project_edit_status.html:12
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Configure your %(kind)s's status so that it appears in the appropriate lists."
 msgstr ""
@@ -3186,7 +3151,7 @@ msgstr ""
 
 #: templates/projects/project_edit_summary.html:41
 msgid "What kind of content do you want to create?"
-msgstr ""
+msgstr "¿Qué tipo de contenido desea crear?"
 
 #: templates/projects/project_edit_summary.html:42
 msgid "Select if you are creating a study group, course, or challenge."
@@ -3500,49 +3465,44 @@ msgstr "Ver comentario en:"
 
 #: templates/reviews/_projects_reviews_list_item.html:3
 #: templates/reviews/review_project.html:7
-#, fuzzy
 msgid "Review"
-msgstr "Revisiones"
+msgstr "Revisar"
 
 #: templates/reviews/projects_reviews_list.html:12
-#, fuzzy
 msgid "Under Review"
-msgstr "Revisiones"
+msgstr "En Revisión"
 
 #: templates/reviews/projects_reviews_list.html:13
 msgid "Accepted"
-msgstr ""
+msgstr "Aceptado"
 
 #: templates/reviews/review_project.html:13
 msgid "Feedback"
-msgstr ""
+msgstr "Comentarios"
 
 #: templates/reviews/review_project.html:20
-#, fuzzy
 msgid "Mark as Accepted."
-msgstr " fue actualizado."
+msgstr "Marcar como Aceptado."
 
 #: templates/reviews/show_project_reviews.html:16
-#, fuzzy
 msgid "Review from"
-msgstr "Revisión del Trabajo de"
+msgstr "Evaluación de "
 
 #: templates/reviews/show_project_reviews.html:18
-msgid "Project Accepted!"
-msgstr ""
+msgid "Accepted!"
+msgstr "¡Aceptado!"
 
 #: templates/reviews/show_project_reviews.html:19
 msgid "Feedback:"
-msgstr ""
+msgstr "Comentarios:"
 
 #: templates/reviews/show_project_reviews.html:26
-#, fuzzy
 msgid "Post Review"
-msgstr "Revisiones"
+msgstr "Publicar Evaluación"
 
 #: templates/richtext/_external_link.html:2
 msgid "Work on this Task"
-msgstr ""
+msgstr "Trabajar en esta Tarea"
 
 #: templates/richtext/browse.html:9
 msgid "Select the file you want, then click 'Attach File' to continue..."
@@ -3566,32 +3526,27 @@ msgstr ""
 "del dialogo 'Insertar Vínculo'."
 
 #: templates/schools/_projectset_card.html:24
-#, fuzzy
 msgid "View Challenges"
-msgstr "Siguientes Retos"
+msgstr "Ver Retos"
 
 #: templates/schools/_projectset_card.html:30
 #: templates/schools/projectset_home.html:19
 #: templates/schools/projectset_home.html:36
-#, fuzzy
 msgid "Challenges"
-msgstr "Siguientes Retos"
+msgstr "Retos"
 
 #: templates/schools/_projectset_card.html:38
 #: templates/schools/projectset_home.html:21
-#, fuzzy
 msgid "Adopters"
-msgstr "Que Adoptó"
+msgstr "Adoptaron"
 
 #: templates/schools/_projectset_card.html:52
-#, fuzzy
 msgid "Get started with the first Challenge now"
-msgstr "Ayude a Otros con este Reto"
+msgstr "Empiece con el primer Reto ahora"
 
 #: templates/schools/_projectset_card.html:70
-#, fuzzy
 msgid "View All Challenges"
-msgstr "Ver Todas las Medallas"
+msgstr "Ver Todos los Retos"
 
 #: templates/schools/footer.html:5
 msgid "P2PU Schools:"
@@ -3612,9 +3567,8 @@ msgid "Schools"
 msgstr "Escuelas"
 
 #: templates/schools/projectset_home.html:25
-#, fuzzy
 msgid "Start first Challenge"
-msgstr "Iniciar Reto"
+msgstr "Iniciar primer Reto"
 
 #: templates/schools/school_edit.html:12
 msgid "View School"
@@ -4178,7 +4132,7 @@ msgstr "Todos los groups, cursos, ... etiquetados '"
 #: templates/tracker/scoreboard.html:4 templates/tracker/scoreboard.html:11
 #: templates/tracker/scoreboard.html:16
 msgid "Scoreboard"
-msgstr ""
+msgstr "Marcador"
 
 #: templates/users/_openid_providers.html:7
 msgid "Sign In with your Google account"
@@ -4263,41 +4217,34 @@ msgstr ""
 "Dimensiones: 57x57 pixels"
 
 #: templates/users/_profile_info.html:6
-#, fuzzy
 msgid "Followings"
 msgstr "Siguiendo"
 
 #: templates/users/_profile_info.html:7
-#, fuzzy
 msgid "Courses"
-msgstr "Curso"
+msgstr "Cursos"
 
 #: templates/users/_profile_info.html:13
-#, fuzzy
 msgid "Latest Courses"
-msgstr "Curso"
+msgstr "Cursos Recientes"
 
 #: templates/users/_profile_info.html:44
-#, fuzzy
 msgid "Latest Badges"
-msgstr "Administrar Medallas"
+msgstr "Medallas Recientes"
 
 #: templates/users/_profile_info.html:65
-#, fuzzy
 msgid "My Skills"
-msgstr "Habilidades"
+msgstr "Mis Habilidades"
 
 #: templates/users/_profile_info.html:69
 msgid "View more with skills in "
 msgstr "Ver más habilidades en "
 
 #: templates/users/_profile_info.html:77
-#, fuzzy
 msgid "My Interests"
-msgstr "Intereses"
+msgstr "Mis Intereses"
 
 #: templates/users/_profile_info.html:89
-#, fuzzy
 msgid "What I want to learn more about"
 msgstr "Quiero aprender más sobre"
 
@@ -4589,6 +4536,8 @@ msgstr ""
 msgid ""
 "Someone posts a submission for the badges of one of the challenges I adopted."
 msgstr ""
+"Alguien publico una respuesta para una de las medallas de los retos que "
+"adopté."
 
 #: templates/users/settings_notifications.html:37
 msgid "An organizer posts or replies to a message on the wall of:"
@@ -4622,7 +4571,7 @@ msgstr ""
 
 #: templates/users/sidebar.html:24
 msgid "Lives in"
-msgstr ""
+msgstr "Vive en"
 
 #: templates/users/sidebar.html:45
 msgid "Private Message"
@@ -4693,188 +4642,3 @@ msgstr "Gracias!"
 #: templates/users/emails/registration_confirm_subject.txt:2
 msgid "[P2PU] Complete Registration!"
 msgstr "[P2PU] Termine de Crear su Cuenta."
-
-#~ msgid "Self assessment -- able to get the badge without outside assessment"
-#~ msgstr ""
-#~ "Auto-evaluación - capaz de obtener la medalla sin evaluación externa"
-
-#~ msgid "Peer assessment -- community or skill badges users grant each other"
-#~ msgstr ""
-#~ "Evaluación de Colegas -- Medallas de la comunidad o por hábilidades "
-#~ "adquiridas que los usuarios se otorgan unos a otros"
-
-#~ msgid ""
-#~ "Stealth assessment -- badges granted by the system based on supplied "
-#~ "logic. Accumulative."
-#~ msgstr ""
-#~ "Evaluación Automatica -- medallas otorgadas por el sistema de acuerdo a "
-#~ "la lógica especificada. Son acumulativas."
-
-#~ msgid "Completion/aggregate badge -- awarded by self assessments"
-#~ msgstr ""
-#~ "Medalla por Terminación/agregado -- otorgada mediante auto-evaluación"
-
-#~ msgid ""
-#~ "Skill badge -- badges that are skill based and assessed by peers with "
-#~ "related logic"
-#~ msgstr ""
-#~ "Medalla por habilidad -- medallas que se basan en habilidades y que los "
-#~ "colegas evaluan de acuerdo a la lógica especificada"
-
-#~ msgid "Peer-to-peer/community badge -- badges granted by peers"
-#~ msgstr ""
-#~ "Medalla de-colega-a-colega/de-la-comunidad -- medallas otorgadas por "
-#~ "otros colegas"
-
-#~ msgid "Stealth badge -- system awarded badges"
-#~ msgstr "Medalla Automática -- medallas otorgadas por el sistema"
-
-#~ msgid "Other badges -- badges like course organizer or those staff issued"
-#~ msgstr ""
-#~ "Otras medallas -- medallas como organizador de un curso o otras dadas por "
-#~ "los administradores"
-
-#~ msgid ""
-#~ "If no logic is chosen, no logic required.  Example: self-assessment "
-#~ "badges."
-#~ msgstr ""
-#~ "No todas las medallas requiren especificar una lógica. Por ejemplo: las "
-#~ "medallas otorgadas por auto-evaluación."
-
-#~ msgid "%(min_votes)s peers -- by an average rating of %(min_avg)s -- "
-#~ msgstr ""
-#~ "%(min_votes)s colegas-- para una calificación promedio de %(min_avg)s -- "
-
-#~ msgid "Current number of votes"
-#~ msgstr "Número actual de votos"
-
-#~ msgid "Current total rating"
-#~ msgstr "Calificación total actual."
-
-#~ msgid "Last time this person received a qualified rating"
-#~ msgstr "Última vez que esta persona recibió una calificación"
-
-#~ msgid "First time this person received a qualified rating"
-#~ msgstr "Primera vez que esta persona recibió una calificación"
-
-#~ msgid "%(user)s progress for %(badge)s"
-#~ msgstr "progreso de %(user)s en %(badge)s"
-
-#~ msgid "You are lacking one or more of the requirements."
-#~ msgstr "Le falta satisfacer uno o más requerimientos."
-
-#~ msgid ""
-#~ "Based on the submission above, please provide a rating on how well this "
-#~ "peer was able to:"
-#~ msgstr ""
-#~ "Basado en la respuesta anterior, por favor califique cuán bien este "
-#~ "colega fue capaz de:"
-
-#~ msgid "View your Application"
-#~ msgstr "Ver su Aplicación"
-
-#~ msgid "More than "
-#~ msgstr "Mas de "
-
-#~ msgid " have said that you can "
-#~ msgstr " han dicho que usted puede "
-
-#~ msgid "You need at least 1 peer to say that you "
-#~ msgstr "Usted necesita que al menos 1 colega diga que usted "
-
-#~ msgid "You have "
-#~ msgstr "Usted tiene "
-
-#~ msgid "This is a manually awarded badge."
-#~ msgstr "Esta es una medalla otorgada manualmente."
-
-#~ msgid "There are no requirements for this badge."
-#~ msgstr "No hay ningún requerimiento para esta medalla."
-
-#~ msgid ""
-#~ "This is what is sent to OBI for the criteria information. Note: Thinking "
-#~ "about replacing this just generating text for OBI from rubric and type."
-#~ msgstr ""
-#~ "Esto es enviado al OBI para la información sobre los criterios. Nota: "
-#~ "Pensando en remplazarlo por texto generado a partir de la rubrica y el "
-#~ "tipo de badge."
-
-#~ msgid "Assessment type"
-#~ msgstr "Tipo de evaluación"
-
-#~ msgid "Depending on the type, more options will show."
-#~ msgstr "Dependiendo en el tipo, más opciones serán mostradas."
-
-#~ msgid "Badge logic"
-#~ msgstr "Lógica para la Medalla"
-
-#~ msgid ""
-#~ "Only valid for certain assessment types. Badge logic is pulled from pre-"
-#~ "made logic statements."
-#~ msgstr ""
-#~ "Sólo valido para ciertos tipos de evaluaciones. La lógica para la medalla "
-#~ "se obtiene de opciones pre-hechas."
-
-#~ msgid "Badge rubric"
-#~ msgstr "Rúbrica de la Medalla"
-
-#~ msgid ""
-#~ "Only valid for certain assessment types. Badge rubric is pulled from pre-"
-#~ "made rubric statements."
-#~ msgstr ""
-#~ "Sólo valido para ciertos tipos de evaluaciones. La rúbrica para la "
-#~ "medalla se optiene de opciones pre-hechas."
-
-#~ msgid "Based on assessment type, the badge type is pre-selected."
-#~ msgstr ""
-#~ "Basado en el tipo de evaluación, el tipo de medalla es pre-seleccionado."
-
-#~ msgid "Give"
-#~ msgstr "Dar"
-
-#~ msgid "to your Peer"
-#~ msgstr "a su Colega"
-
-#~ msgid "'s Work for "
-#~ msgstr " para "
-
-#~ msgid "Award to"
-#~ msgstr "Otorgar a"
-
-#~ msgid "Review Results:"
-#~ msgstr "Revisar Resultados:"
-
-#~ msgid " reviews from the"
-#~ msgstr " revisiones de "
-
-#~ msgid "reviews needed from challenge adopters."
-#~ msgstr "revisiones necesarias de personas que adoptaron los retos."
-
-#~ msgid "The posted reviews are giving this work submission a total score of"
-#~ msgstr ""
-#~ "Las revisiones enviadas están dando a esta respuesta una evaluación total "
-#~ "de"
-
-#~ msgid "from"
-#~ msgstr "de"
-
-#~ msgid "Review This"
-#~ msgstr "Revise Esto"
-
-#~ msgid "Pending "
-#~ msgstr "Pendiente "
-
-#~ msgid "Submissions "
-#~ msgstr "Respuestas "
-
-#~ msgid "No submissions available."
-#~ msgstr "No hay respuestas disponibles."
-
-#~ msgid "Active on the site."
-#~ msgstr "Activos en el sitio."
-
-#~ msgid "Next Steps"
-#~ msgstr "Pasos Siguientes"
-
-#~ msgid "Past Involvement"
-#~ msgstr "Participación Anterior"
