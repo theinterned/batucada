@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 12:22-0500\n"
+"POT-Creation-Date: 2012-01-28 13:08-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1267,6 +1267,12 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
+#: templates/base.html:93 templates/drumbeatmail/base.html:52
+#: templates/projects/contact_organizers.html:49
+#: templates/users/profile_form_base.html:76
+msgid "en"
+msgstr ""
+
 #: templates/base.html:112
 msgid "Home"
 msgstr ""
@@ -2289,12 +2295,6 @@ msgstr ""
 msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
 "will."
-msgstr ""
-
-#: templates/drumbeatmail/base.html:52
-#: templates/projects/contact_organizers.html:49
-#: templates/users/profile_form_base.html:76
-msgid "en"
 msgstr ""
 
 #: templates/drumbeatmail/compose.html:4

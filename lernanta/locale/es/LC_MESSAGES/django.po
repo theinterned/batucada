@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 12:22-0500\n"
+"POT-Creation-Date: 2012-01-28 13:08-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1309,6 +1309,12 @@ msgstr "Entrar"
 msgid "Loading"
 msgstr "Cargando"
 
+#: templates/base.html:93 templates/drumbeatmail/base.html:52
+#: templates/projects/contact_organizers.html:49
+#: templates/users/profile_form_base.html:76
+msgid "en"
+msgstr "es"
+
 #: templates/base.html:112
 msgid "Home"
 msgstr "Inicio"
@@ -2377,12 +2383,6 @@ msgid ""
 msgstr ""
 "Bienvenidos Robots, ReCaptch ha sido deshabilitado para su conveniencia.  "
 "Envíe spam como lo desee."
-
-#: templates/drumbeatmail/base.html:52
-#: templates/projects/contact_organizers.html:49
-#: templates/users/profile_form_base.html:76
-msgid "en"
-msgstr "es"
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
