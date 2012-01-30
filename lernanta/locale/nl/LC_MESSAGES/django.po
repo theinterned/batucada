@@ -1,99 +1,97 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Localization in Dutch
+# Public Domain. 2011. No warranties.
+# Hèlen Grives <helengrives@hotmail.com>, 2011
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 13:08-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2012-01-30 11:03-0500\n"
+"PO-Revision-Date: 2011-04-11 8:23-0500\n"
+"Last-Translator: Hèlen Grives <helengrives@hotmail.com>\n"
+"Language-Team: LANGUAGE <nl>\n"
+"Language: Dutch\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: apps/activity/feeds.py:70
 #, python-format
 msgid "Activity feed from %s"
-msgstr ""
+msgstr "Activiteiten feed van %s"
 
 #: apps/activity/feeds.py:114
 #, python-format
 msgid "Activity feed from %s's dashboard"
-msgstr ""
+msgstr "Activiteiten feed van %s dashboard"
 
 #: apps/activity/models.py:95
 msgid "activities"
-msgstr ""
+msgstr "activiteiten"
 
 #: apps/activity/models.py:102
 #, python-format
 msgid "%(actor)s %(verb)s %(target)s"
-msgstr ""
+msgstr "%(actor)s %(verb)s %(target)s"
 
 #: apps/activity/models.py:120
-#, python-format
+#, fuzzy, python-format
 msgid "wall activity from %s"
-msgstr ""
+msgstr "Activiteiten feed van %s"
 
 #: apps/activity/schema.py:22
 msgid "started following"
-msgstr ""
+msgstr "volg"
 
 #: apps/activity/schema.py:23
 msgid "joined"
-msgstr ""
+msgstr "toegevoegd"
 
 #: apps/activity/schema.py:24
 msgid "posted"
-msgstr ""
+msgstr "gepost"
 
 #: apps/activity/schema.py:25
 msgid "updated"
-msgstr ""
+msgstr "bijgewerkt"
 
 #: apps/activity/schema.py:26
 msgid "shared"
-msgstr ""
+msgstr "gedeeld"
 
 #: apps/activity/schema.py:27
 msgid "received"
-msgstr ""
+msgstr "ontvangen"
 
 #: apps/activity/views.py:43
 msgid "This activity was deleted."
-msgstr ""
+msgstr "Deze activiteit is verwijderd."
 
 #: apps/activity/views.py:64
 msgid "You can't edit this activity"
-msgstr ""
+msgstr "Je kunt deze activiteit niet bewerken"
 
 #: apps/activity/views.py:69
 msgid "Activity deleted!"
-msgstr ""
+msgstr "¡Activiteit verwijderd!"
 
 #: apps/activity/views.py:71
 msgid "Activity restored!"
-msgstr ""
+msgstr "¡Activiteit hersteld!"
 
 #: apps/badges/forms.py:56
+#, fuzzy
 msgid "You cannot give a badge to yourself."
-msgstr ""
+msgstr "Je kunt de taakvolgorde niet veranderen."
 
 #: apps/badges/forms.py:61 apps/projects/forms.py:99 apps/schools/forms.py:96
 msgid "That user account was deleted."
-msgstr ""
+msgstr "Dit gebruikersaccount is verwijderd."
 
 #: apps/badges/forms.py:64 apps/projects/forms.py:102 apps/schools/forms.py:99
 #, python-format
 msgid "There is no user with username: %s."
-msgstr ""
+msgstr "Er is geen gebruiker met de gebruikersnaam: %s."
 
 #: apps/badges/forms.py:67
 #, python-format
@@ -110,8 +108,9 @@ msgid "Regulates how the badge is awarded to users."
 msgstr ""
 
 #: apps/badges/models.py:54 templates/badges/_submissions_list_item.html:11
+#, fuzzy
 msgid "Badge"
-msgstr ""
+msgstr "Emblemen"
 
 #: apps/badges/models.py:225
 msgid "Minimum number of votes."
@@ -183,9 +182,9 @@ msgid "%(score)s for %(rubric)s"
 msgstr ""
 
 #: apps/badges/models.py:399
-#, python-format
+#, fuzzy, python-format
 msgid "%(user)s - %(badge)s"
-msgstr ""
+msgstr "%(actor)s %(verb)s %(target)s"
 
 #: apps/badges/views.py:61
 msgid "Something has gone wrong. Hopefully it's temporary. "
@@ -198,15 +197,17 @@ msgstr ""
 #: apps/badges/views.py:120 apps/projects/views.py:107
 #, python-format
 msgid "The %s has been created."
-msgstr ""
+msgstr "De %s is gemaakt."
 
 #: apps/badges/views.py:125
+#, fuzzy
 msgid "Problem creating the badge."
-msgstr ""
+msgstr "Problemen met het maken van de studiegroep, cursus ..."
 
 #: apps/badges/views.py:139
+#, fuzzy
 msgid "You can not apply for this badge."
-msgstr ""
+msgstr "Je kunt niet reageren op deze activiteit"
 
 #: apps/badges/views.py:153
 msgid "Submission created and out for review!"
@@ -218,44 +219,50 @@ msgstr ""
 #: apps/replies/views.py:118 apps/replies/views.py:152
 #: apps/reviews/views.py:83 apps/signups/views.py:144
 #: apps/signups/views.py:183
+#, fuzzy
 msgid "Please correct errors below."
-msgstr ""
+msgstr "Verbeter de fouten aub."
 
 #: apps/badges/views.py:252
+#, fuzzy
 msgid "You cannot assess your own work."
-msgstr ""
+msgstr "Je kunt de taakvolgorde niet veranderen."
 
 #: apps/badges/views.py:256
+#, fuzzy
 msgid "You have already assessed this submission."
-msgstr ""
+msgstr "Je bent al toegevoegd%s."
 
 #: apps/badges/views.py:286
 msgid "Assessment saved. Thank you for your feedback!"
 msgstr ""
 
 #: apps/badges/views.py:328
+#, fuzzy
 msgid "You can not give this badge to a peer."
-msgstr ""
+msgstr "Je kunt de taakvolgorde niet veranderen."
 
 #: apps/badges/views.py:342
 msgid "Thank you for giving a badge to your peer!"
 msgstr ""
 
 #: apps/content/forms.py:45
+#, fuzzy
 msgid "Post a link to your work."
-msgstr ""
+msgstr "Publiceer een bericht voor je volgers"
 
 #: apps/content/models.py:66
 msgid "added"
-msgstr ""
+msgstr "toegevoegd"
 
 #: apps/content/models.py:171
 msgid "today"
 msgstr ""
 
 #: apps/content/models.py:186
+#, fuzzy
 msgid "this week"
-msgstr ""
+msgstr "Actief deze week"
 
 #: apps/content/models.py:190
 msgid "this month"
@@ -268,135 +275,139 @@ msgstr ""
 
 #: apps/content/views.py:37
 msgid "This task was deleted."
-msgstr ""
+msgstr "Deze taak is verwijderd."
 
 #: apps/content/views.py:86 apps/content/views.py:93 apps/content/views.py:227
 msgid "You can't edit this page"
-msgstr ""
+msgstr "Je kunt deze pagina niet bewerken"
 
 #: apps/content/views.py:105 apps/projects/views.py:311
 #, python-format
 msgid "%s updated!"
-msgstr ""
+msgstr "%s bijgewerkt!"
 
 #: apps/content/views.py:132
 msgid "You can not create a new task!"
-msgstr ""
+msgstr "Je kunt geen nieuwe taak aanmaken!"
 
 #: apps/content/views.py:146
 msgid "Task created!"
-msgstr ""
+msgstr "Taak gemaakt!"
 
 #: apps/content/views.py:169 apps/content/views.py:171
+#, fuzzy
 msgid "You can't delete this page"
-msgstr ""
+msgstr "Je kunt deze pagina niet bekijken"
 
 #: apps/content/views.py:181
 #, python-format
 msgid "%s deleted!"
-msgstr ""
+msgstr "%s verwijderd!"
 
 #: apps/content/views.py:220
+#, fuzzy
 msgid "You can't restore this page"
-msgstr ""
+msgstr "Je kunt deze pagina niet bekijken"
 
 #: apps/content/views.py:241
 #, python-format
 msgid "%s restored!"
-msgstr ""
+msgstr "%s hersteld!"
 
 #: apps/content/views.py:273 apps/content/views.py:302
 msgid "You can not change tasks order."
-msgstr ""
+msgstr "Je kunt de taakvolgorde niet veranderen."
 
 #: apps/dashboard/views.py:84
 msgid "Please fill out your profile to finish registration."
-msgstr ""
+msgstr "Vul aub je profiel in om de registratie te voltooien."
 
 #: apps/drumbeat/views.py:89
 msgid "Export selected objects as csv file"
-msgstr ""
+msgstr "Export de geselecteerde objecten als csv bestand"
 
 #: apps/drumbeat/templatetags/time_since.py:16
 msgid " ago"
-msgstr ""
+msgstr " terug"
 
 #: apps/drumbeatmail/fields.py:22
 msgid "No such user with that username or email."
-msgstr ""
+msgstr "Er bestaat geen gebruiker met deze gebruikersnaam of e-mail."
 
 #: apps/drumbeatmail/views.py:174
 msgid "Can't send email"
-msgstr ""
+msgstr "Kan e-mail niet versturen"
 
 #: apps/drumbeatmail/views.py:180 apps/drumbeatmail/views.py:210
 #: apps/projects/views.py:836
 msgid "Message successfully sent."
-msgstr ""
+msgstr "Bericht met succes verstuurd."
 
 #: apps/drumbeatmail/views.py:183 apps/drumbeatmail/views.py:213
 msgid "There was an error sending your message. Please try again."
 msgstr ""
+"Er is een fout opgetreden tijdens het versturen van het bericht.Probeer het "
+"opnieuw"
 
 #: apps/links/views.py:25 apps/links/views.py:50
 msgid "You can not change links order."
-msgstr ""
+msgstr "Je kunt de link volgorde niet veranderen."
 
 #: apps/preferences/forms.py:22
 msgid "That email address is register under a different username."
-msgstr ""
+msgstr "Dit e-mailadres is geregistreed onder een andere gebruikersnaam."
 
 #: apps/preferences/forms.py:32 apps/users/forms.py:37
 msgid "Password must be at least 8 characters long "
-msgstr ""
+msgstr "Het paswoord moet minstens 8 karakters lang zijn "
 
 #: apps/preferences/forms.py:33 apps/users/forms.py:38
 msgid "and contain both numbers and letters."
-msgstr ""
+msgstr "en moet zowel nummers als letters bevatten"
 
 #: apps/preferences/forms.py:38 apps/users/forms.py:43
 msgid "That password is too common. Please choose another."
-msgstr ""
+msgstr "Dit paswoord is te algemeen. Kies aub een ander."
 
 #: apps/preferences/forms.py:69 apps/users/forms.py:167
 msgid "Passwords do not match."
-msgstr ""
+msgstr "De paswoorden zijn niet gelijk."
 
 #: apps/preferences/views.py:49
 msgid "Thank you, your settings have been saved."
-msgstr ""
+msgstr "Dankjewel, je instellingen zijn bewaard."
 
 #: apps/preferences/views.py:74
 msgid "Email updated"
-msgstr ""
+msgstr "E-mail is bijgewerkt"
 
 #: apps/preferences/views.py:98
 msgid "Password updated"
-msgstr ""
+msgstr "Paswoord is bijgewerkt"
 
 #: apps/preferences/views.py:102 apps/users/views.py:309
 #: apps/users/views.py:448
 msgid "There are errors in this form. Please correct them and resubmit."
-msgstr ""
+msgstr "Er zitten fouten in dit formulier. Verbeter ze en verzend opnieuw."
 
 #: apps/preferences/views.py:122
 #, python-format
 msgid "You are the only organizer of %s active "
-msgstr ""
+msgstr "Je bent de enige coördinator van %s activiteit"
 
 #: apps/preferences/views.py:123
 msgid "study groups, courses, ..."
-msgstr ""
+msgstr "studie groepen, cursussen, ....."
 
 #: apps/projects/decorators.py:19
-#, python-format
+#, fuzzy, python-format
 msgid "You are not organizing this %s."
-msgstr ""
+msgstr "Je organiseert dit %s niet"
 
 #: apps/projects/decorators.py:35
-#, python-format
+#, fuzzy, python-format
 msgid "You are not participating in this %s."
-msgstr ""
+msgstr "Je neemt niet deel aan %s"
 
 #: apps/projects/decorators.py:52
 msgid "You are not authorized to view the detailed statistics."
@@ -410,17 +421,17 @@ msgstr ""
 #: apps/schools/forms.py:64 apps/schools/forms.py:78 apps/users/forms.py:250
 #, python-format
 msgid "Image exceeds max image size: %(max)dk"
-msgstr ""
+msgstr "Het plaatje overschrijdt de maximum grootte: %(max)dk"
 
 #: apps/projects/forms.py:107
 #, python-format
 msgid "User %s is already an organizer."
-msgstr ""
+msgstr "Gebruiker %s is al coördinator."
 
 #: apps/projects/forms.py:112
 #, python-format
 msgid "User %s is already a participant."
-msgstr ""
+msgstr "Gebruiker %s is al een deelnemer."
 
 #: apps/projects/forms.py:126
 #, python-format
@@ -428,50 +439,54 @@ msgid "A %s can not be its own next step."
 msgstr ""
 
 #: apps/projects/forms.py:128
-#, python-format
+#, fuzzy, python-format
 msgid "There is no challenge, study group, ... with short name: %s."
-msgstr ""
+msgstr "Er is geen studiegroep, cursus, ... met deze afkorting: %s."
 
 #: apps/projects/forms.py:134
-#, python-format
+#, fuzzy, python-format
 msgid "The %(slug)s %(kind)s is already a next step."
-msgstr ""
+msgstr "Het %(kind)s %(slug)s is al benadrukt."
 
 #: apps/projects/forms.py:146 templates/drumbeatmail/base.html:17
 #: templates/messages/inbox.html:12
 #: templates/projects/contact_organizers.html:12
 msgid "Subject"
-msgstr ""
+msgstr "Onderwerp"
 
 #: apps/projects/forms.py:148
 msgid "Body"
-msgstr ""
+msgstr "Tekstveld"
 
 #: apps/projects/forms.py:158
 msgid "That study group, course, ... does not exist."
-msgstr ""
+msgstr "Deze studiegroep, cursus, ... bestaat niet."
 
 #: apps/projects/forms.py:177 apps/schools/forms.py:115
 #: apps/schools/forms.py:140
 #, python-format
 msgid "There is no study group, course, ... with short name: %s."
-msgstr ""
+msgstr "Er is geen studiegroep, cursus, ... met deze afkorting: %s."
 
 #: apps/projects/forms.py:193
 msgid "There is no course with this short name on the archive."
-msgstr ""
+msgstr "Er is geen cursus met deze afkorting in het archief."
 
 #: apps/projects/models.py:95
 msgid ""
 "Study Group -- group of people working collaboratively to acquire and share "
 "knowledge."
 msgstr ""
+"Studiegroep -- een groep mensen die samenwerken om bij het verzamelen en "
+"delen van kennis."
 
 #: apps/projects/models.py:97
 msgid ""
 "Course -- led by one or more organizers with skills on a field who direct "
 "and help participants during their learning."
 msgstr ""
+"Cursus -- geleid door een of meerdere coördinatoren met vakkennis die "
+"deelnemers aansturen en helpen bij het leren."
 
 #: apps/projects/models.py:100
 msgid "Challenge -- series of tasks peers can engage in to develop skills."
@@ -479,177 +494,183 @@ msgstr ""
 
 #: apps/projects/models.py:150
 msgid "group"
-msgstr ""
+msgstr "groep"
 
 #: apps/projects/models.py:153
 #, python-format
 msgid "%(name)s %(kind)s"
-msgstr ""
+msgstr "%(kind)s %(name)s"
 
 #: apps/projects/models.py:164
 msgid "created"
-msgstr ""
+msgstr "gemaakt"
 
 #: apps/projects/views.py:96 apps/projects/views.py:177
 #: apps/projects/views.py:258
 msgid "Full Description"
-msgstr ""
+msgstr "Volledige omschrijving"
 
 #: apps/projects/views.py:112
 msgid "Problem creating the study group, course, ..."
-msgstr ""
+msgstr "Problemen met het maken van de studiegroep, cursus ..."
 
 #: apps/projects/views.py:202
 #, python-format
 msgid "The %s has been cloned."
-msgstr ""
+msgstr "De %s is gekopiëerd."
 
 #: apps/projects/views.py:208
 msgid "There was a problem cloning the study group, course, ..."
-msgstr ""
+msgstr "Er is een probleem met het kopiëren van de studiegroep, cursus, ..."
 
 #: apps/projects/views.py:276
 #, python-format
 msgid "The %s has been imported."
-msgstr ""
+msgstr "De %s is geïmporteerd."
 
 #: apps/projects/views.py:281
 msgid "Problem importing the study group, course, ..."
-msgstr ""
+msgstr "Er is een probleem met het importeren van de studiegroep, cursus, ..."
 
 #: apps/projects/views.py:354 apps/schools/views.py:135
 #: apps/schools/views.py:177 apps/schools/views.py:219
 #: apps/schools/views.py:261
 msgid "Image updated"
-msgstr ""
+msgstr "Afbeelding bijgewerkt"
 
 #: apps/projects/views.py:361 apps/schools/views.py:141
 #: apps/schools/views.py:183 apps/schools/views.py:225
 #: apps/schools/views.py:267
 msgid "There was an error uploading your image"
-msgstr ""
+msgstr "Er is een probleem met het toevoegen van je afbeelding"
 
 #: apps/projects/views.py:387
 msgid "Link added."
-msgstr ""
+msgstr "Link toegevoegd."
 
 #: apps/projects/views.py:391
 msgid "There was an error adding your link."
-msgstr ""
+msgstr "Er is een probleem met het toevoegen van je link."
 
 #: apps/projects/views.py:413 apps/projects/views.py:446
 #: apps/users/views.py:647
 msgid "You can't edit this link"
-msgstr ""
+msgstr "Je kunt deze link niet bewerken"
 
 #: apps/projects/views.py:424
 msgid "Link updated."
-msgstr ""
+msgstr "De link is bijgewerkt."
 
 #: apps/projects/views.py:448
 msgid "The link was deleted"
-msgstr ""
+msgstr "De link is verwijderd"
 
 #: apps/projects/views.py:470
 msgid "Participant added."
-msgstr ""
+msgstr "Deelnemer toegevoegd."
 
 #: apps/projects/views.py:476
 msgid "There was an error adding the participant."
-msgstr ""
+msgstr "Er is een probleem met het toevoegen van de deelnemer."
 
 #: apps/projects/views.py:512
 msgid "You can't make that person an organizer"
-msgstr ""
+msgstr "Je kunt deze persoon geen coördinator maken"
 
 #: apps/projects/views.py:515
 msgid "The participant is now an organizer."
-msgstr ""
+msgstr "De deelnemer is nu een coördinator."
 
 #: apps/projects/views.py:529
 #, python-format
 msgid "The participant %s has been removed."
-msgstr ""
+msgstr "De deelnemer %s is verwijderd."
 
 #: apps/projects/views.py:547
 msgid "Next step added."
 msgstr ""
 
 #: apps/projects/views.py:553
+#, fuzzy
 msgid "There was an error adding that next step."
-msgstr ""
+msgstr "Er is een probleem met het toevoegen van de deelnemer."
 
 #: apps/projects/views.py:597
-#, python-format
+#, fuzzy, python-format
 msgid "The %(name)s %(kind)s is not a next step anymore."
-msgstr ""
+msgstr "Het %(kind)s %(slug)s is geen deel van deze school."
 
 #: apps/projects/views.py:618
 #, python-format
 msgid "There was a problem saving the %s's status."
-msgstr ""
+msgstr "Er is een probleem met het opslaan van de status van %s."
 
 #: apps/relationships/models.py:59
 msgid "Cannot create self referencing relationship."
-msgstr ""
+msgstr "Kan geen naar zichzelfreferende relatie maken."
 
 #: apps/relationships/views.py:55
 msgid "You can't unfollow"
-msgstr ""
+msgstr "Je kunt niet ontvolgen"
 
 #: apps/replies/models.py:51
 #, python-format
 msgid "comment at %s"
-msgstr ""
+msgstr "geef commentaar op %s"
 
 #: apps/replies/views.py:18 templates/replies/_comment_threads.html:12
 msgid "This comment was deleted."
-msgstr ""
+msgstr "Dit commentaar is verwijderd."
 
 #: apps/replies/views.py:39
+#, fuzzy
 msgid "You can not reply to this comment."
-msgstr ""
+msgstr "Je kunt deze reactie niet bewerken"
 
 #: apps/replies/views.py:54 apps/replies/views.py:115
 msgid "Comment posted!"
-msgstr ""
+msgstr " Reactie gepost!"
 
 #: apps/replies/views.py:92
-#, python-format
+#, fuzzy, python-format
 msgid "You can not post a comment at %s."
-msgstr ""
+msgstr " een nieuwe reactie is geplaats op "
 
 #: apps/replies/views.py:141
+#, fuzzy
 msgid "You can not edit this comment."
-msgstr ""
+msgstr "Je kunt deze reactie niet bewerken"
 
 #: apps/replies/views.py:149
 msgid "Comment updated!"
-msgstr ""
+msgstr "Reactie bijgewerkt!"
 
 #: apps/replies/views.py:175
+#, fuzzy
 msgid "You can not restore this comment."
-msgstr ""
+msgstr "Je kunt deze reactie niet bewerken"
 
 #: apps/replies/views.py:177
+#, fuzzy
 msgid "You can not delete this comment."
-msgstr ""
+msgstr "Je kunt deze reactie niet bewerken"
 
 #: apps/replies/views.py:184
 msgid "Comment deleted!"
-msgstr ""
+msgstr "Reactie verwijderd!"
 
 #: apps/replies/views.py:186
 msgid "Comment restored!"
-msgstr ""
+msgstr "Reactie hersteld!"
 
 #: apps/reviews/decorators.py:14
 msgid "You need to be a reviewer."
 msgstr ""
 
 #: apps/reviews/views.py:80
+#, fuzzy
 msgid "Review posted!"
-msgstr ""
+msgstr "Antwoord gepost!"
 
 #: apps/richtext/views.py:131
 #, python-format
@@ -663,86 +684,88 @@ msgstr ""
 
 #: apps/schools/decorators.py:20
 msgid "You are not school organizer"
-msgstr ""
+msgstr "Je bent geen schoolcoördinator"
 
 #: apps/schools/forms.py:102
 #, python-format
 msgid "User %s is organizing the school."
-msgstr ""
+msgstr "Gebruiker %s organiseert de school."
 
 #: apps/schools/forms.py:121
 #, python-format
 msgid "The %(slug)s %(kind)s is not part of this school."
-msgstr ""
+msgstr "Het %(kind)s %(slug)s is geen deel van deze school."
 
 #: apps/schools/forms.py:125
 #, python-format
 msgid "The %(slug)s %(kind)s is already featured."
-msgstr ""
+msgstr "Het %(kind)s %(slug)s is al benadrukt."
 
 #: apps/schools/forms.py:146
 #, python-format
 msgid "The %(slug)s %(kind)s is already part of this school."
-msgstr ""
+msgstr "Het %(kind)s %(slug)s is al een deel van deze school."
 
 #: apps/schools/forms.py:150
 #, python-format
 msgid "The %(slug)s %(kind)s is part of: %(school)s."
-msgstr ""
+msgstr "Het %(kind)s %(slug)s is een deel van: %(school)s."
 
 #: apps/schools/views.py:75
 msgid "School updated!"
-msgstr ""
+msgstr "School bijgewerkt!"
 
 #: apps/schools/views.py:96
 msgid "School styles updated!"
-msgstr ""
+msgstr "School stijlen bijgewerkt!"
 
 #: apps/schools/views.py:287
 msgid "School organizer added."
-msgstr ""
+msgstr "School coördinator toegevoegd!"
 
 #: apps/schools/views.py:292
 msgid "There was an error adding the school organizer."
-msgstr ""
+msgstr "Er is een probleem met het toevoegen van de schoolcoördinator."
 
 #: apps/schools/views.py:328
 #, python-format
 msgid "The %s is now featured for this school."
-msgstr ""
+msgstr "Het %s is nu speciaal benadrukt voor deze school."
 
 #: apps/schools/views.py:333
 #, python-format
 msgid "There was an error marking %s as featured."
-msgstr ""
+msgstr "Er is een probleem met het %s benadrukken."
 
 #: apps/schools/views.py:368
 #, python-format
 msgid "The %s stopped being featured for this school."
-msgstr ""
+msgstr "Het %s is gestopt met het benadrukken voor deze school."
 
 #: apps/schools/views.py:386
 #, python-format
 msgid "The %s was added to this school."
-msgstr ""
+msgstr "De %s is toegevoegd aan deze school."
 
 #: apps/schools/views.py:391
 #, python-format
 msgid "There was an adding %s to this school."
-msgstr ""
+msgstr "Er is een %s toegevoegd aan deze school."
 
 #: apps/schools/views.py:426
 #, python-format
 msgid "The %s is no longer part of this school."
-msgstr ""
+msgstr "Het %s is niet langer meer deel van deze school."
 
 #: apps/schools/views.py:496
+#, fuzzy
 msgid "School mentorship details updated!"
-msgstr ""
+msgstr "School stijlen bijgewerkt!"
 
 #: apps/signups/models.py:31
+#, fuzzy
 msgid "Closed signup"
-msgstr ""
+msgstr "Aanmelding gesloten"
 
 #: apps/signups/models.py:32
 msgid "Moderated signup"
@@ -758,66 +781,71 @@ msgid "the signup answer of %(author)s at %(project)s"
 msgstr ""
 
 #: apps/signups/views.py:36
+#, fuzzy
 msgid "Signup updated!"
-msgstr ""
+msgstr "De link is bijgewerkt."
 
 #: apps/signups/views.py:85 templates/signups/sign_up.html:51
 msgid "This answer was deleted."
-msgstr ""
+msgstr "Dit antwoord is verwijderd."
 
 #: apps/signups/views.py:106
 #, python-format
 msgid "You already joined this %s."
-msgstr ""
+msgstr "Je bent al toegevoegd%s."
 
 #: apps/signups/views.py:109
 #, python-format
 msgid "Sign-up is currently closed.You can clone the %s if is full."
-msgstr ""
+msgstr "De inschrijving is gesloten. Je kunt %s kopieren als vol is."
 
 #: apps/signups/views.py:118
 msgid "You already posted an answer to the signup questions."
-msgstr ""
+msgstr "Je hebt al een antwoord gepost op de aanmeldvragen."
 
 #: apps/signups/views.py:139
+#, fuzzy
 msgid "You are now a participant!"
-msgstr ""
+msgstr "Je neemt niet deel aan %s"
 
 #: apps/signups/views.py:141
 msgid "Answer submitted!"
-msgstr ""
+msgstr "Antwoord toegevoegd!"
 
 #: apps/signups/views.py:168
+#, fuzzy
 msgid "You can't edit this answer"
-msgstr ""
+msgstr "Je kunt deze pagina niet bewerken"
 
 #: apps/signups/views.py:180
 msgid "Answer updated!"
-msgstr ""
+msgstr "Antwoord bijgewerkt!"
 
 #: apps/signups/views.py:214
 msgid "Organizer added!"
-msgstr ""
+msgstr "coördinator toegevoegd!"
 
 #: apps/signups/views.py:216
 msgid "Participant added!"
-msgstr ""
+msgstr "Deelnemer toegevoegd!"
 
 #: apps/signups/views.py:227
+#, fuzzy
 msgid "You can not restore this answer."
-msgstr ""
+msgstr "Weet je zeker dat je dit antwoord wilt herstellen?"
 
 #: apps/signups/views.py:229
+#, fuzzy
 msgid "You can not delete this answer."
-msgstr ""
+msgstr "Je kunt deze pagina niet bekijken"
 
 #: apps/signups/views.py:236
 msgid "Answer deleted!"
-msgstr ""
+msgstr "Antwoord verwijderd!"
 
 #: apps/signups/views.py:238
 msgid "Answer restored!"
-msgstr ""
+msgstr "Antwoord hersteld!"
 
 #: apps/signups/views.py:261
 msgid "Organizers can't use this page to leave their group."
@@ -840,12 +868,14 @@ msgid "You need to complete all tasks before becoming an adopter."
 msgstr ""
 
 #: apps/signups/views.py:310
+#, fuzzy
 msgid "You already adopted this challenge."
-msgstr ""
+msgstr "Je bent al toegevoegd%s."
 
 #: apps/signups/views.py:313
+#, fuzzy
 msgid "Thanks! "
-msgstr ""
+msgstr "Bedankt,"
 
 #: apps/signups/views.py:314
 msgid "You are now listed among the peers who offered their help."
@@ -853,16 +883,16 @@ msgstr ""
 
 #: apps/statuses/models.py:33
 msgid "statuses"
-msgstr ""
+msgstr "statussen"
 
 #: apps/statuses/models.py:36
 #, python-format
 msgid "message: %s"
-msgstr ""
+msgstr "bericht: %s"
 
 #: apps/statuses/views.py:28 apps/statuses/views.py:58
 msgid "There was an error posting your status update"
-msgstr ""
+msgstr "Er is een probleem met het posten van je bijgewerkte status"
 
 #: apps/tags/models.py:9
 msgid "Tag"
@@ -883,59 +913,61 @@ msgstr ""
 
 #: apps/users/decorators.py:21
 msgid "You are already logged into an account."
-msgstr ""
+msgstr "Je bent al ingelogd."
 
 #: apps/users/fields.py:20 apps/users/fields.py:24
 msgid "Please choose another username."
-msgstr ""
+msgstr "Kies aub een andere gebruikersnaam."
 
 #: apps/users/forms.py:67
 msgid "This google openid is not supported. "
-msgstr ""
+msgstr "Deze google openid is niet ondersteund. "
 
 #: apps/users/forms.py:68
 msgid "Please use your google profile openid."
-msgstr ""
+msgstr "Gebruik aub je google profiel openid."
 
 #: apps/users/forms.py:76
 msgid "Your account was migrated from the old P2PU website."
-msgstr ""
+msgstr "Je account is gemigreerd van de oude P2PU website."
 
 #: apps/users/forms.py:148
 msgid "User profile with this Username already exists."
-msgstr ""
+msgstr "Gebruikersprofiel met deze gebruikersnaam bestaat al."
 
 #: apps/users/forms.py:154
 msgid "This field is required."
-msgstr ""
+msgstr "Dit veld is verplicht."
 
 #: apps/users/forms.py:157
 msgid "User profile with this Email already exists."
-msgstr ""
+msgstr "Gebruikersprofiel met dit e-mailadres bestaat al."
 
 #: apps/users/forms.py:285
 msgid "That e-mail address isn't associated to a user account. "
-msgstr ""
+msgstr "Dit e-mailadres is heeft geen connectie met een gebruikersaccount. "
 
 #: apps/users/forms.py:286
+#, fuzzy
 msgid "You didn't finish registering the last time. "
-msgstr ""
+msgstr "Je hebt het registratieproces de laatste keer niet afgemaakt."
 
 #: apps/users/forms.py:287
 msgid "Please register a new account."
-msgstr ""
+msgstr "Maak aub een nieuw account."
 
 #: apps/users/forms.py:290
+#, fuzzy
 msgid "Username not found. "
-msgstr ""
+msgstr "Pagina niet gevonden"
 
 #: apps/users/forms.py:291
 msgid "Are you sure you've registered?"
-msgstr ""
+msgstr "Weet je zeker dat je je hebt geregistreerd?"
 
 #: apps/users/models.py:128
 msgid "Anonym"
-msgstr ""
+msgstr "Anoniem"
 
 #: apps/users/models.py:180
 msgid "(adopted)"
@@ -943,15 +975,15 @@ msgstr ""
 
 #: apps/users/models.py:182
 msgid "(organizing)"
-msgstr ""
+msgstr "(organiseren)"
 
 #: apps/users/models.py:185
 msgid "(participating)"
-msgstr ""
+msgstr "(participeren)"
 
 #: apps/users/models.py:188
 msgid "(following)"
-msgstr ""
+msgstr "(volgen)"
 
 #: apps/users/views.py:48
 #, python-format
@@ -959,6 +991,8 @@ msgid ""
 "A link to activate your user account was sent by email to your address %s. "
 "You have to click it before you can log in."
 msgstr ""
+"Een een link om je gebruikersaccount te activeren is gestuurd naar je e-"
+"mailadres: %s. Klik op de link voordat je kunt inloggen."
 
 #: apps/users/views.py:54
 #, python-format
@@ -968,123 +1002,135 @@ msgid ""
 "us <a href=\"%s\">resend the confirmation message</a> to your email address "
 "mentioned above."
 msgstr ""
+"Als je de bevestigingsmail niet hebt ontvangen, controleer of je "
+"mailprogramma  het niet als \"junk mail\" of \"spam\" ziet. Als het nodig "
+"is, kunnen wij <a href=\"%s\"> de bevestigingsmail opnieuw verzenden</a> "
+"naar het bovengenoemde mailadres ."
 
 #: apps/users/views.py:204
 msgid "Incorrect username, email or password."
-msgstr ""
+msgstr "Onjuiste gebruikersnaam, e-mail of paswoord."
 
 #: apps/users/views.py:294
 msgid "Congratulations! Your user account was successfully created."
-msgstr ""
+msgstr "Gefeliciteerd! Je gebruikersaccount is succesvol aangemaakt!."
 
 #: apps/users/views.py:302 apps/users/views.py:442
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
 msgstr ""
+"Bedankt! We hebben een mail gestuurd naar {0} met aanwijzingen voor het "
+"voltooien van je registratie."
 
 #: apps/users/views.py:373
 msgid "Hmm, that doesn't look like the correct confirmation code"
-msgstr ""
+msgstr "Hmm, dit lijkt niet op de goede bevestigingscode"
 
 #: apps/users/views.py:378
 msgid "Success! You have verified your account. You may now sign in."
-msgstr ""
+msgstr "Gelukt! Je hebt je account bevestigd. Je mag nu inloggen"
 
 #: apps/users/views.py:394
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
 msgstr ""
+"Een bevestingingscode is naar het e-mailadres dat bij je account hoort "
+"gestuurd ."
 
 #: apps/users/views.py:403
 msgid "This user account was deleted."
-msgstr ""
+msgstr "Dit gebruikersaccount is verwijderd."
 
 #: apps/users/views.py:465
 msgid "Profile updated"
-msgstr ""
+msgstr "Profiel bijgewerkt"
 
 #: apps/users/views.py:471
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
 msgstr ""
+"Er is een probleem met het bijwerken van je profiel. Verbeter de problemen "
+"en probeer opnieuw de informatie te verzenden."
 
 #: apps/users/views.py:506
 #, python-format
 msgid "The identity %s has already been claimed by you."
-msgstr ""
+msgstr "De identiteit %s is al door jou gereserveerd."
 
 #: apps/users/views.py:507
 #, python-format
 msgid "The identity %s has already been claimed by another user."
-msgstr ""
+msgstr "De %s identiteit is al gereserveerd door een andere gebruiker."
 
 #: apps/users/views.py:520
 #, python-format
 msgid "The identity %s has been saved."
-msgstr ""
+msgstr "Je identiteit %s is opgeslagen."
 
 #: apps/users/views.py:527
 #, python-format
 msgid "OpenID authentication failed: %s"
-msgstr ""
+msgstr "De authenticatie met OpenID is mislukt: %s"
 
 #: apps/users/views.py:530
 msgid "Authentication cancelled."
-msgstr ""
+msgstr "Authenticatie beëindigd."
 
 #: apps/users/views.py:533
 #, python-format
 msgid "Unknown OpenID response type: %r"
-msgstr ""
+msgstr "Onbekend type OpenID reactie: %r"
 
 #: apps/users/views.py:535
 msgid "This is an OpenID relying party endpoint."
-msgstr ""
+msgstr "Dit is een OpenID afhankelijk van derden."
 
 #: apps/users/views.py:544
 msgid "You can't edit this openid"
-msgstr ""
+msgstr "Je kunt deze OpenID niet bewerken"
 
 #: apps/users/views.py:546
 msgid "The openid was deleted."
-msgstr ""
+msgstr "De OpenID was verwijderd."
 
 #: apps/users/views.py:576
 msgid "Profile image updated"
-msgstr ""
+msgstr "Profielafbeelding bijgewerkt"
 
 #: apps/users/views.py:581
 msgid "There was an error uploading your image."
-msgstr ""
+msgstr "Er is een fout opgetreden bij het versturen van je afbeelding."
 
 #: apps/users/views.py:593
 msgid "Profile link added."
-msgstr ""
+msgstr "Profiellink toegevoegd."
 
 #: apps/users/views.py:602
 msgid "There was an error saving your link."
-msgstr ""
+msgstr "Er is een fout opgetreden bij het bewaren van je link."
 
 #: apps/users/views.py:626
 msgid "Profile link updated"
-msgstr ""
+msgstr "Profiellink bijgewerkt"
 
 #: apps/users/views.py:649
 msgid "The link was deleted."
-msgstr ""
+msgstr "De link is verwijderd."
 
 #: templates/404.html:6
 msgid "Page not found"
-msgstr ""
+msgstr "Pagina niet gevonden"
 
 #: templates/404.html:8
 msgid ""
 "Oops. That links doesn't seem to work. Maybe the page you are looking for is "
 "on the old p2pu site? Try "
 msgstr ""
+"Oeps! Deze link werkt niet. Misschien is de pagina die je zoekt op de oude "
+"p2pu website? probeer"
 
 #: templates/404.html:9
 msgid ""
@@ -1092,10 +1138,12 @@ msgid ""
 "lighthouseapp.com/projects/71002\" target=\"_blank\">filling a bug report</"
 "a>."
 msgstr ""
+"Als je denkt dat dit een fout is, laat het ons weten <a href=\"http://p2pu."
+"lighthouseapp.com/projects/71002\">bugs melden</a>."
 
 #: templates/500.html:6
 msgid "Internal server error"
-msgstr ""
+msgstr "Interne server fout"
 
 #: templates/500.html:8
 msgid ""
@@ -1103,16 +1151,22 @@ msgid ""
 "problem by <a href=\"http://p2pu.lighthouseapp.com/projects/71002\">filing a "
 "bug report</a>, and telling us what you were doing when the problem occurred."
 msgstr ""
+"Wat klaarblijkelijk moest gebeuren, gebeurde niet. Je kunt ons helpen om dit "
+"probleem op te lossen <a href=\"http://p2pu.lighthouseapp.com/"
+"projects/71002\">vul een bugrapport</a>, en vertel ons wat je deed toen het "
+"probleem ontstond ."
 
 #: templates/503.html:5
 msgid "Down for maintenance, come back soon"
-msgstr ""
+msgstr "Buiten gebruik wegens onderhoud, kom gauw terug"
 
 #: templates/503.html:7
 msgid ""
 "We are probably in the process of upgrading the site. We apologize for any "
 "inconvenience, and hope that you will like the new features."
 msgstr ""
+"We zijn waarschijnlijk de site aan het upgraden. Onze excusses voor het "
+"ongemak, en we hopen dat je de nieuwe extras leuk zult vinden."
 
 #: templates/_footer.html:11
 msgid "What is P2PU?"
@@ -1133,8 +1187,9 @@ msgid "Join P2PU Today! It's free."
 msgstr ""
 
 #: templates/_footer.html:18
+#, fuzzy
 msgid "Some of our supporters"
-msgstr ""
+msgstr "Sponsors"
 
 #: templates/_footer.html:21
 msgid "View all of our supporters"
@@ -1146,7 +1201,7 @@ msgstr ""
 
 #: templates/_footer.html:26
 msgid "Get Involved"
-msgstr ""
+msgstr "Doe mee"
 
 #: templates/_footer.html:27
 msgid "Read our Blog"
@@ -1161,60 +1216,62 @@ msgid "Follow us on Twitter"
 msgstr ""
 
 #: templates/_footer.html:30
+#, fuzzy
 msgid "Send us an email"
-msgstr ""
+msgstr "Stuur me een e-mail als..."
 
 #: templates/_footer.html:37
 msgid "(more)"
-msgstr ""
+msgstr "(meer)"
 
 #: templates/_footer.html:40
 msgid "CC BY SA"
-msgstr ""
+msgstr "CC REC/BY CI/SA"
 
 #: templates/_footer.html:43 templates/base.html:78 templates/base.html.py:84
 msgid "Help"
-msgstr ""
+msgstr "Help"
 
 #: templates/_footer.html:44
 msgid "About P2PU"
-msgstr ""
+msgstr "Over P2PU"
 
 #: templates/_footer.html:45
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: templates/_footer.html:46
 msgid "Announcements"
-msgstr ""
+msgstr "Aankondigingen"
 
 #: templates/_footer.html:47
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: templates/_footer.html:48
 msgid "Found a Bug?"
-msgstr ""
+msgstr "Een bug gevonden?"
 
 #: templates/_footer.html:51
+#, fuzzy
 msgid "Creative Commons Share-Alike"
-msgstr ""
+msgstr "Creative Commons REC/BY CI/SA"
 
 #: templates/_footer.html:52
 msgid "Privacy Guidelines"
-msgstr ""
+msgstr "Privacy richtlijnen"
 
 #: templates/_footer.html:53
 msgid "Terms of Use"
-msgstr ""
+msgstr "Gebruiksvoorwaarden"
 
 #: templates/base.html:14
 msgid "Learning for everyone, by everyone, about almost anything."
-msgstr ""
+msgstr "Leren voor iedereen, door iedereen,over bijna alles."
 
 #: templates/base.html:28
 msgid "css/style-en.css"
-msgstr ""
+msgstr "css/style-nl.css"
 
 #: templates/base.html:47 templates/activity/base.html:17
 #: templates/projects/base.html:18 templates/projects/directory.html:4
@@ -1223,7 +1280,7 @@ msgstr ""
 #: templates/projects/project_edit.html:25 templates/tags/directory.html:4
 #: templates/tags/directory.html.py:12
 msgid "Learn"
-msgstr ""
+msgstr "Leren"
 
 #: templates/base.html:48
 msgid "Contribute"
@@ -1232,11 +1289,12 @@ msgstr ""
 #: templates/base.html:70 templates/dashboard/dashboard.html:17
 #: templates/drumbeatmail/inbox.html:9
 msgid "Dashboard"
-msgstr ""
+msgstr "Mijn Pagina"
 
 #: templates/base.html:71
+#, fuzzy
 msgid "My Profile"
-msgstr ""
+msgstr "Profiel"
 
 #: templates/base.html:72
 msgid "My Settings"
@@ -1245,46 +1303,46 @@ msgstr ""
 #: templates/base.html:73 templates/chat/chat.html:4
 #: templates/chat/chat.html.py:10 templates/projects/sidebar.html:162
 msgid "Chat"
-msgstr ""
+msgstr "Chat"
 
 #: templates/base.html:74 templates/drumbeatmail/inbox.html:4
 #: templates/drumbeatmail/inbox.html:11 templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
-msgstr ""
+msgstr "Inbox"
 
 #: templates/base.html:75
 msgid "Logout"
-msgstr ""
+msgstr "Uitloggen"
 
 #: templates/base.html:79 templates/base.html.py:85
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: templates/base.html:83
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: templates/base.html:90 templates/search/search.html:15
 msgid "Loading"
-msgstr ""
+msgstr "Laden"
 
 #: templates/base.html:93 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
-#: templates/users/profile_form_base.html:76
+#: templates/search/search.html:30 templates/users/profile_form_base.html:76
 msgid "en"
-msgstr ""
+msgstr "nl"
 
 #: templates/base.html:112
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: templates/base.html:152
 msgid "jquery.ui.datepicker-en.js"
-msgstr ""
+msgstr "jquery.ui.datepicker-nl.js"
 
 #: templates/base.html:154
 msgid "js/script-en.js"
-msgstr ""
+msgstr "js/script-nl.js"
 
 #: templates/activity/_activity_resource.html:11
 #: templates/content/page.html:48 templates/drumbeat/report_abuse.html:10
@@ -1295,7 +1353,7 @@ msgstr ""
 #: templates/replies/_comment_threads.html:90
 #: templates/signups/sign_up.html:66 templates/users/sidebar.html:31
 msgid "Report Abuse"
-msgstr ""
+msgstr "Meld misbruik"
 
 #: templates/activity/_activity_resource.html:18
 #: templates/activity/delete_restore.html:32
@@ -1316,15 +1374,15 @@ msgstr ""
 #: templates/users/profile_edit_openids.html:30
 #: templates/users/settings_delete.html:26
 msgid "Delete"
-msgstr ""
+msgstr "Verwijderen"
 
 #: templates/activity/_activity_resource.html:31
 msgid "at"
-msgstr ""
+msgstr "in"
 
 #: templates/activity/_activity_resource.html:42
 msgid "via"
-msgstr ""
+msgstr "naar"
 
 #: templates/activity/_activity_resource.html:51
 #, python-format
@@ -1342,7 +1400,7 @@ msgstr[1] ""
 #: templates/activity/base.html:4
 #: templates/schools/school_edit_statistics.html:23
 msgid "Activity"
-msgstr ""
+msgstr "Activiteit"
 
 #: templates/activity/base.html:21 templates/projects/_user_list.html:8
 #: templates/projects/project_user_list.html:7
@@ -1351,23 +1409,23 @@ msgstr ""
 #: templates/users/profile.html:19 templates/users/profile_edit.html:11
 #: templates/users/user_list.html:5 templates/users/user_list.html.py:10
 msgid "People"
-msgstr ""
+msgstr "Mensen"
 
 #: templates/activity/delete_restore.html:8
 msgid "Restore Activity"
-msgstr ""
+msgstr "Activiteit herstellen"
 
 #: templates/activity/delete_restore.html:10
 msgid "Delete Activity"
-msgstr ""
+msgstr "Activiteit verwijderen"
 
 #: templates/activity/delete_restore.html:21
 msgid "Are you sure you want to restore this activity?"
-msgstr ""
+msgstr "Weet je zeker dat je deze activiteit wilt herstellen?"
 
 #: templates/activity/delete_restore.html:23
 msgid "Are you sure you want to delete this activity?"
-msgstr ""
+msgstr "Weet je zeker dat je deze activiteit wilt verwijderen?"
 
 #: templates/activity/delete_restore.html:27
 #: templates/badges/badge_edit_summary.html:35
@@ -1404,7 +1462,7 @@ msgstr ""
 #: templates/users/settings_notifications.html:83
 #: templates/users/settings_password.html:27
 msgid "Cancel"
-msgstr ""
+msgstr "Ongedaan maken"
 
 #: templates/activity/delete_restore.html:30
 #: templates/content/restore_version.html:21
@@ -1415,13 +1473,13 @@ msgstr ""
 #: templates/signups/delete_restore_answer.html:33
 #: templates/signups/sign_up.html:53
 msgid "Restore"
-msgstr ""
+msgstr "Herstellen"
 
 #: templates/activity/index.html:20 templates/content/page.html:76
 #: templates/projects/project_admin_metrics.html:26
 #: templates/projects/project_admin_metrics.html:41
 msgid "Comments"
-msgstr ""
+msgstr "Reacties"
 
 #: templates/activity/reply_action_link.html:3
 #: templates/drumbeatmail/inbox.html:48 templates/drumbeatmail/inbox.html:95
@@ -1432,7 +1490,7 @@ msgstr ""
 #: templates/replies/_comment_threads.html:121
 #: templates/signups/sign_up.html:61
 msgid "Reply"
-msgstr ""
+msgstr "Antwoordt"
 
 #: templates/badges/_assessment_body.html:4
 msgid "Assessment from"
@@ -1452,7 +1510,7 @@ msgstr ""
 #: templates/badges/_assessment_body.html:40
 #: templates/replies/emails/post_comment.txt:8
 msgid "Comment:"
-msgstr ""
+msgstr "Reactie:"
 
 #: templates/badges/_assessment_item.html:11
 msgid "Gave"
@@ -1462,11 +1520,12 @@ msgstr ""
 #: templates/projects/project_edit_status.html:48
 #: templates/projects/sidebar.html:138
 msgid "to"
-msgstr ""
+msgstr "aan"
 
 #: templates/badges/_give_badge_action.html:3
+#, fuzzy
 msgid "Give Badge"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/badges/_give_badge_action.html:4
 #: templates/badges/badges_list.html:9 templates/badges/base.html:10
@@ -1475,7 +1534,7 @@ msgstr ""
 #: templates/schools/projectset_home.html:22
 #: templates/users/_profile_info.html:8
 msgid "Badges"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/badges/_review_submission_action.html:4
 #: templates/badges/submission_show.html:47
@@ -1529,12 +1588,14 @@ msgid "read more"
 msgstr ""
 
 #: templates/badges/_submissions_list_item.html:37
+#, fuzzy
 msgid "submitted"
-msgstr ""
+msgstr "Antwoord toegevoegd!"
 
 #: templates/badges/_submissions_list_item.html:37
+#, fuzzy
 msgid "ago"
-msgstr ""
+msgstr " terug"
 
 #: templates/badges/assessment_edit.html:19
 msgid "Review this submission:"
@@ -1542,8 +1603,9 @@ msgstr ""
 
 #: templates/badges/assessment_edit.html:28
 #: templates/badges/submission_show.html:31
+#, fuzzy
 msgid "Link to work submitted"
-msgstr ""
+msgstr "Antwoord toegevoegd!"
 
 #: templates/badges/assessment_edit.html:34
 msgid "How well is this peer was able to:"
@@ -1570,7 +1632,7 @@ msgstr ""
 #: templates/content/_toggle_completion.html:70
 #: templates/reviews/review_project.html:25
 msgid "Submit"
-msgstr ""
+msgstr "Verzend"
 
 #: templates/badges/badge.html:15
 msgid "View your Submissions"
@@ -1588,12 +1650,14 @@ msgstr ""
 #: templates/badges/show_user_awards.html:19
 #: templates/badges/submission_edit.html:25
 #: templates/content/_toggle_completion.html:56
+#, fuzzy
 msgid "Requirements:"
-msgstr ""
+msgstr "Reactie herstellen:"
 
 #: templates/badges/badge.html:33
+#, fuzzy
 msgid "You need to have these badges:"
-msgstr ""
+msgstr "Je kunt deze pagina niet bekijken"
 
 #: templates/badges/badge.html:48
 msgid "Other badges you can apply for:"
@@ -1617,12 +1681,14 @@ msgstr ""
 
 #: templates/badges/badge.html:84 templates/projects/sidebar.html:295
 #: templates/reviews/projects_reviews_list.html:11
+#, fuzzy
 msgid "Pending"
-msgstr ""
+msgstr "Wachtende antwoorden:"
 
 #: templates/badges/badge_edit.html:4 templates/badges/badge_edit.html:10
+#, fuzzy
 msgid "Edit Badge"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/badges/badge_edit_summary.html:10
 #: templates/projects/project_edit_links.html:14
@@ -1638,11 +1704,12 @@ msgstr ""
 #: templates/users/profile_edit_links.html:35
 #: templates/users/profile_edit_links_edit.html:13
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: templates/badges/badge_edit_summary.html:15
+#, fuzzy
 msgid "Brief description"
-msgstr ""
+msgstr "Beschrijven"
 
 #: templates/badges/badge_edit_summary.html:16
 msgid ""
@@ -1659,8 +1726,9 @@ msgid ""
 msgstr ""
 
 #: templates/badges/badge_edit_summary.html:27
+#, fuzzy
 msgid "Badge Type"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/badges/badge_edit_summary.html:28
 msgid ""
@@ -1683,7 +1751,7 @@ msgstr ""
 #: templates/users/settings_notifications.html:84
 #: templates/users/settings_password.html:28
 msgid "Save"
-msgstr ""
+msgstr "Bewaren"
 
 #: templates/badges/badge_edit_summary.html:39
 #: templates/content/create_page.html:30 templates/projects/directory.html:22
@@ -1693,21 +1761,23 @@ msgstr ""
 #: templates/projects/project_import.html:22 templates/schools/home.html:15
 #: templates/tags/directory.html:22
 msgid "Create"
-msgstr ""
+msgstr "Maken"
 
 #: templates/badges/peer_assessment.html:20
 msgid "Give this badge to your peer."
 msgstr ""
 
 #: templates/badges/peer_assessment.html:34
+#, fuzzy
 msgid "Peer Username:"
-msgstr ""
+msgstr "Gebruikersnaam"
 
 #: templates/badges/profile_badges_manage.html:6
 #: templates/badges/profile_badges_manage.html:9
 #: templates/users/profile_edit.html:32
+#, fuzzy
 msgid "Manage Badges"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/badges/profile_badges_manage.html:10
 #, python-format
@@ -1723,11 +1793,12 @@ msgstr ""
 #: templates/projects/contact_organizers.html:36
 #: templates/users/forgot_password.html:18
 msgid "Send"
-msgstr ""
+msgstr "versturen"
 
 #: templates/badges/profile_badges_manage.html:26
+#, fuzzy
 msgid "You don't have any badges."
-msgstr ""
+msgstr "Je hebt geen berichten"
 
 #: templates/badges/show_assessment.html:6
 msgid "Award Justification for"
@@ -1736,11 +1807,12 @@ msgstr ""
 #: templates/badges/show_assessment.html:30
 #: templates/badges/submission_show.html:37 templates/messages/inbox.html:13
 msgid "Received"
-msgstr ""
+msgstr "Ontvangen"
 
 #: templates/badges/show_assessment.html:39
+#, fuzzy
 msgid "Award Justification"
-msgstr ""
+msgstr "Notificaties"
 
 #: templates/badges/show_user_awards.html:10
 msgid "'s Awards to"
@@ -1749,7 +1821,7 @@ msgstr ""
 #: templates/badges/show_user_awards.html:29
 #: templates/projects/imported_detailed_description.html:15
 msgid "Prerequisites"
-msgstr ""
+msgstr "Voorwaarden"
 
 #: templates/badges/show_user_awards.html:39
 msgid "Awarded At"
@@ -1777,8 +1849,9 @@ msgid "Submission for"
 msgstr ""
 
 #: templates/badges/submission_show.html:20
+#, fuzzy
 msgid "Submission"
-msgstr ""
+msgstr "Verzend"
 
 #: templates/badges/submission_show.html:34
 msgid "Progress:"
@@ -1808,13 +1881,15 @@ msgstr ""
 #: templates/reviews/base.html.py:10
 #: templates/reviews/show_project_reviews.html:6
 #: templates/reviews/show_project_reviews.html:12
+#, fuzzy
 msgid "Reviews"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: templates/badges/submissions_list.html:7
 #: templates/badges/submissions_list.html:11
+#, fuzzy
 msgid "Submissions"
-msgstr ""
+msgstr "Vragen"
 
 #: templates/badges/success_msg.html:3
 #, python-format
@@ -1827,7 +1902,7 @@ msgstr ""
 #: templates/badges/emails/new_submission.txt:2
 #: templates/projects/emails/project_created.txt:2
 msgid "Hello!"
-msgstr ""
+msgstr "Hallo!"
 
 #: templates/badges/emails/new_submission.txt:4
 msgid "A new peer is waiting for you to review their submission for the"
@@ -1842,12 +1917,14 @@ msgid "They will love you!"
 msgstr ""
 
 #: templates/badges/emails/new_submission.txt:6
+#, fuzzy
 msgid "Thanks,"
-msgstr ""
+msgstr "Bedankt,"
 
 #: templates/badges/emails/new_submission.txt:8
+#, fuzzy
 msgid "The P2PU team"
-msgstr ""
+msgstr "Het P2PU Team"
 
 #: templates/badges/emails/new_submission.txt:10
 #: templates/content/emails/content_update.txt:14
@@ -1857,7 +1934,7 @@ msgstr ""
 #: templates/replies/emails/post_comment.txt:16
 #: templates/statuses/emails/wall_updated.txt:20
 msgid "Manage your subscriptions:"
-msgstr ""
+msgstr "Beheer je aanmeldingen:"
 
 #: templates/badges/emails/new_submission_subject.txt:2
 msgid "New submission for the"
@@ -1868,12 +1945,14 @@ msgid "This is a link to my work:"
 msgstr ""
 
 #: templates/content/_toggle_completion.html:8
+#, fuzzy
 msgid "You've marked this task as completed."
-msgstr ""
+msgstr "Deze taak is verwijderd."
 
 #: templates/content/_toggle_completion.html:13
+#, fuzzy
 msgid "Are you done with this task?"
-msgstr ""
+msgstr "Weet je zeker dat je deze taak wilt verwijderen?"
 
 #: templates/content/_toggle_completion.html:14
 msgid "Yes, I'm done"
@@ -1912,49 +1991,52 @@ msgid "Did you know that you can apply for these badges in this task?"
 msgstr ""
 
 #: templates/content/_toggle_completion.html:92
+#, fuzzy
 msgid "Received!"
-msgstr ""
+msgstr "Ontvangen"
 
 #: templates/content/_toggle_completion.html:95
 msgid "Apply"
 msgstr ""
 
 #: templates/content/_toggle_completion.html:98
+#, fuzzy
 msgid "Submitted"
-msgstr ""
+msgstr "Verzend"
 
 #: templates/content/base_page_form.html:19
 #: templates/replies/comment_page.html:77
 #: templates/signups/answer_sign_up.html:24
 msgid "[Preview]"
-msgstr ""
+msgstr "[Voorbeeld]"
 
 #: templates/content/base_page_form.html:32
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: templates/content/base_page_form.html:33
 msgid "A good title is short and descriptive."
-msgstr ""
+msgstr "Een goede titel is kort en omschrijvend."
 
 #: templates/content/base_page_form.html:40
 #: templates/projects/project_edit_summary.html:18
 msgid "One sentence description"
-msgstr ""
+msgstr "Een beschrijving in een zin"
 
 #: templates/content/base_page_form.html:41
+#, fuzzy
 msgid "This description will be used as sub header below the task title."
-msgstr ""
+msgstr "Deze beschrijving zal gebruikt worden bij zoekresultaten en lijsten."
 
 #: templates/content/base_page_form.html:52
 msgid "Collaborative work (editable by all the participants)."
-msgstr ""
+msgstr "Samenwerken (bij te werken door alle deelnemers)."
 
 #: templates/content/base_page_form.html:58
 #: templates/replies/comment_page.html:132
 #: templates/signups/answer_sign_up.html:98
 msgid "Preview"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: templates/content/confirm_delete_page.html:11
 #: templates/content/create_page.html:11 templates/content/edit_page.html:11
@@ -1963,15 +2045,15 @@ msgstr ""
 #: templates/content/version_page.html:12
 #: templates/projects/project_task_list.html:9
 msgid "Task List"
-msgstr ""
+msgstr "Takenlijst"
 
 #: templates/content/confirm_delete_page.html:24
 msgid "Are you sure you want to delete this task?"
-msgstr ""
+msgstr "Weet je zeker dat je deze taak wilt verwijderen?"
 
 #: templates/content/create_page.html:5 templates/content/create_page.html:15
 msgid "Create Task"
-msgstr ""
+msgstr "Maak taak"
 
 #: templates/content/create_page.html:19 templates/content/edit_page.html:27
 msgid ""
@@ -1982,6 +2064,12 @@ msgid ""
 "constructed over a week, a project that lasts for a few weeks, or a month-"
 "long endeavour that everyone works on."
 msgstr ""
+"Een goede taak maken is belangrijk in het primaire leerproces. Taken moeten "
+"een duidelijk doel hebben en moeten elkaar opvolgen tijdens het leerproces. "
+"Een taak kan zo groot of klein zijn en zo lang duren als je wilt - het kan "
+"een geplande discussie zijn voor een dag, een stukje tekst gemaakt voor een "
+"week, een project dat een paar weken duurt, of een maand-lange onderneming "
+"waaraan iedereen werkt."
 
 #: templates/content/edit_page.html:18 templates/content/page.html:22
 #: templates/projects/project_edit.html:6
@@ -1994,55 +2082,56 @@ msgstr ""
 #: templates/signups/sign_up.html:64
 #: templates/users/profile_edit_links.html:56
 msgid "Edit"
-msgstr ""
+msgstr "Bewerken"
 
 #: templates/content/edit_page.html:33
 #: templates/content/restore_version.html:30
 msgid "Minor update (not posted to the wall)."
-msgstr ""
+msgstr "Kleine update (niet gepubliceerd op de overzichtspagina)."
 
 #: templates/content/history_page.html:15
 #: templates/content/history_page.html:21
 #: templates/content/restore_version.html:14
 #: templates/content/version_page.html:16
 msgid "History"
-msgstr ""
+msgstr "Geschiedenis"
 
 #: templates/content/history_page.html:25
 #: templates/content/history_page.html:33
 msgid "deleted"
-msgstr ""
+msgstr "Verwijderd"
 
 #: templates/content/history_page.html:27
 msgid "(current)"
-msgstr ""
+msgstr "(huidig)"
 
 #: templates/content/page.html:25
 msgid "View History"
-msgstr ""
+msgstr "Bekijk geschiedenis"
 
 #: templates/content/page.html:27 templates/content/page.html.py:72
 msgid "Post Comment"
-msgstr ""
+msgstr "Publiceer reactie"
 
 #: templates/content/page.html:37
 msgid "Task Navigation"
 msgstr ""
 
 #: templates/content/page.html:74
+#, fuzzy
 msgid "Task Discussion"
-msgstr ""
+msgstr "Nieuwe privé discussie"
 
 #: templates/content/emails/content_update.txt:2
 #: templates/replies/emails/post_comment.txt:3
 #: templates/statuses/emails/wall_updated.txt:2
 msgid " was updated."
-msgstr ""
+msgstr " is bijgewerkt."
 
 #: templates/content/emails/content_update.txt:4
 #: templates/content/emails/content_update_subject.txt:2
 msgid " created a new task: "
-msgstr ""
+msgstr " een nieuwe taak gemaakt: "
 
 #: templates/content/emails/content_update.txt:4
 #: templates/content/emails/content_update_subject.txt:2
@@ -2051,11 +2140,11 @@ msgstr ""
 #: templates/replies/emails/post_comment_subject.txt:2
 #: templates/signups/emails/new_signup_answer.txt:2
 msgid "."
-msgstr ""
+msgstr "."
 
 #: templates/content/emails/content_update.txt:9
 msgid "See task at:"
-msgstr ""
+msgstr "Bekijk taak in:"
 
 #: templates/content/emails/content_update.txt:11
 #: templates/drumbeatmail/emails/direct_message.txt:8
@@ -2066,7 +2155,7 @@ msgstr ""
 #: templates/users/emails/forgot_password.txt:11
 #: templates/users/emails/registration_confirm.txt:10
 msgid "Sincerely,"
-msgstr ""
+msgstr "Met vriendelijke groet,"
 
 #: templates/content/emails/content_update.txt:12
 #: templates/drumbeatmail/emails/direct_message.txt:9
@@ -2077,11 +2166,12 @@ msgstr ""
 #: templates/users/emails/forgot_password.txt:12
 #: templates/users/emails/registration_confirm.txt:11
 msgid "The P2PU Team"
-msgstr ""
+msgstr "Het P2PU Team"
 
 #: templates/dashboard/_join_p2pu.html:6
+#, fuzzy
 msgid "Join the Community"
-msgstr ""
+msgstr "Bewerk reactie"
 
 #: templates/dashboard/_join_p2pu.html:6
 msgid "It's free!"
@@ -2092,90 +2182,96 @@ msgid "Learn anything, with your peers."
 msgstr ""
 
 #: templates/dashboard/_join_p2pu.html:8
+#, fuzzy
 msgid ""
 "At P2PU, people work together to learn a particular topic by completing "
 "tasks, assessing individual and group work, and providing constructive "
 "feedback."
 msgstr ""
+"mensen werken samen om een bepaald onderwerp te leren door taken te maken, "
+"door mee te doen aan individueel - en groepswerk, en door goede feedback te "
+"geven.retroalimentación constructiva."
 
 #: templates/dashboard/dashboard.html:8
 msgid "Your Dashboard"
-msgstr ""
+msgstr "Mijn pagina"
 
 #: templates/dashboard/dashboard.html:10
 msgid "Activity from your profile"
-msgstr ""
+msgstr "Activiteiten van jou profiel"
 
 #: templates/dashboard/dashboard.html:11
 msgid "Activity from your dashboard"
-msgstr ""
+msgstr "Activiteiten van jouw dashboard"
 
 #: templates/dashboard/dashboard.html:28
 #: templates/users/emails/registration_confirm.txt:2
 msgid "Welcome to P2PU!"
-msgstr ""
+msgstr "Welkom bij P2PU!"
 
 #: templates/dashboard/dashboard.html:29
 msgid "To get started, you should "
-msgstr ""
+msgstr "Om te beginnen, bewerk "
 
 #: templates/dashboard/dashboard.html:29
 msgid ""
 "update your profile</a>. This is a great way to tell people a bit more about "
 "yourself. Then find "
 msgstr ""
+"je profiel</a>. Dit is een goede manier om mensen een beetje meer over "
+"jezelf te vertellen. Zoek daarna "
 
 #: templates/dashboard/dashboard.html:29
 msgid "people</a> and "
-msgstr ""
+msgstr "mensen</a> en "
 
 #: templates/dashboard/dashboard.html:29
 msgid "groups</a> that interest you and start following them! You can also "
-msgstr ""
+msgstr "groepen</a> die je leuk vindt en volg ze! Je kunt ook "
 
 #: templates/dashboard/dashboard.html:29
 msgid "create new groups</a> and update how often P2PU "
-msgstr ""
+msgstr "nieuwe groepen maken</a> bijwerken hoe vaak P2PU "
 
 #: templates/dashboard/dashboard.html:29
 msgid "contacts you</a>."
-msgstr ""
+msgstr "je benadert</a>."
 
 #: templates/dashboard/dashboard.html:36
 msgid "Post a message to your followers"
-msgstr ""
+msgstr "Publiceer een bericht voor je volgers"
 
 #: templates/dashboard/dashboard.html:45
 msgid "Post Update"
-msgstr ""
+msgstr "Publiceer een update"
 
 #: templates/dashboard/setup_profile.html:5
 #: templates/dashboard/setup_profile.html:7
 msgid "Create Profile"
-msgstr ""
+msgstr "Maak een profiel"
 
 #: templates/dashboard/sidebar.html:20
 #: templates/relationships/emails/new_follower.txt:6
 #: templates/signups/answer_sign_up.html:28 templates/signups/sign_up.html:80
 #: templates/signups/emails/new_signup_answer.txt:6
 msgid "Location:"
-msgstr ""
+msgstr "Locatie:"
 
 #: templates/dashboard/sidebar.html:25
 msgid "Interests"
-msgstr ""
+msgstr "Interesses"
 
 #: templates/dashboard/sidebar.html:29 templates/users/_profile_info.html:81
 msgid "View more interested in "
-msgstr ""
+msgstr "Bekijk meer interesses in "
 
 #: templates/dashboard/sidebar.html:37 templates/users/_profile_edit.html:33
 msgid "Want to learn more about"
-msgstr ""
+msgstr "Wil graag meer leren over"
 
 #: templates/dashboard/sidebar.html:41 templates/users/_profile_info.html:93
 msgid "View more interested in learning more about "
-msgstr ""
+msgstr "Bekijk meer geínteresseerden studenten in  "
 
 #: templates/dashboard/sidebar.html:54
 #: templates/projects/_project_card.html:31
@@ -2183,35 +2279,35 @@ msgstr ""
 #: templates/schools/school_edit_statistics.html:20
 #: templates/users/_profile_info.html:5 templates/users/_user_card.html:12
 msgid "Followers"
-msgstr ""
+msgstr "Volgers"
 
 #: templates/dashboard/sidebar.html:64 templates/users/_user_card.html:16
 msgid "Following"
-msgstr ""
+msgstr "Volgen"
 
 #: templates/dashboard/sidebar.html:75
 msgid "Learning"
-msgstr ""
+msgstr "Onderwijs"
 
 #: templates/dashboard/sidebar.html:98 templates/users/sidebar.html:60
 msgid "(UP)"
-msgstr ""
+msgstr "(Boven)"
 
 #: templates/dashboard/sidebar.html:101 templates/users/sidebar.html:63
 msgid "(DOWN)"
-msgstr ""
+msgstr "(Beneden)"
 
 #: templates/dashboard/splash.html:5
 msgid "Learning for everyone, by everyone, about almost anything"
-msgstr ""
+msgstr "Leren voor iedereen, door iedereen, over bijna alles"
 
 #: templates/dashboard/splash.html:18
 msgid "Browse Groups & Courses"
-msgstr ""
+msgstr "Bekijk groepen & cursussen"
 
 #: templates/dashboard/splash.html:19
 msgid "Start Your Own"
-msgstr ""
+msgstr "Start hier"
 
 #: templates/dashboard/splash.html:22
 msgid ""
@@ -2220,75 +2316,84 @@ msgid ""
 "\"highlight2\">online</em> and totally <em class=\"highlight3\">free</em></"
 "span>."
 msgstr ""
+"<em class=\"highlight3\">Leer</em> van alles<br>met je <em class="
+"\"highlight2\">collega's</em>.<br><span class=\"sub\">Het is <em class="
+"\"highlight2\">online</em> en helemaal <em class=\"highlight3\">gratis</em></"
+"span>."
 
 #: templates/dashboard/splash.html:24
 msgid "At"
-msgstr ""
+msgstr "In"
 
 #: templates/dashboard/splash.html:24
 msgid ""
 "people work together to learn a particular topic by completing tasks, "
 "assessing individual and group work, and providing constructive feedback."
 msgstr ""
+"mensen werken samen om een bepaald onderwerp te leren door taken te maken, "
+"door mee te doen aan individueel - en groepswerk, en door goede feedback te "
+"geven.retroalimentación constructiva."
 
 #: templates/dashboard/splash.html:37 templates/projects/_project_list.html:16
 #: templates/schools/school_edit.html:23
 #: templates/schools/school_edit_featured.html:7
 #: templates/users/user_list.html:30
 msgid "Featured"
-msgstr ""
+msgstr "In de spotlights"
 
 #: templates/dashboard/splash.html:47
 msgid "P2PU Blog"
-msgstr ""
+msgstr "P2PU Blog"
 
 #: templates/dashboard/splash.html:47
 msgid "Subscribe to the Peer 2 Peer University blog"
-msgstr ""
+msgstr "Abonneer op de Peer 2 Peer University blog"
 
 #: templates/dashboard/splash.html:47
 msgid "feed"
-msgstr ""
+msgstr "feed"
 
 #: templates/drumbeat/report_abuse.html:5
 #: templates/drumbeat/report_received.html:5
 msgid "Abuse Report Received"
-msgstr ""
+msgstr "Misbruik rapport ontvangen"
 
 #: templates/drumbeat/report_abuse.html:14
 msgid ""
 "Would you like to report this content as objectionable? This can be anything "
 "from suspected spam to offensive content."
 msgstr ""
+"Wil je deze inhoud als beledigend melden? Het kan van alles zijn van "
+"mogelijke spam tot grievende inhoud."
 
 #: templates/drumbeat/report_abuse.html:17
 msgid "Report"
-msgstr ""
+msgstr "Melden"
 
 #: templates/drumbeat/report_received.html:12
 msgid "Thank You,"
-msgstr ""
+msgstr "Bedankt,"
 
 #: templates/drumbeat/report_received.html:13
 msgid "We have received your report and will investigate further."
-msgstr ""
+msgstr "We hebben je melding ontvangen en zullen het verder onderzoeken."
 
 #: templates/drumbeat/emails/abuse_report.txt:2
 msgid "has reported the following content as objectionable:"
-msgstr ""
+msgstr "heeft de volgende inhoud als beledigend gemeld:"
 
 #: templates/drumbeat/emails/abuse_report_subject.txt:2
 msgid "Abuse Report"
-msgstr ""
+msgstr "Meld misbruik"
 
 #: templates/drumbeatmail/base.html:12
 msgid "To"
-msgstr ""
+msgstr "aan"
 
 #: templates/drumbeatmail/base.html:22
 #: templates/projects/contact_organizers.html:17
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #: templates/drumbeatmail/base.html:34
 #: templates/projects/contact_organizers.html:29
@@ -2297,89 +2402,91 @@ msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
 "will."
 msgstr ""
+"Welkom Robots, ReCaptcha is uitgeschakeld voor het gemak. Spam voorzal ."
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
-msgstr ""
+msgstr "Bericht maken"
 
 #: templates/drumbeatmail/compose.html:6
 msgid "New Private Message"
-msgstr ""
+msgstr "Nieuw privé bericht"
 
 #: templates/drumbeatmail/inbox.html:14
 msgid "New Private Discussion"
-msgstr ""
+msgstr "Nieuwe privé discussie"
 
 #: templates/drumbeatmail/inbox.html:25
 msgid "All Messages"
-msgstr ""
+msgstr "Alle berichten"
 
 #: templates/drumbeatmail/inbox.html:26
 msgid "Sent"
-msgstr ""
+msgstr "Versturen"
 
 #: templates/drumbeatmail/inbox.html:41
 msgid "You have no messages"
-msgstr ""
+msgstr "Je hebt geen berichten"
 
 #: templates/drumbeatmail/inbox.html:116
 msgid "More"
-msgstr ""
+msgstr "Meer"
 
 #: templates/drumbeatmail/emails/direct_message.txt:2
 msgid "You have received a new direct message from"
-msgstr ""
+msgstr "Je hebt een direct bericht van"
 
 #: templates/drumbeatmail/emails/direct_message.txt:6
 msgid "Reply:"
-msgstr ""
+msgstr "Antwoord:"
 
 #: templates/drumbeatmail/emails/direct_message_subject.txt:2
+#, fuzzy
 msgid "New Message from"
-msgstr ""
+msgstr "Nieuw bericht"
 
 #: templates/messages/compose.html:4 templates/messages/inbox.html:40
 msgid "New Message"
-msgstr ""
+msgstr "Nieuw bericht"
 
 #: templates/messages/inbox.html:4
 msgid "Your Messages"
-msgstr ""
+msgstr "Jouw berichten"
 
 #: templates/messages/inbox.html:6
 msgid "You have no messages in your inbox"
-msgstr ""
+msgstr "Je hebt geen berichten in jouw inbox"
 
 #: templates/messages/inbox.html:11
 msgid "From"
-msgstr ""
+msgstr "Van"
 
 #: templates/messages/inbox.html:14
 msgid "Action"
-msgstr ""
+msgstr "Actie"
 
 #: templates/messages/inbox.html:29
 msgid "DATETIME_FORMAT"
-msgstr ""
+msgstr "j N Y P"
 
 #: templates/messages/inbox.html:32
 msgid "delete"
-msgstr ""
+msgstr "verwijderen"
 
 #: templates/pagination/pagination_links.html:4
 #: templates/pagination/pagination_links.html:6
 msgid "previous"
-msgstr ""
+msgstr "voorgaande"
 
 #: templates/pagination/pagination_links.html:9
 #: templates/pagination/pagination_links.html:11
 msgid "next"
-msgstr ""
+msgstr "volgende"
 
 #: templates/projects/_project_card.html:23
 #: templates/projects/sidebar.html:166 templates/users/_user_card.html:20
 msgid "Updates"
-msgstr ""
+msgstr "Updates"
 
 #: templates/projects/_project_card.html:27
 #: templates/projects/_user_list.html:71
@@ -2390,7 +2497,7 @@ msgstr ""
 #: templates/schools/projectset_home.html:20
 #: templates/schools/school_edit_statistics.html:19
 msgid "Participants"
-msgstr ""
+msgstr "Participanten"
 
 #: templates/projects/_project_list.html:5
 msgid "Challenge Sets"
@@ -2398,79 +2505,82 @@ msgstr ""
 
 #: templates/projects/_project_list.html:27
 msgid "Open for Sign-Up"
-msgstr ""
+msgstr "Open voor aanmelding"
 
 #: templates/projects/_project_list.html:38
 msgid "Last Updated"
-msgstr ""
+msgstr "Laatste update"
 
 #: templates/projects/_project_list.html:49
 msgid "Popular"
-msgstr ""
+msgstr "Populair"
 
 #: templates/projects/_project_list.html:60
 msgid "New"
-msgstr ""
+msgstr "Nieuw"
 
 #: templates/projects/_project_list.html:71
 #: templates/projects/sidebar.html:130
 msgid "Under Development"
-msgstr ""
+msgstr "Onder constructie"
 
 #: templates/projects/_project_list.html:82
 #: templates/projects/sidebar.html:127
 msgid "Archived"
-msgstr ""
+msgstr "Gearchiveerd"
 
 #: templates/projects/_project_list.html:91 templates/projects/gallery.html:22
 #: templates/users/_profile_info.html:13 templates/users/_profile_info.html:44
 msgid "View All"
-msgstr ""
+msgstr "Alles bekijken"
 
 #: templates/projects/_task_list.html:6
 #: templates/projects/_tasks_list_wall.html:9
 #: templates/projects/sidebar.html:211
 msgid "Tasks"
-msgstr ""
+msgstr "Taken"
 
 #: templates/projects/_task_list.html:22
+#, fuzzy
 msgid "new"
-msgstr ""
+msgstr "Nieuw"
 
 #: templates/projects/_task_list.html:25
+#, fuzzy
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Reactie"
+msgstr[1] "Reactie"
 
 #: templates/projects/_task_list.html:36
+#, fuzzy
 msgid "View and Discuss"
-msgstr ""
+msgstr "Nieuwe privé discussie"
 
 #: templates/projects/_task_list.html:39
 #: templates/projects/project_edit.html:38
 msgid "View"
-msgstr ""
+msgstr "Bekijk"
 
 #: templates/projects/_task_list.html:45 templates/projects/sidebar.html:230
 msgid "No tasks have been added."
-msgstr ""
+msgstr "Er zijn geen taken toegevoegd."
 
 #: templates/projects/_task_list.html:49
 msgid "Displaying"
-msgstr ""
+msgstr "Presentatie"
 
 #: templates/projects/_task_list.html:49
 msgid "of"
-msgstr ""
+msgstr "van"
 
 #: templates/projects/_task_list.html:49
 msgid "total tasks"
-msgstr ""
+msgstr "Alle taken"
 
 #: templates/projects/_task_list.html:50
 msgid "See All Tasks"
-msgstr ""
+msgstr "Bekijk alle taken"
 
 #: templates/projects/_tasks_completed_msg.html:3
 msgid "Congratulations!"
@@ -2481,8 +2591,9 @@ msgid "Good job completing all the tasks."
 msgstr ""
 
 #: templates/projects/_tasks_completed_msg.html:8
+#, fuzzy
 msgid "Badges Awarded"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/projects/_tasks_completed_msg.html:26
 msgid "Earn More Badges"
@@ -2501,12 +2612,14 @@ msgid "Adopt this Challenge"
 msgstr ""
 
 #: templates/projects/_tasks_list_wall.html:10
+#, fuzzy
 msgid "Discussions"
-msgstr ""
+msgstr "Nieuwe privé discussie"
 
 #: templates/projects/_tasks_list_wall.html:15
+#, fuzzy
 msgid "Completed"
-msgstr ""
+msgstr "Reactie verwijderd!"
 
 #: templates/projects/_tasks_list_wall.html:22
 msgid "Badges you can earn in this challenge:"
@@ -2514,7 +2627,7 @@ msgstr ""
 
 #: templates/projects/_user_list.html:6
 msgid "See All"
-msgstr ""
+msgstr "Bekijk allen"
 
 #: templates/projects/_user_list.html:24
 msgid "Peers who have offered their help"
@@ -2523,7 +2636,7 @@ msgstr ""
 #: templates/projects/_user_list.html:38 templates/projects/sidebar.html:170
 #: templates/schools/school_edit_statistics.html:18
 msgid "Organizers"
-msgstr ""
+msgstr "Coördinatoren"
 
 #: templates/projects/_user_list.html:58
 msgid "Peers taking this challenge"
@@ -2534,35 +2647,37 @@ msgid "Peers who have completed this challenge"
 msgstr ""
 
 #: templates/projects/_user_list.html:123
+#, fuzzy
 msgid "View all"
-msgstr ""
+msgstr "Alles bekijken"
 
 #: templates/projects/_wall.html:11
 msgid "Post a message"
-msgstr ""
+msgstr "Publiceer een bericht"
 
 #: templates/projects/_wall.html:15
 msgid ""
 "Important message (participants can not turn off notifications for important "
 "messages)."
-msgstr ""
+msgstr "Belangrijk bericht (deelnemers kunnen spoedberichten niet uitzetten )."
 
 #: templates/projects/_wall.html:22
+#, fuzzy
 msgid "Post Message"
-msgstr ""
+msgstr "Publiceer een bericht"
 
 #: templates/projects/contact_organizers.html:6
 msgid "Contact Organizers of "
-msgstr ""
+msgstr "Neem contact op met de coördinatoren van "
 
 #: templates/projects/detailed_description_initial_content.html:4
-#, python-format
+#, fuzzy, python-format
 msgid "Please fill out the  %(kind)s's full description."
-msgstr ""
+msgstr "Vul aub de hele omschrijving van %(kind)s in."
 
 #: templates/projects/detailed_description_initial_content.html:4
 msgid "In this page you could:"
-msgstr ""
+msgstr "Op deze pagina zou je kunnen:"
 
 #: templates/projects/detailed_description_initial_content.html:7
 #, python-format
@@ -2570,56 +2685,68 @@ msgid ""
 "Describe the purpose of the %(kind)s and the learning goals for the tasks "
 "within."
 msgstr ""
+"Omschrijf het doel van de %(kind)s en de leerdoelen voor de taken  ervan."
 
 #: templates/projects/detailed_description_initial_content.html:8
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Describe your role in this  %(kind)s. What made you interested in this "
 "topic? What do you hope to achieve by organizing this  %(kind)s? Are you an "
 "expert, enthusiastic or a novice?"
 msgstr ""
+"Omschrijf je rol erin %(kind)s. Waardoor werd je geïnteresseerd in dit "
+"onderwerp? Wat hoop je te bereiken door dit %(kind)s te organiseren? Ben je "
+"een expert, een enthousiasteling of een newbie?"
 
 #: templates/projects/detailed_description_initial_content.html:9
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Include any prerequisite knowledge or skills needed to participate in the  "
 "%(kind)s, the intended start date, estimated pace, commitment, amount of "
 "work, and the length of time the participants can expect to work together (a "
 "few days, a few weeks, or forever)."
 msgstr ""
+"vermeld alle benodigde kennis of vaardigheid die nodig is om deel te nemen "
+"aan %(kind)s, verwachte startdatum, de geschatte tijd, verplichting, de "
+"hoeveelheid werk, en de tijd dat de deelnemers verwacht worden samen te "
+"werken (een paar dagen, een paar weken, of voor altijd)."
 
 #: templates/projects/detailed_description_initial_content.html:10
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Provided any other information that could be useful for people interested in "
 "joining the  %(kind)s. In what ways can participants expect to contribute to "
 "the creation of tasks and assessing each others\\' contributions? What will "
 "the final task comprise?"
 msgstr ""
+"Het beschikbaar stellen van andere informatie dat bruikbaar is voor die "
+"geïnteresseerd zijn in %(kind)s. Op welke manier deelnemers kunnen bijdragen "
+"aan het maken van taken en het beoordelen van elkaars werk? Waaruit zalde "
+"uiteindelijke taak bestaan?"
 
 #: templates/projects/directory.html:18 templates/projects/directory.html:30
 #: templates/tags/directory.html:18
 msgid "All"
-msgstr ""
+msgstr "Alles"
 
 #: templates/projects/directory.html:28 templates/projects/gallery.html:27
 #: templates/schools/home.html:17 templates/tags/directory.html:27
 msgid "Browse"
-msgstr ""
+msgstr "Blader"
 
 #: templates/projects/imported_detailed_description.html:3
 #: templates/projects/project_edit.html:45
 #: templates/schools/school_edit.html:16
 msgid "Summary"
-msgstr ""
+msgstr "Samenvatting"
 
 #: templates/projects/imported_detailed_description.html:9
 msgid "Learning Objectives"
-msgstr ""
+msgstr "Leerdoelen"
 
 #: templates/projects/project.html:21 templates/projects/sidebar.html:235
 msgid "New Task"
-msgstr ""
+msgstr "Nieuwe taak"
 
 #: templates/projects/project.html:22 templates/projects/project_edit.html:37
 msgid "Admin"
@@ -2627,11 +2754,12 @@ msgstr ""
 
 #: templates/projects/project.html:38
 msgid "Activity Wall"
-msgstr ""
+msgstr "Activiteiten wand"
 
 #: templates/projects/project_admin_metrics.html:12
+#, fuzzy
 msgid "Organizer Quick View"
-msgstr ""
+msgstr "Coördinator"
 
 #: templates/projects/project_admin_metrics.html:14
 msgid "export data"
@@ -2649,8 +2777,9 @@ msgstr ""
 
 #: templates/projects/project_admin_metrics.html:24
 #: templates/projects/project_admin_metrics.html:39
+#, fuzzy
 msgid "Participant"
-msgstr ""
+msgstr "Participanten"
 
 #: templates/projects/project_admin_metrics.html:25
 #: templates/projects/project_admin_metrics.html:40
@@ -2659,8 +2788,9 @@ msgstr ""
 
 #: templates/projects/project_admin_metrics.html:27
 #: templates/projects/project_admin_metrics.html:42
+#, fuzzy
 msgid "Task Edits"
-msgstr ""
+msgstr "Takenlijst"
 
 #: templates/projects/project_admin_metrics.html:28
 #: templates/projects/project_admin_metrics.html:43
@@ -2706,13 +2836,15 @@ msgstr ""
 #: templates/projects/project_clone.html:9
 #: templates/projects/project_edit.html:57
 msgid "Clone Existing"
-msgstr ""
+msgstr "Kopiëer bestaande"
 
 #: templates/projects/project_clone.html:10
 msgid ""
 "Create a new study group, course ... based on an existing one. Note that if "
 "you start typing the matching suggestions will be displayed."
 msgstr ""
+"Maak een nieuwe studiegroep, cursus ....gebaseerd op een bestaande. Merk op "
+"dat wanneer je begint te typen bijpassende suggesties zullen worden vertoond."
 
 #: templates/projects/project_clone.html:15
 #: templates/projects/project_edit_next_steps.html:12
@@ -2720,27 +2852,29 @@ msgstr ""
 #: templates/schools/school_edit_membership.html:13
 #: templates/schools/school_edit_summary.html:16
 msgid "Short Name"
-msgstr ""
+msgstr "Korte naam"
 
 #: templates/projects/project_clone.html:22
 msgid "Clone"
-msgstr ""
+msgstr "Kopieer"
 
 #: templates/projects/project_edit.html:46
 msgid "Image"
-msgstr ""
+msgstr "Afbeelding"
 
 #: templates/projects/project_edit.html:47
+#, fuzzy
 msgid "Status"
-msgstr ""
+msgstr "statussen"
 
 #: templates/projects/project_edit.html:47
+#, fuzzy
 msgid " &amp; Dates"
-msgstr ""
+msgstr "Status en data"
 
 #: templates/projects/project_edit.html:48 templates/projects/sidebar.html:158
 msgid "Signup"
-msgstr ""
+msgstr "Aanmelding"
 
 #: templates/projects/project_edit.html:50
 #: templates/projects/project_edit_next_steps.html:7
@@ -2753,7 +2887,7 @@ msgstr ""
 #: templates/users/profile_edit_links.html:8
 #: templates/users/profile_edit_links_edit.html:8
 msgid "Links"
-msgstr ""
+msgstr "Links"
 
 #: templates/projects/project_edit.html:52
 msgid "Metrics"
@@ -2761,20 +2895,20 @@ msgstr ""
 
 #: templates/projects/project_edit.html:55
 msgid "Create from Scratch"
-msgstr ""
+msgstr "Begin bij niets"
 
 #: templates/projects/project_edit.html:59
 #: templates/projects/project_import.html:9
 msgid "Import from Old Site"
-msgstr ""
+msgstr "Importeer van de oude site"
 
 #: templates/projects/project_edit_image.html:14
 msgid "Upload an Image"
-msgstr ""
+msgstr "Upload een afbeelding"
 
 #: templates/projects/project_edit_image.html:16
 msgid "This image is shown in search results and on the listing page."
-msgstr ""
+msgstr "Deze afbeelding wordt in de zoekresultaten getoond en op de lijst."
 
 #: templates/projects/project_edit_image.html:17
 #: templates/schools/school_edit_background.html:16
@@ -2782,13 +2916,15 @@ msgstr ""
 #: templates/schools/school_edit_logo.html:16
 #: templates/schools/school_edit_site_logo.html:16
 msgid "Upload an image file from your computer:"
-msgstr ""
+msgstr "Upload een afbeelding vanaf de computer:"
 
 #: templates/projects/project_edit_image.html:20
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
 "243x150 pixels"
 msgstr ""
+"Bestandstypen: alleen JPG, GIF or PNG<br/> Max. grootte: 700k <br/> "
+"Afmetingen: 243x150 pixels"
 
 #: templates/projects/project_edit_image.html:25
 #: templates/schools/school_edit_background.html:24
@@ -2797,16 +2933,17 @@ msgstr ""
 #: templates/schools/school_edit_site_logo.html:24
 #: templates/users/profile_edit_main.html:15
 msgid "Upload"
-msgstr ""
+msgstr "Upload"
 
 #: templates/projects/project_edit_links.html:5
 msgid "Add links to websites associated with this "
-msgstr ""
+msgstr "Voeg bijbehorende websiteslinks toe "
 
 #: templates/projects/project_edit_links.html:5
 #: templates/projects/project_edit_links_edit.html:5
 msgid " such as a blog, homepage, twitter profile, github repository etc."
 msgstr ""
+" bijvoorbeeld een blog, homepage, twitterprofiel, github verzameling, etc. "
 
 #: templates/projects/project_edit_links.html:7
 #: templates/projects/project_edit_next_steps.html:17
@@ -2816,17 +2953,17 @@ msgstr ""
 #: templates/schools/school_edit_organizers.html:19
 #: templates/users/profile_edit_links.html:28
 msgid "Add"
-msgstr ""
+msgstr "Toevoegen"
 
 #: templates/projects/project_edit_links.html:15
 #: templates/users/profile_edit_links.html:36
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: templates/projects/project_edit_links.html:16
 #: templates/users/profile_edit_links.html:37
 msgid "Subscribed"
-msgstr ""
+msgstr "Geabonneerd"
 
 #: templates/projects/project_edit_links.html:17
 #: templates/projects/project_edit_next_steps.html:27
@@ -2836,12 +2973,12 @@ msgstr ""
 #: templates/users/profile_edit_links.html:38
 #: templates/users/profile_edit_openids.html:20
 msgid "Actions"
-msgstr ""
+msgstr "Acties"
 
 #: templates/projects/project_edit_links.html:27
 #: templates/users/profile_edit_links.html:48
 msgid "Subscribed."
-msgstr ""
+msgstr "Geabonneerd."
 
 #: templates/projects/project_edit_links.html:27
 #: templates/projects/project_edit_participants.html:48
@@ -2849,51 +2986,51 @@ msgstr ""
 #: templates/schools/school_edit_organizers.html:36
 #: templates/users/profile_edit_links.html:48
 msgid "yes"
-msgstr ""
+msgstr "si"
 
 #: templates/projects/project_edit_links.html:28
 #: templates/users/profile_edit_links.html:49
 msgid "Error saving subscription."
-msgstr ""
+msgstr "Fout bij het opslaan van het abonnement."
 
 #: templates/projects/project_edit_links.html:28
 #: templates/users/profile_edit_links.html:49
 msgid "error"
-msgstr ""
+msgstr "fout"
 
 #: templates/projects/project_edit_links.html:31
 #: templates/users/profile_edit_links.html:52
 msgid "Not subscribed."
-msgstr ""
+msgstr "Niet geabonneerd."
 
 #: templates/projects/project_edit_links.html:31
 #: templates/projects/project_edit_participants.html:50
 #: templates/projects/project_edit_participants.html:58
 #: templates/users/profile_edit_links.html:52
 msgid "no"
-msgstr ""
+msgstr "Nee"
 
 #: templates/projects/project_edit_links_base.html:18
 #: templates/users/profile_edit_links.html:18
 #: templates/users/profile_edit_links_edit.html:18
 msgid "Url"
-msgstr ""
+msgstr "Url"
 
 #: templates/projects/project_edit_links_base.html:23
 #: templates/users/profile_edit_links.html:23
 #: templates/users/profile_edit_links_edit.html:23
 msgid "Subscribe"
-msgstr ""
+msgstr "Abonneren"
 
 #: templates/projects/project_edit_links_edit.html:5
 msgid "Edit links to websites associated with this "
-msgstr ""
+msgstr "Bewerk bijbehorende websitelinks "
 
 #: templates/projects/project_edit_links_edit.html:7
 #: templates/users/forgot_password_confirm.html:26
 #: templates/users/profile_edit_links_edit.html:27
 msgid "Update"
-msgstr ""
+msgstr "Bijgewerkt"
 
 #: templates/projects/project_edit_next_steps.html:8
 msgid ""
@@ -2904,31 +3041,32 @@ msgstr ""
 #: templates/projects/project_edit_next_steps.html:26
 #: templates/projects/sidebar.html:154
 msgid "Kind"
-msgstr ""
+msgstr "Soort"
 
 #: templates/projects/project_edit_next_steps.html:38
 #: templates/projects/project_edit_participants.html:72
 msgid "Remove"
-msgstr ""
+msgstr "Verwijder"
 
 #: templates/projects/project_edit_participants.html:10
+#, fuzzy
 msgid "View and add participants."
-msgstr ""
+msgstr "Bekijk, voeg toe en verwijder deelnemers."
 
 #: templates/projects/project_edit_participants.html:12
 msgid "View, add and remove participants."
-msgstr ""
+msgstr "Bekijk, voeg toe en verwijder deelnemers."
 
 #: templates/projects/project_edit_participants.html:18
 #: templates/schools/school_edit_organizers.html:13
 #: templates/users/profile_form_base.html:19
 msgid "Username"
-msgstr ""
+msgstr "Gebruikersnaam"
 
 #: templates/projects/project_edit_participants.html:23
 #: templates/projects/project_edit_participants.html:37
 msgid "Organizer"
-msgstr ""
+msgstr "Coördinator"
 
 #: templates/projects/project_edit_participants.html:38
 msgid "Adopter"
@@ -2936,46 +3074,49 @@ msgstr ""
 
 #: templates/projects/project_edit_participants.html:48
 msgid "Organizing."
-msgstr ""
+msgstr "Organisatie."
 
 #: templates/projects/project_edit_participants.html:50
+#, fuzzy
 msgid "Not Organizing."
-msgstr ""
+msgstr "Organisatie."
 
 #: templates/projects/project_edit_participants.html:56
 msgid "Adopter."
 msgstr ""
 
 #: templates/projects/project_edit_participants.html:58
+#, fuzzy
 msgid "Participant."
-msgstr ""
+msgstr "Participanten"
 
 #: templates/projects/project_edit_participants.html:66
 #: templates/signups/sign_up.html:102
 msgid "Add Organizer"
-msgstr ""
+msgstr "Voeg een coördinator toe"
 
 #: templates/projects/project_edit_status.html:9
 msgid "Status &amp; Dates"
-msgstr ""
+msgstr "Status en data"
 
 #: templates/projects/project_edit_status.html:12
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Configure your %(kind)s's status so that it appears in the appropriate lists."
 msgstr ""
+"Stel je %(kind)s zo status in, zodat het in de juiste lijsten zichtbaar is."
 
 #: templates/projects/project_edit_status.html:16
 msgid "Under Development."
-msgstr ""
+msgstr "Onder constructie."
 
 #: templates/projects/project_edit_status.html:23
 msgid "Not Listed."
-msgstr ""
+msgstr "Niet vermeldt."
 
 #: templates/projects/project_edit_status.html:30
 msgid "Archived."
-msgstr ""
+msgstr "Gearchiveerd."
 
 #: templates/projects/project_edit_status.html:37
 #, python-format
@@ -2983,44 +3124,57 @@ msgid ""
 "Optionally, provide the period of time in which you expect the %(kind)s to "
 "be active. These dates are optional and will be displayed on the home page."
 msgstr ""
+"Niet verplicht, geef een tijdsindicatie waarin je verwacht de %(kind)s "
+"actief is. Deze data zijn niet verplicht en zullen op de homepage zichtbaar "
+"zijn."
 
 #: templates/projects/project_edit_status.html:41
 msgid "Active from"
-msgstr ""
+msgstr "Actief van"
 
 #: templates/projects/project_edit_summary.html:13
 msgid ""
 "A good name is short and descriptive. People should know what your study "
 "group, course, ... is about without reading the description."
 msgstr ""
+"Een goede titel is kort en beschrijvend. Mensen zouden moeten weten wat je "
+"studiegroep, cursus, ... is zonder de beschrijving te lezen."
 
 #: templates/projects/project_edit_summary.html:19
 msgid "This description will be used on search results and listing pages."
-msgstr ""
+msgstr "Deze beschrijving zal gebruikt worden bij zoekresultaten en lijsten."
 
 #: templates/projects/project_edit_summary.html:24
 msgid "One paragraph description"
-msgstr ""
+msgstr "Een paragraaf beschrijving"
 
 #: templates/projects/project_edit_summary.html:25
 msgid ""
 "This description is shown on home page of the study group, course, ... It "
 "can go into a bit more detail, but it should be brief and to the point."
 msgstr ""
+"Deze beschrijving wordt op de homepage getoond, natuurlijk, ...kan het meer "
+"details bevatten, maar moet het kort en terzake zijn."
 
 #: templates/projects/project_edit_summary.html:34
+#, fuzzy
 msgid ""
 "Please describe this study group, course, ... by providing a comma-separated "
 "list of tags."
 msgstr ""
+"Omschrijf deze leeropdracht door een comma-gescheiden lijst van categorieën "
+"te maken."
 
 #: templates/projects/project_edit_summary.html:41
 msgid "What kind of content do you want to create?"
 msgstr ""
 
 #: templates/projects/project_edit_summary.html:42
+#, fuzzy
 msgid "Select if you are creating a study group, course, or challenge."
 msgstr ""
+"Kies, voor het maken van een studiegroep, een cursus, of een andere soort "
+"onderwijsproject."
 
 #: templates/projects/project_edit_summary.html:46
 msgid ""
@@ -3030,50 +3184,54 @@ msgstr ""
 
 #: templates/projects/project_edit_summary.html:48
 msgid "Term"
-msgstr ""
+msgstr "Voorwaarde"
 
 #: templates/projects/project_edit_summary.html:52
 #: templates/schools/school_edit_summary.html:22
 msgid "Description"
-msgstr ""
+msgstr "Beschrijven"
 
 #: templates/projects/project_import.html:10
 msgid ""
 "Import a course from the old p2pu site. Note that if you start typing the "
 "matching suggestions will be displayed."
 msgstr ""
+"Importeer een cursus van de oude p2pu website. Merk op dat wanneer je begint "
+"te typen overeenkomstige voorbeelden worden getoond."
 
 #: templates/projects/project_import.html:15
 msgid "Course"
-msgstr ""
+msgstr "Cursus"
 
 #: templates/projects/project_import.html:22
 msgid "Import"
-msgstr ""
+msgstr "Importeer"
 
 #: templates/projects/sidebar.html:26 templates/users/sidebar.html:37
 msgid "Unfollow"
-msgstr ""
+msgstr "Volgen stoppen"
 
 #: templates/projects/sidebar.html:31 templates/users/sidebar.html:42
 msgid "Follow"
-msgstr ""
+msgstr "Volg"
 
 #: templates/projects/sidebar.html:36
 msgid "Participate"
-msgstr ""
+msgstr "Neem deel"
 
 #: templates/projects/sidebar.html:59 templates/projects/sidebar.html.py:62
 msgid "Start Challenge"
 msgstr ""
 
 #: templates/projects/sidebar.html:66 templates/projects/sidebar.html.py:74
+#, fuzzy
 msgid "View Tasks"
-msgstr ""
+msgstr "Nieuwe taak"
 
 #: templates/projects/sidebar.html:68
+#, fuzzy
 msgid "View Discussions"
-msgstr ""
+msgstr "Nieuwe privé discussie"
 
 #: templates/projects/sidebar.html:72
 msgid "Request a Mentor"
@@ -3088,52 +3246,53 @@ msgid "Leave Challenge"
 msgstr ""
 
 #: templates/projects/sidebar.html:93
+#, fuzzy
 msgid "View more tagged with "
-msgstr ""
+msgstr "Bekijk meer tags met "
 
 #: templates/projects/sidebar.html:102
 msgid "View Full Description"
-msgstr ""
+msgstr "Bekijk volledige omschrijving"
 
 #: templates/projects/sidebar.html:133
 msgid "Not Listed"
-msgstr ""
+msgstr "Niet vermeldt"
 
 #: templates/projects/sidebar.html:135
 msgid "DATE_FORMAT"
-msgstr ""
+msgstr "D M J"
 
 #: templates/projects/sidebar.html:137
 msgid "Runs"
-msgstr ""
+msgstr "Actief"
 
 #: templates/projects/sidebar.html:143 templates/projects/sidebar.html:149
 msgid "Based on"
-msgstr ""
+msgstr "Gebaseerd op"
 
 #: templates/projects/sidebar.html:183
 msgid "Pending Applicants"
-msgstr ""
+msgstr "Wachtende deelnemers:"
 
 #: templates/projects/sidebar.html:202
 msgid "Edit Participants"
-msgstr ""
+msgstr "Bewerk deelnemers"
 
 #: templates/projects/sidebar.html:204
 msgid "Contact Organizer"
-msgstr ""
+msgstr "Contact met coördinator"
 
 #: templates/projects/sidebar.html:241
 msgid "External Links"
-msgstr ""
+msgstr "Externe links"
 
 #: templates/projects/sidebar.html:259
 msgid "No external links have been added."
-msgstr ""
+msgstr "Er zijn geen externe links toegevoegd."
 
 #: templates/projects/sidebar.html:264
 msgid "Edit Links"
-msgstr ""
+msgstr "Bewerk links"
 
 #: templates/projects/sidebar.html:275
 msgid "Help your peers"
@@ -3159,19 +3318,20 @@ msgstr[1] ""
 #: templates/projects/sidebar.html:302
 #: templates/users/_openid_providers.html:14
 msgid "Go"
-msgstr ""
+msgstr "Enter"
 
 #: templates/projects/emails/admin_project_created_subject.txt:2
 msgid "[P2PU] New "
-msgstr ""
+msgstr "Nieuw [P2PU] "
 
 #: templates/projects/emails/contact_organizer.txt:4
 msgid "You received this message through the Contact Organizer form at "
-msgstr ""
+msgstr "Je hebt dit bericht gekregen via het contactformulier op "
 
 #: templates/projects/emails/project_created.txt:4
 msgid "Welcome to P2PU! We are excited to help you develop and promote"
 msgstr ""
+"Welkom op P2PU! We zijn blij om je te vooruit te helpen en te ontwikkelen"
 
 #: templates/projects/emails/project_created.txt:6
 msgid "What are the next steps?"
@@ -3179,17 +3339,22 @@ msgstr ""
 
 #: templates/projects/emails/project_created.txt:8
 msgid "* Provide a meaningful description, title and image for your "
-msgstr ""
+msgstr "* Geef een duidelijke omschrijving, titel en afbeelding voor je "
 
 #: templates/projects/emails/project_created.txt:8
 msgid ". (If the image isn't yours, make sure it's licensed for reuse!)"
 msgstr ""
+". (Als de afbeelding niet van jou is, zorg ervoor dat je een licentie hebt "
+"voor gebruik!)"
 
 #: templates/projects/emails/project_created.txt:10
+#, fuzzy
 msgid ""
 "* Update your profile with information about yourself and a picture so "
 "learners can know more about you."
 msgstr ""
+"Bewerk je profiel met informatie over jezelf en een foto (mag van alles "
+"zijn)."
 
 #: templates/projects/emails/project_created.txt:12
 msgid ""
@@ -3205,44 +3370,47 @@ msgid ""
 msgstr ""
 
 #: templates/projects/emails/project_created.txt:16
+#, fuzzy
 msgid "We look forward to learning with and from you!"
-msgstr ""
+msgstr "We kijken er naar uit om met je samen te werken,"
 
 #: templates/projects/emails/project_created.txt:18
 msgid "Alison, John & Bekka"
 msgstr ""
 
 #: templates/projects/emails/project_created.txt:19
+#, fuzzy
 msgid "P2PU Support Team"
-msgstr ""
+msgstr "Het P2PU Team"
 
 #: templates/relationships/emails/new_follower.txt:2
 msgid "is now following "
-msgstr ""
+msgstr "volgt nu "
 
 #: templates/relationships/emails/new_follower.txt:2
 #: templates/relationships/emails/new_follower_subject.txt:1
 msgid "you"
-msgstr ""
+msgstr "jouw activiteit"
 
 #: templates/relationships/emails/new_follower.txt:2
 #: templates/relationships/emails/new_follower_subject.txt:1
 msgid "on P2PU!"
-msgstr ""
+msgstr "op P2PU!"
 
 #: templates/relationships/emails/new_follower.txt:4
 #: templates/signups/answer_sign_up.html:27 templates/signups/sign_up.html:79
 #: templates/signups/emails/new_signup_answer.txt:4
 msgid "Bio:"
-msgstr ""
+msgstr "Vertel iets over jezelf:"
 
 #: templates/relationships/emails/new_follower.txt:8
 msgid "You can see their profile here:"
-msgstr ""
+msgstr "Je kunt hun profiel hier zien:"
 
 #: templates/relationships/emails/new_follower_subject.txt:1
+#, fuzzy
 msgid "is following "
-msgstr ""
+msgstr "volgt nu "
 
 #: templates/replies/_comment_threads.html:43
 #: templates/replies/_comment_threads.html:101
@@ -3262,64 +3430,68 @@ msgstr ""
 #: templates/replies/comment_page.html:48
 #: templates/replies/comment_page.html:83
 msgid "In Reply To:"
-msgstr ""
+msgstr "Reageer op:"
 
 #: templates/replies/_comment_threads.html:117
 #: templates/replies/comment_page.html:59
 #: templates/replies/comment_page.html:94
+#, fuzzy
 msgid "in reply to "
-msgstr ""
+msgstr "Reageer op:"
 
 #: templates/replies/comment_page.html:25
 msgid "Edit Comment"
-msgstr ""
+msgstr "Bewerk reactie"
 
 #: templates/replies/comment_page.html:27
 msgid "Reply Comment"
-msgstr ""
+msgstr "Beantwoord reactie"
 
 #: templates/replies/comment_page.html:29
+#, fuzzy
 msgid "New Comment"
-msgstr ""
+msgstr "Reactie"
 
 #: templates/replies/comment_page.html:130
 #: templates/signups/answer_sign_up.html:94
 msgid "Post"
-msgstr ""
+msgstr "Publiceer"
 
 #: templates/replies/delete_restore_comment.html:16
 msgid "Restore Comment:"
-msgstr ""
+msgstr "Reactie herstellen:"
 
 #: templates/replies/delete_restore_comment.html:16
 msgid "Delete Comment:"
-msgstr ""
+msgstr "Reactie verwijderen:"
 
 #: templates/replies/delete_restore_comment.html:27
 msgid "Are you sure you want to restore this comment?"
-msgstr ""
+msgstr "Weet je zeker dat je deze reactie wilt herstellen?"
 
 #: templates/replies/delete_restore_comment.html:29
 msgid "Are you sure you want to delete this comment?"
-msgstr ""
+msgstr "Weet je zeker dat je deze reactie wilt verwijderen?"
 
 #: templates/replies/emails/post_comment.txt:6
 #: templates/replies/emails/post_comment_subject.txt:2
 msgid " posted a new comment at "
-msgstr ""
+msgstr " een nieuwe reactie is geplaats op "
 
 #: templates/replies/emails/post_comment.txt:11
 msgid "See comment at:"
-msgstr ""
+msgstr "Bekijk reactie op:"
 
 #: templates/reviews/_projects_reviews_list_item.html:3
 #: templates/reviews/review_project.html:7
+#, fuzzy
 msgid "Review"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: templates/reviews/projects_reviews_list.html:12
+#, fuzzy
 msgid "Under Review"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: templates/reviews/projects_reviews_list.html:13
 msgid "Accepted"
@@ -3330,12 +3502,14 @@ msgid "Feedback"
 msgstr ""
 
 #: templates/reviews/review_project.html:20
+#, fuzzy
 msgid "Mark as Accepted."
-msgstr ""
+msgstr " is bijgewerkt."
 
 #: templates/reviews/show_project_reviews.html:16
+#, fuzzy
 msgid "Review from"
-msgstr ""
+msgstr "Actief van"
 
 #: templates/reviews/show_project_reviews.html:18
 msgid "Accepted!"
@@ -3346,8 +3520,9 @@ msgid "Feedback:"
 msgstr ""
 
 #: templates/reviews/show_project_reviews.html:26
+#, fuzzy
 msgid "Post Review"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: templates/richtext/_external_link.html:2
 msgid "Work on this Task"
@@ -3371,8 +3546,9 @@ msgid ""
 msgstr ""
 
 #: templates/schools/_projectset_card.html:24
+#, fuzzy
 msgid "View Challenges"
-msgstr ""
+msgstr "Alles bekijken"
 
 #: templates/schools/_projectset_card.html:30
 #: templates/schools/projectset_home.html:19
@@ -3394,22 +3570,23 @@ msgid "View All Challenges"
 msgstr ""
 
 #: templates/schools/footer.html:5
+#, fuzzy
 msgid "P2PU Schools:"
-msgstr ""
+msgstr "Scholen"
 
 #: templates/schools/home.html:12 templates/schools/school_edit.html:4
 #: templates/schools/school_edit.html:11
 msgid "Edit School"
-msgstr ""
+msgstr "Bewerk school"
 
 #: templates/schools/home.html:34 templates/schools/school_edit.html:22
 #: templates/schools/school_edit_organizers.html:7
 msgid "School Organizers"
-msgstr ""
+msgstr "School coördinatoren"
 
 #: templates/schools/menu.html:4
 msgid "Schools"
-msgstr ""
+msgstr "Scholen"
 
 #: templates/schools/projectset_home.html:25
 msgid "Start first Challenge"
@@ -3417,7 +3594,7 @@ msgstr ""
 
 #: templates/schools/school_edit.html:12
 msgid "View School"
-msgstr ""
+msgstr "Bekijk scholen"
 
 #: templates/schools/school_edit.html:17
 msgid "Appearance"
@@ -3425,29 +3602,31 @@ msgstr ""
 
 #: templates/schools/school_edit.html:18
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #: templates/schools/school_edit.html:19
+#, fuzzy
 msgid "Small Logo"
-msgstr ""
+msgstr "Website logo"
 
 #: templates/schools/school_edit.html:20
 msgid "Background"
-msgstr ""
+msgstr "Achtergrond"
 
 #: templates/schools/school_edit.html:21
 msgid "Site Logo"
-msgstr ""
+msgstr "Website logo"
 
 #: templates/schools/school_edit.html:24
 #: templates/schools/school_edit_membership.html:7
 msgid "Membership"
-msgstr ""
+msgstr "Lidmaatschap"
 
 #: templates/schools/school_edit.html:25
 #: templates/schools/school_edit_mentorship.html:7
+#, fuzzy
 msgid "Mentorship"
-msgstr ""
+msgstr "Lidmaatschap"
 
 #: templates/schools/school_edit.html:26
 #: templates/schools/school_edit_statistics.html:7
@@ -3456,54 +3635,66 @@ msgstr ""
 
 #: templates/schools/school_edit_background.html:12
 msgid "Replace School Background Image"
-msgstr ""
+msgstr "Vervang achtergrondafbeelding school"
 
 #: templates/schools/school_edit_background.html:14
 msgid "Upload a School Background Image"
-msgstr ""
+msgstr "Upload een achtergrondafbeelding school"
 
 #: templates/schools/school_edit_background.html:19
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 20x60 "
 "pixels"
 msgstr ""
+"Bestandsformaten: alleen JPG, GIF of PNG <br/> Max grootte: 700k <br/> "
+"Afmetingen: 20x60 pixels"
 
 #: templates/schools/school_edit_featured.html:8
 msgid ""
 "View, add and remove featured study groups, courses, ... to this school."
 msgstr ""
+"Bekijk, voeg toe en verwijder tentoongestelde groepen, cursussen, ... voor "
+"deze school."
 
 #: templates/schools/school_edit_groups_icon.html:12
+#, fuzzy
 msgid "Replace School Small Logo"
-msgstr ""
+msgstr "Vervang schoollogo"
 
 #: templates/schools/school_edit_groups_icon.html:14
+#, fuzzy
 msgid "Upload a School Small Logo"
-msgstr ""
+msgstr "Upload schoollogo"
 
 #: templates/schools/school_edit_groups_icon.html:19
+#, fuzzy
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 41x50 "
 "pixels"
 msgstr ""
+"Bestandstypen: alleen JPG, GIF or PNG<br/> Max. grootte: 700k <br/> "
+"Afmetingen: 243x150 pixels"
 
 #: templates/schools/school_edit_logo.html:12
 msgid "Replace School Logo"
-msgstr ""
+msgstr "Vervang schoollogo"
 
 #: templates/schools/school_edit_logo.html:14
 msgid "Upload a School Logo"
-msgstr ""
+msgstr "Upload schoollogo"
 
 #: templates/schools/school_edit_logo.html:19
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
 "Variable"
 msgstr ""
+"Bestandstypen: alleen JPG, GIF of PNG <br/> Max grootte: 700k <br/> "
+"Afmetingen: Variabel"
 
 #: templates/schools/school_edit_membership.html:8
 msgid "View, add and remove study groups, courses, ... to this school."
 msgstr ""
+"Bekijk, voeg toe en verwijder studiegroepen, cursussen, ... voor deze school."
 
 #: templates/schools/school_edit_mentorship.html:8
 msgid ""
@@ -3530,61 +3721,70 @@ msgstr ""
 
 #: templates/schools/school_edit_organizers.html:8
 msgid "View, add and remove organizers of your school."
-msgstr ""
+msgstr "Bekijk, voeg toe en verwijder coördinatoren van je school."
 
 #: templates/schools/school_edit_organizers.html:28
 msgid "School Organizer"
-msgstr ""
+msgstr "School coördinator"
 
 #: templates/schools/school_edit_organizers.html:36
 msgid "Organizing this school."
-msgstr ""
+msgstr "Deze school organiseren."
 
 #: templates/schools/school_edit_site_logo.html:12
 msgid "Replace School Site Logo"
-msgstr ""
+msgstr "Vervang schoollogo website"
 
 #: templates/schools/school_edit_site_logo.html:14
 msgid "Upload a School Site Logo"
-msgstr ""
+msgstr "Upload een schoolwebsitelogo"
 
 #: templates/schools/school_edit_site_logo.html:19
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
 "141x44 pixels"
 msgstr ""
+"Bestandstypen:  alleen JPG, GIF of PNG <br/> Max grootte: 700k <br/> "
+"Afmetingen: 141x44 pixels"
 
 #: templates/schools/school_edit_statistics.html:8
+#, fuzzy
 msgid "Statistics for this school"
-msgstr ""
+msgstr "Het %s i afgewezen voor deze school."
 
 #: templates/schools/school_edit_statistics.html:9
+#, fuzzy
 msgid "Groups"
-msgstr ""
+msgstr "groep"
 
 #: templates/schools/school_edit_statistics.html:25
+#, fuzzy
 msgid "Page Comments"
-msgstr ""
+msgstr "Reacties"
 
 #: templates/schools/school_edit_statistics.html:26
+#, fuzzy
 msgid "Wall Messages"
-msgstr ""
+msgstr "Alle berichten"
 
 #: templates/schools/school_edit_statistics.html:27
+#, fuzzy
 msgid "Activity Replies"
-msgstr ""
+msgstr "¡Activiteit verwijderd!"
 
 #: templates/schools/school_edit_statistics.html:28
 msgid "Page Edits"
 msgstr ""
 
 #: templates/schools/school_edit_statistics.html:29
+#, fuzzy
 msgid "Sign-Up Answers"
-msgstr ""
+msgstr "Aanmelden taak"
 
 #: templates/schools/school_edit_statistics.html:30
+#, fuzzy
 msgid "Sign-Up Comments"
-msgstr ""
+msgstr "Aanmelding gesloten."
 
 #: templates/schools/school_edit_statistics.html:34
 msgid "The numbers on this page do not include data from the old p2pu site."
@@ -3618,28 +3818,36 @@ msgid ""
 msgstr ""
 
 #: templates/schools/school_edit_styles.html:9
+#, fuzzy
 msgid "Sidebar"
-msgstr ""
+msgstr "Zijbalk grootte"
 
 #: templates/schools/school_edit_styles.html:13
+#, fuzzy
 msgid "Show School Organizers."
-msgstr ""
+msgstr "School coördinatoren"
 
 #: templates/schools/school_edit_styles.html:15
+#, fuzzy
 msgid ""
 "Hide the list of school organizers if you don't want it to appear on the "
 "school home page sidebar."
 msgstr ""
+"Je moet deze waarde aanpassen, zodat het schoollogo precies past op de "
+"homepage zijbalk."
 
 #: templates/schools/school_edit_styles.html:19
 msgid "Width"
 msgstr ""
 
 #: templates/schools/school_edit_styles.html:20
+#, fuzzy
 msgid ""
 "Update this value so the school logo fits nicelly on the school home page "
 "sidebar."
 msgstr ""
+"Je moet deze waarde aanpassen, zodat het schoollogo precies past op de "
+"homepage zijbalk."
 
 #: templates/schools/school_edit_styles.html:24
 msgid "Colors"
@@ -3647,48 +3855,54 @@ msgstr ""
 
 #: templates/schools/school_edit_styles.html:27
 msgid "Headers Color"
-msgstr ""
+msgstr "Kleur koppen"
 
 #: templates/schools/school_edit_styles.html:28
 msgid ""
 "This color will be used for the headers of pages associated with this school."
 msgstr ""
+"Deze kleur zal worden gebruikt voor de koppen van de pagina's die bij deze "
+"school horen.  "
 
 #: templates/schools/school_edit_styles.html:34
 msgid "Lighter Headers Color"
-msgstr ""
+msgstr "Lichtere kop kleur"
 
 #: templates/schools/school_edit_styles.html:35
 msgid "Lighter variant of the headers color."
-msgstr ""
+msgstr "Lichtere variant van de kopkleuren."
 
 #: templates/schools/school_edit_styles.html:41
 msgid "Background Color"
-msgstr ""
+msgstr "Achtergrond kleur"
 
 #: templates/schools/school_edit_styles.html:42
 msgid ""
 "This color will be used as background for the non-striped sections of the "
 "pages associated with this school."
 msgstr ""
+"Deze kleur zal worden gebruikt bij de achtergrond voor de niet onderstreepte "
+"secties van de pagina's die bij deze school horen."
 
 #: templates/schools/school_edit_styles.html:48
 msgid "Menus Color"
-msgstr ""
+msgstr "Menu kleuren"
 
 #: templates/schools/school_edit_styles.html:49
 msgid ""
 "This color will be used as background for the menus of the pages associated "
 "with this school."
 msgstr ""
+"Deze kleur zal worden gebruikt voor de achtergrond van de menus of voor de "
+"pagina's die bij deze school horen."
 
 #: templates/schools/school_edit_styles.html:55
 msgid "Lighter Menus Color"
-msgstr ""
+msgstr "Lichtere menu kleur"
 
 #: templates/schools/school_edit_styles.html:56
 msgid "Lighter variant of the menus color."
-msgstr ""
+msgstr "Lichtere variant voor menukleur."
 
 #: templates/schools/school_edit_styles.html:62
 msgid "Custom Styles (Advanced)"
@@ -3703,6 +3917,8 @@ msgid ""
 "A good name is short and descriptive. People should know what your school is "
 "about without reading the description."
 msgstr ""
+"Een goede naam is kort en beschrijvend. Mensen zou moeten weten waar je "
+"school over gaat, zonder de beschrijving te lezen."
 
 #: templates/schools/school_edit_summary.html:17
 msgid ""
@@ -3712,37 +3928,41 @@ msgstr ""
 
 #: templates/schools/school_edit_summary.html:23
 msgid "This description is shown on the school page."
-msgstr ""
+msgstr "Deze beschrijving wordt op de schoolpagina getoond."
 
 #: templates/search/search.html:4 templates/search/search.html.py:10
 msgid "Search"
-msgstr ""
+msgstr "Zoeken"
 
 #: templates/signups/accept_sign_up_comment.html:2
 msgid "Welcome aboard! You are an organizer now."
-msgstr ""
+msgstr "Welkom! Je bent nu een coördinator."
 
 #: templates/signups/accept_sign_up_comment.html:4
 msgid "Welcome aboard! You are a participant now."
-msgstr ""
+msgstr "Welkom! Je bent nu een deelnemer."
 
 #: templates/signups/answer_sign_up.html:13
+#, fuzzy
 msgid "New Answer"
-msgstr ""
+msgstr "Antwoord:"
 
 #: templates/signups/answer_sign_up.html:15
+#, fuzzy
 msgid "Edit answer"
-msgstr ""
+msgstr "Antwoord bewerken"
 
 #: templates/signups/answer_sign_up.html:29 templates/signups/sign_up.html:81
 #: templates/signups/emails/new_signup_answer.txt:8
+#, fuzzy
 msgid "Standard Set Answer:"
-msgstr ""
+msgstr "Antwoord herstellen"
 
 #: templates/signups/answer_sign_up.html:32 templates/signups/sign_up.html:84
 #: templates/signups/emails/new_signup_answer.txt:11
+#, fuzzy
 msgid "Public Set Answer:"
-msgstr ""
+msgstr "Antwoord verwijderen:"
 
 #: templates/signups/answer_sign_up.html:36 templates/signups/sign_up.html:89
 #: templates/signups/emails/new_signup_answer.txt:15
@@ -3751,7 +3971,7 @@ msgstr ""
 
 #: templates/signups/answer_sign_up.html:53
 msgid "Profile"
-msgstr ""
+msgstr "Profiel"
 
 #: templates/signups/answer_sign_up.html:54
 msgid ""
@@ -3760,8 +3980,9 @@ msgid ""
 msgstr ""
 
 #: templates/signups/answer_sign_up.html:57
+#, fuzzy
 msgid "Signup Questions"
-msgstr ""
+msgstr "Vragen"
 
 #: templates/signups/answer_sign_up.html:58
 msgid ""
@@ -3808,27 +4029,28 @@ msgstr ""
 #: templates/signups/base.html:4 templates/signups/base.html.py:10
 #: templates/signups/sign_up.html:19
 msgid "Sign-Up"
-msgstr ""
+msgstr "Aanmelding"
 
 #: templates/signups/delete_restore_answer.html:13
 msgid "Restore Answer:"
-msgstr ""
+msgstr "Antwoord herstellen"
 
 #: templates/signups/delete_restore_answer.html:13
 msgid "Delete Answer:"
-msgstr ""
+msgstr "Antwoord verwijderen:"
 
 #: templates/signups/delete_restore_answer.html:24
 msgid "Are you sure you want to restore this answer?"
-msgstr ""
+msgstr "Weet je zeker dat je dit antwoord wilt herstellen?"
 
 #: templates/signups/delete_restore_answer.html:26
 msgid "Are you sure you want to delete this answer?"
-msgstr ""
+msgstr "Weet je zeker dat je dit antwoord wilt verwijderen?"
 
 #: templates/signups/edit_signup.html:13
+#, fuzzy
 msgid "Sign-up Status"
-msgstr ""
+msgstr "Aanmelden taak"
 
 #: templates/signups/edit_signup.html:14
 #, python-format
@@ -3839,13 +4061,14 @@ msgstr ""
 
 #: templates/signups/sign_up.html:12
 msgid "Post Answer"
-msgstr ""
+msgstr "Publiceer antwoord"
 
 #: templates/signups/sign_up.html:21
 msgid "Anyone can follow a"
-msgstr ""
+msgstr "Iedereen kan volgen"
 
 #: templates/signups/sign_up.html:21
+#, fuzzy
 msgid ""
 "on P2PU. Participating is the next level of engagement. The sign-up is a "
 "space where interested individuals can express their interest and background "
@@ -3853,65 +4076,72 @@ msgid ""
 "answer the following set(s) of questions if you want to become a participant "
 "or organizer."
 msgstr ""
+"op P2PU. Deelnemen is het volgende niveau om mee te doen. De aanmelding is "
+"een plek waar geïneresseerde individuen hun interesse en achtergrond van een "
+"onderwerp tonen en met de andere deelnemers kunnen samenwerken. Geef meer "
+"details:"
 
 #: templates/signups/sign_up.html:42
 msgid "Answers"
-msgstr ""
+msgstr "Antwoorden"
 
 #: templates/signups/sign_up.html:43
 msgid "Pending Answers:"
-msgstr ""
+msgstr "Wachtende antwoorden:"
 
 #: templates/signups/sign_up.html:98
 msgid "Add Participant"
-msgstr ""
+msgstr "Voeg een medegebruiker toe"
 
 #: templates/signups/sign_up_initial_content.html:4
 msgid "What made you interested in this topic?"
-msgstr ""
+msgstr "Waarom ben je geïnteresseerd in dit onderwerp?"
 
 #: templates/signups/sign_up_initial_content.html:5
 msgid "What do you hope to achieve by participating?"
-msgstr ""
+msgstr "Wat denk je te bereiken met je deelname?"
 
 #: templates/signups/sign_up_initial_content.html:6
 #, python-format
 msgid "Are you interested in helping with the %(kind)s organization?"
 msgstr ""
+"Ben je geïnteresseerd om mee te helpen met de organisatie van %(kind)s?"
 
 #: templates/signups/emails/new_signup_answer.txt:2
 msgid " submitted a new answer at the sign-up page of "
-msgstr ""
+msgstr " heeft een nieuw antwoord achtergelaten op de aanmeldpagina van "
 
 #: templates/signups/emails/new_signup_answer.txt:19
 msgid "See answer at:"
-msgstr ""
+msgstr "Bekijk het antwoord op:"
 
 #: templates/signups/emails/new_signup_answer_subject.txt:2
 msgid " submitted a new answer at the sign-up page."
-msgstr ""
+msgstr " heeft een nieuw antwoord achtergelaten op de aanmeldpagina."
 
 #: templates/statuses/emails/wall_updated.txt:5
 msgid " posted an important message to the wall:"
-msgstr ""
+msgstr " Een belangrijk bericht op de wand gepost:"
 
 #: templates/statuses/emails/wall_updated.txt:7
 msgid " posted a message to the wall:"
-msgstr ""
+msgstr " bericht gepost op de wand:"
 
 #: templates/statuses/emails/wall_updated.txt:12
 msgid "See message at:"
-msgstr ""
+msgstr "Bekijk bericht op:"
 
 #: templates/statuses/emails/wall_updated.txt:18
 msgid ""
 "This message was marked as important by an organizer. Participants can not "
 "turn off notifications for important updates."
 msgstr ""
+"Dit bericht is gemarkeerd als belangrijk door de coördinator. Deelnemers "
+"kunnen berichtgevingen voor belangrijke updates niet uitzetten."
 
 #: templates/statuses/emails/wall_updated_subject.txt:2
 msgid " posted a message to the wall."
-msgstr ""
+msgstr " bericht op de wand geplaatst."
 
 #: templates/tags/directory.html:29
 msgid "All courses tagged '"
@@ -3924,376 +4154,407 @@ msgstr ""
 
 #: templates/users/_openid_providers.html:7
 msgid "Sign In with your Google account"
-msgstr ""
+msgstr "Meld je aan met je Google account"
 
 #: templates/users/_openid_providers.html:8
+#, fuzzy
 msgid "Sign In with your Yahoo! account"
-msgstr ""
+msgstr "Meld je aan met je Yahoo account!"
 
 #: templates/users/_openid_providers.html:9
 msgid "Sign In with your myOpenID account"
-msgstr ""
+msgstr "Meld je aan met je myOpenID account"
 
 #: templates/users/_openid_providers.html:11
 #: templates/users/profile_form_base.html:8
 #: templates/users/register_openid.html:9 templates/users/signin.html:10
 msgid "or"
-msgstr ""
+msgstr "of"
 
 #: templates/users/_openid_providers.html:12
 msgid "enter any OpenID URL"
-msgstr ""
+msgstr "vul een OpenID webadres in"
 
 #: templates/users/_profile_edit.html:2
 #: templates/users/profile_form_base.html:13
 msgid "Display Name"
-msgstr ""
+msgstr "Schermnaam"
 
 #: templates/users/_profile_edit.html:7
 msgid "Location"
-msgstr ""
+msgstr "Locatie"
 
 #: templates/users/_profile_edit.html:12
 #: templates/users/profile_form_base.html:33
 msgid "Preferred Language"
-msgstr ""
+msgstr "Voorkeurstaal"
 
 #: templates/users/_profile_edit.html:17
 msgid "About Me"
-msgstr ""
+msgstr "Over Mij"
 
 #: templates/users/_profile_edit.html:21
 msgid ""
 "Please describe your skills, interest, and the things you will want to "
 "learn, by providing a comma-separated list of tags."
 msgstr ""
+"Beschrijf je vaardigheden, interesses, en de dingen die wilt leren door een "
+"comma-gescheidenlijst te maken van kernwoorden."
 
 #: templates/users/_profile_edit.html:23
 msgid "Skilled in"
-msgstr ""
+msgstr "Vaardig in"
 
 #: templates/users/_profile_edit.html:28
 msgid "Interested in"
-msgstr ""
+msgstr "Geïnteresseerd in"
 
 #: templates/users/_profile_edit_image.html:1
 msgid "Current Profile Image"
-msgstr ""
+msgstr "Huidige profielafbeelding"
 
 #: templates/users/_profile_edit_image.html:3
 msgid ""
 "Upload an image file from your computer to replace your current profile "
 "image:"
 msgstr ""
+"Upload een afbeeldingsbestand van je computer om je huidige "
+"profielafbeelding te vervangen:"
 
 #: templates/users/_profile_edit_image.html:5
 msgid ""
 "Personalize your profile image by uploading an image file from your computer:"
 msgstr ""
+"Personaliseer je profielafbeelding door het uploaden van een afbeelding van "
+"je computer:"
 
 #: templates/users/_profile_edit_image.html:13
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
 "pixels"
 msgstr ""
+"Bestandstypen: JPG, GIF of PNG unicamente<br/> Max grootte: 700k <br/> "
+"Afmetingen: 57x57 pixels"
 
 #: templates/users/_profile_info.html:6
+#, fuzzy
 msgid "Followings"
-msgstr ""
+msgstr "Volgen"
 
 #: templates/users/_profile_info.html:7
+#, fuzzy
 msgid "Courses"
-msgstr ""
+msgstr "Cursus"
 
 #: templates/users/_profile_info.html:13
+#, fuzzy
 msgid "Latest Courses"
-msgstr ""
+msgstr "Cursus"
 
 #: templates/users/_profile_info.html:44
+#, fuzzy
 msgid "Latest Badges"
-msgstr ""
+msgstr "Emblemen"
 
 #: templates/users/_profile_info.html:65
+#, fuzzy
 msgid "My Skills"
-msgstr ""
+msgstr "Vaardigheden"
 
 #: templates/users/_profile_info.html:69
 msgid "View more with skills in "
-msgstr ""
+msgstr "Bekijk meer vaardigheden in "
 
 #: templates/users/_profile_info.html:77
+#, fuzzy
 msgid "My Interests"
-msgstr ""
+msgstr "Interesses"
 
 #: templates/users/_profile_info.html:89
+#, fuzzy
 msgid "What I want to learn more about"
-msgstr ""
+msgstr "Wil graag meer leren over"
 
 #: templates/users/forgot_password.html:3
 msgid "Forgot Your Password?"
-msgstr ""
+msgstr "Je paswoord vergeten?"
 
 #: templates/users/forgot_password.html:8 templates/users/signin.html:21
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Je paswoord vergeten?"
 
 #: templates/users/forgot_password.html:13 templates/users/signin.html:16
 msgid "Username or Email"
-msgstr ""
+msgstr "Gebruikersnaam of E-mail"
 
 #: templates/users/forgot_password.html:22 templates/users/login_openid.html:5
 #: templates/users/signin.html:5 templates/users/signin.html.py:10
 #: templates/users/signin.html:33
 msgid "Sign In"
-msgstr ""
+msgstr "Inloggen"
 
 #: templates/users/forgot_password_complete.html:4
 msgid "Password Updated"
-msgstr ""
+msgstr "Paswoord"
 
 #: templates/users/forgot_password_complete.html:9
 #: templates/users/forgot_password_confirm.html:5
 #: templates/users/forgot_password_confirm.html:10
 msgid "Reset Password"
-msgstr ""
+msgstr "Paswoord opnieuw instellen"
 
 #: templates/users/forgot_password_complete.html:12
 msgid "Thank you! Your password has been updated."
-msgstr ""
+msgstr "Bedankt! je paswoord is bijgewerkt."
 
 #: templates/users/forgot_password_complete.html:13
 msgid "You may now sign in."
-msgstr ""
+msgstr "Je kunt nu inloggen."
 
 #: templates/users/forgot_password_confirm.html:16
 msgid "New Password"
-msgstr ""
+msgstr "Nieuw Paswoord"
 
 #: templates/users/forgot_password_confirm.html:21
 msgid "Confirm Password"
-msgstr ""
+msgstr "Bevestig Paswoord"
 
 #: templates/users/forgot_password_confirm.html:31
 msgid "Hmm, that does not appear to be a correct link."
-msgstr ""
+msgstr "Hmm, dat lijkt niet op een goede link."
 
 #: templates/users/forgot_password_done.html:3
 #: templates/users/forgot_password_done.html:8
 #: templates/users/emails/forgot_password.txt:2
 msgid "Password Reset"
-msgstr ""
+msgstr "Paswoord instellen"
 
 #: templates/users/forgot_password_done.html:10
 msgid ""
 "Instructions for resetting your password were sent to your email address."
 msgstr ""
+"Aanwijzingen voor het instellen van je paswoord zijn naar je e-mailadres "
+"gestuurd."
 
 #: templates/users/login_openid.html:11
 msgid "Sign In with OpenID"
-msgstr ""
+msgstr "Aanmelden met OpenID"
 
 #: templates/users/login_openid.html:11 templates/users/signin.html:10
 msgid "create an account"
-msgstr ""
+msgstr "Maak een account"
 
 #: templates/users/profile.html:10
 msgid "Activity from user's profile"
-msgstr ""
+msgstr "Activiteit van gebruikersprofiel"
 
 #: templates/users/profile.html:11
 msgid "Activity from user's dashboard"
-msgstr ""
+msgstr "Activiteit van gebruikersdashboard"
 
 #: templates/users/profile_edit.html:5 templates/users/profile_edit.html:21
 #: templates/users/sidebar.html:8
 msgid "Edit Profile"
-msgstr ""
+msgstr "Profiel bewerken"
 
 #: templates/users/profile_edit.html:22
 msgid "View Profile"
-msgstr ""
+msgstr "Profiel bekijken"
 
 #: templates/users/profile_edit.html:26
 #: templates/users/profile_edit_main.html:8
 msgid "Basic Information"
-msgstr ""
+msgstr "Basis informatie"
 
 #: templates/users/profile_edit.html:28
 msgid "Notifications"
-msgstr ""
+msgstr "Notificaties"
 
 #: templates/users/profile_edit.html:29
 msgid "Update Email"
-msgstr ""
+msgstr "Update e-mail"
 
 #: templates/users/profile_edit.html:30
 msgid "Update Password"
-msgstr ""
+msgstr "Bewerk Paswoord"
 
 #: templates/users/profile_edit.html:31
 #: templates/users/profile_edit_openids.html:8
 msgid "OpenIDs"
-msgstr ""
+msgstr "OpenIDs"
 
 #: templates/users/profile_edit.html:33
 msgid "Delete Account"
-msgstr ""
+msgstr "Verwijder Account"
 
 #: templates/users/profile_edit_links.html:9
+#, fuzzy
 msgid ""
 "Add links to your blog, homepage, twitter profile, github repository etc. "
 "These links will appear on your profile."
 msgstr ""
+"Bewerk links op je blog, homepage, twitterprofiel, github verzameling etc.  "
 
 #: templates/users/profile_edit_links_edit.html:9
 msgid ""
 "Edit links to your blog, homepage, twitter profile, github repository etc. "
 "These links will appear on your profile."
 msgstr ""
+"Bewerk links op je blog, homepage, twitterprofiel, github verzameling etc.  "
 
 #: templates/users/profile_edit_openids.html:9
 msgid ""
 "Add openid urls to login to your account. If you do not have any openids you "
 "can access your account with username and password."
 msgstr ""
+"Voeg openid urls toe om aan te melden op je account. Als je geen openids "
+"hebt kun je je aanmelden op je account met gebruikersnaam en paswoord."
 
 #: templates/users/profile_edit_openids.html:19
 #: templates/users/register.html:13 templates/users/signin.html:35
 msgid "OpenID"
-msgstr ""
+msgstr "OpenID"
 
 #: templates/users/profile_form_base.html:8
 #: templates/users/register_openid.html:9
 msgid "sign in"
-msgstr ""
+msgstr "Login"
 
 #: templates/users/profile_form_base.html:16
 msgid "A name that will identify you to other users. This is optional."
-msgstr ""
+msgstr "Een naam die je onderscheidt van andere gebruikers. Dit is optioneel."
 
 #: templates/users/profile_form_base.html:22
 msgid "Your public profile:"
-msgstr ""
+msgstr "Je openbare profiel:"
 
 #: templates/users/profile_form_base.html:22
 msgid "username"
-msgstr ""
+msgstr "gebruikersnaam"
 
 #: templates/users/profile_form_base.html:27
 #: templates/users/settings_email.html:9
 #: templates/users/settings_email.html:13
 msgid "Email Address"
-msgstr ""
+msgstr "E-mail Adres"
 
 #: templates/users/profile_form_base.html:30
 msgid "Required to send you notifications about your P2PU account."
-msgstr ""
+msgstr "Noodzakelijk om je notificaties te sturen over je P2PU account."
 
 #: templates/users/profile_form_base.html:42
 msgid "Please sign me up for the P2PU newsletter."
-msgstr ""
+msgstr "Meldt mij aan voor de P2PU nieuwsbrief."
 
 #: templates/users/profile_form_base.html:59
 msgid "By creating an account on"
-msgstr ""
+msgstr "Door een account te maken op"
 
 #: templates/users/profile_form_base.html:59
 msgid ", you accept our"
-msgstr ""
+msgstr ", accepteer je onze"
 
 #: templates/users/profile_form_base.html:59
 msgid "privacy guidelines"
-msgstr ""
+msgstr "privacy richtlijnen"
 
 #: templates/users/profile_form_base.html:59
 msgid "license provisions"
-msgstr ""
+msgstr "licentievoorwaarden"
 
 #: templates/users/profile_form_base.html:59
 msgid "and"
-msgstr ""
+msgstr "en"
 
 #: templates/users/profile_form_base.html:59
 msgid "terms of use"
-msgstr ""
+msgstr "gebruiksvoorwaarden"
 
 #: templates/users/profile_form_base.html:59
 msgid "By default all content you create on this site is publicly viewable."
-msgstr ""
+msgstr "Alle inhoud die je maakt op deze site is publiekelijk zichtbaar.  "
 
 #: templates/users/register.html:5 templates/users/register_openid.html:3
 msgid "Sign Up"
-msgstr ""
+msgstr "Aanmelden"
 
 #: templates/users/register.html:7 templates/users/register_openid.html:9
 msgid "Create a New Account"
-msgstr ""
+msgstr "Maak nieuw account"
 
 #: templates/users/register.html:9
 msgid "Create Account"
-msgstr ""
+msgstr "Maak Account"
 
 #: templates/users/register.html:12
 msgid "or sign up using"
-msgstr ""
+msgstr "of meld aan met"
 
 #: templates/users/register.html:18 templates/users/settings_password.html:6
 #: templates/users/settings_password.html:9
 #: templates/users/settings_password.html:13 templates/users/signin.html:21
 msgid "Password"
-msgstr ""
+msgstr "Paswoord"
 
 #: templates/users/register.html:22 templates/users/settings_password.html:18
 msgid "Confirm password"
-msgstr ""
+msgstr "Bevestig paswoord"
 
 #: templates/users/register.html:27 templates/users/settings_password.html:23
 msgid ""
 "Passwords must be at least 8 characters and contain numbers and letters."
 msgstr ""
+"Paswoorden moeten op zijn minst 8 karakter hebben en bestaan uit nummers en "
+"letters."
 
 #: templates/users/settings_delete.html:6
 #: templates/users/settings_delete.html:10
 msgid "Delete Your Account"
-msgstr ""
+msgstr "Verwijder je account"
 
 #: templates/users/settings_delete.html:11
 msgid ""
 "Are you sure you would like to delete your account? Be aware that you will "
 "not be able to login again to this account after you delete it."
 msgstr ""
+"Weet je zeker dat je je account wilt verwijderen? Houdt er rekening mee "
+"datje niet meer kunt inloggen op dit account wanneer je het hebt verwijderd."
 
 #: templates/users/settings_delete.html:13
 msgid ""
 "You are currently the only organizer of the following non-archived study "
 "groups, courses ..."
 msgstr ""
+"Je bent op dit moment de enige coördinator van de volgende gearchiveerde "
+"studiegroep, cursussen ...."
 
 #: templates/users/settings_email.html:6
 msgid "Email address"
-msgstr ""
+msgstr "E-mailadres"
 
 #: templates/users/settings_notifications.html:6
 msgid "Notification Settings"
-msgstr ""
+msgstr "Notificatie Instellingen"
 
 #: templates/users/settings_notifications.html:9
 msgid "Send me an email when..."
-msgstr ""
+msgstr "Stuur me een e-mail als..."
 
 #: templates/users/settings_notifications.html:15
 msgid "A user messages me on"
-msgstr ""
+msgstr "Een gebruiker een bericht stuurt over"
 
 #: templates/users/settings_notifications.html:21
 msgid "Someone starts following me."
-msgstr ""
+msgstr "Iemand me begint te volgen."
 
 #: templates/users/settings_notifications.html:27
 msgid ""
 "Someone starts following one of the study groups, courses, ... that I am "
 "organizing."
 msgstr ""
+"Iemand een van de studiegroepen, cursussen volgt....die ik aan het "
+"organiseren ben."
 
 #: templates/users/settings_notifications.html:33
 msgid ""
@@ -4301,12 +4562,14 @@ msgid ""
 msgstr ""
 
 #: templates/users/settings_notifications.html:37
+#, fuzzy
 msgid "An organizer posts or replies to a message on the wall of:"
-msgstr ""
+msgstr " bericht gepost op de wand:"
 
 #: templates/users/settings_notifications.html:47
+#, fuzzy
 msgid "A participant posts or replies to a message on the wall of:"
-msgstr ""
+msgstr " bericht gepost op de wand:"
 
 #: templates/users/settings_notifications.html:57
 msgid ""
@@ -4319,10 +4582,13 @@ msgid ""
 msgstr ""
 
 #: templates/users/settings_notifications.html:79
+#, fuzzy
 msgid ""
 "Does not include important updates for which notifications can not be turn "
 "off."
 msgstr ""
+" is bijgewerkt(deze instelling bevat geen belangrijke updates waarvoor, de "
+"notificaties niet kunnen worden uitgezet)."
 
 #: templates/users/sidebar.html:24
 msgid "Lives in"
@@ -4330,62 +4596,275 @@ msgstr ""
 
 #: templates/users/sidebar.html:45
 msgid "Private Message"
-msgstr ""
+msgstr "Privé berichten"
 
 #: templates/users/signin.html:14
 msgid ""
 "You can login directly with your username and password from the old P2PU "
 "website."
 msgstr ""
+"Je kunt meteen inloggen met je gebruikersnaam en paswoord via de oude P2PU "
+"website."
 
 #: templates/users/signin.html:29
 msgid "Remember Me"
-msgstr ""
+msgstr "Onthoud mij"
 
 #: templates/users/signin.html:34
 msgid "or use"
-msgstr ""
+msgstr "of gebruik"
 
 #: templates/users/user_list.html:15
 msgid "Browse <b>People</b>"
-msgstr ""
+msgstr "Bekijk <b>Mensen</b>"
 
 #: templates/users/user_list.html:19
 msgid "in"
-msgstr ""
+msgstr "in"
 
 #: templates/users/user_list.html:40
 msgid "Active this Week"
-msgstr ""
+msgstr "Actief deze week"
 
 #: templates/users/user_list.html:51
 msgid "New People"
-msgstr ""
+msgstr "Nieuwe Mensen"
 
 #: templates/users/emails/forgot_password.txt:4
 msgid "A request was received to reset the password for this account on "
 msgstr ""
+"Een verzoek is ontvangen voor het herstellen van het paswoord voor dit "
+"account op "
 
 #: templates/users/emails/forgot_password.txt:5
 msgid ""
 "To change this password please click on the following link, or paste it into "
 "your browser's location bar:"
 msgstr ""
+"Om dit paswoord te veranderen klik op de volgende link, of kopiëeer deze "
+"naar de locatiebalk in de browser:"
 
 #: templates/users/emails/forgot_password.txt:9
 msgid "If you did not request this email there is no need for further action."
-msgstr ""
+msgstr "Als je deze e-mail niet gevraagd hebt, hoef je niet te reageren."
 
 #: templates/users/emails/registration_confirm.txt:4
 msgid ""
 "To complete the sign up process, please confirm your email address by "
 "clicking here:"
 msgstr ""
+"Om de aanmeldingsprocedure te voltooien, bevestig je e-mailadres door hier "
+"te klikken op de link:"
 
 #: templates/users/emails/registration_confirm.txt:8
 msgid "Thank you!"
-msgstr ""
+msgstr "Bedankt!"
 
 #: templates/users/emails/registration_confirm_subject.txt:2
+#, fuzzy
 msgid "[P2PU] Complete Registration!"
-msgstr ""
+msgstr "Registratie compleet"
+
+#~ msgid "answer at %s"
+#~ msgstr "antwoord op %s"
+
+#~ msgid "Comment to %s"
+#~ msgstr "geef commentaar aan %s"
+
+#~ msgid "New Message from %(sender)s"
+#~ msgstr "Nieuw bericht van %(sender)s"
+
+#~ msgid ""
+#~ "Other -- if other, please fill out and describe the term you will use to "
+#~ "categorize it."
+#~ msgstr ""
+#~ "Overig -- indien overig, vul aub in en omschrijf de term die je wilt "
+#~ "gebruiken om te categoriseren."
+
+#~ msgid "%(user)s is following you on P2PU!"
+#~ msgstr "%(user)s volgt je op P2PU!"
+
+#~ msgid "%(user)s is following %(project)s on P2PU!"
+#~ msgstr "%(user)s volgt %(project)s op P2PU!"
+
+#~ msgid "The %(slug)s %(kind)s was already declined."
+#~ msgstr "Het %(kind)s %(slug)s is al afgewezen."
+
+#~ msgid "There was an error when declining %s membership."
+#~ msgstr "Er is een probleem met het afwijzen van %s lidmaatschap."
+
+#~ msgid "The %s stopped being declined for this school."
+#~ msgstr "Het %s is gestopt met het afwijzen voor deze school."
+
+#~ msgid "About Us"
+#~ msgstr "Over ons"
+
+#~ msgid "Old P2PU Site"
+#~ msgstr "De oude P2PU website"
+
+#~ msgid "Contact Us"
+#~ msgstr "Contact"
+
+#~ msgid "Email"
+#~ msgstr "E-mail"
+
+#~ msgid "Facebook"
+#~ msgstr "Facebook"
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "License Info"
+#~ msgstr "Licensie informatie"
+
+#~ msgid "License"
+#~ msgstr "Licensie"
+
+#~ msgid "The Hewlett Foundation"
+#~ msgstr "De Hewlett stichting"
+
+#~ msgid "The Shuttleworth Foundation"
+#~ msgstr "De Shuttleworth stichting"
+
+#~ msgid "BETA"
+#~ msgstr "BETA"
+
+#~ msgid "Ask a Question"
+#~ msgstr "Stel een vraag"
+
+#~ msgid "Handbook"
+#~ msgstr "Handboek"
+
+#~ msgid "My P2PU"
+#~ msgstr "Mijn P2PU"
+
+#~ msgid ": Answer Questions"
+#~ msgstr ": Vraag beantwoorden"
+
+#~ msgid ""
+#~ "First update your profile information, which will be included with your "
+#~ "answer."
+#~ msgstr ""
+#~ "Werk eerst je profielinformatie bij, dat toegevoegd zal worden aan je "
+#~ "antwoord."
+
+#~ msgid "Then answer the sign-up questions listed below."
+#~ msgstr "Het antwoord op de aanmeldvragen is beneden gegeven."
+
+#~ msgid " posted a new comment at the sign-up page of "
+#~ msgstr " heeft een nieuwe reactie achtergelaten op de aanmeldpagina van "
+
+#~ msgid " posted a new comment at the sign-up page."
+#~ msgstr " heeft een nieuwe reactie achtergelaten op de aanmeldpagina."
+
+#~ msgid "Links &amp; Content"
+#~ msgstr "Links en inhoud"
+
+#~ msgid "Participating."
+#~ msgstr "Deelname."
+
+#~ msgid "Closed"
+#~ msgstr "Gesloten"
+
+#~ msgid "Open"
+#~ msgstr "Open"
+
+#~ msgid "Sign-up in Progress"
+#~ msgstr "Aanmelding in behandeling"
+
+#~ msgid "Your Answer"
+#~ msgstr "Je antwoord"
+
+#~ msgid ""
+#~ "All the participants will be able to see your answers after you get "
+#~ "accepted."
+#~ msgstr ""
+#~ "Alle deelnemers zullen je antwoorden kunnen zien nadat je bent "
+#~ "geaccepteerd."
+
+#~ msgid "Important first steps:"
+#~ msgstr "Belangrijke eerste stappen:"
+
+#~ msgid ""
+#~ "* Join the Help Desk to receive support during the development process:"
+#~ msgstr ""
+#~ "* Wendt je tot de Helpdesk voor ondersteuning tijdens het "
+#~ "ontwikkelproces :"
+
+#~ msgid "You can also ask general questions at: http://qa.p2pu.org"
+#~ msgstr "Je kunt ook algemene vragen stellen op: http://qa.p2pu.org"
+
+#~ msgid ""
+#~ "P2PU has a large community of learners and people willing to help along "
+#~ "the way! All questions, ideas and challenges are most welcome."
+#~ msgstr ""
+#~ "P2PU heeft een grote gemeenschap van studenten en mensen die willen "
+#~ "helpen! Alle vragen, ideeën en uitdagingen zijn welkom."
+
+#~ msgid "Styles"
+#~ msgstr "Stijlen"
+
+#~ msgid "Groups Icon"
+#~ msgstr "Groepsavatar"
+
+#~ msgid "Declined"
+#~ msgstr "Afgewezen"
+
+#~ msgid ""
+#~ "View, add and remove declined study groups, courses, ... to this school."
+#~ msgstr ""
+#~ "Bekijk, voeg toe en verwijder afgewezen studiegroepen, cursussen, ...voor "
+#~ "deze school. "
+
+#~ msgid "Replace School Groups Icon"
+#~ msgstr "Vervang groepsavatar school"
+
+#~ msgid "Upload a School Groups Icon"
+#~ msgstr "Upload een groepsavatar school"
+
+#~ msgid ""
+#~ "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+#~ "118x32 pixels"
+#~ msgstr ""
+#~ "Bestandstypen: alleen JPG, GIF of PNG <br/> Max grootte: 700k <br/> "
+#~ "Afmetingen: 118x32 pixels"
+
+#~ msgid "About Us Footnote Color"
+#~ msgstr "Over Ons Voetnootkleur"
+
+#~ msgid "Background color of the About Us footnotes."
+#~ msgstr "Achtergrondkleur van de Over Ons Voetnoot."
+
+#~ msgid "Contact Us Footnote Color"
+#~ msgstr "Neem Contact Op Voetnootkleur"
+
+#~ msgid "Background color of the Contact Us footnotes."
+#~ msgstr "Achtergrondkleur van de Neem Contact Op Voetnoot."
+
+#~ msgid "License Info Footnote Color"
+#~ msgstr "Licentie Info Voetnootkleur"
+
+#~ msgid "Background color of the License Info footnotes."
+#~ msgstr "Achtergrondkleur van de Licentie Info Voetnoot."
+
+#~ msgid ""
+#~ "Add links to your blog, homepage, twitter profile, github repository etc. "
+#~ "These links will appear on your profile. Check subscribe if you would "
+#~ "like to subscribe to its feed and publish its activity to your followers."
+#~ msgstr ""
+#~ "Voeg links toe op je blog, je homepage, je twitterprofiel, github "
+#~ "verzameling etc. Deze links zullen op je profiel zichtbaar zijn. Vink "
+#~ "abonneren aan als je je wilt abonneren op de feed en de activiteit "
+#~ "daarvan wilt publiceren voor je volgers."
+
+#~ msgid "The wall of "
+#~ msgstr "De wand van "
+
+#~ msgid "The content (e.g. tasks, comments, ...) of "
+#~ msgstr "De inhoud (b.v. taken, reacties, ...) van "
+
+#~ msgid " is updated."
+#~ msgstr " is bijgewerkt."
+
+#~ msgid "Past Involvement"
+#~ msgstr "Vroegere bezigheden"
