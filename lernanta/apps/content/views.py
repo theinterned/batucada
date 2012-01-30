@@ -10,7 +10,7 @@ from django.utils import simplejson
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
-from projects.decorators import participation_required
+from projects.decorators import participation_required, hide_deleted_projects
 from projects.models import Project
 from pagination.views import get_pagination_context
 from projects.decorators import restrict_project_kind
@@ -26,6 +26,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
+@hide_deleted_projects
 def show_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     is_challenge = (page.project.category == Project.CHALLENGE)
@@ -63,6 +64,7 @@ def show_page(request, slug, page_slug):
         context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 @restrict_project_kind(Project.CHALLENGE)
@@ -78,6 +80,7 @@ def link_submit(request, slug, page_slug):
     return http.HttpResponse(json, mimetype="application/json")
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 def edit_page(request, slug, page_slug):
@@ -120,6 +123,7 @@ def edit_page(request, slug, page_slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 def create_page(request, slug):
@@ -161,6 +165,7 @@ def create_page(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 def delete_page(request, slug, page_slug):
@@ -188,6 +193,7 @@ def delete_page(request, slug, page_slug):
         }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 def history_page(request, slug, page_slug):
     page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
     versions = PageVersion.objects.filter(page=page).order_by('-date')
@@ -198,6 +204,7 @@ def history_page(request, slug, page_slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 def version_page(request, slug, page_slug, version_id):
     version = get_object_or_404(PageVersion, page__project__slug=slug,
         page__slug=page_slug, id=version_id, deleted=False)
@@ -210,6 +217,7 @@ def version_page(request, slug, page_slug, version_id):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 def restore_version(request, slug, page_slug, version_id):
@@ -259,6 +267,7 @@ def restore_version(request, slug, page_slug, version_id):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 def page_index_up(request, slug, counter):
@@ -288,6 +297,7 @@ def page_index_up(request, slug, counter):
     return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 def page_index_down(request, slug, counter):

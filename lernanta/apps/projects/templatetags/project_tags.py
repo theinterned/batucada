@@ -88,9 +88,11 @@ register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
 
 def project_list(school=None, only_featured=False, limit=8):
-    listed = Project.objects.filter(not_listed=False, archived=False)
+    listed = Project.objects.filter(not_listed=False, archived=False,
+        deleted=False)
     if school:
-        featured = school.featured.filter(not_listed=False, archived=False)
+        featured = school.featured.filter(not_listed=False, archived=False,
+            deleted=False)
         project_sets = school.project_sets.all()
         if only_featured:
             project_sets = project_sets.filter(featured=True)
@@ -109,7 +111,7 @@ def project_list(school=None, only_featured=False, limit=8):
             status=Signup.CLOSED).values('project')
         open_signup = listed.filter(id__in=open_signup_ids)
         under_development = Project.objects.filter(under_development=True,
-            not_listed=False, archived=False)
+            not_listed=False, archived=False, deleted=False)
         archived = Project.objects.filter(not_listed=False,
             archived=True).order_by('-created_on')
         if school:

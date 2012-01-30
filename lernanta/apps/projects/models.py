@@ -52,7 +52,8 @@ class ProjectManager(caching.base.CachingManager):
                 target_project__isnull=True).filter(
                 target_project__under_development=False,
                 target_project__not_listed=False,
-                target_project__archived=False).order_by('-id__count')
+                target_project__archived=False,
+                target_project__deleted=False).order_by('-id__count')
             if school:
                 rels = rels.filter(target_project__school=school)
             if limit:
@@ -70,7 +71,8 @@ class ProjectManager(caching.base.CachingManager):
                 verb=verbs['follow'], target_content_type=ct).filter(
                 scope_object__under_development=False,
                 scope_object__not_listed=False,
-                scope_object__archived=False).order_by('-created_on__max')
+                scope_object__archived=False,
+                scope_object__deleted=False).order_by('-created_on__max')
             if school:
                 activities = activities.filter(
                     scope_object__school=school)
@@ -143,6 +145,8 @@ class Project(ModelBase):
     # Stealth Badges awarded upon completion of all tasks.
     completion_badges = models.ManyToManyField('badges.Badge',
         null=True, blank=False, related_name='projects_completion')
+
+    deleted = models.BooleanField(default=False)
 
     objects = ProjectManager()
 

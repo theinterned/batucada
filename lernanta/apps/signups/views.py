@@ -11,6 +11,7 @@ from users.decorators import login_required
 from users.forms import ProfileEditForm, ProfileImageForm
 from relationships.models import Relationship
 from projects.decorators import organizer_required, restrict_project_kind
+from projects.decorators import hide_deleted_projects
 from pagination.views import get_pagination_context
 from projects.models import Project, Participation, PerUserTaskCompletion
 from content.models import Page
@@ -19,6 +20,7 @@ from signups.models import Signup
 from signups.forms import SignupForm, SignupAnswerForm
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -48,6 +50,7 @@ def edit_signup(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def show_signup(request, slug):
     sign_up = get_object_or_404(Signup, project__slug=slug)
@@ -77,6 +80,7 @@ def show_signup(request, slug):
         context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def show_signup_answer(request, slug, answer_id):
     sign_up = get_object_or_404(Signup, project__slug=slug)
@@ -93,6 +97,7 @@ def show_signup_answer(request, slug, answer_id):
             sign_up.get_answer_url(answer, request.user))
 
 
+@hide_deleted_projects
 @login_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def answer_sign_up(request, slug):
@@ -159,6 +164,7 @@ def answer_sign_up(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def edit_answer_sign_up(request, slug, answer_id):
@@ -197,6 +203,7 @@ def edit_answer_sign_up(request, slug, answer_id):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -217,6 +224,7 @@ def accept_sign_up(request, slug, answer_id, as_organizer=False):
     return http.HttpResponseRedirect(answer.get_absolute_url())
 
 
+@hide_deleted_projects
 @login_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def delete_restore_signup_answer(request, slug, answer_id):
@@ -250,6 +258,7 @@ def delete_restore_signup_answer(request, slug, answer_id):
         }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @restrict_project_kind(Project.CHALLENGE)
 def direct_signup(request, slug):
@@ -281,6 +290,7 @@ def direct_signup(request, slug):
     return http.HttpResponseRedirect(project.get_absolute_url())
 
 
+@hide_deleted_projects
 @login_required
 @restrict_project_kind(Project.CHALLENGE)
 def direct_signup_adopter(request, slug):

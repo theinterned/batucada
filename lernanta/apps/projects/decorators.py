@@ -1,7 +1,9 @@
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
+from l10n.urlresolvers import reverse
+from drumbeat import messages
 from projects.models import Project
 
 
@@ -86,3 +88,20 @@ def restrict_project_kind(*kinds):
             return func(*args, **kwargs)
         return decorated
     return decorator
+
+
+def hide_deleted_projects(func):
+    """
+    Return a redirect with a message if the project
+    specified by the ``slug`` kwarg was deleted.
+    """
+
+    def decorated(*args, **kwargs):
+        request = args[0]
+        project = kwargs['slug']
+        project = get_object_or_404(Project, slug=project)
+        if project.deleted:
+            messages.error(request, _('This %s was deleted.') % project.kind)
+            return HttpResponseRedirect(reverse('projects_gallery'))
+        return func(*args, **kwargs)
+    return decorated

@@ -40,7 +40,8 @@ class ActivityManager(ManagerBase):
             Status)
         return Activity.objects.filter(deleted=False,
             scope_object__isnull=False,
-            scope_object__not_listed=False).exclude(
+            scope_object__not_listed=False,
+            scope_object__deleted=False).exclude(
             scope_object__category=Project.CHALLENGE).exclude(
             models.Q(target_content_type=remote_object_ct)
             | models.Q(target_content_type=status_ct)
@@ -60,7 +61,8 @@ class ActivityManager(ManagerBase):
             'actor', 'target_object', 'scope_object').filter(
             models.Q(actor__exact=user) | models.Q(actor__in=user_ids)
           | models.Q(scope_object__in=project_ids)).exclude(
-            scope_object__category=Project.CHALLENGE).order_by('-created_on')
+            scope_object__category=Project.CHALLENGE).exclude(
+            scope_object__deleted=True).order_by('-created_on')
 
     def for_user(self, user):
         """Return a list of activities where the actor is user."""
@@ -70,7 +72,8 @@ class ActivityManager(ManagerBase):
             actor=user).filter(
             models.Q(scope_object__isnull=True)
             | models.Q(scope_object__not_listed=False)).exclude(
-            scope_object__category=Project.CHALLENGE).order_by('-created_on')
+            scope_object__category=Project.CHALLENGE).exclude(
+            scope_object__deleted=True).order_by('-created_on')
 
 
 class Activity(ModelBase):
