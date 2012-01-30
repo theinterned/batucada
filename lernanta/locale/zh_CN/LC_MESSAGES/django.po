@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-30 11:54-0500\n"
+"POT-Creation-Date: 2012-01-30 12:10-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1163,47 +1163,47 @@ msgstr ""
 msgid "Send us an email"
 msgstr ""
 
-#: templates/_footer.html:37
+#: templates/_footer.html:40
 msgid "(more)"
 msgstr ""
 
-#: templates/_footer.html:40
+#: templates/_footer.html:43
 msgid "CC BY SA"
 msgstr ""
 
-#: templates/_footer.html:43 templates/base.html:78 templates/base.html.py:84
+#: templates/_footer.html:46 templates/base.html:78 templates/base.html.py:84
 msgid "Help"
 msgstr ""
 
-#: templates/_footer.html:44
+#: templates/_footer.html:47
 msgid "About P2PU"
 msgstr ""
 
-#: templates/_footer.html:45
+#: templates/_footer.html:48
 msgid "FAQ"
 msgstr ""
 
-#: templates/_footer.html:46
+#: templates/_footer.html:49
 msgid "Announcements"
 msgstr ""
 
-#: templates/_footer.html:47
+#: templates/_footer.html:50
 msgid "Wiki"
 msgstr ""
 
-#: templates/_footer.html:48
+#: templates/_footer.html:51
 msgid "Found a Bug?"
 msgstr ""
 
-#: templates/_footer.html:51
+#: templates/_footer.html:54
 msgid "Creative Commons Share-Alike"
 msgstr ""
 
-#: templates/_footer.html:52
+#: templates/_footer.html:55
 msgid "Privacy Guidelines"
 msgstr ""
 
-#: templates/_footer.html:53
+#: templates/_footer.html:56
 msgid "Terms of Use"
 msgstr ""
 
