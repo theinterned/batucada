@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-30 11:04-0500\n"
+"POT-Creation-Date: 2012-01-30 11:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: templates/base.html:28
 msgid "css/style-en.css"
-msgstr ""
+msgstr "css/style-zh-CN.css"
 
 #: templates/base.html:47 templates/activity/base.html:17
 #: templates/projects/base.html:18 templates/projects/directory.html:4
@@ -1271,7 +1271,7 @@ msgstr ""
 #: templates/projects/contact_organizers.html:49
 #: templates/search/search.html:30 templates/users/profile_form_base.html:76
 msgid "en"
-msgstr ""
+msgstr "zh-CN"
 
 #: templates/base.html:112
 msgid "Home"
@@ -1279,11 +1279,11 @@ msgstr ""
 
 #: templates/base.html:152
 msgid "jquery.ui.datepicker-en.js"
-msgstr ""
+msgstr "jquery.ui.datepicker-zh-CN.js"
 
 #: templates/base.html:154
 msgid "js/script-en.js"
-msgstr ""
+msgstr "js/script-zh-CN.js"
 
 #: templates/activity/_activity_resource.html:11
 #: templates/content/page.html:48 templates/drumbeat/report_abuse.html:10
@@ -2359,7 +2359,7 @@ msgstr ""
 
 #: templates/messages/inbox.html:29
 msgid "DATETIME_FORMAT"
-msgstr ""
+msgstr "N j, Y, P"
 
 #: templates/messages/inbox.html:32
 msgid "delete"
@@ -3100,7 +3100,7 @@ msgstr ""
 
 #: templates/projects/sidebar.html:135
 msgid "DATE_FORMAT"
-msgstr ""
+msgstr "N j, Y"
 
 #: templates/projects/sidebar.html:137
 msgid "Runs"
