@@ -26,5 +26,12 @@
         "external":"sv",
         "dictionary":"sv",
         "native":"Svenska"
+    },
+    "zh-CN":{
+        "English":"Chinese",
+        "internal":"zh-cn",
+        "external":"zh-CN",
+        "dictionary":"zh-cn",
+        "native":"中国"
     }
 }
