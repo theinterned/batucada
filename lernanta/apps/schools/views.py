@@ -406,7 +406,7 @@ def matching_non_member(request, slug):
     if len(request.GET['term']) == 0:
         raise http.Http404
 
-    matching_projects = Project.objects.filter(
+    matching_projects = Project.objects.filter(deleted=False,
         slug__icontains=request.GET['term']).exclude(
         id__in=school.projects.all().values('id'))
     json = simplejson.dumps([project.slug for project in matching_projects])

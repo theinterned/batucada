@@ -18,9 +18,8 @@ from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
 from projects.decorators import organizer_required, participation_required
-from projects.decorators import can_view_metric_overview
-from projects.decorators import can_view_metric_detail
-from projects.decorators import restrict_project_kind
+from projects.decorators import can_view_metric_overview, can_view_metric_detail
+from projects.decorators import restrict_project_kind, hide_deleted_projects
 from projects.models import Project, Participation, PerUserTaskCompletion
 from projects import drupal
 
@@ -62,7 +61,7 @@ def list_all(request):
             school = School.objects.get(slug=request.GET['school'])
         except School.DoesNotExist:
             return http.HttpResponseRedirect(directory_url)
-    projects = Project.objects.filter(not_listed=False).order_by('name')
+    projects = Project.objects.filter(not_listed=False, deleted=False).order_by('name')
     if school:
         projects = projects.filter(school=school)
     context = {'school': school, 'directory_url': directory_url}
@@ -130,6 +129,7 @@ def matching_kinds(request):
     return http.HttpResponse(json, mimetype="application/json")
 
 
+@hide_deleted_projects
 def show(request, slug, toggled_tasks=True):
     project = get_object_or_404(Project, slug=slug)
     is_organizing = project.is_organizing(request.user)
@@ -218,7 +218,7 @@ def matching_projects(request):
     if len(request.GET['term']) == 0:
         raise http.Http404
 
-    matching_projects = Project.objects.filter(
+    matching_projects = Project.objects.filter(deleted=False,
         slug__icontains=request.GET['term'])
     json = simplejson.dumps([project.slug for project in matching_projects])
 
@@ -298,6 +298,7 @@ def matching_courses(request):
     return http.HttpResponse(json, mimetype="application/json")
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 def edit(request, slug):
@@ -324,6 +325,7 @@ def edit(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @xframe_sameorigin
 @organizer_required
@@ -342,6 +344,7 @@ def edit_image_async(request, slug):
     }))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 def edit_image(request, slug):
@@ -370,6 +373,7 @@ def edit_image(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -401,6 +405,7 @@ def edit_links(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -435,6 +440,7 @@ def edit_links_edit(request, slug, link):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -450,6 +456,7 @@ def edit_links_delete(request, slug, link):
         reverse('projects_edit_links', kwargs=dict(slug=slug)))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 def edit_participants(request, slug):
@@ -486,6 +493,7 @@ def edit_participants(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 def matching_non_participants(request, slug):
@@ -502,6 +510,7 @@ def matching_non_participants(request, slug):
     return http.HttpResponse(json, mimetype="application/json")
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 def edit_participants_make_organizer(request, slug, username):
@@ -517,6 +526,7 @@ def edit_participants_make_organizer(request, slug, username):
         kwargs=dict(slug=participation.project.slug)))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -533,6 +543,7 @@ def edit_participants_delete(request, slug, username):
         kwargs={'slug': participation.project.slug}))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.CHALLENGE)
@@ -563,6 +574,7 @@ def edit_next_steps(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.CHALLENGE)
@@ -574,13 +586,14 @@ def matching_non_next_steps(request, slug):
     non_next_steps = Project.objects.exclude(
         slug=slug).exclude(
         id__in=project.next_projects.values('id'))
-    matching_steps = non_next_steps.filter(
+    matching_steps = non_next_steps.filter(deleted=False,
         slug__icontains=request.GET['term'])
     json = simplejson.dumps([step.slug for step in matching_steps])
 
     return http.HttpResponse(json, mimetype="application/json")
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 @restrict_project_kind(Project.CHALLENGE)
@@ -601,6 +614,7 @@ def edit_next_steps_delete(request, slug, step_slug):
         kwargs={'slug': project.slug}))
 
 
+@hide_deleted_projects
 @login_required
 @organizer_required
 def edit_status(request, slug):
@@ -628,6 +642,7 @@ def edit_status(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @can_view_metric_overview
 def admin_metrics(request, slug):
@@ -656,6 +671,7 @@ def admin_metrics(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @can_view_metric_detail
 def export_detailed_csv(request, slug):
@@ -824,6 +840,7 @@ def export_detailed_csv(request, slug):
     return response
 
 
+@hide_deleted_projects
 @login_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
 def contact_organizers(request, slug):
@@ -844,6 +861,7 @@ def contact_organizers(request, slug):
     }, context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 def task_list(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.category == Project.CHALLENGE:
@@ -858,6 +876,7 @@ def task_list(request, slug):
         context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 def discussion_area(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if project.category != Project.CHALLENGE:
@@ -866,6 +885,7 @@ def discussion_area(request, slug):
         return show(request, slug, False)
 
 
+@hide_deleted_projects
 def user_list(request, slug):
     """Display full list of users for the project."""
     project = get_object_or_404(Project, slug=slug)
@@ -880,6 +900,7 @@ def user_list(request, slug):
         context_instance=RequestContext(request))
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 @restrict_project_kind(Project.CHALLENGE)

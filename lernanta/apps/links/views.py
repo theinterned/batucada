@@ -6,10 +6,12 @@ from drumbeat import messages
 from users.decorators import login_required
 from projects.models import Project
 from projects.decorators import participation_required, restrict_project_kind
+from projects.decorators import hide_deleted_projects
 
 from links.models import Link
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)
@@ -35,6 +37,7 @@ def link_index_up(request, slug, counter):
     return http.HttpResponseRedirect(project.get_absolute_url() + '#links')
 
 
+@hide_deleted_projects
 @login_required
 @participation_required
 @restrict_project_kind(Project.STUDY_GROUP, Project.COURSE)

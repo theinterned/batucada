@@ -121,7 +121,7 @@ class ProjectActivityFeed(BaseActivityFeed):
 
     def get_object(self, request, slug):
         self._request = request
-        return get_object_or_404(Project, slug=slug)
+        return get_object_or_404(Project, slug=slug, deleted=False)
 
     def link(self, project):
         return reverse('projects_show', kwargs={'slug': project.slug})
