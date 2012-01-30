@@ -12,5 +12,19 @@
         "external":"en",
         "dictionary":"en",
         "native":"English"
+    },
+    "nl":{
+        "English":"Dutch",
+        "internal":"nl",
+        "external":"nl",
+        "dictionary":"nl",
+        "native":"Nederlands"
+    },
+    "sv":{
+        "English":"Swedish",
+        "internal":"sv",
+        "external":"sv",
+        "dictionary":"sv",
+        "native":"Svenska"
     }
 }

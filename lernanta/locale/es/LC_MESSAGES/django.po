@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 13:08-0500\n"
+"POT-Creation-Date: 2012-01-30 11:04-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1311,7 +1311,7 @@ msgstr "Cargando"
 
 #: templates/base.html:93 templates/drumbeatmail/base.html:52
 #: templates/projects/contact_organizers.html:49
-#: templates/users/profile_form_base.html:76
+#: templates/search/search.html:30 templates/users/profile_form_base.html:76
 msgid "en"
 msgstr "es"
 
@@ -1378,7 +1378,13 @@ msgid_plural ""
 "              %(counter)s Comments\n"
 "            "
 msgstr[0] ""
+"\n"
+"              %(counter)s Comentario\n"
+"            "
 msgstr[1] ""
+"\n"
+"              %(counter)s Comentarios\n"
+"            "
 
 #: templates/activity/base.html:4
 #: templates/schools/school_edit_statistics.html:23
@@ -1539,11 +1545,11 @@ msgid_plural ""
 "          "
 msgstr[0] ""
 "\n"
-"            %(counter)s revisión\n"
+"            %(counter)s Revisión\n"
 "          "
 msgstr[1] ""
 "\n"
-"            %(counter)s revisiones\n"
+"            %(counter)s Revisiones\n"
 "          "
 
 #: templates/badges/_submissions_list.html:6
