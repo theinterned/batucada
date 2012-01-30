@@ -36,3 +36,12 @@
 #user {
   min-width: 170px;
 }
+
+#language-nav {
+    width: 240px;
+    font-size: 10px;
+}
+
+#language-nav a {
+    margin-left: 2px;
+}

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-30 11:54-0500\n"
+"POT-Creation-Date: 2012-01-30 12:10-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Hèlen Grives <helengrives@hotmail.com>\n"
 "Language-Team: LANGUAGE <nl>\n"
@@ -1220,48 +1220,48 @@ msgstr ""
 msgid "Send us an email"
 msgstr "Stuur me een e-mail als..."
 
-#: templates/_footer.html:37
+#: templates/_footer.html:40
 msgid "(more)"
 msgstr "(meer)"
 
-#: templates/_footer.html:40
+#: templates/_footer.html:43
 msgid "CC BY SA"
 msgstr "CC REC/BY CI/SA"
 
-#: templates/_footer.html:43 templates/base.html:78 templates/base.html.py:84
+#: templates/_footer.html:46 templates/base.html:78 templates/base.html.py:84
 msgid "Help"
 msgstr "Help"
 
-#: templates/_footer.html:44
+#: templates/_footer.html:47
 msgid "About P2PU"
 msgstr "Over P2PU"
 
-#: templates/_footer.html:45
+#: templates/_footer.html:48
 msgid "FAQ"
 msgstr "FAQ"
 
-#: templates/_footer.html:46
+#: templates/_footer.html:49
 msgid "Announcements"
 msgstr "Aankondigingen"
 
-#: templates/_footer.html:47
+#: templates/_footer.html:50
 msgid "Wiki"
 msgstr "Wiki"
 
-#: templates/_footer.html:48
+#: templates/_footer.html:51
 msgid "Found a Bug?"
 msgstr "Een bug gevonden?"
 
-#: templates/_footer.html:51
+#: templates/_footer.html:54
 #, fuzzy
 msgid "Creative Commons Share-Alike"
 msgstr "Creative Commons REC/BY CI/SA"
 
-#: templates/_footer.html:52
+#: templates/_footer.html:55
 msgid "Privacy Guidelines"
 msgstr "Privacy richtlijnen"
 
-#: templates/_footer.html:53
+#: templates/_footer.html:56
 msgid "Terms of Use"
 msgstr "Gebruiksvoorwaarden"
 
@@ -2307,7 +2307,7 @@ msgstr "Bekijk groepen & cursussen"
 
 #: templates/dashboard/splash.html:19
 msgid "Start Your Own"
-msgstr "Start hier"
+msgstr "Start<br> hier"
 
 #: templates/dashboard/splash.html:22
 msgid ""
