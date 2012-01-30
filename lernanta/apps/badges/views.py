@@ -81,7 +81,7 @@ def show_badge(request, slug):
     awarded_user_ids = badge.awards.all().values('user_id')
     awarded_users = UserProfile.objects.filter(
         deleted=False, id__in=awarded_user_ids)
-    related_projects = badge.groups.all()
+    related_projects = badge.groups.filter(deleted=False)
     prerequisites = badge.prerequisites.all()
     other_badges_can_apply_for = badge.other_badges_can_apply_for()[:5]
     context = {
