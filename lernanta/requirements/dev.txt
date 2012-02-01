@@ -1,12 +1,12 @@
 -r prod.txt
 
-coverage==3.5
-docutils==0.7
-ipython==0.10.2
-nose==1.0.0
-jinja2==2.5.5  # only required for test-utils
+coverage==3.5.1
+docutils==0.8.1
+ipython==0.12
+nose==1.1.2
+jinja2==2.6
 pep8==0.6.1
-pyflakes==0.4.0
+pyflakes==0.5.0
 
 -e git://github.com/jbalogh/django-nose#egg=django-nose
 -e git://github.com/jbalogh/test-utils#egg=test-utils
