@@ -87,7 +87,7 @@ class CreateProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('username', 'full_name', 'newsletter', 'email')
+        fields = ('username', 'full_name', 'email', 'preflang')
         widgets = {
             'username': forms.TextInput(attrs={'autocomplete': 'off'}),
         }
@@ -116,9 +116,9 @@ class RegisterForm(forms.ModelForm):
     password_confirm = forms.CharField(
         max_length=128,
         widget=forms.PasswordInput(render_value=False))
-    newsletter = forms.BooleanField(required=False)
     preflang = forms.CharField(max_length=3,
-            widget=forms.Select(choices=settings.SUPPORTED_LANGUAGES))
+            widget=forms.Select(choices=settings.SUPPORTED_LANGUAGES),
+            initial=settings.LANGUAGE_CODE)
     recaptcha = captcha_fields.ReCaptchaField()
 
     class Meta:

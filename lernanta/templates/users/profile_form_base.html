@@ -35,15 +35,6 @@
           {{ form.preflang.errors }}
         </div>
         <br>
-        <div class="consents">
-          <div class="field inline_label{% if form.newsletter.errors %} error{% endif %}">
-            <label for="id_newsletter">
-              {{ form.newsletter }}
-              {{ _('Please sign me up for the P2PU newsletter.') }}
-            </label>
-            {{ form.newsletter.errors }}
-          </div>
-        </div>
         {% if settings.RECAPTCHA_PRIVATE_KEY %}
           <div class="field{% if form.recaptcha.errors %} error{% endif %}">
                <!-- Note: though recaptcha is localized the "Play sound again" and "Download sound as MP3" are in English -->

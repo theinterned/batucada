@@ -286,7 +286,6 @@ def register(request):
             user.generate_confirmation_code()
             user.full_name = form.cleaned_data['full_name']
             user.preflang = form.cleaned_data['preflang']
-            user.newsletter = form.cleaned_data['newsletter']
             user.save()
 
             log.info(u"Registered new account for user (%s)", user)
