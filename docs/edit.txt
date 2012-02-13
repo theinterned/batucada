@@ -1,0 +1,3 @@
+For beginners:
+Edit this file in your local fork of Lernanta.
+Use Git Gui and scan for changes to see how it works.
