@@ -9,10 +9,9 @@ from replies.models import PageComment
 from users.models import UserProfile
 from l10n import locales
 from content.models import Page
+from schools.models import School, ProjectSet
 
 # INPUT
-# url (prefixes starting in / and without locale part)
-TRACKED_URLS_PATH = 'tracked_urls.csv'
 # group (slug or shortname of groups, courses, challenges)
 GROUPS_PATH = 'groups.csv'
 
@@ -43,19 +42,39 @@ def read_csv(path):
     return data
 
 
-def generate_csv_files():
-    tracked_urls = [r[0] for r in read_csv(TRACKED_URLS_PATH)]
-    pages_filter = None
-    for url in tracked_urls:
-        if pages_filter:
-            pages_filter |= Q(request_url__startswith=url)
+def get_page_filters(projects):
+    tracked_urls = set()
+    tracked_url_prefixes = set()
+    for project in projects:
+        tracked_url_prefixes.add(project.get_absolute_url())
+        if project.school:
+            tracked_urls.add(project.school.get_absolute_url())
+        for projectset in project.projectsets.all():
+            tracked_urls.add(projectset.get_absolute_url())
+    page_filters = None
+    for prefix in tracked_url_prefixes:
+        if page_filters:
+            page_filters |= Q(request_url__startswith=prefix)
         else:
-            pages_filter = Q(request_url__startswith=url)
+            page_filters = Q(request_url__startswith=prefix)
+        for k in locales.LOCALES:
+            prefix_with_locale = '/%s%s' % (locales.LOCALES[k].external, prefix)
+            page_filters |= Q(request_url__startswith=prefix_with_locale)
+    for url in tracked_urls:
+        page_filters |= Q(request_url=url)
         for k in locales.LOCALES:
             url_with_locale = '/%s%s' % (locales.LOCALES[k].external, url)
-            pages_filter |= Q(request_url__startswith=url_with_locale)
+            page_filters |= Q(request_url=url_with_locale)
+    return page_filters
+
+
+def generate_csv_files():
+    groups_slugs = [r[0] for r in read_csv(GROUPS_PATH)]
+    projects = Project.objects.filter(slug__in=groups_slugs)
+    page_filters = get_page_filters(projects)
+    projects = projects.values('id')
     with open(VISITS_PATH, 'w') as f:
-        for pageview in PageView.objects.filter(pages_filter).distinct():
+        for pageview in PageView.objects.filter(page_filters).distinct():
             if pageview.user:
                 f.write('%s,%s,%s,%s\n' % (pageview.request_url, pageview.access_time, pageview.ip_address, 'user%s' % pageview.user.id))
             else:
