@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from projects.models import Project, Participation, PerUserTaskCompletion
 from tracker.models import PageView
-from badges.models import Badge, Award, Assessment
+from badges.models import Badge, Award, Assessment, Submission
 from statuses.models import Status
 from replies.models import PageComment
 from users.models import UserProfile
@@ -30,6 +30,8 @@ BADGES_GROUPS_PATH = 'badges_groups_data.csv'
 AWARDS_PATH = 'awards_data.csv'
 # type, badge, userid (assessor), submission (yes or no), date
 ASSESSMENTS_PATH = 'assessments_data.csv'
+# type, badge, userid, date
+SUBMISSIONS_PATH = 'submissions_data.csv'
 # group, task, userid, date
 COMMENTS_PATH = 'comments_data.csv'
 
@@ -106,6 +108,9 @@ def generate_csv_files():
         for assessment in Assessment.objects.filter(badge__groups__in=projects).distinct():
             f.write('%s,%s,%s,%s,%s\n' % (assessment.badge.logic, assessment.badge.slug, 'user%s' % assessment.assessor.id,
                 'yes' if assessment.submission else 'no', assessment.created_on))
+    with open(SUBMISSIONS_PATH, 'w') as f:
+        for sub in Submission.objects.filter(badge__groups__in=projects).distinct():
+            f.write('%s,%s,%s,%s\n' % (sub.badge.logic, sub.badge.slug, 'user%s' % sub.author.id, sub.created_on))
     with open(COMMENTS_PATH, 'w') as f:
         project_ct = ContentType.objects.get_for_model(Project)
         status_ct = ContentType.objects.get_for_model(Status)
@@ -121,7 +126,7 @@ def generate_csv_files():
 
 def test_generated_csv_files():
     for path in [VISITS_PATH, PARTICIPATIONS_PATH, TASKS_PATH, TASKS_COMPLETION_PATH,
-           BADGES_GROUPS_PATH, AWARDS_PATH, ASSESSMENTS_PATH, COMMENTS_PATH]:
+           BADGES_GROUPS_PATH, AWARDS_PATH, ASSESSMENTS_PATH, SUBMISSIONS_PATH, COMMENTS_PATH]:
         data = read_csv(path)
         print path, len(data), len(set(data)), '-'*10, data[0]
 
