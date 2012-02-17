@@ -882,7 +882,7 @@ def discussion_area(request, slug):
     if project.category != Project.CHALLENGE:
         return http.HttpResponseRedirect(project.get_absolute_url())
     else:
-        return show(request, slug, False)
+        return show(request, slug=slug, toggled_tasks=False)
 
 
 @hide_deleted_projects
