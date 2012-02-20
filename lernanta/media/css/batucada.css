@@ -3154,11 +3154,11 @@ ul.ui-autocomplete #ui-active-menuitem {
     #task_list_section .up {
 	   right: 240px;
     }
-/*
+
     .project-kind-challenge #task_list_section .up {
 	   right: 180px;
     }
-*/
+
 	#content-pages .dwn,
 	#project-links .dwn,
 	#member_links .dwn,
@@ -3171,11 +3171,11 @@ ul.ui-autocomplete #ui-active-menuitem {
     #task_list_section .dwn {
 	   right: 260px;
 	}
-/*
+
     .project-kind-challenge #task_list_section .dwn {
 	   right: 200px;
 	}
-*/
+
 	#content-pages .up:hover, 
 	#project-links .up:hover,
 	#member_links .up:hover,
