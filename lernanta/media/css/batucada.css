@@ -252,6 +252,51 @@ input[type=submit]:active,
     margin-top: 0px !important
 }
 
+.project-kind-challenge #sidebar .duration-time {
+  background: #f9f9f9;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f1f1f1), to(#d9d9d9));
+  /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: -moz-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: -o-linear-gradient(top, #f1f1f1, #d9d9d9);
+  background-image: linear-gradient(top, #f1f1f1, #d9d9d9);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  padding: 10px 10px 10px 20px;
+  float: left;
+  width: 209px;
+  height: 32px;
+  margin-bottom: 20px;
+  text-shadow: #fff 1px 1px 0;
+  -moz-text-shadow: #fff 1px 1px 0px;
+  -webkit-text-shadow: #fff 1px 1px 0px;
+}
+
+.project-kind-challenge #sidebar .duration-time .left {
+  font-family: 'WebSymbolsRegular';
+  font-size: 34px;
+  float: left;
+  line-height: 32px;
+  width: 30px;
+}
+
+.project-kind-challenge #sidebar .duration-time .right {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 20px;
+  float: left;
+  margin-top: -10px;
+}
+
+.project-kind-challenge #sidebar .duration-time .right .top {
+  font-size: 10px;
+  font-weight: normal;
+}
+
 .project-kind-challenge #sidebar button#direct_signup_button,
 .project-kind-challenge #sidebar a#direct_signup_button,
 .badge-show .badge-call-to-action-button {
