@@ -44,7 +44,7 @@
     {% if project %}
 	<li class="summary {% if summary_tab %}active{% endif %}"><a href="{% locale_url projects_edit slug=project.slug %}">{{ _('Summary') }}</a></li>
 	<li class="image {% if image_tab %}active{% endif %}"><a href="{% locale_url projects_edit_image slug=project.slug %}">{{ _('Image') }}</a></li>
-	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{{ _('Status')}}{% if not is_challenge %}{{ _(' &amp; Dates') }}{% endif %}</a></li>
+	<li class="status {% if status_tab %}active{% endif %}"><a href="{% locale_url projects_edit_status slug=project.slug %}">{% if is_challenge %}{{ _('Status &amp; Duration')}}{% else %}{{ _('Status &amp; Dates') }}{% endif %}</a></li>
     {% if not is_challenge %}<li class="status {% if signup_tab %}active{% endif %}"><a href="{% locale_url edit_signup slug=project.slug %}">{{ _('Signup') }}</a></li>{% endif %}
 	<li class="participants {% if participants_tab %}active{% endif %}"><a href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Participants') }}</a></li>
     {% if is_challenge %}<li class="next_steps {% if next_steps_tab %}active{% endif %}"><a href="{% locale_url projects_edit_next_steps slug=project.slug %}">{{ _('Associated Courses') }}</a></li>{% endif %}

@@ -115,6 +115,8 @@ class Project(ModelBase):
 
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    duration_hours = models.PositiveIntegerField(default=0, blank=True)
+    duration_minutes = models.PositiveIntegerField(default=0, blank=True)
 
     school = models.ForeignKey('schools.School', related_name='projects',
         null=True, blank=True)
