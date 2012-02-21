@@ -27,8 +27,12 @@
     {{ form.long_description }}
     {{ form.long_description.errors }}
   </div>
-  
-  {% if not is_challenge %}
+
+  <div class="field{% if form.language.errors %} error{% endif %}">
+    <label for="id_language">{{ _('Language') }}</label>
+    {{ form.language }}
+    {{ form.language.errors }}
+  </div>
 
   <div class="field{% if form.tags.errors %} error{% endif %}">
     <label for="id_tags">{{ _('Tags') }}</label>
@@ -37,7 +41,6 @@
     {{ form.tags.errors }}
   </div>
 
-  {% endif %}
   <div class="field{% if form.category.errors %} error{% endif %}">
     <label for="id_category">{{ _('Type') }}</label>
     <span class="hint block">{{ _('What kind of learning environment do you want to create?') }}</span>
