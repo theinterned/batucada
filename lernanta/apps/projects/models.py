@@ -106,6 +106,8 @@ class Project(ModelBase):
         default=STUDY_GROUP, null=True, blank=False)
 
     tags = TaggableManager(through=GeneralTaggedItem, blank=True)
+    language = models.CharField(max_length=16, choices=settings.LANGUAGES,
+        default=settings.LANGUAGE_CODE)
 
     other = models.CharField(max_length=30, blank=True, null=True)
     other_description = models.CharField(max_length=150, blank=True, null=True)
