@@ -423,6 +423,22 @@ class Project(ModelBase):
         else:
             return Project.objects.none()
 
+    @classmethod
+    def get_popular_tags(cls, max_count=7):
+        ct = ContentType.objects.get_for_model(Project)
+        return GeneralTaggedItem.objects.filter(
+            content_type=ct).values('tag__name').annotate(
+            Count('object_id')).order_by(
+            '-object_id__count')[:max_count]
+
+    @classmethod
+    def get_tagged_projects(self, tag_name):
+        ct = ContentType.objects.get_for_model(Project)
+        items = GeneralTaggedItem.objects.filter(
+            content_type=ct, tag__name=tag_name).values(
+            'object_id')
+        return Project.objects.filter(id__in=items)
+
     @staticmethod
     def filter_activities(activities):
         from statuses.models import Status
