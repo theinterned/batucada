@@ -130,7 +130,10 @@ class Project(ModelBase):
                               storage=storage.ImageStorage(), blank=True)
 
     slug = models.SlugField(unique=True, max_length=110)
-    featured = models.BooleanField(default=False)
+
+    featured = models.BooleanField(default=False, verbose_name='staff favourite')
+    community_featured = models.BooleanField(default=False, verbose_name='community pick')
+
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
 
