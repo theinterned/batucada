@@ -13,7 +13,7 @@ var createPostTextArea = function() {
             counter.removeClass('danger');
             counter.addClass('warning');
             removeDisabledAttr();
-        } else if (count === max) {
+        } else if (count == max) {
             counter.removeClass('danger');
             counter.removeClass('warning');
             disableFields();
