@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-24 16:56-0500\n"
+"POT-Creation-Date: 2012-02-24 17:45-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Hèlen Grives <helengrives@hotmail.com>\n"
 "Language-Team: LANGUAGE <nl>\n"
@@ -4252,12 +4252,13 @@ msgstr ""
 "je computer:"
 
 #: templates/users/_profile_edit_image.html:13
+#, fuzzy
 msgid ""
-"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
-"pixels"
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"240x240 pixels"
 msgstr ""
-"Bestandstypen: JPG, GIF of PNG unicamente<br/> Max grootte: 700k <br/> "
-"Afmetingen: 57x57 pixels"
+"Bestandsformaten: alleen JPG, GIF of PNG <br/> Max grootte: 700k <br/> "
+"Afmetingen: 20x60 pixels"
 
 #: templates/users/_profile_info.html:6
 #, fuzzy
@@ -4683,6 +4684,13 @@ msgstr "Bedankt!"
 #, fuzzy
 msgid "[P2PU] Complete Registration!"
 msgstr "Registratie compleet"
+
+#~ msgid ""
+#~ "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+#~ "57x57 pixels"
+#~ msgstr ""
+#~ "Bestandstypen: JPG, GIF of PNG unicamente<br/> Max grootte: 700k <br/> "
+#~ "Afmetingen: 57x57 pixels"
 
 #, fuzzy
 #~ msgid "Status"
