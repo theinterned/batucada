@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-24 16:56-0500\n"
+"POT-Creation-Date: 2012-02-24 17:45-0500\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Vladimir Támara Patiño <vtamara@pasosdeJesus.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -407,9 +407,9 @@ msgid "You aren't authorized to view the statistics' overview."
 msgstr "No está autorizado a ver el resumen de las estadísticas."
 
 #: apps/projects/decorators.py:104
-#, fuzzy, python-format
+#, python-format
 msgid "This %s was deleted."
-msgstr "Esta tarea fue eliminada."
+msgstr "Este %s fue eliminado."
 
 #: apps/projects/forms.py:69 apps/schools/forms.py:36 apps/schools/forms.py:50
 #: apps/schools/forms.py:64 apps/schools/forms.py:78 apps/users/forms.py:250
@@ -2857,9 +2857,8 @@ msgstr "Imagen"
 
 #: templates/projects/project_edit.html:47
 #: templates/projects/project_edit_status.html:10
-#, fuzzy
 msgid "Status &amp; Duration"
-msgstr "Estado y Fechas"
+msgstr "Estado y Duración"
 
 #: templates/projects/project_edit.html:47
 #: templates/projects/project_edit_status.html:12
@@ -3114,16 +3113,15 @@ msgstr "Archivado."
 #: templates/projects/project_edit_status.html:42
 #, python-format
 msgid "Optionally, provide the time it should take to complete the %(kind)s."
-msgstr ""
+msgstr "Opcionalmente, de el tiempo que debería tomar completar el %(kind)s."
 
 #: templates/projects/project_edit_status.html:45
-#, fuzzy
 msgid "Hours"
-msgstr "Curso"
+msgstr "Horas"
 
 #: templates/projects/project_edit_status.html:51
 msgid "Minutes"
-msgstr ""
+msgstr "Minutos"
 
 #: templates/projects/project_edit_status.html:59
 #, python-format
@@ -3141,14 +3139,11 @@ msgstr "Activo desde el"
 
 #: templates/projects/project_edit_summary.html:13
 msgid "Short and descriptive works best."
-msgstr ""
+msgstr "Breve y descriptivo funciona mejor."
 
 #: templates/projects/project_edit_summary.html:19
-#, fuzzy
 msgid "Used in search results and listings."
-msgstr ""
-"Esta imagen se presenta en los resultados de búsquedas y en las páginas con "
-"listados"
+msgstr "Usado en resultados de búsquedas y en páginas con listados"
 
 #: templates/projects/project_edit_summary.html:25
 msgid "One paragraph description"
@@ -3157,29 +3152,27 @@ msgstr "Un párrafo de descripción"
 #: templates/projects/project_edit_summary.html:26
 msgid ""
 "What's this about? What will I learn? Tell me more, but keep it to the point."
-msgstr ""
+msgstr "¿Sobre que trata? ¿Qué voy a aprender? Diga más, pero vaya al grano."
 
 #: templates/projects/project_edit_summary.html:32
-#, fuzzy
 msgid "Language"
-msgstr "Idioma Preferido"
+msgstr "Idioma"
 
 #: templates/projects/project_edit_summary.html:39
 msgid "Comma-separated list of keywords."
-msgstr ""
+msgstr "Lista de palabras clave separadas por comas."
 
 #: templates/projects/project_edit_summary.html:45
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: templates/projects/project_edit_summary.html:46
-#, fuzzy
 msgid "What kind of learning environment do you want to create?"
-msgstr "¿Qué tipo de contenido desea crear?"
+msgstr "¿Qué tipo de entorno de aprendizaje desea crear?"
 
 #: templates/projects/project_edit_summary.html:50
 msgid "Or make up your own term."
-msgstr ""
+msgstr "O cree su propio término."
 
 #: templates/projects/project_edit_summary.html:52
 msgid "Term"
@@ -3220,16 +3213,15 @@ msgstr "Participar"
 
 #: templates/projects/sidebar.html:57
 msgid "Time it should take to complete:"
-msgstr ""
+msgstr "Tiempo que debería tomar en completar:"
 
 #: templates/projects/sidebar.html:57
 msgid "hrs"
-msgstr ""
+msgstr "h"
 
 #: templates/projects/sidebar.html:57
-#, fuzzy
 msgid "min"
-msgstr "en"
+msgstr "m"
 
 #: templates/projects/sidebar.html:66 templates/projects/sidebar.html.py:69
 msgid "Start Challenge"
@@ -3288,9 +3280,8 @@ msgid "Edit Participants"
 msgstr "Editar Participantes"
 
 #: templates/projects/sidebar.html:212
-#, fuzzy
 msgid "Contact Organizer(s)"
-msgstr "Contactar Organizador"
+msgstr "Contactar Organizador(es)"
 
 #: templates/projects/sidebar.html:215
 msgid "Contact Organizer"
@@ -4244,11 +4235,11 @@ msgstr ""
 
 #: templates/users/_profile_edit_image.html:13
 msgid ""
-"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
-"pixels"
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"240x240 pixels"
 msgstr ""
 "Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
-"Dimensiones: 57x57 pixels"
+"Dimensiones: 240x240 pixels"
 
 #: templates/users/_profile_info.html:6
 msgid "Followings"
@@ -4673,47 +4664,9 @@ msgstr "Gracias!"
 msgid "[P2PU] Complete Registration!"
 msgstr "[P2PU] Termine de Crear su Cuenta."
 
-#~ msgid "Status"
-#~ msgstr "Estado"
-
-#~ msgid " &amp; Dates"
-#~ msgstr " y Fechas"
-
 #~ msgid ""
-#~ "A good name is short and descriptive. People should know what your study "
-#~ "group, course, ... is about without reading the description."
+#~ "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+#~ "57x57 pixels"
 #~ msgstr ""
-#~ "Un buen nombre es corto y descriptivo. La gente debería saber sobre que "
-#~ "es su grupo de estudio, curso, ... sin leer la descripción."
-
-#~ msgid "This description will be used on search results and listing pages."
-#~ msgstr ""
-#~ "Esta descripción se usará en resultados de búsquedas y en páginas con "
-#~ "listados."
-
-#~ msgid ""
-#~ "This description is shown on home page of the study group, course, ... It "
-#~ "can go into a bit more detail, but it should be brief and to the point."
-#~ msgstr ""
-#~ "Esta descripción se muestra en la página del grupo de estudio, "
-#~ "curso, ...  Puede ser más detallada, pero debe ser breve e ir al grano."
-
-#~ msgid ""
-#~ "Please describe this study group, course, ... by providing a comma-"
-#~ "separated list of tags."
-#~ msgstr ""
-#~ "Por favor, describa este grupo de estudio, curso, ... mediante una lista "
-#~ "de etiquetas separadas por comas."
-
-#~ msgid "Select if you are creating a study group, course, or challenge."
-#~ msgstr "Indique si esta creando un grupo de estudio, curso, o reto."
-
-#~ msgid ""
-#~ "Optionally provide a term more specific than study group, course, or "
-#~ "challenge, and the corresponding description."
-#~ msgstr ""
-#~ "Opcionalmente proporcione un término más específico que grupo de estudio, "
-#~ "curso o reto, y la descripción correspondiente."
-
-#~ msgid "Please sign me up for the P2PU newsletter."
-#~ msgstr "Por favor suscríbame al boletín de P2PU."
+#~ "Tipos de archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/"
+#~ "> Dimensiones: 57x57 pixels"

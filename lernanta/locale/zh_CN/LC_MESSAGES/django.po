@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-24 16:56-0500\n"
+"POT-Creation-Date: 2012-02-24 17:45-0500\n"
 "PO-Revision-Date: 2012-01-02 11:34+0800\n"
 "Last-Translator: 谢昱 <emiliaxie@qq.com>\n"
 "Language-Team: LANGUAGE &lt;LL@li.org&gt;\n"
@@ -1239,7 +1239,7 @@ msgstr "向所有人学习任何知识。"
 
 #: templates/base.html:28
 msgid "css/style-en.css"
-msgstr ""
+msgstr "css/style-zh-CN.css"
 
 #: templates/base.html:47 templates/activity/base.html:17
 #: templates/projects/base.html:18 templates/projects/directory.html:4
@@ -1298,7 +1298,7 @@ msgstr "正在下载"
 #: templates/projects/contact_organizers.html:49
 #: templates/search/search.html:30 templates/users/profile_form_base.html:67
 msgid "en"
-msgstr ""
+msgstr "zn-CN"
 
 #: templates/base.html:112
 msgid "Home"
@@ -1306,11 +1306,11 @@ msgstr "主页"
 
 #: templates/base.html:152
 msgid "jquery.ui.datepicker-en.js"
-msgstr ""
+msgstr "jquery.ui.datepicker-zn-CN.js"
 
 #: templates/base.html:154
 msgid "js/script-en.js"
-msgstr ""
+msgstr "js/script-zn-CN.js"
 
 #: templates/activity/_activity_resource.html:11
 #: templates/content/page.html:44 templates/drumbeat/report_abuse.html:10
@@ -2444,7 +2444,7 @@ msgstr ""
 
 #: templates/messages/inbox.html:29
 msgid "DATETIME_FORMAT"
-msgstr ""
+msgstr "N j, Y, P"
 
 #: templates/messages/inbox.html:32
 msgid "delete"
@@ -3213,7 +3213,7 @@ msgstr ""
 
 #: templates/projects/sidebar.html:142
 msgid "DATE_FORMAT"
-msgstr ""
+msgstr "N j, Y"
 
 #: templates/projects/sidebar.html:144
 msgid "Runs"
@@ -4137,8 +4137,8 @@ msgstr "通过上传电脑中的照片来创建个性头像"
 #: templates/users/_profile_edit_image.html:13
 #, fuzzy
 msgid ""
-"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
-"pixels"
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"240x240 pixels"
 msgstr ""
 "文件类型：JPG,GIF或者PNG&lt;br/&gt;。最大不超过700K &lt;br/&gt;,最小不小于"
 "57x57 像素"
@@ -4538,6 +4538,14 @@ msgstr "谢谢！"
 #: templates/users/emails/registration_confirm_subject.txt:2
 msgid "[P2PU] Complete Registration!"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+#~ "57x57 pixels"
+#~ msgstr ""
+#~ "文件类型：JPG,GIF或者PNG&lt;br/&gt;。最大不超过700K &lt;br/&gt;,最小不小于"
+#~ "57x57 像素"
 
 #~ msgid "Self assessment -- able to get the badge without outside assessment"
 #~ msgstr "自我评估--不需外部评估而获得勋章。"

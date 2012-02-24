@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-24 16:56-0500\n"
+"POT-Creation-Date: 2012-02-24 17:45-0500\n"
 "PO-Revision-Date: 2012-02-13 00:38+0100\n"
 "Last-Translator: Leo Larsson <friutbildning@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4198,12 +4198,13 @@ msgstr ""
 "Gör din profilbild personlig genom att ladda upp en bildfil från din dator:"
 
 #: templates/users/_profile_edit_image.html:13
+#, fuzzy
 msgid ""
-"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 57x57 "
-"pixels"
+"File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+"240x240 pixels"
 msgstr ""
 "Filtyper: endast JPG, GIF eller PNG<br/>Maximal storlek: 700k<br/>Mått: "
-"57x57 pixlar"
+"20x60 pixlar"
 
 #: templates/users/_profile_info.html:6
 msgid "Followings"
@@ -4624,6 +4625,13 @@ msgstr "Tack!"
 #: templates/users/emails/registration_confirm_subject.txt:2
 msgid "[P2PU] Complete Registration!"
 msgstr "[P2PU] Slutför registrering!"
+
+#~ msgid ""
+#~ "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
+#~ "57x57 pixels"
+#~ msgstr ""
+#~ "Filtyper: endast JPG, GIF eller PNG<br/>Maximal storlek: 700k<br/>Mått: "
+#~ "57x57 pixlar"
 
 #~ msgid "Status"
 #~ msgstr "Status"
