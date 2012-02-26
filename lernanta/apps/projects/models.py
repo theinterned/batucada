@@ -151,7 +151,7 @@ class Project(ModelBase):
         null=True)
     # Stealth Badges awarded upon completion of all tasks.
     completion_badges = models.ManyToManyField('badges.Badge',
-        null=True, blank=False, related_name='projects_completion')
+        null=True, blank=True, related_name='projects_completion')
 
     deleted = models.BooleanField(default=False)
 
@@ -441,6 +441,9 @@ class Project(ModelBase):
             content_type=ct, tag__name=tag_name).values(
             'object_id')
         return Project.objects.filter(id__in=items)
+
+    def is_challenge(self):
+        return (self.category == Project.CHALLENGE)
 
     @staticmethod
     def filter_activities(activities):
