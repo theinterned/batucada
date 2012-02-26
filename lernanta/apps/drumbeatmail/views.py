@@ -173,7 +173,7 @@ def reply(request, message):
     if message.recipient != request.user:
         return http.HttpResponseForbidden(_("Can't send email"))
     if request.method == 'POST':
-        form = forms.ComposeForm(data=request.POST,
+        form = forms.ComposeReplyForm(data=request.POST,
                                  sender=request.user.get_profile())
         if form.is_valid():
             form.save(sender=request.user)
@@ -187,7 +187,7 @@ def reply(request, message):
             subject = 'Re: %s' % (message.subject,)
         else:
             subject = message.subject
-        form = forms.ComposeForm(initial={
+        form = forms.ComposeReplyForm(initial={
             'recipient': message.sender.get_profile().username,
             'subject': subject,
         })
