@@ -27,8 +27,13 @@
       <dt>{{ _('Participants') }}</dt>
     </dl>
     <dl class="followers">
-      <dd>{{ project.non_participant_followers.count }}</dd>
-      <dt>{{ _('Followers') }}</dt>
+      {% if project.is_challenge %}
+        <dd>{{ project.badges.count }}</dd>
+        <dt>{{ _('Badges') }}</dt>
+      {% else %}
+        <dd>{{ project.non_participant_followers.count }}</dd>
+        <dt>{{ _('Followers') }}</dt>
+      {% endif %}
     </dl>
   </div>
 </article>

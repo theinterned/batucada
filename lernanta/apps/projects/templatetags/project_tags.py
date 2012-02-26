@@ -110,6 +110,7 @@ def project_list(school=None, only_featured=False, limit=8):
         open_signup_ids = Signup.objects.exclude(
             status=Signup.CLOSED).values('project')
         open_signup = listed.filter(id__in=open_signup_ids)
+        challenges_open_signup = listed.filter(category=Project.CHALLENGE)
         under_development = Project.objects.filter(under_development=True,
             not_listed=False, archived=False, deleted=False)
         archived = Project.objects.filter(not_listed=False,
@@ -117,6 +118,7 @@ def project_list(school=None, only_featured=False, limit=8):
         if school:
             new_groups = new_groups.filter(school=school)
             open_signup = open_signup.filter(school=school)
+            challenges_open_signup = challenges_open_signup.filter(school=school)
             under_development = under_development.filter(school=school)
             archived = archived.filter(school=school)
         if limit:
@@ -125,7 +127,7 @@ def project_list(school=None, only_featured=False, limit=8):
             under_development = under_development[:limit]
         context.update({'active': active, 'popular': popular,
             'new_groups': new_groups, 'open_signup': open_signup,
-            'under_development': under_development,
+            'challenges_open_signup': challenges_open_signup, 'under_development': under_development,
             'archived': archived})
     return context
 
