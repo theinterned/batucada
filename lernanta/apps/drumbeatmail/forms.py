@@ -19,3 +19,11 @@ class ComposeForm(MessagesComposeForm):
         super(ComposeForm, self).__init__(*args, **kwargs)
         if not settings.RECAPTCHA_PRIVATE_KEY:
             del self.fields['recaptcha']
+
+
+class ComposeReplyForm(MessagesComposeForm):
+    recipient = UserField()
+
+    def __init__(self, sender=None, *args, **kwargs):
+        self.sender = sender
+        super(ComposeReplyForm, self).__init__(*args, **kwargs)

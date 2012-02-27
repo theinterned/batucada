@@ -29,6 +29,9 @@
     {% for project in open_signup %}
       <li>{% include "projects/_project_card.html" %}</li>
     {% endfor %}
+    {% for project in challenges_open_signup %}
+      <li>{% include "projects/_project_card.html" %}</li>
+    {% endfor %}
   </ul>
 </section>
 {% endif %}
