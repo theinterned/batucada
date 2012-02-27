@@ -435,12 +435,21 @@ class Project(ModelBase):
             '-object_id__count')[:max_count]
 
     @classmethod
-    def get_tagged_projects(self, tag_name):
+    def get_matching_tags(cls, term):
+        ct = ContentType.objects.get_for_model(Project)
+        return GeneralTaggedItem.objects.filter(
+            content_type=ct, tag__name__icontains=term).values_list(
+            'tag__name', flat=True).distinct()
+
+    @classmethod
+    def get_tagged_projects(self, tag_name, projects=None):
         ct = ContentType.objects.get_for_model(Project)
         items = GeneralTaggedItem.objects.filter(
             content_type=ct, tag__name=tag_name).values(
             'object_id')
-        return Project.objects.filter(id__in=items)
+        if projects == None:
+            project = Project.objects
+        return projects.filter(id__in=items)
 
     @staticmethod
     def filter_activities(activities):
