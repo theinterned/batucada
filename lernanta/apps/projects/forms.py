@@ -192,3 +192,8 @@ class ImportProjectForm(forms.Form):
             raise forms.ValidationError(
                 _('There is no course with this short name on the archive.'))
         return course
+
+class ProjectsTagSearch(forms.Form):
+    tag = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': _('Search Tags')}))
+
