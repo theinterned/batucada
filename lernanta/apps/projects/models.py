@@ -106,6 +106,8 @@ class Project(ModelBase):
         default=STUDY_GROUP, null=True, blank=False)
 
     tags = TaggableManager(through=GeneralTaggedItem, blank=True)
+    language = models.CharField(max_length=16, choices=settings.LANGUAGES,
+        default=settings.LANGUAGE_CODE)
 
     other = models.CharField(max_length=30, blank=True, null=True)
     other_description = models.CharField(max_length=150, blank=True, null=True)
@@ -115,6 +117,8 @@ class Project(ModelBase):
 
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    duration_hours = models.PositiveIntegerField(default=0, blank=True)
+    duration_minutes = models.PositiveIntegerField(default=0, blank=True)
 
     school = models.ForeignKey('schools.School', related_name='projects',
         null=True, blank=True)
@@ -126,7 +130,10 @@ class Project(ModelBase):
                               storage=storage.ImageStorage(), blank=True)
 
     slug = models.SlugField(unique=True, max_length=110)
-    featured = models.BooleanField(default=False)
+
+    featured = models.BooleanField(default=False, verbose_name='staff favourite')
+    community_featured = models.BooleanField(default=False, verbose_name='community pick')
+
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
 
@@ -144,7 +151,7 @@ class Project(ModelBase):
         null=True)
     # Stealth Badges awarded upon completion of all tasks.
     completion_badges = models.ManyToManyField('badges.Badge',
-        null=True, blank=False, related_name='projects_completion')
+        null=True, blank=True, related_name='projects_completion')
 
     deleted = models.BooleanField(default=False)
 
@@ -418,6 +425,34 @@ class Project(ModelBase):
                 id__in=joined)
         else:
             return Project.objects.none()
+
+    @classmethod
+    def get_popular_tags(cls, max_count=7):
+        ct = ContentType.objects.get_for_model(Project)
+        return GeneralTaggedItem.objects.filter(
+            content_type=ct).values('tag__name').annotate(
+            Count('object_id')).order_by(
+            '-object_id__count')[:max_count]
+
+    @classmethod
+    def get_matching_tags(cls, term):
+        ct = ContentType.objects.get_for_model(Project)
+        return GeneralTaggedItem.objects.filter(
+            content_type=ct, tag__name__icontains=term).values_list(
+            'tag__name', flat=True).distinct()
+
+    @classmethod
+    def get_tagged_projects(self, tag_name, projects=None):
+        ct = ContentType.objects.get_for_model(Project)
+        items = GeneralTaggedItem.objects.filter(
+            content_type=ct, tag__name=tag_name).values(
+            'object_id')
+        if projects == None:
+            project = Project.objects
+        return projects.filter(id__in=items)
+
+    def is_challenge(self):
+        return (self.category == Project.CHALLENGE)
 
     @staticmethod
     def filter_activities(activities):

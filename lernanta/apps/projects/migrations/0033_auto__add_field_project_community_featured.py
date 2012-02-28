@@ -6,25 +6,16 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    depends_on = (
-        ("badges", "0002_auto__add_badge"),
-    )
-
     def forwards(self, orm):
         
-        # Adding M2M table for field completion_badges on 'Project'
-        db.create_table('projects_project_completion_badges', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('project', models.ForeignKey(orm['projects.project'], null=False)),
-            ('badge', models.ForeignKey(orm['badges.badge'], null=False))
-        ))
-        db.create_unique('projects_project_completion_badges', ['project_id', 'badge_id'])
+        # Adding field 'Project.community_featured'
+        db.add_column('projects_project', 'community_featured', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Removing M2M table for field completion_badges on 'Project'
-        db.delete_table('projects_project_completion_badges')
+        # Deleting field 'Project.community_featured'
+        db.delete_column('projects_project', 'community_featured')
 
 
     models = {
@@ -59,28 +50,27 @@ class Migration(SchemaMigration):
         },
         'badges.badge': {
             'Meta': {'object_name': 'Badge'},
-            'assessment_type': ('django.db.models.fields.CharField', [], {'default': "'self'", 'max_length': '30', 'null': 'True'}),
-            'badge_type': ('django.db.models.fields.CharField', [], {'default': "'completion/aggregate'", 'max_length': '30', 'null': 'True'}),
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'badges'", 'null': 'True', 'to': "orm['users.UserProfile']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '225'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'badges'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['projects.Project']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'default': "''", 'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'logic': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'badges'", 'null': 'True', 'to': "orm['badges.Logic']"}),
+            'logic': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'badges'", 'to': "orm['badges.Logic']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '225'}),
             'prerequisites': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['badges.Badge']", 'null': 'True', 'blank': 'True'}),
             'requirements': ('richtext.models.RichTextField', [], {'null': 'True', 'blank': 'True'}),
             'rubrics': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'badges'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['badges.Rubric']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '110', 'db_index': 'True'}),
-            'unique': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '110', 'db_index': 'True'})
         },
         'badges.logic': {
             'Meta': {'object_name': 'Logic'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'min_avg_rating': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'min_votes': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'submission_style': ('django.db.models.fields.CharField', [], {'default': "'no_submissions'", 'max_length': '30'}),
+            'unique': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'badges.rubric': {
             'Meta': {'object_name': 'Rubric'},
@@ -139,14 +129,19 @@ class Migration(SchemaMigration):
             'archived': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'category': ('django.db.models.fields.CharField', [], {'default': "'study group'", 'max_length': '30', 'null': 'True'}),
             'clone_of': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'derivated_projects'", 'null': 'True', 'to': "orm['projects.Project']"}),
+            'community_featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'completion_badges': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'projects_completion'", 'null': 'True', 'to': "orm['badges.Badge']"}),
             'created_on': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'detailed_description': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'desc_project'", 'null': 'True', 'to': "orm['content.Page']"}),
+            'duration_hours': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'blank': 'True'}),
+            'duration_minutes': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'blank': 'True'}),
             'end_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'imported_from': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
+            'language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '16'}),
             'long_description': ('richtext.models.RichTextField', [], {}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'next_projects': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'previous_projects'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['projects.Project']"}),
