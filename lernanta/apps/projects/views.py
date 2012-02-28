@@ -41,6 +41,42 @@ from users.decorators import login_required
 log = logging.getLogger(__name__)
 
 
+def learn(request):
+    projects = Project.objects.filter(not_listed=False, archived=False,
+        deleted=False)
+    if 'school' in request.GET:
+        projects = projects.filter(school__slug=request.GET['school'])
+    if 'featured' in request.GET:
+        featured = request.GET['featured']
+        if featured == 'staff':
+            projects = projects.filter(featured=True)
+        elif featured == 'community':
+            projects = projects.filter(community_featured=True)
+        elif featured == 'fresh':
+            one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
+            projects = projects.filter(created_on__gte=one_week)
+    if 'lang' in request.GET:
+        projects = projects.filter(language=request.GET['lang'])
+    if 'tag' in request.GET:
+        projects = Project.get_tagged_projects(request.GET['tag'], projects)
+    context = {
+        'projects': projects, 
+        'schools': School.objects.all(),
+        'popular_tags': Project.get_popular_tags(),
+        'tags_form': project_forms.ProjectsTagSearch()
+    }
+    context.update(get_pagination_context(request, projects, 4))
+    return render_to_response('projects/learn.html', context,
+        context_instance=RequestContext(request))
+
+
+def matching_tags(request):
+    matching_tags = Project.get_matching_tags(request.GET.get('term', ''))
+    json = simplejson.dumps(list(matching_tags))
+
+    return http.HttpResponse(json, mimetype="application/json")
+
+
 def project_list(request):
     school = None
     project_list_url = reverse('projects_gallery')
@@ -50,7 +86,7 @@ def project_list(request):
         except School.DoesNotExist:
             return http.HttpResponseRedirect(project_list_url)
     return render_to_response('projects/gallery.html', {'school': school},
-                              context_instance=RequestContext(request))
+        context_instance=RequestContext(request))
 
 
 def list_all(request):
@@ -882,7 +918,7 @@ def discussion_area(request, slug):
     if project.category != Project.CHALLENGE:
         return http.HttpResponseRedirect(project.get_absolute_url())
     else:
-        return show(request, slug, False)
+        return show(request, slug=slug, toggled_tasks=False)
 
 
 @hide_deleted_projects

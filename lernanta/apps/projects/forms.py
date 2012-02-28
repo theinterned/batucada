@@ -32,7 +32,7 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'category', 'other', 'other_description',
-            'short_description', 'long_description')
+            'short_description', 'long_description', 'language')
         widgets = {
             'category': forms.RadioSelect,
         }
@@ -79,7 +79,7 @@ class ProjectStatusForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('start_date', 'end_date', 'under_development',
-            'not_listed', 'archived')
+            'not_listed', 'archived', 'duration_hours', 'duration_minutes')
 
 
 class ProjectAddParticipantForm(forms.Form):
@@ -192,3 +192,8 @@ class ImportProjectForm(forms.Form):
             raise forms.ValidationError(
                 _('There is no course with this short name on the archive.'))
         return course
+
+class ProjectsTagSearch(forms.Form):
+    tag = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': _('Search Tags')}))
+

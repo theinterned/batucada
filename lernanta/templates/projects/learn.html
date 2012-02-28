@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+{% block title %}{{ _('Learn') }}{% endblock %}
+
+{% block body %}
+  <div id="sidebar">
+    <h2>{{ _('Featured') }}</h2>
+    <ul>
+      <li><a href="{% locale_url projects_learn %}?featured=community">{{ _('Community Picks') }}</a></li>
+      <li><a href="{% locale_url projects_learn %}?featured=staff">{{ _('Staff Favorites') }}</a></li>
+      <li><a href="{% locale_url projects_learn %}?featured=new">{{ _('Fresh Additions') }}</a></li>
+    </ul>
+    <h2>{{ _('Schools') }}</h2>
+    <ul>
+      {% for school in schools %}
+        <li><a href="{% locale_url projects_learn %}?school={{ school.slug }}">{{ school }}</a></li>
+      {% endfor %}
+    </ul>
+    <h2>{{ _('Tags') }}</h2>
+    <ul>
+        {% for tag in popular_tags %}
+          <li><a href="{% locale_url projects_learn %}?tag={{ tag.tag__name }}">{{ tag.tag__name }}</a></li>
+        {% endfor %}
+    </ul>
+    <form action="{% locale_url projects_learn %}" method="get">
+      <div class="field{% if tags_form.tag.errors %} error{% endif %}">
+        {{ tags_form.tag }}
+        {{ tags_form.tag.errors }}
+      </div>
+    </form>
+  </div>
+
+  <div id="main">
+    <ul>
+      {% include "projects/learn_projects.html" %}
+    </ul>
+
+    {% with prefix='' page_url=directory_url %}
+      {% pagination_links %}
+    {% endwith %}
+
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    $('#id_tag').autocomplete({
+        source: function( request, response ) {
+                url = "{% url projects_matching_tags %}?term=" + request.term;
+                $.getJSON(url, function(data) {
+                    response(data);
+                });
+            }
+    });
+  </script>
+{% endblock %}
