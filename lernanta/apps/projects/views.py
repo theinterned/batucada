@@ -43,7 +43,7 @@ log = logging.getLogger(__name__)
 
 def learn(request):
     projects = Project.objects.filter(not_listed=False, archived=False,
-        deleted=False)
+        under_development=False, deleted=False)
     if 'school' in request.GET:
         projects = projects.filter(school__slug=request.GET['school'])
     if 'featured' in request.GET:
@@ -65,7 +65,7 @@ def learn(request):
         'popular_tags': Project.get_popular_tags(),
         'tags_form': project_forms.ProjectsTagSearch()
     }
-    context.update(get_pagination_context(request, projects, 4))
+    context.update(get_pagination_context(request, projects, 24))
     return render_to_response('projects/learn.html', context,
         context_instance=RequestContext(request))
 
