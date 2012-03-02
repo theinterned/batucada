@@ -28,6 +28,9 @@ def replace(match):
         url_validate(url)
     except ValidationError:
         return '[%s:Invalid Url]' % kind
+    for prefix in settings.P2PU_EMBEDS:
+        if url.startswith(prefix):
+            return render_to_string('richtext/_p2pu_embed.html', {'url': url})
     if not external_task:
         expiration_date = datetime.now() - settings.EMBEDLY_CACHE_EXPIRES
         embedded_urls = EmbeddedUrl.objects.filter(original_url=url,
