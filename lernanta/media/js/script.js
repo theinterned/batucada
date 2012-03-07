@@ -171,6 +171,18 @@ function carousel_itemAddCallback(carousel, first, last, data) {
     });
 };
 
+function updateLearnShowMoreResults() {
+    if ( $("#learn #main .pagination a.next").length ) {
+        var $next = $("#learn #main .pagination a.next");
+        $("#learn #main #show-more-results").attr('href', $next.attr('href'));
+        $("#learn #main #show-more-results").removeClass('disabled');
+        $("#learn #main #show-more-results").show();
+    } else {
+        $("#learn #main #show-more-results").hide();
+        $("#learn #main #show-more-results").addClass('disabled');
+    }
+};
+
 var batucada = {
     splash: {
         onload: function() {
@@ -420,7 +432,11 @@ $(document).ready(function() {
           'transitionOut'       : 'none'
         });
     }
-    
+
+    if ( $("#learn #main .pagination").length ) {
+        $("#learn #main .pagination").hide();
+        updateLearnShowMoreResults();
+    }
 });
 
 // Recaptcha
@@ -665,4 +681,20 @@ $(".right-aligned-rating").hover(
     function () {
         $("div.rating-key").hide();
         $(this).find("div.rating-key").show();
+});
+
+$('#learn #main #show-more-results').click(function(e){
+    if ( !$(this).hasClass('disabled')) {
+        $(this).addClass('disabled');
+        var url = $(this).attr('href');
+        $.get(url, function(data) {
+            var projects_html = data['projects_html'];
+            var projects_pagination = data['projects_pagination'];
+            $('#learn #main ul.project-list').append(projects_html);
+            $('#learn #main .pagination').html(projects_pagination);
+            updateLearnShowMoreResults();
+        });
+    }
+    return false;
+
 });

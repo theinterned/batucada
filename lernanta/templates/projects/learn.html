@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
-{% load pagination_tags %}
 {% load project_tags %}
 {% block title %}{{ _('Learn') }}{% endblock %}
 {% block bodyid %}learn{% endblock %}
@@ -85,12 +84,11 @@
       </span></h1>
       <br>
       <ul class="project-list">
-        {% include "projects/learn_projects.html" %}
+        {% include "projects/_learn_projects.html" %}
       </ul>
-
-      {% with prefix='' page_url=learn_url %}
-        {% pagination_links %}
-      {% endwith %}
+      <br clear="both">
+      {% include "projects/_learn_pagination.html" %}
+      <a id="show-more-results" class="button" href="#">{{ _('Show More Results') }}</a>
     </section>
   </div>
 
@@ -106,5 +104,16 @@
                 });
             }
     });
+    {% if infinite_scroll %}
+        $(window).scroll(function(){
+            var $project_list = $('#learn #main ul.project-list');
+            if ($project_list.offset().top + $project_list.height() < $(document).scrollTop() + $(window).height()) {
+                var $show_more_results = $('#learn #main #show-more-results');
+                if ( !$show_more_results.hasClass('disabled')) {
+                    $show_more_results.trigger('click');
+                }
+            }
+        });
+    {% endif %}
   </script>
 {% endblock %}
