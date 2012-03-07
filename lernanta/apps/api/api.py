@@ -27,7 +27,7 @@ class ProjectResource(ModelResource):
     completion_badges = fields.ToManyField(BadgeResource, 'badges', null=True)
 
     class Meta:
-        queryset = Project.objects.get_active()
+        queryset = Project.objects.all()
         fields = ['school', 'category', 'community_featured', 'created_on',
                 'duration_hours', 'end_date', 'featured', 'image', 'language',
                 'long_description', 'name', 'other', 'other_description',
