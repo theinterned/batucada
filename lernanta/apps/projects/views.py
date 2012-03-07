@@ -44,7 +44,7 @@ from users.decorators import login_required
 log = logging.getLogger(__name__)
 
 
-def learn(request, max_count=24):
+def learn(request, max_count=6):
     projects = Project.objects.filter(not_listed=False,
         deleted=False).order_by('-created_on')
     get_params = request.GET.copy()
@@ -56,6 +56,7 @@ def learn(request, max_count=24):
         'popular_tags': Project.get_popular_tags(),
         'form': form,
         'learn_url': reverse('projects_learn'),
+        'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
     if form.is_valid():
         archived = form.cleaned_data['archived']
@@ -117,6 +118,17 @@ def learn(request, max_count=24):
             projects = projects.filter(id__in=accepted_reviews)
     context['projects'] = projects
     context.update(get_pagination_context(request, projects, max_count))
+    if request.is_ajax():
+        projects_html = render_to_string('projects/_learn_projects.html',
+            context, context_instance=RequestContext(request))
+        projects_pagination = render_to_string('projects/_learn_pagination.html',
+            context, context_instance=RequestContext(request))
+        data = {
+            'projects_html': projects_html,
+            'projects_pagination': projects_pagination,
+        }
+        json = simplejson.dumps(data)
+        return http.HttpResponse(json, mimetype="application/json")
     return render_to_response('projects/learn.html', context,
         context_instance=RequestContext(request))
 

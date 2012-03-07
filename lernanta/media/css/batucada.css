@@ -5706,3 +5706,9 @@ table#metrics-scoreboard td.todays-count {
      border-radius: 3px;
      padding: 15px;
 }
+
+#learn #main #show-more-results {
+    margin-top: 50px;
+    margin-left: 300px;
+    display: none;
+}
