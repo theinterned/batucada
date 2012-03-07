@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from l10n.urlresolvers import reverse
 from drumbeat import messages
 from projects.models import Project
+from projects.templatetags.project_tags import learn_default
 
 
 def organizer_required(func):
@@ -102,6 +103,6 @@ def hide_deleted_projects(func):
         project = get_object_or_404(Project, slug=project)
         if project.deleted:
             messages.error(request, _('This %s was deleted.') % project.kind)
-            return HttpResponseRedirect(reverse('projects_gallery'))
+            return HttpResponseRedirect(learn_default())
         return func(*args, **kwargs)
     return decorated

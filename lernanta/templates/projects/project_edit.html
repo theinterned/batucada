@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load l10n_tags %}
+{% load project_tags %}
 
 {% block title %}{% if project %}{{ _('Edit') }}{% else %}{{ _('Create') }}{% endif %}{% endblock %}
 
@@ -22,7 +23,7 @@
 {% endblock %}
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  <a href="{% learn_default %}">{{ _('Learn') }}</a>
   {% if project %}
     <span class="arrow">&rsaquo;</span>
     <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>

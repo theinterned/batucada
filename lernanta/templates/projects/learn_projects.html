@@ -1,4 +1,4 @@
 {% load l10n_tags %}
 {% for project in pagination_current_page.object_list %}
-  <li><a href="{{project.get_absolute_url}}">{{ project }}</a></li>
+  <li>{% include "projects/_project_card.html" %}</li>
 {% endfor %}

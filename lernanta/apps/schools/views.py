@@ -30,6 +30,10 @@ from schools import forms as school_forms
 def home(request, slug):
     school = get_object_or_404(School, slug=slug)
     user = request.user
+    featured = school.featured.filter(not_listed=False,
+        archived=False, deleted=False)
+    featured_project_sets = school.project_sets.filter(
+        featured=True)
     if user.is_authenticated():
         profile = user.get_profile()
         is_organizer = school.organizers.filter(id=profile.id).exists()
@@ -38,6 +42,8 @@ def home(request, slug):
     context = {
         'school': school,
         'is_organizer': is_organizer,
+        'featured': featured,
+        'featured_project_sets': featured_project_sets,
     }
     context.update(get_google_tracking_context(school))
     return render_to_response('schools/home.html', context,

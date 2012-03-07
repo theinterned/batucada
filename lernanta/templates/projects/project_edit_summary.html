@@ -1,5 +1,6 @@
 {% extends "projects/project_edit.html" %}
 {% load l10n_tags %}
+{% load project_tags %}
 {% block bodyclasses %}project edit summary{% endblock %}
 
 {% block links %}{% if school %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endif %}{% endblock %}
@@ -64,7 +65,7 @@
     <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
     {% else %}
-    <a class="button" href="{% locale_url projects_gallery %}">{{ _('Cancel') }}</a>
+    <a class="button" href="{% learn_default %}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
     {% endif %}
   </p>

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load truncate_chars %}
+{% load project_tags %}
 
 {% block title %}{{ _('Learning for everyone, by everyone, about almost anything') }}{% endblock %}
 {% block bodyid %}splash{% endblock %}
@@ -15,7 +16,7 @@
 <header id="intro">
   <div class="container">
     <nav id="intro-links">
-      <a href="{% locale_url projects_gallery %}" class="big-find-course">{{ _('Browse Groups & Courses') }}</a>
+      <a href="{% learn_default %}" class="big-find-course">{{ _('Browse Groups & Courses') }}</a>
       <a href="{% locale_url projects_create %}" class="big-run-course">{{ _('Start Your Own') }}</a>
     </nav>
     <div id="call-to-action">

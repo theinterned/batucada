@@ -5,12 +5,14 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+from django.db.models import Count
 
 from links.models import Link
 from users.models import UserProfile
 from users import tasks
 from tags.forms import GeneralTagField
 from tags.models import GeneralTaggedItem
+from schools.models import School
 
 from projects.models import Project
 from projects import drupal
@@ -193,7 +195,41 @@ class ImportProjectForm(forms.Form):
                 _('There is no course with this short name on the archive.'))
         return course
 
-class ProjectsTagSearch(forms.Form):
-    tag = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': _('Search Tags')}))
 
+class ProjectsFilterForm(forms.Form):
+    # Not listed by default
+    archived = forms.BooleanField(required=False, widget=forms.HiddenInput)
+    under_development = forms.BooleanField(required=False, widget=forms.HiddenInput)
+    closed_signup = forms.BooleanField(required=False, widget=forms.HiddenInput)
+    # Featured
+    COMMUNITY = 'community'
+    STAFF = 'staff'
+    FRESH = 'fresh'
+    POPULAR = 'popular'
+    UPDATED = 'updated'
+    FEATURED_CHOICES = (
+        (COMMUNITY, _('Community Picks')),
+        (STAFF, _('Staff Favorites')),
+        (FRESH, _('Fresh Additions')),
+        (POPULAR, _('Popular')),
+        (UPDATED, _('Last Updated'))
+    )
+    featured = forms.ChoiceField(required=False, widget=forms.HiddenInput,
+        choices=FEATURED_CHOICES)
+    # Filters
+    school = forms.ModelChoiceField(required=False, queryset=School.objects.all(),
+        widget=forms.HiddenInput)
+    tag = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': _('Search Tags')}))
+    language = forms.ChoiceField(required=False, choices=settings.LANGUAGES)
+    reviewed = forms.BooleanField(required=False)
+
+    def __init__(self, projects, *args, **kwargs):
+        super(ProjectsFilterForm, self).__init__(*args, **kwargs)
+        existing_locales = set(loc for loc, lang in settings.LANGUAGES)
+        visible_locales = set(projects.values('language').annotate(
+            project_language_count=Count('id')).filter(
+            project_language_count__gt=1).values_list('language', flat=True))
+        language_choices = tuple((loc, lang) for loc, lang in settings.LANGUAGES
+            if loc in visible_locales and (len(loc) == 2 or loc[:2] not in existing_locales))
+        self.fields['language'].widget.choices = language_choices
