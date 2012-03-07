@@ -94,6 +94,11 @@ RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
 EMBEDLY_KEY = ''
 EMBEDLY_CACHE_EXPIRES = datetime.timedelta(weeks=4)
 
+P2PU_EMBEDS= (
+    'http://pad.p2pu.org/',
+    'http://etherpad.p2pu.org/'
+)
+
 # Use dummy caching for development.
 CACHE_BACKEND = 'dummy://'
 CACHE_PREFIX = 'lernanta'
