@@ -21,6 +21,24 @@
           </label>
           {{ form.accepted.errors }}
         </p>
+        {% if reviewer.can_feature %}
+          <p>
+            <label for="id_mark_featured">
+              {{ form.mark_featured }}
+              {{ _('Mark as Community Pick.') }}
+            </label>
+            {{ form.mark_featured.errors }}
+          </p>
+        {% endif %}
+        {% if reviewer.can_delete %}
+          <p>
+            <label for="id_mark_deleted">
+              {{ form.mark_deleted }}
+              {{ _('Mark as Deleted (Spam).') }}
+            </label>
+            {{ form.mark_deleted.errors }}
+          </p>
+        {% endif %}
         <p class="buttons">
           <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
         </p>

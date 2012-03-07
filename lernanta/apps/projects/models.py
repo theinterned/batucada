@@ -30,8 +30,6 @@ from replies.models import PageComment
 from tags.models import GeneralTaggedItem
 from tracker import statsd
 
-import caching.base
-
 log = logging.getLogger(__name__)
 
 
@@ -40,47 +38,6 @@ def determine_image_upload_path(instance, filename):
         'partition': get_partition_id(instance.pk),
         'filename': safe_filename(filename),
     }
-
-
-class ProjectManager(caching.base.CachingManager):
-
-    def get_popular(self, limit=0, school=None):
-        popular = cache.get('projectspopular')
-        if not popular:
-            rels = Relationship.objects.filter(deleted=False).values(
-                'target_project').annotate(Count('id')).exclude(
-                target_project__isnull=True).filter(
-                target_project__under_development=False,
-                target_project__not_listed=False,
-                target_project__archived=False,
-                target_project__deleted=False).order_by('-id__count')
-            if school:
-                rels = rels.filter(target_project__school=school)
-            if limit:
-                rels = rels[:limit]
-            popular = [r['target_project'] for r in rels]
-            cache.set('projectspopular', popular, 3000)
-        return Project.objects.filter(id__in=popular)
-
-    def get_active(self, limit=0, school=None):
-        active = cache.get('projectsactive')
-        if not active:
-            ct = ContentType.objects.get_for_model(RemoteObject)
-            activities = Activity.objects.values('scope_object').annotate(
-                Max('created_on')).exclude(scope_object__isnull=True,
-                verb=verbs['follow'], target_content_type=ct).filter(
-                scope_object__under_development=False,
-                scope_object__not_listed=False,
-                scope_object__archived=False,
-                scope_object__deleted=False).order_by('-created_on__max')
-            if school:
-                activities = activities.filter(
-                    scope_object__school=school)
-            if limit:
-                activities = activities[:limit]
-            active = [a['scope_object'] for a in activities]
-            cache.set('projectsactive', active, 3000)
-        return Project.objects.filter(id__in=active)
 
 
 class Project(ModelBase):
@@ -154,8 +111,6 @@ class Project(ModelBase):
         null=True, blank=True, related_name='projects_completion')
 
     deleted = models.BooleanField(default=False)
-
-    objects = ProjectManager()
 
     class Meta:
         verbose_name = _('group')
@@ -427,7 +382,7 @@ class Project(ModelBase):
             return Project.objects.none()
 
     @classmethod
-    def get_popular_tags(cls, max_count=7):
+    def get_popular_tags(cls, max_count=6):
         ct = ContentType.objects.get_for_model(Project)
         return GeneralTaggedItem.objects.filter(
             content_type=ct).values('tag__name').annotate(

@@ -87,56 +87,22 @@ def sidebar(context):
 register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
 
-def project_list(school=None, only_featured=False, limit=8):
-    listed = Project.objects.filter(not_listed=False, archived=False,
-        deleted=False)
+def learn_default(tag=None, school=None):
+    learn_url = reverse('projects_learn')
+    learn_url += "?reviewed=on"
     if school:
-        featured = school.featured.filter(not_listed=False, archived=False,
-            deleted=False)
-        project_sets = school.project_sets.all()
-        if only_featured:
-            project_sets = project_sets.filter(featured=True)
-    else:
-        featured = listed.filter(featured=True)
-        project_sets = ProjectSet.objects.none()
-    listed = listed.filter(under_development=False)
-    context = {'featured': featured, 'school': school, 'project_sets':project_sets}
-    if not only_featured:
-        active = Project.objects.get_active(limit=limit, school=school)
-        popular = Project.objects.get_popular(limit=limit, school=school)
-        one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
-        new_groups = listed.filter(created_on__gte=one_week).order_by(
-            '-created_on')
-        open_signup_ids = Signup.objects.exclude(
-            status=Signup.CLOSED).values('project')
-        open_signup = listed.filter(id__in=open_signup_ids)
-        challenges_open_signup = listed.filter(category=Project.CHALLENGE)
-        under_development = Project.objects.filter(under_development=True,
-            not_listed=False, archived=False, deleted=False)
-        archived = Project.objects.filter(not_listed=False,
-            archived=True).order_by('-created_on')
-        if school:
-            new_groups = new_groups.filter(school=school)
-            open_signup = open_signup.filter(school=school)
-            challenges_open_signup = challenges_open_signup.filter(school=school)
-            under_development = under_development.filter(school=school)
-            archived = archived.filter(school=school)
-        if limit:
-            new_groups = new_groups[:limit]
-            archived = archived[:limit]
-            under_development = under_development[:limit]
-        context.update({'active': active, 'popular': popular,
-            'new_groups': new_groups, 'open_signup': open_signup,
-            'challenges_open_signup': challenges_open_signup, 'under_development': under_development,
-            'archived': archived})
-    return context
+        learn_url += "&school=%s" % school.id
+    if tag:
+        learn_url += '&tag=%s' % tag.name
+    if not school and not tag:
+        learn_url += '&featured=community'
+    return learn_url
 
+def school_learn_default(school, tag=None):
+    return learn_default(tag=tag, school=school)
 
-def featured_list(school=None):
-    return project_list(school, True)
-
-register.inclusion_tag('projects/_project_list.html')(project_list)
-register.inclusion_tag('projects/_project_list.html')(featured_list)
+register.simple_tag(learn_default)
+register.simple_tag(school_learn_default)
 
 
 def task_list(project, user, show_all_tasks=True, short_list_length=3):

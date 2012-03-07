@@ -1055,8 +1055,7 @@ header {}
         margin-right: 10px;
     }
     
-    #user_profile #breadcrumbs #breadcrumbs-actions, #project_gallery #breadcrumbs #breadcrumbs-actions,
-    #project_directory #breadcrumbs #breadcrumbs-actions, 
+    #user_profile #breadcrumbs #breadcrumbs-actions, #learn #breadcrumbs #breadcrumbs-actions,
     #school_home #breadcrumbs #breadcrumbs-actions, #inbox #breadcrumbs #breadcrumbs-actions {
         top: -25px;
     }
@@ -1379,9 +1378,8 @@ header {}
             -webkit-text-shadow: #fff 1px 1px 0px;
           }
 
-  #project_gallery{}
   #user_list{}
-  /* generalized layout of card lists, by using a '.card-list' class on the body of project_gallery and user_list */
+  /* generalized layout of card lists, by using a '.card-list' class on the body of learn and user_list */
 	.card-list h1{
 		font-weight: normal;
 		margin-bottom: 32px;
@@ -1612,7 +1610,7 @@ header {}
   margin-left: 140px;
 }
 
-#project_gallery #main, #project_directory #main, #school_home #main , #user_list #main, #one-column-page #main,
+#learn #main, #school_home #main , #user_list #main, #one-column-page #main,
 #badges-page #main, #projectset_home #main, #project-reviews #main {
   width: 970px;
   margin-right: 40px;
@@ -5654,4 +5652,63 @@ table#metrics-scoreboard td.todays-count {
 
 #user_profile #main {
     float: right;
+}
+
+#learn #sidebar h2, #learn #sidebar form {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#learn #sidebar a {
+    display: block;
+}
+
+#learn #learn-projects-filter #id_tag {
+    display: none;
+}
+
+#learn #learn-search-tags #id_tag {
+    background: url('../images/icon.loupe.png') no-repeat 3px center;
+    padding-left: 20px;
+}
+
+#learn #learn-search-tags #id_reviewed {
+    display: none;
+}
+
+#learn #sidebar {
+    width: 200px;
+    margin: 0px;
+}
+
+#learn #main {
+    width: 725px;
+    float: right;
+    margin: 0px;
+}
+
+#learn.card-list .project-list li:nth-child(4n),
+#learn.card-list .user-list li:nth-child(4n){
+    margin-right: 8px;
+}
+
+#learn.card-list .project-list li:nth-child(3n),
+#learn.card-list .user-list li:nth-child(3n){
+    margin-right: 0;
+}
+
+#learn #sidebar #learn-projects-filter {
+     border:1px solid #cccccc;
+     -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+     -ms-border-radius: 3px;
+     -o-border-radius: 3px;
+     border-radius: 3px;
+     padding: 15px;
+}
+
+#learn #main #show-more-results {
+    margin-top: 50px;
+    margin-left: 300px;
+    display: none;
 }
