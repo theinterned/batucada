@@ -1,5 +1,6 @@
 {% load l10n_tags %}
 {% load school_tags%}
+{% load project_tags %}
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -44,7 +45,7 @@
 
 		<nav id="main-nav">
 		  <ul>
-		    <li><a href="{% locale_url projects_gallery %}" class="top-level">{{ _('Learn') }}</a></li>
+		    <li><a href="{% learn_default %}" class="top-level">{{ _('Learn') }}</a></li>
 		    <li><a href="{% locale_url static_page_show 'get-involved' %}" class="top-level">{{ _('Contribute') }}</a></li>
 		  </ul>
 		</nav>

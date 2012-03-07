@@ -1,14 +1,10 @@
 from django.conf.urls.defaults import patterns, url, include
 
 urlpatterns = patterns('',
-  url(r'^$', 'projects.views.project_list',
-      name='projects_gallery'),
-  url(r'^learn/$', 'projects.views.learn',
+  url(r'^$', 'projects.views.learn',
       name='projects_learn'),
-  url(r'^learn/matching_tags/$', 'projects.views.matching_tags',
+  url(r'^matching_tags/$', 'projects.views.matching_tags',
       name='projects_matching_tags'),
-  url(r'^all/$', 'projects.views.list_all',
-      name='projects_directory'),
   url(r'^create/$', 'projects.views.create',
       name='projects_create'),
   url(r'^create/matching_kinds/$',

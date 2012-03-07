@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load project_tags %}
 
 {% block description %}{{ project.name }}: {{ project.short_description }}{% endblock %}
 {% block title %}{{ project.name }} | {% block project_title %}{% endblock %}{% endblock %}
@@ -15,7 +16,7 @@
 {% endblock %}
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+  <a href="{% learn_default %}">{{ _('Learn') }}</a>
   <span class="arrow">&rsaquo;</span>
   {% if is_challenge and project.accepted_school %}
   <a href="{{ project.accepted_school.get_absolute_url }}">{{ project.accepted_school }}</a>

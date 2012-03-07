@@ -10,7 +10,7 @@ from users.decorators import login_required
 from drumbeat import messages
 from l10n.urlresolvers import reverse
 
-from reviews.models import Review
+from reviews.models import Review, Reviewer
 from reviews.decorators import reviewer_required
 from reviews.forms import ReviewForm
 
@@ -70,6 +70,7 @@ def show_project_reviews(request, slug):
 def review_project(request, slug):
     project = get_object_or_404(Project, slug=slug)
     profile = request.user.get_profile()
+    reviewer = Reviewer.objects.get(user=profile)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -77,12 +78,18 @@ def review_project(request, slug):
             review.project = project
             review.author = profile
             review.save()
+            if reviewer.can_feature:
+                project.community_featured = review.mark_featured
+            if reviewer.can_delete:
+                project.deleted = review.mark_featured
+            if reviewer.can_feature or reviewer.can_delete:
+                project.save()
             messages.success(request, _('Review posted!'))
             return http.HttpResponseRedirect(review.get_absolute_url())
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
         form = ReviewForm()
-    context = {'form': form, 'project': project}
+    context = {'form': form, 'project': project, 'reviewer': reviewer}
     return render_to_response('reviews/review_project.html',
         context, context_instance=RequestContext(request))

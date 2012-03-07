@@ -14,7 +14,7 @@
     {% if user.is_authenticated %}
        <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
     {% endif %}
-    <a class="button" href="{% locale_url projects_gallery %}?school={{ school.slug }}">{{ _('Browse') }}</a>
+    <a class="button" href="{% school_learn_default school %}">{{ _('Browse') }}</a>
 {% endblock %}
 
 {% block body %}
@@ -42,7 +42,26 @@
   {{ school.description|embed|safe }}
   <br clear="all">
   <br>
-  {% featured_list school %}
+  {% if featured_project_sets %}
+    <section id="challenge-sets">
+      <h1><span>{{ _('Challenge Sets') }}</span></h1>
+      <ul class="challenge-set-list">
+        {% for projectset in featured_project_sets %}
+          <li>{% include "schools/_projectset_card.html" %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+  {% if featured %}
+    <section id="featured_projects">
+      <h1><span>{{_('Featured')}}</span></h1>
+      <ul class="project-list">
+        {% for project in featured %}
+          <li>{% include "projects/_project_card.html" %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 </div>
 
 {% endblock %}

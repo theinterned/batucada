@@ -1,52 +1,104 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load pagination_tags %}
+{% load project_tags %}
 {% block title %}{{ _('Learn') }}{% endblock %}
+{% block bodyid %}learn{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
+
+{% block links %}<link rel="stylesheet" href="{% locale_url multiple_schools_css %}?v=1">{% endblock %}
+
+{% block breadcrumbs %}
+  {% if learn_school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ learn_school.get_absolute_url }}">{{ learn_school.name }}</a>
+  {% endif %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% if learn_school %}{% school_learn_default learn_school %}{% else %}{% learn_default %}{% endif %}">{{ _('Learn') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  {% if user.is_authenticated %}
+    <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+  {% endif %}
+{% endblock %}
 
 {% block body %}
   <div id="sidebar">
+    <a href="{% locale_url projects_learn %}?reviewed=on">{{ _('All') }}</a>
     <h2>{{ _('Featured') }}</h2>
-    <ul>
-      <li><a href="{% locale_url projects_learn %}?featured=community">{{ _('Community Picks') }}</a></li>
-      <li><a href="{% locale_url projects_learn %}?featured=staff">{{ _('Staff Favorites') }}</a></li>
-      <li><a href="{% locale_url projects_learn %}?featured=fresh">{{ _('Fresh Additions') }}</a></li>
-    </ul>
+    <a href="{% locale_url projects_learn %}?reviewed=on&featured=community">{{ _('Community Picks') }}</a>
+    <a href="{% locale_url projects_learn %}?reviewed=on&featured=staff">{{ _('Staff Favorites') }}</a>
+    <a href="{% locale_url projects_learn %}?reviewed=on&featured=fresh">{{ _('Fresh Additions') }}</a>
     <h2>{{ _('Schools') }}</h2>
-    <ul>
-      {% for school in schools %}
-        <li><a href="{% locale_url projects_learn %}?school={{ school.slug }}">{{ school }}</a></li>
-      {% endfor %}
-    </ul>
+    {% for school in schools %}
+      <a href="{% locale_url projects_learn %}?reviewed=on&school={{ school.id }}">{{ school }}</a>
+    {% endfor %}
     <h2>{{ _('Tags') }}</h2>
-    <ul>
-        {% for tag in popular_tags %}
-          <li><a href="{% locale_url projects_learn %}?tag={{ tag.tag__name }}">{{ tag.tag__name }}</a></li>
-        {% endfor %}
-    </ul>
-    <form action="{% locale_url projects_learn %}" method="get">
-      <div class="field{% if tags_form.tag.errors %} error{% endif %}">
-        {{ tags_form.tag }}
-        {{ tags_form.tag.errors }}
+    {% for tag in popular_tags %}
+      <a href="{% locale_url projects_learn %}?reviewed=on&tag={{ tag.tag__name }}">{{ tag.tag__name }}</a>
+    {% endfor %}
+    <form id="learn-search-tags" action="{% locale_url projects_learn %}" method="get">
+      {{ form.reviewed }}
+      <div class="field{% if form.tag.errors %} error{% endif %}">
+        {{ form.tag }}
+        {{ form.tag.errors }}
       </div>
+    </form>
+    <h2>{{ _('Filters') }}</h2>
+    <form id="learn-projects-filter" action="{% locale_url projects_learn %}" method="get">
+      {{ form.featured }}
+      {{ form.school }}
+      {{ form.tag }}
+      <div class="field{% if form.language.errors %} error{% endif %}">
+        <label for="id_language">
+          {{ _('Language:') }}
+          {{ form.language }}
+        </label>
+        {{ form.language.errors }}
+      </div>
+      <div class="field{% if form.reviewed.errors %} error{% endif %}">
+        <label for="id_reviewed">
+          {{ form.reviewed }}
+          {{ _('Community Reviewed Only') }}
+        </label>
+        {{ form.reviewed.errors }}
+      </div>
+      <button type="submit" value="{{ _('Filter') }}">{{ _('Filter') }}</button>
     </form>
   </div>
 
   <div id="main">
-    <ul>
-      {% include "projects/learn_projects.html" %}
-    </ul>
+    <br>
+    <section id="learn-projects-list">
+      <h1><span>{{ _('Learn') }}
+        {% if learn_community %}
+          {{ _('- Community Picks') }}
+        {% else %}{% if learn_staff %}
+          {{ _('- Staff Favorites')}}
+        {% else %}{% if learn_fresh %}
+          {{ _('- Fresh Additions') }}
+        {% else %}{% if learn_school %}
+          {{_('-')}} {{ learn_school }}
+        {% else %}{% if learn_tag %}
+          {{ _('- Tagged as \'') }}{{ learn_tag }}'
+        {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
+      </span></h1>
+      <br>
+      <ul class="project-list">
+        {% include "projects/learn_projects.html" %}
+      </ul>
 
-    {% with prefix='' page_url=directory_url %}
-      {% pagination_links %}
-    {% endwith %}
-
+      {% with prefix='' page_url=learn_url %}
+        {% pagination_links %}
+      {% endwith %}
+    </section>
   </div>
 
 {% endblock %}
 
 {% block js %}
   <script type="text/javascript">
-    $('#id_tag').autocomplete({
+    $('#learn-search-tags #id_tag').autocomplete({
         source: function( request, response ) {
                 url = "{% url projects_matching_tags %}?term=" + request.term;
                 $.getJSON(url, function(data) {

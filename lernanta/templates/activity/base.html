@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
+{% load project_tags %}
 
 {% block title %}{{ _('Activity') }}{% endblock %}
 {% block bodyid %}activity{% endblock %}
@@ -14,7 +15,7 @@
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
   {% if activity.scope_object %}
-    <a href="{% locale_url projects_gallery %}">{{ _('Learn') }}</a>
+    <a href="{% learn_default %}">{{ _('Learn') }}</a>
     <span class="arrow">&rsaquo;</span>
     <a href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object }}</a>
   {% else %}
