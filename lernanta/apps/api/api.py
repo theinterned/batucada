@@ -9,11 +9,12 @@ from badges.models import Badge
 class UserProfileResource(ModelResource):
     class Meta:
         queryset = UserProfile.objects.all()
-        fields = ['username', 'bio', 'gravatar', 'following']
+        fields = ['username', 'bio', 'gravatar', 'following', 'followers']
         
     def dehydrate(self, bundle):
         bundle.data['gravatar'] = bundle.obj.gravatar()
         bundle.data['following'] = bundle.obj.get_current_projects()
+        bundle.data['followers'] = bundle.obj.followers()
 
         return bundle
 
