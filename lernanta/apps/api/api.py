@@ -9,7 +9,13 @@ from badges.models import Badge
 class UserProfileResource(ModelResource):
     class Meta:
         queryset = UserProfile.objects.all()
-        fields = ['username', 'bio', 'image']
+        fields = ['username', 'bio', 'gravatar', 'following']
+        
+    def dehydrate(self, bundle):
+        bundle.data['gravatar'] = bundle.obj.gravatar()
+        bundle.data['following'] = bundle.obj.get_current_projects()
+
+        return bundle
 
 
 class SchoolResource(ModelResource):
