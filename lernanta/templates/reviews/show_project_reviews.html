@@ -15,9 +15,9 @@
         <li class="post-container">
           <p>{{ _('Review from') }} <a href="{{ review.author.get_absolute_url }}">{{ review.author }}</a> {{ _('on') }} {{ review.created_on }}</p>
           <div class="post-body assessment">
-          {% if review.accepted %}<p>{{ _('Accepted!') }}</p>{% endif %}
+          {% if review.accepted %}<p>{{ _('Community Reviewed!') }}</p>{% endif %}
           {% if review.mark_deleted %}<p>{{ _('Deleted (Spam)!') }}</p>{% endif %}
-          {% if review.mark_featured %}<p>{{ _('Community Pick!') }}</p>{% endif %}
+          {% if review.mark_featured %}<p>{{ _('Featured as Community Pick!') }}</p>{% endif %}
           <p><b>{{ _('Feedback:') }}</b></p>
           {{ review.content|embed|safe }}
           </div>

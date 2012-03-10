@@ -3982,7 +3982,7 @@ div.voting div.score {
     background-position: 13px 17px;
     width: 165px; 
     background-image: url("/media/images/logo.png");
-    height: 120px;
+    height: 70px;
     margin-top: 2px;
     margin-right: 20px;
     position: absolute;
@@ -4387,17 +4387,14 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 #submissions-list #my-submissions-list,
 #submissions-list.toggled-awards #pending-submission-list,
 #submissions-list.toggled-mine #pending-submission-list,
-#projects-reviews-list #under-review-projects-reviews-list,
-#projects-reviews-list #accepted-projects-reviews-list,
-#projects-reviews-list.toggled-under-review #pending-projects-reviews-list,
-#projects-reviews-list.toggled-accepted #pending-projects-reviews-list {
+#projects-reviews-list #reviewed-projects-reviews-list,
+#projects-reviews-list.toggled-reviewed #new-projects-reviews-list {
     display: none;
 }
 
 #submissions-list.toggled-awards #awarded-submission-list,
 #submissions-list.toggled-mine #my-submissions-list,
-#projects-reviews-list.toggled-under-review #under-review-projects-reviews-list,
-#projects-reviews-list.toggled-accepted #accepted-projects-reviews-list {
+#projects-reviews-list.toggled-reviewed #reviewed-projects-reviews-list {
     display: inline;
 }
 
@@ -4434,7 +4431,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 
 #submissions-list ul li,
 #projects-reviews-list ul li {
-    padding: 20px 15px 0 15px;
+    padding: 20px 15px 0 0;
     list-style: none;
     background: #fbfbfb;
     margin-bottom: 10px;

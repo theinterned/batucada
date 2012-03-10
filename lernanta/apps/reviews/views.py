@@ -17,44 +17,33 @@ from reviews.forms import ReviewForm
 
 @login_required
 @reviewer_required
-def projects_reviews_list(request, toggled_under_review=False,
-        toggled_accepted=False):
-    reviews = Review.objects.values('project_id')
+def projects_reviews_list(request, toggled_reviewed=False):
     accepted_reviews = Review.objects.filter(
         accepted=True).values('project_id')
-    projects_pending = Project.objects.exclude(
-        id__in=reviews)
-    projects_under_review = Project.objects.filter(
-        id__in=reviews).exclude(id__in=accepted_reviews)
-    projects_accepted = Project.objects.filter(
+    new_projects = Project.objects.filter(under_development=False,
+        archived=False, deleted=False, not_listed=False).exclude(
+        id__in=accepted_reviews)
+    reviewed_projects = Project.objects.filter(
         id__in=accepted_reviews)
     context = {
-        'toggled_under_review': toggled_under_review,
-        'toggled_accepted': toggled_accepted,
-        'pending_page_url': reverse('projects_pending_review'),
-        'under_review_page_url': reverse('projects_under_review'),
-        'accepted_page_url': reverse('accepted_projects')
+        'toggled_reviewed': toggled_reviewed,
+        'show_new_page_url': reverse('reviews_show_new'),
+        'show_reviewed_page_url': reverse('reviews_show_reviewed')
     }
-    context.update(get_pagination_context(request, projects_pending,
-        24, prefix='pending_'))
-    context.update(get_pagination_context(request, projects_under_review,
-        24, prefix='under_review_'))
-    context.update(get_pagination_context(request, projects_accepted,
-        24, prefix='accepted_'))
+    context.update(get_pagination_context(request, new_projects,
+        24, prefix='new_'))
+    context.update(get_pagination_context(request, reviewed_projects,
+        24, prefix='reviewed_'))
     return render_to_response('reviews/projects_reviews_list.html',
         context, context_instance=RequestContext(request))
 
 
-def pending(request):
+def show_new(request):
     return projects_reviews_list(request)
 
 
-def under_review(request):
-    return projects_reviews_list(request, toggled_under_review=True)
-
-
-def accepted(request):
-    return projects_reviews_list(request, toggled_accepted=True)
+def show_reviewed(request):
+    return projects_reviews_list(request, toggled_reviewed=True)
 
 
 @login_required

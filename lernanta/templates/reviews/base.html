@@ -7,7 +7,7 @@
 
 {% block breadcrumbs %}
   <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_pending_review %}">{{ _('Reviews') }}</a>
+  <a href="{% locale_url reviews_show_new %}">{{ _('Reviews') }}</a>
   {% if project %}
     <span class="arrow">&rsaquo;</span>
     <a href="{% locale_url show_project_reviews slug=project.slug %}">{{ project }}</a>
