@@ -382,19 +382,30 @@ class Project(ModelBase):
             return Project.objects.none()
 
     @classmethod
-    def get_popular_tags(cls, max_count=6):
+    def get_popular_tags(cls, max_count=10):
         ct = ContentType.objects.get_for_model(Project)
         return GeneralTaggedItem.objects.filter(
             content_type=ct).values('tag__name').annotate(
-            Count('object_id')).order_by(
-            '-object_id__count')[:max_count]
+            tagged_count=Count('object_id')).order_by(
+            '-tagged_count')[:max_count]
 
     @classmethod
-    def get_matching_tags(cls, term):
+    def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=6):
         ct = ContentType.objects.get_for_model(Project)
-        return GeneralTaggedItem.objects.filter(
-            content_type=ct, tag__name__icontains=term).values_list(
-            'tag__name', flat=True).distinct()
+        tags = GeneralTaggedItem.objects.filter(
+            content_type=ct).values('tag__name').annotate(
+            tagged_count=Count('object_id')).filter(
+            tagged_count__gte=min_count)
+        if tags.count():
+            min_tagged_count = tags.order_by('tagged_count')[0]['tagged_count']
+            max_tagged_count = tags.order_by('-tagged_count')[0]['tagged_count']
+            if min_tagged_count == max_tagged_count:
+                factor = 1.0
+            else:
+                factor = float(max_weight - min_weight) / float(max_tagged_count - min_tagged_count)
+        for tag in tags:
+            tag['weight']  = max_weight - (max_tagged_count - tag['tagged_count']) * factor
+        return tags
 
     @classmethod
     def get_tagged_projects(self, tag_name, projects=None):
