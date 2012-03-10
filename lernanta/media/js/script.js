@@ -479,21 +479,13 @@ $("#submissions-list-toogle #radio3").click(function(){
 });
 
 $("#projects-reviews-list-toggle #radio1").click(function(){
-    $('#projects-reviews-list #under-review-projects-reviews-list').hide();
-    $('#projects-reviews-list #accepted-projects-reviews-list').hide();
-    $('#projects-reviews-list #pending-projects-reviews-list').show();
+    $('#projects-reviews-list #reviewed-projects-reviews-list').hide();
+    $('#projects-reviews-list #new-projects-reviews-list').show();
 });
 
 $("#projects-reviews-list-toggle #radio2").click(function(){
-    $('#projects-reviews-list #pending-projects-reviews-list').hide();
-    $('#projects-reviews-list #accepted-projects-reviews-list').hide();
-    $('#projects-reviews-list #under-review-projects-reviews-list').show();
-});
-
-$("#projects-reviews-list-toggle #radio3").click(function(){
-    $('#projects-reviews-list #pending-projects-reviews-list').hide();
-    $('#projects-reviews-list #under-review-projects-reviews-list').hide();
-    $('#projects-reviews-list #accepted-projects-reviews-list').show();
+    $('#projects-reviews-list #new-projects-reviews-list').hide();
+    $('#projects-reviews-list #reviewed-projects-reviews-list').show();
 });
 
 $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){

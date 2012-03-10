@@ -17,7 +17,7 @@
         <p>
           <label for="id_accepted">
             {{ form.accepted }}
-            {{ _('Mark as Accepted.') }}
+            {{ _('Mark as Reviewed') }}
           </label>
           {{ form.accepted.errors }}
         </p>
@@ -25,7 +25,7 @@
           <p>
             <label for="id_mark_featured">
               {{ form.mark_featured }}
-              {{ _('Mark as Community Pick.') }}
+              {{ _('Feature as Community Pick') }}
             </label>
             {{ form.mark_featured.errors }}
           </p>
@@ -34,7 +34,7 @@
           <p>
             <label for="id_mark_deleted">
               {{ form.mark_deleted }}
-              {{ _('Mark as Deleted (Spam).') }}
+              {{ _('Mark as Deleted (Spam)') }}
             </label>
             {{ form.mark_deleted.errors }}
           </p>
