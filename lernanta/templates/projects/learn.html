@@ -23,71 +23,23 @@
 
 {% block body %}
   <div id="sidebar">
-    <a href="{% locale_url projects_learn %}?reviewed=on">{{ _('All') }}</a>
-    <h2>{{ _('Featured') }}</h2>
-    <a href="{% locale_url projects_learn %}?reviewed=on&featured=community">{{ _('Community Picks') }}</a>
-    <a href="{% locale_url projects_learn %}?reviewed=on&featured=staff">{{ _('Staff Favorites') }}</a>
-    <a href="{% locale_url projects_learn %}?reviewed=on&featured=fresh">{{ _('Fresh Additions') }}</a>
-    <h2>{{ _('Schools') }}</h2>
-    {% for school in schools %}
-      <a href="{% locale_url projects_learn %}?reviewed=on&school={{ school.id }}">{{ school }}</a>
-    {% endfor %}
-    <h2>{{ _('Tags') }}</h2>
-    {% for tag in popular_tags %}
-      <a href="{% locale_url projects_learn %}?reviewed=on&tag={{ tag.tag__name }}">{{ tag.tag__name }}</a>
-    {% endfor %}
-    <form id="learn-search-tags" action="{% locale_url projects_learn %}" method="get">
-      {{ form.reviewed }}
-      <div class="field{% if form.tag.errors %} error{% endif %}">
-        {{ form.tag }}
-        {{ form.tag.errors }}
-      </div>
-    </form>
-    <h2>{{ _('Filters') }}</h2>
-    <form id="learn-projects-filter" action="{% locale_url projects_learn %}" method="get">
-      {{ form.featured }}
-      {{ form.school }}
-      {{ form.tag }}
-      <div class="field{% if form.language.errors %} error{% endif %}">
-        <label for="id_language">
-          {{ _('Language:') }}
-          {{ form.language }}
-        </label>
-        {{ form.language.errors }}
-      </div>
-      <div class="field{% if form.reviewed.errors %} error{% endif %}">
-        <label for="id_reviewed">
-          {{ form.reviewed }}
-          {{ _('Community Reviewed Only') }}
-        </label>
-        {{ form.reviewed.errors }}
-      </div>
-      <button type="submit" value="{{ _('Filter') }}">{{ _('Filter') }}</button>
-    </form>
+    {% include "projects/_learn_filters.html"%}
   </div>
 
   <div id="main">
     <br>
-    <section id="learn-projects-list">
-      <h1><span>{{ _('Learn') }}
-        {% if learn_community %}
-          {{ _('- Community Picks') }}
-        {% else %}{% if learn_staff %}
-          {{ _('- Staff Favorites')}}
-        {% else %}{% if learn_fresh %}
-          {{ _('- Fresh Additions') }}
-        {% else %}{% if learn_school %}
-          {{_('-')}} {{ learn_school }}
-        {% else %}{% if learn_tag %}
-          {{ _('- Tagged as \'') }}{{ learn_tag }}'
-        {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
-      </span></h1>
+    <section>
+      <h1 id="learn-header">
+        {% include "projects/_learn_header.html"%}
+      </h1>
       <br>
       <ul class="project-list">
         {% include "projects/_learn_projects.html" %}
       </ul>
       <br clear="both">
-      {% include "projects/_learn_pagination.html" %}
+      <div id="learn-pagination">
+        {% include "projects/_learn_pagination.html" %}
+      </div>
       <a id="show-more-results" class="button" href="#">{{ _('Show More Results') }}</a>
     </section>
   </div>
@@ -96,14 +48,6 @@
 
 {% block js %}
   <script type="text/javascript">
-    $('#learn-search-tags #id_tag').autocomplete({
-        source: function( request, response ) {
-                url = "{% url projects_matching_tags %}?term=" + request.term;
-                $.getJSON(url, function(data) {
-                    response(data);
-                });
-            }
-    });
     {% if infinite_scroll %}
         $(window).scroll(function(){
             var $project_list = $('#learn #main ul.project-list');
