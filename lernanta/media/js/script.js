@@ -716,21 +716,24 @@ function reloadLearnProjectList(data) {
     updateLearnProjectList(data);
 }
 
-function updateBrowserUrl(url) {
-    if ( url != window.location ) {
-            window.history.pushState({}, '', url);
-    }
+var doingPush = false;
+
+if ( window.History.enabled ) {
+    window.History.Adapter.bind(window,'statechange',function(){
+        var state = window.History.getState();
+        if ( !doingPush ) {
+            window.location.href = state.url;
+        }
+        doingPush = false;
+    });
 }
 
-var popped = ('state' in window.history), initialURL = location.href;
-$(window).bind('popstate', function(event) {
-
-    var initialPop = !popped && location.href == initialURL
-    popped = true
-    if ( initialPop ) return
-
-    window.location = document.location;
-});
+function updateBrowserUrl(url) {
+    if ( window.History.enabled ) {
+        doingPush = true;
+        window.History.pushState({}, $("title").text(), url);
+    }
+}
 
 function submitLearnShowMore(e) {
     $link = $(this);
