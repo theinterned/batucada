@@ -722,7 +722,7 @@ if ( window.History.enabled ) {
     window.History.Adapter.bind(window,'statechange',function(){
         var state = window.History.getState();
         if ( !doingPush && state.data.path ) {
-            location.href = state.data.path;
+            window.location = state.data.path;
         }
         doingPush = false;
     });
