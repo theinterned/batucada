@@ -721,8 +721,8 @@ var doingPush = false;
 if ( window.History.enabled ) {
     window.History.Adapter.bind(window,'statechange',function(){
         var state = window.History.getState();
-        if ( !doingPush ) {
-            window.location.href = state.url;
+        if ( !doingPush && state.data.path ) {
+            window.location = state.data.path;
         }
         doingPush = false;
     });
@@ -731,7 +731,7 @@ if ( window.History.enabled ) {
 function updateBrowserUrl(url) {
     if ( window.History.enabled ) {
         doingPush = true;
-        window.History.pushState({}, $("title").text(), url);
+        window.History.pushState({path: url}, $("title").text(), url);
     }
 }
 
