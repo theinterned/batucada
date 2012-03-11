@@ -52,7 +52,7 @@
         {% if user|can_edit_signup_answer:answer %}
           <a class="action restore" href="{% locale_url restore_signup_answer slug=project.slug answer_id=answer.id %}">{{ _('Restore') }}</a>
         {% endif %}
-      <li>
+      </li>
     {% endif %}
   {% else %}
     <li class="post-container">
