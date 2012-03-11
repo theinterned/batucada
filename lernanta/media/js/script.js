@@ -722,7 +722,13 @@ function updateBrowserUrl(url) {
     }
 }
 
+var popped = ('state' in window.history), initialURL = location.href;
 $(window).bind('popstate', function(event) {
+
+    var initialPop = !popped && location.href == initialURL
+    popped = true
+    if ( initialPop ) return
+
     window.location = document.location;
 });
 
