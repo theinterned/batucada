@@ -390,7 +390,7 @@ class Project(ModelBase):
             '-tagged_count')[:max_count]
 
     @classmethod
-    def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=6):
+    def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=7.0):
         ct = ContentType.objects.get_for_model(Project)
         tags = GeneralTaggedItem.objects.filter(
             content_type=ct).values('tag__name').annotate(
@@ -403,6 +403,7 @@ class Project(ModelBase):
                 factor = 1.0
             else:
                 factor = float(max_weight - min_weight) / float(max_tagged_count - min_tagged_count)
+        tags = tags.order_by('tag__name')
         for tag in tags:
             tag['weight']  = max_weight - (max_tagged_count - tag['tagged_count']) * factor
         return tags
