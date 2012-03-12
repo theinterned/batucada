@@ -5740,3 +5740,138 @@ table#metrics-scoreboard td.todays-count {
 #learn-tags #main a {
     padding: 5px;
 }
+
+.pages-jobs #main {
+    background: #f3f3f3;
+    border-color: #ffffff;
+    font-size: 14px;
+}
+
+.pages-jobs p {
+    margin-top: 5px;
+}
+
+.pages-jobs #jobs-top {
+    background-image: url('/media/images/jobs_page/workshop.png');
+    height: 450px;
+    width: 960px;
+    padding-top: 0px;
+}
+
+.pages-jobs #jobs-top,
+.pages-jobs #jobs-bottom {
+    margin-left: 6px;
+}
+
+.pages-jobs #jobs-top h1 {
+    font-size: 42px;
+    font-weight:100;
+    text-shadow: none;
+    color: #ffffff;
+    padding-top: 390px;
+    padding-left: 48px;
+}
+
+.pages-jobs .highlight1 {
+    color: #ff7300;
+}
+
+.pages-jobs .highlight2 {
+    color: #b7d500;
+}
+
+.pages-jobs .highlight3 {
+    color: #00c7b5;
+}
+
+.pages-jobs .highlight4 {
+    color: #ffbc1a;
+}
+
+.pages-jobs #jobs-left {
+    width: 590px;
+    margin-bottom: 25px;
+    margin-left: 30px;
+}
+
+.pages-jobs #jobs-left h2, .pages-jobs #jobs-right h2 {
+    font-size: 26px;
+    margin-top: 20px;
+}
+
+.pages-jobs #jobs-left h2 {
+    margin-bottom: 10px;
+}
+
+.pages-jobs #jobs-left img {
+    margin-bottom: 30px;
+}
+
+.pages-jobs #jobs-right {
+    float: right;
+    position: relative;
+    width: 320px;
+    margin-right: 0;
+    margin-bottom: 5px;
+}
+
+.pages-jobs #jobs-right h2 {
+    margin-bottom: 10px;
+}
+
+.pages-jobs #jobs-right h3 {
+    font-size: 20px;
+}
+
+.pages-jobs #jobs-right .job-possitions {
+    background: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.pages-jobs #jobs-right .job-possitions a.button {
+    margin-left: 250px;
+    font-weight: bold;
+}
+
+.pages-jobs #jobs-right ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.pages-jobs #jobs-right ul li {
+    border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.pages-jobs #jobs-right ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0px;
+}
+
+.pages-jobs #jobs-bottom {
+    margin-top: 20px;
+    height: 630px;
+    background-image: url('/media/images/jobs_page/map.png')
+}
+
+.pages-jobs #jobs-bottom h2, .pages-jobs #jobs-bottom  a {
+    font-size: 22px;
+    font-weight: 100px;
+    text-shadow: none;
+}
+
+.pages-jobs #jobs-bottom h2 {
+    padding-top: 40px;
+    padding-left: 40px;
+}
+
+.pages-jobs #jobs-bottom a.button {
+    margin-right: 270px;
+    margin-top: -34px;
+    float: right;
+    padding: 10px;
+}
