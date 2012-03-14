@@ -22,7 +22,7 @@
           <p>{{ badge.description }}</p>
           {% if badge.requirements %}
             <h2>{{ _('Requirements:') }}</h2> 
-            {{ badge.requirements }}
+            {{ badge.requirements|embed|safe }}
           {% endif %}
         </div>
         <p>

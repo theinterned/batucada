@@ -1,6 +1,7 @@
 {% extends "badges/base.html" %}
 
 {% load l10n_tags %}
+{% load embed %}
 
 {% block bodyclasses %}submission-edit summary{% endblock %}
 
@@ -23,7 +24,7 @@
        <p>{{ badge.description }}</p>
        {% if badge.requirements %}
          <h2>{{ _('Requirements:') }}</h2> 
-         {{ badge.requirements }}
+         {{ badge.requirements|embed|safe }}
        {% endif %}
     </div>
     <p>

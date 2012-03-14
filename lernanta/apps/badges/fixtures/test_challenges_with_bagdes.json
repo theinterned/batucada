@@ -1338,10 +1338,6 @@
         "pk": 12, 
         "model": "badges.badge", 
         "fields": {
-            "groups": [
-                2, 
-                3
-            ], 
             "description": "The Helpful Feedback Badge recognizes the ability to provide helpful and interesting feedback while maintaining a respectful tone.", 
             "requirements": "You need at least 1 peer to say that you provide helpful and interesting feedback while maintaining a respectful tone.",
             "creator": null, 
@@ -1351,16 +1347,14 @@
             "created_on": "2011-10-02 22:28:29", 
             "logic": 2, 
             "image": "images/sow_badges/helpful-feedback.png", 
-            "name": "Helpful Feedback"
+            "name": "Helpful Feedback",
+            "all_groups": true
         }
     }, 
     {
         "pk": 13, 
         "model": "badges.badge", 
         "fields": {
-            "groups": [
-                4
-            ], 
             "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
             "requirements": "You need at least 1 peer to say that you help push work forward within the community and motivate other team members to do so.",
             "creator": null, 
@@ -1372,7 +1366,8 @@
             "created_on": "2011-10-02 22:28:29", 
             "logic": 2, 
             "image": "images/sow_badges/team-player.png", 
-            "name": "Team Player"
+            "name": "Team Player",
+            "all_groups": true
         }
     }, 
     {

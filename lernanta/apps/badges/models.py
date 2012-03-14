@@ -44,6 +44,7 @@ class Badge(ModelBase):
         null=True, blank=True)
     logic = models.ForeignKey('badges.Logic', related_name='badges',
         help_text=_('Regulates how the badge is awarded to users.'))
+    all_groups = models.BooleanField(default=False)
     groups = models.ManyToManyField('projects.Project', related_name='badges',
         null=True, blank=True)
     creator = models.ForeignKey('users.UserProfile', related_name='badges',
@@ -148,14 +149,16 @@ class Badge(ModelBase):
     def get_peers(self, profile):
         from projects.models import Participation
         from users.models import UserProfile
-        badge_projects = self.groups.values('id')
         user_projects = Participation.objects.filter(
             user=profile).values('project__id')
         peers = Participation.objects.filter(
-            project__in=badge_projects).filter(
-            project__in=user_projects).values('user__id')
+            project__in=user_projects)
+        if not self.all_groups:
+            badge_projects = self.groups.values('id')
+            peers = peers.filter(project__in=badge_projects)
         return UserProfile.objects.filter(deleted=False,
-            id__in=peers).exclude(id=profile.id)
+            id__in=peers.values('user__id')).exclude(
+            id=profile.id)
 
     def other_badges_can_apply_for(self):
         badges = Badge.objects.exclude(
