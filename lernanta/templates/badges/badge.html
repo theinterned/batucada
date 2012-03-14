@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load l10n_tags %}
 {% load pagination_tags %}
+{% load embed %}
 
 {% block bodyclasses %}badge-show{% endblock %}
 
@@ -24,9 +25,10 @@
       <div id="badge-description">
 	    <h1>{{ badge }}</h1>
 	    <p>{{ badge.description }}</p>
+        <p>{{ _('This badge can be earned at all challenges.') }}</p>
         {% if badge.requirements %}
           <h2>{{ _('Requirements:') }}</h2> 
-          {{ badge.requirements }}
+          {{ badge.requirements|embed|safe }}
         {% endif %}
 		{% if prerequisites %}
 		  <br><br>
@@ -67,7 +69,7 @@
       {% endwith %}
     {% endif %}
 
-    {% if related_projects %}
+    {% if not badge.all_groups and related_projects %}
       <hr>
       <h2>{{ _('This badge can be earned at these Challenges:') }}</h2>
       <br>
