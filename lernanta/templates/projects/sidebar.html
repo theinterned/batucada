@@ -223,6 +223,7 @@
   <br>
   {% if content_pages %}
     <nav id="content-pages">
+    <form id="reorder_tasks" method="post" action="{%locale_url page_index_reorder slug=project.slug%}">
       <ul>
         {% for page in content_pages %}
 	<li>	
@@ -236,6 +237,7 @@
 	</li>
         {% endfor %}
       </ul>
+    </form>
     </nav>
   {% else %}
     {{ _('No tasks have been added.') }}
