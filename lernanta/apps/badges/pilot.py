@@ -80,7 +80,7 @@ def get_awarded_badges(username):
                         'image': image_url,
                         'count': 1,
                         'description': custom_badge.description,
-                        'template': description_url,
+                        'criteria': description_url,
                     }
                     badges[tag.name] = data
     except User.DoesNotExist:
