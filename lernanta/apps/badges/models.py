@@ -14,6 +14,7 @@ from drumbeat.models import ModelBase
 from richtext.models import RichTextField
 from users.tasks import SendUserEmail
 from l10n.models import localize_email
+from l10n.urlresolvers import reverse
 
 
 def determine_upload_path(instance, filename):
@@ -26,7 +27,22 @@ def determine_upload_path(instance, filename):
 
 def get_awarded_badges(user):
     from pilot import get_awarded_badges as get_pilot_badges
-    return get_pilot_badges(user)
+    badges = get_pilot_badges(user)
+    profile = user.get_profile()
+    badges_ids = Award.objects.filter(user=profile).values(
+        'badge_id').distinct()
+    for badge in Badge.objects.filter(id__in=badges_ids):
+        evidence = reverse('user_awards_show',
+            kwargs= dict(slug=badge.slug, username=profile.username))
+        data = {
+            'name': badge.name,
+            'description': badge.description,
+            'image': badge.get_image_url(),
+            'evidence': evidence,
+            'criteria': badge.get_absolute_url(),
+        }
+        badges[badge.slug] = data
+    return badges
 
 
 class Badge(ModelBase):

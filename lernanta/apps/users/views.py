@@ -32,6 +32,7 @@ from drumbeat import messages
 from activity.models import Activity
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
+from badges.models import Award
 
 from users import forms
 from users.models import UserProfile, create_profile, ProfileTag
@@ -581,6 +582,24 @@ def profile_edit_image(request):
                                       'your image.'))
     else:
         return http.HttpResponseRedirect(reverse('users_profile_edit'))
+
+
+@login_required
+def badges_manage(request):
+    profile = request.user.get_profile()
+    badges_help_url = "http://help.p2pu.org/kb/learning/what-are-badges"
+    has_badges = Award.objects.filter(user=profile).exists()
+    badges_url = reverse('badges_list')
+    context = {
+        'profile': profile,
+        'obi_url': settings.MOZBADGES['hub'],
+        'badges_help_url': badges_help_url,
+        'badges_url': badges_url,
+        'has_badges': has_badges,
+        'badges_tab': True,
+    }
+    return render_to_response('badges/profile_badges_manage.html',
+        context, context_instance=RequestContext(request))
 
 
 @login_required
