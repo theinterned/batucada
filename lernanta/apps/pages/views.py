@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import get_language
+from django import http
 
 from pages.models import Page
 
@@ -25,5 +26,6 @@ def show_page(request, slug):
 
 
 def jobs_page(request):
+    raise http.Http404
     return render_to_response('pages/jobs_page.html', {},
         context_instance=RequestContext(request))

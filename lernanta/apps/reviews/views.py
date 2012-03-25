@@ -70,7 +70,7 @@ def review_project(request, slug):
             if reviewer.can_feature:
                 project.community_featured = review.mark_featured
             if reviewer.can_delete:
-                project.deleted = review.mark_featured
+                project.deleted = review.mark_deleted
             if reviewer.can_feature or reviewer.can_delete:
                 project.save()
             messages.success(request, _('Review posted!'))

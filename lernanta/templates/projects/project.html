@@ -4,6 +4,7 @@
 {% load activity_tags %}
 {% load pagination_tags %}
 {% load join_p2pu_tags %}
+{% load reviews_tags %}
 
 {% block title %}{{ project.name }}{% endblock %}
 
@@ -21,6 +22,7 @@
     <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
     <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Admin') }} {{ project.kind|title }}</a>
   {% endif %}
+  {% project_review_action project user %}
 {% endblock %}
 
 

@@ -95,7 +95,7 @@ def learn_default(tag=None, school=None):
     if tag:
         learn_url += '&tag=%s' % tag.name
     if not school and not tag:
-        learn_url += '&featured=showcase'
+        learn_url += '&featured=community'
     return learn_url
 
 def school_learn_default(school, tag=None):

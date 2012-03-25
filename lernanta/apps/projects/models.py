@@ -385,17 +385,21 @@ class Project(ModelBase):
     @classmethod
     def get_popular_tags(cls, max_count=10):
         ct = ContentType.objects.get_for_model(Project)
+        not_listed = Project.objects.filter(
+            Q(not_listed=True)|Q(deleted=True)).values('id')
         return GeneralTaggedItem.objects.filter(
-            content_type=ct).values('tag__name').annotate(
-            tagged_count=Count('object_id')).order_by(
+            content_type=ct).exclude(object_id__in=not_listed).values(
+            'tag__name').annotate(tagged_count=Count('object_id')).order_by(
             '-tagged_count')[:max_count]
 
     @classmethod
     def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=7.0):
         ct = ContentType.objects.get_for_model(Project)
+        not_listed = Project.objects.filter(
+            Q(not_listed=True)|Q(deleted=True)).values('id')
         tags = GeneralTaggedItem.objects.filter(
-            content_type=ct).values('tag__name').annotate(
-            tagged_count=Count('object_id')).filter(
+            content_type=ct).exclude(object_id__in=not_listed).values(
+            'tag__name').annotate(tagged_count=Count('object_id')).filter(
             tagged_count__gte=min_count)
         if tags.count():
             min_tagged_count = tags.order_by('tagged_count')[0]['tagged_count']

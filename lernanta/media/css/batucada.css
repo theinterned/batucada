@@ -4977,6 +4977,21 @@ table#metrics-scoreboard td.todays-count {
   font-size: 86px;
 }
 
+#scoreboard-details h2 {
+  text-align: center;
+  font-size: 30px;
+  color: #262626;
+  font-weight: normal;
+  padding: 30px;
+}
+
+table.display {
+    border: 0;
+}
+
+table.display thead, table.display tfoot {
+    background-color: #eee;
+}
 
 #badge-top {
      width: 930px;
@@ -4990,7 +5005,6 @@ table#metrics-scoreboard td.todays-count {
      -o-border-radius: 3px;
      border-radius: 3px;
 }
-
 
 #peer-assessment-left, #submission-edit-left {
     width: 185px;
