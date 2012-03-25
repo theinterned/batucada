@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 12:14-0400\n"
+"POT-Creation-Date: 2012-03-24 23:27-0400\n"
 "PO-Revision-Date: 2012-02-27 11:34+0800\n"
 "Last-Translator: 谢昱 <emiliaxie@qq.com>\n"
 "Language-Team: LANGUAGE &lt;LL@li.org&gt;\n"
@@ -102,115 +102,107 @@ msgstr "用户%s需要是你的同伴。"
 msgid "User %s has not received all the prerequisite badges."
 msgstr "用户%s没有受到所有基本勋章。"
 
-#: apps/badges/models.py:46
+#: apps/badges/models.py:62
 msgid "Regulates how the badge is awarded to users."
 msgstr "管理勋章怎么被颁布给用户。"
 
-#: apps/badges/models.py:54 templates/badges/_submissions_list_item.html:11
+#: apps/badges/models.py:71 templates/badges/_submissions_list_item.html:11
 msgid "Badge"
 msgstr "勋章"
 
-#: apps/badges/models.py:225
+#: apps/badges/models.py:244
 msgid "Minimum number of votes."
 msgstr "最低数量的选票。"
 
-#: apps/badges/models.py:228
+#: apps/badges/models.py:247
 msgid "Minimum average rating."
 msgstr "最小平均评级。"
 
-#: apps/badges/models.py:231
+#: apps/badges/models.py:250
 msgid "If the badge can only be awarded to the user once."
 msgstr "如果勋章仅可授予一个用户一次。"
 
-#: apps/badges/models.py:237
+#: apps/badges/models.py:256
 msgid "Submission Required"
 msgstr "需要提交"
 
-#: apps/badges/models.py:238
+#: apps/badges/models.py:257
 #, fuzzy
 msgid "Submission Optional"
 msgstr "提交随意"
 
-#: apps/badges/models.py:239
+#: apps/badges/models.py:258
 msgid "No submissions"
 msgstr "不要提交"
 
-#: apps/badges/models.py:262
+#: apps/badges/models.py:281
 #, python-format
 msgid "%(author)s's application for %(badge)s"
 msgstr "%(author)s对%(badge)s的申请书"
 
-#: apps/badges/models.py:289
+#: apps/badges/models.py:308
 msgid "Allows to give more or less weight to the assessor's vote."
 msgstr "允许对评价者的评级加权。"
 
-#: apps/badges/models.py:300
+#: apps/badges/models.py:319
 msgid ""
 "If submission is blank, this is a peer awarded assessment or superuser "
 "granted"
 msgstr "如果提交的是空白，这是一个被同辈评估或被超级用户授予的。"
 
-#: apps/badges/models.py:303
+#: apps/badges/models.py:322
 msgid "If all rubric ratings were provided."
 msgstr "如果所有的分级专栏评级被提交。"
 
-#: apps/badges/models.py:306
+#: apps/badges/models.py:325
 #, python-format
 msgid "%(assessor)s for %(assessed)s for %(badge)s"
 msgstr "%(assessor)s为%(assessed)s授予%(badge)s"
 
-#: apps/badges/models.py:369
+#: apps/badges/models.py:388
 msgid "Never"
 msgstr "从不"
 
-#: apps/badges/models.py:370
+#: apps/badges/models.py:389
 msgid "Sometimes"
 msgstr "偶尔"
 
-#: apps/badges/models.py:371
+#: apps/badges/models.py:390
 msgid "Most of the time"
 msgstr "大部分时间"
 
-#: apps/badges/models.py:372
+#: apps/badges/models.py:391
 msgid "Always"
 msgstr "总是"
 
-#: apps/badges/models.py:380
+#: apps/badges/models.py:399
 #, python-format
 msgid "%(score)s for %(rubric)s"
 msgstr "%(score)s的%(rubric)s"
 
-#: apps/badges/models.py:399
+#: apps/badges/models.py:418
 #, python-format
 msgid "%(user)s - %(badge)s"
 msgstr "%(user)s - %(badge)s"
 
-#: apps/badges/views.py:61
-msgid "Something has gone wrong. Hopefully it's temporary. "
-msgstr "出问题了，希望它是暂时的。"
-
-#: apps/badges/views.py:62
-msgid "Please try again in a few minutes."
-msgstr "请在几分钟后再试。"
-
-#: apps/badges/views.py:120 apps/projects/views.py:182
+#: apps/badges/views.py:86 apps/projects/views.py:182
 #, python-format
 msgid "The %s has been created."
 msgstr "%s已经被创造。"
 
-#: apps/badges/views.py:125
+#: apps/badges/views.py:91
 msgid "Problem creating the badge."
 msgstr "创建勋章出问题了。"
 
-#: apps/badges/views.py:139
+#: apps/badges/views.py:105
 msgid "You can not apply for this badge."
 msgstr "你不能申请这个勋章。"
 
-#: apps/badges/views.py:153
+#: apps/badges/views.py:119
 msgid "Submission created and out for review!"
 msgstr "已提交，审查中！"
 
-#: apps/badges/views.py:156 apps/badges/views.py:289 apps/badges/views.py:345
+#: apps/badges/views.py:122 apps/badges/views.py:255 apps/badges/views.py:311
 #: apps/content/views.py:114 apps/content/views.py:156
 #: apps/content/views.py:255 apps/replies/views.py:57
 #: apps/replies/views.py:118 apps/replies/views.py:152
@@ -219,23 +211,23 @@ msgstr "已提交，审查中！"
 msgid "Please correct errors below."
 msgstr "请修改一下下面的错误。"
 
-#: apps/badges/views.py:252
+#: apps/badges/views.py:218
 msgid "You cannot assess your own work."
 msgstr "你不能评估自己的作业。"
 
-#: apps/badges/views.py:256
+#: apps/badges/views.py:222
 msgid "You have already assessed this submission."
 msgstr "你已经评估此提交。"
 
-#: apps/badges/views.py:286
+#: apps/badges/views.py:252
 msgid "Assessment saved. Thank you for your feedback!"
 msgstr "评估已保存。谢谢你的反馈！"
 
-#: apps/badges/views.py:328
+#: apps/badges/views.py:294
 msgid "You can not give this badge to a peer."
 msgstr "你不可以把这个勋章颁布给同辈。"
 
-#: apps/badges/views.py:342
+#: apps/badges/views.py:308
 msgid "Thank you for giving a badge to your peer!"
 msgstr "感谢你为你的同伴颁布勋章。"
 
@@ -372,8 +364,8 @@ msgstr "邮件更新"
 msgid "Password updated"
 msgstr "更新密码"
 
-#: apps/preferences/views.py:102 apps/users/views.py:308
-#: apps/users/views.py:447
+#: apps/preferences/views.py:102 apps/users/views.py:309
+#: apps/users/views.py:448
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr "表格有误，请改正并重新提交。"
 
@@ -464,12 +456,12 @@ msgstr "没有短名%s的学习小组、课程。"
 msgid "There is no course with this short name on the archive."
 msgstr "存档里没有该短名的课程。"
 
-#: apps/projects/forms.py:211 templates/projects/_learn_filters.html:8
+#: apps/projects/forms.py:211 templates/projects/_learn_filters.html:5
 #, fuzzy
 msgid "Community Picks"
 msgstr "评论"
 
-#: apps/projects/forms.py:212 templates/projects/_learn_filters.html:5
+#: apps/projects/forms.py:212 templates/projects/_learn_filters.html:8
 msgid "Showcase"
 msgstr ""
 
@@ -562,7 +554,7 @@ msgid "There was an error adding your link."
 msgstr "添加链接有误。"
 
 #: apps/projects/views.py:494 apps/projects/views.py:528
-#: apps/users/views.py:646
+#: apps/users/views.py:666
 msgid "You can't edit this link"
 msgstr "你无法编辑此链接。"
 
@@ -979,14 +971,14 @@ msgstr "（参与）"
 msgid "(following)"
 msgstr "（关注）"
 
-#: apps/users/views.py:48
+#: apps/users/views.py:49
 #, python-format
 msgid ""
 "A link to activate your user account was sent by email to your address %s. "
 "You have to click it before you can log in."
 msgstr "账号激活链接已通过邮件发送至您的邮箱%s。激活后才能够正常登陆。"
 
-#: apps/users/views.py:54
+#: apps/users/views.py:55
 #, python-format
 msgid ""
 "If you did not receive the confirmation email, make sure your email service "
@@ -997,112 +989,119 @@ msgstr ""
 "如果你没有收到确认信，请确保你的邮箱未将此邮件设为\"垃圾邮件\"。如果需要，你"
 "可以让我们&lt;a href=\"%s\"&gt;重新发送确认信&gt;到您邮箱。"
 
-#: apps/users/views.py:204
+#: apps/users/views.py:205
 msgid "Incorrect username, email or password."
 msgstr "用户名、邮箱或密码不正确。"
 
-#: apps/users/views.py:293
+#: apps/users/views.py:294
 msgid "Congratulations! Your user account was successfully created."
 msgstr "祝贺您！你的账号注册成功！"
 
-#: apps/users/views.py:301 apps/users/views.py:441
+#: apps/users/views.py:302 apps/users/views.py:442
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
 msgstr "谢谢！确认邮件已发出到{0} 。请根据邮件指示完成注册。"
 
-#: apps/users/views.py:372
+#: apps/users/views.py:373
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "确认密码不正确。"
 
-#: apps/users/views.py:377
+#: apps/users/views.py:378
 msgid "Success! You have verified your account. You may now sign in."
 msgstr "注册成功！你已激活账号，立即登录吧！"
 
-#: apps/users/views.py:393
+#: apps/users/views.py:394
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
 msgstr "确认密码及账号已发送至您的邮箱。"
 
-#: apps/users/views.py:402
+#: apps/users/views.py:403
 msgid "This user account was deleted."
 msgstr "用户名已删除。"
 
-#: apps/users/views.py:464
+#: apps/users/views.py:465
 msgid "Profile updated"
 msgstr "文件更新了。"
 
-#: apps/users/views.py:470
+#: apps/users/views.py:471
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
 msgstr "更新文件中出现问题。请重新提交。"
 
-#: apps/users/views.py:505
+#: apps/users/views.py:506
 #, python-format
 msgid "The identity %s has already been claimed by you."
 msgstr "身份%s已被你声称。"
 
-#: apps/users/views.py:506
+#: apps/users/views.py:507
 #, python-format
 msgid "The identity %s has already been claimed by another user."
 msgstr "身份%s已被别人声称。"
 
-#: apps/users/views.py:519
+#: apps/users/views.py:520
 #, python-format
 msgid "The identity %s has been saved."
 msgstr "身份%s已保存。"
 
-#: apps/users/views.py:526
+#: apps/users/views.py:527
 #, python-format
 msgid "OpenID authentication failed: %s"
 msgstr "开放身份认证失败：%s"
 
-#: apps/users/views.py:529
+#: apps/users/views.py:530
 msgid "Authentication cancelled."
 msgstr "认证取消。"
 
-#: apps/users/views.py:532
+#: apps/users/views.py:533
 #, python-format
 msgid "Unknown OpenID response type: %r"
 msgstr "未知开放身份回答类型：%r"
 
-#: apps/users/views.py:534
+#: apps/users/views.py:535
 msgid "This is an OpenID relying party endpoint."
 msgstr "该开放身份依赖于终端。"
 
-#: apps/users/views.py:543
+#: apps/users/views.py:544
 msgid "You can't edit this openid"
 msgstr "你无法编辑该开放身份。"
 
-#: apps/users/views.py:545
+#: apps/users/views.py:546
 msgid "The openid was deleted."
 msgstr "该开放身份已删除。"
 
-#: apps/users/views.py:575
+#: apps/users/views.py:576
 msgid "Profile image updated"
 msgstr "设定档图片已更新。"
 
-#: apps/users/views.py:580
+#: apps/users/views.py:581
 msgid "There was an error uploading your image."
 msgstr "上传图片中出错。"
 
-#: apps/users/views.py:592
+#: apps/users/views.py:612
 msgid "Profile link added."
 msgstr "设定档链接已添加。"
 
-#: apps/users/views.py:601
+#: apps/users/views.py:621
 msgid "There was an error saving your link."
 msgstr "链接保存中存在错误。"
 
-#: apps/users/views.py:625
+#: apps/users/views.py:645
 msgid "Profile link updated"
 msgstr "设定档链接已更新。"
 
-#: apps/users/views.py:648
+#: apps/users/views.py:668
 msgid "The link was deleted."
 msgstr "链接已删除。"
+
+#: src/django-obi/django_obi/templates/django_obi/send.html:3
+#: templates/drumbeatmail/base.html:41 templates/messages/compose.html:8
+#: templates/projects/contact_organizers.html:36
+#: templates/users/forgot_password.html:18
+msgid "Send"
+msgstr "发送"
 
 #: templates/404.html:6
 msgid "Page not found"
@@ -1253,7 +1252,7 @@ msgid "css/style-en.css"
 msgstr "css/style-zh-CN.css"
 
 #: templates/base.html:49 templates/activity/base.html:18
-#: templates/projects/base.html:19 templates/projects/learn.html:4
+#: templates/projects/base.html:22 templates/projects/learn.html:4
 #: templates/projects/learn.html.py:16 templates/projects/learn_tags.html:10
 #: templates/projects/project_edit.html:26
 msgid "Learn"
@@ -1312,11 +1311,11 @@ msgstr "zn-CN"
 msgid "Home"
 msgstr "主页"
 
-#: templates/base.html:154
+#: templates/base.html:155
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-zn-CN.js"
 
-#: templates/base.html:156
+#: templates/base.html:157
 msgid "js/script-en.js"
 msgstr "js/script-zn-CN.js"
 
@@ -1460,6 +1459,8 @@ msgstr "还原"
 #: templates/activity/index.html:20
 #: templates/projects/project_admin_metrics.html:26
 #: templates/projects/project_admin_metrics.html:41
+#: templates/tracker/scoreboard.html:55 templates/tracker/scoreboard.html:67
+#: templates/tracker/scoreboard.html:89
 msgid "Comments"
 msgstr "评论"
 
@@ -1510,7 +1511,6 @@ msgstr "给与勋章"
 
 #: templates/badges/_give_badge_action.html:5
 #: templates/badges/badges_list.html:9 templates/badges/base.html:10
-#: templates/badges/profile_badges_manage.html:17
 #: templates/projects/_project_card.html:32
 #: templates/schools/_projectset_card.html:42
 #: templates/schools/projectset_home.html:22
@@ -1611,61 +1611,66 @@ msgstr ""
 
 #: templates/badges/assessment_edit.html:66
 #: templates/badges/peer_assessment.html:46
-#: templates/badges/submission_edit.html:45
+#: templates/badges/submission_edit.html:46
 #: templates/content/_toggle_completion.html:41
 #: templates/content/_toggle_completion.html:70
 #: templates/reviews/review_project.html:43
 msgid "Submit"
 msgstr "提交"
 
-#: templates/badges/badge.html:15
+#: templates/badges/badge.html:16
 #, fuzzy
 msgid "View your Submissions"
 msgstr "意见"
 
-#: templates/badges/badge.html:18
+#: templates/badges/badge.html:19
 msgid "Apply for Badge"
 msgstr "申请徽章"
 
-#: templates/badges/badge.html:21
+#: templates/badges/badge.html:22
 #, fuzzy
 msgid "Award Badge to Peer"
 msgstr "给与你的同伴一个徽章"
 
-#: templates/badges/badge.html:28 templates/badges/peer_assessment.html:24
-#: templates/badges/show_user_awards.html:19
-#: templates/badges/submission_edit.html:25
+#: templates/badges/badge.html:28
+#, fuzzy
+msgid "This badge can be earned at all challenges."
+msgstr "你已经使用该挑战。"
+
+#: templates/badges/badge.html:30 templates/badges/peer_assessment.html:24
+#: templates/badges/show_user_awards.html:20
+#: templates/badges/submission_edit.html:26
 #: templates/content/_toggle_completion.html:56
 msgid "Requirements:"
 msgstr ""
 
-#: templates/badges/badge.html:33
+#: templates/badges/badge.html:35
 #, fuzzy
 msgid "You need to have these badges:"
 msgstr "你没有任何徽章"
 
-#: templates/badges/badge.html:48
+#: templates/badges/badge.html:50
 msgid "Other badges you can apply for:"
 msgstr ""
 
-#: templates/badges/badge.html:60
+#: templates/badges/badge.html:62
 #, fuzzy
 msgid "Peers that have received this badge:"
 msgstr "用户 %s 没有受到所有基本勋章。"
 
-#: templates/badges/badge.html:72
+#: templates/badges/badge.html:74
 msgid "This badge can be earned at these Challenges:"
 msgstr ""
 
-#: templates/badges/badge.html:82
+#: templates/badges/badge.html:84
 msgid "Peers that are applying for this badge:"
 msgstr ""
 
-#: templates/badges/badge.html:84 templates/projects/sidebar.html:302
+#: templates/badges/badge.html:86 templates/projects/sidebar.html:302
 msgid "Awarded"
 msgstr "授奖"
 
-#: templates/badges/badge.html:84 templates/projects/sidebar.html:306
+#: templates/badges/badge.html:86 templates/projects/sidebar.html:306
 msgid "Pending"
 msgstr "待定"
 
@@ -1755,35 +1760,33 @@ msgstr "给与你的同伴一个徽章"
 msgid "Peer Username:"
 msgstr "同伴的用户名"
 
-#: templates/badges/profile_badges_manage.html:6
-#: templates/badges/profile_badges_manage.html:9
+#: templates/badges/profile_badges_manage.html:7
+#: templates/badges/profile_badges_manage.html:10
 #: templates/users/profile_edit.html:32
 msgid "Manage Badges"
 msgstr "管理徽章"
 
-#: templates/badges/profile_badges_manage.html:10
+#: templates/badges/profile_badges_manage.html:11
 #, fuzzy, python-format
 msgid ""
-"Send your email address and badges to the <a href=\"%(obi_url)s\" target="
-"\"_blank\">Open Badges Infrastructure (OBI)</a>. Visit the <a href="
-"\"%(badges_help_url)s\" target=\"_blank\">assessments and badges page</a> "
-"for more information."
+"Send your badges to the <a href=\"%(obi_url)s\" target=\"_blank\">Mozilla "
+"Open Badge Backpack</a> as %(email)s. Read more about badges at <a href="
+"\"%(badges_help_url)s\" target=\"_blank\">help.p2pu.org</a>."
 msgstr ""
 "发送你的邮箱地址和徽章到&lt;a href=\"%(obi_url)s\" target=\"_blank\"&gt;Open "
 "Badges Infrastructure (OBI)&lt;/a&gt;. Visit the &lt;a href="
 "\"%(badges_help_url)s\" target=\"_blank\"&gt;assessments and badges page&lt;/"
 "a&gt; 以获得更多的信息。"
 
-#: templates/badges/profile_badges_manage.html:22
-#: templates/drumbeatmail/base.html:41 templates/messages/compose.html:8
-#: templates/projects/contact_organizers.html:36
-#: templates/users/forgot_password.html:18
-msgid "Send"
-msgstr "发送"
-
-#: templates/badges/profile_badges_manage.html:26
+#: templates/badges/profile_badges_manage.html:16
 msgid "You don't have any badges."
 msgstr "你没有任何徽章"
+
+#: templates/badges/profile_badges_manage.html:17
+#, python-format
+msgid ""
+"Check out the <a href=\"%(badges_url)s\">existing badges</a> you can earn!"
+msgstr ""
 
 #: templates/badges/show_assessment.html:6
 #, fuzzy
@@ -1800,34 +1803,34 @@ msgstr "接手"
 msgid "Award Justification"
 msgstr "关于  的评定"
 
-#: templates/badges/show_user_awards.html:10
+#: templates/badges/show_user_awards.html:11
 msgid "'s Awards to"
 msgstr "对   的授奖"
 
-#: templates/badges/show_user_awards.html:29
+#: templates/badges/show_user_awards.html:30
 #: templates/projects/imported_detailed_description.html:15
 msgid "Prerequisites"
 msgstr "预习"
 
-#: templates/badges/show_user_awards.html:39
+#: templates/badges/show_user_awards.html:40
 msgid "Awarded At"
 msgstr "对  的授奖"
 
-#: templates/badges/show_user_awards.html:50
+#: templates/badges/show_user_awards.html:51
 msgid "Evidence"
 msgstr ""
 
-#: templates/badges/submission_edit.html:21
+#: templates/badges/submission_edit.html:22
 #, fuzzy
 msgid "Apply for this badge."
 msgstr "申请徽章"
 
-#: templates/badges/submission_edit.html:35
+#: templates/badges/submission_edit.html:36
 #, fuzzy
 msgid "URL to the work you are submitting:"
 msgstr "链接你的作业"
 
-#: templates/badges/submission_edit.html:40
+#: templates/badges/submission_edit.html:41
 #: templates/content/_toggle_completion.html:66
 #, fuzzy
 msgid "What did you learn? Why do you feel you deserve this badge?"
@@ -2463,6 +2466,63 @@ msgstr "N j, Y, P"
 msgid "delete"
 msgstr ""
 
+#: templates/pages/jobs_page.html:17
+msgid ""
+"P2PU <span class=\"highlight4\">is hiring.</span> <span class="
+"\"highlight3\">Learn anything,</span> <span class=\"highlight2\">while you "
+"work.</span>"
+msgstr ""
+
+#: templates/pages/jobs_page.html:20
+msgid "Open Positions"
+msgstr ""
+
+#: templates/pages/jobs_page.html:22
+msgid "Staff"
+msgstr ""
+
+#: templates/pages/jobs_page.html:25 templates/pages/jobs_page.html.py:30
+msgid "Django Developer"
+msgstr ""
+
+#: templates/pages/jobs_page.html:27 templates/pages/jobs_page.html.py:32
+#: templates/pages/jobs_page.html:42 templates/pages/jobs_page.html.py:52
+msgid "GO!"
+msgstr ""
+
+#: templates/pages/jobs_page.html:37
+#, fuzzy
+msgid "Intern"
+msgstr "兴趣"
+
+#: templates/pages/jobs_page.html:40
+msgid "Marketing Intern"
+msgstr ""
+
+#: templates/pages/jobs_page.html:47
+msgid "Volunteer"
+msgstr ""
+
+#: templates/pages/jobs_page.html:50
+msgid "Graphic Designer"
+msgstr ""
+
+#: templates/pages/jobs_page.html:58
+msgid "Why work at p2pu?"
+msgstr ""
+
+#: templates/pages/jobs_page.html:62
+msgid "Benefits and Percks"
+msgstr ""
+
+#: templates/pages/jobs_page.html:67
+msgid "You can work from anywhere, P2PU is global"
+msgstr ""
+
+#: templates/pages/jobs_page.html:68
+msgid "Meet our Team"
+msgstr ""
+
 #: templates/pagination/pagination_links.html:4
 #: templates/pagination/pagination_links.html:6
 msgid "previous"
@@ -2733,15 +2793,15 @@ msgstr ""
 msgid "Show More Results"
 msgstr ""
 
-#: templates/projects/project.html:21 templates/projects/sidebar.html:246
+#: templates/projects/project.html:22 templates/projects/sidebar.html:246
 msgid "New Task"
 msgstr ""
 
-#: templates/projects/project.html:22 templates/projects/project_edit.html:38
+#: templates/projects/project.html:23 templates/projects/project_edit.html:38
 msgid "Admin"
 msgstr ""
 
-#: templates/projects/project.html:38
+#: templates/projects/project.html:40
 msgid "Activity Wall"
 msgstr ""
 
@@ -4124,9 +4184,40 @@ msgstr ""
 msgid " posted a message to the wall."
 msgstr "给与你的追随者信息"
 
-#: templates/tracker/scoreboard.html:4 templates/tracker/scoreboard.html:11
-#: templates/tracker/scoreboard.html:16
+#: templates/tracker/scoreboard.html:4 templates/tracker/scoreboard.html:16
+#: templates/tracker/scoreboard.html:21
 msgid "Scoreboard"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:50
+msgid "Users Registered this Month"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:54
+msgid "User"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:56 templates/tracker/scoreboard.html:78
+#: templates/tracker/scoreboard.html:90
+msgid "Joins"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:62
+msgid "Comments Posted at Groups this Month"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:66 templates/tracker/scoreboard.html:77
+#: templates/tracker/scoreboard.html:88
+#, fuzzy
+msgid "Group"
+msgstr "小组"
+
+#: templates/tracker/scoreboard.html:73
+msgid "Joins to Groups this Month"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:84
+msgid "Groups Created this Month"
 msgstr ""
 
 #: templates/users/_openid_providers.html:7
@@ -4602,6 +4693,12 @@ msgstr "谢谢！"
 #: templates/users/emails/registration_confirm_subject.txt:2
 msgid "[P2PU] Complete Registration!"
 msgstr ""
+
+#~ msgid "Something has gone wrong. Hopefully it's temporary. "
+#~ msgstr "出问题了，希望它是暂时的。"
+
+#~ msgid "Please try again in a few minutes."
+#~ msgstr "请在几分钟后再试。"
 
 #, fuzzy
 #~ msgid "Under Review"
