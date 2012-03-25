@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LERNANTA 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 12:14-0400\n"
+"POT-Creation-Date: 2012-03-24 23:27-0400\n"
 "PO-Revision-Date: 2011-04-11 8:23-0500\n"
 "Last-Translator: Hèlen Grives <helengrives@hotmail.com>\n"
 "Language-Team: LANGUAGE <nl>\n"
@@ -103,117 +103,109 @@ msgstr ""
 msgid "User %s has not received all the prerequisite badges."
 msgstr ""
 
-#: apps/badges/models.py:46
+#: apps/badges/models.py:62
 msgid "Regulates how the badge is awarded to users."
 msgstr ""
 
-#: apps/badges/models.py:54 templates/badges/_submissions_list_item.html:11
+#: apps/badges/models.py:71 templates/badges/_submissions_list_item.html:11
 #, fuzzy
 msgid "Badge"
 msgstr "Emblemen"
 
-#: apps/badges/models.py:225
+#: apps/badges/models.py:244
 msgid "Minimum number of votes."
 msgstr ""
 
-#: apps/badges/models.py:228
+#: apps/badges/models.py:247
 msgid "Minimum average rating."
 msgstr ""
 
-#: apps/badges/models.py:231
+#: apps/badges/models.py:250
 msgid "If the badge can only be awarded to the user once."
 msgstr ""
 
-#: apps/badges/models.py:237
+#: apps/badges/models.py:256
 msgid "Submission Required"
 msgstr ""
 
-#: apps/badges/models.py:238
+#: apps/badges/models.py:257
 msgid "Submission Optional"
 msgstr ""
 
-#: apps/badges/models.py:239
+#: apps/badges/models.py:258
 msgid "No submissions"
 msgstr ""
 
-#: apps/badges/models.py:262
+#: apps/badges/models.py:281
 #, python-format
 msgid "%(author)s's application for %(badge)s"
 msgstr ""
 
-#: apps/badges/models.py:289
+#: apps/badges/models.py:308
 msgid "Allows to give more or less weight to the assessor's vote."
 msgstr ""
 
-#: apps/badges/models.py:300
+#: apps/badges/models.py:319
 msgid ""
 "If submission is blank, this is a peer awarded assessment or superuser "
 "granted"
 msgstr ""
 
-#: apps/badges/models.py:303
+#: apps/badges/models.py:322
 msgid "If all rubric ratings were provided."
 msgstr ""
 
-#: apps/badges/models.py:306
+#: apps/badges/models.py:325
 #, python-format
 msgid "%(assessor)s for %(assessed)s for %(badge)s"
 msgstr ""
 
-#: apps/badges/models.py:369
+#: apps/badges/models.py:388
 msgid "Never"
 msgstr ""
 
-#: apps/badges/models.py:370
+#: apps/badges/models.py:389
 msgid "Sometimes"
 msgstr ""
 
-#: apps/badges/models.py:371
+#: apps/badges/models.py:390
 msgid "Most of the time"
 msgstr ""
 
-#: apps/badges/models.py:372
+#: apps/badges/models.py:391
 msgid "Always"
 msgstr ""
 
-#: apps/badges/models.py:380
+#: apps/badges/models.py:399
 #, python-format
 msgid "%(score)s for %(rubric)s"
 msgstr ""
 
-#: apps/badges/models.py:399
+#: apps/badges/models.py:418
 #, fuzzy, python-format
 msgid "%(user)s - %(badge)s"
 msgstr "%(actor)s %(verb)s %(target)s"
 
-#: apps/badges/views.py:61
-msgid "Something has gone wrong. Hopefully it's temporary. "
-msgstr ""
-
-#: apps/badges/views.py:62
-msgid "Please try again in a few minutes."
-msgstr ""
-
-#: apps/badges/views.py:120 apps/projects/views.py:182
+#: apps/badges/views.py:86 apps/projects/views.py:182
 #, python-format
 msgid "The %s has been created."
 msgstr "De %s is gemaakt."
 
-#: apps/badges/views.py:125
+#: apps/badges/views.py:91
 #, fuzzy
 msgid "Problem creating the badge."
 msgstr "Problemen met het maken van de studiegroep, cursus ..."
 
-#: apps/badges/views.py:139
+#: apps/badges/views.py:105
 #, fuzzy
 msgid "You can not apply for this badge."
 msgstr "Je kunt niet reageren op deze activiteit"
 
-#: apps/badges/views.py:153
+#: apps/badges/views.py:119
 msgid "Submission created and out for review!"
 msgstr ""
 
-#: apps/badges/views.py:156 apps/badges/views.py:289 apps/badges/views.py:345
+#: apps/badges/views.py:122 apps/badges/views.py:255 apps/badges/views.py:311
 #: apps/content/views.py:114 apps/content/views.py:156
 #: apps/content/views.py:255 apps/replies/views.py:57
 #: apps/replies/views.py:118 apps/replies/views.py:152
@@ -223,26 +215,26 @@ msgstr ""
 msgid "Please correct errors below."
 msgstr "Verbeter de fouten aub."
 
-#: apps/badges/views.py:252
+#: apps/badges/views.py:218
 #, fuzzy
 msgid "You cannot assess your own work."
 msgstr "Je kunt de taakvolgorde niet veranderen."
 
-#: apps/badges/views.py:256
+#: apps/badges/views.py:222
 #, fuzzy
 msgid "You have already assessed this submission."
 msgstr "Je bent al toegevoegd%s."
 
-#: apps/badges/views.py:286
+#: apps/badges/views.py:252
 msgid "Assessment saved. Thank you for your feedback!"
 msgstr ""
 
-#: apps/badges/views.py:328
+#: apps/badges/views.py:294
 #, fuzzy
 msgid "You can not give this badge to a peer."
 msgstr "Je kunt de taakvolgorde niet veranderen."
 
-#: apps/badges/views.py:342
+#: apps/badges/views.py:308
 msgid "Thank you for giving a badge to your peer!"
 msgstr ""
 
@@ -385,8 +377,8 @@ msgstr "E-mail is bijgewerkt"
 msgid "Password updated"
 msgstr "Paswoord is bijgewerkt"
 
-#: apps/preferences/views.py:102 apps/users/views.py:308
-#: apps/users/views.py:447
+#: apps/preferences/views.py:102 apps/users/views.py:309
+#: apps/users/views.py:448
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr "Er zitten fouten in dit formulier. Verbeter ze en verzend opnieuw."
 
@@ -477,12 +469,12 @@ msgstr "Er is geen studiegroep, cursus, ... met deze afkorting: %s."
 msgid "There is no course with this short name on the archive."
 msgstr "Er is geen cursus met deze afkorting in het archief."
 
-#: apps/projects/forms.py:211 templates/projects/_learn_filters.html:8
+#: apps/projects/forms.py:211 templates/projects/_learn_filters.html:5
 #, fuzzy
 msgid "Community Picks"
 msgstr "Reacties"
 
-#: apps/projects/forms.py:212 templates/projects/_learn_filters.html:5
+#: apps/projects/forms.py:212 templates/projects/_learn_filters.html:8
 msgid "Showcase"
 msgstr ""
 
@@ -579,7 +571,7 @@ msgid "There was an error adding your link."
 msgstr "Er is een probleem met het toevoegen van je link."
 
 #: apps/projects/views.py:494 apps/projects/views.py:528
-#: apps/users/views.py:646
+#: apps/users/views.py:666
 msgid "You can't edit this link"
 msgstr "Je kunt deze link niet bewerken"
 
@@ -1013,7 +1005,7 @@ msgstr "(participeren)"
 msgid "(following)"
 msgstr "(volgen)"
 
-#: apps/users/views.py:48
+#: apps/users/views.py:49
 #, python-format
 msgid ""
 "A link to activate your user account was sent by email to your address %s. "
@@ -1022,7 +1014,7 @@ msgstr ""
 "Een een link om je gebruikersaccount te activeren is gestuurd naar je e-"
 "mailadres: %s. Klik op de link voordat je kunt inloggen."
 
-#: apps/users/views.py:54
+#: apps/users/views.py:55
 #, python-format
 msgid ""
 "If you did not receive the confirmation email, make sure your email service "
@@ -1035,15 +1027,15 @@ msgstr ""
 "is, kunnen wij <a href=\"%s\"> de bevestigingsmail opnieuw verzenden</a> "
 "naar het bovengenoemde mailadres ."
 
-#: apps/users/views.py:204
+#: apps/users/views.py:205
 msgid "Incorrect username, email or password."
 msgstr "Onjuiste gebruikersnaam, e-mail of paswoord."
 
-#: apps/users/views.py:293
+#: apps/users/views.py:294
 msgid "Congratulations! Your user account was successfully created."
 msgstr "Gefeliciteerd! Je gebruikersaccount is succesvol aangemaakt!."
 
-#: apps/users/views.py:301 apps/users/views.py:441
+#: apps/users/views.py:302 apps/users/views.py:442
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
@@ -1051,15 +1043,15 @@ msgstr ""
 "Bedankt! We hebben een mail gestuurd naar {0} met aanwijzingen voor het "
 "voltooien van je registratie."
 
-#: apps/users/views.py:372
+#: apps/users/views.py:373
 msgid "Hmm, that doesn't look like the correct confirmation code"
 msgstr "Hmm, dit lijkt niet op de goede bevestigingscode"
 
-#: apps/users/views.py:377
+#: apps/users/views.py:378
 msgid "Success! You have verified your account. You may now sign in."
 msgstr "Gelukt! Je hebt je account bevestigd. Je mag nu inloggen"
 
-#: apps/users/views.py:393
+#: apps/users/views.py:394
 msgid ""
 "A confirmation code has been sent to the email address associated with your "
 "account."
@@ -1067,15 +1059,15 @@ msgstr ""
 "Een bevestingingscode is naar het e-mailadres dat bij je account hoort "
 "gestuurd ."
 
-#: apps/users/views.py:402
+#: apps/users/views.py:403
 msgid "This user account was deleted."
 msgstr "Dit gebruikersaccount is verwijderd."
 
-#: apps/users/views.py:464
+#: apps/users/views.py:465
 msgid "Profile updated"
 msgstr "Profiel bijgewerkt"
 
-#: apps/users/views.py:470
+#: apps/users/views.py:471
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
@@ -1083,70 +1075,77 @@ msgstr ""
 "Er is een probleem met het bijwerken van je profiel. Verbeter de problemen "
 "en probeer opnieuw de informatie te verzenden."
 
-#: apps/users/views.py:505
+#: apps/users/views.py:506
 #, python-format
 msgid "The identity %s has already been claimed by you."
 msgstr "De identiteit %s is al door jou gereserveerd."
 
-#: apps/users/views.py:506
+#: apps/users/views.py:507
 #, python-format
 msgid "The identity %s has already been claimed by another user."
 msgstr "De %s identiteit is al gereserveerd door een andere gebruiker."
 
-#: apps/users/views.py:519
+#: apps/users/views.py:520
 #, python-format
 msgid "The identity %s has been saved."
 msgstr "Je identiteit %s is opgeslagen."
 
-#: apps/users/views.py:526
+#: apps/users/views.py:527
 #, python-format
 msgid "OpenID authentication failed: %s"
 msgstr "De authenticatie met OpenID is mislukt: %s"
 
-#: apps/users/views.py:529
+#: apps/users/views.py:530
 msgid "Authentication cancelled."
 msgstr "Authenticatie beëindigd."
 
-#: apps/users/views.py:532
+#: apps/users/views.py:533
 #, python-format
 msgid "Unknown OpenID response type: %r"
 msgstr "Onbekend type OpenID reactie: %r"
 
-#: apps/users/views.py:534
+#: apps/users/views.py:535
 msgid "This is an OpenID relying party endpoint."
 msgstr "Dit is een OpenID afhankelijk van derden."
 
-#: apps/users/views.py:543
+#: apps/users/views.py:544
 msgid "You can't edit this openid"
 msgstr "Je kunt deze OpenID niet bewerken"
 
-#: apps/users/views.py:545
+#: apps/users/views.py:546
 msgid "The openid was deleted."
 msgstr "De OpenID was verwijderd."
 
-#: apps/users/views.py:575
+#: apps/users/views.py:576
 msgid "Profile image updated"
 msgstr "Profielafbeelding bijgewerkt"
 
-#: apps/users/views.py:580
+#: apps/users/views.py:581
 msgid "There was an error uploading your image."
 msgstr "Er is een fout opgetreden bij het versturen van je afbeelding."
 
-#: apps/users/views.py:592
+#: apps/users/views.py:612
 msgid "Profile link added."
 msgstr "Profiellink toegevoegd."
 
-#: apps/users/views.py:601
+#: apps/users/views.py:621
 msgid "There was an error saving your link."
 msgstr "Er is een fout opgetreden bij het bewaren van je link."
 
-#: apps/users/views.py:625
+#: apps/users/views.py:645
 msgid "Profile link updated"
 msgstr "Profiellink bijgewerkt"
 
-#: apps/users/views.py:648
+#: apps/users/views.py:668
 msgid "The link was deleted."
 msgstr "De link is verwijderd."
+
+#: src/django-obi/django_obi/templates/django_obi/send.html:3
+#: templates/drumbeatmail/base.html:41 templates/messages/compose.html:8
+#: templates/projects/contact_organizers.html:36
+#: templates/users/forgot_password.html:18
+msgid "Send"
+msgstr "versturen"
 
 #: templates/404.html:6
 msgid "Page not found"
@@ -1302,7 +1301,7 @@ msgid "css/style-en.css"
 msgstr "css/style-nl.css"
 
 #: templates/base.html:49 templates/activity/base.html:18
-#: templates/projects/base.html:19 templates/projects/learn.html:4
+#: templates/projects/base.html:22 templates/projects/learn.html:4
 #: templates/projects/learn.html.py:16 templates/projects/learn_tags.html:10
 #: templates/projects/project_edit.html:26
 msgid "Learn"
@@ -1362,11 +1361,11 @@ msgstr "nl"
 msgid "Home"
 msgstr "Home"
 
-#: templates/base.html:154
+#: templates/base.html:155
 msgid "jquery.ui.datepicker-en.js"
 msgstr "jquery.ui.datepicker-nl.js"
 
-#: templates/base.html:156
+#: templates/base.html:157
 msgid "js/script-en.js"
 msgstr "js/script-nl.js"
 
@@ -1504,6 +1503,8 @@ msgstr "Herstellen"
 #: templates/activity/index.html:20
 #: templates/projects/project_admin_metrics.html:26
 #: templates/projects/project_admin_metrics.html:41
+#: templates/tracker/scoreboard.html:55 templates/tracker/scoreboard.html:67
+#: templates/tracker/scoreboard.html:89
 msgid "Comments"
 msgstr "Reacties"
 
@@ -1555,7 +1556,6 @@ msgstr "Emblemen"
 
 #: templates/badges/_give_badge_action.html:5
 #: templates/badges/badges_list.html:9 templates/badges/base.html:10
-#: templates/badges/profile_badges_manage.html:17
 #: templates/projects/_project_card.html:32
 #: templates/schools/_projectset_card.html:42
 #: templates/schools/projectset_home.html:22
@@ -1654,59 +1654,63 @@ msgstr ""
 
 #: templates/badges/assessment_edit.html:66
 #: templates/badges/peer_assessment.html:46
-#: templates/badges/submission_edit.html:45
+#: templates/badges/submission_edit.html:46
 #: templates/content/_toggle_completion.html:41
 #: templates/content/_toggle_completion.html:70
 #: templates/reviews/review_project.html:43
 msgid "Submit"
 msgstr "Verzend"
 
-#: templates/badges/badge.html:15
+#: templates/badges/badge.html:16
 msgid "View your Submissions"
 msgstr ""
 
-#: templates/badges/badge.html:18
+#: templates/badges/badge.html:19
 msgid "Apply for Badge"
 msgstr ""
 
-#: templates/badges/badge.html:21
+#: templates/badges/badge.html:22
 msgid "Award Badge to Peer"
 msgstr ""
 
-#: templates/badges/badge.html:28 templates/badges/peer_assessment.html:24
-#: templates/badges/show_user_awards.html:19
-#: templates/badges/submission_edit.html:25
+#: templates/badges/badge.html:28
+msgid "This badge can be earned at all challenges."
+msgstr ""
+
+#: templates/badges/badge.html:30 templates/badges/peer_assessment.html:24
+#: templates/badges/show_user_awards.html:20
+#: templates/badges/submission_edit.html:26
 #: templates/content/_toggle_completion.html:56
 #, fuzzy
 msgid "Requirements:"
 msgstr "Reactie herstellen:"
 
-#: templates/badges/badge.html:33
+#: templates/badges/badge.html:35
 #, fuzzy
 msgid "You need to have these badges:"
 msgstr "Je kunt deze pagina niet bekijken"
 
-#: templates/badges/badge.html:48
+#: templates/badges/badge.html:50
 msgid "Other badges you can apply for:"
 msgstr ""
 
-#: templates/badges/badge.html:60
+#: templates/badges/badge.html:62
 msgid "Peers that have received this badge:"
 msgstr ""
 
-#: templates/badges/badge.html:72
+#: templates/badges/badge.html:74
 msgid "This badge can be earned at these Challenges:"
 msgstr ""
 
-#: templates/badges/badge.html:82
+#: templates/badges/badge.html:84
 msgid "Peers that are applying for this badge:"
 msgstr ""
 
-#: templates/badges/badge.html:84 templates/projects/sidebar.html:302
+#: templates/badges/badge.html:86 templates/projects/sidebar.html:302
 msgid "Awarded"
 msgstr ""
 
-#: templates/badges/badge.html:84 templates/projects/sidebar.html:306
+#: templates/badges/badge.html:86 templates/projects/sidebar.html:306
 #, fuzzy
 msgid "Pending"
 msgstr "Wachtende antwoorden:"
@@ -1797,33 +1801,31 @@ msgstr ""
 msgid "Peer Username:"
 msgstr "Gebruikersnaam"
 
-#: templates/badges/profile_badges_manage.html:6
-#: templates/badges/profile_badges_manage.html:9
+#: templates/badges/profile_badges_manage.html:7
+#: templates/badges/profile_badges_manage.html:10
 #: templates/users/profile_edit.html:32
 #, fuzzy
 msgid "Manage Badges"
 msgstr "Emblemen"
 
-#: templates/badges/profile_badges_manage.html:10
+#: templates/badges/profile_badges_manage.html:11
 #, python-format
 msgid ""
-"Send your email address and badges to the <a href=\"%(obi_url)s\" target="
-"\"_blank\">Open Badges Infrastructure (OBI)</a>. Visit the <a href="
-"\"%(badges_help_url)s\" target=\"_blank\">assessments and badges page</a> "
-"for more information."
+"Send your badges to the <a href=\"%(obi_url)s\" target=\"_blank\">Mozilla "
+"Open Badge Backpack</a> as %(email)s. Read more about badges at <a href="
+"\"%(badges_help_url)s\" target=\"_blank\">help.p2pu.org</a>."
 msgstr ""
 
-#: templates/badges/profile_badges_manage.html:22
-#: templates/drumbeatmail/base.html:41 templates/messages/compose.html:8
-#: templates/projects/contact_organizers.html:36
-#: templates/users/forgot_password.html:18
-msgid "Send"
-msgstr "versturen"
-
-#: templates/badges/profile_badges_manage.html:26
+#: templates/badges/profile_badges_manage.html:16
 #, fuzzy
 msgid "You don't have any badges."
 msgstr "Je hebt geen berichten"
+
+#: templates/badges/profile_badges_manage.html:17
+#, python-format
+msgid ""
+"Check out the <a href=\"%(badges_url)s\">existing badges</a> you can earn!"
+msgstr ""
 
 #: templates/badges/show_assessment.html:6
 msgid "Award Justification for"
@@ -1839,32 +1841,32 @@ msgstr "Ontvangen"
 msgid "Award Justification"
 msgstr "Notificaties"
 
-#: templates/badges/show_user_awards.html:10
+#: templates/badges/show_user_awards.html:11
 msgid "'s Awards to"
 msgstr ""
 
-#: templates/badges/show_user_awards.html:29
+#: templates/badges/show_user_awards.html:30
 #: templates/projects/imported_detailed_description.html:15
 msgid "Prerequisites"
 msgstr "Voorwaarden"
 
-#: templates/badges/show_user_awards.html:39
+#: templates/badges/show_user_awards.html:40
 msgid "Awarded At"
 msgstr ""
 
-#: templates/badges/show_user_awards.html:50
+#: templates/badges/show_user_awards.html:51
 msgid "Evidence"
 msgstr ""
 
-#: templates/badges/submission_edit.html:21
+#: templates/badges/submission_edit.html:22
 msgid "Apply for this badge."
 msgstr ""
 
-#: templates/badges/submission_edit.html:35
+#: templates/badges/submission_edit.html:36
 msgid "URL to the work you are submitting:"
 msgstr ""
 
-#: templates/badges/submission_edit.html:40
+#: templates/badges/submission_edit.html:41
 #: templates/content/_toggle_completion.html:66
 msgid "What did you learn? Why do you feel you deserve this badge?"
 msgstr ""
@@ -2498,6 +2500,64 @@ msgstr "j N Y P"
 msgid "delete"
 msgstr "verwijderen"
 
+#: templates/pages/jobs_page.html:17
+msgid ""
+"P2PU <span class=\"highlight4\">is hiring.</span> <span class="
+"\"highlight3\">Learn anything,</span> <span class=\"highlight2\">while you "
+"work.</span>"
+msgstr ""
+
+#: templates/pages/jobs_page.html:20
+msgid "Open Positions"
+msgstr ""
+
+#: templates/pages/jobs_page.html:22
+msgid "Staff"
+msgstr ""
+
+#: templates/pages/jobs_page.html:25 templates/pages/jobs_page.html.py:30
+#, fuzzy
+msgid "Django Developer"
+msgstr "Onder constructie"
+
+#: templates/pages/jobs_page.html:27 templates/pages/jobs_page.html.py:32
+#: templates/pages/jobs_page.html:42 templates/pages/jobs_page.html.py:52
+msgid "GO!"
+msgstr ""
+
+#: templates/pages/jobs_page.html:37
+#, fuzzy
+msgid "Intern"
+msgstr "Interesses"
+
+#: templates/pages/jobs_page.html:40
+msgid "Marketing Intern"
+msgstr ""
+
+#: templates/pages/jobs_page.html:47
+msgid "Volunteer"
+msgstr ""
+
+#: templates/pages/jobs_page.html:50
+msgid "Graphic Designer"
+msgstr ""
+
+#: templates/pages/jobs_page.html:58
+msgid "Why work at p2pu?"
+msgstr ""
+
+#: templates/pages/jobs_page.html:62
+msgid "Benefits and Percks"
+msgstr ""
+
+#: templates/pages/jobs_page.html:67
+msgid "You can work from anywhere, P2PU is global"
+msgstr ""
+
+#: templates/pages/jobs_page.html:68
+msgid "Meet our Team"
+msgstr ""
+
 #: templates/pagination/pagination_links.html:4
 #: templates/pagination/pagination_links.html:6
 msgid "previous"
@@ -2784,15 +2844,15 @@ msgstr "Leerdoelen"
 msgid "Show More Results"
 msgstr ""
 
-#: templates/projects/project.html:21 templates/projects/sidebar.html:246
+#: templates/projects/project.html:22 templates/projects/sidebar.html:246
 msgid "New Task"
 msgstr "Nieuwe taak"
 
-#: templates/projects/project.html:22 templates/projects/project_edit.html:38
+#: templates/projects/project.html:23 templates/projects/project_edit.html:38
 msgid "Admin"
 msgstr ""
 
-#: templates/projects/project.html:38
+#: templates/projects/project.html:40
 msgid "Activity Wall"
 msgstr "Activiteiten wand"
 
@@ -4242,9 +4302,41 @@ msgstr ""
 msgid " posted a message to the wall."
 msgstr " bericht op de wand geplaatst."
 
-#: templates/tracker/scoreboard.html:4 templates/tracker/scoreboard.html:11
-#: templates/tracker/scoreboard.html:16
+#: templates/tracker/scoreboard.html:4 templates/tracker/scoreboard.html:16
+#: templates/tracker/scoreboard.html:21
 msgid "Scoreboard"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:50
+msgid "Users Registered this Month"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:54
+#, fuzzy
+msgid "User"
+msgstr "Gebruikersnaam"
+
+#: templates/tracker/scoreboard.html:56 templates/tracker/scoreboard.html:78
+#: templates/tracker/scoreboard.html:90
+msgid "Joins"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:62
+msgid "Comments Posted at Groups this Month"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:66 templates/tracker/scoreboard.html:77
+#: templates/tracker/scoreboard.html:88
+#, fuzzy
+msgid "Group"
+msgstr "groep"
+
+#: templates/tracker/scoreboard.html:73
+msgid "Joins to Groups this Month"
+msgstr ""
+
+#: templates/tracker/scoreboard.html:84
+msgid "Groups Created this Month"
 msgstr ""
 
 #: templates/users/_openid_providers.html:7
