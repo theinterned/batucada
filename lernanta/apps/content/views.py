@@ -1,15 +1,18 @@
 import datetime
-import pdb;
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django import http
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.utils import simplejson
+
 from django.forms.models import modelformset_factory
 
 from urlparse import urlsplit
 from django.http import QueryDict
+=======
+>>>>>>> The front end change for sortable tasks
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -460,19 +463,3 @@ def page_index_down(request, slug, page_slug):
     # Page goes down in the sidebar index (page.index increases).
     return _move_page(request, slug, page_slug, 'down')
 
-
-@login_required
-@participation_required
-def page_index_reorder(request, slug):
-    # Page goes down in the sidebar index (page.index increases).
-    project = get_object_or_404(Project, slug=slug);    pdb.set_trace();
-    tasks = QueryDict(request.POST['tasks']).getlist("task[]");
-    pdb.set_trace();
-    organizing = project.is_organizing(request.user)
-    if not organizing and project.category != Project.STUDY_GROUP:
-        messages.error(request, _('You can not change tasks order.'))
-        return http.HttpResponseRedirect(project.get_absolute_url())
-    content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
-        deleted=False).order_by('index')
-
-    return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')

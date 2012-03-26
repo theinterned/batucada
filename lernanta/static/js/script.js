@@ -828,27 +828,5 @@ $("#content-pages ul").sortable({
 		var tasks = $(this).sortable('serialize');
 		var url = $("#reorder_tasks").attr("action");
 		//alert($("input[name='csrfmiddlewaretoken']").val());
-        $.ajax({
-        	type: 'POST',
-            url: url,
-            data: {
-            	csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            	tasks: tasks 
-            },
-            success: function() { alert("second success"); },
-            error: function() { alert("error"); },
-            complete: function(){alert("complete");}
-        });
-	}
+        	}
 });
-        /*
-        $.ajax({
-        	type: 'POST',
-            url: '/ajax/check_username/',
-            data: {
-                username: "TestUser2"
-            },
-            success: function() {alert("second success");},
-            error: function() { alert("error"); }
-        });
-*/
