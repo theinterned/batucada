@@ -824,9 +824,13 @@ bindLearnFilters();
 
 $("#content-pages ul").sortable({
 	update: function(event, ui) {
-		//var tasks = $(this).sortable('toArray');
-		var tasks = $(this).sortable('serialize');
-		var url = $("#reorder_tasks").attr("action");
-		//alert($("input[name='csrfmiddlewaretoken']").val());
-        	}
+				//var tasks = $(this).sortable('toArray');
+				var tasks = $(this).sortable('serialize');
+				var url = $("#reorder_tasks").attr("action");
+				//alert($("input[name='csrfmiddlewaretoken']").val());
+       		}
 });
+var canChangeOrder = $("input[name=canChangeOrder]").val() == "True";
+if (!canChangeOrder){
+	$("#content-pages ul").sortable('disable');	
+}
