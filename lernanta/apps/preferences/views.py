@@ -71,12 +71,31 @@ def email(request):
             request.FILES, instance=profile)
         if form.is_valid():
             profile = form.save(commit=False)
-            messages.success(request, _('Email updated'))
             profile.user.email = profile.email
             profile.user.save()
+            profile.confirmation_code = profile.generate_confirmation_code()
             profile.save()
+            path = reverse('users_confirm_registration', kwargs={
+                'username': profile.username,
+                'token': profile.confirmation_code,
+            })
+            url = request.build_absolute_uri(path)
+            profile.email_confirmation_code(url, new_user=False)
+            msg1 = _('A link to confirm your email address was sent '
+              'to %s.') % profile.email
+            messages.info(request, msg1)
+            form = forms.EmailEditForm(profile.username, instance=profile)
     else:
         form = forms.EmailEditForm(profile.username, instance=profile)
+
+    if profile.confirmation_code and not form.is_bound:
+        url = request.build_absolute_uri(reverse('users_confirm_resend'))
+        msg2 = _('If you did not receive the confirmation email, make '
+            'sure your email service did not mark it as "junk '
+            'mail" or "spam". If you need to, you can have us '
+            '<a href="%s">resend the confirmation message</a> '
+            'to your email address.') % url
+        messages.info(request, msg2, safe=True)
 
     return render_to_response('users/settings_email.html', {
         'profile': profile,

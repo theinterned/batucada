@@ -44,23 +44,6 @@ from users import drupal
 log = logging.getLogger(__name__)
 
 
-def unconfirmed_account_notice(request, user):
-    log.info(u'Attempt to log in with unconfirmed account (%s)' % user)
-    msg1 = _('A link to activate your user account was sent by email '
-              'to your address %s. You have to click it before you '
-              'can log in.') % user.email
-    url = request.build_absolute_uri(
-        reverse('users_confirm_resend',
-                kwargs=dict(username=user.username)))
-    msg2 = _('If you did not receive the confirmation email, make '
-              'sure your email service did not mark it as "junk '
-              'mail" or "spam". If you need to, you can have us '
-              '<a href="%s">resend the confirmation message</a> '
-              'to your email address mentioned above.') % url
-    messages.error(request, msg1)
-    messages.info(request, msg2, safe=True)
-
-
 def render_openid_failure(request, message, status, template_name):
     if request.method == 'POST':
         form = forms.OpenIDForm(request.POST)
@@ -177,17 +160,7 @@ def login(request):
                          authentication_form=forms.AuthenticationForm)
 
     if isinstance(r, http.HttpResponseRedirect):
-        # Successful log in according to django.  Now we do our checks.  I do
-        # the checks here instead of the form's clean() because I want to use
-        # the messages framework and it's not available in the request there
         user = request.user.get_profile()
-
-        if user.confirmation_code:
-            logout(request)
-            unconfirmed_account_notice(request, user)
-            return render_to_response('users/signin.html', {
-                'form': auth_forms.AuthenticationForm(),
-            }, context_instance=RequestContext(request))
 
         if request.POST.get('remember_me', None):
             request.session.set_expiry(settings.SESSION_COOKIE_AGE)
@@ -247,12 +220,6 @@ def login_openid_complete(request):
             return render_to_response('dashboard/setup_profile.html', {
                 'form': form,
             }, context_instance=RequestContext(request))
-        if user.confirmation_code:
-            logout(request)
-            unconfirmed_account_notice(request, user)
-            return render_to_response('users/login_openid.html', {
-                'form': forms.OpenIDForm(),
-            }, context_instance=RequestContext(request))
 
         redirect_url = _get_redirect_url(request)
         if redirect_url:
@@ -303,8 +270,7 @@ def register(request):
                     'instructions for completing your '
                     'registration.').format(user.email)
             messages.info(request, msg)
-
-            return http.HttpResponseRedirect(reverse('users_login'))
+            return login(request)
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -363,7 +329,6 @@ def user_tagged_list(request, tag_slug):
     }, context_instance=RequestContext(request))
 
 
-@anonymous_only
 def confirm_registration(request, token, username):
     """Confirm a users registration."""
     profile = get_object_or_404(UserProfile, username=username)
@@ -371,30 +336,29 @@ def confirm_registration(request, token, username):
         messages.error(
             request,
            _('Hmm, that doesn\'t look like the correct confirmation code'))
-        log.info('Account confirmation failed for %s' % (profile,))
+        log.info('Email address confirmation failed for %s' % (profile,))
         return http.HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
-    messages.success(request, _('Success! You have verified your account. '
-                     'You may now sign in.'))
-    return http.HttpResponseRedirect(reverse('users_login'))
+    messages.success(request, _('Success! You have verified your email address.'))
+    return http.HttpResponseRedirect(reverse('dashboard'))
 
 
-@anonymous_only
-def confirm_resend(request, username):
+@login_required
+def confirm_resend(request):
     """Resend a confirmation code."""
-    profile = get_object_or_404(UserProfile, username=username)
+    profile = request.user.get_profile()
     if profile.confirmation_code:
         path = reverse('users_confirm_registration', kwargs={
             'username': profile.username,
             'token': profile.confirmation_code,
         })
         url = request.build_absolute_uri(path)
-        profile.email_confirmation_code(url)
-        msg = _('A confirmation code has been sent to the email address '
-                'associated with your account.')
-        messages.info(request, msg)
-    return http.HttpResponseRedirect(reverse('users_login'))
+        profile.email_confirmation_code(url, new_user=False)
+        msg = _('A link to confirm your email address was sent '
+              'to %s.')
+        messages.info(request, msg % profile.email)
+    return http.HttpResponseRedirect(reverse('preferences_email'))
 
 
 def profile_view(request, username):
@@ -438,12 +402,11 @@ def profile_create(request):
         })
         url = request.build_absolute_uri(path)
         profile.email_confirmation_code(url)
-        auth.logout(request)
         msg = _('Thanks! We have sent an email to {0} with '
                 'instructions for completing your '
                 'registration.').format(profile.email)
         messages.info(request, msg)
-        return http.HttpResponseRedirect(reverse('splash'))
+        return http.HttpResponseRedirect(reverse('dashboard'))
     else:
         messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))

@@ -8,6 +8,7 @@ from users import drupal
 
 
 class EmailEditForm(forms.ModelForm):
+    email_confirm = forms.EmailField(max_length=75)
 
     def __init__(self, username, *args, **kwargs):
         super(EmailEditForm, self).__init__(*args, **kwargs)
@@ -25,6 +26,9 @@ class EmailEditForm(forms.ModelForm):
             drupal_user = drupal.get_user(data['email'])
             if drupal_user and self.username != drupal_user.name:
                 self._errors['email'] = forms.util.ErrorList([msg])
+            if data['email'] != data.get('email_confirm', data['email']):
+                self._errors['email_confirm'] = forms.util.ErrorList([
+                    _('Email addresses do not match.')])
         return data
 
 

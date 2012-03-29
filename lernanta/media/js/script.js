@@ -444,8 +444,8 @@ $('#recaptcha_help').click(function(e) {
     Recaptcha.showhelp();
 });
 
-$('.messages li.error, .messages li.success, .messages li.info').click(function () {
-    $(this).fadeOut("fast");
+$('.messages li.error .closeNotification, .messages li.success .closeNotification, .messages li.info .closeNotification').click(function () {
+    $(this).parent().fadeOut("fast");
 });
 
 $(".project-kind-challenge #task_list_wall #task_list_wall_toogle #radio1").click(function(){
