@@ -221,9 +221,9 @@ class UserProfile(ModelBase):
             'username': username,
         })
 
-    def email_confirmation_code(self, url):
+    def email_confirmation_code(self, url, new_user=True):
         """Send a confirmation email to the user after registering."""
-        context = {'confirmation_url': url}
+        context = {'confirmation_url': url, 'new_user': new_user}
         subjects, bodies = localize_email(
             'users/emails/registration_confirm_subject.txt',
             'users/emails/registration_confirm.txt', context)

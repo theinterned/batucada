@@ -84,6 +84,7 @@ def validate_user_identity(form, data):
 
 class CreateProfileForm(forms.ModelForm):
     recaptcha = captcha_fields.ReCaptchaField()
+    email_confirm = forms.EmailField(max_length=75)
 
     class Meta:
         model = UserProfile
@@ -104,6 +105,10 @@ class CreateProfileForm(forms.ModelForm):
         validate_user_identity(self, data)
         if 'full_name' in data:
             data['full_name'] = data['full_name'].strip()
+        if 'email' in data and 'email_confirm' in data:
+            if data['email'] != data['email_confirm']:
+                self._errors['email_confirm'] = forms.util.ErrorList([
+                    _('Email addresses do not match.')])
         return data
 
 
@@ -120,6 +125,7 @@ class RegisterForm(forms.ModelForm):
             widget=forms.Select(choices=settings.SUPPORTED_LANGUAGES),
             initial=settings.LANGUAGE_CODE)
     recaptcha = captcha_fields.ReCaptchaField()
+    email_confirm = forms.EmailField(max_length=75)
 
     class Meta:
         model = User
@@ -165,6 +171,10 @@ class RegisterForm(forms.ModelForm):
             if data['password'] != data['password_confirm']:
                 self._errors['password_confirm'] = forms.util.ErrorList([
                     _('Passwords do not match.')])
+        if 'email' in data and 'email_confirm' in data:
+            if data['email'] != data['email_confirm']:
+                self._errors['email_confirm'] = forms.util.ErrorList([
+                    _('Email addresses do not match.')])
         if 'full_name' in data:
             data['full_name'] = data['full_name'].strip()
         return data

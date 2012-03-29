@@ -1,7 +1,9 @@
 {% load l10n_tags %}
+{% if new_user %}
 {{ _('Welcome to P2PU!') }}
+{% endif %}
 
-{{ _('To complete the sign up process, please confirm your email address by clicking here:') }}
+{{ _('Please confirm your email address by clicking here:') }}
 
 {{ confirmation_url }}
 
