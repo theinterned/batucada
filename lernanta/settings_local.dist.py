@@ -104,6 +104,13 @@ CACHE_BACKEND = 'dummy://'
 CACHE_PREFIX = 'lernanta'
 CACHE_COUNT_TIMEOUT = 60
 
+# RabbitMQ Config
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = ""
+BROKER_PASSWORD = ""
+BROKER_VHOST = ""
+
 # Execute celery tasks locally, so you don't have to be running an MQ
 CELERY_ALWAYS_EAGER = True
 

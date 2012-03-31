@@ -9,7 +9,7 @@ from django.db.models import Count
 
 from links.models import Link
 from users.models import UserProfile
-from users import tasks
+from users.tasks import SendPrivateMessages
 from tags.forms import GeneralTagField
 from tags.models import GeneralTaggedItem
 from schools.models import School
@@ -167,7 +167,7 @@ class ProjectContactOrganizersForm(forms.Form):
             'project': project}).strip()
         messages = [(sender, r.user.user, subject, body, parent_msg)
             for r in recipients]
-        tasks.SendPrivateMessages.apply_async(args=(self, messages))
+        SendPrivateMessages.apply_async(args=(self, messages))
         return messages
 
 

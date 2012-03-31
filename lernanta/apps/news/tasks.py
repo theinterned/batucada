@@ -103,7 +103,7 @@ def parse_feed(feed_url, page):
     return ids
 
 
-@periodic_task(run_every=crontab(minute=0, hour=0))
+@periodic_task(run_every=crontab(minute=0, hour=0), name='news.tasks.update_feeds')
 def update_feeds():
     ids = []
     feeds = getattr(settings, 'FEED_URLS', None)

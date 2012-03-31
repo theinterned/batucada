@@ -6,7 +6,8 @@ from StringIO import StringIO
 from django_push.subscriber.models import Subscription
 from django.contrib.auth.models import User
 
-from links import utils, tasks
+from links import utils
+from links.tasks import HandleNotification
 from links.models import Link
 
 from test_utils import TestCase
@@ -170,6 +171,6 @@ class TestLinkParsing(TestCase):
             </entry>
         </feed>"""
         parsed = feedparser.parse(test_feed_data)
-        handler = tasks.HandleNotification()
+        handler = HandleNotification()
         handler.run(parsed, sub)
         self.assertEqual(Activity.objects.count(), count + 1)

@@ -7,6 +7,7 @@ from messages.models import Message
 
 class SendUserEmail(Task):
     """Send an email to a specific user specified by ``profile``."""
+    name = 'users.tasks.SendUserEmail'
 
     def run(self, profile, subjects, bodies, **kwargs):
         if profile.deleted:
@@ -24,6 +25,7 @@ class SendPrivateMessages(Task):
     Send an email to multiple users. ``messages`` should be a sequence
     containing tuples of sender, recipient, subject, body, parent.
     """
+    name = 'users.tasks.SendPrivateMessages'
 
     def run(self, form, messages, **kwargs):
         log = self.get_logger(**kwargs)
