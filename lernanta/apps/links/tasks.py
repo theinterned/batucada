@@ -16,6 +16,7 @@ class SubscribeToFeed(Task):
     subscribe to it. Try to discover a hub declaration for the feed.
     If no hub is declared, fall back to using SuperFeedr.
     """
+    name = 'links.tasks.SubscribeToFeed'
 
     max_retries = 3
 
@@ -68,6 +69,7 @@ class SubscribeToFeed(Task):
 
 class UnsubscribeFromFeed(Task):
     """Simply send an unsubscribe request to the provided links hub."""
+    name = 'links.tasks.UnsubscribeFromFeed'
 
     def run(self, link, **kwargs):
         Subscription.objects.unsubscribe(link.subscription.topic,
@@ -79,6 +81,7 @@ class HandleNotification(Task):
     When a notification of a new or updated entry is received, parse
     the entry and create an activity representation of it.
     """
+    name = 'links.tasks.HandleNotification'
 
     def get_activity_namespace_prefix(self, feed):
         """Discover the prefix used for the activity namespace."""

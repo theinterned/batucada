@@ -6,7 +6,8 @@ from django.db import models
 from django_push.subscriber.models import Subscription
 # from django_push.subscriber.signals import updated
 from django.db.models import Max
-from links import tasks
+from links.tasks import SubscribeToFeed, UnsubscribeFromFeed, HandleNotification
+
 
 log = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ def link_create_handler(sender, **kwargs):
     if not isinstance(link, Link):
         return
     if link.subscribe:
-        tasks.SubscribeToFeed.apply_async(args=(link,))
+        SubscribeToFeed.apply_async(args=(link,))
 
 # post_save.connect(link_create_handler, sender=Link,
 #     dispatch_uid='links_link_create_handler')
@@ -61,7 +62,7 @@ def link_delete_handler(sender, **kwargs):
     except Subscription.DoesNotExist:
         return
 
-    tasks.UnsubscribeFromFeed.apply_async(args=(link,))
+    UnsubscribeFromFeed.apply_async(args=(link,))
 
 # post_delete.connect(link_delete_handler, sender=Link,
 #     dispatch_uid='links_link_delete_handler')
@@ -78,7 +79,7 @@ def listener(notification, **kwargs):
     try:
         msg = 'Received feed update notification: %s, sender: %s'
         log.debug(msg % (notification, sender))
-        eager_result = tasks.HandleNotification.apply_async(
+        eager_result = HandleNotification.apply_async(
             args=(notification, sender))
         msg = 'Result from the feed notification handler: %s, %s'
         log.debug(msg % (eager_result.status, eager_result.result))

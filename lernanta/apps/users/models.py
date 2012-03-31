@@ -24,7 +24,7 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
-from users import tasks
+from users.tasks import SendUserEmail
 from activity.schema import object_types
 from users.managers import CategoryTaggableManager
 from richtext.models import RichTextField
@@ -227,7 +227,7 @@ class UserProfile(ModelBase):
         subjects, bodies = localize_email(
             'users/emails/registration_confirm_subject.txt',
             'users/emails/registration_confirm.txt', context)
-        tasks.SendUserEmail.apply_async(args=(self, subjects, bodies))
+        SendUserEmail.apply_async(args=(self, subjects, bodies))
 
     def image_or_default(self):
         """Return user profile image or a default."""

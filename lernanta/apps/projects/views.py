@@ -15,7 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from commonware.decorators import xframe_sameorigin
 
-# from links import tasks as links_tasks
+# from links.tasks import UnsubscribeFromFeed
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
@@ -495,7 +495,7 @@ def edit_links_edit(request, slug, link):
     metric_permissions = project.get_metrics_permissions(request.user)
     if form.is_valid():
         if link.subscription:
-            #links_tasks.UnsubscribeFromFeed.apply_async(args=(link,))
+            #UnsubscribeFromFeed.apply_async(args=(link,))
             link.subscription = None
             link.save()
         link = form.save(commit=False)
