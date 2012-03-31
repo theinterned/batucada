@@ -33,8 +33,7 @@ settings :
 
 # Synchronize the database.
 syncdb :
-	@${PYTHON} manage.py syncdb --noinput
-	@for i in ${APPS}; do ${MANAGE} migrate $$i; done
+	@${PYTHON} manage.py syncdb --noinput --migrate
 
 # Run tests.
 test :
