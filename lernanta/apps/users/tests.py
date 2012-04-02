@@ -36,9 +36,7 @@ class TestLogins(TestCase):
         """Test that authenticated users are redirected in specific views."""
         self.client.login(username=self.test_username,
                           password=self.test_password)
-        paths = ('login/', 'register/',
-                 'confirm/123456/username/',
-                 'confirm/resend/username/')
+        paths = ('login/', 'register/')
         for path in paths:
             full = "/%s/%s" % (self.locale, path)
             response = self.client.get(full)
@@ -115,6 +113,7 @@ class TestLogins(TestCase):
                 'password': 'foobar123',
                 'password_confirm': 'foobar123',
                 'email': 'foobar123@example.com',
+                'email_confirm': 'foobar123@example.com',
                 'preflang': 'en'
             })
             self.assertContains(response, 'Please choose another')
@@ -123,6 +122,7 @@ class TestLogins(TestCase):
             'password': 'foobar123',
             'password_confirm': 'foobar123',
             'email': 'foobar123@example.com',
+            'email_confirm': 'foobar123@example.com',
             'preflang': 'en',
         })
         self.assertEqual(302, ok.status_code)
