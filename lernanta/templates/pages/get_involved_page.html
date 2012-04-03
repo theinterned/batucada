@@ -1,0 +1,87 @@
+
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load embed %}
+ 
+{% block title %}Get Involved{% endblock %}
+ 
+{% block bodyid %}one-column-page{% endblock %}
+{% block bodyclasses %}page pages-get-involved{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url static_get_involved_page %}">Get Involved</a>
+{% endblock %}
+
+{% block body %} 
+    <div id="main">
+        <h1>Get Involved</h1>
+        <hr />
+        <div id="contribute-wrapper">
+			<p>Welcome to the P2PU Community. We are a respectful and dynamic group who are excited by the idea of finding new ways to learn online. There are several different ways you can get involved in the P2PU Community.</p>
+			  
+			<div id="contribute-navbar">
+				<p class="contribute-ways">Ways to get involved:</p>
+				<ul>    
+					<li class="contribute-nav active"><a href="#">Create a new Study Group</a></li>
+					<li class="contribute-nav inactive"><a href="#">Stay up-to-date with P2PU</a></li>
+					<li class="contribute-nav inactive"><a href="#">Join community discussions</a></li>
+					<li class="contribute-nav inactive"><a href="#">Join a Study Group</a></li>
+					<li class="contribute-nav inactive"><a href="#">Help us improve P2PU</a></li>
+					<li class="contribute-nav inactive"><a href="#">P2PU Working Groups</a></li>
+					<li class="contribute-nav inactive"><a href="#">Donate to P2PU</a></li>
+					<li class="contribute-nav inactive"><a href="#">Join or start a Meetup</a></li>
+				</ul>
+			</div>
+			<div id="contribute-slider">
+				<ul>  
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Create a new Study Group</h2>
+					  <p class="contribute-content">P2PU is dedicated to helping motivated individuals design great peer to peer courses. Our <a href="http://wiki.p2pu.org/Course-Design-Handbook" title="course design handbook">course design handbook</a> is a compilation of community wisdom and expert guidance. We also run orientations to help new organizers work in groups. There is also the <a href="http://p2pu.org/groups/p2pu-help-desk/">help desk</a> which is continuously open for new organizers and learners.</p>
+					  <!--a href="http://p2pu.org/groups/create/" class="contribute-button">Start today &#187;</a-->
+					  <a href="{% locale_url projects_create %}" class="contribute-button">Start today &#187;</a>
+					</li>
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Stay up-to-date with P2PU</h2>
+					  <p class="contribute-content">You can sign up for our announcements list. This is a very low-traffic mailing list, which will keep you up-to-date with important P2PU news, like when new courses are starting.</p>
+					  <a href="http://groups.google.com/group/p2pu-announce" class="contribute-button" target="_blank">Start today &#187;</a>
+					</li>
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Join community discussions</h2>
+					  <p class="contribute-content">The main P2PU discussions happen on the p2pu-community mailing list. It\u2019s a good forum for meeting the P2PU community and ask any questions you may have.</p>
+					  <a href="http://groups.google.com/group/p2pu-community" class="contribute-button" target="_blank">Start today &#187;</a>
+					</li>
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Join a Study Group</h2>
+					  <p class="contribute-content">You can browse the list of courses and join one which is open, and which you think may be of interest to you.</p>
+					  <!--a href="http://p2pu.org/groups/" class="contribute-button">Start today &#187;</a-->
+					  <a href="{% locale_url projects_learn %}" class="contribute-button">Start today &#187;</a>
+					</li>
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Help us improve P2PU</h2>
+					  <p class="contribute-content">Join the developer mailing list, sign up for the bug/task tracker, join the Introduction to Contributing to Lernanta study group, or view the developer documentation on github.</p>
+					  <a href="https://github.com/p2pu/lernanta/wiki" class="contribute-button" target="_blank">Start today &#187;</a>
+					</li>
+					<li class="contribute-item">
+					  <h2 class="contribute-header">P2PU Working Groups</h2>
+					  <p class="contribute-content">There are many working groups helping to develop specific elements of the P2PU community and we welcome people willing to participate. For an up-to-date listing of the working groups and the mailing lists they communicate on please check this wiki page.</p>
+					  <a href="http://wiki.p2pu.org/mailing-lists" class="contribute-button" target="_blank">Start today &#187;</a>
+					</li>  
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Donate to P2PU</h2>
+					  <p class="contribute-content">You can donate to P2PU through our partner, The Mozilla Foundation. All donations go directly to P2PU and help us continue our mission to enable high-quality low-cost education opportunities!</p>
+					  <a href="https://donate.mozilla.org/page/contribute/P2PU" class="contribute-button" target="_blank">Start today &#187;</a>
+					</li>  
+					<li class="contribute-item">
+					  <h2 class="contribute-header">Join or start a Meetup</h2>
+					  <p class="contribute-content">There are P2PU Meetups happening all over the world, come and join us or organize one of your own.</p>
+					  <a href="http://www.meetup.com/p2pu/" class="contribute-button" target="_blank">Start today &#187;</a>
+					</li>
+				</ul>
+			</div>
+		</div><br clear="both">
+		<br>
+		<br>
+	</div>
+
+{% endblock %}
