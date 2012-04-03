@@ -22,8 +22,7 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
 from richtext.models import RichTextField
 from content.models import Page
 from replies.models import PageComment
@@ -249,15 +248,15 @@ class Project(ModelBase):
 
     def send_creation_notification(self):
         """Send notification when a new project is created."""
+        subject_template = 'projects/emails/project_created_subject.txt'
+        body_template = 'projects/emails/project_created.txt'
         context = {
             'project': self,
             'domain': Site.objects.get_current().domain,
         }
-        subjects, bodies = localize_email(
-            'projects/emails/project_created_subject.txt',
-            'projects/emails/project_created.txt', context)
-        for organizer in self.organizers():
-            SendUserEmail.apply_async((organizer.user, subjects, bodies))
+        profiles = [recipient.user for recipient in self.organizers()]
+        SendNotifications.apply_async((profiles, subject_template, body_template,
+            context))
         admin_subject = render_to_string(
             "projects/emails/admin_project_created_subject.txt",
             context).strip()

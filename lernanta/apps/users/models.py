@@ -24,11 +24,10 @@ from drumbeat.utils import get_partition_id, safe_filename
 from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from projects.models import Project, Participation
-from users.tasks import SendUserEmail
+from users.tasks import SendNotifications
 from activity.schema import object_types
 from users.managers import CategoryTaggableManager
 from richtext.models import RichTextField
-from l10n.models import localize_email
 from tracker import statsd
 
 import caching.base
@@ -223,11 +222,11 @@ class UserProfile(ModelBase):
 
     def email_confirmation_code(self, url, new_user=True):
         """Send a confirmation email to the user after registering."""
+        subject_template = 'users/emails/registration_confirm_subject.txt'
+        body_template = 'users/emails/registration_confirm.txt'
         context = {'confirmation_url': url, 'new_user': new_user}
-        subjects, bodies = localize_email(
-            'users/emails/registration_confirm_subject.txt',
-            'users/emails/registration_confirm.txt', context)
-        SendUserEmail.apply_async(args=(self, subjects, bodies))
+        SendNotifications.apply_async(([self], subject_template, body_template,
+            context))
 
     def image_or_default(self):
         """Return user profile image or a default."""

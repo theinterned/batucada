@@ -402,9 +402,9 @@ def profile_create(request):
         })
         url = request.build_absolute_uri(path)
         profile.email_confirmation_code(url)
-        msg = _('Thanks! We have sent an email to {0} with '
+        msg = _('Thanks! We have sent an email to %s with '
                 'instructions for completing your '
-                'registration.').format(profile.email)
+                'registration.') % profile.email
         messages.info(request, msg)
         return http.HttpResponseRedirect(reverse('dashboard'))
     else:
