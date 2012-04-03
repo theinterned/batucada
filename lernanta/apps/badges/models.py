@@ -12,8 +12,7 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename, MultiQuerySet
 from drumbeat.models import ModelBase
 from richtext.models import RichTextField
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
 from l10n.urlresolvers import reverse
 
 
@@ -290,15 +289,15 @@ class Submission(ModelBase):
 
     def send_notification(self):
         """Send notification when a new submission is posted."""
+        subject_template = 'badges/emails/new_submission_subject.txt'
+        body_template = 'badges/emails/new_submission.txt'
         context = {
             'submission': self,
             'domain': Site.objects.get_current().domain,
         }
-        subjects, bodies = localize_email(
-            'badges/emails/new_submission_subject.txt',
-            'badges/emails/new_submission.txt', context)
-        for adopter in self.badge.get_adopters():
-            SendUserEmail.apply_async((adopter.user, subjects, bodies))
+        profiles = [recipient.user for recipient in self.badge.get_adopters()]
+        SendNotifications.apply_async((profiles, subject_template, body_template,
+            context))
 
 
 class Assessment(ModelBase):

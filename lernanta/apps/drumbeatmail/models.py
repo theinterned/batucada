@@ -3,9 +3,8 @@ from django.contrib.sites.models import Site
 
 from l10n.urlresolvers import reverse
 from messages.models import Message
-from users.tasks import SendUserEmail
+from users.tasks import SendNotifications
 from preferences.models import AccountPreferences
-from l10n.models import localize_email
 from richtext import clean_html
 
 import logging
@@ -27,16 +26,15 @@ def message_sent_handler(sender, **kwargs):
     sender = message.sender.get_profile()
     reply_url = reverse('drumbeatmail_reply', kwargs={'message': message.pk})
     msg_body = clean_html('rich', message.body)
+    subject_template = 'drumbeatmail/emails/direct_message_subject.txt'
+    body_template = 'drumbeatmail/emails/direct_message.txt'
     context = {
         'sender': sender,
         'message': msg_body,
         'domain': Site.objects.get_current().domain,
         'reply_url': reply_url,
     }
-    subjects, bodies = localize_email(
-        'drumbeatmail/emails/direct_message_subject.txt',
-        'drumbeatmail/emails/direct_message.txt', context)
-    SendUserEmail.apply_async((recipient, subjects, bodies))
+    SendNotifications.apply_async(([recipient], subject_template, body_template, context))
 
 post_save.connect(message_sent_handler, sender=Message,
     dispatch_uid='drumbeatmail_message_sent_handler')

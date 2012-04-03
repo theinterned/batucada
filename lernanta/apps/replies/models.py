@@ -5,13 +5,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
 from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from activity.schema import verbs, object_types
 from tracker import statsd
+from users.tasks import SendNotifications
 
 from richtext.models import RichTextField
 
@@ -70,17 +69,19 @@ class PageComment(ModelBase):
             return False
 
     def send_comment_notification(self):
+        recipients = self.page_object.comment_notification_recipients(self)
+        subject_template = 'replies/emails/post_comment_subject.txt'
+        body_template = 'replies/emails/post_comment.txt'
         context = {
             'comment': self,
             'domain': Site.objects.get_current().domain,
         }
-        subjects, bodies = localize_email(
-            'replies/emails/post_comment_subject.txt',
-            'replies/emails/post_comment.txt', context)
-        recipients = self.page_object.comment_notification_recipients(self)
-        for recipient in recipients:
-            if self.author != recipient:
-                SendUserEmail.apply_async((recipient, subjects, bodies))
+        profiles = []
+        for profile in recipients:
+            if self.author != profile:
+                profiles.append(profile)
+        SendNotifications.apply_async((profiles, subject_template, body_template,
+            context))
 
 
 ###########

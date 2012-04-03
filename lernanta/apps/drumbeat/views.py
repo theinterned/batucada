@@ -1,4 +1,6 @@
 import unicodecsv
+import logging
+import sys
 
 from django.conf import settings
 from django import http
@@ -12,12 +14,9 @@ from django.http import HttpResponse
 
 from l10n.urlresolvers import reverse
 from users.models import UserProfile
-from users.tasks import SendUserEmail
+from users.tasks import SendNotifications
 from drumbeat.forms import AbuseForm
-from l10n.models import localize_email
 
-import logging
-import sys
 
 log = logging.getLogger(__name__)
 
@@ -42,17 +41,17 @@ def report_abuse(request, model, app_label, pk):
             url = request.build_absolute_uri(instance.get_absolute_url())
         except NoReverseMatch:
             url = request.build_absolute_uri(reverse('dashboard'))
+        subject_template = 'drumbeat/emails/abuse_report_subject.txt'
+        body_template = 'drumbeat/emails/abuse_report.txt'
         context = {
             'user': request.user.get_profile(),
             'url': url, 'model': model,
             'app_label': app_label, 'pk': pk,
         }
-        subjects, bodies = localize_email(
-            'drumbeat/emails/abuse_report_subject.txt',
-            'drumbeat/emails/abuse_report.txt', context)
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
-            SendUserEmail.apply_async(args=(profile, subjects, bodies))
+            SendNotifications.apply_async(args=([profile], subject_template, body_template,
+                context))
         except:
             log.debug("Error sending abuse report: %s" % sys.exc_info()[0])
             pass
