@@ -1611,7 +1611,7 @@ header {}
 }
 
 #learn #main, #school_home #main , #user_list #main, #one-column-page #main,
-#badges-page #main, #projectset_home #main, #project-reviews #main {
+#badges-page #main, #projectset_home #main, #project-reviews #main, #learn-tags #main {
   width: 970px;
   margin-right: 40px;
   margin-left: 0;
@@ -3982,7 +3982,7 @@ div.voting div.score {
     background-position: 13px 17px;
     width: 165px; 
     background-image: url("/media/images/logo.png");
-    height: 120px;
+    height: 70px;
     margin-top: 2px;
     margin-right: 20px;
     position: absolute;
@@ -4387,17 +4387,14 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 #submissions-list #my-submissions-list,
 #submissions-list.toggled-awards #pending-submission-list,
 #submissions-list.toggled-mine #pending-submission-list,
-#projects-reviews-list #under-review-projects-reviews-list,
-#projects-reviews-list #accepted-projects-reviews-list,
-#projects-reviews-list.toggled-under-review #pending-projects-reviews-list,
-#projects-reviews-list.toggled-accepted #pending-projects-reviews-list {
+#projects-reviews-list #reviewed-projects-reviews-list,
+#projects-reviews-list.toggled-reviewed #new-projects-reviews-list {
     display: none;
 }
 
 #submissions-list.toggled-awards #awarded-submission-list,
 #submissions-list.toggled-mine #my-submissions-list,
-#projects-reviews-list.toggled-under-review #under-review-projects-reviews-list,
-#projects-reviews-list.toggled-accepted #accepted-projects-reviews-list {
+#projects-reviews-list.toggled-reviewed #reviewed-projects-reviews-list {
     display: inline;
 }
 
@@ -4434,7 +4431,7 @@ footer[id="footer-wrapper"] ul[class="license-info"] li:last-child {
 
 #submissions-list ul li,
 #projects-reviews-list ul li {
-    padding: 20px 15px 0 15px;
+    padding: 20px 15px 0 0;
     list-style: none;
     background: #fbfbfb;
     margin-bottom: 10px;
@@ -4980,6 +4977,21 @@ table#metrics-scoreboard td.todays-count {
   font-size: 86px;
 }
 
+#scoreboard-details h2 {
+  text-align: center;
+  font-size: 30px;
+  color: #262626;
+  font-weight: normal;
+  padding: 30px;
+}
+
+table.display {
+    border: 0;
+}
+
+table.display thead, table.display tfoot {
+    background-color: #eee;
+}
 
 #badge-top {
      width: 930px;
@@ -4993,7 +5005,6 @@ table#metrics-scoreboard td.todays-count {
      -o-border-radius: 3px;
      border-radius: 3px;
 }
-
 
 #peer-assessment-left, #submission-edit-left {
     width: 185px;
@@ -5654,31 +5665,70 @@ table#metrics-scoreboard td.todays-count {
     float: right;
 }
 
-#learn #sidebar h2, #learn #sidebar form {
-    margin-top: 15px;
-    margin-bottom: 15px;
+#learn #sidebar {
+    width: 200px;
+    margin: 0px;
+}
+
+#learn #sidebar h2 {
+    margin-top: 9px;
+    color: #999999;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 3px 15px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+#learn #sidebar i {
+    margin-right: 4px;
 }
 
 #learn #sidebar a {
     display: block;
+    margin-bottom: 3px;
+    margin-right: 0;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 2px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    line-height: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #0088CC;
+    text-decoration: none;
+    font-size: 13px;
 }
 
-#learn #learn-projects-filter #id_tag {
-    display: none;
+#learn #sidebar a:focus {
+    outline-width: thin;
+    outline-style: dotted;
+    outline-color: #333333;
+    outline-offset: -2px;
 }
 
-#learn #learn-search-tags #id_tag {
-    background: url('../images/icon.loupe.png') no-repeat 3px center;
-    padding-left: 20px;
+#learn #sidebar a.active, #learn #sidebar a.active:hover {
+    background-color: #0088CC;
+    color: #FFFFFF;
 }
 
-#learn #learn-search-tags #id_reviewed {
-    display: none;
+#learn #sidebar a:hover, #learn #sidebar a:active {
+    outline-width: 0pt;
+    outline-style: none;
+    outline-color: -moz-use-text-color;
 }
 
-#learn #sidebar {
-    width: 200px;
-    margin: 0px;
+#learn #sidebar a:hover {
+    color: #005580;
+    background-color: #eeeeee;
+}
+
+#learn #sidebar #learn-projects-filter {
+    padding-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #learn #main {
@@ -5687,28 +5737,155 @@ table#metrics-scoreboard td.todays-count {
     margin: 0px;
 }
 
-#learn.card-list .project-list li:nth-child(4n),
-#learn.card-list .user-list li:nth-child(4n){
+#learn.card-list .project-list li:nth-child(4n) {
     margin-right: 8px;
 }
 
-#learn.card-list .project-list li:nth-child(3n),
-#learn.card-list .user-list li:nth-child(3n){
+#learn.card-list .project-list li:nth-child(3n) {
     margin-right: 0;
-}
-
-#learn #sidebar #learn-projects-filter {
-     border:1px solid #cccccc;
-     -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-     -ms-border-radius: 3px;
-     -o-border-radius: 3px;
-     border-radius: 3px;
-     padding: 15px;
 }
 
 #learn #main #show-more-results {
     margin-top: 50px;
     margin-left: 300px;
     display: none;
+}
+
+#learn-tags #main a {
+    padding: 5px;
+}
+
+.pages-jobs #main {
+    background: #f3f3f3;
+    border-color: #ffffff;
+    font-size: 14px;
+}
+
+.pages-jobs p {
+    margin-top: 5px;
+}
+
+.pages-jobs #jobs-top {
+    background-image: url('/media/images/jobs_page/workshop.png');
+    height: 450px;
+    width: 960px;
+    padding-top: 0px;
+}
+
+.pages-jobs #jobs-top,
+.pages-jobs #jobs-bottom {
+    margin-left: 6px;
+}
+
+.pages-jobs #jobs-top h1 {
+    font-size: 42px;
+    font-weight:100;
+    text-shadow: none;
+    color: #ffffff;
+    padding-top: 390px;
+    padding-left: 48px;
+}
+
+.pages-jobs .highlight1 {
+    color: #ff7300;
+}
+
+.pages-jobs .highlight2 {
+    color: #b7d500;
+}
+
+.pages-jobs .highlight3 {
+    color: #00c7b5;
+}
+
+.pages-jobs .highlight4 {
+    color: #ffbc1a;
+}
+
+.pages-jobs #jobs-left {
+    width: 590px;
+    margin-bottom: 25px;
+    margin-left: 30px;
+}
+
+.pages-jobs #jobs-left h2, .pages-jobs #jobs-right h2 {
+    font-size: 26px;
+    margin-top: 20px;
+}
+
+.pages-jobs #jobs-left h2 {
+    margin-bottom: 10px;
+}
+
+.pages-jobs #jobs-left img {
+    margin-bottom: 30px;
+}
+
+.pages-jobs #jobs-right {
+    float: right;
+    position: relative;
+    width: 320px;
+    margin-right: 0;
+    margin-bottom: 5px;
+}
+
+.pages-jobs #jobs-right h2 {
+    margin-bottom: 10px;
+}
+
+.pages-jobs #jobs-right h3 {
+    font-size: 20px;
+}
+
+.pages-jobs #jobs-right .job-possitions {
+    background: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.pages-jobs #jobs-right .job-possitions a.button {
+    margin-left: 250px;
+    font-weight: bold;
+}
+
+.pages-jobs #jobs-right ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.pages-jobs #jobs-right ul li {
+    border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.pages-jobs #jobs-right ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0px;
+}
+
+.pages-jobs #jobs-bottom {
+    margin-top: 20px;
+    height: 630px;
+    background-image: url('/media/images/jobs_page/map.png')
+}
+
+.pages-jobs #jobs-bottom h2, .pages-jobs #jobs-bottom  a {
+    font-size: 22px;
+    font-weight: 100px;
+    text-shadow: none;
+}
+
+.pages-jobs #jobs-bottom h2 {
+    padding-top: 40px;
+    padding-left: 40px;
+}
+
+.pages-jobs #jobs-bottom a.button {
+    margin-right: 270px;
+    margin-top: -34px;
+    float: right;
+    padding: 10px;
 }

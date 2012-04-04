@@ -1,6 +1,6 @@
 {% extends "projects/project_edit.html" %}
 {% load l10n_tags %}
-{% project_tags %}
+{% load project_tags %}
 {% block bodyclasses %}project import{% endblock %}
 
 {% block links %}{% if school %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endif %}{% endblock %}

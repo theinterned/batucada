@@ -1,6 +1,9 @@
+import urllib2
+
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test
+from django.conf import settings
 
 from drumbeat import messages
 from users.models import UserProfile
@@ -41,3 +44,20 @@ def login_required(func=None, profile_required=True):
     if func:
         return actual_decorator(func)
     return actual_decorator
+
+
+def secure_required(func):
+    """
+    This decorator is for views that require https.
+
+    Enabled only if settings.SESSION_COOKIE_SECURE is set to True.
+    """
+    def decorator(*args, **kwargs):
+        request = args[0]
+        enabled_https = getattr(settings, 'SESSION_COOKIE_SECURE', False)
+        if enabled_https and not request.is_secure():
+            http_url = request.build_absolute_uri(request.get_full_path())
+            https_url = 'https:' + urllib2.splittype(http_url)[1]
+            return HttpResponseRedirect(https_url)
+        return func(*args, **kwargs)
+    return decorator

@@ -10,8 +10,7 @@ from django.contrib.contenttypes import generic
 from activity.models import Activity, register_filter
 from activity.schema import object_types, verbs
 from drumbeat.models import ModelBase
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
 from richtext.models import RichTextField
 
 
@@ -44,26 +43,29 @@ class Status(ModelBase):
     def send_wall_notification(self):
         if not self.project:
             return
+        recipients = self.project.participants()
+        subject_template = 'statuses/emails/wall_updated_subject.txt'
+        body_template = 'statuses/emails/wall_updated.txt'
         context = {
             'status': self,
             'project': self.project,
             'domain': Site.objects.get_current().domain,
         }
-        subjects, bodies = localize_email(
-            'statuses/emails/wall_updated_subject.txt',
-            'statuses/emails/wall_updated.txt', context)
         from_organizer = self.project.organizers().filter(
             user=self.author).exists()
-        for participation in self.project.participants():
+        profiles = []
+        for recipient in recipients:
+            profile = recipient.user
             if self.important:
                 unsubscribed = False
             elif from_organizer:
-                unsubscribed = participation.no_organizers_wall_updates
+                unsubscribed = recipient.no_organizers_wall_updates
             else:
-                unsubscribed = participation.no_participants_wall_updates
-            if self.author != participation.user and not unsubscribed:
-                SendUserEmail.apply_async(
-                    (participation.user, subjects, bodies))
+                unsubscribed = recipient.no_participants_wall_updates
+            if self.author != profile and not unsubscribed:
+                profiles.append(profile)
+        SendNotifications.apply_async((profiles, subject_template, body_template,
+            context))
 
     @staticmethod
     def filter_activities(activities):

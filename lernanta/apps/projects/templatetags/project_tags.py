@@ -89,7 +89,7 @@ register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
 def learn_default(tag=None, school=None):
     learn_url = reverse('projects_learn')
-    learn_url += "?reviewed=on"
+    learn_url += '?all_languages=on'
     if school:
         learn_url += "&school=%s" % school.id
     if tag:

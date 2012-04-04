@@ -12,8 +12,8 @@ from drumbeat.models import ModelBase
 from activity.models import Activity, register_filter
 from activity.schema import verbs
 from preferences.models import AccountPreferences
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
+
 
 log = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ def follow_handler(sender, **kwargs):
     activity = Activity(actor=rel.source,
                         verb=verbs['follow'],
                         target_object=rel)
-    receipts = []
+    recipients = []
     if rel.target_user:
         preferences = AccountPreferences.objects.filter(
             user=rel.target_user, key='no_email_new_follower')
@@ -88,7 +88,7 @@ def follow_handler(sender, **kwargs):
             if pref.value:
                 break
         else:
-            receipts.append(rel.target_user)
+            recipients.append(rel.target_user)
     else:
         activity.scope_object = rel.target_project
         for organizer in rel.target_project.organizers():
@@ -99,18 +99,17 @@ def follow_handler(sender, **kwargs):
                     if pref.value:
                         break
                 else:
-                    receipts.append(organizer.user)
+                    recipients.append(organizer.user)
     activity.save()
+    subject_template = 'relationships/emails/new_follower_subject.txt'
+    body_template = 'relationships/emails/new_follower.txt'
     context = {
         'user': rel.source,
         'project': rel.target_project,
         'domain': Site.objects.get_current().domain
     }
-    subjects, bodies = localize_email(
-        'relationships/emails/new_follower_subject.txt',
-        'relationships/emails/new_follower.txt', context)
-    for user in receipts:
-        SendUserEmail.apply_async((user, subjects, bodies))
+    SendNotifications.apply_async((recipients, subject_template, body_template,
+        context))
 
 post_save.connect(follow_handler, sender=Relationship,
     dispatch_uid='relationships_follow_handler')

@@ -5,7 +5,7 @@
 {% block body %}
 <section class="modal">
   <article>
-    <h1>{% block heading %}{% endblock %} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}">{{_('sign in')}}</a></span></h1>
+    <h1>{% block heading %}{% endblock %} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}{% if redirect_field_value %}?{{ redirect_field_name }}={{ redirect_field_value }}{% endif %}">{{_('sign in')}}</a></span></h1>
     <fieldset>
       <form action="{% block action %}{% endblock %}" method="post">
         {% csrf_token %}
@@ -20,7 +20,7 @@
           {{ form.username }}
           {{ form.username.errors }}
           <small class="hint">{{ _('Your public profile:') }} http://{{ domain }}/<b>{{ _('username') }}</b></small>
-          <small class="hint" id="availability"></small>          
+          <small class="hint" id="availability"></small>
         </div>
         {% block password_fields %}{% endblock %}
         <div class="field{% if form.email.errors %} error{% endif %}">
@@ -28,6 +28,11 @@
           {{ form.email }}
           {{ form.email.errors }}
           <small class="hint">{{ _('Required to send you notifications about your P2PU account.') }}</small>
+        </div>
+        <div class="field{% if form.email_confirm.errors %} error{% endif %}">
+          <label for="id_email_confirm">{{ _('Re-enter Email Address') }}</label>
+          {{ form.email_confirm }}
+          {{ form.email_confirm.errors }}
         </div>
         <div class="preflang">
           <label for="preflang">{{ _('Preferred Language') }}</label>

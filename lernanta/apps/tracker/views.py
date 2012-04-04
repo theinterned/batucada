@@ -6,10 +6,14 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import http
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Count
+from django.utils import simplejson
 
 from users.models import UserProfile
 from replies.models import PageComment
 from projects.models import Participation, Project
+from signups.models import SignupAnswer
+
 
 log = logging.getLogger(__name__)
 
@@ -78,7 +82,6 @@ def scoreboard(request):
     time_details = get_time_details()
     users_stats = get_stats('users', UserProfile.objects.all(),
         'user__date_joined', time_details)
-    from signups.models import SignupAnswer
     ct = ContentType.objects.get_for_model(SignupAnswer)
     comments = PageComment.objects.exclude(page_content_type=ct)
     comments_stats = get_stats('comments', comments, 'created_on', time_details)
@@ -94,3 +97,74 @@ def scoreboard(request):
         'tracker/scoreboard.html', context,
         context_instance=RequestContext(request)
     )
+
+
+def scoreboard_users(request):
+    if not request.user.is_authenticated() or not request.user.is_staff:
+        raise http.Http404
+    stats_date = datetime.datetime.now()
+    users = UserProfile.objects.filter(user__date_joined__month=stats_date.month,
+        user__date_joined__year=stats_date.year)
+    users_ids = users.values('id')
+    ct = ContentType.objects.get_for_model(SignupAnswer)
+    comments_count = dict(PageComment.objects.exclude(
+        page_content_type=ct).filter(author__in=users_ids).values(
+        'author_id').annotate(comments_count=Count('id')).values_list(
+        'author_id', 'comments_count'))
+    joins_count = dict(Participation.objects.filter(user__in=users_ids).values(
+        'user_id').annotate(joins_count=Count('id')).values_list(
+        'user_id', 'joins_count'))
+    aaData = [[u.username, comments_count.get(u.id,0), joins_count.get(u.id, 0)] for u in users]
+    data = {'aaData': aaData}
+    json = simplejson.dumps(data)
+    return http.HttpResponse(json, mimetype="application/json")
+
+
+def scoreboard_top_groups_by_comments(request):
+    if not request.user.is_authenticated() or not request.user.is_staff:
+        raise http.Http404
+    stats_date = datetime.datetime.now()
+    ct = ContentType.objects.get_for_model(SignupAnswer)
+    p_ct = ContentType.objects.get_for_model(Project)
+    commented_projects = PageComment.objects.exclude(page_content_type=ct).filter(
+        created_on__month=stats_date.month, created_on__year=stats_date.year,
+        scope_content_type=p_ct).values('scope_id').annotate(
+        comments_count=Count('id'))
+    aaData = [[Project.objects.get(id=p['scope_id']).slug, p['comments_count']] for p in commented_projects]
+    data = {'aaData': aaData}
+    json = simplejson.dumps(data)
+    return http.HttpResponse(json, mimetype="application/json")
+
+
+def scoreboard_top_groups_by_joins(request):
+    if not request.user.is_authenticated() or not request.user.is_staff:
+        raise http.Http404
+    stats_date = datetime.datetime.now()
+    aaData = list(Participation.objects.filter(joined_on__month=stats_date.month,
+        joined_on__year=stats_date.year).values('project__slug').annotate(
+        joins_count=Count('id')).values_list('project__slug', 'joins_count'))
+    data = {'aaData': aaData}
+    json = simplejson.dumps(data)
+    return http.HttpResponse(json, mimetype="application/json")
+
+
+def scoreboard_groups(request):
+    if not request.user.is_authenticated() or not request.user.is_staff:
+        raise http.Http404
+    stats_date = datetime.datetime.now()
+    groups = Project.objects.filter(created_on__month=stats_date.month,
+        created_on__year=stats_date.year)
+    groups_ids = groups.values('id')
+    ct = ContentType.objects.get_for_model(SignupAnswer)
+    p_ct = ContentType.objects.get_for_model(Project)
+    comments_count = dict(PageComment.objects.exclude(page_content_type=ct).filter(
+        scope_id__in=groups_ids, scope_content_type=p_ct).values(
+        'scope_id').annotate(comments_count=Count('id')).values_list(
+        'scope_id', 'comments_count'))
+    joins_count = dict(Participation.objects.filter(project__in=groups_ids).values(
+        'project_id').annotate(joins_count=Count('id')).values_list(
+        'project_id', 'joins_count'))
+    aaData = [[p.slug, comments_count.get(p.id,0), joins_count.get(p.id, 0)] for p in groups]
+    data = {'aaData': aaData}
+    json = simplejson.dumps(data)
+    return http.HttpResponse(json, mimetype="application/json")

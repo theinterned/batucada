@@ -13,8 +13,7 @@ from django.conf import settings
 from drumbeat.models import ModelBase
 from activity.models import Activity
 from activity.schema import verbs, object_types
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
 from richtext.models import RichTextField
 from replies.models import PageComment
 from badges.models import Submission, Award
@@ -215,25 +214,27 @@ def send_email_notification(instance):
     project = instance.project
     if not instance.listed:
         return
+    recipients = project.participants()
+    subject_template = 'content/emails/content_update_subject.txt'
+    body_template = 'content/emails/content_update.txt'
     context = {
         'instance': instance,
         'project': project,
         'domain': Site.objects.get_current().domain,
     }
-    subjects, bodies = localize_email(
-        'content/emails/content_update_subject.txt',
-        'content/emails/content_update.txt', context)
     from_organizer = project.organizers().filter(
         user=instance.author).exists()
-    for participation in project.participants():
-        is_author = (instance.author == participation.user)
+    profiles = []
+    for recipient in recipients:
+        profile = recipient.user
         if from_organizer:
-            unsubscribed = participation.no_organizers_content_updates
+            unsubscribed = recipient.no_organizers_content_updates
         else:
-            unsubscribed = participation.no_participants_content_updates
-        if not is_author and not unsubscribed:
-            SendUserEmail.apply_async(
-                    (participation.user, subjects, bodies))
+            unsubscribed = recipient.no_participants_content_updates
+        if instance.author != profile and not unsubscribed:
+            profiles.append(profile)
+    SendNotifications.apply_async((profiles, subject_template, body_template,
+        context))
 
 
 ###########

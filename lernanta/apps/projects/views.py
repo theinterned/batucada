@@ -15,7 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from commonware.decorators import xframe_sameorigin
 
-# from links import tasks as links_tasks
+# from links.tasks import UnsubscribeFromFeed
 from pagination.views import get_pagination_context
 
 from projects import forms as project_forms
@@ -44,7 +44,7 @@ from users.decorators import login_required
 log = logging.getLogger(__name__)
 
 
-def learn(request, max_count=6):
+def learn(request, max_count=24):
     projects = Project.objects.filter(not_listed=False,
         deleted=False).order_by('-created_on')
     get_params = request.GET.copy()
@@ -73,8 +73,8 @@ def learn(request, max_count=6):
                 | Q(sign_up__status=Signup.MODERATED)
                 | Q(sign_up__status=Signup.NON_MODERATED))
         featured = form.cleaned_data['featured']
-        if featured == project_forms.ProjectsFilterForm.STAFF:
-            context['learn_staff'] = True
+        if featured == project_forms.ProjectsFilterForm.SHOWCASE:
+            context['learn_showcase'] = True
             projects = projects.filter(featured=True)
         elif featured == project_forms.ProjectsFilterForm.COMMUNITY:
             context['learn_community'] = True
@@ -109,8 +109,9 @@ def learn(request, max_count=6):
         if tag:
             context['learn_tag'] = tag
             projects = Project.get_tagged_projects(tag, projects)
-        language = form.cleaned_data['language']
-        projects = projects.filter(language__startswith=language)
+        if not form.cleaned_data['all_languages']:
+            language = form.cleaned_data['language']
+            projects = projects.filter(language__startswith=language)
         reviewed = form.cleaned_data['reviewed']
         if reviewed:
             accepted_reviews = Review.objects.filter(
@@ -123,9 +124,15 @@ def learn(request, max_count=6):
             context, context_instance=RequestContext(request))
         projects_pagination = render_to_string('projects/_learn_pagination.html',
             context, context_instance=RequestContext(request))
+        learn_header = render_to_string('projects/_learn_header.html',
+            context, context_instance=RequestContext(request))
+        learn_filters = render_to_string('projects/_learn_filters.html',
+            context, context_instance=RequestContext(request))
         data = {
             'projects_html': projects_html,
             'projects_pagination': projects_pagination,
+            'learn_header': learn_header,
+            'learn_filters': learn_filters,
         }
         json = simplejson.dumps(data)
         return http.HttpResponse(json, mimetype="application/json")
@@ -133,11 +140,10 @@ def learn(request, max_count=6):
         context_instance=RequestContext(request))
 
 
-def matching_tags(request):
-    matching_tags = Project.get_matching_tags(request.GET.get('term', ''))
-    json = simplejson.dumps(list(matching_tags))
-
-    return http.HttpResponse(json, mimetype="application/json")
+def learn_tags(request):
+    tags = Project.get_weighted_tags()
+    return render_to_response('projects/learn_tags.html', {'tags': tags},
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -489,7 +495,7 @@ def edit_links_edit(request, slug, link):
     metric_permissions = project.get_metrics_permissions(request.user)
     if form.is_valid():
         if link.subscription:
-            #links_tasks.UnsubscribeFromFeed.apply_async(args=(link,))
+            #UnsubscribeFromFeed.apply_async(args=(link,))
             link.subscription = None
             link.save()
         link = form.save(commit=False)

@@ -69,6 +69,9 @@ DATABASES = {
 
 TIME_ZONE = 'America/Toronto'
 
+# Set to True to use https
+SESSION_COOKIE_SECURE = False
+
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
@@ -103,6 +106,13 @@ P2PU_EMBEDS= (
 CACHE_BACKEND = 'dummy://'
 CACHE_PREFIX = 'lernanta'
 CACHE_COUNT_TIMEOUT = 60
+
+# RabbitMQ Config
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = ""
+BROKER_PASSWORD = ""
+BROKER_VHOST = ""
 
 # Execute celery tasks locally, so you don't have to be running an MQ
 CELERY_ALWAYS_EAGER = True
@@ -139,7 +149,7 @@ PAGINATION_DEFAULT_ITEMS_PER_PAGE = 20
 # Used for open badges integration.
 MOZBADGES = {
     # location of badge hub. Currently this is the only public one
-    'hub': 'http://alpha.badgehub.org',
+    'hub': 'http://beta.openbadges.org',
 
     # method for getting badges for a user. Called with user object.
     'badge_getter': 'badges.models.get_awarded_badges',

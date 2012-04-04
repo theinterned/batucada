@@ -9,8 +9,6 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import simplejson
 
-from django_obi.views import send_badges
-
 from users.decorators import login_required
 from users.models import UserProfile
 from drumbeat import messages
@@ -30,38 +28,6 @@ def pilot_badge_redirect(request, slug):
         return http.HttpResponseRedirect(pilot_url)
     else:
         raise http.Http404
-
-
-@login_required
-def badges_manage(request):
-    #FIXME: Re-enable after updating integration with the OBI.
-    raise http.Http404
-    profile = request.user.get_profile()
-    badges_help_url = reverse('static_page_show', kwargs=dict(
-            slug='assessments-and-badges'))
-    return send_badges(request,
-        template_name='badges/profile_badges_manage.html',
-        send_badges_complete_view='users_badges_manage_done',
-        render_failure=badges_manage_render_failure,
-        extra_context=dict(profile=profile, obi_url=settings.MOZBADGES['hub'],
-        badges_help_url=badges_help_url, badges_tab=True))
-
-
-@login_required
-def badges_manage_complete(request):
-    msg = render_to_string('badges/success_msg.html', dict(
-        obi_url=settings.MOZBADGES['hub'], email=request.user.email))
-    messages.info(request, msg)
-    return http.HttpResponseRedirect(reverse('users_badges_manage'))
-
-
-@login_required
-def badges_manage_render_failure(request, message, status=500):
-    log.error('Error sending badges to the OBI: %s' % message)
-    msg = _("Something has gone wrong. Hopefully it's temporary. ")
-    msg += _("Please try again in a few minutes.")
-    messages.error(request, msg)
-    return http.HttpResponseRedirect(reverse('users_badges_manage'))
 
 
 def show_badge(request, slug):

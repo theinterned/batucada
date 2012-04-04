@@ -12,8 +12,8 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename, MultiQuerySet
 from drumbeat.models import ModelBase
 from richtext.models import RichTextField
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
+from l10n.urlresolvers import reverse
 
 
 def determine_upload_path(instance, filename):
@@ -26,7 +26,22 @@ def determine_upload_path(instance, filename):
 
 def get_awarded_badges(user):
     from pilot import get_awarded_badges as get_pilot_badges
-    return get_pilot_badges(user)
+    badges = get_pilot_badges(user)
+    profile = user.get_profile()
+    badges_ids = Award.objects.filter(user=profile).values(
+        'badge_id').distinct()
+    for badge in Badge.objects.filter(id__in=badges_ids):
+        evidence = reverse('user_awards_show',
+            kwargs= dict(slug=badge.slug, username=profile.username))
+        data = {
+            'name': badge.name,
+            'description': badge.description,
+            'image': badge.get_image_url(),
+            'evidence': evidence,
+            'criteria': badge.get_absolute_url(),
+        }
+        badges[badge.slug] = data
+    return badges
 
 
 class Badge(ModelBase):
@@ -44,6 +59,7 @@ class Badge(ModelBase):
         null=True, blank=True)
     logic = models.ForeignKey('badges.Logic', related_name='badges',
         help_text=_('Regulates how the badge is awarded to users.'))
+    all_groups = models.BooleanField(default=False)
     groups = models.ManyToManyField('projects.Project', related_name='badges',
         null=True, blank=True)
     creator = models.ForeignKey('users.UserProfile', related_name='badges',
@@ -148,14 +164,16 @@ class Badge(ModelBase):
     def get_peers(self, profile):
         from projects.models import Participation
         from users.models import UserProfile
-        badge_projects = self.groups.values('id')
         user_projects = Participation.objects.filter(
             user=profile).values('project__id')
         peers = Participation.objects.filter(
-            project__in=badge_projects).filter(
-            project__in=user_projects).values('user__id')
+            project__in=user_projects)
+        if not self.all_groups:
+            badge_projects = self.groups.values('id')
+            peers = peers.filter(project__in=badge_projects)
         return UserProfile.objects.filter(deleted=False,
-            id__in=peers).exclude(id=profile.id)
+            id__in=peers.values('user__id')).exclude(
+            id=profile.id)
 
     def other_badges_can_apply_for(self):
         badges = Badge.objects.exclude(
@@ -271,15 +289,15 @@ class Submission(ModelBase):
 
     def send_notification(self):
         """Send notification when a new submission is posted."""
+        subject_template = 'badges/emails/new_submission_subject.txt'
+        body_template = 'badges/emails/new_submission.txt'
         context = {
             'submission': self,
             'domain': Site.objects.get_current().domain,
         }
-        subjects, bodies = localize_email(
-            'badges/emails/new_submission_subject.txt',
-            'badges/emails/new_submission.txt', context)
-        for adopter in self.badge.get_adopters():
-            SendUserEmail.apply_async((adopter.user, subjects, bodies))
+        profiles = [recipient.user for recipient in self.badge.get_adopters()]
+        SendNotifications.apply_async((profiles, subject_template, body_template,
+            context))
 
 
 class Assessment(ModelBase):

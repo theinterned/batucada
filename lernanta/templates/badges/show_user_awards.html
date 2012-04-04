@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load l10n_tags %}
 {% load pagination_tags %}
+{% load embed %}
 
 {% block bodyclasses %}badge-show-user-awards{% endblock %}
 
@@ -17,7 +18,7 @@
         <p>{{ badge.description }}</p>
         {% if badge.requirements %}
           <h2>{{ _('Requirements:') }}</h2> 
-          {{ badge.requirements }}
+          {{ badge.requirements|embed|safe }}
         {% endif %}
 
 	    {% if not badge.logic.unique %}

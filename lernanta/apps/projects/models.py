@@ -22,8 +22,7 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
 from richtext.models import RichTextField
 from content.models import Page
 from replies.models import PageComment
@@ -249,15 +248,15 @@ class Project(ModelBase):
 
     def send_creation_notification(self):
         """Send notification when a new project is created."""
+        subject_template = 'projects/emails/project_created_subject.txt'
+        body_template = 'projects/emails/project_created.txt'
         context = {
             'project': self,
             'domain': Site.objects.get_current().domain,
         }
-        subjects, bodies = localize_email(
-            'projects/emails/project_created_subject.txt',
-            'projects/emails/project_created.txt', context)
-        for organizer in self.organizers():
-            SendUserEmail.apply_async((organizer.user, subjects, bodies))
+        profiles = [recipient.user for recipient in self.organizers()]
+        SendNotifications.apply_async((profiles, subject_template, body_template,
+            context))
         admin_subject = render_to_string(
             "projects/emails/admin_project_created_subject.txt",
             context).strip()
@@ -300,10 +299,11 @@ class Project(ModelBase):
             logic__submission_style=Logic.NO_SUBMISSIONS)
 
     def get_badges_peers_can_give(self):
-        from badges.models import Logic
-        return self.badges.filter(logic__min_votes=1,
-            logic__min_avg_rating=0).exclude(
-            logic__submission_style=Logic.SUBMISSION_REQUIRED)
+        from badges.models import Logic, Badge
+        return Badge.objects.filter(
+            logic__min_votes=1, logic__min_avg_rating=0).exclude(
+            logic__submission_style=Logic.SUBMISSION_REQUIRED).filter(
+            Q(groups=self.id) | Q(all_groups=True)).distinct()
 
     def get_upon_completion_badges(self, user):
         from badges.models import Badge, Award
@@ -382,19 +382,35 @@ class Project(ModelBase):
             return Project.objects.none()
 
     @classmethod
-    def get_popular_tags(cls, max_count=6):
+    def get_popular_tags(cls, max_count=10):
         ct = ContentType.objects.get_for_model(Project)
+        not_listed = Project.objects.filter(
+            Q(not_listed=True)|Q(deleted=True)).values('id')
         return GeneralTaggedItem.objects.filter(
-            content_type=ct).values('tag__name').annotate(
-            Count('object_id')).order_by(
-            '-object_id__count')[:max_count]
+            content_type=ct).exclude(object_id__in=not_listed).values(
+            'tag__name').annotate(tagged_count=Count('object_id')).order_by(
+            '-tagged_count')[:max_count]
 
     @classmethod
-    def get_matching_tags(cls, term):
+    def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=7.0):
         ct = ContentType.objects.get_for_model(Project)
-        return GeneralTaggedItem.objects.filter(
-            content_type=ct, tag__name__icontains=term).values_list(
-            'tag__name', flat=True).distinct()
+        not_listed = Project.objects.filter(
+            Q(not_listed=True)|Q(deleted=True)).values('id')
+        tags = GeneralTaggedItem.objects.filter(
+            content_type=ct).exclude(object_id__in=not_listed).values(
+            'tag__name').annotate(tagged_count=Count('object_id')).filter(
+            tagged_count__gte=min_count)
+        if tags.count():
+            min_tagged_count = tags.order_by('tagged_count')[0]['tagged_count']
+            max_tagged_count = tags.order_by('-tagged_count')[0]['tagged_count']
+            if min_tagged_count == max_tagged_count:
+                factor = 1.0
+            else:
+                factor = float(max_weight - min_weight) / float(max_tagged_count - min_tagged_count)
+        tags = tags.order_by('tag__name')
+        for tag in tags:
+            tag['weight']  = max_weight - (max_tagged_count - tag['tagged_count']) * factor
+        return tags
 
     @classmethod
     def get_tagged_projects(self, tag_name, projects=None):

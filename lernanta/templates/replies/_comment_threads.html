@@ -113,8 +113,8 @@
         </div>
         {% if is_challenge %}
           <div class="post-details">
-            {{ _('on ') }} <a href="{{ reply.reply_to.get_absolute_url }}">{{ reply.reply_to.created_on }}</a>
-            {{ _('in reply to ') }} <a href="{{ reply.reply_to.author.get_absolute_url }}">{{ reply.reply_to.author }}</a>
+            {{ _('on ') }} <a href="{{ reply.get_absolute_url }}">{{ reply.created_on }}</a>
+            {{ _('in reply to ') }} <a href="{{ reply.reply_to.get_absolute_url }}">{{ reply.reply_to.author }}</a>
             <br />
             {% if user.is_authenticated %}
               {% if user|can_reply_comment:reply %}

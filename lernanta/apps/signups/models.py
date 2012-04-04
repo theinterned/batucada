@@ -9,8 +9,7 @@ from django.contrib.contenttypes import generic
 from django.db.models import Q
 from django.conf import settings
 
-from users.tasks import SendUserEmail
-from l10n.models import localize_email
+from users.tasks import SendNotifications
 from drumbeat.models import ModelBase
 from richtext.models import RichTextField
 from activity.schema import object_types
@@ -175,16 +174,16 @@ class SignupAnswer(ModelBase):
 
 
 def send_new_signup_answer_notification(answer):
+    recipients = answer.sign_up.project.organizers()
+    subject_template = 'signups/emails/new_signup_answer_subject.txt'
+    body_template = 'signups/emails/new_signup_answer.txt'
     context = {
         'answer': answer,
         'domain': Site.objects.get_current().domain,
     }
-    subjects, bodies = localize_email(
-        'signups/emails/new_signup_answer_subject.txt',
-        'signups/emails/new_signup_answer.txt', context)
-    for organizer in answer.sign_up.project.organizers():
-        SendUserEmail.apply_async((organizer.user,
-            subjects, bodies))
+    profiles = [recipient.user for recipient in recipients]
+    SendNotifications.apply_async((profiles, subject_template, body_template,
+        context))
 
 
 ###########

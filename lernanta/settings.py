@@ -205,13 +205,6 @@ CACHE_COUNT_TIMEOUT = 60
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
 
-# RabbitMQ Config
-BROKER_HOST = "localhost"
-BROKER_PORT = 5672
-BROKER_USER = ""
-BROKER_PASSWORD = ""
-BROKER_VHOST = ""
-
 CELERY_RESULT_BACKEND = "amqp"
 
 # SuperFeedr settings

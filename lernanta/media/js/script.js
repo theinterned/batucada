@@ -171,18 +171,6 @@ function carousel_itemAddCallback(carousel, first, last, data) {
     });
 };
 
-function updateLearnShowMoreResults() {
-    if ( $("#learn #main .pagination a.next").length ) {
-        var $next = $("#learn #main .pagination a.next");
-        $("#learn #main #show-more-results").attr('href', $next.attr('href'));
-        $("#learn #main #show-more-results").removeClass('disabled');
-        $("#learn #main #show-more-results").show();
-    } else {
-        $("#learn #main #show-more-results").hide();
-        $("#learn #main #show-more-results").addClass('disabled');
-    }
-};
-
 var batucada = {
     splash: {
         onload: function() {
@@ -432,11 +420,10 @@ $(document).ready(function() {
           'transitionOut'       : 'none'
         });
     }
-
-    if ( $("#learn #main .pagination").length ) {
-        $("#learn #main .pagination").hide();
-        updateLearnShowMoreResults();
+    if ( $('#learn').length ) {
+        enableLearn();
     }
+
 });
 
 // Recaptcha
@@ -457,8 +444,8 @@ $('#recaptcha_help').click(function(e) {
     Recaptcha.showhelp();
 });
 
-$('.messages li.error, .messages li.success, .messages li.info').click(function () {
-    $(this).fadeOut("fast");
+$('.messages li.error .closeNotification, .messages li.success .closeNotification, .messages li.info .closeNotification').click(function () {
+    $(this).parent().fadeOut("fast");
 });
 
 $(".project-kind-challenge #task_list_wall #task_list_wall_toogle #radio1").click(function(){
@@ -492,21 +479,13 @@ $("#submissions-list-toogle #radio3").click(function(){
 });
 
 $("#projects-reviews-list-toggle #radio1").click(function(){
-    $('#projects-reviews-list #under-review-projects-reviews-list').hide();
-    $('#projects-reviews-list #accepted-projects-reviews-list').hide();
-    $('#projects-reviews-list #pending-projects-reviews-list').show();
+    $('#projects-reviews-list #reviewed-projects-reviews-list').hide();
+    $('#projects-reviews-list #new-projects-reviews-list').show();
 });
 
 $("#projects-reviews-list-toggle #radio2").click(function(){
-    $('#projects-reviews-list #pending-projects-reviews-list').hide();
-    $('#projects-reviews-list #accepted-projects-reviews-list').hide();
-    $('#projects-reviews-list #under-review-projects-reviews-list').show();
-});
-
-$("#projects-reviews-list-toggle #radio3").click(function(){
-    $('#projects-reviews-list #pending-projects-reviews-list').hide();
-    $('#projects-reviews-list #under-review-projects-reviews-list').hide();
-    $('#projects-reviews-list #accepted-projects-reviews-list').show();
+    $('#projects-reviews-list #new-projects-reviews-list').hide();
+    $('#projects-reviews-list #reviewed-projects-reviews-list').show();
 });
 
 $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
@@ -683,18 +662,129 @@ $(".right-aligned-rating").hover(
         $(this).find("div.rating-key").show();
 });
 
-$('#learn #main #show-more-results').click(function(e){
-    if ( !$(this).hasClass('disabled')) {
-        $(this).addClass('disabled');
-        var url = $(this).attr('href');
+
+function disableLearn() {
+    $("#learn #main #show-more-results").addClass('disabled');
+    $("#learn #sidebar a.filter").addClass('disabled');
+    $('#learn #sidebar form#learn-projects-filter input').attr('disabled', 'disabled');
+    $('#learn #sidebar form#learn-projects-filter select').attr('disabled', 'disabled');
+}
+
+function enableLearn() {
+    $("#learn #sidebar form#learn-projects-filter button[type=submit]").hide();
+    $("#learn #main #learn-pagination").hide();
+    if ( $("#learn #main #learn-pagination a.next").length ) {
+        var $next = $("#learn #main #learn-pagination a.next");
+        $("#learn #main #show-more-results").attr('href', $next.attr('href'));
+        $("#learn #main #show-more-results").removeClass('disabled');
+        $("#learn #main #show-more-results").show();
+    } else {
+        $("#learn #main #show-more-results").hide();
+    }
+    $("#learn #sidebar a.filter").removeClass('disabled');
+    $('#learn #sidebar form#learn-projects-filter input').removeAttr('disabled');
+    $('#learn #sidebar form#learn-projects-filter select').removeAttr('disabled');
+}
+
+function updateLearnHeader(data) {
+    var learn_header = data['learn_header'];
+    $('#learn #main #learn-header').html(learn_header);
+}
+
+function bindLearnFilters() {
+    $('#learn #sidebar a.filter').click(submitLearnFilterLinks);
+    $('#learn #sidebar form#learn-projects-filter select').change(submitLearnFilterFormField);
+    $('#learn #sidebar form#learn-projects-filter input').click(submitLearnFilterFormField);
+    $('#learn #sidebar form#learn-projects-filter').submit(submitLearnFilterForm);
+}
+
+function updateLearnFilters(data) {
+    var learn_filters = data['learn_filters'];
+    $('#learn #sidebar').html(learn_filters);
+    bindLearnFilters();
+}
+
+function updateLearnProjectList(data) {
+    var projects_html = data['projects_html'];
+    var projects_pagination = data['projects_pagination'];
+    $('#learn #main ul.project-list').append(projects_html);
+    $('#learn #main #learn-pagination').html(projects_pagination);
+}
+
+function reloadLearnProjectList(data) {
+    $('#learn #main ul.project-list').empty();
+    updateLearnProjectList(data);
+}
+
+var doingPush = false;
+
+if ( window.History.enabled ) {
+    window.History.Adapter.bind(window,'statechange',function(){
+        var state = window.History.getState();
+        if ( !doingPush && state.data.path ) {
+            window.location = state.data.path;
+        }
+        doingPush = false;
+    });
+}
+
+function updateBrowserUrl(url) {
+    if ( window.History.enabled ) {
+        doingPush = true;
+        window.History.pushState({path: url}, $("title").text(), url);
+    }
+}
+
+function submitLearnShowMore(e) {
+    $link = $(this);
+    if ( !$link.hasClass('disabled') ) {
+        var url = $link.attr('href');
+        disableLearn();
         $.get(url, function(data) {
-            var projects_html = data['projects_html'];
-            var projects_pagination = data['projects_pagination'];
-            $('#learn #main ul.project-list').append(projects_html);
-            $('#learn #main .pagination').html(projects_pagination);
-            updateLearnShowMoreResults();
+            updateLearnProjectList(data);
+            enableLearn();
         });
+        updateBrowserUrl(url);
     }
     return false;
+}
 
-});
+function submitLearnFilterLinks(e) {
+    $link = $(this);
+    if ( !$link.hasClass('disabled')) {
+        var url = $link.attr('href');
+        disableLearn();
+        $.get(url, function(data) {
+            updateLearnHeader(data);
+            updateLearnFilters(data);
+            reloadLearnProjectList(data);
+            enableLearn();
+        });
+        updateBrowserUrl(url);
+    }
+    return false;
+}
+
+function submitLearnFilterForm (e) {
+    var $form = $(this).closest('form');
+    var url = $form.attr('action');
+    var form_data = $form.serialize();
+    disableLearn();
+    $.get(url, form_data, function(data) {
+        updateLearnHeader(data);
+        updateLearnFilters(data);
+        reloadLearnProjectList(data);
+        enableLearn();
+    });
+    updateBrowserUrl(url + '?' + form_data);
+   return false;
+};
+
+function submitLearnFilterFormField(e) {
+    $(this).closest('form').submit();
+}
+
+$('#learn #main #show-more-results').click(submitLearnShowMore);
+bindLearnFilters();
+
+
