@@ -69,6 +69,9 @@ DATABASES = {
 
 TIME_ZONE = 'America/Toronto'
 
+# Set to True to use https
+SESSION_COOKIE_SECURE = False
+
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }

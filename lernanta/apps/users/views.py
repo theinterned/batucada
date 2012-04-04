@@ -37,7 +37,7 @@ from badges.models import Award
 from users import forms
 from users.models import UserProfile, create_profile, ProfileTag
 from users.fields import UsernameField
-from users.decorators import anonymous_only, login_required
+from users.decorators import anonymous_only, login_required, secure_required
 from users import drupal
 
 
@@ -141,6 +141,7 @@ def force_language_in_url(url, oldlang, newlang):
         p.params, p.query, p.fragment])
 
 
+@secure_required
 def login(request):
     """Log the user in. Lifted most of this code from zamboni."""
 
@@ -183,6 +184,7 @@ def login(request):
     return r
 
 
+@secure_required
 @anonymous_only
 def login_openid(request):
     if request.method == 'POST':
@@ -238,6 +240,7 @@ def logout(request):
     return http.HttpResponseRedirect(reverse('splash'))
 
 
+@secure_required
 @anonymous_only
 def register(request):
     """Present user registration form and handle registrations."""
@@ -282,6 +285,7 @@ def register(request):
     }, context_instance=RequestContext(request))
 
 
+@secure_required
 @anonymous_only
 def register_openid(request):
     if request.method == 'POST':
