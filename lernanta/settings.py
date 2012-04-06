@@ -93,6 +93,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 MIDDLEWARE_CLASSES = (
     'drumbeat.middleware.NotFoundMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'api.middleware.APISubdomainMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
