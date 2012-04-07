@@ -567,7 +567,6 @@ def profile_edit_image(request):
 
 @login_required
 def badges_manage(request):
-    raise http.Http404
     profile = request.user.get_profile()
     badges_help_url = "http://help.p2pu.org/kb/learning/what-are-badges"
     has_badges = Award.objects.filter(user=profile).exists()
