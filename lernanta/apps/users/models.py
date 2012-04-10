@@ -37,7 +37,7 @@ log = logging.getLogger(__name__)
 # To fix a South problem (Cannot freeze field 'users.userprofile.tags')
 add_ignored_fields(["^users\.managers"])
 
-GRAVATAR_TEMPLATE = ("http://www.gravatar.com/avatar/%(gravatar_hash)s"
+GRAVATAR_TEMPLATE = ("https://secure.gravatar.com/avatar/%(gravatar_hash)s"
                      "?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s")
 
 
