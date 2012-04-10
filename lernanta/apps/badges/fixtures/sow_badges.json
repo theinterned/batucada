@@ -299,7 +299,7 @@
         "fields": {
             "groups": [], 
             "description": "The HTML Basic Badge recognizes the ability to write an html page by making basic use of HTML tags.", 
-            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can use the Mozilla Developer Network HTML reference [0] to identify and use basic HTML tags , translate HTML tags like <div>, <p> into real world structures.",
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can use the Mozilla Developer Network HTML reference [0] to identify and use basic HTML tags , translate HTML tags like &lt;div&gt; , &lt;p&gt; into real world structures.",
             "creator": null, 
             "prerequisites": [], 
             "rubrics": [1,2], 
