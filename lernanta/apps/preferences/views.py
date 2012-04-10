@@ -9,7 +9,7 @@ from django.contrib.sessions.models import Session
 
 from l10n.urlresolvers import reverse
 from drumbeat import messages
-from users.decorators import login_required
+from users.decorators import login_required, secure_required
 from preferences import forms
 from preferences.models import AccountPreferences
 
@@ -24,6 +24,7 @@ PER_PROJECT_PREFERENCES = (
 )
 
 
+@secure_required
 @login_required
 def settings(request):
     profile = request.user.get_profile()
@@ -62,6 +63,7 @@ def settings(request):
                               context_instance=RequestContext(request))
 
 
+@secure_required
 @login_required
 def email(request):
     profile = request.user.get_profile()
@@ -105,6 +107,7 @@ def email(request):
     }, context_instance=RequestContext(request))
 
 
+@secure_required
 @login_required
 def password(request):
     profile = request.user.get_profile()

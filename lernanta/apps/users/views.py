@@ -32,7 +32,7 @@ from drumbeat import messages
 from activity.models import Activity
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
-from badges.models import Award
+from badges.models import Award, get_awarded_badges
 
 from users import forms
 from users.models import UserProfile, create_profile, ProfileTag
@@ -157,8 +157,9 @@ def login(request):
 
     logout(request)
 
+    dashboard_url = reverse('dashboard')
     redirect_field_value = request.session.get(
-        REDIRECT_FIELD_NAME, reverse('dashboard'))
+        REDIRECT_FIELD_NAME, dashboard_url) or dashboard_url
     extra_context = {
         'redirect_field_name': REDIRECT_FIELD_NAME,
         'redirect_field_value': urllib2.quote(redirect_field_value),
@@ -569,7 +570,7 @@ def profile_edit_image(request):
 def badges_manage(request):
     profile = request.user.get_profile()
     badges_help_url = "http://help.p2pu.org/kb/learning/what-are-badges"
-    has_badges = Award.objects.filter(user=profile).exists()
+    has_badges = get_awarded_badges(profile.user)
     badges_url = reverse('badges_list')
     context = {
         'profile': profile,
