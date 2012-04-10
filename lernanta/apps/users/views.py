@@ -157,8 +157,16 @@ def login(request):
 
     logout(request)
 
+    redirect_field_value = request.session.get(
+        REDIRECT_FIELD_NAME, reverse('dashboard'))
+    extra_context = {
+        'redirect_field_name': REDIRECT_FIELD_NAME,
+        'redirect_field_value': urllib2.quote(redirect_field_value),
+    }
+
     r = auth_views.login(request, template_name='users/signin.html',
-                         authentication_form=forms.AuthenticationForm)
+                         authentication_form=forms.AuthenticationForm,
+                         extra_context=extra_context)
 
     if isinstance(r, http.HttpResponseRedirect):
         user = request.user.get_profile()
@@ -279,9 +287,15 @@ def register(request):
                                       'correct them and resubmit.'))
     else:
         form = forms.RegisterForm()
+
+    redirect_field_value = request.session.get(
+        REDIRECT_FIELD_NAME, reverse('dashboard'))
+
     return render_to_response('users/register.html', {
         'form': form,
         'domain': Site.objects.get_current().domain,
+        'redirect_field_name': REDIRECT_FIELD_NAME,
+        'redirect_field_value': urllib2.quote(redirect_field_value),
     }, context_instance=RequestContext(request))
 
 
@@ -553,7 +567,6 @@ def profile_edit_image(request):
 
 @login_required
 def badges_manage(request):
-    raise http.Http404
     profile = request.user.get_profile()
     badges_help_url = "http://help.p2pu.org/kb/learning/what-are-badges"
     has_badges = Award.objects.filter(user=profile).exists()

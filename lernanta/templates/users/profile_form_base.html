@@ -5,7 +5,7 @@
 {% block body %}
 <section class="modal">
   <article>
-    <h1>{% block heading %}{% endblock %} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}">{{_('sign in')}}</a></span></h1>
+    <h1>{% block heading %}{% endblock %} <span class="pester">{{  _('or') }} <a href="{% locale_url users_login %}{% if redirect_field_value %}?{{ redirect_field_name }}={{ redirect_field_value }}{% endif %}">{{_('sign in')}}</a></span></h1>
     <fieldset>
       <form action="{% block action %}{% endblock %}" method="post">
         {% csrf_token %}
