@@ -6,13 +6,12 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.utils import simplejson
+from django.db.models import F
 
 from django.forms.models import modelformset_factory
 
 from urlparse import urlsplit
 from django.http import QueryDict
-=======
->>>>>>> The front end change for sortable tasks
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
@@ -463,3 +462,53 @@ def page_index_down(request, slug, page_slug):
     # Page goes down in the sidebar index (page.index increases).
     return _move_page(request, slug, page_slug, 'down')
 
+
+@hide_deleted_projects
+@login_required
+@participation_required
+def page_index_reorder(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    organizing = project.is_organizing(request.user)
+    if not organizing and project.category != Project.STUDY_GROUP:
+        messages.error(request, _('You can not change tasks order.'))
+        return http.HttpResponseRedirect(project.get_absolute_url())
+
+    newIndex = int(request.POST['newIndex']) + 1  # task indices are 1-based
+    oldIndex = int(request.POST['oldIndex']) + 1
+    if newIndex < 0 or oldIndex < 0:
+        raise http.Http404
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
+        deleted=False,
+        index__range=(min(newIndex, oldIndex), max(newIndex, oldIndex)),
+    ).order_by('index')
+    if content_pages.count() <= 0:
+        raise http.Http404
+
+    up_down = cmp(oldIndex, newIndex)
+    if up_down > 0:
+        moveTask = content_pages[content_pages.count() - 1]
+    else:
+        moveTask = content_pages[0]
+
+    content_pages.exclude(index=oldIndex).update(index=F('index') + up_down)
+
+    moveTask.index = newIndex
+    moveTask.save()
+    #refresh tasks
+    content_pages = Page.objects.filter(project__pk=project.pk, listed=True,
+        deleted=False,
+    ).order_by('index')
+
+    #tasks = content_pages.values()
+    tasks = []
+    for counter, task in enumerate(content_pages):
+        tasks.append({"title": task.title,
+                     "href": task.get_absolute_url(),
+                     "bttnUpUrl": reverse('page_index_up',
+                         kwargs={'slug': project.slug, 'counter': counter}),
+                     "bttnDownUrl": reverse('page_index_down',
+                         kwargs={'slug': project.slug, 'counter': counter}),
+    })
+
+    json = simplejson.dumps(tasks)
+    return http.HttpResponse(json, mimetype="application/json")
