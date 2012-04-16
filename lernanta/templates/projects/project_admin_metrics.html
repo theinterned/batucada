@@ -63,7 +63,14 @@
     <script>
 	$(document).ready(function() {
 	    $('#example').dataTable({
-		"aaSorting": [[ 1, "desc" ]],
+		"aaSorting": [[ 0, "asc" ]],
+		"aoColumns": [
+		    { "mDataProp": 0 },
+		    { "mDataProp": 1, "sDefaultContent": "--" },
+		    { "mDataProp": 3 },
+		    { "mDataProp": 4 },
+		    { "mDataProp": 2 }
+		],
 		"bProcessing": true,
 		"sAjaxSource": "{% locale_url projects_admin_metrics_data slug=project.slug %}",
 		"bDeferRender": true
