@@ -748,12 +748,7 @@ def admin_metrics_data_ajax(request, slug):
     participant_profiles = (participant.user for participant in participants)
     tracker_models.update_metrics_cache(project)
     metrics = tracker_models.metrics_summary(project, participant_profiles)
-    aaData = [
-        [val[0], val[1], val[3], val[4], val[2]] if val[1] != None
-        else [val[0], "--", val[3], val[4], val[2]]
-        for val in metrics
-    ]
-    json = simplejson.dumps({'aaData': aaData})
+    json = simplejson.dumps({'aaData': list(metrics)})
     return http.HttpResponse(json, mimetype="application/json")
 
 
