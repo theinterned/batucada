@@ -703,9 +703,15 @@ form .small {
 .clear {
 	clear: both;
 	}
+
 .start_date input, 
 .end_date input {
     width: 7em !important;
+}
+
+.duration input {
+    width: 4em !important;
+    margin-left: 10px;
 }
 
 .start_date label,

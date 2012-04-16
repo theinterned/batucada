@@ -347,6 +347,10 @@ $(document).ready(function() {
         $('#id_end_date').datepicker();
     }
 
+    if ($('#id_duration').length) {
+        $('#id_duration').spinner({min:0, max:9000, step: 0.1, places:1});
+    }
+
     if ($('.project-kind-challenge #task_list_wall #progressbar').length) {
         var progressbar_value = $(".project-kind-challenge #task_list_wall #progressbar").attr('value');
         $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});

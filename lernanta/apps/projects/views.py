@@ -719,15 +719,20 @@ def edit_status(request, slug):
         form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
         if form.is_valid():
-            form.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            project = form.save(commit=False)
+            project.set_duration(form.cleaned_data['duration'])
+            project.save()
+            messages.success(request,
+                _('%s updated!') % project.kind.capitalize())
+            return http.HttpResponseRedirect(reverse('projects_edit_status', kwargs={
                 'slug': project.slug,
             }))
         else:
             msg = _('There was a problem saving the %s\'s status.')
             messages.error(request, msg % project.kind.lower())
     else:
-        form = project_forms.ProjectStatusForm(instance=project)
+        form = project_forms.ProjectStatusForm(instance=project,
+            initial={'duration': project.get_duration()})
     return render_to_response('projects/project_edit_status.html', {
         'form': form,
         'project': project,
