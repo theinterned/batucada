@@ -24,12 +24,26 @@ log = logging.getLogger(__name__)
 class ProjectForm(forms.ModelForm):
     tags = GeneralTagField(required=False)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, category, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         if 'instance' in kwargs:
             instance = kwargs['instance']
             self.initial['tags'] = GeneralTaggedItem.objects.filter(
                object_id=instance.id)
+        if category:
+            self.fields['category'].required = False
+        if category == Project.CHALLENGE:
+            self.fields['name'].widget.attrs.update(
+                {'placeholder': _('Write a catchy title, keep it short and sweet')})
+            self.fields['short_description'].widget.attrs.update(
+                {'placeholder': _('e.g. Learn to write HTML by hand, literally.')})
+            self.fields['long_description'].widget.attrs.update(
+                {'placeholder': _("Who is the challenge for? <br>" \
+                                  "What are they going to be doing? <br>" \
+                                  "How are they going to be doing it? <br>" \
+                                  "Why are they doing it?")})
+            self.fields['tags'].widget.attrs.update(
+                {'placeholder': _('What will your peers be able to do upon completion of this challenge? Separate with commas')})
 
     class Meta:
         model = Project

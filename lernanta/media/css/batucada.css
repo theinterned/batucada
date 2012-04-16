@@ -2205,6 +2205,10 @@ header {}
 			width: 100%;
 		}
 
+        .modal .project.edit.summary input#id_tags {
+                        width: 100%;
+                }
+
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
@@ -3381,7 +3385,7 @@ h1.tasks-title {
  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
 }
 
-.project-kind-challenge #task-footer-after-completed input[placeholder] {
+input[placeholder] {
   color: #777 !important;
 }
 
