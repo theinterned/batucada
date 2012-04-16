@@ -23,6 +23,8 @@ log = logging.getLogger(__name__)
 
 class ProjectForm(forms.ModelForm):
     tags = GeneralTagField(required=False)
+    duration = forms.DecimalField(min_value=0, max_value=9000,
+        decimal_places=1, required=False)
 
     def __init__(self, category, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
@@ -30,6 +32,9 @@ class ProjectForm(forms.ModelForm):
             instance = kwargs['instance']
             self.initial['tags'] = GeneralTaggedItem.objects.filter(
                object_id=instance.id)
+            self.initial['duration'] = instance.get_duration()
+        else:
+            self.initial['duration'] = 0
         if category:
             self.fields['category'].required = False
         if category == Project.CHALLENGE:

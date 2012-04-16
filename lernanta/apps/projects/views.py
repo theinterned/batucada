@@ -155,6 +155,7 @@ def create(request, category=None):
             project = form.save()
             if category:
                 project.category = category
+            project.set_duration(form.cleaned_data['duration'] or 0)
             act = Activity(actor=user,
                 verb=verbs['post'],
                 scope_object=project,

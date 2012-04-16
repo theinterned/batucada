@@ -65,6 +65,7 @@ class ProjectTests(TestCase):
             'short_description': 'This is my new challenge',
             'long_description': '<p>The new challenge is about...</p>',
             'language': 'en',
+            'duration': 10.3,
         }
         self.client.login(username=self.test_username,
             password=self.test_password)
@@ -76,3 +77,5 @@ class ProjectTests(TestCase):
             target_status_code=200)
         challenge = Project.objects.get(slug=slug)
         self.assertEqual(challenge.category, Project.CHALLENGE)
+        self.assertEqual(challenge.duration_hours, 10)
+        self.assertEqual(challenge.duration_minutes, 18)
