@@ -40,3 +40,20 @@ class ProjectTests(TestCase):
         )
         project2.save()
         self.assertEqual('my-cool-project-2', project2.slug)
+
+    def test_course_creation(self):
+        """Test valid post request to course creation page"""
+        data = {
+            'name': 'Test New Course',
+            'short_description': 'This is my new course',
+            'long_description': '<p>The new course is about...</p>',
+            'language': 'en',
+            'category': 'course',
+        }
+        self.client.login(username=self.test_username,
+            password=self.test_password)
+        response = self.client.post('/%s/groups/create/' % (self.locale,),
+            data)
+        self.assertRedirects(response, 
+            '/%s/groups/%s/' % (self.locale, 'test-new-course'),
+            target_status_code=200)
