@@ -29,6 +29,13 @@
     {{ form.short_description }}
     {{ form.short_description.errors }}
   </div>
+
+  {% if not project and is_challenge %}
+    <div class="field duration {% if form.duration.errors %} error{% endif %} ">
+      <label for="id_duration">{{ _('How many hours will this challenge take to complete?') }} {{ form.duration }}</label>
+      {{ form.duration.errors }}
+    </div>
+  {% endif %}
   
   <div class="field long-description{% if form.long_description.errors %} error{% endif %}">
     {% if is_challenge %}
