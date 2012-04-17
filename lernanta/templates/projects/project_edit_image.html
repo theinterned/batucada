@@ -3,34 +3,15 @@
 {% block bodyclasses %}project edit image{% endblock %}
 
 {% block form %}
-{# <p>{{ _('Use this form to upload an image. The image will appear in search results and listing pages.') }}</p> #}
 
 <fieldset id="project_edit_image" class="project edit image tabpane">
-<form action="{% locale_url projects_edit_image slug=project.slug %}" method="post" enctype="multipart/form-data" data-url="{% locale_url projects_edit_image_async slug=project.slug %}">
+<form id="project-edit-image-form" action="{% locale_url projects_edit_image slug=project.slug %}" method="post" enctype="multipart/form-data" data-url="{% locale_url projects_edit_image_async slug=project.slug %}">
   {% csrf_token %}
-  {% if project.image %}
-  <h2>Replace Image</h2>
-  {% else %}
-  <h2>{{ _('Upload an Image') }}</h2>
-  {% endif %}
-  <p class="hint">{{ _('This image is shown in search results and on the listing page.') }}</p>
-  <p class="hint">{{ _('Upload an image file from your computer:') }}</p>  
-  <div class="field{% if form.image.errors %} error{% endif %}">
-    <input type="file" name="image" id="id_image" />
-    <small class="hint block">{{ _('File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 243x150 pixels') }}</small>
-    {{ form.image.errors }}
-  </div>
+  {% include "projects/_project_edit_image.html" %}
   <p class="buttons">
     <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
     <button type="submit" value="{{ _('Upload') }}">{{ _('Upload') }}</button>
   </p>
 </form>
-<p class="picture-preview">
-  {% if project.image %}
-  <img src="{{ MEDIA_URL }}{{ project.image }}" class="project picture"/>
-  {% else %}
-  <img src="/media/images/project-missing.png" alt="project image" class="project picture"/>
-{% endif %}
-</p>
 </fieldset>
 {% endblock %}
