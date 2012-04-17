@@ -36,7 +36,7 @@ syncdb :
 	@${PYTHON} manage.py syncdb --noinput --migrate
 
 # Run tests.
-test :
+run_tests :
 	@FORCE_DB=1 ${MANAGE} test
 
 # Runs pep8 and pyflakes

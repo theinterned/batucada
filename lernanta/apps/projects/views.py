@@ -147,12 +147,15 @@ def learn_tags(request):
 
 
 @login_required
-def create(request):
+def create(request, category=None):
     user = request.user.get_profile()
     if request.method == 'POST':
-        form = project_forms.ProjectForm(request.POST)
+        form = project_forms.ProjectForm(category, request.POST)
         if form.is_valid():
             project = form.save()
+            if category:
+                project.category = category
+            project.set_duration(form.cleaned_data['duration'] or 0)
             act = Activity(actor=user,
                 verb=verbs['post'],
                 scope_object=project,
@@ -184,13 +187,30 @@ def create(request):
                 'slug': project.slug,
             }))
         else:
-            msg = _("Problem creating the study group, course, ...")
+            if category:
+                msg = _("Problem creating the %s") % category
+            else:
+                msg = _("Problem creating the study group, course, ...")
             messages.error(request, msg)
     else:
-        form = project_forms.ProjectForm()
-    return render_to_response('projects/project_edit_summary.html', {
-        'form': form, 'new_tab': True,
-    }, context_instance=RequestContext(request))
+        form = project_forms.ProjectForm(category)
+    context = {
+        'form': form,
+        'category': category,
+        'is_challenge': (category == Project.CHALLENGE),
+    }
+    if category:
+        tab = 'new_%s_tab' % ('_'.join(category.split()))
+        context[tab] = True
+    else:
+        context['new_tab'] = True
+    return render_to_response('projects/project_edit_summary.html',
+        context, context_instance=RequestContext(request))
+
+
+@login_required
+def create_challenge(request):
+    return create(request, Project.CHALLENGE)
 
 
 @login_required
@@ -381,7 +401,7 @@ def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_challenge = (project.category == project.CHALLENGE)
     if request.method == 'POST':
-        form = project_forms.ProjectForm(request.POST, instance=project)
+        form = project_forms.ProjectForm(project.category, request.POST, instance=project)
         if form.is_valid():
             form.save()
             messages.success(request,
@@ -389,7 +409,7 @@ def edit(request, slug):
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
-        form = project_forms.ProjectForm(instance=project)
+        form = project_forms.ProjectForm(project.category, instance=project)
     metric_permissions = project.get_metrics_permissions(request.user)
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
@@ -700,15 +720,20 @@ def edit_status(request, slug):
         form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
         if form.is_valid():
-            form.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            project = form.save(commit=False)
+            project.set_duration(form.cleaned_data['duration'])
+            project.save()
+            messages.success(request,
+                _('%s updated!') % project.kind.capitalize())
+            return http.HttpResponseRedirect(reverse('projects_edit_status', kwargs={
                 'slug': project.slug,
             }))
         else:
             msg = _('There was a problem saving the %s\'s status.')
             messages.error(request, msg % project.kind.lower())
     else:
-        form = project_forms.ProjectStatusForm(instance=project)
+        form = project_forms.ProjectStatusForm(instance=project,
+            initial={'duration': project.get_duration()})
     return render_to_response('projects/project_edit_status.html', {
         'form': form,
         'project': project,
