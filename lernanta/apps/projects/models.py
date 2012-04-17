@@ -241,6 +241,22 @@ class Project(ModelBase):
                 count += 1
         super(Project, self).save()
 
+    def set_duration(self, value):
+        """Sets (without saving) duration in hours and minutes given a decimal value.
+
+        e.g., a decimal value of 10.3 equals 10 hours and 18 minutes."""
+        hours = int(value)
+        minutes = int(60 * (value - hours))
+        self.duration_hours = hours
+        self.duration_minutes = minutes
+
+    def get_duration(self):
+        """Gets closest decimal value that represents the current duration.
+
+        e.g., a duration of 10 hours and 18 minutes corresponds to the decimal value 10.3
+        """
+        return round(self.duration_hours + (self.duration_minutes / 60.0), 1)
+
     def get_image_url(self):
         missing = settings.MEDIA_URL + 'images/project-missing.png'
         image_path = self.image.url if self.image else missing

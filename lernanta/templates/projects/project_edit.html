@@ -54,6 +54,8 @@
     {% else %}
     <li class="new {% if new_tab %}active{% endif %}"><a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
        {{ _('Create from Scratch') }}</a></li>
+    <li class="new {% if new_challenge_tab %}active{% endif %}"><a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}">
+       {{ _('Create Challenge') }}</a></li>
     <li class="sandbox"><a href="http://help.p2pu.org/kb/learning/looking-for-a-sandbox-to-test-the-creation-of-courses-challenges" target="_blank">
        {{ _('Sandbox') }}</a></li>
     <li class="clone {% if clone_tab %}active{% endif %}"><a href="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif%}">

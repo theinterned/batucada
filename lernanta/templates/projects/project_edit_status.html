@@ -38,19 +38,11 @@
   </p>
 
   {% if is_challenge %}
-
-  <p class="hint">{% blocktrans with kind=project.kind|lower %}Optionally, provide the time it should take to complete the {{ kind }}.{% endblocktrans %}</p>
+  
   <p>
-      <span class="field duration_hours {% if form.duration_hours.errors %} error{% endif %} "> 
-        <label for="id_duration_hours">{{ _('Hours') }}</label>
-        {{ form.duration_hours }}
-        {{ form.duration_hours.errors }}
-      </span>
-       
-      <span class="field duration_minutes {% if form.duration_minutes.errors %} error{% endif %}"> 
-        <label for="id_duration_minutes">{{ _('Minutes') }}</label>
-        {{ form.duration_minutes }}
-        {{ form.duration_minutes.errors }}
+      <span class="field duration {% if form.duration.errors %} error{% endif %} "> 
+        <label for="id_duration">{{ _('How many hours will this challenge take to complete?') }} {{ form.duration }}</label>
+        {{ form.duration.errors }}
       </span>
   </p>
 

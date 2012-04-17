@@ -703,9 +703,15 @@ form .small {
 .clear {
 	clear: both;
 	}
+
 .start_date input, 
 .end_date input {
     width: 7em !important;
+}
+
+.duration input {
+    width: 4em !important;
+    margin-left: 10px;
 }
 
 .start_date label,
@@ -2205,6 +2211,10 @@ header {}
 			width: 100%;
 		}
 
+        .modal .project.edit.summary input#id_tags {
+                        width: 100%;
+                }
+
 		.modal .links .url input[type=text] {
 			width: 150px;
 		}
@@ -2354,6 +2364,7 @@ header {}
 			border-color: #C6C6C6;
 			margin-bottom: 0;
 		}
+
 		.modal .member-picture {
 		  max-width: 97px;
 		  max-height: 97px;
@@ -2362,10 +2373,11 @@ header {}
 		    margin-left: 17px;
 		    margin-top: 0px;
 		}
+                #project-edit-image-form {
+                    width: 600px;
+                }
 		.modal .image form {
-			/*width: 249px;*/
 			display: inline-block;
-			/*float: left;*/
 		}
 		.modal .description textarea, .school.edit.styles .modal textarea {
 			height: 35.5em;
@@ -3381,7 +3393,7 @@ h1.tasks-title {
  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
 }
 
-.project-kind-challenge #task-footer-after-completed input[placeholder] {
+input[placeholder] {
   color: #777 !important;
 }
 
