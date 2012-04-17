@@ -133,9 +133,10 @@ class ProjectSet(ModelBase):
         return image_path
 
     def _distinct_participants(self):
-        return UserProfile.objects.filter(participations__project__projectsets=self, 
-                                    deleted=False, 
+        return UserProfile.objects.filter(participations__project__projectsets=self,
+                                    deleted=False,
                                     participations__left_on__isnull=True).distinct()
+
     def total_participants(self):
         return self._distinct_participants().filter(
             participations__adopter = False,
