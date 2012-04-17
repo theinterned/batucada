@@ -19,7 +19,7 @@
 
 {% trans "To get it featured in the showcase, send us a note at help.p2pu.org." %}
 
-{% trans "P2PU does a major promotion of new courses every 3 months. The next promotion date is 18 April 2012. For more information about how to promote your course visit us at help.p2pu.org!" %}
+{% trans "P2PU will also help you with promoting your course. For more information see: http://help.p2pu.org/kb/learning/how-can-i-promote-my-course" %}
 
 {% trans "Looking forward to learning from you!" %}
 
