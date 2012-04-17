@@ -85,7 +85,7 @@ class ProjectImageForm(forms.ModelForm):
         fields = ('image',)
 
     def clean_image(self):
-        if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
+        if self.cleaned_data['image'] and self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
             max_size = settings.MAX_IMAGE_SIZE / 1024
             msg = _("Image exceeds max image size: %(max)dk")
             raise forms.ValidationError(msg % dict(max=max_size))

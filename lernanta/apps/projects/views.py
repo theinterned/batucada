@@ -151,10 +151,15 @@ def create(request, category=None):
     user = request.user.get_profile()
     if request.method == 'POST':
         form = project_forms.ProjectForm(category, request.POST)
+        image_form = None
         if form.is_valid():
             project = form.save()
             if category:
                 project.category = category
+            image_form = project_forms.ProjectImageForm(request.POST,
+                request.FILES, instance=project)
+            if category and image_form.is_valid():
+                image_form.save()
             project.set_duration(form.cleaned_data['duration'] or 0)
             act = Activity(actor=user,
                 verb=verbs['post'],
@@ -194,8 +199,10 @@ def create(request, category=None):
             messages.error(request, msg)
     else:
         form = project_forms.ProjectForm(category)
+        image_form = project_forms.ProjectImageForm()
     context = {
         'form': form,
+        'image_form': image_form,
         'category': category,
         'is_challenge': (category == Project.CHALLENGE),
     }

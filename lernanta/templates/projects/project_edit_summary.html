@@ -7,7 +7,7 @@
 
 {% block form %}
 <fieldset id="project_edit_summary" class="project edit summary tabpane">
-<form action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% if is_challenge %}{% locale_url projects_create_challenge %}{% else %}{% locale_url projects_create %}{% endif %}{% if school %}?school={{ school.slug }}{% endif %}{% endif %}" method="post">
+<form id="project-edit-summary-form" action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% if is_challenge %}{% locale_url projects_create_challenge %}{% else %}{% locale_url projects_create %}{% endif %}{% if school %}?school={{ school.slug }}{% endif %}{% endif %}" method="post" {% if category and not project %}enctype="multipart/form-data"{% endif %}>
   {% csrf_token %}
   <div class="field{% if form.name.errors %} error{% endif %}">
     {% if is_challenge %}
@@ -82,6 +82,12 @@
       {{ form.other_description }}
       {{ form.other_description.errors }}
     </div>
+  {% endif %}
+
+  {% if category and not project %}
+    {% with form=image_form %}
+      {% include "projects/_project_edit_image.html" %}
+    {% endwith %}
   {% endif %}
 
   <br><br>
