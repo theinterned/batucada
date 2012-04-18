@@ -1,2 +1,2 @@
 {% load l10n_tags %}
-[P2PU] Congratulations! You've Established {{ project.name }} at P2PU!
+{% blocktrans with project_name=project.name %}[P2PU] How to turn {{ project_name }} into an awesome course{% endblocktrans %}
