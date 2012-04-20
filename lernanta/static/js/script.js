@@ -848,7 +848,7 @@ bindLearnFilters();
 	            success: function(data) {
 	            	renderTasks($(ui.item).parent(), data);
             	},
-	            error: function() { alert("error"); 
+	            error: function() {
 	            	oldOrder.sortable('cancel');
             	},
 	        });
