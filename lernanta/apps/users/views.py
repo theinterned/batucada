@@ -282,7 +282,9 @@ def register(request):
                     'instructions for completing your '
                     'registration.').format(user.email)
             messages.info(request, msg)
-            return login(request)
+            response = login(request)
+            request.session['send_registration_event'] = True
+            return response
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -427,6 +429,7 @@ def profile_create(request):
                 'instructions for completing your '
                 'registration.') % profile.email
         messages.info(request, msg)
+        request.session['send_registration_event'] = True
         return http.HttpResponseRedirect(reverse('dashboard'))
     else:
         messages.error(request, _('There are errors in this form. Please '

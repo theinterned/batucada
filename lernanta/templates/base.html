@@ -186,7 +186,7 @@
             1
           ]);
         {% endif %}
-        {% if tracking_code.registration_event %}
+        {% if tracking_code.registration_event and send_registration_event %}
           _gaq.push(['{{ tracking_code.key }}._trackEvent', 'user', 'create']);
         {% endif %}
         _gaq.push(['{{ tracking_code.key }}._trackPageview']);
