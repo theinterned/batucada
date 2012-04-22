@@ -11,4 +11,8 @@ def django_conf(request):
     }
     site = Site.objects.get_current()
     context.update(get_google_tracking_context(site))
+    registration_event_key = 'send_registration_event'
+    if registration_event_key in request.session:
+        context[registration_event_key] = request.session[registration_event_key]
+        del request.session[registration_event_key]
     return context
