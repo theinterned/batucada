@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate, get_language
 from django.shortcuts import render_to_response, get_object_or_404
@@ -359,6 +359,8 @@ def confirm_registration(request, token, username):
         return http.HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
+    profile.user.backend = 'django.contrib.auth.backends.ModelBackend'
+    auth_login(request, profile.user)
     messages.success(request, _('Success! You have verified your email address.'))
     return http.HttpResponseRedirect(reverse('dashboard'))
 
