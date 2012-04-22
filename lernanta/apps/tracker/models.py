@@ -44,6 +44,7 @@ class GoogleAnalyticsTrackingCode(ModelBase):
     code = models.SlugField(unique=True)
     # extra tracking options
     logged_in_status = models.BooleanField(default=False)
+    registration_event = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s: %s" % (self.key, self.code)
