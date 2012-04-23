@@ -45,6 +45,9 @@ class GoogleAnalyticsTrackingCode(ModelBase):
     # extra tracking options
     logged_in_status = models.BooleanField(default=False)
     registration_event = models.BooleanField(default=False)
+    # warning: not tested with multiple conversion trackings
+    adwords_conversion_id = models.SlugField(blank=True, null=True)
+    adwords_conversion_label = models.SlugField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %s" % (self.key, self.code)
