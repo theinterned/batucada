@@ -201,6 +201,30 @@
 
   </script> 
 
+  {% if send_registration_event and google_analytics_tracking_codes %}
+    {% for tracking_code in google_analytics_tracking_codes %}
+      {% if tracking_code.adwords_conversion_id and tracking_code.adwords_conversion_label %}
+        <!-- Google Code for sign_up Conversion Page -->
+        <script type="text/javascript">
+          /* <![CDATA[ */
+            var google_conversion_id = {{ tracking_code.adwords_conversion_id }};
+            var google_conversion_language = "{{ _('en') }}";
+            var google_conversion_format = "3";
+            var google_conversion_color = "ffffff";
+            var google_conversion_label = "{{ tracking_code.adwords_conversion_label }}";
+            var google_conversion_value = 0;
+          /* ]]> */
+        </script>
+        <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js"></script>
+        <noscript>
+          <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/{{ tracking_code.adwords_conversion_id }}/?label={{ tracking_code.adwords_conversion_label }}&amp;guid=ON&amp;script=0"/>
+          </div>
+        </noscript>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
 
 </body>
 </html>
