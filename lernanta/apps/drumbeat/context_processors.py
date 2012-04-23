@@ -5,11 +5,12 @@ from tracker.models import get_google_tracking_context
 
 
 def django_conf(request):
+    site = Site.objects.get_current()
     context =  {
         'settings': settings,
         'request': request,
+        'site': site,
     }
-    site = Site.objects.get_current()
     context.update(get_google_tracking_context(site))
     registration_event_key = 'send_registration_event'
     if registration_event_key in request.session:
