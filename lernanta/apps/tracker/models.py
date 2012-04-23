@@ -48,6 +48,7 @@ class GoogleAnalyticsTrackingCode(ModelBase):
     # warning: not tested with multiple conversion trackings
     adwords_conversion_id = models.SlugField(blank=True, null=True)
     adwords_conversion_label = models.SlugField(blank=True, null=True)
+    chartbeat_uid = models.SlugField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %s" % (self.key, self.code)
