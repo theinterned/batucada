@@ -309,17 +309,21 @@ class Project(ModelBase):
         return Relationship.objects.filter(source__username__in=usernames,
             target_project=self, source__deleted=False)
 
+    def get_badges(self):
+        from badges.models import Badge
+        return Badge.objects.filter(
+            Q(groups=self.id) | Q(all_groups=True)).distinct()
+
     def get_submission_enabled_badges(self):
         from badges.models import Logic
-        return self.badges.exclude(
+        return self.get_badges().exclude(
             logic__submission_style=Logic.NO_SUBMISSIONS)
 
     def get_badges_peers_can_give(self):
         from badges.models import Logic, Badge
-        return Badge.objects.filter(
+        return self.get_badges().filter(
             logic__min_votes=1, logic__min_avg_rating=0).exclude(
-            logic__submission_style=Logic.SUBMISSION_REQUIRED).filter(
-            Q(groups=self.id) | Q(all_groups=True)).distinct()
+            logic__submission_style=Logic.SUBMISSION_REQUIRED)
 
     def get_upon_completion_badges(self, user):
         from badges.models import Badge, Award
@@ -343,7 +347,7 @@ class Project(ModelBase):
         from badges.models import Badge, Award
         if user.is_authenticated():
             profile = user.get_profile()
-            project_badges = self.badges.all()
+            project_badges = self.get_badges()
             if exclude_completion_badges:
                 completion_badges = self.completion_badges.all()
                 project_badges = project_badges.exclude(
