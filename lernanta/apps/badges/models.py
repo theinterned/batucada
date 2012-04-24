@@ -33,12 +33,15 @@ def get_awarded_badges(user):
     for badge in Badge.objects.filter(id__in=badges_ids):
         evidence = reverse('user_awards_show',
             kwargs= dict(slug=badge.slug, username=profile.username))
+        awards_count = Award.objects.filter(user=profile,
+             badge=badge).count()
         data = {
             'name': badge.name,
             'description': badge.description,
             'image': badge.get_image_url(),
             'evidence': evidence,
             'criteria': badge.get_absolute_url(),
+            'count': awards_count,
         }
         badges[badge.slug] = data
     return badges
