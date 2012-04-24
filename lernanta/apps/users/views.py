@@ -160,9 +160,14 @@ def login(request):
     dashboard_url = reverse('dashboard')
     redirect_field_value = request.session.get(
         REDIRECT_FIELD_NAME, dashboard_url) or dashboard_url
+    try:
+        redirect_field_value = urllib2.quote(redirect_field_value)
+    except KeyError:
+        # Unicode Issue
+        pass
     extra_context = {
         'redirect_field_name': REDIRECT_FIELD_NAME,
-        'redirect_field_value': urllib2.quote(redirect_field_value),
+        'redirect_field_value': redirect_field_value,
     }
 
     r = auth_views.login(request, template_name='users/signin.html',
