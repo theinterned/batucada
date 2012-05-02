@@ -35,7 +35,7 @@
   <section id="challenge-set-project-list">
     <h1><span>{{_('Challenges')}}</span></h1>
     <ul class="project-list">
-      {% for project in projectset.projects.all %}
+      {% for project in projectset.get_projects %}
         <li>{% include "projects/_project_card.html" %}</li>
       {% endfor %}
     </ul>

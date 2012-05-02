@@ -41,7 +41,10 @@
 
     {% if badges or pilot_badges %}
     <div class="profile-badges">
-      <h3>{{ _('Latest Badges') }} <a class="show-all-badges">{{ _('View All') }}</a></h3>
+      <h3>
+        {{ _('Latest Badges') }}
+        <a href="{% locale_url users_badges_manage %}" title="{{ _('Share your badges') }}"><i class="icon-share icon-large"></i></a>
+        <a class="show-all-badges">{{ _('View All') }}</a></h3>
       <ul>
         {% for badge in badges %}
           <li>
