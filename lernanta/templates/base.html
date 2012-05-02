@@ -8,6 +8,7 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
+  <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
   <meta charset="utf-8">
   <!--[if IE]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
 
@@ -174,28 +175,21 @@
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-5757664-8']);
-    _gaq.push(['_setCustomVar',
-      1, 
-      'logged_in_status', 
-      {% if user.is_authenticated %}'logged_in'{% else %}'anonymous'{% endif %}, 
-      2
-    ]);
-    _gaq.push(['_trackPageview']);
-
-    _gaq.push(['hewlett._setAccount', 'UA-5033010-1']);
-    _gaq.push(['hewlett._trackPageview']);
 
     {% if google_analytics_tracking_codes %}
       {% for tracking_code in google_analytics_tracking_codes %}
         _gaq.push(['{{ tracking_code.key }}._setAccount', '{{ tracking_code.code }}']);
-        
-        _gaq.push(['{{ tracking_code.key }}._setCustomVar',
-          1, 
-          'logged_in_status', 
-          {% if user.is_authenticated %}'logged_in'{% else %}'anonymous'{% endif %}, 
-          2
-        ]);
+        {% if tracking_code.logged_in_status %}    
+          _gaq.push(['{{ tracking_code.key }}._setCustomVar',
+            1, 
+            'logged_in_status', 
+            {% if user.is_authenticated %}'logged_in'{% else %}'anonymous'{% endif %}, 
+            1
+          ]);
+        {% endif %}
+        {% if tracking_code.registration_event and send_registration_event %}
+          _gaq.push(['{{ tracking_code.key }}._trackEvent', 'user', 'create']);
+        {% endif %}
         _gaq.push(['{{ tracking_code.key }}._trackPageview']);
       {% endfor %}
     {% endif %}
@@ -207,6 +201,56 @@
     })();
 
   </script> 
+
+  {% if google_analytics_tracking_codes %}
+    {% for tracking_code in google_analytics_tracking_codes %}
+      {% if send_registration_event and tracking_code.adwords_conversion_id and tracking_code.adwords_conversion_label %}
+        <!-- Google Code for sign_up Conversion Page -->
+        <script type="text/javascript">
+          /* <![CDATA[ */
+            var google_conversion_id = {{ tracking_code.adwords_conversion_id }};
+            var google_conversion_language = "{{ _('en') }}";
+            var google_conversion_format = "3";
+            var google_conversion_color = "ffffff";
+            var google_conversion_label = "{{ tracking_code.adwords_conversion_label }}";
+            var google_conversion_value = 0;
+          /* ]]> */
+        </script>
+        <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js"></script>
+        <noscript>
+          <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/{{ tracking_code.adwords_conversion_id }}/?label={{ tracking_code.adwords_conversion_label }}&amp;guid=ON&amp;script=0"/>
+          </div>
+        </noscript>
+      {% endif %}
+      {% if tracking_code.chartbeat_uid %}
+        <script type="text/javascript">
+          var _sf_async_config={};
+          /** CONFIGURATION START **/
+          _sf_async_config.uid = {{ tracking_code.chartbeat_uid }};
+          _sf_async_config.domain = "{{ site.domain }}";
+          /** CONFIGURATION END **/
+          (function(){
+            function loadChartbeat() {
+              window._sf_endpt=(new Date()).getTime();
+              var e = document.createElement("script");
+              e.setAttribute("language", "javascript");
+              e.setAttribute("type", "text/javascript");
+              e.setAttribute("src",
+              (("https:" == document.location.protocol) ?
+                "https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/" :
+                "http://static.chartbeat.com/") +
+                "js/chartbeat.js");
+              document.body.appendChild(e);
+            }
+            var oldonload = window.onload;
+            window.onload = (typeof window.onload != "function") ?
+            loadChartbeat : function() { oldonload(); loadChartbeat(); };
+          })();
+        </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
 
 </body>

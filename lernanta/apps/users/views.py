@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate, get_language
 from django.shortcuts import render_to_response, get_object_or_404
@@ -160,9 +160,14 @@ def login(request):
     dashboard_url = reverse('dashboard')
     redirect_field_value = request.session.get(
         REDIRECT_FIELD_NAME, dashboard_url) or dashboard_url
+    try:
+        redirect_field_value = urllib2.quote(redirect_field_value)
+    except KeyError:
+        # Unicode Issue
+        pass
     extra_context = {
         'redirect_field_name': REDIRECT_FIELD_NAME,
-        'redirect_field_value': urllib2.quote(redirect_field_value),
+        'redirect_field_value': redirect_field_value,
     }
 
     r = auth_views.login(request, template_name='users/signin.html',
@@ -282,7 +287,9 @@ def register(request):
                     'instructions for completing your '
                     'registration.').format(user.email)
             messages.info(request, msg)
-            return login(request)
+            response = login(request)
+            request.session['send_registration_event'] = True
+            return response
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -359,6 +366,8 @@ def confirm_registration(request, token, username):
         return http.HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
+    profile.user.backend = 'django.contrib.auth.backends.ModelBackend'
+    auth_login(request, profile.user)
     messages.success(request, _('Success! You have verified your email address.'))
     return http.HttpResponseRedirect(reverse('dashboard'))
 
@@ -425,6 +434,7 @@ def profile_create(request):
                 'instructions for completing your '
                 'registration.') % profile.email
         messages.info(request, msg)
+        request.session['send_registration_event'] = True
         return http.HttpResponseRedirect(reverse('dashboard'))
     else:
         messages.error(request, _('There are errors in this form. Please '
