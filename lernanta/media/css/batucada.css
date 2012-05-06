@@ -5917,3 +5917,11 @@ table.display thead, table.display tfoot {
 #edit_pages .accordion-section-order {
     display: none;
 }
+
+#edit_pages .modal form {
+    width: 635px;
+}
+
+#edit_pages .ui-accordion-content {
+    height: 510px;
+}
