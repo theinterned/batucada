@@ -23,11 +23,16 @@
         {% csrf_token %}
         {{ formset.management_form }}
         <div id="accordion">
-          {% for form in formset.forms %}
+          {% for form in forms %}
             {% include "content/_edit_pages_item.html" %}
           {% endfor %}
         </div>
         <br>
+        {% if preview %}
+          <button type="submit" id="editModeButton" name="edit_mode" value="{{ _('Edit') }}">{{ _('Edit') }}</button>
+        {% else %}
+          <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
+        {% endif %}
         <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
       </form>
     </fieldset>

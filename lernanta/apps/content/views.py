@@ -180,22 +180,35 @@ def edit_pages(request, slug):
         pages = pages.filter(collaborative=True)
     PageFormSet = modelformset_factory(Page, extra=0,
         fields=form_cls.Meta.fields, can_order=True)
+    preview = ('show_preview' in request.POST)
+    edit_mode = ('edit_mode' in request.POST)
     if request.method == 'POST':
         formset = PageFormSet(request.POST, queryset=pages)
+        forms = formset.forms
         if formset.is_valid():
+            forms = formset.ordered_forms
             current_order = list(pages.values_list('index', flat=True))
-            for form in formset.forms:
+            for form in forms:
                 instance = form.save(commit=False)
                 instance.index = current_order[form.cleaned_data['ORDER'] - 1]
-                instance.save()
-            return http.HttpResponseRedirect(reverse('edit_pages',
-                kwargs=dict(slug=project.slug)))
+                form.instance = instance
+                if not preview and not edit_mode:
+                    instance.save()
+            if not preview and not edit_mode:
+                return http.HttpResponseRedirect(reverse('edit_pages',
+                    kwargs=dict(slug=project.slug)))
     else:
         formset = PageFormSet(queryset=pages)
-    
-    return render_to_response('content/edit_pages.html', {
-        'project': project, 'formset': formset,
-    }, context_instance=RequestContext(request))
+        forms = formset.forms
+    context = {
+        'project': project,
+        'formset': formset,
+        'forms': forms,
+        'preview': preview,
+        'edit_mode': edit_mode,
+    }
+    return render_to_response('content/edit_pages.html', context,
+        context_instance=RequestContext(request))
 
 
 @hide_deleted_projects
