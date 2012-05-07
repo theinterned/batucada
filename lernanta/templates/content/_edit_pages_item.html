@@ -2,7 +2,7 @@
 {% load embed %}
 
 <div class="accordion-section">
-  <h3><a href="#">{{ form.instance.title }}</a></h3>
+  <h3><a href="#">{% if form.instance.title %}{{ form.instance.title }}{% else %}{{ _('New Task') }}{% endif %}</a></h3>
   <div class="accordion-content {% if preview %}show-preview-enabled{% endif %}">
     <div class="accordion-preview">
       {{ form.instance.sub_header|default:"" }}

@@ -5942,7 +5942,10 @@ table.display thead, table.display tfoot {
     display: none;
 }
 
-#edit_pages #addTaskButton {
+#edit_pages #addPageButton {
     width: 180px;
 }
 
+#edit_pages .errorlist {
+     left: 400px;
+}
