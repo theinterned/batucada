@@ -403,6 +403,8 @@ $(document).ready(function() {
         $(this).find('input[type=submit]').attr('disabled', 'disabled');
         $(this).find('button[type=submit]').attr('disabled', 'disabled');
         $(this).find('#previewButton').removeAttr('disabled');
+        $(this).find('#editModeButton').removeAttr('disabled');
+        $(this).find('#addPageButton').removeAttr('disabled');
     });
 
     if ($('#task_list_wall_toogle').length) {

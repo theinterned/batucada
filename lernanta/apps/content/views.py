@@ -171,6 +171,7 @@ def create_page(request, slug):
 @participation_required
 def edit_pages(request, slug):
     project = get_object_or_404(Project, slug=slug)
+    profile = request.user.get_profile()
     pages = project.pages.filter(deleted=False,
         listed=True).order_by('index')
     if project.is_organizing(request.user):
@@ -182,21 +183,46 @@ def edit_pages(request, slug):
         fields=form_cls.Meta.fields, can_order=True)
     preview = ('show_preview' in request.POST)
     edit_mode = ('edit_mode' in request.POST)
+    add_page = ('add_page' in request.POST)
+    save_action = not preview and not edit_mode and not add_page
     if request.method == 'POST':
-        formset = PageFormSet(request.POST, queryset=pages)
+        post_data = request.POST
+        try:
+            total_forms_count = int(post_data['form-TOTAL_FORMS'])
+        except ValueError, KeyError:
+            total_forms_count = 0
+        if add_page:
+            total_forms_count += 1
+            post_data = post_data.copy()
+            post_data['form-TOTAL_FORMS'] = total_forms_count
+        formset = PageFormSet(post_data, queryset=pages)
         forms = formset.forms
         if formset.is_valid():
             forms = formset.ordered_forms
             current_order = list(pages.values_list('index', flat=True))
+            new_forms_count = total_forms_count - len(current_order)
+            if new_forms_count > 0:
+                try:
+                    first_available_index = project.pages.order_by('-index')[0].index + 1
+                except IndexError:
+                    first_available_index = 1
+                current_order.extend(xrange(first_available_index, first_available_index + new_forms_count + 1))
             for form in forms:
                 instance = form.save(commit=False)
-                instance.index = current_order[form.cleaned_data['ORDER'] - 1]
+                if not instance.id:
+                    instance.project = project
+                    instance.author = profile
+                if form.cleaned_data['ORDER']:
+                    instance.index = current_order[form.cleaned_data['ORDER'] - 1]
                 form.instance = instance
-                if not preview and not edit_mode:
+                if save_action:
                     instance.save()
-            if not preview and not edit_mode:
+            if save_action:
                 return http.HttpResponseRedirect(reverse('edit_pages',
                     kwargs=dict(slug=project.slug)))
+        else:
+            messages.error(request, _('Please correct errors below.'))
+            preview = False
     else:
         formset = PageFormSet(queryset=pages)
         forms = formset.forms
