@@ -37,6 +37,7 @@ from activity.schema import verbs
 from signups.models import Signup
 from tracker import models as tracker_models
 from reviews.models import Review
+from utils import json_date_encoder
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -780,7 +781,9 @@ def admin_metrics_data_ajax(request, slug):
     participant_profiles = (participant.user for participant in participants)
     tracker_models.update_metrics_cache(project)
     metrics = tracker_models.metrics_summary(project, participant_profiles)
-    json = simplejson.dumps({'aaData': list(metrics)})
+    json = simplejson.dumps(
+        {'aaData': list(metrics)},
+        default=json_date_encoder)
     return http.HttpResponse(json, mimetype="application/json")
 
 
