@@ -171,7 +171,6 @@ def create_page(request, slug):
 @participation_required
 def edit_pages(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    profile = request.user.get_profile()
     pages = project.pages.filter(deleted=False,
         listed=True).order_by('index')
     if project.is_organizing(request.user):
@@ -199,30 +198,36 @@ def edit_pages(request, slug):
         forms = formset.forms
         if formset.is_valid():
             forms = formset.ordered_forms
-            current_order = list(pages.values_list('index', flat=True))
-            new_forms_count = total_forms_count - len(current_order)
-            if new_forms_count > 0:
-                try:
-                    first_available_index = project.pages.order_by('-index')[0].index + 1
-                except IndexError:
-                    first_available_index = 1
-                current_order.extend(xrange(first_available_index, first_available_index + new_forms_count + 1))
+            if save_action:
+                profile = request.user.get_profile()
+                current_order = list(pages.values_list('index', flat=True))
+                new_forms_count = total_forms_count - len(current_order)
+                if new_forms_count > 0:
+                    try:
+                        first_available_index = project.pages.order_by('-index')[0].index + 1
+                    except IndexError:
+                        first_available_index = 1
+                    current_order.extend(xrange(first_available_index, first_available_index + new_forms_count + 1))
             for form in forms:
                 instance = form.save(commit=False)
-                # FIXME: Starting with Django 1.4 it is possible to
-                # specify initial values on model formsets so we could include
-                # the minor_update and collaborative form fields in the future.
-                if not instance.id:
-                    instance.project = project
-                    instance.author = profile
-                    if project.category != Project.STUDY_GROUP:
-                        instance.collaborative = False
-                else:
-                    instance.minor_update = True
-                if form.cleaned_data['ORDER']:
-                    instance.index = current_order[form.cleaned_data['ORDER'] - 1]
-                form.instance = instance
                 if save_action:
+                    # FIXME: Starting with Django 1.4 it is possible to
+                    # specify initial values on model formsets so we could include
+                    # the minor_update and collaborative form fields in the future.
+                    if instance.id:
+                        old_page = Page.objects.get(id=instance.id)
+                        old_version = PageVersion(title=old_page.title, content=old_page.content,
+                            author=old_page.author, date=old_page.last_update, page=instance)
+                        old_version.save()
+                        instance.minor_update = True
+                        instance.last_update = datetime.datetime.now()
+                    else:
+                        instance.project = project
+                        instance.author = profile
+                        if project.category != Project.STUDY_GROUP:
+                            instance.collaborative = False
+                    if form.cleaned_data['ORDER']:
+                        instance.index = current_order[form.cleaned_data['ORDER'] - 1]
                     instance.save()
             if save_action:
                 return http.HttpResponseRedirect(reverse('edit_pages',
