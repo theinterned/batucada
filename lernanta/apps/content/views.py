@@ -209,13 +209,15 @@ def edit_pages(request, slug):
                 current_order.extend(xrange(first_available_index, first_available_index + new_forms_count + 1))
             for form in forms:
                 instance = form.save(commit=False)
+                # FIXME: Starting with Django 1.4 it is possible to
+                # specify initial values on model formsets so we could include
+                # the minor_update and collaborative form fields in the future.
                 if not instance.id:
                     instance.project = project
                     instance.author = profile
+                    if project.category != Project.STUDY_GROUP:
+                        instance.collaborative = False
                 else:
-                    # FIXME: Starting with Django 1.4 it is possible to
-                    # specify initial values on model formsets so we could include
-                    # the minor_update form field in the future
                     instance.minor_update = True
                 if form.cleaned_data['ORDER']:
                     instance.index = current_order[form.cleaned_data['ORDER'] - 1]
