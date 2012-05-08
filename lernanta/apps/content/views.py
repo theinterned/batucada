@@ -221,7 +221,10 @@ def edit_pages(request, slug):
                 return http.HttpResponseRedirect(reverse('edit_pages',
                     kwargs=dict(slug=project.slug)))
         else:
-            messages.error(request, _('Please correct errors below.'))
+            if add_page:
+                messages.info(request, _('Please fill out the new task.'))
+            else:
+                messages.error(request, _('Please correct errors below.'))
             preview = False
     else:
         formset = PageFormSet(queryset=pages)
@@ -232,6 +235,8 @@ def edit_pages(request, slug):
         'forms': forms,
         'preview': preview,
         'edit_mode': edit_mode,
+        'add_page': add_page,
+        'save_action': save_action,
     }
     return render_to_response('content/edit_pages.html', context,
         context_instance=RequestContext(request))

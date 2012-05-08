@@ -14,19 +14,19 @@
       {% if formset.can_order %}
         <div class='accordion-section-order'>{{ form.ORDER }}</div>
       {% endif %}
-      <div class="field{% if form.title.errors %} error{% endif %}">
+      <div class="field{% if form.title.errors and not add_page %} error{% endif %}">
         <label for="id_title">{{ _('Title') }}</label>
         {{ form.title }}
-        {{ form.title.errors }}
+        {% if not add_page %}{{ form.title.errors }}{% endif %}
       </div>
-      <div class="field{% if form.sub_header.errors %} error{% endif %}">
+      <div class="field{% if form.sub_header.errors and not add_page %} error{% endif %}">
         <label for="id_sub_header">{{ _('Tagline') }}</label>
         {{ form.sub_header }}
-        {{ form.sub_header.errors }}
+        {% if not add_page %}{{ form.sub_header.errors }}{% endif %}
       </div>
-      <div class="field{% if form.content.errors %} error{% endif %}">
+      <div class="field{% if form.content.errors and not add_page %} error{% endif %}">
         {{ form.content }}
-        {{ form.content.errors }}
+        {% if not add_page %}{{ form.content.errors }}{% endif %}
       </div>
     </div>
   </div>
