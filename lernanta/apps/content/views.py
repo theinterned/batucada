@@ -212,6 +212,11 @@ def edit_pages(request, slug):
                 if not instance.id:
                     instance.project = project
                     instance.author = profile
+                else:
+                    # FIXME: Starting with Django 1.4 it is possible to
+                    # specify initial values on model formsets so we could include
+                    # the minor_update form field in the future
+                    instance.minor_update = True
                 if form.cleaned_data['ORDER']:
                     instance.index = current_order[form.cleaned_data['ORDER'] - 1]
                 form.instance = instance
