@@ -1,7 +1,7 @@
 {% load l10n_tags %}
 {% load embed %}
 
-<div class="accordion-section">
+<div class="accordion-section {% if form.instance.deleted %}deleted-page{% endif %}">
   <h3><a href="#">{% if form.instance.title %}{{ form.instance.title }}{% else %}{{ _('New Task') }}{% endif %}</a></h3>
   <div class="accordion-content {% if preview %}show-preview-enabled{% endif %}">
     <div class="accordion-preview">
@@ -28,6 +28,9 @@
         {{ form.content }}
         {% if not add_page %}{{ form.content.errors }}{% endif %}
       </div>
+      {% if formset.can_delete %}
+        <div class='accordion-section-delete'>{{ _('Delete?') }} {{ form.DELETE }}</div>
+      {% endif %}
     </div>
   </div>
 </div>

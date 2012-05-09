@@ -179,7 +179,7 @@ def edit_pages(request, slug):
         form_cls = PageForm
         pages = pages.filter(collaborative=True)
     PageFormSet = modelformset_factory(Page, extra=0,
-        fields=form_cls.Meta.fields, can_order=True)
+        fields=form_cls.Meta.fields, can_order=True, can_delete=True)
     preview = ('show_preview' in request.POST)
     edit_mode = ('edit_mode' in request.POST)
     add_page = ('add_page' in request.POST)
@@ -211,6 +211,7 @@ def edit_pages(request, slug):
             for form in forms:
                 instance = form.save(commit=False)
                 if save_action:
+                    instance.author = profile
                     # FIXME: Starting with Django 1.4 it is possible to
                     # specify initial values on model formsets so we could include
                     # the minor_update and collaborative form fields in the future.
@@ -223,12 +224,23 @@ def edit_pages(request, slug):
                         instance.last_update = datetime.datetime.now()
                     else:
                         instance.project = project
-                        instance.author = profile
                         if project.category != Project.STUDY_GROUP:
                             instance.collaborative = False
                     if form.cleaned_data['ORDER']:
                         instance.index = current_order[form.cleaned_data['ORDER'] - 1]
                     instance.save()
+            for form in formset.deleted_forms:
+                instance = form.instance
+                instance.deleted = True
+                if save_action and instance.id:
+                    old_page = Page.objects.get(id=instance.id)
+                    old_version = PageVersion(title=old_page.title, content=old_page.content,
+                        author=old_page.author, date=old_page.last_update, page=instance)
+                    old_version.save()
+                    old_page.deleted = True
+                    old_page.author = profile
+                    old_page.last_update = datetime.datetime.now()
+                    old_page.save()
             if save_action:
                 return http.HttpResponseRedirect(reverse('edit_pages',
                     kwargs=dict(slug=project.slug)))
