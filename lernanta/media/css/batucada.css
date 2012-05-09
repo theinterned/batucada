@@ -5955,6 +5955,10 @@ table.display thead, table.display tfoot {
     width: 180px;
 }
 
+#edit_pages #saveProgressButton {
+    width: 140px;
+}
+
 #edit_pages .errorlist {
      left: 460px;
 }

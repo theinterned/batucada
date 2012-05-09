@@ -405,6 +405,7 @@ $(document).ready(function() {
         $(this).find('#previewButton').removeAttr('disabled');
         $(this).find('#editModeButton').removeAttr('disabled');
         $(this).find('#addPageButton').removeAttr('disabled');
+        $(this).find('#finalSaveButton').removeAttr('disabled');
     });
 
     if ($('#task_list_wall_toogle').length) {

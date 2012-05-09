@@ -37,7 +37,8 @@
         {% else %}
           <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
         {% endif %}
-        <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+        <button type="submit" id="saveProgressButton" value="{{ _('Save Progress') }}">{{ _('Save Progress') }}</button>
+        <button type="submit" id="finalSaveButton" name="final_save" value="{{ _('Finish') }}">{{ _('Finish') }}</button>
       </form>
     </fieldset>
   </article>
