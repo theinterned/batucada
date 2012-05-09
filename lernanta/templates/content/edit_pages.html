@@ -26,6 +26,9 @@
           {% for form in forms %}
             {% include "content/_edit_pages_item.html" %}
           {% endfor %}
+          {% for form in formset.deleted_forms %}
+            {% include "content/_edit_pages_item.html" %}
+          {% endfor %}
         </div>
         <br>
         <button type="submit" id="addPageButton" name="add_page" value="{{ _('Add Another Task') }}">{{ _('Add Another Task') }}</button>
