@@ -1045,7 +1045,7 @@ msgstr "Contraseña, nombre de usuario, o correo incorrectos."
 
 #: apps/users/views.py:278
 msgid "Congratulations! Your user account was successfully created."
-msgstr "¡Felicitaciones! Su cuenta de usuario fue creada exitosamente."
+msgstr "¡Felicidades! Su cuenta de usuario fue creada exitosamente."
 
 #: apps/users/views.py:286
 msgid ""
@@ -2851,11 +2851,11 @@ msgstr "Ver Todas las Tareas"
 
 #: templates/projects/_tasks_completed_msg.html:3
 msgid "Congratulations!"
-msgstr "¡Felicitaciones!"
+msgstr "¡Felicidades!"
 
 #: templates/projects/_tasks_completed_msg.html:4
 msgid "Good job completing all the tasks."
-msgstr "Buen trabajo completando todas las tareas."
+msgstr "Has completado todas las tareas."
 
 #: templates/projects/_tasks_completed_msg.html:8
 msgid "Badges Awarded"
