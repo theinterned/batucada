@@ -184,6 +184,7 @@ def edit_pages(request, slug):
     edit_mode = ('edit_mode' in request.POST)
     add_page = ('add_page' in request.POST)
     save_action = not preview and not edit_mode and not add_page
+    final_save = ('final_save' in request.POST)
     if request.method == 'POST':
         post_data = request.POST
         try:
@@ -241,7 +242,9 @@ def edit_pages(request, slug):
                     old_page.author = profile
                     old_page.last_update = datetime.datetime.now()
                     old_page.save()
-            if save_action:
+            if final_save:
+                return http.HttpResponseRedirect(project.get_absolute_url())
+            elif save_action:
                 return http.HttpResponseRedirect(reverse('edit_pages',
                     kwargs=dict(slug=project.slug)))
         else:
