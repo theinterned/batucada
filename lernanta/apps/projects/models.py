@@ -95,6 +95,7 @@ class Project(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
 
+    test = models.BooleanField(default=False)
     under_development = models.BooleanField(default=True)
     not_listed = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
