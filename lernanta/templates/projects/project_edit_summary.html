@@ -10,6 +10,12 @@
 <form id="project-edit-summary-form" action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% if is_challenge %}{% locale_url projects_create_challenge %}{% else %}{% locale_url projects_create %}{% endif %}{% if school %}?school={{ school.slug }}{% endif %}{% endif %}" method="post" {% if category and not project %}enctype="multipart/form-data"{% endif %}>
   {% csrf_token %}
   <div class="field{% if form.name.errors %} error{% endif %}">
+    <label for="id_test">{{ _('Test') }}</label>
+    <span class="hint block">{{ _('Please check this if you are just testing out P2PU.') }}</span>
+    {{ form.test }}
+    {{ form.test.errors }}
+  </div>
+  <div class="field{% if form.name.errors %} error{% endif %}">
     {% if is_challenge %}
       <label for="id_name">{{ _('Title') }}</label>
     {% else %}
