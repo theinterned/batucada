@@ -33,12 +33,15 @@ def get_awarded_badges(user):
     for badge in Badge.objects.filter(id__in=badges_ids):
         evidence = reverse('user_awards_show',
             kwargs= dict(slug=badge.slug, username=profile.username))
+        awards_count = Award.objects.filter(user=profile,
+             badge=badge).count()
         data = {
             'name': badge.name,
             'description': badge.description,
             'image': badge.get_image_url(),
             'evidence': evidence,
             'criteria': badge.get_absolute_url(),
+            'count': awards_count,
         }
         badges[badge.slug] = data
     return badges
@@ -210,22 +213,36 @@ class Badge(ModelBase):
         return True
 
     def can_review_submission(self, submission, user):
-        if user.is_authenticated():
-            profile = user.get_profile()
-            if not submission.pending or profile == submission.author:
-                return False
-            assessments = submission.assessments.filter(
-                assessor=profile)
-            return not assessments.exists()
-        else:
+        # only authenticated users can review a submission
+        if not user.is_authenticated():
             return False
+        profile = user.get_profile()
+
+        # user cannot review his/her own submission
+        if profile == submission.author:
+            return False
+
+        # if this is a unique badge, only allow one review of submission
+        if self.logic.unique and not submission.pending:
+            return False
+
+        # user can only submit one review
+        assessments = submission.assessments.filter(
+            assessor=profile)
+        if assessments.exists():
+            return False
+
+        return True
 
     def get_adopters(self):
         from projects.models import Participation
-        return Participation.objects.filter(
+        from users.models import UserProfile
+        adopters = Participation.objects.filter(
             project__in=self.groups.values('id'),
             left_on__isnull=True).filter(
-            Q(adopter=True) | Q(organizing=True))
+            Q(adopter=True) | Q(organizing=True)).values(
+            'user_id').distinct()
+        return UserProfile.objects.filter(id__in=adopters)
 
 
 class Rubric(ModelBase):
@@ -295,7 +312,7 @@ class Submission(ModelBase):
             'submission': self,
             'domain': Site.objects.get_current().domain,
         }
-        profiles = [recipient.user for recipient in self.badge.get_adopters()]
+        profiles = self.badge.get_adopters()
         SendNotifications.apply_async((profiles, subject_template, body_template,
             context))
 
@@ -372,7 +389,7 @@ class Assessment(ModelBase):
         for assessment in assessments:
             ratings_sum += assessment.final_rating
             weights_sum += assessment.weight
-        return ratings_sum / weights_sum if weights_sum > 0 else 0 
+        return ratings_sum / weights_sum if weights_sum > 0 else 0
 
 
 class Rating(ModelBase):

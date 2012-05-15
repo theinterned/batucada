@@ -30,6 +30,7 @@ class School(ModelBase):
     slug = models.SlugField(unique=True, blank=True)
     short_name = models.CharField(max_length=20)
     description = RichTextField(config_name='rich')
+    more_info = RichTextField(config_name='rich', null=True, blank=True)
     organizers = models.ManyToManyField('users.UserProfile',
         null=True, blank=True)
     featured = models.ManyToManyField('projects.Project',
@@ -107,9 +108,7 @@ class ProjectSet(ModelBase):
     school = models.ForeignKey(School, blank=True, null=True,
         related_name="project_sets")
     projects = models.ManyToManyField('projects.Project', blank=True, null=True,
-        related_name="projectsets")
-    first_project = models.ForeignKey('projects.Project', blank=True, null=True,
-        related_name="starting_project_sets")
+        related_name="projectsets", through='schools.ProjectSetIndex')
     featured = models.BooleanField(default=False)
     image = models.ImageField(upload_to=projectsets_determine_image_upload_path,
         null=True, storage=storage.ImageStorage(), blank=True)
@@ -131,10 +130,21 @@ class ProjectSet(ModelBase):
         image_path = self.image.url if self.image else missing
         return image_path
 
+    def get_projects(self):
+        return self.projects.order_by('projectsetindex__index')
+
+    @property
+    def first_project(self):
+        try:
+            return self.projects.order_by('projectsetindex__index')[0]
+        except IndexError:
+            return None
+
     def _distinct_participants(self):
-        return UserProfile.objects.filter(participations__project__projectsets=self, 
-                                    deleted=False, 
+        return UserProfile.objects.filter(participations__project__projectsets=self,
+                                    deleted=False,
                                     participations__left_on__isnull=True).distinct()
+
     def total_participants(self):
         return self._distinct_participants().filter(
             participations__adopter = False,
@@ -148,3 +158,10 @@ class ProjectSet(ModelBase):
     def total_badges(self):
         return Badge.objects.filter(
             groups__projectsets=self).distinct().count()
+
+
+class ProjectSetIndex(ModelBase):
+    """Stores order of projects inside set"""
+    projectset = models.ForeignKey('schools.ProjectSet')
+    project = models.ForeignKey('projects.Project')
+    index = models.IntegerField()

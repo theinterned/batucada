@@ -37,6 +37,7 @@ from activity.schema import verbs
 from signups.models import Signup
 from tracker import models as tracker_models
 from reviews.models import Review
+from utils import json_date_encoder
 
 from drumbeat import messages
 from users.decorators import login_required
@@ -147,12 +148,20 @@ def learn_tags(request):
 
 
 @login_required
-def create(request):
+def create(request, category=None):
     user = request.user.get_profile()
     if request.method == 'POST':
-        form = project_forms.ProjectForm(request.POST)
+        form = project_forms.ProjectForm(category, request.POST)
+        image_form = None
         if form.is_valid():
             project = form.save()
+            if category:
+                project.category = category
+            image_form = project_forms.ProjectImageForm(request.POST,
+                request.FILES, instance=project)
+            if category and image_form.is_valid():
+                image_form.save()
+            project.set_duration(form.cleaned_data['duration'] or 0)
             act = Activity(actor=user,
                 verb=verbs['post'],
                 scope_object=project,
@@ -184,13 +193,32 @@ def create(request):
                 'slug': project.slug,
             }))
         else:
-            msg = _("Problem creating the study group, course, ...")
+            if category:
+                msg = _("Problem creating the %s") % category
+            else:
+                msg = _("Problem creating the study group, course, ...")
             messages.error(request, msg)
     else:
-        form = project_forms.ProjectForm()
-    return render_to_response('projects/project_edit_summary.html', {
-        'form': form, 'new_tab': True,
-    }, context_instance=RequestContext(request))
+        form = project_forms.ProjectForm(category)
+        image_form = project_forms.ProjectImageForm()
+    context = {
+        'form': form,
+        'image_form': image_form,
+        'category': category,
+        'is_challenge': (category == Project.CHALLENGE),
+    }
+    if category:
+        tab = 'new_%s_tab' % ('_'.join(category.split()))
+        context[tab] = True
+    else:
+        context['new_tab'] = True
+    return render_to_response('projects/project_edit_summary.html',
+        context, context_instance=RequestContext(request))
+
+
+@login_required
+def create_challenge(request):
+    return create(request, Project.CHALLENGE)
 
 
 @login_required
@@ -381,7 +409,7 @@ def edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_challenge = (project.category == project.CHALLENGE)
     if request.method == 'POST':
-        form = project_forms.ProjectForm(request.POST, instance=project)
+        form = project_forms.ProjectForm(project.category, request.POST, instance=project)
         if form.is_valid():
             form.save()
             messages.success(request,
@@ -389,7 +417,7 @@ def edit(request, slug):
             return http.HttpResponseRedirect(
                 reverse('projects_edit', kwargs=dict(slug=project.slug)))
     else:
-        form = project_forms.ProjectForm(instance=project)
+        form = project_forms.ProjectForm(project.category, instance=project)
     metric_permissions = project.get_metrics_permissions(request.user)
     return render_to_response('projects/project_edit_summary.html', {
         'form': form,
@@ -595,12 +623,38 @@ def edit_participants_make_organizer(request, slug, username):
     if participation.organizing or request.method != 'POST':
         return http.HttpResponseForbidden(
             _("You can't make that person an organizer"))
+    participation.left_on = datetime.datetime.now()
+    participation.save()
+    participation = Participation(user=participation.user, project=participation.project)
     participation.organizing = True
     participation.save()
     messages.success(request, _('The participant is now an organizer.'))
     return http.HttpResponseRedirect(reverse('projects_edit_participants',
         kwargs=dict(slug=participation.project.slug)))
 
+@hide_deleted_projects
+@login_required
+@organizer_required
+def edit_participants_organizer_delete(request, slug, username):
+    """ remove username as an organizer for the course """
+    project = get_object_or_404(Project, slug=slug)
+    profile = get_object_or_404(UserProfile, username=username)
+    participation = get_object_or_404(Participation, project=project,
+        user=profile.user, left_on__isnull=True)
+    organizers = project.organizers()
+    # check that this isn't the only organizer
+    if len(organizers) == 1:
+        messages.error(request, _('You cannot delete the only organizer'))
+    elif request.method != 'POST':
+        http.Http404
+    else:
+        participation.left_on = datetime.datetime.now()
+        participation.save()
+        participation = Participation(user=profile, project=project)
+        participation.save()
+        messages.success(request, _('The organizer in now only a participant.'))
+    return http.HttpResponseRedirect(reverse('projects_edit_participants',
+        kwargs=dict(slug=participation.project.slug)))
 
 @hide_deleted_projects
 @login_required
@@ -700,15 +754,20 @@ def edit_status(request, slug):
         form = project_forms.ProjectStatusForm(
             request.POST, instance=project)
         if form.is_valid():
-            form.save()
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            project = form.save(commit=False)
+            project.set_duration(form.cleaned_data['duration'])
+            project.save()
+            messages.success(request,
+                _('%s updated!') % project.kind.capitalize())
+            return http.HttpResponseRedirect(reverse('projects_edit_status', kwargs={
                 'slug': project.slug,
             }))
         else:
             msg = _('There was a problem saving the %s\'s status.')
             messages.error(request, msg % project.kind.lower())
     else:
-        form = project_forms.ProjectStatusForm(instance=project)
+        form = project_forms.ProjectStatusForm(instance=project,
+            initial={'duration': project.get_duration()})
     return render_to_response('projects/project_edit_status.html', {
         'form': form,
         'project': project,
@@ -728,23 +787,30 @@ def admin_metrics(request, slug):
     """
     project = get_object_or_404(Project, slug=slug)
     metric_permissions = project.get_metrics_permissions(request.user)
-    participants = project.participants(
-        include_deleted=True).order_by('user__username')
-    participant_profiles = (participant.user for participant in participants)
-    tracker_models.update_metrics_cache(project)
-    keys = ('username', 'last_active', 'course_activity_minutes',
-        'comment_count', 'task_edits_count')
-    metrics = tracker_models.metrics_summary(project, participant_profiles)
-    data = (dict(itertools.izip(keys, d)) for d in metrics)
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
             'can_view_metric_overview': metric_permissions[0],
             'can_view_metric_detail': metric_permissions[1],
-            'data': data,
             'metrics_tab': True,
             'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@can_view_metric_overview
+def admin_metrics_data_ajax(request, slug):
+    """ returns data for jquery data tables plugin """
+    project = get_object_or_404(Project, slug=slug)
+    participants = project.participants(
+        include_deleted=True).order_by('user__username')
+    participant_profiles = (participant.user for participant in participants)
+    tracker_models.update_metrics_cache(project)
+    metrics = tracker_models.metrics_summary(project, participant_profiles)
+    json = simplejson.dumps(
+        {'aaData': list(metrics)},
+        default=json_date_encoder)
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 @hide_deleted_projects

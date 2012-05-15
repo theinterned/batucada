@@ -41,15 +41,12 @@
 
     {% if badges or pilot_badges %}
     <div class="profile-badges">
-      <h3>{{ _('Latest Badges') }} <a class="show-all-badges">{{ _('View All') }}</a></h3>
+      <h3>
+        {{ _('Latest Badges') }}
+        <a href="{% locale_url users_badges_manage %}" title="{{ _('Share your badges') }}"><i class="icon-share icon-large"></i></a>
+        <a class="show-all-badges">{{ _('View All') }}</a></h3>
       <ul>
         {% for badge in badges %}
-          <li>
-            <a href="{% locale_url user_awards_show slug=badge.slug username=profile.username %}" title="{{ badge.name }} {% if badge.count > 1 %}(x{{ badge.count }}){% endif %}">
-              <img src="{{ badge.get_image_url }}" width="70" height="70" alt="badge image"/>
-            </a>
-        {% endfor %}
-        {% for badge in pilot_badges %}
           <li>
             <a href="{{ badge.evidence }}" title="{{ badge.name }} {% if badge.count > 1 %}(x{{ badge.count }}){% endif %}" target="_blank">
               <img src="{{ badge.image }}" width="70" height="70" alt="badge image"/>

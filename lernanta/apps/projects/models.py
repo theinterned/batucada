@@ -45,6 +45,8 @@ class Project(ModelBase):
 
     name = models.CharField(max_length=100)
 
+    short_name = models.CharField(max_length=20, null=True, blank=True)
+
     # Select kind of project (study group, course, or other)
     STUDY_GROUP = 'study group'
     COURSE = 'course'
@@ -241,6 +243,23 @@ class Project(ModelBase):
                 count += 1
         super(Project, self).save()
 
+    def set_duration(self, value):
+        """Sets (without saving) duration in hours and minutes given a decimal value.
+
+        e.g., a decimal value of 10.3 equals 10 hours and 18 minutes."""
+        value = value or 0
+        hours = int(value)
+        minutes = int(60 * (value - hours))
+        self.duration_hours = hours
+        self.duration_minutes = minutes
+
+    def get_duration(self):
+        """Gets closest decimal value that represents the current duration.
+
+        e.g., a duration of 10 hours and 18 minutes corresponds to the decimal value 10.3
+        """
+        return round(self.duration_hours + (self.duration_minutes / 60.0), 1)
+
     def get_image_url(self):
         missing = settings.MEDIA_URL + 'images/project-missing.png'
         image_path = self.image.url if self.image else missing
@@ -293,17 +312,21 @@ class Project(ModelBase):
         return Relationship.objects.filter(source__username__in=usernames,
             target_project=self, source__deleted=False)
 
+    def get_badges(self):
+        from badges.models import Badge
+        return Badge.objects.filter(
+            Q(groups=self.id) | Q(all_groups=True)).distinct()
+
     def get_submission_enabled_badges(self):
         from badges.models import Logic
-        return self.badges.exclude(
+        return self.get_badges().exclude(
             logic__submission_style=Logic.NO_SUBMISSIONS)
 
     def get_badges_peers_can_give(self):
         from badges.models import Logic, Badge
-        return Badge.objects.filter(
+        return self.get_badges().filter(
             logic__min_votes=1, logic__min_avg_rating=0).exclude(
-            logic__submission_style=Logic.SUBMISSION_REQUIRED).filter(
-            Q(groups=self.id) | Q(all_groups=True)).distinct()
+            logic__submission_style=Logic.SUBMISSION_REQUIRED)
 
     def get_upon_completion_badges(self, user):
         from badges.models import Badge, Award
@@ -327,7 +350,7 @@ class Project(ModelBase):
         from badges.models import Badge, Award
         if user.is_authenticated():
             profile = user.get_profile()
-            project_badges = self.badges.all()
+            project_badges = self.get_badges()
             if exclude_completion_badges:
                 completion_badges = self.completion_badges.all()
                 project_badges = project_badges.exclude(

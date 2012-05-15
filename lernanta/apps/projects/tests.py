@@ -40,3 +40,42 @@ class ProjectTests(TestCase):
         )
         project2.save()
         self.assertEqual('my-cool-project-2', project2.slug)
+
+    def test_course_creation(self):
+        """Test valid post request to course creation page"""
+        data = {
+            'name': 'Test New Course',
+            'short_description': 'This is my new course',
+            'long_description': '<p>The new course is about...</p>',
+            'language': 'en',
+            'category': 'course',
+        }
+        self.client.login(username=self.test_username,
+            password=self.test_password)
+        response = self.client.post('/%s/groups/create/' % (self.locale,),
+            data)
+        self.assertRedirects(response,
+            '/%s/groups/%s/' % (self.locale, 'test-new-course'),
+            target_status_code=200)
+
+    def test_challenge_creation(self):
+        """Test valid post request to challenge creation page"""
+        data = {
+            'name': 'Test New Challenge',
+            'short_description': 'This is my new challenge',
+            'long_description': '<p>The new challenge is about...</p>',
+            'language': 'en',
+            'duration': 10.3,
+        }
+        self.client.login(username=self.test_username,
+            password=self.test_password)
+        response = self.client.post('/%s/groups/create/challenge/' % (self.locale,),
+            data)
+        slug = 'test-new-challenge'
+        self.assertRedirects(response,
+            '/%s/groups/%s/' % (self.locale, slug),
+            target_status_code=200)
+        challenge = Project.objects.get(slug=slug)
+        self.assertEqual(challenge.category, Project.CHALLENGE)
+        self.assertEqual(challenge.duration_hours, 10)
+        self.assertEqual(challenge.duration_minutes, 18)

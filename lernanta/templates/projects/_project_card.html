@@ -28,7 +28,7 @@
     </dl>
     <dl class="followers">
       {% if project.is_challenge %}
-        <dd>{{ project.badges.count }}</dd>
+        <dd>{{ project.get_badges.count }}</dd>
         <dt>{{ _('Badges') }}</dt>
       {% else %}
         <dd>{{ project.non_participant_followers.count }}</dd>

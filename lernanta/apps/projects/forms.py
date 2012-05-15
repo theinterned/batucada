@@ -23,13 +23,32 @@ log = logging.getLogger(__name__)
 
 class ProjectForm(forms.ModelForm):
     tags = GeneralTagField(required=False)
+    duration = forms.DecimalField(min_value=0, max_value=9000,
+        decimal_places=1, required=False)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, category, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         if 'instance' in kwargs:
             instance = kwargs['instance']
             self.initial['tags'] = GeneralTaggedItem.objects.filter(
                object_id=instance.id)
+            self.initial['duration'] = instance.get_duration()
+        else:
+            self.initial['duration'] = 0
+        if category:
+            self.fields['category'].required = False
+        if category == Project.CHALLENGE:
+            self.fields['name'].widget.attrs.update(
+                {'placeholder': _('Write a catchy title, keep it short and sweet')})
+            self.fields['short_description'].widget.attrs.update(
+                {'placeholder': _('e.g. Learn to write HTML by hand, literally.')})
+            self.fields['long_description'].widget.attrs.update(
+                {'placeholder': _("Who is the challenge for? <br>" \
+                                  "What are they going to be doing? <br>" \
+                                  "How are they going to be doing it? <br>" \
+                                  "Why are they doing it?")})
+            self.fields['tags'].widget.attrs.update(
+                {'placeholder': _('What will your peers be able to do upon completion of this challenge? Separate with commas')})
 
     class Meta:
         model = Project
@@ -66,7 +85,7 @@ class ProjectImageForm(forms.ModelForm):
         fields = ('image',)
 
     def clean_image(self):
-        if self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
+        if self.cleaned_data['image'] and self.cleaned_data['image'].size > settings.MAX_IMAGE_SIZE:
             max_size = settings.MAX_IMAGE_SIZE / 1024
             msg = _("Image exceeds max image size: %(max)dk")
             raise forms.ValidationError(msg % dict(max=max_size))
@@ -78,10 +97,13 @@ class ProjectStatusForm(forms.ModelForm):
     start_date = forms.DateField(localize=True, required=False)
     end_date = forms.DateField(localize=True, required=False)
 
+    duration = forms.DecimalField(min_value=0, max_value=9000,
+        decimal_places=1, required=False)
+
     class Meta:
         model = Project
         fields = ('start_date', 'end_date', 'under_development',
-            'not_listed', 'archived', 'duration_hours', 'duration_minutes')
+            'not_listed', 'archived')
 
 
 class ProjectAddParticipantForm(forms.Form):

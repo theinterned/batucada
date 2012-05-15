@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate, get_language
 from django.shortcuts import render_to_response, get_object_or_404
@@ -32,7 +32,7 @@ from drumbeat import messages
 from activity.models import Activity
 from activity.views import filter_activities
 from pagination.views import get_pagination_context
-from badges.models import Award
+from badges.models import Award, get_awarded_badges
 
 from users import forms
 from users.models import UserProfile, create_profile, ProfileTag
@@ -157,11 +157,17 @@ def login(request):
 
     logout(request)
 
+    dashboard_url = reverse('dashboard')
     redirect_field_value = request.session.get(
-        REDIRECT_FIELD_NAME, reverse('dashboard'))
+        REDIRECT_FIELD_NAME, dashboard_url) or dashboard_url
+    try:
+        redirect_field_value = urllib2.quote(redirect_field_value)
+    except KeyError:
+        # Unicode Issue
+        pass
     extra_context = {
         'redirect_field_name': REDIRECT_FIELD_NAME,
-        'redirect_field_value': urllib2.quote(redirect_field_value),
+        'redirect_field_value': redirect_field_value,
     }
 
     r = auth_views.login(request, template_name='users/signin.html',
@@ -281,7 +287,9 @@ def register(request):
                     'instructions for completing your '
                     'registration.').format(user.email)
             messages.info(request, msg)
-            return login(request)
+            response = login(request)
+            request.session['send_registration_event'] = True
+            return response
         else:
             messages.error(request, _('There are errors in this form. Please '
                                       'correct them and resubmit.'))
@@ -327,12 +335,12 @@ def register_openid_complete(request):
 def user_list(request):
     """Display a list of users on the site. Featured, new and active."""
     featured = UserProfile.objects.filter(deleted=False, featured=True)
-    new = UserProfile.objects.filter(deleted=False).order_by(
+    recent = UserProfile.objects.filter(deleted=False).order_by(
         '-created_on')[:20]
     popular = UserProfile.objects.get_popular(limit=20)
     return render_to_response('users/user_list.html', {
         'featured': featured,
-        'new': new,
+        'recent': recent,
         'popular': popular,
     }, context_instance=RequestContext(request))
 
@@ -358,6 +366,8 @@ def confirm_registration(request, token, username):
         return http.HttpResponseRedirect(reverse('users_login'))
     profile.confirmation_code = ''
     profile.save()
+    profile.user.backend = 'django.contrib.auth.backends.ModelBackend'
+    auth_login(request, profile.user)
     messages.success(request, _('Success! You have verified your email address.'))
     return http.HttpResponseRedirect(reverse('dashboard'))
 
@@ -424,6 +434,7 @@ def profile_create(request):
                 'instructions for completing your '
                 'registration.') % profile.email
         messages.info(request, msg)
+        request.session['send_registration_event'] = True
         return http.HttpResponseRedirect(reverse('dashboard'))
     else:
         messages.error(request, _('There are errors in this form. Please '
@@ -464,6 +475,7 @@ def profile_edit(request):
 
 @login_required
 def profile_edit_openids(request):
+    profile = request.user.get_profile()
     if request.method == 'POST':
         return openid_views.login_begin(
             request,
@@ -474,6 +486,7 @@ def profile_edit_openids(request):
         form = forms.OpenIDForm()
     openids = UserOpenID.objects.filter(user=request.user)
     return render_to_response('users/profile_edit_openids.html', {
+        'profile': profile,
         'form': form,
         'openids': openids,
         'openids_tab': True,
@@ -567,10 +580,9 @@ def profile_edit_image(request):
 
 @login_required
 def badges_manage(request):
-    raise http.Http404
     profile = request.user.get_profile()
     badges_help_url = "http://help.p2pu.org/kb/learning/what-are-badges"
-    has_badges = Award.objects.filter(user=profile).exists()
+    has_badges = get_awarded_badges(profile.user)
     badges_url = reverse('badges_list')
     context = {
         'profile': profile,

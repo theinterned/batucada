@@ -29,7 +29,7 @@ class Page(ModelBase):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=110)
     sub_header = models.CharField(max_length=150, blank=True, null=True)
-    content = RichTextField(config_name='rich', blank='False')
+    content = RichTextField(config_name='rich')
     author = models.ForeignKey('users.UserProfile', related_name='pages')
     last_update = models.DateTimeField(auto_now_add=True,
         default=datetime.datetime.now)
@@ -48,7 +48,7 @@ class Page(ModelBase):
     # Used to facilitate both posting a comment to the task with
     # a link to the work they did on the task and apply for skills badges
     badges_to_apply = models.ManyToManyField('badges.Badge',
-        null=True, blank=False, related_name='tasks_accepting_submissions')
+        null=True, blank=True, related_name='tasks_accepting_submissions')
 
     def __unicode__(self):
         return self.title
@@ -91,7 +91,7 @@ class Page(ModelBase):
             try:
                 return self.project.pages.filter(
                     deleted=False, index__gt=self.index,
-                    listed=True)[0]
+                    listed=True).order_by('index')[0]
             except IndexError:
                 pass
         return None
@@ -170,7 +170,7 @@ class Page(ModelBase):
             return today_comments_count, _('today')
         # get this week comments count
         week = today.isocalendar()[1]
-        first_day = datetime.date(year, 1, 1)    
+        first_day = datetime.date(year, 1, 1)
         delta_days = first_day.isoweekday() - 1
         delta_weeks = week
         if year == first_day.isocalendar()[0]:
@@ -186,7 +186,7 @@ class Page(ModelBase):
         # get this month comments count
         this_month_comments_count = comments.filter(created_on__month=month,
             created_on__year=year).count()
-        return this_month_comments_count, _('this month') 
+        return this_month_comments_count, _('this month')
 
 
 class PageVersion(ModelBase):

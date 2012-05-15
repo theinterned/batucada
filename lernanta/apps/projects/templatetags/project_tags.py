@@ -238,7 +238,7 @@ def tasks_list_wall(request, project, user, toggled_tasks=True):
     hidde_tasks_complete_msg = (progressbar_value != 100)
     adopter_request = (not is_organizing and not adopter)
     next_projects = project.next_projects.all()
-    next_badges = project.badges.order_by('id')
+    next_badges = project.get_badges().order_by('id')
     context = {
         'tasks_count': tasks_count,
         'completed_count': completed_count,

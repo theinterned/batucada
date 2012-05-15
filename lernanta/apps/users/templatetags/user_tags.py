@@ -40,11 +40,8 @@ def profile_info(context):
     past_drupal_courses = projects_drupal.get_past_courses(
         profile.username)
     past_involvement_count = len(past_projects) + len(past_drupal_courses)
-    pilot_badges = get_awarded_badges(profile.user).values()
-    badge_awards = Award.objects.filter(
-        user=profile).values('badge_id')
-    badges = Badge.objects.filter(id__in=badge_awards)
-    badges_count = len(pilot_badges) + badges.count()
+    badges = get_awarded_badges(profile.user).values()
+    badges_count = len(badges)
 
     context.update({
         'current_projects': current_projects,
@@ -57,7 +54,6 @@ def profile_info(context):
         'past_drupal_courses': past_drupal_courses,
         'past_involvement_count': past_involvement_count,
         'badges': badges,
-        'pilot_badges': pilot_badges,
         'badges_count': badges_count,
     })
     return context

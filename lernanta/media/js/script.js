@@ -347,6 +347,10 @@ $(document).ready(function() {
         $('#id_end_date').datepicker();
     }
 
+    if ($('#id_duration').length) {
+        $('#id_duration').spinner({min:0, max:9000, step:1, places:0});
+    }
+
     if ($('.project-kind-challenge #task_list_wall #progressbar').length) {
         var progressbar_value = $(".project-kind-challenge #task_list_wall #progressbar").attr('value');
         $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});
@@ -369,14 +373,14 @@ $(document).ready(function() {
         });
     }
 
-    if ( $('.project-kind-challenge #task-body a.external-task').length ) {
-        var $external_task = $('.project-kind-challenge #task-body a.external-task');
+    if ( $('#task-body a.external-task').length ) {
+        var $external_task = $('#task-body a.external-task');
         $external_task.find('span.external-task-text').text($external_task.attr('title'));
         $external_task.show();
     }
 
-    if ( $('.project-kind-challenge #task-body-preview a.external-task').length ) {
-        var $external_task = $('.project-kind-challenge #task-body-preview a.external-task');
+    if ( $('#task-body-preview a.external-task').length ) {
+        var $external_task = $('#task-body-preview a.external-task');
         $external_task.find('span.external-task-text').text($external_task.attr('title'));
         $external_task.show();
     }
@@ -399,6 +403,9 @@ $(document).ready(function() {
         $(this).find('input[type=submit]').attr('disabled', 'disabled');
         $(this).find('button[type=submit]').attr('disabled', 'disabled');
         $(this).find('#previewButton').removeAttr('disabled');
+        $(this).find('#editModeButton').removeAttr('disabled');
+        $(this).find('#addPageButton').removeAttr('disabled');
+        $(this).find('#finalSaveButton').removeAttr('disabled');
     });
 
     if ($('#task_list_wall_toogle').length) {
@@ -422,6 +429,38 @@ $(document).ready(function() {
     }
     if ( $('#learn').length ) {
         enableLearn();
+    }
+
+    if ( $('#edit_pages #accordion') ) {
+        $('#edit_pages #accordion').accordion({
+            header: '> div > h3'
+        }).sortable({
+            axis: 'y',
+            handle: 'h3',
+            start: function( event, ui ) {
+                var $ckeditor_textarea = ui.item.find('textarea');
+                var ckeditor_text_area_id = $ckeditor_textarea.attr('id');
+                if ( CKEDITOR.instances[ckeditor_text_area_id] ) {
+                    $ckeditor_textarea.text(CKEDITOR.instances[ckeditor_text_area_id].getData());
+                }
+            },
+            stop: function( event, ui ) {
+                var $ckeditor_textarea = ui.item.find('textarea');
+                var ckeditor_text_area_id = $ckeditor_textarea.attr('id');
+                if ( CKEDITOR.instances[ckeditor_text_area_id] ) {
+                    CKEDITOR.instances[ckeditor_text_area_id].setData($ckeditor_textarea.text());
+                }
+                // IE doesn't register the blur when sorting
+                // so trigger focusout handlers to remove .ui-state-focus
+                ui.item.children( 'h3').triggerHandler( "focusout" );
+                
+            },
+            update: function( event, ui ) {
+                $(this).find('.accordion-section-order input').each(function(i) {
+                    $(this).val(i+1);
+                });
+            }
+          });
     }
 
 });
@@ -553,9 +592,6 @@ var submitTaskFooterAfterCompletionForm = function() {
         var upon_completion_redirect = data['upon_completion_redirect'];
         var stay_on_page = data['stay_on_page'];
         var toggle_task_completion_form_html = data['toggle_task_completion_form_html'];
-        if (CKEDITOR.instances['id_content']) {
-            CKEDITOR.instances['id_content'].destroy();
-        }
         $task_footer.html(toggle_task_completion_form_html);
         if( !stay_on_page && progressbar_value == "100" ) {
             window.location.href = upon_completion_redirect;

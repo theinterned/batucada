@@ -54,7 +54,7 @@
         {% endif %}
       </p>
       <ul>
-        {% for project in projectset.projects.all|slice:":6" %}
+        {% for project in projectset.get_projects|slice:":6" %}
           <li>
             <a href="{{ project.get_absolute_url }}" title="{{ project }}">
               {% if project.image %}

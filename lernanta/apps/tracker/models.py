@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.contrib.sites.models import Site
 
 from drumbeat.models import ModelBase
 from content.models import Page
@@ -17,21 +18,37 @@ from tracker.utils import force_date
 
 
 def get_google_tracking_context(instance=None):
+    codes_key = 'google_analytics_tracking_codes'
     if instance:
-        ct = ContentType.objects.get_for_model(
+        instance_ct = ContentType.objects.get_for_model(
             instance)
-        trackings = GoogleAnalyticsTracking.objects.filter(
-            target_content_type=ct, target_id=instance.pk)
+        site_ct = ContentType.objects.get_for_model(Site)
+        codes_ids = []
+        if instance_ct != site_ct:
+            site = Site.objects.get_current()
+            codes_ids.extend(get_google_tracking_context(
+                site)[codes_key].values_list(
+                'id', flat=True))
+        codes_ids.extend(GoogleAnalyticsTracking.objects.filter(
+            target_content_type=instance_ct, target_id=instance.pk).values_list(
+            'tracking_code_id', flat=True))
         codes = GoogleAnalyticsTrackingCode.objects.filter(
-            id__in=trackings.values('tracking_code_id'))
+            id__in=codes_ids)
     else:
         codes = GoogleAnalyticsTrackingCode.objects.all()
-    return {'google_analytics_tracking_codes': codes}
+    return {codes_key: codes}
 
 
 class GoogleAnalyticsTrackingCode(ModelBase):
     key = models.SlugField(unique=True)
     code = models.SlugField(unique=True)
+    # extra tracking options
+    logged_in_status = models.BooleanField(default=False)
+    registration_event = models.BooleanField(default=False)
+    # warning: not tested with multiple conversion trackings
+    adwords_conversion_id = models.SlugField(blank=True, null=True)
+    adwords_conversion_label = models.SlugField(blank=True, null=True)
+    chartbeat_uid = models.SlugField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %s" % (self.key, self.code)
