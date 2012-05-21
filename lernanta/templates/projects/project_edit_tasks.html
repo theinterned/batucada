@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load l10n_tags %}
+{% load project_tags %}
+
+{% block title %}{{ _('Edit tasks') }}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/course.css?v=1">
+{% endblock %}
+
+{% block bodyid %}task_edit{% endblock %}
+
+{% block links %}
+  {% if project %}
+    {% if project.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.accepted_school.slug %}?v=1">{% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    var changes = false;
+    
+    $(document).ready( function(){
+        $("#id_task_add_button").bind('click', function(e){
+            e.preventDefault();
+            /// todo: check for unsubmitted data first
+            if (changes) {
+                alert("please submit your changes first");
+            } else {
+                $.ajax({
+                    url: $(this).attr('href'),
+                    success: function(data, textStatus, jqXHR) {
+                       $("#task_list").append(data);
+                       changes = true;
+                    }
+                });
+            }
+        });
+
+        $(".task_edit_action").bind('click', function(e){
+            e.preventDefault();
+            container = $(this).closest('div.task_edit_view');
+            
+            $.ajax({
+                url: $(this).attr('href'),
+                success: function(data, textStatus, jqXHR) {
+                    container.empty();
+                    container.append(data);
+                }
+            });
+        });
+        
+        /*$(".task_edit_actions a").bind('click', function(e) {
+            e.preventDefault();
+            alert("catchall");
+        });*/
+    });
+</script>
+{% endblock %}
+
+{% block breadcrumbs_title %}
+  {% if project %}
+    <h1 id="project-name">
+      <a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a>
+    </h1>
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% learn_default %}">{{ _('Learn') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>{{ _('Edit tasks') }}</h1>
+    <div id="task_list">
+        {% for task in tasks %}
+            <div id="id_task_{{task.slug}}" class="task_edit_view">
+                {{task.title}} --
+                {{task.sub_header}}&nbsp;
+                <div class="task_edit_actions">
+                    <a class="task_edit_action" href="{% locale_url page_edit slug=project.slug page_slug=task.slug %}" >{{ _('Edit') }}</a>
+                    <a href="task/{{task.slug}}/delete/">{{ _('Delete') }}</a>
+                    <a href="task/{{task.slug}}/up/">{{ _('Up') }}</a>
+                    <a href="task/{{task.slug}}/down/">{{ _('Down') }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a id="id_task_add_button" class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('Add Task') }}</a>
+    
+  </article>
+</section>
+{% endblock %}
+
