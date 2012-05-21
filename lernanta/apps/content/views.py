@@ -157,13 +157,19 @@ def create_page(request, slug):
             messages.error(request, _('Please correct errors below.'))
     else:
         form = form_cls(initial=initial)
-    return render_to_response('content/create_page.html', {
+
+    context = {
         'form': form,
         'project': project,
         'page': page,
         'preview': ('show_preview' in request.POST),
         'is_challenge': (project.category == Project.CHALLENGE),
-    }, context_instance=RequestContext(request))
+    }
+    
+    if request.is_ajax():
+        return render_to_response('content/create_page_embedded.html', context, context_instance=RequestContext(request))
+    else:
+        return render_to_response('content/create_page.html', context, context_instance=RequestContext(request))
 
 
 @hide_deleted_projects
