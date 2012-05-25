@@ -112,7 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'maintenancemode.middleware.MaintenanceModeMiddleware',
-    'commonware.middleware.HidePasswordOnException',
+    'commonware.middleware.ScrubRequestOnException',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',

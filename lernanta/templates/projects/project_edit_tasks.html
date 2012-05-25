@@ -19,20 +19,20 @@
 
 {% block js %}
 <script type="text/javascript">
-    var changes = false;
+    var newTaskId = "";
     
     $(document).ready( function(){
         $("#id_task_add_button").bind('click', function(e){
             e.preventDefault();
             /// todo: check for unsubmitted data first
-            if (changes) {
+            if (newTaskId != '' && $("#" + newTaskId).size() > 0) {
                 alert("please submit your changes first");
             } else {
                 $.ajax({
                     url: $(this).attr('href'),
                     success: function(data, textStatus, jqXHR) {
                        $("#task_list").append(data);
-                       changes = true;
+                       newTaskId = $(data).attr('id');
                     }
                 });
             }
@@ -85,9 +85,13 @@
                 {{task.sub_header}}&nbsp;
                 <div class="task_edit_actions">
                     <a class="task_edit_action" href="{% locale_url page_edit slug=project.slug page_slug=task.slug %}" >{{ _('Edit') }}</a>
-                    <a href="task/{{task.slug}}/delete/">{{ _('Delete') }}</a>
-                    <a href="task/{{task.slug}}/up/">{{ _('Up') }}</a>
-                    <a href="task/{{task.slug}}/down/">{{ _('Down') }}</a>
+                    <a href="{% locale_url page_delete slug=project.slug page_slug=task.slug %}">{{ _('Delete') }}</a>
+                    {% if not forloop.first %}
+                    <a href="{% locale_url page_index_up slug=project.slug page_slug=task.slug%}">{{ _('Up') }}</a>
+                    {% endif %}
+                    {% if not forloop.last %}
+                    <a href="{% locale_url page_index_down slug=project.slug page_slug=task.slug%}">{{ _('Down') }}</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
