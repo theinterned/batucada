@@ -8,6 +8,8 @@ from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.forms.models import modelformset_factory
 
+from urlparse import urlsplit
+
 from l10n.urlresolvers import reverse
 from users.decorators import login_required
 from drumbeat import messages
@@ -61,8 +63,22 @@ def show_page(request, slug, page_slug):
     }
     context.update(get_pagination_context(request, first_level_comments))
     context.update(get_google_tracking_context(page.project))
+
     return render_to_response('content/page.html', context,
-        context_instance=RequestContext(request))
+            context_instance=RequestContext(request))
+
+@hide_deleted_projects
+def show_page_embedded(request, slug, page_slug):
+    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
+    context = {
+        'page': page,
+        'project': page.project,
+    }
+    context.update(get_pagination_context(request, first_level_comments))
+    context.update(get_google_tracking_context(page.project))
+
+    return render_to_response('content/page_embedded.html', context,
+            context_instance=RequestContext(request))
 
 
 @hide_deleted_projects
@@ -107,10 +123,13 @@ def edit_page(request, slug, page_slug):
                 old_version.save()
                 page.save()
                 messages.success(request, _('%s updated!') % page.title)
-                return http.HttpResponseRedirect(reverse('page_show', kwargs={
-                    'slug': slug,
-                    'page_slug': page_slug,
-                }))
+                if request.is_ajax():
+                    return http.HttpResponseRedirect(
+                        reverse('page_show_embedded',
+                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
+                else:
+                    return http.HttpResponseRedirect(reverse('page_show',
+                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
         else:
             messages.error(request, _('Please correct errors below.'))
     else:
@@ -149,9 +168,13 @@ def create_page(request, slug):
             if 'show_preview' not in request.POST:
                 page.save()
                 messages.success(request, _('Task created!'))
-                return http.HttpResponseRedirect(reverse('page_show', kwargs={
-                    'slug': slug,
-                    'page_slug': page.slug,
+                if request.is_ajax():
+                    return http.HttpResponseRedirect(reverse(
+                        'page_show_embedded',
+                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
+                else:
+                    return http.HttpResponseRedirect(reverse('page_show',
+                    kwargs={'slug': slug, 'page_slug': page.slug,
                 }))
         else:
             messages.error(request, _('Please correct errors below.'))
@@ -285,6 +308,7 @@ def delete_page(request, slug, page_slug):
     if not page.project.is_organizing(request.user) and not page.collaborative:
         return http.HttpResponseForbidden(_("You can't delete this page"))
     if request.method == 'POST':
+        redirect_url = request.POST.get('next_page', None)
         old_version = PageVersion(title=page.title, sub_header=page.sub_header,
             content=page.content, author=page.author, date=page.last_update,
             page=page)
@@ -294,13 +318,20 @@ def delete_page(request, slug, page_slug):
         page.deleted = True
         page.save()
         messages.success(request, _('%s deleted!') % page.title)
+        if redirect_url:
+            return http.HttpResponseRedirect(redirect_url)
         return http.HttpResponseRedirect(reverse('page_history',
             kwargs={'slug': page.project.slug, 'page_slug': page.slug}))
     else:
-        return render_to_response('content/confirm_delete_page.html', {
+        context = {
             'page': page,
             'project': page.project,
-        }, context_instance=RequestContext(request))
+        }
+        referer = request.META.get('HTTP_REFERER', None)
+        if referer:
+            context['next_page'] = urlsplit(referer, 'http', False)[2]
+        return render_to_response('content/confirm_delete_page.html',
+            context, context_instance=RequestContext(request))
 
 
 @hide_deleted_projects
@@ -404,6 +435,15 @@ def _move_page(request, slug, page_slug, direction='up'):
     page.minor_update = prev_page.minor_update = True
     page.save()
     prev_page.save()
+    
+    referer = request.META.get('HTTP_REFERER', None)
+    if referer:
+        try:
+            redirect_to = urlsplit(referer, 'http', False)[2]
+            return http.HttpResponseRedirect(redirect_to)
+        except IndexError:
+            pass
+    
     return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
 
 @hide_deleted_projects

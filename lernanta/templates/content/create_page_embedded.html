@@ -1,10 +1,9 @@
 {% load l10n_tags %}
 {% load embed %}
-  <article>
-    {% block page_form_title %}{% endblock %}
+  <article id="id_new_page">
     <br />
     <fieldset>
-    <form action="{% block page_form_url %}{% endblock %}" method="post">
+    <form id="id_new_page_form" action="{% locale_url page_create slug=project.slug %}" method="post">
       {% csrf_token %}
       {% if preview %}
         <div class="preview">
@@ -46,9 +45,31 @@
         </div>
       {% endif %}
       <p class="content_buttons">
-        <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
+        <button type="submit" id="createButton" name="create" value="{{ _('Create') }}">{{ _('Create') }}</button>
         <button type="submit" id="cancelButton" name="cancel" value="{{ _('Cancel') }}">{{ _('Cancel') }}</button>
       </p>
     </form>
     </fieldset>
+
+    <script>
+    $(document).ready( function(){
+        $("#createButton").bind('click', function(e){
+            e.preventDefault();
+            alert($("#id_new_page_form").serialize());
+            $.post(
+                $("#id_new_page_form").attr('action'),
+                $("#id_new_page_form").serialize(),
+                function(data){
+                    parent = $("#id_new_page").parent()
+                    $("#id_new_page").remove();
+                    parent.append(data);
+                }
+            );
+        });
+        $("#cancelButton").bind('click', function(e){
+            e.preventDefault();
+            $("#id_new_page").remove();
+        });
+    });
+    </script>
   </article>
