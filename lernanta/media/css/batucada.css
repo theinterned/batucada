@@ -71,6 +71,12 @@ img.badge-graphic {
   behavior: url("/media/css/PIE.htc");
 }
 
+.justify_content{
+	text-align: justify;
+/*ie*/
+	text-justify:inter-word;
+	
+}
 /* BUTTONS */
 
 button,
@@ -249,7 +255,7 @@ input[type=submit]:active,
 }
 
 .login_participate_button {
-    margin-top: 0px !important
+    margin-top: 0px !important;
 }
 
 .project-kind-challenge #sidebar .duration-time {
@@ -630,8 +636,8 @@ input[type="password"],
 input[type="search"],
 input[type="tel"],
 input[type="url"],
-input[type*="date"],
-input[type*="time"],
+input[type="date"],
+input[type="time"],
 textarea {
 	padding: 5px 8px;
 	margin-bottom: 0.5em;
@@ -655,8 +661,8 @@ input[type="password"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
-input[type*="date"]:focus,
-input[type*="time"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
 textarea:focus {
 	outline: none;
 	border-color: #90c7ee;
@@ -682,11 +688,11 @@ form .small {
 	}
 
 ::-webkit-input-placeholder {
-  color: #ddd; !important
+  color: #ddd !important;
 }
 
 :-moz-placeholder {
-  color: #ddd; !important
+  color: #ddd !important;
 }
 		
 .hint {
@@ -2818,7 +2824,7 @@ div.warning h2 {
 .inline_label .errorlist {	
 	top: -5px;
 	}
-.error input:not([type=file]),
+.error input:not([type="file"]),
 .error textarea {
 	border-color: #a00;
 	box-shadow: 0 0 3px #a00;
@@ -5529,7 +5535,7 @@ table.display thead, table.display tfoot {
 
 #user_profile #sidebar .member-bio {
     color: #aaaaaa;
-    margin-bottom: 0pt;#
+    margin-bottom: 0pt;
 }
 
 #user_profile #sidebar .member-location {
