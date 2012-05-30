@@ -6,7 +6,7 @@
 
 {% block title %}{{ _('Edit tasks') }}{% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/course.css?v=1">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css?v=1">
 {% endblock %}
 
 {% block bodyid %}task_edit{% endblock %}
@@ -24,7 +24,6 @@
     $(document).ready( function(){
         $("#id_task_add_button").bind('click', function(e){
             e.preventDefault();
-            /// todo: check for unsubmitted data first
             if (newTaskId != '' && $("#" + newTaskId).size() > 0) {
                 alert("please submit your changes first");
             } else {
@@ -37,24 +36,6 @@
                 });
             }
         });
-
-        $(".task_edit_action").bind('click', function(e){
-            e.preventDefault();
-            container = $(this).closest('div.task_edit_view');
-            
-            $.ajax({
-                url: $(this).attr('href'),
-                success: function(data, textStatus, jqXHR) {
-                    container.empty();
-                    container.append(data);
-                }
-            });
-        });
-        
-        /*$(".task_edit_actions a").bind('click', function(e) {
-            e.preventDefault();
-            alert("catchall");
-        });*/
     });
 </script>
 {% endblock %}
@@ -80,20 +61,7 @@
     <h1>{{ _('Edit tasks') }}</h1>
     <div id="task_list">
         {% for task in tasks %}
-            <div id="id_task_{{task.slug}}" class="task_edit_view">
-                {{task.title}} --
-                {{task.sub_header}}&nbsp;
-                <div class="task_edit_actions">
-                    <a class="task_edit_action" href="{% locale_url page_edit slug=project.slug page_slug=task.slug %}" >{{ _('Edit') }}</a>
-                    <a href="{% locale_url page_delete slug=project.slug page_slug=task.slug %}">{{ _('Delete') }}</a>
-                    {% if not forloop.first %}
-                    <a href="{% locale_url page_index_up slug=project.slug page_slug=task.slug%}">{{ _('Up') }}</a>
-                    {% endif %}
-                    {% if not forloop.last %}
-                    <a href="{% locale_url page_index_down slug=project.slug page_slug=task.slug%}">{{ _('Down') }}</a>
-                    {% endif %}
-                </div>
-            </div>
+            {% include "content/page_embedded.html" with page=task %}
         {% endfor %}
     </div>
 

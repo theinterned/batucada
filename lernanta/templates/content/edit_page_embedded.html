@@ -1,9 +1,10 @@
 {% load l10n_tags %}
 {% load embed %}
-  <article id="id_new_page">
+
+<div id="id_task_{{page.slug}}" class="task_edit_view">
     <br />
     <fieldset>
-    <form id="id_new_page_form" action="{% locale_url page_create slug=project.slug %}" method="post">
+    <form id="id_task_{{page.slug}}_edit_form" action="{% locale_url page_edit slug=page.project.slug page_slug=page.slug %}" method="post">
       {% csrf_token %}
       {% if preview %}
         <div class="preview">
@@ -17,6 +18,9 @@
             </div>
         </div>
         <br />
+      {% endif %}
+      {% if page.listed %}
+        <span class="hint block">{{ _('Constructing a good task is crucial to the peer learning process. Tasks should have a clear goal in mind and should be sequential throughout the learning process. A task can be as big or as small and last as long as you like - it can be a planned discussion for one day, a piece of writing constructed over a week, a project that lasts for a few weeks, or a month-long endeavour that everyone works on.') }}</span>
       {% endif %}
       {% if form.title %}
         <div class="field{% if form.title.errors %} error{% endif %}">
@@ -45,32 +49,42 @@
         </div>
       {% endif %}
       <p class="content_buttons">
-        <button type="submit" id="createButton" name="create" value="{{ _('Create') }}">{{ _('Create') }}</button>
-        <button type="submit" id="cancelButton" name="cancel" value="{{ _('Cancel') }}">{{ _('Cancel') }}</button>
+        <div class="field{% if form.minor_update.errors %} error{% endif %}">
+          {{ form.minor_update }} {{ _('Minor update (not posted to the wall).') }}
+          {{ form.minor_update.errors }}
+        </div>
+        <a id="cancelButton" class="button" href="{% locale_url page_show_embedded slug=project.slug page_slug=page.slug %}">{{ _('Cancel') }}</a>
+        <button id="submitButton" type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
       </p>
     </form>
     </fieldset>
 
     <script>
     $(document).ready( function(){
-        $("#createButton").bind('click', function(e){
+        $("#submitButton").bind('click', function(e){
             e.preventDefault();
             // TODO: remove hack to fix ckeditor!
-            var ckeditor_text_area_id = $("#id_new_page_form").find('textarea').attr('id');
-            $("#id_new_page_form").find('textarea').val(CKEDITOR.instances[ckeditor_text_area_id].getData());
-            alert($("#id_new_page_form").serialize());
+            var formId = "#id_task_{{page.slug}}_edit_form"
+            var ckeditor_text_area_id = $(formId).find('textarea').attr('id');
+            $(formId).find('textarea').val(CKEDITOR.instances[ckeditor_text_area_id].getData());
             $.post(
-                $("#id_new_page_form").attr('action'),
-                $("#id_new_page_form").serialize(),
+                $(formId).attr('action'),
+                $(formId).serialize(),
                 function(data){
-                    $("#id_new_page").replaceWith(data);
+                    $("#id_task_{{page.slug}}").replaceWith(data);
                 }
             );
         });
         $("#cancelButton").bind('click', function(e){
             e.preventDefault();
-            $("#id_new_page").remove();
+            $.ajax({
+                url: $(this).attr('href'),
+                success: function(data, textStatus, jqXHR) {
+                    $("#id_task_{{page.slug}}").replaceWith(data);
+                }
+            });
         });
     });
     </script>
-  </article>
+    
+</div>
