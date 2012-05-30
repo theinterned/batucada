@@ -74,7 +74,7 @@ def show_page_embedded(request, slug, page_slug):
         'page': page,
         'project': page.project,
     }
-    context.update(get_pagination_context(request, first_level_comments))
+    context.update(get_pagination_context(request, page.first_level_comments()))
     context.update(get_google_tracking_context(page.project))
 
     return render_to_response('content/page_embedded.html', context,
@@ -122,25 +122,32 @@ def edit_page(request, slug, page_slug):
             if 'show_preview' not in request.POST:
                 old_version.save()
                 page.save()
-                messages.success(request, _('%s updated!') % page.title)
+                if not request.is_ajax():
+                    messages.success(request, _('%s updated!') % page.title)
+                view_name = 'page_show'
                 if request.is_ajax():
-                    return http.HttpResponseRedirect(
-                        reverse('page_show_embedded',
-                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
-                else:
-                    return http.HttpResponseRedirect(reverse('page_show',
-                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
-        else:
+                    view_name = 'page_show_embedded'
+                return http.HttpResponseRedirect(reverse(view_name,
+                    kwargs={ 'slug': slug, 'page_slug': page_slug }))
+        elif not request.is_ajax():
             messages.error(request, _('Please correct errors below.'))
     else:
         form = form_cls(instance=page, initial={'minor_update': True})
-    return render_to_response('content/edit_page.html', {
+
+    template = 'content/edit_page.html'
+    if request.is_ajax():
+        template = 'content/edit_page_embedded.html'
+        
+    context = {
         'form': form,
         'page': page,
         'project': page.project,
         'preview': ('show_preview' in request.POST),
         'is_challenge': (page.project.category == Project.CHALLENGE),
-    }, context_instance=RequestContext(request))
+    }
+    
+    return render_to_response(template, context,
+        context_instance=RequestContext(request))
 
 
 @hide_deleted_projects
@@ -167,16 +174,14 @@ def create_page(request, slug):
             page.author = request.user.get_profile()
             if 'show_preview' not in request.POST:
                 page.save()
-                messages.success(request, _('Task created!'))
+                if not request.is_ajax():
+                    messages.success(request, _('Task created!'))
+                view_name = 'page_show'
                 if request.is_ajax():
-                    return http.HttpResponseRedirect(reverse(
-                        'page_show_embedded',
-                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
-                else:
-                    return http.HttpResponseRedirect(reverse('page_show',
-                    kwargs={'slug': slug, 'page_slug': page.slug,
-                }))
-        else:
+                    view_name = 'page_show_embedded'
+                return http.HttpResponseRedirect(reverse(view_name,
+                    kwargs={'slug': slug, 'page_slug': page.slug}))
+        elif not request.is_ajax():
             messages.error(request, _('Please correct errors below.'))
     else:
         form = form_cls(initial=initial)
@@ -188,11 +193,13 @@ def create_page(request, slug):
         'preview': ('show_preview' in request.POST),
         'is_challenge': (project.category == Project.CHALLENGE),
     }
-    
+
+    template = 'content/create_page.html'
     if request.is_ajax():
-        return render_to_response('content/create_page_embedded.html', context, context_instance=RequestContext(request))
-    else:
-        return render_to_response('content/create_page.html', context, context_instance=RequestContext(request))
+        template = 'content/create_page_embedded.html'
+
+    return render_to_response(template, context,
+        context_instance=RequestContext(request))
 
 
 @hide_deleted_projects
@@ -411,16 +418,27 @@ def _move_page(request, slug, page_slug, direction='up'):
     # Page goes up in the sidebar index (page.index decreases)."""
     project = get_object_or_404(Project, slug=slug)
     organizing = project.is_organizing(request.user)
+
+    # determine redirect url to use
+    redirect_to = project.get_absolute_url()
+    referer = request.META.get('HTTP_REFERER', None)
+    if referer:
+        try:
+            redirect_to = urlsplit(referer, 'http', False)[2]
+        except IndexError:
+            pass
+    
     if not organizing and project.category != Project.STUDY_GROUP:
         messages.error(request, _('You can not change tasks order.'))
-        return http.HttpResponseRedirect(project.get_absolute_url())
+        return http.HttpResponseRedirect(redirect_to)
+        
     content_pages = Page.objects.filter(project__pk=project.pk,
         listed=True, deleted=False).order_by('index')
 
     #find page we want to move
     index = [i for i,x in enumerate(content_pages) if x.slug == page_slug]
     if len(index) != 1 or direction=='up' and index[0] == 0 or direction=='down' and index[0] == len(content_pages)-1:
-        raise http.Http404
+        return http.HttpResponseRedirect(redirect_to)
 
     if direction=='up':
         prev_page = content_pages[index[0] - 1]
@@ -436,14 +454,9 @@ def _move_page(request, slug, page_slug, direction='up'):
     page.save()
     prev_page.save()
     
-    referer = request.META.get('HTTP_REFERER', None)
     if referer:
-        try:
-            redirect_to = urlsplit(referer, 'http', False)[2]
-            return http.HttpResponseRedirect(redirect_to)
-        except IndexError:
-            pass
-    
+        return http.HttpResponseRedirect(redirect_to)
+
     return http.HttpResponseRedirect(project.get_absolute_url() + '#tasks')
 
 @hide_deleted_projects
