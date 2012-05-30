@@ -1,0 +1,39 @@
+{% load l10n_tags %}
+{% load embed %}
+{% load project_tags %}
+{% load comment_threads %}
+{% load pagination_tags %}
+{% load content_tags %}
+
+<div id="id_task_{{page.slug}}" class="task_edit_view">
+    <div class="task_edit_actions">
+	<a id="id_task_edit_{{page.slug}}" class="task_edit_action" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
+	<a href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>
+	<a class="task_up" href="{% locale_url page_index_up slug=project.slug page_slug=page.slug%}">{{ _('Up') }}</a>
+	<a class="task_down" href="{% locale_url page_index_down slug=project.slug page_slug=page.slug%}">{{ _('Down') }}</a>
+    </div>
+    
+    {{page.title}} --
+    {{page.sub_header}}&nbsp;
+    <div id="task-body">
+	{{ page.content|embed|safe }}
+    </div>
+
+    <script type="text/javascript">
+    
+	$(document).ready( function(){
+	    $("#id_task_edit_{{page.slug}}").bind('click', function(e){
+		e.preventDefault();
+		container = $(this).closest('div.task_edit_view');		
+		$.ajax({
+		    url: $(this).attr('href'),
+		    success: function(data, textStatus, jqXHR) {
+			container.replaceWith(data);
+		    }
+		});
+	    });
+	});
+    </script>
+</div>
+
+

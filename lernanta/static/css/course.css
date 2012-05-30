@@ -1,0 +1,29 @@
+.task_edit_view {
+    margin: 2px;
+    padding: 5px;
+    border: 1px;
+    border-style: solid;
+    border-color: black;    
+}
+
+.task_edit_actions {
+    float: right;
+}
+
+.task_down {
+    float: right;
+    display: block;
+    text-indent: -9999em;
+    background-image: url("/static/images/arrows.png");
+    background-position: 20px 0;
+    width: 20px;
+}
+
+.task_up {
+    float: right;
+    display: block;
+    text-indent: -9999em;
+    background-image: url("/static/images/arrows.png");
+    background-position: 0 0;
+    width: 20px;
+}
