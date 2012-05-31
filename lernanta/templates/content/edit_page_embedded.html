@@ -1,7 +1,7 @@
 {% load l10n_tags %}
 {% load embed %}
 
-<div id="id_task_{{page.slug}}" class="task_edit_view">
+<div id="id_task_{{page.slug}}" class="task_view">
     <br />
     <fieldset>
     <form id="id_task_{{page.slug}}_edit_form" action="{% locale_url page_edit slug=page.project.slug page_slug=page.slug %}" method="post">
