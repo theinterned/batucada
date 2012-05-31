@@ -5,17 +5,16 @@
 {% load pagination_tags %}
 {% load content_tags %}
 
-<div id="id_task_{{page.slug}}" class="task_edit_view">
-    <div class="task_edit_actions">
-	<a id="id_task_edit_{{page.slug}}" class="task_edit_action" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
+<div id="id_task_{{page.slug}}" class="task_view">
+    <div class="task_actions">
+	<a id="id_task_edit_{{page.slug}}" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
 	<a href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>
 	<a class="task_up" href="{% locale_url page_index_up slug=project.slug page_slug=page.slug%}">{{ _('Up') }}</a>
 	<a class="task_down" href="{% locale_url page_index_down slug=project.slug page_slug=page.slug%}">{{ _('Down') }}</a>
     </div>
-    
-    {{page.title}} --
-    {{page.sub_header}}&nbsp;
-    <div id="task-body">
+    <h2>{{page.title}}</h2>
+    <h3>{{page.sub_header}}</h3>
+    <div class="task_body">
 	{{ page.content|embed|safe }}
     </div>
 
@@ -24,7 +23,7 @@
 	$(document).ready( function(){
 	    $("#id_task_edit_{{page.slug}}").bind('click', function(e){
 		e.preventDefault();
-		container = $(this).closest('div.task_edit_view');		
+		container = $("#id_task_{{page.slug}}");		
 		$.ajax({
 		    url: $(this).attr('href'),
 		    success: function(data, textStatus, jqXHR) {
