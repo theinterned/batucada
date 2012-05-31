@@ -1,13 +1,36 @@
-.task_edit_view {
-    margin: 2px;
-    padding: 5px;
-    border: 1px;
+.task_view {
+    margin: 0 10px 10px 0;
+    border: 3px;
     border-style: solid;
-    border-color: black;    
+    border-color: #AAA;
+    border-radius: 10px 10px 10px 10px;
 }
 
-.task_edit_actions {
+.task_view h2 {
+    background: -moz-linear-gradient(center top , #F9F9F9 0%, #F6F6F6 50%, #F2F2F2 51%, #EBEBEB 100%) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #D6D6D6;
+    border-radius: 7px 7px 0 0;
+    color: #777777;
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 1em;
+    padding: 18px 9px;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+
+.task_view h3 {
+    font-size: 14px;
+    padding: 0 9px;
+}
+
+.task_view .task_body{
+    padding: 0 9px;
+}
+
+.task_actions {
     float: right;
+    margin-bottom: 1em;
+    padding: 18px 9px 0 0;
 }
 
 .task_down {
@@ -26,4 +49,19 @@
     background-image: url("/static/images/arrows.png");
     background-position: 0 0;
     width: 20px;
+}
+
+#id_tasks_edit {
+    background-color: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 10px 10px 10px 10px;
+    line-height: 22px;
+    margin: auto;
+    padding-left: 10px;
+    width: 990px;
+}
+
+#id_tasks_edit .container {
+    padding: 13px 3px;
+    width: auto;
 }
