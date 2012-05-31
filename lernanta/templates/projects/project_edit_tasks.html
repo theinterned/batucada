@@ -56,9 +56,11 @@
 {% endblock %}
 
 {% block body %}
-<section class="modal">
+<section id="id_tasks_edit">
+  <div class="container">
   <article>
     <h1>{{ _('Edit tasks') }}</h1>
+    <br/>
     <div id="task_list">
         {% for task in tasks %}
             {% include "content/page_embedded.html" with page=task %}
@@ -68,6 +70,7 @@
     <a id="id_task_add_button" class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('Add Task') }}</a>
     
   </article>
+  </div>
 </section>
 {% endblock %}
 
