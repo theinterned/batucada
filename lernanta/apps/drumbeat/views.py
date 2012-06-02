@@ -21,6 +21,13 @@ from drumbeat.forms import AbuseForm
 log = logging.getLogger(__name__)
 
 
+def page_not_found(request):
+    """Render custom 404 page."""
+    d = dict(language=settings.LANGUAGE_CODE, domain="http://p2pu.org")
+    return render_to_response("404.html", d,
+                              context_instance=RequestContext(request))
+
+
 def server_error(request):
     """Make MEDIA_URL available to the 500 template."""
     t = loader.get_template('500.html')
