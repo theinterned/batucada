@@ -16,14 +16,15 @@ from l10n.urlresolvers import reverse
 from users.models import UserProfile
 from users.tasks import SendNotifications
 from drumbeat.forms import AbuseForm
-
+from django.contrib.sites.models import Site
 
 log = logging.getLogger(__name__)
 
 
 def page_not_found(request):
     """Render custom 404 page."""
-    d = dict(language=settings.LANGUAGE_CODE, domain="http://p2pu.org")
+    d = dict(language=settings.LANGUAGE_CODE,
+             domain=Site.objects.get_current())
     return render_to_response("404.html", d,
                               context_instance=RequestContext(request))
 
