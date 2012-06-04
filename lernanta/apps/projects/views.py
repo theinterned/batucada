@@ -646,7 +646,7 @@ def edit_participants_organizer_delete(request, slug, username):
     if len(organizers) == 1:
         messages.error(request, _('You cannot delete the only organizer'))
     elif request.method != 'POST':
-        http.Http404
+        raise http.Http404
     else:
         participation.left_on = datetime.datetime.now()
         participation.save()
@@ -1066,3 +1066,5 @@ def toggle_task_completion(request, slug, page_slug):
             context, context_instance=RequestContext(request)).strip()
         json = simplejson.dumps(data)
         return http.HttpResponse(json, mimetype="application/json")
+
+    raise http.Http404
