@@ -212,9 +212,23 @@ def create(request, category=None):
         context[tab] = True
     else:
         context['new_tab'] = True
-    return render_to_response('projects/project_edit_summary.html',
+    return render_to_response('projects/project_create_overview.html',
         context, context_instance=RequestContext(request))
 
+@hide_deleted_projects
+@login_required
+@organizer_required
+def create_tasks(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    pages = project.pages.filter(deleted=False,listed=True).order_by('index')
+
+    context = {
+        'project': project,
+        'tasks': pages,
+        'task_create_tab': True
+    }
+    return render_to_response('projects/project_create_tasks.html', context,
+        context_instance=RequestContext(request))
 
 @login_required
 def create_challenge(request):
