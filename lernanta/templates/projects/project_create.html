@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load l10n_tags %}
+{% load project_tags %}
+
+{% block title %}{{ _('Create') }}{% endblock %}
+
+{% block bodyid %}project_create{% endblock %}
+
+{% block breadcrumbs_title %}
+{% endblock %}
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% learn_default %}">{{ _('Learn') }}</a>
+{% endblock %}
+
+{% block body %}
+<section class="modal nav">
+  <article>
+    <h1>{{ _('Create') }}</h1>
+    <nav id="project-edit-nav" class="tabs">
+      <ul>
+        <li class="new {% if new_challenge_tab %}active{% endif %}"><a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}">
+          {{ _('Step 1: Overview') }}</a>
+        </li>
+        <li class="{% if task_create_tab %}active{% endif %}">
+          {% if project %}
+          <a href="{% locale_url projects_create_tasks slug=project.slug %}">
+          {% else %}
+          <a href="">
+          {% endif %}
+            {{ _('Step 2: Add Tasks') }}
+          </a>
+        </li>
+        <li class="import {% if import_tab %}active{% endif %}"><a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
+          {{ _('Step 3: Review and Publish') }}</a>
+        </li>
+      </ul>
+    </nav>
+    
+    {% block form %}{% endblock %}
+    
+  </article>
+</section>
+{% endblock %}
+
