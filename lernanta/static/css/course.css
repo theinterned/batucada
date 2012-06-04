@@ -61,6 +61,11 @@
     width: 990px;
 }
 
+.modal.nav #id_tasks_edit{
+    margin-left: 200px;
+    width: auto;
+}
+
 #id_tasks_edit .container {
     padding: 13px 3px;
     width: auto;
