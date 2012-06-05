@@ -26,7 +26,7 @@
           {{ form.title.errors }}
         </div>
       {% endif %}
-      {% if is_challenge %}
+      {% if form.sub_header %}
         <div class="field{% if form.sub_header.errors %} error{% endif %}">
           <label for="id_sub_header">{{ _('One sentence description') }}</label>
           <span class="hint block">{{ _('This description will be used as sub header below the task title.') }}</span>
@@ -58,7 +58,6 @@
             // TODO: remove hack to fix ckeditor!
             var ckeditor_text_area_id = $("#id_new_page_form").find('textarea').attr('id');
             $("#id_new_page_form").find('textarea').val(CKEDITOR.instances[ckeditor_text_area_id].getData());
-            alert($("#id_new_page_form").serialize());
             $.post(
                 $("#id_new_page_form").attr('action'),
                 $("#id_new_page_form").serialize(),
