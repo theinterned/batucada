@@ -13,6 +13,9 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[\w-]+)/create/tasks/$', 'projects.views.create_tasks',
         name='projects_create_tasks'),
 
+    url(r'^(?P<slug>[\w-]+)/create/review/$', 'projects.views.create_review',
+        name='projects_create_review'),
+
     url(r'^create/challenge/$', 'projects.views.create_challenge',
         name='projects_create_challenge'),
 

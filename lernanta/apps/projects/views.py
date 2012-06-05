@@ -189,7 +189,7 @@ def create(request, category=None):
             project.create()
             messages.success(request,
                 _('The %s has been created.') % project.kind.lower())
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            return http.HttpResponseRedirect(reverse('projects_create_tasks', kwargs={
                 'slug': project.slug,
             }))
         else:
@@ -224,11 +224,19 @@ def create_tasks(request, slug):
 
     context = {
         'project': project,
-        'tasks': pages,
-        'task_create_tab': True
+        'tasks': pages
     }
     return render_to_response('projects/project_create_tasks.html', context,
         context_instance=RequestContext(request))
+
+def create_review(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    context = {
+        'project': project
+    }
+    return render_to_response('projects/project_create_review.html', context,
+        context_instance=RequestContext(request))
+
 
 @login_required
 def create_challenge(request):
@@ -318,7 +326,7 @@ def clone(request):
             project.create()
             messages.success(request,
                 _('The %s has been cloned.') % project.kind.lower())
-            return http.HttpResponseRedirect(reverse('projects_show', kwargs={
+            return http.HttpResponseRedirect(reverse('projects_create_tasks', kwargs={
                 'slug': project.slug,
             }))
         else:
