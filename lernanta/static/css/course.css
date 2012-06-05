@@ -53,20 +53,33 @@
 
 #id_tasks_edit {
     background-color: #FFFFFF;
-    border: 1px solid #EEEEEE;
-    border-radius: 10px 10px 10px 10px;
     line-height: 22px;
     margin: auto;
     padding-left: 10px;
     width: 990px;
 }
 
-.modal.nav #id_tasks_edit{
+.modal.nav #id_tasks_edit {
     margin-left: 200px;
     width: auto;
+}
+
+.modal.nav fieldset {
+    margin-left: 5px;
 }
 
 #id_tasks_edit .container {
     padding: 13px 3px;
     width: auto;
 }
+
+.disabled {
+   pointer-events: none;
+   cursor: default;
+}
+
+.or-separator {
+    margin-left: 36px;
+    margin-bottom: 5px;
+}
+

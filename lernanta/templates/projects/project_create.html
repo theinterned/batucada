@@ -8,6 +8,10 @@
 
 {% block bodyid %}project_create{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css?v=1">
+{% endblock %}
+
 {% block breadcrumbs_title %}
 {% endblock %}
 {% block breadcrumbs %}
@@ -18,23 +22,35 @@
 {% block body %}
 <section class="modal nav">
   <article>
-    <h1>{{ _('Create') }}</h1>
+    <h1>{{ _('Create Course') }}</h1>
     <nav id="project-edit-nav" class="tabs">
       <ul>
-        <li class="new {% if new_challenge_tab %}active{% endif %}"><a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}">
-          {{ _('Step 1: Overview') }}</a>
+        <li class="new {% if new_challenge_tab %}active{% endif %}">
+          <a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}">
+            {{ _('Step 1: Create Course') }}</a>
+        </li>
+        <li class="or-separator">or</li>
+        <li class="new {% if new_challenge_tab %}active{% endif %}">
+          <a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}">
+            {{ _('Step 1: Clone Existing') }}</a>
+        </li>
+        <li class="or-separator">or</li>
+        <li class="new {% if new_challenge_tab %}active{% endif %}">
+          <a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}">
+            {{ _('Step 1: Import from old site') }}</a>
         </li>
         <li class="{% if task_create_tab %}active{% endif %}">
           {% if project %}
-          <a href="{% locale_url projects_create_tasks slug=project.slug %}">
+          <a href="{% locale_url projects_create_tasks slug=project.slug %}" class="disabled">
           {% else %}
-          <a href="">
+          <a href="" class="disabled">
           {% endif %}
             {{ _('Step 2: Add Tasks') }}
           </a>
         </li>
-        <li class="import {% if import_tab %}active{% endif %}"><a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
-          {{ _('Step 3: Review and Publish') }}</a>
+        <li class="import {% if import_tab %}active{% endif %}">
+          <a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}" class="disabled">
+            {{ _('Step 3: Review and Publish') }}</a>
         </li>
       </ul>
     </nav>

@@ -4,7 +4,7 @@
 {% load l10n_tags %}
 {% load project_tags %}
 
-{% block title %}{{ _('Create tasks') }}{% endblock %}
+{% block title %}{{ _('Create') }}{% endblock %}
 
 {% block bodyclasses %}project edit{% endblock %}
 
@@ -32,34 +32,23 @@
     <nav id="project-edit-nav" class="tabs">
       <ul>
         <li class="new">
-          <a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}" class="disabled">
-            {{ _('Step 1: Create Course') }}</a>
-        </li>
-        <li class="active">
-          <a href="" class="disabled">{{ _('Step 2: Add Tasks') }}</a>
+          <a href="" class="disabled">{{ _('Step 1: Create Course') }}</a>
         </li>
         <li>
-          <a href="{% locale_url projects_create_review slug=project.slug %}">
-            {{ _('Step 3: Review and Publish') }}</a>
+          <a href="{% locale_url projects_create_tasks slug=project.slug %}">{{ _('Step 2: Add Tasks') }}</a>
+        </li>
+        <li class="active">
+          <a href="" class="disabled">  {{ _('Step 3: Review and Publish') }}</a>
         </li>
       </ul>
     </nav>
     
     <section id="id_tasks_edit">
-      <div>
-        <h1>{{ _('Create tasks') }}</h1>
-        <br/>
-        <div id="task_list">
-            {% for task in tasks %}
-                {% include "content/page_embedded.html" with page=task %}
-            {% endfor %}
-        </div>
-
-        <a id="id_task_add_button" class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('Add Task') }}</a>
-        <a id="id_task_add_button" class="button" href="{% locale_url projects_create_review slug=project.slug %}">{{ _('Review') }}</a>
-      </div>
+        <h2>{{ _('Review your course') }}</h2>
+        <p>{{ _('Take a moment to review your course.') }}</p>
+        <p>{{ _('You may also choose to asks for some feedback on your course.') }}</p>
+        <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Finish') }}</a>
     </section>
-    
   </article>
 </section>
 {% endblock %}
