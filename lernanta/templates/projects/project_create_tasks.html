@@ -40,7 +40,8 @@
         </li>
         <li>
           <a href="{% locale_url projects_create_review slug=project.slug %}">
-            {{ _('Step 3: Review and Publish') }}</a>
+            {{ _('Step 3: Review and Publish') }}
+          </a>
         </li>
       </ul>
     </nav>
@@ -49,14 +50,26 @@
       <div>
         <h1>{{ _('Create tasks') }}</h1>
         <br/>
-        <div id="task_list">
-            {% for task in tasks %}
-                {% include "content/page_embedded.html" with page=task %}
+        <div id="task-list">
+            <ol>
+            {% for page in tasks %}
+                <li class="{% cycle 'odd' 'even' %}">
+                    <div class="task_actions">
+                        <a id="id-task-edit_{{page.slug}}" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
+                        <a href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>
+                        <a class="task-up" href="{% locale_url page_index_up slug=project.slug page_slug=page.slug%}">{{ _('Up') }}</a>
+                        <a class="task-down" href="{% locale_url page_index_down slug=project.slug page_slug=page.slug%}">{{ _('Down') }}</a>
+                    </div>
+                    <span class="task-number">{{ forloop.counter }}.</span>
+                    <span class="task-header">{{ page.title }}</span>
+                    <p class="task-subheader">{{ page.sub_header|default:"&nbsp;" }}</p>
+                </li>
             {% endfor %}
+            </ol>
         </div>
 
-        <a id="id_task_add_button" class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('Add Task') }}</a>
-        <a id="id_task_add_button" class="button" href="{% locale_url projects_create_review slug=project.slug %}">{{ _('Review') }}</a>
+        <a id="id-task-add-button" class="button" href="{% locale_url page_create slug=project.slug %}?next_url={{request.get_full_path}}">{{ _('Add Task') }}</a>
+        <a id="id-task-add-button" class="button" href="{% locale_url projects_create_review slug=project.slug %}">{{ _('Go to step 3') }}</a>
       </div>
     </section>
     
@@ -68,8 +81,8 @@
 <script type="text/javascript">
     var newTaskId = "";
     
-    $(document).ready( function(){
-        $("#id_task_add_button").bind('click', function(e){
+    /*$(document).ready( function(){
+        $("#id-task-add-button").bind('click', function(e){
             e.preventDefault();
             if (newTaskId != '' && $("#" + newTaskId).size() > 0) {
                 alert("please submit your changes first");
@@ -77,13 +90,13 @@
                 $.ajax({
                     url: $(this).attr('href'),
                     success: function(data, textStatus, jqXHR) {
-                       $("#task_list").append(data);
+                       $("#task-list").append(data);
                        newTaskId = $(data).attr('id');
                     }
                 });
             }
         });
-    });
+    });*/
 </script>
 {% endblock %}
 

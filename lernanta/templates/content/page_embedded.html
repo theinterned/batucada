@@ -7,21 +7,21 @@
 
 <div id="id_task_{{page.slug}}" class="task_view">
     <div class="task_actions">
-	<a id="id_task_edit_{{page.slug}}" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
+	<a id="id-task-edit-{{page.slug}}" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
 	<a href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>
-	<a class="task_up" href="{% locale_url page_index_up slug=project.slug page_slug=page.slug%}">{{ _('Up') }}</a>
-	<a class="task_down" href="{% locale_url page_index_down slug=project.slug page_slug=page.slug%}">{{ _('Down') }}</a>
+	<a class="task-up" href="{% locale_url page_index_up slug=project.slug page_slug=page.slug%}">{{ _('Up') }}</a>
+	<a class="task-down" href="{% locale_url page_index_down slug=project.slug page_slug=page.slug%}">{{ _('Down') }}</a>
     </div>
-    <h2>{{page.title}}</h2>
-    <h3>{{page.sub_header}}</h3>
-    <div class="task_body">
+    <span class="task-header">{{ page.title }}</span>
+    <p class="task-subheader">{{ page.sub_header|default:"&nbsp;" }}</p>
+    <!--div class="task_body">
 	{{ page.content|embed|safe }}
-    </div>
+    </div-->
 
     <script type="text/javascript">
     
 	$(document).ready( function(){
-	    $("#id_task_edit_{{page.slug}}").bind('click', function(e){
+	    $("#id-task-edit-{{page.slug}}").bind('click', function(e){
 		e.preventDefault();
 		container = $("#id_task_{{page.slug}}");		
 		$.ajax({
