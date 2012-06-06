@@ -159,7 +159,7 @@ def create(request, category=None):
                 project.category = category
             image_form = project_forms.ProjectImageForm(request.POST,
                 request.FILES, instance=project)
-            if category and image_form.is_valid():
+            if image_form.is_valid():
                 image_form.save()
             project.set_duration(form.cleaned_data['duration'] or 0)
             act = Activity(actor=user,
@@ -193,10 +193,7 @@ def create(request, category=None):
                 'slug': project.slug,
             }))
         else:
-            if category:
-                msg = _("Problem creating the %s") % category
-            else:
-                msg = _("Problem creating the study group, course, ...")
+            msg = _("Problem creating the course")
             messages.error(request, msg)
     else:
         form = project_forms.ProjectForm(category, initial={'test':True})
@@ -207,11 +204,6 @@ def create(request, category=None):
         'category': category,
         'is_challenge': (category == Project.CHALLENGE),
     }
-    if category:
-        tab = 'new_%s_tab' % ('_'.join(category.split()))
-        context[tab] = True
-    else:
-        context['new_tab'] = True
     return render_to_response('projects/project_create_overview.html',
         context, context_instance=RequestContext(request))
 

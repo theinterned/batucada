@@ -179,11 +179,16 @@ def create_page(request, slug):
                 view_name = 'page_show'
                 if request.is_ajax():
                     view_name = 'page_show_embedded'
-                return http.HttpResponseRedirect(reverse(view_name,
-                    kwargs={'slug': slug, 'page_slug': page.slug}))
+                if form.cleaned_data.get('next_url', None):
+                    return http.HttpResponseRedirect(form.cleaned_data.get('next_url'))
+                else:
+                    return http.HttpResponseRedirect(reverse(view_name,
+                        kwargs={'slug': slug, 'page_slug': page.slug}))
         elif not request.is_ajax():
             messages.error(request, _('Please correct errors below.'))
     else:
+        if request.GET.get('next_url', None):
+            initial['next_url'] = request.GET.get('next_url', None)
         form = form_cls(initial=initial)
 
     context = {
