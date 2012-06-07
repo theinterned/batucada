@@ -55,7 +55,7 @@
             {% for page in tasks %}
                 <li class="{% cycle 'odd' 'even' %}">
                     <div class="task_actions">
-                        <a id="id-task-edit_{{page.slug}}" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}" >{{ _('Edit') }}</a>
+                        <a id="id-task-edit_{{page.slug}}" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}?next_url={{request.get_full_path}}" >{{ _('Edit') }}</a>
                         <a href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>
                         <a class="task-up" href="{% locale_url page_index_up slug=project.slug page_slug=page.slug%}">{{ _('Up') }}</a>
                         <a class="task-down" href="{% locale_url page_index_down slug=project.slug page_slug=page.slug%}">{{ _('Down') }}</a>

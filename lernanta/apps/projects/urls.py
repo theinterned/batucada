@@ -128,9 +128,10 @@ urlpatterns = patterns('',
         'projects.views.edit_status',
         name='projects_edit_status'),
 
-    url(r'^(?P<slug>[\w-]+)/edit/tasks/$',
-        'projects.views.edit_tasks',
-        name='projects_edit_tasks'),
+    #TODO: remove
+    #url(r'^(?P<slug>[\w-]+)/edit/tasks/$',
+    #    'projects.views.edit_tasks',
+    #    name='projects_edit_tasks'),
 
     url(r'^(?P<slug>[\w-]+)/admin/metrics/$',
         'projects.views.admin_metrics',

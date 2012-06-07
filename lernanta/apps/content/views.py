@@ -122,22 +122,21 @@ def edit_page(request, slug, page_slug):
             if 'show_preview' not in request.POST:
                 old_version.save()
                 page.save()
-                if not request.is_ajax():
-                    messages.success(request, _('%s updated!') % page.title)
-                view_name = 'page_show'
-                if request.is_ajax():
-                    view_name = 'page_show_embedded'
-                return http.HttpResponseRedirect(reverse(view_name,
-                    kwargs={ 'slug': slug, 'page_slug': page_slug }))
+                messages.success(request, _('%s updated!') % page.title)
+                if form.cleaned_data.get('next_url', None):
+                    return http.HttpResponseRedirect(
+                        form.cleaned_data.get('next_url'))
+                else:
+                    return http.HttpResponseRedirect(reverse('page_show',
+                        kwargs={ 'slug': slug, 'page_slug': page_slug }))
         elif not request.is_ajax():
             messages.error(request, _('Please correct errors below.'))
     else:
-        form = form_cls(instance=page, initial={'minor_update': True})
-
-    template = 'content/edit_page.html'
-    if request.is_ajax():
-        template = 'content/edit_page_embedded.html'
-        
+        initial={'minor_update': True}
+        if request.GET.get('next_url', None):
+            initial['next_url'] = request.GET.get('next_url', None)
+        form = form_cls(instance=page, initial=initial)
+       
     context = {
         'form': form,
         'page': page,
@@ -146,7 +145,7 @@ def edit_page(request, slug, page_slug):
         'is_challenge': (page.project.category == Project.CHALLENGE),
     }
     
-    return render_to_response(template, context,
+    return render_to_response('content/edit_page.html', context,
         context_instance=RequestContext(request))
 
 
@@ -174,15 +173,12 @@ def create_page(request, slug):
             page.author = request.user.get_profile()
             if 'show_preview' not in request.POST:
                 page.save()
-                if not request.is_ajax():
-                    messages.success(request, _('Task created!'))
-                view_name = 'page_show'
-                if request.is_ajax():
-                    view_name = 'page_show_embedded'
+                messages.success(request, _('Task created!'))
                 if form.cleaned_data.get('next_url', None):
-                    return http.HttpResponseRedirect(form.cleaned_data.get('next_url'))
+                    return http.HttpResponseRedirect(
+                        form.cleaned_data.get('next_url'))
                 else:
-                    return http.HttpResponseRedirect(reverse(view_name,
+                    return http.HttpResponseRedirect(reverse('page_show',
                         kwargs={'slug': slug, 'page_slug': page.slug}))
         elif not request.is_ajax():
             messages.error(request, _('Please correct errors below.'))
