@@ -77,26 +77,3 @@
 </section>
 {% endblock %}
 
-{% block js %}
-<script type="text/javascript">
-    var newTaskId = "";
-    
-    /*$(document).ready( function(){
-        $("#id-task-add-button").bind('click', function(e){
-            e.preventDefault();
-            if (newTaskId != '' && $("#" + newTaskId).size() > 0) {
-                alert("please submit your changes first");
-            } else {
-                $.ajax({
-                    url: $(this).attr('href'),
-                    success: function(data, textStatus, jqXHR) {
-                       $("#task-list").append(data);
-                       newTaskId = $(data).attr('id');
-                    }
-                });
-            }
-        });
-    });*/
-</script>
-{% endblock %}
-
