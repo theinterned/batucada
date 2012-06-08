@@ -46,33 +46,16 @@
     <section id="id_tasks_edit">
         <h2>{{ _('Review your course') }}</h2>
         <p>{{ _('Take a moment to review your course.') }}</p>
+
+        <p>{{ _(' This is what your project will look like when it is listed') }}</p>
+        <span id="id-course-preview" class="card-list">
+            {% include "projects/_project_card.html" %}
+        </span>
+        
         <p>{{ _('You may also choose to asks for some feedback on your course.') }}</p>
         <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Finish') }}</a>
     </section>
   </article>
 </section>
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript">
-    var newTaskId = "";
-    
-    $(document).ready( function(){
-        $("#id_task_add_button").bind('click', function(e){
-            e.preventDefault();
-            if (newTaskId != '' && $("#" + newTaskId).size() > 0) {
-                alert("please submit your changes first");
-            } else {
-                $.ajax({
-                    url: $(this).attr('href'),
-                    success: function(data, textStatus, jqXHR) {
-                       $("#task_list").append(data);
-                       newTaskId = $(data).attr('id');
-                    }
-                });
-            }
-        });
-    });
-</script>
 {% endblock %}
 

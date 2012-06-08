@@ -230,9 +230,9 @@ def create_review(request, slug):
         context_instance=RequestContext(request))
 
 
-@login_required
-def create_challenge(request):
-    return create(request, Project.CHALLENGE)
+#@login_required
+#def create_challenge(request):
+#    return create(request, Project.CHALLENGE)
 
 
 @login_required
