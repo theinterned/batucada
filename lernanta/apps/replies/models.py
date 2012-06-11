@@ -10,7 +10,7 @@ from django.contrib.sites.models import Site
 from drumbeat.models import ModelBase
 from activity.schema import verbs, object_types
 from tracker import statsd
-from users.tasks import SendNotifications
+from notifications.models import send_notifications
 
 from richtext.models import RichTextField
 
@@ -80,8 +80,7 @@ class PageComment(ModelBase):
         for profile in recipients:
             if self.author != profile:
                 profiles.append(profile)
-        SendNotifications.apply_async((profiles, subject_template, body_template,
-            context))
+        send_notifications(profiles, subject_template, body_template, context)
 
 
 ###########

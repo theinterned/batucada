@@ -10,7 +10,7 @@ from django.contrib.contenttypes import generic
 from activity.models import Activity, register_filter
 from activity.schema import object_types, verbs
 from drumbeat.models import ModelBase
-from users.tasks import SendNotifications
+from notifications.models import send_notifications
 from richtext.models import RichTextField
 
 
@@ -64,8 +64,7 @@ class Status(ModelBase):
                 unsubscribed = recipient.no_participants_wall_updates
             if self.author != profile and not unsubscribed:
                 profiles.append(profile)
-        SendNotifications.apply_async((profiles, subject_template, body_template,
-            context))
+        send_notifications(profiles, subject_template, body_template, context)
 
     @staticmethod
     def filter_activities(activities):
