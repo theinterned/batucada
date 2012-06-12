@@ -37,6 +37,7 @@
           <a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}" class="disabled">
             {{ _('Step 1: Create Course') }}</a>
         </li>
+        {% if not project %}
         <li class="or-separator">or</li>
         <li class="new">
           <a href="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif%}">
@@ -53,11 +54,27 @@
         <li>
           <a href="" class="disabled">{{ _('Step 3: Review and Publish') }}</a>
         </li>
+        {% else %}
+        <li>
+          <a href="{% locale_url projects_create_tasks slug=project.slug %}">{{ _('Step 2: Add Tasks') }}</a>
+        </li>
+        <li>
+          <a href="{% locale_url projects_create_review slug=project.slug %}">{{ _('Step 3: Review and Publish') }}</a>
+        </li>        
+        {% endif %}
+
       </ul>
     </nav>
     
     <fieldset id="project_edit_summary" class="project edit summary tabpane">
-        <form id="project-edit-summary-form" action="{% if is_challenge %}{% locale_url projects_create_challenge %}{% else %}{% locale_url projects_create %}{% endif %}{% if school %}?school={{ school.slug }}{% endif %}" method="post" enctype="multipart/form-data">
+        {% if project %}
+        <form id="project-edit-summary-form" action="{% locale_url projects_create_overview slug=project.slug %}" method="post" enctype="multipart/form-data">
+        {% else %}
+        <form id="project-edit-summary-form" action="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+          <div class="bubble">
+            <p>{% blocktrans with challenge_url='https://p2pu.org/groups/make-a-challenge/'%}Before you start creating your challenge, we have a <a href="{{ challenge_url }}" target="_blank">course</a> that can help you with the process!{% endblocktrans%}</p>
+          </div>
           {% csrf_token %}
           <div class="field{% if form.name.errors %} error{% endif %}">
             <label for="id_test">
@@ -79,7 +96,7 @@
           </div>
 
           <div class="field duration {% if form.duration.errors %} error{% endif %} ">
-              <label for="id_duration">{{ _('How many hours will this challenge take to complete?') }} {{ form.duration }}</label>
+              <label for="id_duration">{{ _('How many hours will this course take to complete?') }} {{ form.duration }}</label>
               {{ form.duration.errors }}
           </div>
           
@@ -108,7 +125,7 @@
               {{ form.category }}
               {{ form.category.errors }}
             </div>
-            <span class="hint block">{{ _('Or make up your own term.') }}</span>
+            <!--span class="hint block">{{ _('Or make up your own term.') }}</span>
             <div class="field term{% if form.other.errors %} error{% endif %}">
               <label for="id_other">{{ _('Term') }}</label>
               {{ form.other }}
@@ -117,7 +134,7 @@
               <label for="id_other_description">{{ _('Description') }}</label>
               {{ form.other_description }}
               {{ form.other_description.errors }}
-            </div>
+            </div-->
           {% endif %}
 
           <label for="id_image">{{ _('Cover Image') }}</label>
@@ -125,7 +142,7 @@
             <!-- Note the "Browse..." button comes from your OS so it will
             only appear in another language if you configure your PC for that language.
             -->
-            <small class="hint block">{{ _('File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 243x150 pixels') }}</small>
+            <small class="hint block">{{ _('Choose an image to be displayed on the front page of your course.<br/>File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 243x150 pixels') }}</small>
             <input type="file" name="image" id="id_image"/>
             {{ image_form.image.errors }}
           </div>
@@ -133,7 +150,7 @@
           <br><br>
           <p class="buttons">
             <a class="button" href="{% learn_default %}">{{ _('Cancel') }}</a>
-            <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+            <button type="submit" value="{{ _('Create') }}">{{ _('Go to step 2') }}</button>
           </p>
         </form>
     </fieldset>

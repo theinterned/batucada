@@ -207,6 +207,33 @@ def create(request, category=None):
     return render_to_response('projects/project_create_overview.html',
         context, context_instance=RequestContext(request))
 
+
+@hide_deleted_projects
+@login_required
+@organizer_required
+def create_overview(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    is_challenge = (project.category == project.CHALLENGE)
+    if request.method == 'POST':
+        form = project_forms.ProjectForm(project.category, request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request,
+                _('%s updated!') % project.kind.capitalize())
+            return http.HttpResponseRedirect(
+                reverse('projects_create_tasks', kwargs=dict(slug=project.slug)))
+    else:
+        form = project_forms.ProjectForm(project.category, instance=project)
+    metric_permissions = project.get_metrics_permissions(request.user)
+    return render_to_response('projects/project_create_overview.html', {
+        'form': form,
+        'project': project,
+        'school': project.school,
+        'summary_tab': True,
+        'can_view_metric_overview': metric_permissions[0],
+        'is_challenge': is_challenge,
+    }, context_instance=RequestContext(request))
+
 @hide_deleted_projects
 @login_required
 @organizer_required
