@@ -32,7 +32,7 @@
     <nav id="project-edit-nav" class="tabs">
       <ul>
         <li class="new">
-          <a href="{% locale_url projects_create_challenge %}{% if school %}?school={{ school.slug }}{% endif%}" class="disabled">
+          <a href="{% locale_url projects_create_overview slug=project.slug %}">
             {{ _('Step 1: Create Course') }}</a>
         </li>
         <li class="active">

@@ -32,7 +32,7 @@
     <nav id="project-edit-nav" class="tabs">
       <ul>
         <li class="new">
-          <a href="" class="disabled">{{ _('Step 1: Create Course') }}</a>
+          <a href="{% locale_url projects_create_overview slug=project.slug %}">{{ _('Step 1: Create Course') }}</a>
         </li>
         <li>
           <a href="{% locale_url projects_create_tasks slug=project.slug %}">{{ _('Step 2: Add Tasks') }}</a>
@@ -45,14 +45,17 @@
     
     <section id="id_tasks_edit">
         <h2>{{ _('Review your course') }}</h2>
-        <p>{{ _('Take a moment to review your course.') }}</p>
 
-        <p>{{ _(' This is what your project will look like when it is listed') }}</p>
+        <p>{{ _('This is what your project will look like to the world when it is published. Take a second to double check your course name, tagline, image and tags.') }}</p>
         <span id="id-course-preview" class="card-list">
             {% include "projects/_project_card.html" %}
         </span>
         
-        <p>{{ _('You may also choose to asks for some feedback on your course.') }}</p>
+        <p>{{ _('We can help you make it better. Email your course to ') }}<a href="mailto:p2pu-community@googlegroups.com">p2pu-community@googlegroups.com</a>{{ _(' and we will give feedback!') }}</p>
+
+        <p>{% blocktrans with challenge_url='https://p2pu.org/groups/make-a-challenge/'%}You may also wish to add a badge to your challenge! For more information on badges and how to add them to your challenge, see <a href="{{ challenge_url }}" target="_blank">this course</a>!{% endblocktrans%}</p>
+
+        <p>{{ _('Once you hit the finish button, you will be taken to your course. You can still make changes to your course and add and update the tasks associated with your course.') }}</p>
         <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Finish') }}</a>
     </section>
   </article>

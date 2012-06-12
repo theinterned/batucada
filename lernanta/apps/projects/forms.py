@@ -39,7 +39,7 @@ class ProjectForm(forms.ModelForm):
             self.fields['category'].required = False
         
         self.fields['name'].widget.attrs.update(
-            {'placeholder': _('Write a catchy title, keep it short and sweet')})
+            {'placeholder': _('Write a catchy title, keep it short and sweet.')})
         self.fields['short_description'].widget.attrs.update(
             {'placeholder': _('e.g. Learn to write HTML by hand, literally.')})
         self.fields['long_description'].widget.attrs.update(
@@ -48,7 +48,7 @@ class ProjectForm(forms.ModelForm):
                               "How are they going to be doing it? <br>" \
                               "Why are they doing it?")})
         self.fields['tags'].widget.attrs.update(
-            {'placeholder': _('What will your peers be able to do upon completion of this challenge? Separate with commas')})
+            {'placeholder': _('What will your peers be able to do upon completion of this course? Separate with commas.')})
 
     class Meta:
         model = Project
