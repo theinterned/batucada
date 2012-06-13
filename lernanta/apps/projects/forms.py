@@ -48,7 +48,7 @@ class ProjectForm(forms.ModelForm):
                               "How are they going to be doing it? <br>" \
                               "Why are they doing it?")})
         self.fields['tags'].widget.attrs.update(
-            {'placeholder': _('What will your peers be able to do upon completion of this course? Separate with commas.')})
+            {'placeholder': _('Tag your course so folks can find it. What will your audience be looking for? Separate with commas.')})
 
     class Meta:
         model = Project

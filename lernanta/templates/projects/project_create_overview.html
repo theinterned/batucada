@@ -73,15 +73,15 @@
         <form id="project-edit-summary-form" action="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif %}" method="post" enctype="multipart/form-data">
         {% endif %}
           <div class="bubble">
-            <p>{% blocktrans with challenge_url='https://p2pu.org/groups/make-a-challenge/'%}Before you start creating your challenge, we have a <a href="{{ challenge_url }}" target="_blank">course</a> that can help you with the process!{% endblocktrans%}</p>
+            <p>{% blocktrans with challenge_url='https://p2pu.org/groups/make-a-challenge/'%}Looking for advice on great course design? We have a <a href="{{ challenge_url }}" target="_blank">course</a> that can help you with the process and articles on our <a href="http://help.p2pu.org/kb" >help desk</a>.{% endblocktrans%}</p>
           </div>
           {% csrf_token %}
           <div class="field{% if form.name.errors %} error{% endif %}">
             <label for="id_test">
                 {{ form.test }}
-                {{ _('This is a test course') }}
+                {{ _('Just doing a test run? Check here to create a test course.') }}
             </label>
-            <span class="hint block">{{ _('Please check this if you are just testing. Your course will not generate updates or notification emails for other users.') }}</span>
+            <!--span class="hint block">{{ _('Please check this if you are just testing. Your course will not generate updates or notification emails for other users.') }}</span-->
             {{ form.test.errors }}
           </div>
           <div class="field{% if form.name.errors %} error{% endif %}">
@@ -113,7 +113,7 @@
           </div>
 
           <div class="field{% if form.tags.errors %} error{% endif %}">
-            <label for="id_tags">{{ _('Skills') }}</label>
+            <label for="id_tags">{{ _('Tags') }}</label>
             {{ form.tags }}
             {{ form.tags.errors }}
           </div>
@@ -142,7 +142,7 @@
             <!-- Note the "Browse..." button comes from your OS so it will
             only appear in another language if you configure your PC for that language.
             -->
-            <small class="hint block">{{ _('Choose an image to be displayed on the front page of your course.<br/>File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: 243x150 pixels') }}</small>
+            <small class="hint block">{{ _('Your cover image is the public face of your course - choose it wisely! Select and upload an image.<br/>We only support JPG, GIF and PNG images<br/>The image should measure 243x150 pixels<br/>The maximum size is 700k') }}</small>
             <input type="file" name="image" id="id_image"/>
             {{ image_form.image.errors }}
           </div>
