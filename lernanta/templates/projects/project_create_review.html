@@ -50,12 +50,13 @@
         <span id="id-course-preview" class="card-list">
             {% include "projects/_project_card.html" %}
         </span>
-        
-        <p>{{ _('We can help you make it better. Email your course to ') }}<a href="mailto:p2pu-community@googlegroups.com">p2pu-community@googlegroups.com</a>{{ _(' and we will give feedback!') }}</p>
 
-        <p>{% blocktrans with challenge_url='https://p2pu.org/groups/make-a-challenge/'%}You may also wish to add a badge to your challenge! For more information on badges and how to add them to your challenge, see <a href="{{ challenge_url }}" target="_blank">this course</a>!{% endblocktrans%}</p>
+        <p>{% blocktrans %}Join the <a href="https://p2pu.org/groups/make-a-challenge/">P2PU Course Design Group</a> to get feedback on your course!{% endblocktrans %}</p>
+
+        <p>{% blocktrans %}You may also wish to add a badge to your challenge! For more information on badges and how to add them to your challenge, see <a href="https://p2pu.org/groups/how-do-i-make-a-badge/">this</a> course!{% endblocktrans %}</p>
 
         <p>{{ _('Once you hit the finish button, you will be taken to your course. You can still make changes to your course and add and update the tasks associated with your course.') }}</p>
+        
         <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Finish') }}</a>
     </section>
   </article>
