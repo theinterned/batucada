@@ -38,16 +38,19 @@
             {{ _('Step 1: Create Course') }}</a>
         </li>
         {% if not project %}
-        <li class="or-separator">or</li>
-        <li class="new">
-          <a href="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif%}">
-            {{ _('Step 1: Clone Existing') }}</a>
-        </li>
-        <li class="or-separator">or</li>
-        <li class="new">
-          <a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
-            {{ _('Step 1: Import from old site') }}</a>
-        </li>
+        <a id="project-create-advanced-toggle" href="">advanced</a>
+        <span id="project-create-advanced">
+          <ul>
+            <li class="new">
+              <a href="{% locale_url projects_clone %}{% if school %}?school={{ school.slug }}{% endif%}">
+                {{ _('Clone Existing') }}</a>
+            </li>
+            <li class="new">
+              <a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
+                {{ _('Import from old site') }}</a>
+            </li>
+          </ul>
+        </span>
         <li>
           <a href="" class="disabled">{{ _('Step 2: Add Tasks') }}</a>
         </li>
@@ -142,7 +145,7 @@
             <!-- Note the "Browse..." button comes from your OS so it will
             only appear in another language if you configure your PC for that language.
             -->
-            <small class="hint block">{{ _('Your cover image is the public face of your course - choose it wisely! Select and upload an image.<br/>We only support JPG, GIF and PNG images<br/>The image should measure 243x150 pixels<br/>The maximum size is 700k') }}</small>
+            <span class="hint block">{{ _('Your cover image is the public face of your course - choose it wisely! Select and upload an image.<br/>We only support JPG, GIF and PNG images<br/>The image should measure 243x150 pixels<br/>The maximum size is 700k') }}</span>
             <input type="file" name="image" id="id_image"/>
             {{ image_form.image.errors }}
           </div>
@@ -167,6 +170,14 @@
                     response(data);
                 });
             }
+    });
+
+    $(document).ready( function(){
+        $('#project-create-advanced-toggle').bind('click', function(e){
+            e.preventDefault();
+            $('#project-create-advanced-toggle').hide();
+            $('#project-create-advanced').show().animate({opacity: 1.0}, 500 );
+        });
     });
   </script>
 {% endblock %}

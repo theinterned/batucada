@@ -37,16 +37,16 @@
           <a href="{% locale_url projects_create %}{% if school %}?school={{ school.slug }}{% endif%}">
             {{ _('Step 1: Create Course') }}</a>
         </li>
-        <li class="or-separator">or</li>
-        <li class="clone active">
-          <a href="">
-            {{ _('Step 1: Clone Existing') }}</a>
-        </li>
-        <li class="or-separator">or</li>
-        <li class="import">
-          <a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
-            {{ _('Step 1: Import from old site') }}</a>
-        </li>
+        <ul>
+          <li class="clone active">
+            <a href="">
+              {{ _('Clone Existing') }}</a>
+          </li>
+          <li class="import">
+            <a href="{% locale_url projects_import %}{% if school %}?school={{ school.slug }}{% endif%}">
+              {{ _('Import from old site') }}</a>
+          </li>
+        </ul>
         <li>
           <a href="" class="disabled">{{ _('Step 2: Update Tasks') }}</a>
         </li>
