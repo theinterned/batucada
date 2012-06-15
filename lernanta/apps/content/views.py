@@ -67,19 +67,6 @@ def show_page(request, slug, page_slug):
     return render_to_response('content/page.html', context,
             context_instance=RequestContext(request))
 
-@hide_deleted_projects
-def show_page_embedded(request, slug, page_slug):
-    page = get_object_or_404(Page, project__slug=slug, slug=page_slug)
-    context = {
-        'page': page,
-        'project': page.project,
-    }
-    context.update(get_pagination_context(request, page.first_level_comments()))
-    context.update(get_google_tracking_context(page.project))
-
-    return render_to_response('content/page_embedded.html', context,
-            context_instance=RequestContext(request))
-
 
 @hide_deleted_projects
 @login_required
@@ -129,7 +116,7 @@ def edit_page(request, slug, page_slug):
                 else:
                     return http.HttpResponseRedirect(reverse('page_show',
                         kwargs={ 'slug': slug, 'page_slug': page_slug }))
-        elif not request.is_ajax():
+        else:
             messages.error(request, _('Please correct errors below.'))
     else:
         initial={'minor_update': True}
@@ -180,7 +167,7 @@ def create_page(request, slug):
                 else:
                     return http.HttpResponseRedirect(reverse('page_show',
                         kwargs={'slug': slug, 'page_slug': page.slug}))
-        elif not request.is_ajax():
+        else:
             messages.error(request, _('Please correct errors below.'))
     else:
         if request.GET.get('next_url', None):
@@ -194,11 +181,8 @@ def create_page(request, slug):
         'preview': ('show_preview' in request.POST),
         'is_challenge': (project.category == Project.CHALLENGE),
     }
-
     template = 'content/create_page.html'
-    if request.is_ajax():
-        template = 'content/create_page_embedded.html'
-
+    
     return render_to_response(template, context,
         context_instance=RequestContext(request))
 
