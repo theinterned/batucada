@@ -521,7 +521,7 @@ def post_save_project(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     is_project = isinstance(instance, Project)
-    if created and is_project:
+    if created and is_project and not instance.test:
         statsd.Statsd.increment('groups')
 
 
