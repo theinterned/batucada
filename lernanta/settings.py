@@ -112,7 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'maintenancemode.middleware.MaintenanceModeMiddleware',
-    'commonware.middleware.HidePasswordOnException',
+    'commonware.middleware.ScrubRequestOnException',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
@@ -246,7 +246,7 @@ CKEDITOR_FILE_UPLOAD_EXTENSIONS = CKEDITOR_IMAGE_UPLOAD_EXTENSIONS + ['.pdf',
     '.avi','.rm','.mp3','.mp4','.wav','.aiff','.midi','.m4p']
 
 # Where the default image for sending to Gravatar
-DEFAULT_PROFILE_IMAGE = 'http://p2pu.org/static/images/member-missing.png'
+DEFAULT_PROFILE_IMAGE = 'https://p2pu.org/static/images/member-missing.png'
 
 # When set to True, if the request URL does not match any
 # of the patterns in the URLconf and it doesn't end in a slash,
