@@ -10,8 +10,6 @@ urlpatterns = patterns('content.views',
       name='page_index_down'),
       
   url(r'^(?P<page_slug>[\w-]+)/$', 'show_page', name='page_show'),
-  url(r'^embedded/(?P<page_slug>[\w-]+)/$', 'show_page_embedded',
-      name='page_show_embedded'),
       
   url(r'^(?P<page_slug>[\w-]+)/edit/$', 'edit_page', name='page_edit'),
   url(r'^(?P<page_slug>[\w-]+)/delete/$', 'delete_page', name='page_delete'),

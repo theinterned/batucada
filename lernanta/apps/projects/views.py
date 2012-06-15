@@ -162,6 +162,7 @@ def create(request, category=None):
             if image_form.is_valid():
                 image_form.save()
             project.set_duration(form.cleaned_data['duration'] or 0)
+            #CS - too much logic in view
             act = Activity(actor=user,
                 verb=verbs['post'],
                 scope_object=project,
@@ -189,9 +190,8 @@ def create(request, category=None):
             project.create()
             messages.success(request,
                 _('The %s has been created.') % project.kind.lower())
-            return http.HttpResponseRedirect(reverse('projects_create_tasks', kwargs={
-                'slug': project.slug,
-            }))
+            return http.HttpResponseRedirect(reverse('projects_create_tasks',
+                kwargs={'slug': project.slug,}))
         else:
             msg = _("Problem creating the course")
             messages.error(request, msg)
@@ -215,13 +215,15 @@ def create_overview(request, slug):
     project = get_object_or_404(Project, slug=slug)
     is_challenge = (project.category == project.CHALLENGE)
     if request.method == 'POST':
-        form = project_forms.ProjectForm(project.category, request.POST, instance=project)
+        form = project_forms.ProjectForm(project.category, request.POST,
+            instance=project)
         if form.is_valid():
             form.save()
             messages.success(request,
                 _('%s updated!') % project.kind.capitalize())
             return http.HttpResponseRedirect(
-                reverse('projects_create_tasks', kwargs=dict(slug=project.slug)))
+                reverse('projects_create_tasks',
+                    kwargs=dict(slug=project.slug)))
     else:
         form = project_forms.ProjectForm(project.category, instance=project)
     metric_permissions = project.get_metrics_permissions(request.user)
@@ -234,19 +236,20 @@ def create_overview(request, slug):
         'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
+
 @hide_deleted_projects
 @login_required
 @organizer_required
 def create_tasks(request, slug):
     project = get_object_or_404(Project, slug=slug)
     pages = project.pages.filter(deleted=False,listed=True).order_by('index')
-
     context = {
         'project': project,
         'tasks': pages
     }
     return render_to_response('projects/project_create_tasks.html', context,
         context_instance=RequestContext(request))
+
 
 def create_review(request, slug):
     project = get_object_or_404(Project, slug=slug)
@@ -255,11 +258,6 @@ def create_review(request, slug):
     }
     return render_to_response('projects/project_create_review.html', context,
         context_instance=RequestContext(request))
-
-
-#@login_required
-#def create_challenge(request):
-#    return create(request, Project.CHALLENGE)
 
 
 @login_required
@@ -299,6 +297,7 @@ def clone(request):
         form = project_forms.CloneProjectForm(request.POST)
         if form.is_valid():
             base_project = form.cleaned_data['project']
+            #CS - too much logic in view
             project = Project(name=base_project.name,
                 category=base_project.category,
                 other=base_project.other,
@@ -377,6 +376,7 @@ def import_from_old_site(request):
         form = project_forms.ImportProjectForm(request.POST)
         if form.is_valid():
             course = form.cleaned_data['course']
+            #CS - too much logic in view
             project = Project(name=course['name'], kind=course['kind'],
                 short_description=course['short_description'],
                 long_description=course['long_description'],
@@ -816,21 +816,6 @@ def edit_status(request, slug):
         'can_view_metric_overview': metric_permissions[0],
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
-
-
-@hide_deleted_projects
-@login_required
-@organizer_required
-def edit_tasks(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    pages = project.pages.filter(deleted=False,listed=True).order_by('index')
-
-    context = {
-        'project': project,
-        'tasks': pages,
-    }
-    return render_to_response('projects/project_edit_tasks.html', context,
-        context_instance=RequestContext(request))
 
 
 @hide_deleted_projects

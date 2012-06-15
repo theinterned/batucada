@@ -19,9 +19,6 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[\w-]+)/create/review/$', 'projects.views.create_review',
         name='projects_create_review'),
 
-#    url(r'^create/challenge/$', 'projects.views.create_challenge',
-#        name='projects_create_challenge'),
-
     url(r'^create/matching_kinds/$',
         'projects.views.matching_kinds',
         name='matching_kinds'),
@@ -130,11 +127,6 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[\w-]+)/edit/status/$',
         'projects.views.edit_status',
         name='projects_edit_status'),
-
-    #TODO: remove
-    #url(r'^(?P<slug>[\w-]+)/edit/tasks/$',
-    #    'projects.views.edit_tasks',
-    #    name='projects_edit_tasks'),
 
     url(r'^(?P<slug>[\w-]+)/admin/metrics/$',
         'projects.views.admin_metrics',
