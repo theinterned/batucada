@@ -55,7 +55,9 @@
 
         <p>{% blocktrans %}You may also wish to add a badge to your challenge! For more information on badges and how to add them to your challenge, see <a href="https://p2pu.org/groups/how-do-i-make-a-badge/">this</a> course!{% endblocktrans %}</p>
 
-        <p>{{ _('Once you hit the finish button, you will be taken to your course. You can still make changes to your course and add and update the tasks associated with your course.') }}</p>
+        <p>{{ _("Once you hit the 'Finish' button, you will be taken to your course. You can still make changes to your course and add and update the tasks associated with your course.") }}</p>
+
+        <p>{{ _("Your course will remain a draft until you uncheck the 'Under Development' checkbox in the admin interface of your course.") }}</p>
         
         <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Finish') }}</a>
     </section>
