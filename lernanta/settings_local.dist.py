@@ -158,7 +158,7 @@ MOZBADGES = {
 
 # Metrics
 STATISTICS_CSV_DOWNLOADERS = ('kfasimpaur',)
-STATISTICS_ENABLED_SCHOOLS = ('school-of-ed-pilot',)
+
 BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
     'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
     'Speedy Spider', 'DotBot']

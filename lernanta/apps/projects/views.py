@@ -232,7 +232,7 @@ def create_overview(request, slug):
         'project': project,
         'school': project.school,
         'summary_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
         'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
@@ -465,7 +465,7 @@ def edit(request, slug):
         'project': project,
         'school': project.school,
         'summary_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
         'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
@@ -513,7 +513,7 @@ def edit_image(request, slug):
         'project': project,
         'form': form,
         'image_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -546,7 +546,7 @@ def edit_links(request, slug):
         'form': form,
         'links': links,
         'links_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
     }, context_instance=RequestContext(request))
 
 
@@ -581,7 +581,7 @@ def edit_links_edit(request, slug, link):
         'form': form,
         'link': link,
         'links_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
     }, context_instance=RequestContext(request))
 
 
@@ -633,7 +633,7 @@ def edit_participants(request, slug):
         'form': form,
         'participations': project.participants().order_by('joined_on'),
         'participants_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -740,7 +740,7 @@ def edit_next_steps(request, slug):
         'form': form,
         'next_steps': project.next_projects.all(),
         'next_steps_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -813,7 +813,7 @@ def edit_status(request, slug):
         'form': form,
         'project': project,
         'status_tab': True,
-        'can_view_metric_overview': metric_permissions[0],
+        'can_view_metric_overview': metric_permissions,
         'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
 
@@ -828,11 +828,12 @@ def admin_metrics(request, slug):
     """
     project = get_object_or_404(Project, slug=slug)
     metric_permissions = project.get_metrics_permissions(request.user)
+    metric_csv_permissions = project.get_metric_csv_permission(request.user)
 
     return render_to_response('projects/project_admin_metrics.html', {
             'project': project,
-            'can_view_metric_overview': metric_permissions[0],
-            'can_view_metric_detail': metric_permissions[1],
+            'can_view_metric_overview': metric_permissions,
+            'can_view_metric_detail': metric_csv_permissions,
             'metrics_tab': True,
             'is_challenge': (project.category == project.CHALLENGE),
     }, context_instance=RequestContext(request))
