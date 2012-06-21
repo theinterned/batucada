@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes.models import ContentType
+from django.views.decorators.csrf import csrf_exempt
 
 from l10n.urlresolvers import reverse
 from drumbeat import messages
@@ -201,6 +202,7 @@ def delete_restore_comment(request, comment_id):
         }, context_instance=RequestContext(request))
 
 
+@csrf_exempt
 def email_reply(request):
     reply_token = ''
     reply_content = ''
@@ -215,4 +217,5 @@ def email_reply(request):
     # determine from user
 
     # get reply content
-    # post reply 
+    # post reply
+    return http.HttpResponse()
