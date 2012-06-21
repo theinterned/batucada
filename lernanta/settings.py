@@ -218,6 +218,7 @@ CACHE_COUNT_TIMEOUT = 60
 # Email goes to the console by default.  s/console/smtp/ for regular delivery
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
+REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
 
 CELERY_RESULT_BACKEND = "amqp"
 

@@ -1,3 +1,5 @@
+import logging
+
 from django import http
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -11,6 +13,7 @@ from users.decorators import login_required
 from replies.models import PageComment
 from replies.forms import CommentForm
 
+log = logging.getLogger(__name__)
 
 def show_comment(request, comment_id):
     comment = get_object_or_404(PageComment, id=comment_id)
@@ -196,3 +199,20 @@ def delete_restore_comment(request, comment_id):
             'page_object': comment.page_object,
             'scope_object': comment.scope_object,
         }, context_instance=RequestContext(request))
+
+
+def email_reply(request):
+    reply_token = ''
+    reply_content = ''
+
+    log.debug(request.POST)
+
+    if not request.method == 'POST':
+        raise http.Http404
+
+    # get reply token
+    # determine if this is a reply to anoter reply, status, activity
+    # determine from user
+
+    # get reply content
+    # post reply 
