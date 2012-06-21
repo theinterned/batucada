@@ -11,6 +11,10 @@ def send_notifications(user_profiles, subject_template, body_template,
     body_template - the template to use for the body
     template_context - the context to use when rendering the template
     reply_token - used to generate reply_to address reply+reply_token@from.org
+
+    If the reply_token is None, it is assumed that the notification cannot
+    be replied to
     """
-    args = (user_profiles, subject_template, body_template, template_context)
+    args = (user_profiles, subject_template, body_template, template_context,
+        reply_token)
     SendNotifications.apply_async(args)
