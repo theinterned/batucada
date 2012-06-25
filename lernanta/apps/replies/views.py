@@ -55,6 +55,7 @@ def reply_comment(request, comment_id):
             comment.abs_reply_to = reply_to.abs_reply_to or reply_to
             if 'show_preview' not in request.POST:
                 comment.save()
+                comment.send_comment_notification()
                 messages.success(request, _('Comment posted!'))
                 return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
@@ -212,6 +213,9 @@ def email_reply(request):
     if not request.method == 'POST':
         raise http.Http404
 
+    to_email = request.POST.get('to')
+    from_email = request.POST.get('from')
+    token = to_email[to_email.index('+')+1:to_email.index('@')]
     # get reply token
     # determine if this is a reply to anoter reply, status, activity
     # determine from user
