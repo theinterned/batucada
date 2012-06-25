@@ -417,26 +417,31 @@ class Project(ModelBase):
             return Project.objects.none()
 
     @classmethod
-    def get_projects_excluded_from_listing(cls): 
-        return Project.objects.filter(Q(not_listed=True)
-            |Q(deleted=True)|Q(archived=True)
-            |Q(under_development=True)|Q(test=True)).values('id')
+    def get_listed_projects(cls):
+        """ return all the projects that should be listed """
+        listed = Project.objects.filter(
+            not_listed=False,
+            deleted=False,
+            archived=False,
+            under_development=False,
+            test=False)
+        return listed
 
     @classmethod
     def get_popular_tags(cls, max_count=10):
         ct = ContentType.objects.get_for_model(Project)
-        not_listed = Project.get_projects_excluded_from_listing()
+        listed = list(Project.get_listed_projects().values_list('id', flat=True))
         return GeneralTaggedItem.objects.filter(
-            content_type=ct).exclude(object_id__in=not_listed).values(
+            content_type=ct, object_id__in=listed).values(
             'tag__name').annotate(tagged_count=Count('object_id')).order_by(
             '-tagged_count')[:max_count]
 
     @classmethod
     def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=7.0):
         ct = ContentType.objects.get_for_model(Project)
-        not_listed = Project.get_projects_excluded_from_listing()
+        listed = Project.get_listed_projects().values('id')
         tags = GeneralTaggedItem.objects.filter(
-            content_type=ct).exclude(object_id__in=not_listed).values(
+            content_type=ct, object_id__in=listed).values(
             'tag__name').annotate(tagged_count=Count('object_id')).filter(
             tagged_count__gte=min_count)
         if tags.count():
