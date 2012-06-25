@@ -2,6 +2,10 @@ from django.db import models
 
 from tasks import SendNotifications
 
+import logging
+
+log = logging.getLogger(__name__)
+
 def send_notifications(user_profiles, subject_template, body_template,
         template_context, reply_token=None):
     """Asynchronously send email notifications to users
@@ -16,5 +20,7 @@ def send_notifications(user_profiles, subject_template, body_template,
     be replied to
     """
     args = (user_profiles, subject_template, body_template, template_context,
-        reply_token)
+        reply_token,)
+
+    log.debug("sending notification {0}".format(args))
     SendNotifications.apply_async(args)
