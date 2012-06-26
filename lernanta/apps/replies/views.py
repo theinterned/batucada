@@ -10,9 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 from l10n.urlresolvers import reverse
 from drumbeat import messages
 from users.decorators import login_required
-
 from replies.models import PageComment
 from replies.forms import CommentForm
+from users.models import UserProfile
 
 log = logging.getLogger(__name__)
 
@@ -215,11 +215,30 @@ def email_reply(request):
 
     to_email = request.POST.get('to')
     from_email = request.POST.get('from')
-    token = to_email[to_email.index('+')+1:to_email.index('@')]
-    # get reply token
-    # determine if this is a reply to anoter reply, status, activity
-    # determine from user
+    reply_text = request.POST.get('text')
 
-    # get reply content
+    # get reply token
+    token = to_email[to_email.index('+')+1:to_email.index('@')]
+    
+    # TODO determine if this is a reply to anoter reply, status or activity
+    try:
+        comment = PageComment.objects.get(reply_token=token)
+    except PageComment.DoesNotExist:
+        log.error("Invalid reply token received")
+
+    # convert 'User Name <email@server.com>' to 'email@server.com'
+    if from_email.index('<') and from_email.index('>'):
+        from_email = from_email[from_email.index('<')+1:from_email.index('>')]
+        
+    # determine from user
+    try:
+        user = UserProfile.objects.get(email=from_email)
+    except UserProfile.DoesNotExist:
+        log.error("Invalid user attempted reply: {0}".format(from_email))
+
     # post reply
+    if comment and user and reply_text:
+        comment.reply(user, reply_text)
+    
+    
     return http.HttpResponse()
