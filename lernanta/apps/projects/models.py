@@ -462,8 +462,8 @@ class Project(ModelBase):
         items = GeneralTaggedItem.objects.filter(
             content_type=ct, tag__name=tag_name).values(
             'object_id')
-        if projects == None:
-            project = Project.objects
+        if not projects:
+            projects = Project.objects
         return projects.filter(id__in=items)
 
     def is_challenge(self):
