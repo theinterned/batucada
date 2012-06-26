@@ -85,6 +85,22 @@ class PageComment(ModelBase):
         else:
             return False
 
+    def reply(self, user, reply_body):
+        """ Create a reply from user to this comment """
+        # TODO check if user can reply
+        
+        reply_comment = PageComment()
+        reply_comment.author = user
+        reply_comment.content = reply_body
+
+        reply_comment.page_object = self.page_object
+        reply_comment.scope_object = self.scope_object
+        reply_comment.reply_to = self
+        reply_comment.abs_reply_to = self.abs_reply_to or self
+        reply_comment.save()
+        reply_comment.send_comment_notification()
+        return True
+
     def send_comment_notification(self):
         recipients = self.page_object.comment_notification_recipients(self)
         subject_template = 'replies/emails/post_comment_subject.txt'
