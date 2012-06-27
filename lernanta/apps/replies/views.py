@@ -205,10 +205,7 @@ def delete_restore_comment(request, comment_id):
 
 @csrf_exempt
 def email_reply(request):
-    reply_token = ''
-    reply_content = ''
-
-    log.debug(request.POST)
+    """ handle a reply received via email """
 
     if not request.method == 'POST':
         raise http.Http404
@@ -218,9 +215,11 @@ def email_reply(request):
     reply_text = request.POST.get('text')
 
     # get reply token
-    token = to_email[to_email.index('+')+1:to_email.index('@')]
+    if to_email.index('+') and to_email.index('@'):
+        token = to_email[to_email.index('+')+1:to_email.index('@')]
     
-    # TODO determine if this is a reply to anoter reply, status or activity
+    # get comment to reply to
+    comment = None
     try:
         comment = PageComment.objects.get(reply_token=token)
     except PageComment.DoesNotExist:
@@ -231,14 +230,14 @@ def email_reply(request):
         from_email = from_email[from_email.index('<')+1:from_email.index('>')]
         
     # determine from user
+    user = None
     try:
         user = UserProfile.objects.get(email=from_email)
     except UserProfile.DoesNotExist:
         log.error("Invalid user attempted reply: {0}".format(from_email))
 
     # post reply
-    if comment and user and reply_text:
+    if comment and user and reply_text and not comment.deleted:
         comment.reply(user, reply_text)
     
-    
-    return http.HttpResponse()
+    return http.HttpResponse(status=200)

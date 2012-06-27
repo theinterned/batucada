@@ -79,6 +79,7 @@ class RepliesViewsTests(TestCase):
         self.assertEquals(comments.count(), 2)       
 
     def test_reply_by_email_hook(self):
+        """ Test that email hook works and returns status code 200 """
         data = {
             u'from': [u'Dirk Uys <dirk@p2pu.org>'],
             u'attachments': [u'0'],
@@ -110,8 +111,6 @@ class RepliesViewsTests(TestCase):
             u'from': [u'Testing <test@p2pu.org>'],
             u'to': [u'reply+{0}@reply.p2pu.org'.format(comment.reply_token)],
             u'text': [u'Maybe this time\n'],
-            u'html': [u'Maybe this time<br>\n'],
-            u'subject': [u'test3']
         }
 
         response = self.client.post('/%s/comments/email_reply/' % (self.locale,), data)
