@@ -8,7 +8,7 @@
 {% trans "There are three places you can get help from the community." %}
 
 {% trans "1. We have a help desk where you can bring all your questions to our staff:" %} help.p2pu.org
-{% trans "2. We have a group just for project-based course designers on the site:" %} http://{{domain}}/groups/make-a-challenge/
+{% trans "2. We have a group just for project-based course designers on the site:" %} http://{{domain}}/groups/make-a-course/
 {% trans "3. We have an awesome P2PU community mailing list where you can pitch your course for feedback and review:" %} groups.google.com/groups/p2pu-community
 
 {% trans "Now that you know where to find help, here\'s what next:" %}
