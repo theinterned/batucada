@@ -62,11 +62,8 @@ def reply_comment(request, comment_id):
             messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm()
-    from projects.models import Project
-    is_challenge = False
-    if reply_to.scope_object:
-        is_challenge = (reply_to.scope_object.category == Project.CHALLENGE)
-    return render_to_response('replies/comment_page.html', {
+
+    context = {
         'form': form,
         'scope_object': reply_to.scope_object,
         'page_object': reply_to.page_object,
@@ -74,8 +71,10 @@ def reply_comment(request, comment_id):
         'comment': comment,
         'create': True,
         'preview': ('show_preview' in request.POST),
-        'is_challenge': is_challenge,
-    }, context_instance=RequestContext(request))
+    }
+
+    return render_to_response('replies/comment_page.html', context,
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -123,10 +122,7 @@ def comment_page(request, page_model, page_app_label, page_pk,
             messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm()
-    from projects.models import Project
-    is_challenge = False
-    if scope_object:
-        is_challenge = (scope_object.category == Project.CHALLENGE)
+
     return render_to_response('replies/comment_page.html', {
         'form': form,
         'scope_object': scope_object,
@@ -135,7 +131,6 @@ def comment_page(request, page_model, page_app_label, page_pk,
         'create': True,
         'preview': ('show_preview' in request.POST),
         'new_comment_url': new_comment_url,
-        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
@@ -157,10 +152,7 @@ def edit_comment(request, comment_id):
             messages.error(request, _('Please correct errors below.'))
     else:
         form = CommentForm(instance=comment)
-    from projects.models import Project
-    is_challenge = False
-    if comment.scope_object:
-        is_challenge = (comment.scope_object.category == Project.CHALLENGE)
+        
     return render_to_response('replies/comment_page.html', {
         'form': form,
         'comment': comment,
@@ -168,7 +160,6 @@ def edit_comment(request, comment_id):
         'scope_object': comment.scope_object,
         'reply_to': comment.reply_to,
         'preview': ('show_preview' in request.POST),
-        'is_challenge': is_challenge,
     }, context_instance=RequestContext(request))
 
 
@@ -214,11 +205,10 @@ def email_reply(request):
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
 
-    # get reply token
+    # get reply token from 'reply+token@reply.p2pu.org'
     if to_email.index('+') and to_email.index('@'):
         token = to_email[to_email.index('+')+1:to_email.index('@')]
     
-    # get comment to reply to
     comment = None
     try:
         comment = PageComment.objects.get(reply_token=token)
@@ -228,16 +218,14 @@ def email_reply(request):
     # convert 'User Name <email@server.com>' to 'email@server.com'
     if from_email.index('<') and from_email.index('>'):
         from_email = from_email[from_email.index('<')+1:from_email.index('>')]
-        
-    # determine from user
+
     user = None
     try:
         user = UserProfile.objects.get(email=from_email)
     except UserProfile.DoesNotExist:
         log.error("Invalid user attempted reply: {0}".format(from_email))
 
-    # post reply
     if comment and user and reply_text and not comment.deleted:
         comment.reply(user, reply_text)
-    
+
     return http.HttpResponse(status=200)
