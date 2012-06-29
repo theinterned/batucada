@@ -1,6 +1,4 @@
 import datetime
-import random
-import string
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -13,11 +11,9 @@ from drumbeat.models import ModelBase
 from activity.schema import verbs, object_types
 from tracker import statsd
 from notifications.models import send_notifications
+from l10n.urlresolvers import reverse
 
 from richtext.models import RichTextField
-
-def gen_token():
-    return ''.join(random.choice(string.ascii_letters + string.digits) for i in range(32))
 
 class PageComment(ModelBase):
     """Placeholder model for comments."""
@@ -50,21 +46,8 @@ class PageComment(ModelBase):
         null=True, related_name='all_replies')
     deleted = models.BooleanField(default=False)
 
-    reply_token = models.CharField(max_length=32, blank=True)
-
     def __unicode__(self):
         return _('comment at %s') % self.page_object
-
-    def save(self):
-        """Generate reply token."""
-        if not self.reply_token:
-            self.reply_token = gen_token()
-            while True:
-                existing = PageComment.objects.filter(reply_token=self.reply_token).count()
-                if existing == 0:
-                    break
-                self.reply_token = gen_token()
-        super(PageComment, self).save()
 
     @models.permalink
     def get_absolute_url(self):
@@ -113,8 +96,10 @@ class PageComment(ModelBase):
         for profile in recipients:
             if self.author != profile:
                 profiles.append(profile)
+        reply_url = reverse('email_reply', args=[self.id])
         send_notifications(profiles, subject_template, body_template, context,
-            self.reply_token)
+            reply_url
+        )
 
 
 ###########
