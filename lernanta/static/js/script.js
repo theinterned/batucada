@@ -836,13 +836,18 @@ bindLearnFilters();
 				return false;
 			}
 			var url = $("#reorder_tasks").attr("action");
+            var tasks = [];
+            tasks = $.makeArray($(this).children().find("a.taskLink"))
+                .map(function(t, i)
+                {
+                    return $(t).attr("id");
+                });
 	        $.ajax({
 	            type: 'POST',
 	            url: url,
 	            data: {
-	               csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-	               oldIndex: oldIndex,
-	               newIndex: newIndex,
+                    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                    tasks: tasks,
 	            },
 	            dataType: "json",
 	            success: function(data) {
