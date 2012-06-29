@@ -1,4 +1,6 @@
 import datetime
+import urllib
+import urllib2
 
 from l10n.models import localize_email
 
@@ -29,3 +31,18 @@ class SendNotifications(Task):
             log.debug("Sending email to user %d with subject %s" % (
                 profile.user.id, subject,))
             profile.user.email_user(subject, body, from_email)
+
+
+class PostNotificationResponse(Task):
+    """ Send a post to the response URL specified by the token """
+    name = 'notifications.tasks.PostNotificationResponse'
+
+    def run(self, token, from_email, text, **kwargs):
+        log = self.get_logger(**kwargs)
+
+        data = { 'from': from_email, 'text': text }
+        host_name = "localhost"
+        results = urllib2.urlopen(
+            "https://{0}{1}".format(host_name, token.response_callback),
+            urllib.urlencode(data)
+        )
