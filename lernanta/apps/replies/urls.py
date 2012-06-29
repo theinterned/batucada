@@ -20,5 +20,5 @@ urlpatterns = patterns('replies.views',
       name='comment_restore'),
   url(r'^(?P<comment_id>\d+)/reply/$', 'reply_comment',
       name='comment_reply'),
-  url(r'^email_reply/$', 'email_reply', name='email_reply'),
+  url(r'^(?P<comment_id>\d+)/email_reply/$', 'email_reply', name='email_reply'),
 )

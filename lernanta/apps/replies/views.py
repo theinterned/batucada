@@ -116,6 +116,7 @@ def comment_page(request, page_model, page_app_label, page_pk,
             comment.author = user
             if 'show_preview' not in request.POST:
                 comment.save()
+                comment.send_comment_notification()
                 messages.success(request, _('Comment posted!'))
                 return http.HttpResponseRedirect(comment.get_absolute_url())
         else:
@@ -195,23 +196,18 @@ def delete_restore_comment(request, comment_id):
 
 
 @csrf_exempt
-def email_reply(request):
+def email_reply(request, comment_id):
     """ handle a reply received via email """
 
     if not request.method == 'POST':
         raise http.Http404
 
-    to_email = request.POST.get('to')
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
-
-    # get reply token from 'reply+token@reply.p2pu.org'
-    if to_email.index('+') and to_email.index('@'):
-        token = to_email[to_email.index('+')+1:to_email.index('@')]
     
     comment = None
     try:
-        comment = PageComment.objects.get(reply_token=token)
+        comment = PageComment.objects.get(id=comment_id)
     except PageComment.DoesNotExist:
         log.error("Invalid reply token received")
 
