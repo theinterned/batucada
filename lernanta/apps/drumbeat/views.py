@@ -28,8 +28,10 @@ def page_not_found(request):
     domain = "http://%s" % domain
     d = dict(language=settings.LANGUAGE_CODE,
              domain=domain)
-    return render_to_response("404.html", d,
-                              context_instance=RequestContext(request))
+
+    return http.HttpResponseNotFound(
+        loader.render_to_string('404.html', d,
+        context_instance=RequestContext(request)) )
 
 
 def server_error(request):
