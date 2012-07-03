@@ -4,6 +4,7 @@ from celery.decorators import periodic_task
 from models import update_metrics_cache
 from projects.models import get_active_projects
 
+#TODO celery.decorators module is being deprecated
 @periodic_task(name="tracker.tasks.update_metrics", run_every=crontab(hour=4, minute=30, day_of_week="*"))
 def update_metrics():
     # This runs every morning at 4:30a.m
