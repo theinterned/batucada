@@ -1,4 +1,5 @@
 from django import http
+from django.views.decorators.csrf import csrf_exempt
 
 from notifications.models import ResponseToken, post_notification_response
 from users.models import UserProfile
@@ -6,6 +7,7 @@ from users.models import UserProfile
 import logging
 log = logging.getLogger(__name__)
 
+@csrf_exempt
 def response(request):
     """ Web hook called when a response to a notification is received """
 
