@@ -89,8 +89,8 @@ class RepliesViewsTests(TestCase):
         comment.save()
         
         data = {
-            u'from': [u'Testing <test@p2pu.org>'],
-            u'text': [u'Maybe this time\n'],
+            u'from': u'test@p2pu.org',
+            u'text': u'Maybe this time\n',
         }
 
         response = self.client.post('/{0}/comments/{1}/email_reply/'.format(self.locale, comment.id), data)

@@ -34,6 +34,10 @@ class ResponseToken(models.Model):
         super(ResponseToken, self).save()
 
 
+    def __unicode__(self):
+        return self.response_token
+
+
 def send_notifications(user_profiles, subject_template, body_template,
         template_context, response_callback=None):
     """Asynchronously send email notifications to users

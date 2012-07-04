@@ -11,16 +11,28 @@ log = logging.getLogger(__name__)
 def response(request):
     """ Web hook called when a response to a notification is received """
 
+    log.debug("notifications.response")
+
     if not request.method == 'POST':
         raise http.Http404
+
+    log.debug(request.POST)
 
     to_email = request.POST.get('to')
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
 
+    log.debug("to: {0}, from: {1}, text: {2}".format(to_email, from_email, reply_text))
+
+    # try to convert from lists to string
+    #try:
+    #    reply_text = reply_text[0]
+    #except:
+    #    pass
+
     # get response token from 'reply+token@reply.p2pu.org'
     token_text = None
-    if to_email.index('+') and to_email.index('@'):
+    if to_email.find('+') != -1 and to_email.find('@') != -1:
         token_text = to_email[to_email.index('+')+1:to_email.index('@')]
 
     token = None
@@ -30,7 +42,7 @@ def response(request):
         log.error("Response token {0} does not exist".format(token_text))
 
     # convert 'User Name <email@server.com>' to 'email@server.com'
-    if from_email.index('<') and from_email.index('>'):
+    if from_email.find('<') != -1 and from_email.find('>') != -1:
         from_email = from_email[from_email.index('<')+1:from_email.index('>')]
 
     user = None
@@ -45,6 +57,9 @@ def response(request):
 
     if token and user and reply_text:
         # post to token.response_callback
+        log.debug("notifications.response: token: {0}, user: {1}, text: {2}".format(token, user, reply_text))
         post_notification_response(token, user.email, reply_text)
+    else:
+        log.error("notifications.response: Invalid response")
 
     return http.HttpResponse(status=200)
