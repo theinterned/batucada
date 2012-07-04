@@ -199,6 +199,8 @@ def delete_restore_comment(request, comment_id):
 def email_reply(request, comment_id):
     """ handle a reply received via email """
 
+    log.debug("replies:email_reply")
+
     if not request.method == 'POST':
         raise http.Http404
 
@@ -210,10 +212,6 @@ def email_reply(request, comment_id):
         comment = PageComment.objects.get(id=comment_id)
     except PageComment.DoesNotExist:
         log.error("Invalid reply token received")
-
-    # convert 'User Name <email@server.com>' to 'email@server.com'
-    if from_email.index('<') and from_email.index('>'):
-        from_email = from_email[from_email.index('<')+1:from_email.index('>')]
 
     user = None
     try:
