@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes.models import ContentType
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 from l10n.urlresolvers import reverse
 from drumbeat import messages
@@ -204,6 +205,10 @@ def email_reply(request, comment_id):
     if not request.method == 'POST':
         raise http.Http404
 
+    api_key = request.POST.get('api-key')
+    if not api_key == settings.INTERNAL_API_KEY:
+        return http.HttpResponseForbidden()
+    
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
     

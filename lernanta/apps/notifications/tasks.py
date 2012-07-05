@@ -9,10 +9,6 @@ from django.contrib.sites.models import Site
 
 from celery.task import Task
 
-import logging
-
-logp = logging.getLogger(__name__)
-
 
 class SendNotifications(Task):
     """Send email notification to the users specified by ``profiles``."""
@@ -23,7 +19,7 @@ class SendNotifications(Task):
         subjects, bodies = localize_email(subject_template,
             body_template, context)
             
-        from_email = setting.DEFAULT_FROM_EMAIL
+        from_email = settings.DEFAULT_FROM_EMAIL
         if reply_token:
             from_email = "reply+{0}@{1}".format(reply_token,
                 settings.REPLY_EMAIL_DOMAIN)
@@ -44,20 +40,17 @@ class PostNotificationResponse(Task):
 
     def run(self, token, from_email, text, **kwargs):
         log = self.get_logger(**kwargs)
+        log.debug("PostNotificationResponse: invoking callback") 
 
-        logp.debug("PostNotificationResponse: invoking callback") 
-
-        data = { 'from': from_email, 'text': text }
+        data = {
+            'from': from_email,
+            'text': text,
+            'api-key': settings.INTERNAL_API_KEY
+        }
+        
         host_name = Site.objects.get_current().domain
-
-        logp.debug("https://{0}{1}".format(host_name, token.response_callback))
-        logp.debug(urllib.urlencode(data))
         
         results = urllib2.urlopen(
-            "http://{0}{1}".format(host_name, token.response_callback),
+            "https://{0}{1}".format(host_name, token.response_callback),
             urllib.urlencode(data)
         )
-
-        logp.debug(results)
-
-
