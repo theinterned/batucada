@@ -11,25 +11,22 @@ log = logging.getLogger(__name__)
 def response(request):
     """ Web hook called when a response to a notification is received """
 
-    log.debug("notifications.response")
+    log.debug("notifications.views.response")
 
     if not request.method == 'POST':
         raise http.Http404
-
-    log.debug(request.POST)
 
     to_email = request.POST.get('to')
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
 
-    log.debug("to: {0}, from: {1}, text: {2}".format(to_email, from_email, reply_text))
-
-    # try to convert from lists to string
-    #try:
-    #    reply_text = reply_text[0]
-    #except:
-    #    pass
-
+    # clean up reply_text - original notification text should be removed by
+    # module that sent the notification
+    if reply_text.startswith("['"):
+        reply_text = reply_text[2:]
+    if reply_text.endswith("']'"):
+        reply_text = reply_text[:-2]
+    
     # get response token from 'reply+token@reply.p2pu.org'
     token_text = None
     if to_email.find('+') != -1 and to_email.find('@') != -1:

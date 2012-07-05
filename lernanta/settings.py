@@ -87,6 +87,9 @@ STATICFILES_DIRS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'std3j$ropgs216z1aa#8+p3a2w2q06mns_%2vfx_#$$i!+6o+x'
 
+# Make sure this is unique and random
+INTERNAL_API_KEY = 'dmWfPniIMhkPRmiLosOEGmVVppfoyEFhpoIgElfyUpgxtJNCsDcdnFZIeYIUuiom'
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
