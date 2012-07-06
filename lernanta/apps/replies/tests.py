@@ -6,6 +6,7 @@ from replies.models import PageComment
 from users.models import create_profile
 from projects.models import Project, Participation
 from content.models import Page
+from statuses.models import Status
 
 from test_utils import TestCase
 
@@ -77,8 +78,32 @@ class RepliesViewsTests(TestCase):
         response = self.client.post(reply_url, data)
             
         comments = PageComment.objects.all()
-        self.assertEquals(comments.count(), 2)       
+        self.assertEquals(comments.count(), 2)
 
+    def test_reply_to_status(self):
+        """ Test a reply sent to a status update on a course page """
+        status = Status(status="status update")
+        status.author = self.user
+        status.project = self.project
+        status.save()
+
+        callback_url = "/en/comments/create/activity/activity/{0}/project/projects/{1}/callback/".format(status.activity.get().id, self.project.id)
+
+        data = {
+            u'api-key': settings.INTERNAL_API_KEY,
+            u'from': u'test@p2pu.org',
+            u'text': u'Maybe this time\n',
+        }
+
+        comment_count = PageComment.objects.count()
+        
+        response = self.client.post(callback_url, data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(comment_count+1, PageComment.objects.count())
+        
+        
+    def test_reply_to_activity(self):
+        pass
 
     def test_reply_by_email(self):
         # post a comment
@@ -101,7 +126,7 @@ class RepliesViewsTests(TestCase):
         comments = PageComment.objects.all()
         self.assertEquals(comments.count(), 2)
 
-    def test_api_key(self):
+    def test_comment_reply_api_key(self):
         comment = PageComment()
         comment.page_object = self.page
         comment.scope_object = self.project

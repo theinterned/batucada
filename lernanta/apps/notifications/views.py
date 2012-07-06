@@ -22,6 +22,7 @@ def response(request):
 
     # clean up reply_text - original notification text should be removed by
     # module that sent the notification
+    reply_text = reply_text.strip()
     if reply_text.startswith("['"):
         reply_text = reply_text[2:]
     if reply_text.endswith("']'"):

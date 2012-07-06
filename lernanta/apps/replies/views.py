@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes.models import ContentType
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.conf import settings
 
 from l10n.urlresolvers import reverse
@@ -98,13 +99,19 @@ def comment_page(request, page_model, page_app_label, page_pk,
         messages.error(request, msg % page_object)
         return http.HttpResponseRedirect(page_object.get_absolute_url())
 
-    kwargs = dict(page_app_label=page_app_label,
-        page_model=page_model, page_pk=page_pk)
+    kwargs = {
+        'page_app_label': page_app_label,
+        'page_model': page_model,
+        'page_pk': page_pk
+    }
     if scope_object:
-        kwargs.update(dict(scope_app_label=scope_app_label,
-            scope_model=scope_model, scope_pk=scope_pk))
-    new_comment_url = reverse('page_comment', kwargs=kwargs)
+        kwargs.update({
+            'scope_app_label': scope_app_label,
+            'scope_model': scope_model,
+            'scope_pk': scope_pk
+        })
 
+    new_comment_url = reverse('page_comment', kwargs=kwargs)
     user = request.user.get_profile()
 
     comment = None
@@ -134,6 +141,54 @@ def comment_page(request, page_model, page_app_label, page_pk,
         'preview': ('show_preview' in request.POST),
         'new_comment_url': new_comment_url,
     }, context_instance=RequestContext(request))
+
+
+@csrf_exempt
+@require_POST
+def comment_page_callback(request, page_model, page_app_label, page_pk,
+        scope_model, scope_app_label, scope_pk):
+    """ callback used when replying by email """
+
+    log.debug("replies.views.comment_page_callback")
+
+    api_key = request.POST.get('api-key')
+    if not api_key == settings.INTERNAL_API_KEY:
+        log.error('Invalid API KEY used for internal API!')
+        return http.HttpResponseForbidden()
+    
+    from_email = request.POST.get('from')
+    reply_text = request.POST.get('text')
+
+    user = None
+    try:
+        user = UserProfile.objects.get(email=from_email)
+    except UserProfile.DoesNotExist:
+        log.error("Invalid user attempted reply: {0}".format(from_email))
+
+    page_object = None
+    try:
+        page_ct_cls = ContentType.objects.get(model=page_model,
+        app_label=page_app_label).model_class()
+        page_object = page_ct_cls.objects.get(pk=page_pk)
+    except:
+        log.error("could not find page object")
+
+    scope_object = None
+    try:
+        scope_ct_cls = ContentType.objects.get(model=scope_model,
+            app_label=scope_app_label).model_class()
+        scope_object = get_object_or_404(scope_ct_cls, pk=scope_pk)
+    except:
+        log.error("could not find scope object")
+
+    if user and page_object and page_object.can_comment(user.user) and scope_object and reply_text:
+        comment = PageComment(content=reply_text)
+        comment.page_object = page_object
+        comment.scope_object = scope_object
+        comment.author = user
+        comment.save()
+
+    return http.HttpResponse(status=200)
 
 
 @login_required
@@ -197,16 +252,15 @@ def delete_restore_comment(request, comment_id):
 
 
 @csrf_exempt
+@require_POST
 def email_reply(request, comment_id):
     """ handle a reply received via email """
 
     log.debug("replies:email_reply")
 
-    if not request.method == 'POST':
-        raise http.Http404
-
     api_key = request.POST.get('api-key')
     if not api_key == settings.INTERNAL_API_KEY:
+        log.error('Invalid API KEY used for internal API!')
         return http.HttpResponseForbidden()
     
     from_email = request.POST.get('from')
@@ -216,7 +270,7 @@ def email_reply(request, comment_id):
     try:
         comment = PageComment.objects.get(id=comment_id)
     except PageComment.DoesNotExist:
-        log.error("Invalid reply token received")
+        log.error("Reply does not exist")
 
     user = None
     try:
