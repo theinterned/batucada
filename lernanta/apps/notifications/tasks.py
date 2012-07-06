@@ -49,8 +49,11 @@ class PostNotificationResponse(Task):
         }
         
         host_name = Site.objects.get_current().domain
-        
-        results = urllib2.urlopen(
-            "https://{0}{1}".format(host_name, token.response_callback),
-            urllib.urlencode(data)
-        )
+        url = "https://{0}{1}".format(host_name, token.response_callback)
+
+        try:
+            results = urllib2.urlopen(url, urllib.urlencode(data))
+        except urllib2.HTTPError as error:
+            log.error("calling internal API failed. URL: {0}, Status code: {1}".format(url, error.code))
+        except urllib.URLError as error:
+            log.error("calling internal API failed. URL: {0}, reason: ".format(url, error.reason))
