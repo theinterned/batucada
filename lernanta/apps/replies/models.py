@@ -10,10 +10,10 @@ from django.contrib.sites.models import Site
 from drumbeat.models import ModelBase
 from activity.schema import verbs, object_types
 from tracker import statsd
-from users.tasks import SendNotifications
+from notifications.models import send_notifications
+from l10n.urlresolvers import reverse
 
 from richtext.models import RichTextField
-
 
 class PageComment(ModelBase):
     """Placeholder model for comments."""
@@ -68,6 +68,22 @@ class PageComment(ModelBase):
         else:
             return False
 
+    def reply(self, user, reply_body):
+        """ Create a reply from user to this comment """
+        # TODO check if user can reply
+        
+        reply_comment = PageComment()
+        reply_comment.author = user
+        reply_comment.content = reply_body
+
+        reply_comment.page_object = self.page_object
+        reply_comment.scope_object = self.scope_object
+        reply_comment.reply_to = self
+        reply_comment.abs_reply_to = self.abs_reply_to or self
+        reply_comment.save()
+        reply_comment.send_comment_notification()
+        return True
+
     def send_comment_notification(self):
         recipients = self.page_object.comment_notification_recipients(self)
         subject_template = 'replies/emails/post_comment_subject.txt'
@@ -80,8 +96,10 @@ class PageComment(ModelBase):
         for profile in recipients:
             if self.author != profile:
                 profiles.append(profile)
-        SendNotifications.apply_async((profiles, subject_template, body_template,
-            context))
+        reply_url = reverse('email_reply', args=[self.id])
+        send_notifications(profiles, subject_template, body_template, context,
+            reply_url
+        )
 
 
 ###########
@@ -97,7 +115,7 @@ def fire_activity(sender, **kwargs):
         ct = ContentType.objects.get_for_model(SignupAnswer)
         if instance.page_content_type != ct:
             statsd.Statsd.increment('comments')
-        instance.send_comment_notification()
+        #instance.send_comment_notification()
         if instance.page_object.comments_fire_activity():
             from activity.models import Activity
             activity = Activity(actor=instance.author, verb=verbs['post'],

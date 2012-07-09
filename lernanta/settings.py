@@ -84,9 +84,6 @@ STATICFILES_DIRS = (
     path('static'),
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'std3j$ropgs216z1aa#8+p3a2w2q06mns_%2vfx_#$$i!+6o+x'
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -172,6 +169,7 @@ INSTALLED_APPS = (
     'lernanta.apps.tags',
     'lernanta.apps.tracker',
     'lernanta.apps.reviews',
+    'lernanta.apps.notifications',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -218,6 +216,7 @@ CACHE_COUNT_TIMEOUT = 60
 # Email goes to the console by default.  s/console/smtp/ for regular delivery
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
+REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
 
 CELERY_RESULT_BACKEND = "amqp"
 
