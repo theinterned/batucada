@@ -95,10 +95,11 @@ class RepliesViewsTests(TestCase):
             u'text': u'Maybe this time\n',
         }
 
-        comment_count = PageComment.objects.count()
+        comment_count = PageComment.objects.filter(sent_by_email=True).count()
         response = self.client.post(callback_url, data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(comment_count+1, PageComment.objects.count())
+        comments = PageComment.objects.filter(sent_by_email=True)
+        self.assertEqual(comment_count+1, comments.count())
 
 
     def test_reply_by_email(self):
@@ -116,11 +117,12 @@ class RepliesViewsTests(TestCase):
             u'text': u'Maybe this time\n',
         }
 
+        comment_count = PageComment.objects.filter(sent_by_email=True).count()
         response = self.client.post('/{0}/comments/{1}/email_reply/'.format(self.locale, comment.id), data)
         self.assertEqual(response.status_code, 200)
 
-        comments = PageComment.objects.all()
-        self.assertEquals(comments.count(), 2)
+        comments = PageComment.objects.filter(sent_by_email=True)
+        self.assertEquals(comments.count(), comment_count+1)
 
     def test_comment_reply_api_key(self):
         comment = PageComment()

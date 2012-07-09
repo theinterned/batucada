@@ -147,7 +147,7 @@ def comment_page(request, page_model, page_app_label, page_pk,
 @require_POST
 def comment_page_callback(request, page_model, page_app_label, page_pk,
         scope_model, scope_app_label, scope_pk):
-    """ callback used when replying by email """
+    """ callback used when replying by email to an activity"""
 
     log.debug("replies.views.comment_page_callback")
 
@@ -186,6 +186,7 @@ def comment_page_callback(request, page_model, page_app_label, page_pk,
         comment.page_object = page_object
         comment.scope_object = scope_object
         comment.author = user
+        comment.sent_by_email = True
         comment.save()
 
     return http.HttpResponse(status=200)
@@ -279,6 +280,6 @@ def email_reply(request, comment_id):
         log.error("Invalid user attempted reply: {0}".format(from_email))
 
     if comment and user and reply_text and not comment.deleted:
-        comment.reply(user, reply_text)
+        comment.reply(user, reply_text, True)
 
     return http.HttpResponse(status=200)

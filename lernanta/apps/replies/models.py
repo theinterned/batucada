@@ -46,6 +46,9 @@ class PageComment(ModelBase):
         null=True, related_name='all_replies')
     deleted = models.BooleanField(default=False)
 
+    # indicate that a comment was sent via email
+    sent_by_email = models.BooleanField(default=False, blank=True)
+
     def __unicode__(self):
         return _('comment at %s') % self.page_object
 
@@ -68,7 +71,7 @@ class PageComment(ModelBase):
         else:
             return False
 
-    def reply(self, user, reply_body):
+    def reply(self, user, reply_body, sent_by_email = False):
         """ Create a reply from user to this comment """
         # TODO check if user can reply
         
@@ -80,6 +83,7 @@ class PageComment(ModelBase):
         reply_comment.scope_object = self.scope_object
         reply_comment.reply_to = self
         reply_comment.abs_reply_to = self.abs_reply_to or self
+        reply_comment.sent_by_email = sent_by_email
         reply_comment.save()
         reply_comment.send_comment_notification()
         return True
@@ -121,7 +125,6 @@ def fire_activity(sender, **kwargs):
             activity = Activity(actor=instance.author, verb=verbs['post'],
                 target_object=instance, scope_object=instance.scope_object)
             activity.save()
-
 
 post_save.connect(fire_activity, sender=PageComment,
     dispatch_uid='replies_pagecomment_fire_activity')
