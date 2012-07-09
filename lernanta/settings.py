@@ -231,7 +231,7 @@ PUSH_HUB = 'http://pubsubhubbub.appspot.com/'
 SOUTH_TESTS_MIGRATE = False
 
 FEED_URLS = {
-    'splash': 'http://blogs.p2pu.org/feed/',
+    'splash': 'http://info.p2pu.org/feed/',
 }
 
 # Ckeditor

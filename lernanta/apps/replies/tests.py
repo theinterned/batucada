@@ -96,14 +96,10 @@ class RepliesViewsTests(TestCase):
         }
 
         comment_count = PageComment.objects.count()
-        
         response = self.client.post(callback_url, data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(comment_count+1, PageComment.objects.count())
-        
-        
-    def test_reply_to_activity(self):
-        pass
+
 
     def test_reply_by_email(self):
         # post a comment
