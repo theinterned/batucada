@@ -14,7 +14,7 @@ from django.http import HttpResponse
 
 from l10n.urlresolvers import reverse
 from users.models import UserProfile
-from users.tasks import SendNotifications
+from notifications.models import send_notifications
 from drumbeat.forms import AbuseForm
 import django.contrib.sites as sites
 
@@ -63,8 +63,7 @@ def report_abuse(request, model, app_label, pk):
         }
         try:
             profile = UserProfile.objects.get(email=settings.ADMINS[0][1])
-            SendNotifications.apply_async(args=([profile], subject_template, body_template,
-                context))
+            send_notifications([profile], subject_template, body_template, context)
         except:
             log.debug("Error sending abuse report: %s" % sys.exc_info()[0])
             pass
