@@ -15,6 +15,7 @@ from users.decorators import login_required
 from replies.models import PageComment
 from replies.forms import CommentForm
 from users.models import UserProfile
+from replies import utils
 
 log = logging.getLogger(__name__)
 
@@ -158,6 +159,7 @@ def comment_page_callback(request, page_model, page_app_label, page_pk,
     
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
+    reply_text = utils.extract_reply(reply_text)
 
     user = None
     try:
@@ -266,6 +268,7 @@ def email_reply(request, comment_id):
     
     from_email = request.POST.get('from')
     reply_text = request.POST.get('text')
+    reply_text = utils.extract_reply(reply_text)
     
     comment = None
     try:
