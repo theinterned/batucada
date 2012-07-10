@@ -13,7 +13,6 @@ def update_metrics():
     log = update_metrics.get_logger()
     log.debug('updating project pageview metrics')
     for project in get_active_projects():
-        update_metrics_cache(project)
         UpdateCourseMetrics.apply_async((project,))
 
 
