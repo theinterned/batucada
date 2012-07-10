@@ -81,7 +81,7 @@ class PageTests(TestCase):
         self.client.login(username=self.test_username,
             password=self.test_password)
 
-        slugs = [slug[0] for slug in self.project.pages.values_list('slug')]
+        #slugs = [slug[0] for slug in self.project.pages.values_list('slug')]
         slug1 = self.project.pages.all()[0].slug
         slug2 = self.project.pages.all()[1].slug
         slug3 = self.project.pages.all()[2].slug
