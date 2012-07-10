@@ -1,4 +1,5 @@
 import datetime
+from urlparse import urlsplit
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django import http
@@ -6,13 +7,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from django.utils import simplejson
-from django.db.models import F
 from django.forms.models import modelformset_factory
-
-from django.forms.models import modelformset_factory
-
-from urlparse import urlsplit
-from django.http import QueryDict
 
 from l10n.urlresolvers import reverse
 from users.decorators import login_required

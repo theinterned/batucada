@@ -1,4 +1,3 @@
-import sys
 import re
 
 def extract_reply(text):

@@ -14,7 +14,7 @@ def update_metrics():
     log.debug('updating project pageview metrics')
     for project in get_active_projects():
         update_metrics_cache(project)
-        SendNotifications.apply_async((project,))
+        UpdateCourseMetrics.apply_async((project,))
 
 
 class UpdateCourseMetrics(Task):

@@ -55,7 +55,9 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', 'static', '.well-known', 'pubsub', 'broadcasts', 'ajax')
+SUPPORTED_NONLOCALES = (
+    'media', 'static', '.well-known', 'pubsub', 'broadcasts', 'ajax'
+)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -122,8 +124,8 @@ TEMPLATE_DIRS = (
     path('templates'),
 )
 
-# Use the fully qualified name for our apps so django_nose does not add duplicates
-# on INSTALLED_APPS.
+# Use the fully qualified name for our apps so django_nose does not
+# add duplicates on INSTALLED_APPS.
 INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.auth',
@@ -239,10 +241,12 @@ CKEDITOR_MEDIA_PREFIX = "/static/ckeditor/"
 CKEDITOR_UPLOAD_PATH = path("media/uploads/images")
 CKEDITOR_FILE_UPLOAD_PATH = path("media/uploads/files")
 CKEDITOR_RESTRICT_BY_USER = True
-CKEDITOR_IMAGE_UPLOAD_EXTENSIONS = ['.jpg','.jpeg','.gif','.png','.tif','.tiff']
+CKEDITOR_IMAGE_UPLOAD_EXTENSIONS = [
+    '.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff'
+]
 CKEDITOR_FILE_UPLOAD_EXTENSIONS = CKEDITOR_IMAGE_UPLOAD_EXTENSIONS + ['.pdf',
-    '.doc','.rtf','.txt','.xls','.csv','.mov','.wmv','.mpeg','.mpg',
-    '.avi','.rm','.mp3','.mp4','.wav','.aiff','.midi','.m4p']
+    '.doc', '.rtf', '.txt', '.xls', '.csv', '.mov', '.wmv', '.mpeg', '.mpg',
+    '.avi', '.rm', '.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p']
 
 # Where the default image for sending to Gravatar
 DEFAULT_PROFILE_IMAGE = 'https://p2pu.org/static/images/member-missing.png'
