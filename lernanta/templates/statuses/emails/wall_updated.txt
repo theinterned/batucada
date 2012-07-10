@@ -2,16 +2,18 @@
 {{ project.name|safe }}{{ _(' update.') }}
 
 {% if status.important %}
-{{ status.author }}{{ _(Update from the flight deck: ' posted an urgent message:') }}
+{% blocktrans with username=status.author %} Update from the flight deck: {{ username }} posted an urgent message:{% endblocktrans %}
 {% else %}
-{{ status.author }}{{ _(Update from the flight deck:' made an update:') }}
+{% blocktrans with username=status.author %} Update from the flight deck: {{ username }} made an update:{% endblocktrans %}
 {% endif %}
 
 {{ status.status|striptags|safe }}
 
 {{ _('See what they said at:') }} http://{{domain}}{{ status.get_absolute_url }}
 
-{{ _('Go get 'em,') }}
+{{ _('You can reply to this comment by email! Just type your reply at the top.') }}
+
+{{ _('Go get \'em,') }}
 {{ _('The P2PU Team') }}
 
 {% if status.important %}
