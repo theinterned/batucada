@@ -111,8 +111,8 @@ def answer_sign_up(request, slug):
             _("You already joined this %s.") % project.kind)
         return http.HttpResponseRedirect(sign_up.get_absolute_url())
     elif sign_up.status == Signup.CLOSED:
-        msg = _("Sign-up is currently closed." \
-                "You can clone the %s if is full.")
+        msg = _("Sign-up is currently closed. " \
+                "You can clone the %s if it is full.")
         messages.error(request, msg % project.kind)
         return http.HttpResponseRedirect(sign_up.get_absolute_url())
     else:
