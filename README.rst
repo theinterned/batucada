@@ -19,6 +19,6 @@ Interested in getting involved in Lernanta code development? Check out `the deve
 Setup the lernanta development environment quickly with our `environment setup script`_
 Or if you enjoy linux command line hacking, check out our `install docs`_ on our wiki. 
 
-.. _dev_env: https://github.com/p2pu/lernanta-dev-env
+.. _environment setup script: https://github.com/p2pu/lernanta-dev-env
 
 .. _install docs: https://github.com/p2pu/lernanta/wiki/Lernanta%27s-Setup-Install
