@@ -17,7 +17,7 @@ class SendNotifications(Task):
         subjects, bodies = localize_email(subject_template,
             body_template, context)
             
-        from_email = "P2PU <{0}>".format(settings.DEFAULT_FROM_EMAIL)
+        from_email = "P2PU Notifications <{0}>".format(settings.DEFAULT_FROM_EMAIL)
         if reply_token:
             from_email = "P2PU Notifications <reply+{0}@{1}>".format(reply_token,
                 settings.REPLY_EMAIL_DOMAIN)
