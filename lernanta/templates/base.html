@@ -1,6 +1,7 @@
 {% load l10n_tags %}
 {% load school_tags%}
 {% load project_tags %}
+{% load waffle_tags %}
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -25,11 +26,17 @@
   <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" href="{{ STATIC_URL }}css/jcarousel/tango/skin.css">
   <link rel="stylesheet" href="https://www.google.com/cse/style/look/default.css" type="text/css" />
+{% flag 'css-framework' %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+  <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+{% else %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/batucada.css?v=1">
   <link rel="stylesheet" href="{{ STATIC_URL }}{{ _('css/style-en.css') }}?v=1">
   <link rel="stylesheet" href="{{ STATIC_URL }}js/libs/prettify/prettify.css">
+{% endflag %}
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.fancybox-1.3.4.css" media="screen" />
   <link rel="stylesheet" href="{{ STATIC_URL }}js/libs/jquery.ui.spinner/ui.spinner.css">
   {% block css %}{% endblock %}
