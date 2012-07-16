@@ -116,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
     'tracker.middleware.PageViewTrackerMiddleware',
+    'waffle.middleware.WaffleMiddleware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'
@@ -172,6 +173,7 @@ INSTALLED_APPS = (
     'lernanta.apps.tracker',
     'lernanta.apps.reviews',
     'lernanta.apps.notifications',
+    'waffle',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -185,6 +187,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'messages.context_processors.inbox',
     'users.context_processors.messages',
     'users.context_processors.redirect_urls',
+    'django.core.context_processors.request',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
