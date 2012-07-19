@@ -830,75 +830,72 @@ msgstr "ה%s כבר לא חלק מבית הספר הזה."
 msgid "School mentorship details updated!"
 msgstr ""
 
-#------------------------------------------------------------------------------
-#- Bookmark -------------------------------------------------------------------
-#------------------------------------------------------------------------------
-
 #: apps/signups/models.py:30
+#, fuzzy
 msgid "Closed signup"
-msgstr "Inscripción cerrada"
+msgstr "הרשמה סגורה"
 
 #: apps/signups/models.py:31
+#, fuzzy
 msgid "Moderated signup"
-msgstr "Inscripción moderada"
+msgstr "הרשמה מונחית"
 
 #: apps/signups/models.py:32
+#, fuzzy
 msgid "Non-moderated signup"
-msgstr "Inscripción no moderada"
+msgstr "הרשמה בלתי-מונחית"
 
 #: apps/signups/models.py:97
 #, python-format
 msgid "the signup answer of %(author)s at %(project)s"
 msgstr ""
-"la respuesta de %(author)s a las preguntas de inscripción en %(project)s"
 
 #: apps/signups/views.py:38
 msgid "Signup updated!"
-msgstr "¡Inscripción actualizada!"
+msgstr "ההרשמה עודכנה!"
 
 #: apps/signups/views.py:89 templates/signups/sign_up.html:51
 msgid "This answer was deleted."
-msgstr "Esta respuesta fue eliminada."
+msgstr "התשובה הזאת נמחקה."
 
 #: apps/signups/views.py:111
 #, python-format
 msgid "You already joined this %s."
-msgstr "Usted ya se unió a este %s."
+msgstr "כבר הצטרפת ל%s הזה."
 
 #: apps/signups/views.py:114
+#, fuzzy
 #, python-format
-msgid "Sign-up is currently closed.You can clone the %s if is full."
-msgstr ""
-"La inscripción esta cerrada en estos momentos. Usted puede clonar el %s si "
-"está lleno."
+msgid "Sign-up is currently closed. You can clone the %s if it is full."
+msgstr "ההרשמה סגורה כרגע. You can clone the %s if it is full."
 
 #: apps/signups/views.py:123
 msgid "You already posted an answer to the signup questions."
-msgstr "Usted ya envió una respuesta en la página de inscripción."
+msgstr "כבר פרסמת תשובה לשאלות ההרשמה."
 
 #: apps/signups/views.py:144
 msgid "You are now a participant!"
-msgstr "¡Ahora es un participante!"
+msgstr "אתה משתתף עכשיו!"
 
 #: apps/signups/views.py:146
 msgid "Answer submitted!"
-msgstr "¡Respuesta enviada!"
+msgstr "התשובה נשלחה!"
 
 #: apps/signups/views.py:174
 msgid "You can't edit this answer"
-msgstr "Usted no puede editar esta respuesta"
+msgstr "אינך יכול לערוך את התשובה הזאת"
 
 #: apps/signups/views.py:186
 msgid "Answer updated!"
-msgstr "¡Respuesta actualizada!"
+msgstr "התשובה עודכנה!"
 
 #: apps/signups/views.py:221
 msgid "Organizer added!"
-msgstr "¡Organizador añadido!"
+msgstr "מארגן נוסף!"
 
 #: apps/signups/views.py:223
 msgid "Participant added!"
-msgstr "¡Participante añadido!"
+msgstr "משתתף נוסף!"
 
 #: apps/signups/views.py:235
 msgid "You can not restore this answer."
@@ -906,11 +903,11 @@ msgstr "אינך יכול לשחזר את התשובה הזאת."
 
 #: apps/signups/views.py:237
 msgid "You can not delete this answer."
-msgstr "Usted no puede eliminar esta respuesta."
+msgstr "אינך יכול למחוק את התשובה הזאת."
 
 #: apps/signups/views.py:244
 msgid "Answer deleted!"
-msgstr "¡Respuesta eliminada!"
+msgstr "התשובה נמחקה!"
 
 #: apps/signups/views.py:246
 msgid "Answer restored!"
@@ -918,179 +915,177 @@ msgstr "התשובה שוחזרה!"
 
 #: apps/signups/views.py:270
 msgid "Organizers can't use this page to leave their group."
-msgstr "Los organizadores no pueden usar esta página para dejar grupo"
+msgstr "מארגנים אינם יכולים להשתמש בדף זה כדי לעזוב את הקבוצה שלהם."
 
 #: apps/signups/views.py:273 apps/signups/views.py:301
-msgid "This page can not be accessed with a get request."
-msgstr "Esta página no es accesible vía un pedido GET."
+msgid "This page can not be accessed with a GET request."
+msgstr "הדף הזה אינו זמין עם בקשת GET."
 
 #: apps/signups/views.py:306
 msgid "You need to be active in this challenge to become an adopter."
-msgstr "Usted debe estar activo en este reto para adoptarlo."
+msgstr "אתה צריך להיות פעיל באתגר הזה כדי להיות מאמץ."
 
 #: apps/signups/views.py:309
 msgid "Organizers do not need to adopt the challenges."
-msgstr "Los organizadores no necesitan adoptar los retos."
+msgstr "מארגנים אינם צריכים לאמץ את האתגרים."
 
 #: apps/signups/views.py:317
-msgid "You need to complete all tasks before becoming an adopter."
-msgstr "Usted debe completar todas las tareas antes de adoptar el reto."
+msgid "You need to complete all of the tasks before becoming an adopter."
+msgstr "הינך צריך לגמור את כל המשימות לפני שתהיה מאמץ."
 
 #: apps/signups/views.py:320
 msgid "You already adopted this challenge."
-msgstr "Usted ya adoptó este reto."
+msgstr "כבר אימצת את האתגר הזה."
 
 #: apps/signups/views.py:323
 msgid "Thanks! "
-msgstr "¡Gracias!"
+msgstr "תודה!"
 
 #: apps/signups/views.py:324
 msgid "You are now listed among the peers who offered their help."
-msgstr ""
-"Usted está ahora listado entre los colegas que ofrecieron su ayuda en este "
-"reto."
+msgstr "הינך רשום עכשיו בקרב העמיתים אשר הציעו את עזרתם."
 
-#: apps/statuses/models.py:32
+#: apps/statuses/models.py:33
 msgid "statuses"
-msgstr "estados"
+msgstr "סטטוסים"
 
-#: apps/statuses/models.py:35
+#: apps/statuses/models.py:36
 #, python-format
 msgid "message: %s"
-msgstr "mensaje: %s"
+msgstr "הודעה: %s"
 
 #: apps/statuses/views.py:28 apps/statuses/views.py:58
 msgid "There was an error posting your status update"
-msgstr "Ocurrió un error al publicar su mensaje"
+msgstr "אירעה שגיאה בעידכון הסטטוס שלך"
 
 #: apps/tags/models.py:9
+#, fuzzy
 msgid "Tag"
-msgstr "Etiqueta"
+msgstr "תג"
 
 #: apps/tags/models.py:10 templates/projects/_learn_filters.html:19
 #: templates/projects/learn_tags.html:12
 #: templates/projects/project_create_overview.html:119
 #: templates/projects/project_edit_summary.html:69
 #: templates/projects/sidebar.html:96
+#, fuzzy
 msgid "Tags"
-msgstr "Etiquetas"
+msgstr "תגים"
 
 #: apps/tags/models.py:19
+#, fuzzy
 msgid "Tagged Item"
-msgstr "Elemento Etiqueteado"
+msgstr "פריטים מתוייגים"
 
 #: apps/tags/models.py:20
 msgid "Tagged Items"
-msgstr "Elementos Etiqueteados"
+msgstr "פריטים מתוייגים"
 
 #: apps/users/decorators.py:24
 msgid "You are already logged into an account."
-msgstr "Usted ya entró a su cuenta."
+msgstr "כבר נכנסת לחשבון."
 
 #: apps/users/fields.py:20 apps/users/fields.py:24
 msgid "Please choose another username."
-msgstr "Por favor elija otro nombre de usuario."
+msgstr "בבקשה בחר שם משתמש אחר."
 
 #: apps/users/forms.py:67
-msgid "This google openid is not supported. "
-msgstr "Este openid de google no está soportado. "
+msgid "This Google OpenID is not supported. "
+msgstr "הOpenID הזה של גוגל אינו נתמך. "
 
 #: apps/users/forms.py:68
-msgid "Please use your google profile openid."
-msgstr "Por favor use el openid de su profile de google."
+msgid "Please use your Google profile OpenID."
+msgstr "בבקשה השתמש בOpenID של הגוגל פרופיל שלך."
 
 #: apps/users/forms.py:76
 msgid "Your account was migrated from the old P2PU website."
-msgstr "Su cuenta fue migrada desde el sitio antiguo de P2PU."
+msgstr "החשבון שלך הועבר מהאתר הישן של P2PU."
 
 #: apps/users/forms.py:154
 msgid "User profile with this Username already exists."
-msgstr "Ya existe un perfil con este nombre de usuario."
+msgstr "פרופיל משתמש עם השם הזה כבר קיים."
 
 #: apps/users/forms.py:160
 msgid "This field is required."
-msgstr "Este campo es requerido."
+msgstr "שדה חובה."
 
 #: apps/users/forms.py:163
 msgid "User profile with this Email already exists."
-msgstr "Ya existe un perfil de usuario con este correo."
+msgstr "פרופיל משתמש עם כתובת הדוא\"ל הזאת כבר קיים."
 
 #: apps/users/forms.py:295
 msgid "That e-mail address isn't associated to a user account. "
-msgstr "La dirección de correo no tiene asociada una cuenta de usuario. "
+msgstr "כתובת הדוא\"ל ההיא אינה קשורה לחשבון משתמש כלשהו. "
 
 #: apps/users/forms.py:296
 msgid "You didn't finish registering the last time. "
-msgstr "Usted no terminó de crear su cuenta la última vez."
+msgstr "לא גמרת להירשם בפעם שעברה. "
 
 #: apps/users/forms.py:297
 msgid "Please register a new account."
-msgstr "Por favor cree una nueva cuenta."
+msgstr "בבקשה פתח חשבון חדש."
 
 #: apps/users/forms.py:300
 msgid "Username not found. "
-msgstr "Nombre de usuario no encontrado."
+msgstr "שם המשתמש לא נמצא. "
 
 #: apps/users/forms.py:301
 msgid "Are you sure you've registered?"
-msgstr "¿Está seguro de haberse registrado?"
+msgstr "אתה בטוח שנרשמת?"
 
 #: apps/users/models.py:127
 msgid "Anonym"
-msgstr "Anónimo"
+msgstr "אנונימי"
 
 #: apps/users/models.py:179
+#, fuzzy
 msgid "(adopted)"
-msgstr "(adoptado)"
+msgstr "(אימץ)"
 
 #: apps/users/models.py:181
 msgid "(organizing)"
-msgstr "(organizando)"
+msgstr "(מארגן)"
 
 #: apps/users/models.py:184
 msgid "(participating)"
-msgstr "(participando)"
+msgstr "(משתתף)"
 
 #: apps/users/models.py:187
 msgid "(following)"
-msgstr "(siguiendo)"
+msgstr "(עוקב)"
 
 #: apps/users/views.py:193
 msgid "Incorrect username, email or password."
-msgstr "שם משתמש, כתובת דואר אלקטרוני, או סיסמה שגויה."
+msgstr "שם משתמש, כתובת דוא\"ל, או סיסמה שגוייה."
 
 #: apps/users/views.py:278
 msgid "Congratulations! Your user account was successfully created."
-msgstr "¡Felicidades! Su cuenta de usuario fue creada exitosamente."
+msgstr "כל הכבוד! חשבון המשתמש שלך נוצר בהצלחה."
 
 #: apps/users/views.py:286
 msgid ""
 "Thanks! We have sent an email to {0} with instructions for completing your "
 "registration."
-msgstr ""
-"¡Gracias! Hemos enviado un correo a {0} con instrucciones para que termine "
-"de crear su cuenta."
+msgstr "תודה! שלחנו הודעה לכתובת  {0} עם הוראות כדי לגמור את ההרשמה שלך."
 
 #: apps/users/views.py:364
 msgid "Hmm, that doesn't look like the correct confirmation code"
-msgstr "Hmm, ese no parece un código de confirmación correcto"
+msgstr "הממ, זה לא נראה כמו קוד הווידוא הנכון"
 
 #: apps/users/views.py:371
 msgid "Success! You have verified your email address."
-msgstr "¡Éxito! Ya verificó su dirección de correo. Ahora puede entrar."
+msgstr "הצלחה! וידאת את כתובת הדוא\"ל שלך."
 
 #: apps/users/views.py:395
 msgid "This user account was deleted."
-msgstr "Esta cuenta de usuario fue borrada."
+msgstr "חשבון המשתמש הזה נמחק."
 
 #: apps/users/views.py:433
 #, python-format
 msgid ""
 "Thanks! We have sent an email to %s with instructions for completing your "
 "registration."
-msgstr ""
-"¡Gracias! Hemos enviado un correo a %s con instrucciones para que termine de "
-"crear su cuenta."
+msgstr "תודה! שלחנו הודעה לכתובת %s עם הוראות כדי לגמור את ההרשמה שלך."
 
 #: apps/users/views.py:457
 msgid "Profile updated"
@@ -1100,110 +1095,116 @@ msgstr "Perfil actualizado"
 msgid ""
 "There were problems updating your profile. Please correct the problems and "
 "submit again."
-msgstr ""
-"Ocurrieron problemas al actualizar su perfil. Por favor corríja la "
-"información e intente nuevamente."
+msgstr "היו שגיאות בעידכון הפרופיל שלך. בבקשה תקן אותם ושלח שוב."
 
 #: apps/users/views.py:500
 #, python-format
 msgid "The identity %s has already been claimed by you."
-msgstr "La identidad %s ya ha sido reservada por usted."
+msgstr "הזהות %s כבר נלקחה על ידך."
 
 #: apps/users/views.py:501
 #, python-format
 msgid "The identity %s has already been claimed by another user."
-msgstr "Otro usuario ya reservó la identidad %s."
+msgstr "הזהות %s כבר נלקחה בידי משתמש אחר."
 
 #: apps/users/views.py:514
 #, python-format
 msgid "The identity %s has been saved."
-msgstr "La identidad %s ha sido guardada."
+msgstr "הזהות %s נשמרה."
 
 #: apps/users/views.py:521
 #, python-format
 msgid "OpenID authentication failed: %s"
-msgstr "Fallo en la autentificación con OpenID: %s"
+msgstr "האימות על ידי OpenID נכשלה: %s"
 
 #: apps/users/views.py:524
 msgid "Authentication cancelled."
-msgstr "Autentificación cancelada."
+msgstr "האימות בוטל."
 
 #: apps/users/views.py:527
 #, python-format
+#, fuzzy
 msgid "Unknown OpenID response type: %r"
-msgstr "Tipo de respuesta OpenID desconocido: %r"
+msgstr "סוג תשובה של OpenID לא ידועה: %r"
 
 #: apps/users/views.py:529
 msgid "This is an OpenID relying party endpoint."
-msgstr "Esta url debe ser accedida por un proveedor de OpenID."
+msgstr ""
 
 #: apps/users/views.py:538
-msgid "You can't edit this openid"
-msgstr "Usted no puede editar este openid"
+msgid "You can't edit this OpenID"
+msgstr "אינך יכול לערוך את הOpenID הזה"
 
 #: apps/users/views.py:540
-msgid "The openid was deleted."
-msgstr "El openid fue removido."
+msgid "The OpenID was deleted."
+msgstr "הOpenID נמחק."
 
 #: apps/users/views.py:570
 msgid "Profile image updated"
-msgstr "Imagen actualizada"
+msgstr "תמונת הפרופיל עודכנה"
 
 #: apps/users/views.py:575
 msgid "There was an error uploading your image."
-msgstr "Ocurrió un error al subir la imagen."
+msgstr "אירעה תקלה בהעלאת התמונה שלך."
 
 #: apps/users/views.py:605
 msgid "Profile link added."
-msgstr "Enlace añadido."
+msgstr "קישור הפרופיל הוסף."
 
 #: apps/users/views.py:614
 msgid "There was an error saving your link."
-msgstr "Ocurrió un error al guardar el enlace."
+msgstr "אירעה תקלה בשמירת הקישור שלך."
 
 #: apps/users/views.py:638
 msgid "Profile link updated"
-msgstr "Enlace actualizado"
+msgstr "קישור הפרופיל עודכן"
 
 #: apps/users/views.py:661
 msgid "The link was deleted."
-msgstr "El enlace fue eliminado."
+msgstr "הקישור נמחק."
 
 #: templates/404.html:6
 msgid "Page not found"
-msgstr "Página no encontrada"
+msgstr "הדף לא נמצא"
 
 #: templates/404.html:8
 msgid ""
 "Oops. That links doesn't seem to work. Maybe the page you are looking for is "
 "on the old p2pu site? Try "
 msgstr ""
-"¡Oh! Ese enlace no parece funcionar. ¿Tal vez la página que está buscando  "
-"está en el antiguo sitio de p2pu? Intente visitar "
+"אופס! הקישור ההוא כנראה לא עובד. אולי הדף אותו אתה מחפש נמצא באתר הישן של "
+"P2PU? נסה "
 
 #: templates/404.html:9
+#, fuzzy
 msgid ""
 "If you think this is an error, please let us know by <a href=\"http://p2pu."
 "lighthouseapp.com/projects/71002\" target=\"_blank\">filling a bug report</"
 "a>."
 msgstr ""
-"Si usted piensa que esto es un error, por favor háganoslo saber <a href="
-"\"http://p2pu.lighthouseapp.com/projects/71002\">reportando el problema</a>."
+"אם אתה חושב שזוהי שגיאה, בבקשה הודיע לנו על ידי <a href="
+"\"http://p2pu.lighthouseapp.com/projects/71002\">דיווח על הבאג</a>."
 
 #: templates/500.html:6
 msgid "Internal server error"
-msgstr "Error interno del servidor"
+msgstr "שגיאת שרת פנימית"
 
 #: templates/500.html:8
+#, fuzzy
 msgid ""
 "Clearly what was supposed to happen, didn't. You can help us to solve this "
 "problem by <a href=\"http://p2pu.lighthouseapp.com/projects/71002\">filing a "
 "bug report</a>, and telling us what you were doing when the problem occurred."
 msgstr ""
-"Claramente lo que debía ocurrir no ocurrió. Puede ayudarnos a resolver el "
-"problema <a href=\"http://p2pu.lighthouseapp.com/"
-"projects/71002\">reportándolo</a>, y diciéndonos que estaba haciendo cuando "
-"ocurrió."
+"בבירור מה שהיה אמור לקרות לא קרה. אתה יכול לעזור לנו לפתור את הבעיה על ידי "
+"<a href=\"http://p2pu.lighthouseapp.com/projects/71002\">דיווח על הבאג</a>, "
+"וסיפור מה עשית כאשר התקלה אירעה."
+
+# #############################################################################
+# #############################################################################
+# ## Bookmark                                                                ##
+# #############################################################################
+# #############################################################################
 
 #: templates/503.html:5
 msgid "Down for maintenance, come back soon"
