@@ -12,7 +12,7 @@ from drumbeat import storage
 from drumbeat.utils import get_partition_id, safe_filename, MultiQuerySet
 from drumbeat.models import ModelBase
 from richtext.models import RichTextField
-from users.tasks import SendNotifications
+from notifications.models import send_notifications
 from l10n.urlresolvers import reverse
 
 
@@ -81,7 +81,7 @@ class Badge(ModelBase):
     def get_image_url(self):
         # TODO: using project's default image until a default badge
         # image is added.
-        missing = settings.MEDIA_URL + 'images/missing-badge.png'
+        missing = settings.STATIC_URL + 'images/missing-badge.png'
         image_path = self.image.url if self.image else missing
         return image_path
 
@@ -313,8 +313,7 @@ class Submission(ModelBase):
             'domain': Site.objects.get_current().domain,
         }
         profiles = self.badge.get_adopters()
-        SendNotifications.apply_async((profiles, subject_template, body_template,
-            context))
+        send_notifications(profiles, subject_template, body_template, context)
 
 
 class Assessment(ModelBase):
@@ -447,25 +446,6 @@ class Award(ModelBase):
 ###########
 # Signals #
 ###########
-
-def post_rating_save(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
-    if created and isinstance(instance, Rating):
-        instance.assessment.update_final_rating()
-
-post_save.connect(post_rating_save, sender=Rating,
-    dispatch_uid='badges_post_rating_save')
-
-
-def post_assessment_save(sender, **kwargs):
-    instance = kwargs.get('instance', None)
-    created = kwargs.get('created', False)
-    if created and isinstance(instance, Assessment):
-        instance.update_final_rating()
-
-post_save.connect(post_assessment_save, sender=Assessment,
-    dispatch_uid='badges_post_assessment_save')
 
 
 def post_submission_save(sender, **kwargs):

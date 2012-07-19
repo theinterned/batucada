@@ -1,16 +1,18 @@
 {% load l10n_tags %}
 {% if comment.scope_object %}
-{{ comment.scope_object.name }}{{ _(' was updated.') }}
+{{ comment.scope_object.name|safe }}{{ _(' was updated.') }}
 {% endif %}
 
-{{ comment.author }}{{ _(' posted a new comment at ') }}{{ comment.page_object }}{{ _('.') }}
+{{ comment.author }}{{ _(' posted a new comment at ') }}{{ comment.page_object|safe }}{{ _('.') }}
 
 {{ _('Comment:') }}
 {{ comment.content|striptags|safe }}
 
-{{ _('See comment at:') }} http://{{domain}}{{ comment.get_absolute_url }}
+{{ _('See comment at:') }} https://{{domain}}{{ comment.get_absolute_url }}
+
+{{ _('You can reply to this comment by email! Just type your reply at the top.') }}
 
 {{ _('Sincerely,') }}
 {{ _('The P2PU Team') }}
 
-{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/
+{{ _('Manage how often you get these delightful messages at:') }} http://{{domain}}/profile/edit/settings/

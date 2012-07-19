@@ -25,10 +25,12 @@ urlpatterns = patterns('',
     (r'^badges/',        include('badges.urls')),
     (r'metrics/',        include('tracker.urls')),
     (r'reviews/',        include('reviews.urls')),
+    (r'notifications/',   include('notifications.urls')),
     (r'',                include('users.urls')),
     (r'',                include('api.urls')),
 )
 
+# for serving media when running a local dev server with DEBUG=True
 media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
 urlpatterns += patterns('',
     (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
@@ -37,4 +39,13 @@ urlpatterns += patterns('',
      }),
 )
 
+static_url = settings.STATIC_URL.lstrip('/').rstrip('/')
+urlpatterns += patterns('',
+    (r'^%s/(?P<path>.*)$' % static_url, 'django.views.static.serve',
+     {
+         'document_root': settings.STATIC_ROOT,
+     }),
+)
+
 handler500 = 'drumbeat.views.server_error'
+handler404 = 'drumbeat.views.page_not_found'

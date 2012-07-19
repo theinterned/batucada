@@ -55,8 +55,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts', 'ajax',
-    'api',)
+SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts', 'ajax', 'api',)
 
 #Add the API server IP as a String here if you want to redirect API calls
 #API_SERVER = 'localhost:8000' to test locally
@@ -74,18 +73,20 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/admin-media/'
+#ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Absolute path to the directory that holds static files.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = path('static')
+STATIC_ROOT = path('static_serv')
 
 # URL that handles the static files served from STATIC_ROOT.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'std3j$ropgs216z1aa#8+p3a2w2q06mns_%2vfx_#$$i!+6o+x'
+# Directories containing static files
+STATICFILES_DIRS = (
+    path('static'),
+)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -113,7 +114,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'maintenancemode.middleware.MaintenanceModeMiddleware',
-    'commonware.middleware.HidePasswordOnException',
+    'commonware.middleware.ScrubRequestOnException',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
@@ -126,8 +127,8 @@ TEMPLATE_DIRS = (
     path('templates'),
 )
 
-# Use the fully qualified name for our apps so django_nose does not add duplicates
-# on INSTALLED_APPS.
+# Use the fully qualified name for our apps so django_nose does not
+# add duplicates on INSTALLED_APPS.
 INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.auth',
@@ -173,6 +174,7 @@ INSTALLED_APPS = (
     'lernanta.apps.tags',
     'lernanta.apps.tracker',
     'lernanta.apps.reviews',
+    'lernanta.apps.notifications',
     'lernanta.apps.api',
     'tastypie',
 )
@@ -221,6 +223,7 @@ CACHE_COUNT_TIMEOUT = 60
 # Email goes to the console by default.  s/console/smtp/ for regular delivery
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
+REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
 
 CELERY_RESULT_BACKEND = "amqp"
 
@@ -235,21 +238,23 @@ PUSH_HUB = 'http://pubsubhubbub.appspot.com/'
 SOUTH_TESTS_MIGRATE = False
 
 FEED_URLS = {
-    'splash': 'http://blogs.p2pu.org/feed/',
+    'splash': 'http://info.p2pu.org/feed/',
 }
 
 # Ckeditor
-CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
+CKEDITOR_MEDIA_PREFIX = "/static/ckeditor/"
 CKEDITOR_UPLOAD_PATH = path("media/uploads/images")
 CKEDITOR_FILE_UPLOAD_PATH = path("media/uploads/files")
 CKEDITOR_RESTRICT_BY_USER = True
-CKEDITOR_IMAGE_UPLOAD_EXTENSIONS = ['.jpg','.jpeg','.gif','.png','.tif','.tiff']
+CKEDITOR_IMAGE_UPLOAD_EXTENSIONS = [
+    '.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff'
+]
 CKEDITOR_FILE_UPLOAD_EXTENSIONS = CKEDITOR_IMAGE_UPLOAD_EXTENSIONS + ['.pdf',
-    '.doc','.rtf','.txt','.xls','.csv','.mov','.wmv','.mpeg','.mpg',
-    '.avi','.rm','.mp3','.mp4','.wav','.aiff','.midi','.m4p']
+    '.doc', '.rtf', '.txt', '.xls', '.csv', '.mov', '.wmv', '.mpeg', '.mpg',
+    '.avi', '.rm', '.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p']
 
 # Where the default image for sending to Gravatar
-DEFAULT_PROFILE_IMAGE = 'http://p2pu.org/media/images/member-missing.png'
+DEFAULT_PROFILE_IMAGE = 'https://p2pu.org/static/images/member-missing.png'
 
 # When set to True, if the request URL does not match any
 # of the patterns in the URLconf and it doesn't end in a slash,
@@ -304,3 +309,7 @@ TRACKING_PREFIXES = [
     r'^/\w{2}/schools/[\w-]+/sets/[\w-]+/$',
     r'^/\w{2}/schools/[\w-]+/$',
 ]
+
+BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
+    'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
+    'Speedy Spider', 'DotBot']

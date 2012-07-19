@@ -55,7 +55,7 @@ class ProjectTests(TestCase):
         response = self.client.post('/%s/groups/create/' % (self.locale,),
             data)
         self.assertRedirects(response,
-            '/%s/groups/%s/' % (self.locale, 'test-new-course'),
+            '/%s/groups/%s/create/tasks/' % (self.locale, 'test-new-course'),
             target_status_code=200)
 
     def test_challenge_creation(self):
@@ -65,17 +65,44 @@ class ProjectTests(TestCase):
             'short_description': 'This is my new challenge',
             'long_description': '<p>The new challenge is about...</p>',
             'language': 'en',
-            'duration': 10.3,
+            'category': 'challenge',
+            'duration': 10,
         }
         self.client.login(username=self.test_username,
             password=self.test_password)
-        response = self.client.post('/%s/groups/create/challenge/' % (self.locale,),
+        response = self.client.post('/%s/groups/create/' % (self.locale,),
             data)
         slug = 'test-new-challenge'
         self.assertRedirects(response,
-            '/%s/groups/%s/' % (self.locale, slug),
+            '/%s/groups/%s/create/tasks/' % (self.locale, slug),
             target_status_code=200)
         challenge = Project.objects.get(slug=slug)
         self.assertEqual(challenge.category, Project.CHALLENGE)
         self.assertEqual(challenge.duration_hours, 10)
-        self.assertEqual(challenge.duration_minutes, 18)
+
+    def test_get_listed_projects(self):
+        deleted_project = Project(deleted=True, test=False)
+        deleted_project.save()
+       
+        not_listed_project = Project(not_listed=True, test=False)
+        not_listed_project.save()
+       
+        under_dev_project = Project(name="under_dev:default", test=False)
+        under_dev_project.save()
+
+        archived_project = Project(under_development=False, archived=True)
+        archived_project.save()
+
+        test_project = Project(under_development=False, test=True)
+        test_project.save()
+
+        project = Project(name="listed", under_development=False, test=False)
+        project.save()
+       
+        listed_projects = Project.get_listed_projects()
+
+        self.assertFalse(deleted_project in listed_projects)
+        self.assertFalse(not_listed_project in listed_projects)
+        self.assertFalse(under_dev_project in listed_projects)
+        self.assertFalse(test_project in listed_projects)
+        self.assertTrue(project in listed_projects)

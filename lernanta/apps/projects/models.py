@@ -22,7 +22,7 @@ from drumbeat.models import ModelBase
 from relationships.models import Relationship
 from activity.models import Activity, RemoteObject, register_filter
 from activity.schema import object_types, verbs
-from users.tasks import SendNotifications
+from notifications.models import send_notifications
 from richtext.models import RichTextField
 from content.models import Page
 from replies.models import PageComment
@@ -95,6 +95,8 @@ class Project(ModelBase):
     created_on = models.DateTimeField(
         auto_now_add=True, default=datetime.datetime.now)
 
+    # Indicates a test course. Affects activities and notifications
+    test = models.BooleanField(default=False)
     under_development = models.BooleanField(default=True)
     not_listed = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
@@ -205,21 +207,30 @@ class Project(ModelBase):
 
     def get_metrics_permissions(self, user):
         """Provides metrics related permissions for metrics overview
-        and csv download."""
+        and CSV download."""
         if user.is_authenticated():
             if user.is_superuser:
-                return True, True
-            allowed_schools = settings.STATISTICS_ENABLED_SCHOOLS
-            if not self.school or self.school.slug not in allowed_schools:
-                return False, False
-            csv_downloaders = settings.STATISTICS_CSV_DOWNLOADERS
-            profile = user.get_profile()
-            csv_permission = profile.username in csv_downloaders
+                return True
+            if self.is_organizing(user):
+                return True
+            if not self.school:
+                return False
             is_school_organizer = self.school.organizers.filter(
                 id=user.id).exists()
-            if is_school_organizer or self.is_organizing(user):
-                return True, csv_permission
-        return False, False
+            if is_school_organizer:
+                return True
+        return False
+
+    def get_metric_csv_permission(self, user):
+        """Provides metrics related permissions for metrics CSV download."""
+        if user.is_authenticated():
+            # check for explicit permission grant
+            csv_downloaders = settings.STATISTICS_CSV_DOWNLOADERS
+            profile = user.get_profile()
+            if profile.username in csv_downloaders:
+                return True
+            return self.get_metrics_permissions(user)
+        return False
 
     def activities(self):
         return Activity.objects.filter(deleted=False,
@@ -261,7 +272,7 @@ class Project(ModelBase):
         return round(self.duration_hours + (self.duration_minutes / 60.0), 1)
 
     def get_image_url(self):
-        missing = settings.MEDIA_URL + 'images/project-missing.png'
+        missing = settings.STATIC_URL + 'images/project-missing.png'
         image_path = self.image.url if self.image else missing
         return image_path
 
@@ -274,16 +285,16 @@ class Project(ModelBase):
             'domain': Site.objects.get_current().domain,
         }
         profiles = [recipient.user for recipient in self.organizers()]
-        SendNotifications.apply_async((profiles, subject_template, body_template,
-            context))
-        admin_subject = render_to_string(
-            "projects/emails/admin_project_created_subject.txt",
-            context).strip()
-        admin_body = render_to_string(
-            "projects/emails/admin_project_created.txt", context).strip()
-        for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
-            send_mail(admin_subject, admin_body, admin_email,
-                [admin_email], fail_silently=True)
+        send_notifications(profiles, subject_template, body_template, context)
+        if not self.test:
+            admin_subject = render_to_string(
+                "projects/emails/admin_project_created_subject.txt",
+                context).strip()
+            admin_body = render_to_string(
+                "projects/emails/admin_project_created.txt", context).strip()
+            for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
+                send_mail(admin_subject, admin_body, admin_email,
+                    [admin_email], fail_silently=True)
 
     def accepted_school(self):
         # Used previously when schools had to decline groups.
@@ -405,22 +416,31 @@ class Project(ModelBase):
             return Project.objects.none()
 
     @classmethod
+    def get_listed_projects(cls):
+        """ return all the projects that should be listed """
+        listed = Project.objects.filter(
+            not_listed=False,
+            deleted=False,
+            archived=False,
+            under_development=False,
+            test=False)
+        return listed
+
+    @classmethod
     def get_popular_tags(cls, max_count=10):
         ct = ContentType.objects.get_for_model(Project)
-        not_listed = Project.objects.filter(
-            Q(not_listed=True)|Q(deleted=True)).values('id')
+        listed = list(Project.get_listed_projects().values_list('id', flat=True))
         return GeneralTaggedItem.objects.filter(
-            content_type=ct).exclude(object_id__in=not_listed).values(
+            content_type=ct, object_id__in=listed).values(
             'tag__name').annotate(tagged_count=Count('object_id')).order_by(
             '-tagged_count')[:max_count]
 
     @classmethod
     def get_weighted_tags(cls, min_count=2, min_weight=1.0, max_weight=7.0):
         ct = ContentType.objects.get_for_model(Project)
-        not_listed = Project.objects.filter(
-            Q(not_listed=True)|Q(deleted=True)).values('id')
+        listed = Project.get_listed_projects().values('id')
         tags = GeneralTaggedItem.objects.filter(
-            content_type=ct).exclude(object_id__in=not_listed).values(
+            content_type=ct, object_id__in=listed).values(
             'tag__name').annotate(tagged_count=Count('object_id')).filter(
             tagged_count__gte=min_count)
         if tags.count():
@@ -441,8 +461,8 @@ class Project(ModelBase):
         items = GeneralTaggedItem.objects.filter(
             content_type=ct, tag__name=tag_name).values(
             'object_id')
-        if projects == None:
-            project = Project.objects
+        if not projects:
+            projects = Project.objects
         return projects.filter(id__in=items)
 
     def is_challenge(self):
@@ -468,6 +488,19 @@ class Project(ModelBase):
 
 register_filter('default', Project.filter_activities)
 register_filter('learning', Project.filter_learning_activities)
+
+
+def get_active_projects():
+    """ get all projects that are not deleted, archived, tests
+        or under development
+    """
+    active_projects = Project.objects.filter(
+        archived=False,
+        deleted=False,
+        test=False,
+        under_development=False
+    )
+    return active_projects
 
 
 class Participation(ModelBase):
@@ -518,7 +551,7 @@ def post_save_project(sender, **kwargs):
     instance = kwargs.get('instance', None)
     created = kwargs.get('created', False)
     is_project = isinstance(instance, Project)
-    if created and is_project:
+    if created and is_project and not instance.test:
         statsd.Statsd.increment('groups')
 
 

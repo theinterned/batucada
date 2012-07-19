@@ -72,6 +72,12 @@ TIME_ZONE = 'America/Toronto'
 # Set to True to use https
 SESSION_COOKIE_SECURE = False
 
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'std3j$ropgs216z1aa#8+p3a2w2q06mns_%2vfx_#$$i!+6o+x'
+
+# Make sure this is unique and random
+INTERNAL_API_KEY = 'dmWfPniIMhkPRmiLosOEGmVVppfoyEFhpoIgElfyUpgxtJNCsDcdnFZIeYIUuiom'
+
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
@@ -90,6 +96,7 @@ INTERNAL_IPS = ('127.0.0.1',)
 # Sign up for an API key at https://www.google.com/recaptcha/admin/create
 RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
+RECAPTCHA_USE_SSL = True
 RECAPTCHA_URL = ('https://api-secure.recaptcha.net/challenge?k=%s' %
                  RECAPTCHA_PUBLIC_KEY)
 
@@ -157,10 +164,6 @@ MOZBADGES = {
 
 # Metrics
 STATISTICS_CSV_DOWNLOADERS = ('kfasimpaur',)
-STATISTICS_ENABLED_SCHOOLS = ('school-of-ed-pilot',)
-BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
-    'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
-    'Speedy Spider', 'DotBot']
 
 # Single Sign On (with multipass tender tokens)
 SSO_REDIRECT_FIELD_NAMES = ['to']

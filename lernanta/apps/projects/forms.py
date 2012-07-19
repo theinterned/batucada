@@ -37,22 +37,22 @@ class ProjectForm(forms.ModelForm):
             self.initial['duration'] = 0
         if category:
             self.fields['category'].required = False
-        if category == Project.CHALLENGE:
-            self.fields['name'].widget.attrs.update(
-                {'placeholder': _('Write a catchy title, keep it short and sweet')})
-            self.fields['short_description'].widget.attrs.update(
-                {'placeholder': _('e.g. Learn to write HTML by hand, literally.')})
-            self.fields['long_description'].widget.attrs.update(
-                {'placeholder': _("Who is the challenge for? <br>" \
-                                  "What are they going to be doing? <br>" \
-                                  "How are they going to be doing it? <br>" \
-                                  "Why are they doing it?")})
-            self.fields['tags'].widget.attrs.update(
-                {'placeholder': _('What will your peers be able to do upon completion of this challenge? Separate with commas')})
+        
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': _('Write a catchy title, keep it short and sweet.')})
+        self.fields['short_description'].widget.attrs.update(
+            {'placeholder': _('e.g. Learn to write HTML by hand, literally.')})
+        self.fields['long_description'].widget.attrs.update(
+            {'placeholder': _("Who is the challenge for? <br>" \
+                              "What are they going to be doing? <br>" \
+                              "How are they going to be doing it? <br>" \
+                              "Why are they doing it?")})
+        self.fields['tags'].widget.attrs.update(
+            {'placeholder': _('Tag your course so folks can find it. What will your audience be looking for? Separate with commas.')})
 
     class Meta:
         model = Project
-        fields = ('name', 'category', 'other', 'other_description',
+        fields = ('test', 'name', 'category', 'other', 'other_description',
             'short_description', 'long_description', 'language')
         widgets = {
             'category': forms.RadioSelect,
