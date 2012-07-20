@@ -58,10 +58,6 @@ USE_L10N = True
 SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts',
 'ajax', 'alpha',)
 
-#Add the API server IP as a String here if you want to redirect API calls
-#API_SERVER = 'localhost:8000' to test locally
-API_SERVER = None
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')

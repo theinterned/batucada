@@ -26,8 +26,8 @@ urlpatterns = patterns('',
     (r'metrics/',        include('tracker.urls')),
     (r'reviews/',        include('reviews.urls')),
     (r'notifications/',   include('notifications.urls')),
-    (r'',                include('users.urls')),
     (r'',                include('api.urls')),
+    (r'',                include('users.urls')),
 )
 
 # for serving media when running a local dev server with DEBUG=True

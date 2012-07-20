@@ -10,5 +10,5 @@ alpha_api.register(SchoolResource())
 alpha_api.register(BadgeResource())
 
 urlpatterns = patterns('',
-    (r'^api/', include(alpha_api.urls)),
+    (r'', include(alpha_api.urls)),
 )
