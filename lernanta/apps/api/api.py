@@ -10,6 +10,7 @@ class UserProfileResource(ModelResource):
     class Meta:
         queryset = UserProfile.objects.all()
         fields = ['username', 'bio', 'gravatar', 'following', 'followers']
+        resource_name = 'users'
         
     def dehydrate(self, bundle):
         bundle.data['gravatar'] = bundle.obj.gravatar()
