@@ -16,7 +16,6 @@ class APISubdomainMiddleware:
           protocol = 'http://'
 
         if ((host_s[0] == 'api') and request.path.startswith('/v')):
-          print 'Redirecting now'
           return HttpResponsePermanentRedirect(protocol + settings.API_SERVER 
               + '/api' + request.path + '?' + request.GET.urlencode(safe='&'))
         return
