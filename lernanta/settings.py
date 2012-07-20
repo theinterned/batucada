@@ -55,7 +55,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts',
+SUPPORTED_NONLOCALES = ('media', 'static', '.well-known', 'pubsub', 'broadcasts',
 'ajax', 'alpha',)
 
 # Absolute path to the directory that holds media.
