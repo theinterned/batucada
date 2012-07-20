@@ -55,7 +55,8 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts', 'ajax', 'api',)
+SUPPORTED_NONLOCALES = ('media', '.well-known', 'pubsub', 'broadcasts',
+'ajax', 'alpha',)
 
 #Add the API server IP as a String here if you want to redirect API calls
 #API_SERVER = 'localhost:8000' to test locally
