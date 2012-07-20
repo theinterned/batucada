@@ -5,6 +5,7 @@ from tasks import SendNotifications, PostNotificationResponse
 import logging
 import random
 import string
+import datetime
 
 log = logging.getLogger(__name__)
 
@@ -19,6 +20,10 @@ class ResponseToken(models.Model):
 
     # URL to call when receiving a response
     response_callback = models.CharField(max_length=255, blank=False)
+
+    # Date that the token was created
+    creation_date = models.DateTimeField(auto_now_add=True,
+        default=datetime.datetime.now, blank=False)
 
     def save(self):
         """Generate response token."""
