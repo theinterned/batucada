@@ -3,6 +3,7 @@ import urllib2
 
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
 
 from celery.task import Task
 
@@ -29,7 +30,9 @@ class SendNotifications(Task):
             body = bodies[profile.preflang]
             log.debug("Sending email to user %d with subject %s" % (
                 profile.user.id, subject,))
-            profile.user.email_user(subject, body, from_email)
+            email = EmailMessage(subject, body, from_email, [profile.user.email])
+            email.send()
+            #profile.user.email_user(subject, body, from_email)
 
 
 class PostNotificationResponse(Task):
