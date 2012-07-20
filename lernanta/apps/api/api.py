@@ -4,6 +4,7 @@ from projects.models import Project
 from users.models import UserProfile
 from schools.models import School
 from badges.models import Badge
+from django.conf.urls.defaults import url 
 
 
 class UserProfileResource(ModelResource):
@@ -19,6 +20,12 @@ class UserProfileResource(ModelResource):
 
         return bundle
 
+    def override_urls(self):
+        return [
+            url(r"^(?P<resource_name>%s)/(?P<username>[\w\d_.-]+)/$" 
+                % self._meta.resource_name, self.wrap_view('dispatch_detail'), 
+                name="api_dispatch_detail"), 
+        ]
 
 class SchoolResource(ModelResource):
     class Meta:
