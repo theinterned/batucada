@@ -39,12 +39,12 @@ class PostNotificationResponse(Task):
     """ Send a post to the response URL specified by the token """
     name = 'notifications.tasks.PostNotificationResponse'
 
-    def run(self, token, from_email, text, **kwargs):
+    def run(self, token, user, text, **kwargs):
         log = self.get_logger(**kwargs)
         log.debug("PostNotificationResponse: invoking callback") 
 
         data = {
-            'from': from_email,
+            'from': user.username,
             'text': text,
             'api-key': settings.INTERNAL_API_KEY
         }

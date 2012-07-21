@@ -2,6 +2,7 @@ from django.db import models
 
 from tasks import SendNotifications, PostNotificationResponse
 
+
 import logging
 import random
 import string
@@ -69,6 +70,25 @@ def send_notifications(user_profiles, subject_template, body_template,
     SendNotifications.apply_async(args)
 
 
-def post_notification_response(token, from_email, text):
-    args = (token, from_email, text,)
-    PostNotificationResponse.apply_async(args)
+def post_notification_response(token_text, from_email, text):
+
+    token = None
+    try:
+        token = ResponseToken.objects.get(response_token=token_text)
+    except ResponseToken.DoesNotExist:
+        log.error("Response token {0} does not exist".format(token_text))
+
+    from users.models import UserProfile
+    user = None
+    try:
+        user = UserProfile.objects.get(email=from_email)
+    except UserProfile.DoesNotExist:
+        log.error(
+            "Invalid user for response. User: {0}, Token: {1}".format(
+                from_email, token_text
+            )
+        )
+
+    if token and user and text:
+        args = (token, user, text,)
+        PostNotificationResponse.apply_async(args)
