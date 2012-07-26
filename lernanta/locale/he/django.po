@@ -80,6 +80,7 @@ msgid "Activity restored!"
 msgstr "הפעילות שוחזרה!"
 
 #: apps/badges/forms.py:56
+#, fuzzy
 msgid "You cannot give a badge to yourself."
 msgstr "אינך יכול לתת badge לעצמך."
 
@@ -99,16 +100,18 @@ msgstr "המשתמש %s צריך להיות עמית שלך."
 
 #: apps/badges/forms.py:70
 #, python-format
+#, fuzzy
 msgid "User %s has not received all the prerequisite badges."
 msgstr "המשתמש %s לא קיבל את כל הbadgeים הנצרכים קודם."
 
 #: apps/badges/models.py:64
+#, fuzzy
 msgid "Regulates how the badge is awarded to users."
 msgstr "מסדיר איך הbadge מוענק למשתמשים."
 
 #: apps/badges/models.py:73 templates/badges/_submissions_list_item.html:11
 msgid "Badge"
-msgstr "Badge"
+msgstr ""
 
 #: apps/badges/models.py:260
 msgid "Minimum number of votes."
@@ -119,23 +122,24 @@ msgid "Minimum average rating."
 msgstr "דירוג ממוצע מינימלי."
 
 #: apps/badges/models.py:266
+#, fuzzy
 msgid "If the badge can only be awarded to the user once."
 msgstr "אם אפשר להעניק את הbadge למשתמש רק פעם אחת."
 
 #: apps/badges/models.py:272
 #, fuzzy
 msgid "Submission Required"
-msgstr "Submission חובה"
+msgstr "הבקשה חובה"
 
 #: apps/badges/models.py:273
 #, fuzzy
 msgid "Submission Optional"
-msgstr "Submission אופציונלי"
+msgstr "הבקשה אופציונלית"
 
 #: apps/badges/models.py:274
 #, fuzzy
 msgid "No submissions"
-msgstr "אין submissions"
+msgstr "אין בקשות"
 
 #: apps/badges/models.py:297
 #, python-format
@@ -150,7 +154,7 @@ msgstr ""
 #, fuzzy
 msgid "If submission is blank, this is a peer awarded assessment or "
 "superuser granted"
-msgstr "אם הsubmission ריקה, זאת היא הערכה שהוענקה בידי עמית או superuser"
+msgstr "אם הבקשה ריקה, זאת היא הערכה שהוענקה בידי עמית או superuser"
 
 #: apps/badges/models.py:337
 msgid "If all rubric ratings were provided."
@@ -158,6 +162,7 @@ msgstr ""
 
 #: apps/badges/models.py:340
 #, python-format
+#, fuzzy
 msgid "%(assessor)s for %(assessed)s for %(badge)s"
 msgstr "%(assessor)s בשביל %(assessed)s בשביל %(badge)s"
 
@@ -184,6 +189,7 @@ msgstr "%(score)s בשביל %(rubric)s"
 
 #: apps/badges/models.py:433
 #, python-format
+#, fuzzy
 msgid "%(user)s - %(badge)s"
 msgstr "%(user)s - %(badge)s"
 
@@ -193,16 +199,19 @@ msgid "The %s has been created."
 msgstr "ה%s נוצר."
 
 #: apps/badges/views.py:91
+#, fuzzy
 msgid "Problem creating the badge."
 msgstr "תקלה ביצירת הbadge."
 
 #: apps/badges/views.py:105
+#, fuzzy
 msgid "You can not apply for this badge."
 msgstr "אינך יכול לבקש את הbadge הזה."
 
 #: apps/badges/views.py:119
+#, fuzzy
 msgid "Submission created and out for review!"
-msgstr ""
+msgstr "הבקשה נוצרה ומחכה להערכה!"
 
 #: apps/badges/views.py:122 apps/badges/views.py:257 apps/badges/views.py:314
 #: apps/content/views.py:117 apps/content/views.py:168
@@ -218,18 +227,21 @@ msgid "You cannot assess your own work."
 msgstr "אינך יכול להעריך את העבודה שלך."
 
 #: apps/badges/views.py:223
+#, fuzzy
 msgid "You have already assessed this submission."
-msgstr ""
+msgstr "כבר הערכת את הבקשה הזאת."
 
 #: apps/badges/views.py:254
 msgid "Assessment saved. Thank you for your feedback!"
 msgstr "ההערכה נשמרה. תודה על המשוב!"
 
 #: apps/badges/views.py:296
+#, fuzzy
 msgid "You can not give this badge to a peer."
 msgstr "אינך יכול לתת את הbadge הזה לעמית."
 
 #: apps/badges/views.py:311
+#, fuzzy
 msgid "Thank you for giving a badge to your peer!"
 msgstr "תודה שנתת badge לעמית שלך!"
 
@@ -1200,28 +1212,21 @@ msgstr ""
 "<a href=\"http://p2pu.lighthouseapp.com/projects/71002\">דיווח על הבאג</a>, "
 "וסיפור מה עשית כאשר התקלה אירעה."
 
-# #############################################################################
-# #############################################################################
-# ## Bookmark                                                                ##
-# #############################################################################
-# #############################################################################
-
 #: templates/503.html:5
 msgid "Down for maintenance, come back soon"
-msgstr "Fuera de servicio por mantenimiento, vuelva pronto"
+msgstr "האתר כרגע בתחזוקה, שוב עוד מעט"
 
 #: templates/503.html:7
 msgid ""
 "We are probably in the process of upgrading the site. We apologize for any "
 "inconvenience, and hope that you will like the new features."
 msgstr ""
-"Posiblemente estamos en el proceso de actualizar el sitio. Nos disculpamos "
-"por las molestias ocasionadas, y esperamos que disfrute las nuevas "
-"funcionalidades."
+"אנחנו כנראה בתהליך שידרוג האתר. אנו מצטערים על אי הנוחות, ומקווים שתאהבו את "
+"התכונות החדשות."
 
 #: templates/_footer.html:11
 msgid "What is P2PU?"
-msgstr "¿Qué es P2PU?"
+msgstr "מה זה P2PU?"
 
 #: templates/_footer.html:12
 msgid ""
@@ -1232,57 +1237,55 @@ msgid ""
 "internet and educational materials openly available online, P2PU enables "
 "high-quality low-cost education opportunities."
 msgstr ""
-"La Universidad Peer 2 Peer (Peer-to-Peer, De Igual a Igual) es un proyecto "
-"educativo con base social que organiza el aprendizaje fuera del marco "
-"institucional y da a quienes aprenden reconocimiento por sus logros. P2PU "
-"crea un modelo para aprender durante toda la vida que complementa los "
-"modelos tradicionales de educación superior formal. Al potencializar "
-"Internet y los materiales educativos en línea y abiertos, P2PU posibilita "
-"oportunidades educativas de alta calidad y bajo costo."
+"אוניברסיטת Peer 2 Peer (עמית לעמית) הינו פרויקט חינוך פתוח עממי, המארגן  "
+"לימוד חוץ-מוסדי ונותן ללומדים הכרה על הישיגיהם. P2PU יוצר מודל בשביל לימוד "
+"לאורך כל החיים, לצד חינוך פורמלי מסורתי. באמצעות שימוש באינטרנט ובחומרי "
+"הלימוד הזמינים בחינם בו, P2PU מאפשר הזדמנויות לימוד באיכות גבוהה ועלות "
+"נמוכה."
 
 #: templates/_footer.html:14
 msgid "Join P2PU Today! It's free."
-msgstr "¡Únase Hoy a P2PU! Es gratis."
+msgstr "הצטרף לP2PU היום! זה חינם."
 
 #: templates/_footer.html:18
 msgid "Some of our supporters"
-msgstr "Algunos de nuestros patrocinadores"
+msgstr "כמה מתומכינו"
 
 #: templates/_footer.html:21
 msgid "View all of our supporters"
-msgstr "Vea todos nuestros patrocinadores"
+msgstr "הצג את כל התומכים שלנו"
 
 #: templates/_footer.html:24
 msgid "Connect with us"
-msgstr "Conéctese con nosotros"
+msgstr "התחבר איתנו"
 
 #: templates/_footer.html:26 templates/pages/get_involved_page.html:7
 msgid "Get Involved"
-msgstr "Involúcrese"
+msgstr ""
 
 #: templates/_footer.html:27
 msgid "Read our Blog"
-msgstr "Lea nuestro Blog"
+msgstr "קרא את הבלוג שלנו"
 
 #: templates/_footer.html:28
 msgid "Find us on Facebook"
-msgstr "Encuéntrenos en Facebook"
+msgstr "חפש אותנו בפייסבוק"
 
 #: templates/_footer.html:29
 msgid "Follow us on Twitter"
-msgstr "Síganos en Twitter"
+msgstr "עקוב אחרינו בטוויטר"
 
 #: templates/_footer.html:30
 msgid "Send us an email"
-msgstr "Envíenos un correo"
+msgstr "שלח לנו דוא\"ל"
 
 #: templates/_footer.html:40
 msgid "(more)"
-msgstr "(más)"
+msgstr "(יותר)"
 
 #: templates/_footer.html:43
 msgid "CC BY SA"
-msgstr "CC REC/BY CI/SA"
+msgstr "CC BY SA (ייחוס-שיתוף זהה)"
 
 #: templates/_footer.html:46 templates/base.html:85 templates/base.html.py:97
 msgid "Help"
@@ -1290,7 +1293,7 @@ msgstr "עזרה"
 
 #: templates/_footer.html:47
 msgid "About P2PU"
-msgstr "Acerca de P2PU"
+msgstr "אודות P2PU"
 
 #: templates/_footer.html:48
 msgid "Announcements"
@@ -1302,23 +1305,23 @@ msgstr "ויקי"
 
 #: templates/_footer.html:50
 msgid "Found a Bug?"
-msgstr "¿Encontró una falla?"
+msgstr "מצאת באג?"
 
 #: templates/_footer.html:53
 msgid "Creative Commons Share-Alike"
-msgstr "Creative Commons Share-Alike"
+msgstr "Creative Commons שיתוף זהה"
 
 #: templates/_footer.html:54
 msgid "Privacy Guidelines"
-msgstr "Políticas de Privacidad"
+msgstr "מדיניות פרטיות"
 
 #: templates/_footer.html:55
 msgid "Terms of Use"
-msgstr "Términos de Uso"
+msgstr "תנאי שימוש"
 
 #: templates/base.html:16
 msgid "Learning for everyone, by everyone, about almost anything."
-msgstr "Aprendizaje para todos, por todos y acerca de casi todo."
+msgstr "לימוד לכולם, מאת כולם, אודות כמעט הכול."
 
 #: templates/base.html:31
 msgid "css/style-en.css"
@@ -1343,7 +1346,7 @@ msgstr "תרום"
 #: templates/base.html:75 templates/dashboard/dashboard.html:18
 #: templates/drumbeatmail/inbox.html:9
 msgid "Dashboard"
-msgstr "Mi Página"
+msgstr ""
 
 #: templates/base.html:76
 msgid "My Profile"
@@ -1351,44 +1354,44 @@ msgstr "הפרופיל שלי"
 
 #: templates/base.html:77
 msgid "My Settings"
-msgstr "Mis Preferencias"
+msgstr "ההגדרות שלי"
 
 #: templates/base.html:78 templates/chat/chat.html:4
 #: templates/chat/chat.html.py:10 templates/projects/sidebar.html:169
 msgid "Chat"
-msgstr "Chat"
+msgstr "צ'אט"
 
 #: templates/base.html:79 templates/drumbeatmail/inbox.html:4
 #: templates/drumbeatmail/inbox.html:11 templates/drumbeatmail/inbox.html:20
 msgid "Inbox"
-msgstr "Bandeja de Entrada"
+msgstr "דואר נכנס"
 
 #: templates/base.html:80
 msgid "Logout"
-msgstr "Salir"
+msgstr "יציאה מהחשבון"
 
 #: templates/base.html:90 templates/base.html.py:98
 msgid "Blog"
-msgstr "Blog"
+msgstr "בלוג"
 
 #: templates/base.html:96
 msgid "Login"
-msgstr "Entrar"
+msgstr "כניסה לחשבון"
 
 #: templates/base.html:103 templates/search/search.html:15
 msgid "Loading"
-msgstr "Cargando"
+msgstr "טוען"
 
 #: templates/base.html:106 templates/base.html.py:212
 #: templates/drumbeatmail/base.html:54
 #: templates/projects/contact_organizers.html:49
 #: templates/search/search.html:30 templates/users/profile_form_base.html:72
 msgid "en"
-msgstr "es"
+msgstr "he"
 
 #: templates/base.html:126
 msgid "Home"
-msgstr "Inicio"
+msgstr "בית"
 
 #: templates/base.html:167
 msgid "jquery.ui.datepicker-en.js"
@@ -1407,7 +1410,7 @@ msgstr "js/script-he.js"
 #: templates/replies/_comment_threads.html:90
 #: templates/signups/sign_up.html:66 templates/users/sidebar.html:31
 msgid "Report Abuse"
-msgstr "Reportar Abuso"
+msgstr "דווח על שימוש לרעה"
 
 #: templates/activity/_activity_resource.html:18
 #: templates/activity/delete_restore.html:32
@@ -1429,15 +1432,17 @@ msgstr "Reportar Abuso"
 #: templates/users/profile_edit_openids.html:30
 #: templates/users/settings_delete.html:26
 msgid "Delete"
-msgstr "Borrar"
+msgstr "מחק"
 
 #: templates/activity/_activity_resource.html:31
+#, fuzzy
 msgid "at"
-msgstr "en"
+msgstr "ב"
 
 #: templates/activity/_activity_resource.html:42
+#, fuzzy
 msgid "via"
-msgstr "vía "
+msgstr "דרך"
 
 #: templates/activity/_activity_resource.html:51
 #, python-format
@@ -1461,7 +1466,7 @@ msgstr[1] ""
 #: templates/activity/base.html:5
 #: templates/schools/school_edit_statistics.html:23
 msgid "Activity"
-msgstr "Actividad"
+msgstr "פעילות"
 
 #: templates/activity/base.html:22 templates/projects/_user_list.html:8
 #: templates/projects/project_user_list.html:7
@@ -1470,7 +1475,7 @@ msgstr "Actividad"
 #: templates/users/profile.html:19 templates/users/profile_edit.html:11
 #: templates/users/user_list.html:5 templates/users/user_list.html.py:10
 msgid "People"
-msgstr "Personas"
+msgstr "אנשים"
 
 #: templates/activity/delete_restore.html:8
 msgid "Restore Activity"
@@ -1507,7 +1512,7 @@ msgstr "אתה בטוח שאתה רוצה למחוק את הפעילות הזא�
 #: templates/projects/project_edit_summary.html:104
 #: templates/projects/project_edit_summary.html:107
 #: templates/projects/project_import.html:71
-#: templates/replies/comment_page.html:125
+#: templates/replies/comment_page.html:98
 #: templates/replies/delete_restore_comment.html:33
 #: templates/schools/school_edit_background.html:23
 #: templates/schools/school_edit_groups_icon.html:23
@@ -1525,7 +1530,7 @@ msgstr "אתה בטוח שאתה רוצה למחוק את הפעילות הזא�
 #: templates/users/settings_notifications.html:83
 #: templates/users/settings_password.html:27
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "ביטול"
 
 #: templates/activity/delete_restore.html:30
 #: templates/content/restore_version.html:21
@@ -1554,23 +1559,25 @@ msgstr "תגובות"
 #: templates/replies/_comment_threads.html:82
 #: templates/replies/_comment_threads.html:121
 #: templates/signups/sign_up.html:61
+#, fuzzy
 msgid "Reply"
-msgstr "Responder"
+msgstr "השב"
 
 #: templates/badges/_assessment_body.html:4
 msgid "Assessment from"
-msgstr "Evaluación de"
+msgstr "הערכה מאת"
 
 #: templates/badges/_assessment_body.html:4
 #: templates/badges/_assessment_item.html:11
 #: templates/reviews/show_project_reviews.html:16
+#, fuzzy
 msgid "on"
-msgstr "en"
+msgstr "בתאריך"
 
 #: templates/badges/_assessment_body.html:14
 #: templates/badges/_assessment_body.html:30
 msgid "out of 4"
-msgstr "de un total de 4"
+msgstr "מתוך 4"
 
 #: templates/badges/_assessment_body.html:40
 #: templates/replies/emails/post_comment.txt:8
@@ -1579,17 +1586,19 @@ msgstr "תגובה:"
 
 #: templates/badges/_assessment_item.html:11
 msgid "Gave"
-msgstr "Dió"
+msgstr "נתן"
 
 #: templates/badges/_assessment_item.html:11
 #: templates/projects/project_edit_status.html:59
 #: templates/projects/sidebar.html:145
+#, fuzzy
 msgid "to"
-msgstr "hasta el"
+msgstr "ל"
 
 #: templates/badges/_give_badge_action.html:4
+#, fuzzy
 msgid "Give Badge"
-msgstr "Dar una Medalla"
+msgstr "תן Badge"
 
 #: templates/badges/_give_badge_action.html:5
 #: templates/badges/badges_list.html:7 templates/badges/badges_list.html:11
@@ -1598,16 +1607,17 @@ msgstr "Dar una Medalla"
 #: templates/schools/projectset_home.html:22
 #: templates/users/_profile_info.html:8
 msgid "Badges"
-msgstr "Medallas"
+msgstr ""
 
 #: templates/badges/_review_submission_action.html:4
 #: templates/badges/submission_show.html:47
+#, fuzzy
 msgid "Review This Submission"
-msgstr "Revise Esta Respuesta"
+msgstr "הערך את הבקשה הזאת"
 
 #: templates/badges/_submission_item.html:11
 msgid "Submitted work on "
-msgstr "Presentó su trabajo en "
+msgstr "הגיש עבודה ב"
 
 #: templates/badges/_submission_item.html:16
 #, python-format
@@ -1620,79 +1630,78 @@ msgid_plural ""
 "            %(counter)s Reviews\n"
 "          "
 msgstr[0] ""
-"\n"
-"            %(counter)s Revisión\n"
-"          "
 msgstr[1] ""
-"\n"
-"            %(counter)s Revisiones\n"
-"          "
 
 #: templates/badges/_submissions_list.html:6
 msgid "WOW!"
-msgstr "¡Vaya!"
+msgstr "וואו!"
 
 #: templates/badges/_submissions_list.html:6
+#, fuzzy
 msgid "Check out all these submissions!"
-msgstr "¡Échele un vistazo a todas estas respuestas!"
+msgstr "בדוק את כל הבקשות האלו!"
 
 #: templates/badges/_submissions_list.html:8
 msgid "Please take a few minutes and help a fellow peer."
-msgstr "Por favor, tómese unos minutos y ayude a un colega."
+msgstr "בבקשה השקיע כמה דקות ועזור לעמית שלך."
 
 #: templates/badges/_submissions_list.html:10
 #: templates/projects/_tasks_completed_msg.html:17
+#, fuzzy
 msgid "Awaiting Review"
-msgstr "Esperando Revisión"
+msgstr "מחכים להערכה"
 
 #: templates/badges/_submissions_list.html:11
 msgid "Previously Awarded"
-msgstr "Previamente Otorgadas"
+msgstr "הענקות קודמות"
 
 #: templates/badges/_submissions_list.html:12
+#, fuzzy
 msgid "My Submissions"
-msgstr "Mis Respuestas"
+msgstr "הבקשות שלי"
 
 #: templates/badges/_submissions_list_item.html:29
 msgid "read more"
-msgstr "leer más"
+msgstr "קרא יותר"
 
 #: templates/badges/_submissions_list_item.html:37
+#, fuzzy
 msgid "submitted"
-msgstr "enviada"
+msgstr "בוקש לפני"
 
 #: templates/badges/_submissions_list_item.html:37
+#, fuzzy
 msgid "ago"
-msgstr "atrás"
+msgstr ""
 
 #: templates/badges/assessment_edit.html:19
+#, fuzzy
 msgid "Review this submission:"
-msgstr "Revise esta respuesta:"
+msgstr "הערך את הבקשה הזאת:"
 
 #: templates/badges/assessment_edit.html:28
 #: templates/badges/submission_show.html:31
 msgid "Link to work submitted"
-msgstr "Enlace al trabajo presentado"
+msgstr "קישור לעבודה המוגשת"
 
 #: templates/badges/assessment_edit.html:34
 msgid "How well was this peer able to:"
-msgstr "Cuán bien el colega fue capaz de:"
+msgstr "כמה טוב העמית הזה יכל ל:"
 
 #: templates/badges/assessment_edit.html:56
 msgid "Please explain your ratings."
-msgstr "Por favor explique su calificación."
+msgstr "בבקשה הסבר את הדירוג שלך."
 
 #: templates/badges/assessment_edit.html:57
 msgid "What did this peer do well? What advice or suggestions would you give?"
-msgstr ""
-"¿Qué hizo bien este colega? ¿Qué consejos o sugerencias le daría usted?"
+msgstr "את מה העמית הזה עשה טוב? איזה עצות וטיפים היית נותן?"
 
 #: templates/badges/assessment_edit.html:59
 #: templates/badges/peer_assessment.html:40
+#, fuzzy
 msgid ""
 "Why do you feel this person deserves this badge? Any additional comments?"
-msgstr ""
-"¿Por qué piensa que esta persona merece esta medalla? ¿Algún otro comentario?"
+msgstr "מדוע אתה חושב שלאדם הזה מגיע badge? הערות נוספות?"
 
 #: templates/badges/assessment_edit.html:66
 #: templates/badges/peer_assessment.html:46
@@ -1701,66 +1710,77 @@ msgstr ""
 #: templates/content/_toggle_completion.html:70
 #: templates/reviews/review_project.html:43
 msgid "Submit"
-msgstr "Enviar"
+msgstr "שלח"
 
 #: templates/badges/badge.html:16
+#, fuzzy
 msgid "View your Submissions"
-msgstr "Vea sus Respuestas"
+msgstr "צפה בבקשות שלך"
 
 #: templates/badges/badge.html:19
+#, fuzzy
 msgid "View Submissions"
-msgstr "Vea Listado Respuestas"
+msgstr "צפה בבקשות"
 
 #: templates/badges/badge.html:24
+#, fuzzy
 msgid "Apply for Badge"
-msgstr "Aplicar para la Medalla"
+msgstr "בקש את הbadge"
 
 #: templates/badges/badge.html:27
+#, fuzzy
 msgid "Award Badge to Peer"
-msgstr "Otorgar Medalla al Colega"
+msgstr "הענק את הbadge לעמית"
 
 #: templates/badges/badge.html:33
+#, fuzzy
 msgid "This badge can be earned at all challenges."
-msgstr "Esta medalla puede ser ganada en todos los retos."
+msgstr "אפשר להרוויח את הbadge הזה בכל האתגרים."
 
 #: templates/badges/badge.html:35 templates/badges/peer_assessment.html:24
 #: templates/badges/show_user_awards.html:20
 #: templates/badges/submission_edit.html:26
 #: templates/content/_toggle_completion.html:56
 msgid "Requirements:"
-msgstr "Requerimientos:"
+msgstr "דרישות:"
 
 #: templates/badges/badge.html:40
+#, fuzzy
 msgid "You need to have these badges:"
-msgstr "Necesita tener estas medallas:"
+msgstr "הינך צריך לקבל את הbadgeים האלו:"
 
 #: templates/badges/badge.html:55
+#, fuzzy
 msgid "Other badges you can apply for:"
-msgstr "Otras medallas a las que puede aplicar:"
+msgstr "badgeים אחרים אותם אתה יכול לבקש:"
 
 #: templates/badges/badge.html:67
+#, fuzzy
 msgid "Peers that have received this badge:"
-msgstr "Colegas que han recibido esta medalla:"
+msgstr "עמיתים אשר קיבלו את הbadge הזה:"
 
 #: templates/badges/badge.html:79
+#, fuzzy
 msgid "This badge can be earned at these Challenges:"
-msgstr "Esta medalla puede ser ganada en estos Retos:"
+msgstr "אפשר להרוויח את הbadge הזה באתגרים הללו:"
 
 #: templates/badges/badge.html:89
+#, fuzzy
 msgid "Peers that are applying for this badge:"
-msgstr "Colegas que están aplicando por esta medalla:"
-
-#: templates/badges/badge.html:91 templates/projects/sidebar.html:302
-msgid "Awarded"
-msgstr "Otorgadas"
+msgstr "עמיתים אשר ביקשו את הbadge הזה:"
 
 #: templates/badges/badge.html:91 templates/projects/sidebar.html:306
+msgid "Awarded"
+msgstr "הוענקו"
+
+#: templates/badges/badge.html:91 templates/projects/sidebar.html:310
 msgid "Pending"
-msgstr "Pendiente"
+msgstr "מחכים"
 
 #: templates/badges/badge_edit.html:4 templates/badges/badge_edit.html:10
+#, fuzzy
 msgid "Edit Badge"
-msgstr "Editar Medalla"
+msgstr "עריכת Badge"
 
 #: templates/badges/badge_edit_summary.html:10
 #: templates/projects/project_edit_links.html:14
@@ -1776,45 +1796,45 @@ msgstr "Editar Medalla"
 #: templates/users/profile_edit_links.html:35
 #: templates/users/profile_edit_links_edit.html:13
 msgid "Name"
-msgstr "Nombre"
+msgstr "שם"
 
 #: templates/badges/badge_edit_summary.html:15
 msgid "Brief description"
-msgstr "Descripción Breve"
+msgstr "תיאור קצר"
 
 #: templates/badges/badge_edit_summary.html:16
 msgid ""
 "This is used both on P2PU and within the Open Badges Infrastructure (OBI)"
-msgstr ""
-"Esto es usado tanto en P2PU como en la Open Badges Infrastructure (OBI)"
+msgstr "משתמשים בזה גם בP2PU וגם בOpen Badges Infrastructure (OBI)"
 
 #: templates/badges/badge_edit_summary.html:21
+#, fuzzy
 msgid "Requirements to get badge"
-msgstr "Requisitos para obtener la medalla"
+msgstr "דרישות לקבלת הbadge"
 
 #: templates/badges/badge_edit_summary.html:22
+#, fuzzy
 msgid ""
 "Description of any requirements that must be satisfied to award the badge."
-msgstr ""
-"Descripción de los requisitos que deben cumplirse para otorgar la medalla."
+msgstr "תיאור הדרישות החייבות להתמלא על מנת להעניק את הbadge."
 
 #: templates/badges/badge_edit_summary.html:27
+#, fuzzy
 msgid "Badge Type"
-msgstr "Tipo de Medalla"
+msgstr "סוג הbadge"
 
 #: templates/badges/badge_edit_summary.html:28
+#, fuzzy
 msgid ""
 "The logic behind badge awarding will change depending on the badge type."
-msgstr ""
-"La lógica detrás de la concesión de la medalla cambia dependiendo del tipo "
-"de medalla."
+msgstr "החישובים בנוגע להענקת הbadge ישתנו בהתאם לסוג הbadge."
 
 #: templates/badges/badge_edit_summary.html:36
 #: templates/content/edit_page.html:43
 #: templates/dashboard/setup_profile.html:9
 #: templates/projects/project_edit_status.html:68
 #: templates/projects/project_edit_summary.html:105
-#: templates/replies/comment_page.html:128
+#: templates/replies/comment_page.html:101
 #: templates/schools/school_edit_mentorship.html:25
 #: templates/schools/school_edit_styles.html:69
 #: templates/schools/school_edit_summary.html:35
@@ -1825,7 +1845,7 @@ msgstr ""
 #: templates/users/settings_notifications.html:84
 #: templates/users/settings_password.html:28
 msgid "Save"
-msgstr "שמור"
+msgstr "שמירה"
 
 #: templates/badges/badge_edit_summary.html:39
 #: templates/content/create_page.html:34 templates/projects/learn.html:20
@@ -1837,59 +1857,70 @@ msgstr "שמור"
 #: templates/projects/project_import.html:7
 #: templates/projects/project_import.html:72 templates/schools/home.html:15
 msgid "Create"
-msgstr "Crear"
+msgstr "יצירה"
 
 #: templates/badges/peer_assessment.html:20
+#, fuzzy
 msgid "Give this badge to your peer."
-msgstr "Dele esta medalla a su colega."
+msgstr "תן את הbadge הזה לעמית שלך."
 
 #: templates/badges/peer_assessment.html:34
 msgid "Peer Username:"
-msgstr "Nombre de Usuario del Colega:"
+msgstr "שם העמית:"
 
 #: templates/badges/profile_badges_manage.html:7
 #: templates/badges/profile_badges_manage.html:10
 #: templates/users/profile_edit.html:32
+#, fuzzy
 msgid "Share Badges"
-msgstr ""
+msgstr "שיתוף Badges"
 
 #: templates/badges/profile_badges_manage.html:13
 #, python-format
+#, fuzzy
 msgid ""
 "In order to allow you to share your <a href=\"%(badges_help_url)s\" target="
 "\"_blank\">badges</a> with other sites and communities, P2PU has plugged "
 "into the Mozilla Open Badge Infrastructure (OBI)."
 msgstr ""
+"על מנת לאפשר לך לשתף את <a href=\"%(badges_help_url)s\" target=\"_blank"
+"\">הbadges</a> שלך עם אתרים וקהילות אחרות, P2PU התחבר לMozilla Open Badge "
+"Infrastructure (OBI)."
 
 #: templates/badges/profile_badges_manage.html:17
 #, python-format
+#, fuzzy
 msgid ""
 "Start by sending your badges to the <a href=\"%(obi_url)s\" target=\"_blank"
 "\">Mozilla Open Badge Backpack</a> as %(email)s."
 msgstr ""
+"התחל על ידי שליחת הbadges שלך ל<a href=\"%(obi_url)s\" target=\"_blank"
+"\">Mozilla Open Badge Backpack</a> כ%(email)s."
 
 #: templates/badges/profile_badges_manage.html:22
+#, fuzzy
 msgid "You don't have any badges."
-msgstr "No tiene ninguna insignia."
+msgstr "אין לך badges."
 
 #: templates/badges/profile_badges_manage.html:23
 #, python-format
+#, fuzzy
 msgid ""
 "Check out the <a href=\"%(badges_url)s\">existing badges</a> you can earn!"
-msgstr "¡Vea las <a href=\"%(badges_url)s\">insignias</a> que puede ganar!"
+msgstr "בדוק את כל <a href=\"%(badges_url)s\">הbadges הקיימים</a> שאתה יכול להרוויח!"
 
 #: templates/badges/show_assessment.html:6
 msgid "Award Justification for"
-msgstr "Justificación para Otorgar"
+msgstr "צידוק ההענקה בשביל"
 
 #: templates/badges/show_assessment.html:30
 #: templates/badges/submission_show.html:37 templates/messages/inbox.html:13
 msgid "Received"
-msgstr "Recibido"
+msgstr ""
 
 #: templates/badges/show_assessment.html:39
 msgid "Award Justification"
-msgstr "Justificación"
+msgstr "צידוק ההענקה"
 
 #: templates/badges/show_user_awards.html:11
 msgid "'s Awards to"
@@ -1898,124 +1929,128 @@ msgstr " Otorgada a"
 #: templates/badges/show_user_awards.html:30
 #: templates/projects/imported_detailed_description.html:15
 msgid "Prerequisites"
-msgstr "Prerequisitos"
+msgstr "דרישות מוקדמות"
 
 #: templates/badges/show_user_awards.html:40
 msgid "Awarded At"
-msgstr "Otorgada En"
+msgstr "הוענק ב"
 
 #: templates/badges/show_user_awards.html:51
 msgid "Evidence"
-msgstr "Evidencia"
+msgstr "ראיות"
 
 #: templates/badges/submission_edit.html:22
+#, fuzzy
 msgid "Apply for this badge."
-msgstr "Aplicar para esta medalla."
+msgstr "בקש את הbadge הזה."
 
 #: templates/badges/submission_edit.html:36
 msgid "URL to the work you are submitting:"
-msgstr "URL al trabajo que esta presentando:"
+msgstr "קישור לעבודה אותה אתה מגיש:"
 
 #: templates/badges/submission_edit.html:41
 #: templates/content/_toggle_completion.html:66
 msgid "What did you learn? Why do you feel you deserve this badge?"
-msgstr "¿Qué ha aprendido? ¿Por qué cree merecer esta medalla?"
+msgstr "מה למדת? מדוע אתה חושב שאתה ראוי לקבל את הbadge הזה?"
 
 #: templates/badges/submission_show.html:6
+#, fuzzy
 msgid "Submission for"
-msgstr "Respuestas a"
+msgstr "בקשה בשביל"
 
 #: templates/badges/submission_show.html:20
+#, fuzzy
 msgid "Submission"
-msgstr "Respuesta"
+msgstr "בקשה"
 
 #: templates/badges/submission_show.html:34
 msgid "Progress:"
-msgstr "Progreso:"
+msgstr "התקדמות:"
 
 #: templates/badges/submission_show.html:37
 msgid " reviews of the"
-msgstr " revisiones de"
+msgstr " הערכות מתוך"
 
 #: templates/badges/submission_show.html:37
 msgid "reviews needed."
-msgstr "revisiones requeridas."
+msgstr "הערכות נצרכות."
 
 #: templates/badges/submission_show.html:40
 msgid "The posted reviews give this work submission a total average score of"
-msgstr ""
-"Las revisiones enviadas dan a esta respuesta una calificación promedio total "
-"de"
+msgstr "ההערכות שפורסמו נתנו לעבודה הזאת ציון ממוצע של"
 
 #: templates/badges/submission_show.html:40
 msgid "(needs to be at least"
-msgstr "(necesita ser al menos"
+msgstr "(צריך להיות לפחות"
 
 #: templates/badges/submission_show.html:40
 msgid "for the badge to be awarded)."
-msgstr "para que la medalla sea otorgada)."
+msgstr "כדי שהbadge יוענק)."
 
 #: templates/badges/submission_show.html:57 templates/reviews/base.html:4
 #: templates/reviews/base.html.py:10
 #: templates/reviews/show_project_reviews.html:6
 #: templates/reviews/show_project_reviews.html:12
 msgid "Reviews"
-msgstr "Revisiones"
+msgstr "הערכות"
 
 #: templates/badges/submissions_list.html:7
 #: templates/badges/submissions_list.html:11
+#, fuzzy
 msgid "Submissions"
-msgstr "Respuestas"
+msgstr "בקשות"
 
 #: templates/badges/success_msg.html:3
 #, python-format
+#, fuzzy
 msgid ""
 "The badges were send succesfully! You can now see your badges at <a href="
 "\"%(obi_url)s\" target=\"_blank\">%(obi_url)s</a>. Be sure to log in using "
 "the email <strong>%(email)s</strong>."
 msgstr ""
-"Las insignias fueron enviadas exitosamente! Ahora puede verlas en <a href="
-"\"%(obi_url)s\" target=\"_blank\">%(obi_url)s</a>. Asegúrese de utilizar la "
-"dirección de correo <strong>%(email)s</strong> cuando entre a ese sitio."
+"הbadges נשלחו בהצלחה! אתה יכול לצפות בbadges שלך אצל <a href=\"%(obi_url)s\" "
+"target=\"_blank\">%(obi_url)s</a>. אל תשכח להתחבר באמצעות הכתובת <strong>"
+"%(email)s</strong>."
 
 #: templates/badges/emails/new_submission.txt:2
 msgid "Howdy!"
-msgstr ""
+msgstr "מה נשמע?"
 
 #: templates/badges/emails/new_submission.txt:4
 msgid "Someone has just submitted work for the"
-msgstr ""
+msgstr "מישהו הגיש עבודה בשביל"
 
 #: templates/badges/emails/new_submission.txt:4
 #, fuzzy
 msgid "Go ahead and take a look at their work here:"
-msgstr "Échele un vistazo a su trabajo en"
+msgstr "לך והסתכל בעבודה שלהם כאן:"
 
 #: templates/badges/emails/new_submission.txt:4
 msgid "They will love you!"
-msgstr "¡Ellos te lo van a agradecer!"
+msgstr "הם יאהבו אותך!"
 
 #: templates/badges/emails/new_submission.txt:6
+#: templates/statuses/emails/wall_updated.txt:16
 msgid "Go get 'em,"
 msgstr ""
 
 #: templates/badges/emails/new_submission.txt:8
 msgid "The P2PU team"
-msgstr "El Equipo de P2PU"
+msgstr "צוות P2PU"
 
 #: templates/badges/emails/new_submission.txt:10
 #: templates/content/emails/content_update.txt:14
 #: templates/replies/emails/post_comment.txt:18
 #: templates/statuses/emails/wall_updated.txt:22
 msgid "Manage how often you get these delightful messages at:"
-msgstr ""
+msgstr "סדר איך אתה מקבל את ההדעות המענגות האלו אצל:"
 
 #: templates/badges/emails/new_submission_subject.txt:2
 msgid "Make someone's day. Review a badge for "
-msgstr ""
+msgstr "עשה את היום של מישהו. הערך בקשה של בשביל"
 
 #: templates/content/_edit_pages_item.html:5
-#: templates/projects/project.html:22 templates/projects/sidebar.html:246
+#: templates/projects/project.html:22 templates/projects/sidebar.html:250
 msgid "New Task"
 msgstr "משימה חדשה"
 
@@ -2024,7 +2059,7 @@ msgstr "משימה חדשה"
 #: templates/projects/project_create_overview.html:91
 #: templates/projects/project_edit_summary.html:22
 msgid "Title"
-msgstr "Título"
+msgstr "כותרת"
 
 #: templates/content/_edit_pages_item.html:23
 #: templates/projects/project_create_overview.html:96
@@ -2038,31 +2073,39 @@ msgstr "מחק?"
 
 #: templates/content/_post_link_comment.html:2
 msgid "This is a link to my work:"
-msgstr "Este es el enlace a mi trabajo:"
+msgstr "זהו קישור לעבודה שלי:"
 
 #: templates/content/_toggle_completion.html:8
 msgid "You've marked this task as completed."
-msgstr "Usted a marcado esta tarea como completa."
+msgstr "סימנת את המשימה הזאת כגמורה."
 
 #: templates/content/_toggle_completion.html:13
 msgid "Are you done with this task?"
-msgstr "¿Está seguro que ha terminado con esta tarea?"
+msgstr "האם סיימת את המשימה הזאת?"
 
 #: templates/content/_toggle_completion.html:14
 msgid "Yes, I'm done"
-msgstr "Sí, ya terminé"
+msgstr "כן, גמרתי"
 
 #: templates/content/_toggle_completion.html:30
 msgid "Post to Discussion Wall"
-msgstr "Publicar en la página de Debates"
+msgstr "פרסם בקיר הדיון"
 
 #: templates/content/_toggle_completion.html:36
+#, fuzzy
 msgid "Submit this link to apply for the badges below"
-msgstr "Usar este enlace para aplicar a las medallas a continuación"
+msgstr "פרסם את הקישור הזה ובקש את הbadge להלן"
 
 #: templates/content/_toggle_completion.html:51
+#, fuzzy
 msgid "Apply for this badge"
-msgstr "Aplicar para esta medalla"
+msgstr "בקש את הbadge הזה"
+
+# #############################################################################
+# #############################################################################
+# ## Bookmark                                                                ##
+# #############################################################################
+# #############################################################################
 
 #: templates/content/_toggle_completion.html:60
 msgid "Badge Application Form"
@@ -2097,7 +2140,7 @@ msgid "Submitted"
 msgstr "¡Enviada!"
 
 #: templates/content/base_page_form.html:20
-#: templates/replies/comment_page.html:77
+#: templates/replies/comment_page.html:59
 #: templates/signups/answer_sign_up.html:24
 msgid "[Preview]"
 msgstr "[Vista Previa]"
@@ -2122,7 +2165,7 @@ msgstr "Trabajo colaborativo (editable por todos los participantes)."
 
 #: templates/content/base_page_form.html:59
 #: templates/content/edit_pages.html:38
-#: templates/replies/comment_page.html:132
+#: templates/replies/comment_page.html:105
 #: templates/signups/answer_sign_up.html:98
 msgid "Preview"
 msgstr "Vista Previa"
