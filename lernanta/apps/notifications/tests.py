@@ -1,5 +1,7 @@
 from django.test import Client
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.core import mail
 
 from replies.models import PageComment
 from users.models import create_profile
@@ -10,6 +12,8 @@ from notifications.models import post_notification_response
 from notifications.models import send_notifications
 
 from test_utils import TestCase
+
+import simplejson as json
 
 
 class NotificationsTests(TestCase):
@@ -64,10 +68,12 @@ class NotificationsTests(TestCase):
             'comment': self.comment,
             'domain': 'example.org',
         }
+        message_count = len(mail.outbox)
         send_notifications(self.user, subject_template, body_template, context)
         self.assertEqual(ResponseToken.objects.count(), 0)
 
         #TODO check that 1 email was sent
+        #self.assertEqual(len(mail.outbox), message_count + 1)
 
     def test_notification_with_response(self):
         """ Test notification with possible response """
@@ -150,4 +156,29 @@ class NotificationsTests(TestCase):
 
         # i wish, the test db isn't running a server that can take the callback
         #comments = PageComment.objects.all()
-        #self.assertEquals(comments.count(), 2)        
+        #self.assertEquals(comments.count(), 2)
+
+    def test_notification_create(self):
+        """ Test sending a notification using the API """
+
+        notification_data = {
+            'api-key': settings.INTERNAL_API_KEY,
+            'user': self.user.username,
+            'subject': 'notification',
+            'text': 'Some notification text.\nAnd some more',
+            'callback_url': 'http://mentor.p2pu.org/message/43234',
+            'from': self.user.username,
+        }
+
+        json_data = json.dumps(notification_data)
+        response = self.client.post(
+            '/{0}/notifications/notification/'.format(self.locale), 
+            json_data,
+            "text/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        
+        #TODO check that email was sent
+        #self.assertEqual(len(mail.outbox), 1)
+
+
