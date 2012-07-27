@@ -13,14 +13,18 @@ class SendNotifications(Task):
     """Send email notification to the users specified by ``profiles``."""
     name = 'notifications.tasks.SendNotifications'
 
-    def run(self, profiles, subject_template, body_template, context, reply_token=None, **kwargs):
+    def run(self, profiles, subject_template, body_template, context, reply_token=None, sender=None, **kwargs):
         log = self.get_logger(**kwargs)
         subjects, bodies = localize_email(subject_template,
             body_template, context)
+
+        from_name = "P2PU Notifications"
+        if sender:
+            from_name = sender
             
-        from_email = "P2PU Notifications <{0}>".format(settings.DEFAULT_FROM_EMAIL)
+        from_email = "{0} <{1}>".format(from_name, settings.DEFAULT_FROM_EMAIL)
         if reply_token:
-            from_email = "P2PU Notifications <reply+{0}@{1}>".format(reply_token,
+            from_email = "{0} <reply+{1}@{2}>".format(from_name, reply_token,
                 settings.REPLY_EMAIL_DOMAIN)
             
         for profile in profiles:
@@ -40,13 +44,16 @@ class PostNotificationResponse(Task):
     name = 'notifications.tasks.PostNotificationResponse'
 
     def run(self, token, user, text, **kwargs):
+        #CS whole token passed in, but only url is used
+        #!! internal API key is posted to callback, wont work for external apps!
+        #!! should send data as json request?
         log = self.get_logger(**kwargs)
         log.debug("PostNotificationResponse: invoking callback") 
 
         data = {
+            'api-key': settings.INTERNAL_API_KEY,
             'from': user.username,
             'text': text,
-            'api-key': settings.INTERNAL_API_KEY
         }
         
         host_name = Site.objects.get_current().domain

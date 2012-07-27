@@ -45,7 +45,7 @@ class ResponseToken(models.Model):
 
 
 def send_notifications(user_profiles, subject_template, body_template,
-        template_context, response_callback=None):
+        template_context, response_callback=None, sender=None):
     """Asynchronously send email notifications to users
     
     user_profiles - the users to send the notification to
@@ -55,6 +55,7 @@ def send_notifications(user_profiles, subject_template, body_template,
     response_callback - url called when a user responds to a notification
         If response_callback is None, it is assumed that the notification
         cannot be responded to
+    sender - the name to be used in the from address: sender <reply+token@domain>
     """
     token_text = None
     if (response_callback):
@@ -64,7 +65,7 @@ def send_notifications(user_profiles, subject_template, body_template,
         token_text = token.response_token
         
     args = (user_profiles, subject_template, body_template, template_context,
-        token_text,)
+        token_text, sender)
 
     log.debug("notifications.send_notifications: {0}".format(args))
     SendNotifications.apply_async(args)
