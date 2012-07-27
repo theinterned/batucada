@@ -217,8 +217,10 @@ CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 CACHE_PREFIX = 'lernanta'
 CACHE_COUNT_TIMEOUT = 60
 
-# Email goes to the console by default.  s/console/smtp/ for regular delivery
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email goes to a file by default.  s/filebased/smtp/ for regular delivery
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = path('mailbox.txt') # change this to a proper location
+
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
 REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
 
