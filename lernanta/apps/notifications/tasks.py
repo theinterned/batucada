@@ -65,4 +65,4 @@ class PostNotificationResponse(Task):
         try:
             results = requests.post(url, data=data)
         except requests.exceptions.RequestException as error:
-            log.error("calling internal API failed. URL: {0}, reason: ".format(url, error.reason))
+            log.error("calling internal API failed. URL: {0}, message: ".format(url, error.message))
