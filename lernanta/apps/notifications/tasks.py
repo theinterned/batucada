@@ -1,5 +1,4 @@
-import urllib
-import urllib2
+import requests
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -55,13 +54,15 @@ class PostNotificationResponse(Task):
             'from': user.username,
             'text': text,
         }
+
+        #TODO check if callback is relative path eg. /replies/blah
+        # in that case, add host_name to URL and send api-key
+        # otherwise, use callback and don't send api-key
         
         host_name = Site.objects.get_current().domain
         url = "https://{0}{1}".format(host_name, token.response_callback)
 
         try:
-            results = urllib2.urlopen(url, urllib.urlencode(data))
-        except urllib2.HTTPError as error:
-            log.error("calling internal API failed. URL: {0}, Status code: {1}".format(url, error.code))
-        except urllib.URLError as error:
+            results = requests.post(url, data=data)
+        except requests.exceptions.RequestException as error:
             log.error("calling internal API failed. URL: {0}, reason: ".format(url, error.reason))
