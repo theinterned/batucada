@@ -102,7 +102,7 @@ class PageComment(ModelBase):
                 profiles.append(profile)
         reply_url = reverse('email_reply', args=[self.id])
         send_notifications(profiles, subject_template, body_template, context,
-            reply_url
+            reply_url, self.author.username
         )
 
 
