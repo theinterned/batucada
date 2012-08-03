@@ -224,6 +224,9 @@ EMAIL_FILE_PATH = path('mailbox.txt') # change this to a proper location
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
 REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
 
+# Quickest allowable response time in seconds
+MIN_EMAIL_RESPONSE_TIME = 30
+
 CELERY_RESULT_BACKEND = "amqp"
 
 # SuperFeedr settings

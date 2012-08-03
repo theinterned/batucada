@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 
 from notifications.models import post_notification_response, send_notifications
+from notifications.models import ResponseToken
 from users.models import UserProfile
 
 import simplejson as json
@@ -34,12 +35,28 @@ def response(request):
     if to_email.find('+') != -1 and to_email.find('@') != -1:
         token_text = to_email[to_email.index('+')+1:to_email.index('@')]
 
+    token = None
+    try:
+        token = ResponseToken.objects.get(response_token=token_text)
+    except ResponseToken.DoesNotExist:
+        log.error("Response token {0} does not exist".format(token_text))
+
     # convert 'User Name <email@server.com>' to 'email@server.com'
     if from_email.find('<') != -1 and from_email.find('>') != -1:
         from_email = from_email[from_email.index('<')+1:from_email.index('>')]
 
-    if token_text and from_email and reply_text:
-        post_notification_response(token_text, from_email, reply_text)
+    user = None
+    try:
+        user = UserProfile.objects.get(email=from_email)
+    except UserProfile.DoesNotExist:
+        log.error(
+            "Invalid user for response. User: {0}, Token: {1}".format(
+                from_email, token_text
+            )
+        )
+
+    if token and user and reply_text:
+        post_notification_response(token, user, reply_text)
     else:
         log.error("notifications.response: Invalid response")
 
