@@ -1,6 +1,8 @@
-{% load l10n_tags %}{% load i18n %}{% blocktrans %}Hi there!
+{% load l10n_tags %}{% load i18n %}{% blocktrans %}We love your enthusiasm for learning & for P2PU. Keep it up!
 
-Wow, you are really quick to respond! Unfortunately we'll have to ask you to send your message again. Other people, surely not you, have auto responders that respond this quick and we don't want to post those messages to all their peers.
+But sometimes speedy responses are a sign that someone has an auto-responder on. And you wouldn't a gazillion of those in your inbox :)
 
-Cheers
-The P2PU team{% endblocktrans %}
+Sorry - we're going to ask you to send your message again. Just in case.
+
+Cheerio,
+P2PU team{% endblocktrans %}

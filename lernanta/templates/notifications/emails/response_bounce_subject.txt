@@ -1,1 +1,1 @@
-{% load l10n_tags %}{{ ('Quick on the draw! Is this maybe your auto responder replying?') }}
+{% load l10n_tags %}{{ ('P2PU calling. Are we getting your machine?') }}
