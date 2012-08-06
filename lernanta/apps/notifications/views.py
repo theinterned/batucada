@@ -98,7 +98,7 @@ def notifications_create(request):
 
     if user and subject and text:
         subject_template = 'notifications/emails/api_notification_subject.txt'
-        body_template = 'notifications/email/api_notification.txt'
+        body_template = 'notifications/emails/api_notification.txt'
         context = {
             'subject': subject,
             'text': text
