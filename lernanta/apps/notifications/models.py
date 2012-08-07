@@ -76,11 +76,13 @@ def post_notification_response(token, user, text):
 
     # check how much time elapse before this response was sent
     delta = datetime.datetime.now() - token.creation_date
-    if delta.total_seconds() < settings.MIN_EMAIL_RESPONSE_TIME:
+    total_seconds = delta.seconds + delta.days * 24 * 3600 # hello python 2.6
+    if total_seconds < settings.MIN_EMAIL_RESPONSE_TIME:
         subject_template = 'notifications/emails/response_bounce_subject.txt'
         body_template = 'notifications/emails/response_bounce.txt'
         context = {}
         send_notifications([user], subject_template, body_template, context)
+        log.debug('post_notification_response: quick response bounced')
         return
 
     args = (token, user, text,)
