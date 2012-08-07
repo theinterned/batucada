@@ -55,12 +55,10 @@ class PostNotificationResponse(Task):
             'text': text,
         }
 
-        #TODO check if callback is relative path eg. /replies/blah
-        # in that case, add host_name to URL and send api-key
-        # otherwise, use callback and don't send api-key
-        
-        host_name = Site.objects.get_current().domain
-        url = "https://{0}{1}".format(host_name, token.response_callback)
+        url = token.response_callback
+        if token.response_callback.find('http') != 0:
+            host_name = Site.objects.get_current().domain
+            url = "https://{0}{1}".format(host_name, token.response_callback)
 
         try:
             results = requests.post(url, data=data)

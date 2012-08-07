@@ -73,8 +73,11 @@ def notifications_create(request):
             user: 'https://api.p2pu.org/alpha/users/username/',
             subject: 'Notification subject',
             text: 'Notification text.\nProbably containing multiple paragraphs',
-            response-callback: 'https://mentors.p2pu.org/api/reply'
+            callback: 'https://mentors.p2pu.org/api/reply',
+            sender: 'Bob Bader'
         }
+
+        Translation is the callers responsibility!
     """
 
     notification_json = json.loads(request.raw_post_data)
@@ -86,7 +89,7 @@ def notifications_create(request):
     username = notification_json.get('user')
     subject = notification_json.get('subject')
     text = notification_json.get('text')
-    callback_url = notification_json.get('response-callback')
+    callback_url = notification_json.get('callback')
     sender = notification_json.get('sender')
 
     # find user
