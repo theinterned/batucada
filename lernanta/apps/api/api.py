@@ -13,6 +13,7 @@ class UserProfileResource(ModelResource):
         fields = ['username', 'bio', 'gravatar', 'following', 'followers',
             'skills']
         resource_name = 'users'
+        include_resource_uri = False
         
     def dehydrate(self, bundle):
         bundle.data['gravatar'] = bundle.obj.gravatar()
