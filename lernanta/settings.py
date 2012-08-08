@@ -56,7 +56,7 @@ USE_I18N = True
 USE_L10N = True
 
 SUPPORTED_NONLOCALES = ('media', 'static', '.well-known', 'pubsub', 'broadcasts',
-'ajax', 'alpha',)
+'ajax', 'api',)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -103,7 +103,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 MIDDLEWARE_CLASSES = (
     'drumbeat.middleware.NotFoundMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'api.middleware.APISubdomainMiddleware',
+    #'api.middleware.APISubdomainMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -314,4 +314,4 @@ TRACKING_PREFIXES = [
 
 BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
     'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
-    'Speedy Spider', 'DotBot']
+    'Speedy Spider', 'DotBot', 'Sogou']
