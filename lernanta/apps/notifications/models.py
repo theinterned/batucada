@@ -80,7 +80,7 @@ def post_notification_response(token, user, text):
     if total_seconds < settings.MIN_EMAIL_RESPONSE_TIME:
         subject_template = 'notifications/emails/response_bounce_subject.txt'
         body_template = 'notifications/emails/response_bounce.txt'
-        context = {}
+        context = { 'original_message': text }
         send_notifications([user], subject_template, body_template, context)
         log.debug('post_notification_response: quick response bounced')
         return
