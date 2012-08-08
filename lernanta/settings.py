@@ -227,6 +227,9 @@ REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
 # Quickest allowable response time in seconds
 MIN_EMAIL_RESPONSE_TIME = 30
 
+AUTO_REPLY_KEYWORDS = ['auto-reply', 'auto reply', 'auto-response',
+    'auto response']
+
 CELERY_RESULT_BACKEND = "amqp"
 
 # SuperFeedr settings
