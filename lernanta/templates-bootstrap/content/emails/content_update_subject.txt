@@ -1,0 +1,2 @@
+{% load l10n_tags %}
+{{ instance.author }}{{ _(' made a new task for ') }}{{ project.name|safe|slice:":20"}}{{ _('.') }}

@@ -1,0 +1,43 @@
+{% load embed %}
+
+<li class="post-container post-assessment">
+  <p>{{ _('Assessment from') }} <a href="{{ assessment.assessor.get_absolute_url }}">{{ assessment.assessor }}</a> {{ _('on') }} {{ assessment.created_on }}</p>
+  <div class="post-body assessment">
+    {% if assessment.ratings.all %}
+      <ol id="ratings">
+        {% for rating in assessment.ratings.all %}
+          <li>
+            <div class="rubric-question">{{ rating.rubric.question}}</div> 
+            <div class="right-aligned-rating">
+              <div class="rating">
+                <div style="width:{{ rating.score_as_percentage }}%">
+                  <span>{{ rating.score }} {{_('out of 4') }}</span>
+                </div>
+              </div>
+              <div class="rating-key">{{ rating.get_score_display }}</div>
+            </div>
+            <br class="clear"/>
+          </li>
+        {% endfor %}
+      </ol>
+      <br>
+      <ul>
+        <li>
+          <div class="rubric-question final-rating">Final rating</div> 
+          <div class="right-aligned-rating">
+            <div class="rating">
+              <div style="width:{{ assessment.final_rating_as_percentage }}%">
+                <span>{{ assessment.final_rating }} {{ _('out of 4') }}</span>
+              </div>
+            </div>
+            <div class="rating-key">{{ assessment.get_final_rating_display }}</div>
+          </div>
+          <br class="clear" />
+        </li>
+      </ul>
+    <br class="clear" />
+    {% endif %}
+    <p><b>{{ _('Comment:') }}</b></p>
+    {{ assessment.comment|embed|safe }}
+  </div>
+</li>

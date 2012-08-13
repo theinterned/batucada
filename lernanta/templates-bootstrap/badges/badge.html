@@ -1,0 +1,104 @@
+{% extends "badges/base.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+{% load embed %}
+
+{% block bodyclasses %}badge-show{% endblock %}
+
+{% block body %}
+  <div id="main">
+    <div id="badge-top">
+      <div id="badge-image">
+        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
+        <br><br>
+        {% if user_submissions %}
+          <p><a href="{% locale_url mine_matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('View your Submissions') }}</a></p>
+	{% else %}
+	    {% if badge.submissions.count > 0 %}
+		<p><a href="{% locale_url matching_submissions slug=badge.slug  %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('View Submissions') }}</a></p>
+		
+	    {% endif %}
+        {% endif %}
+        {% if can_post_submission %}
+          <p><a href="{% locale_url submission_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Apply for Badge') }}</a></p>
+        {% endif %}
+	    {% if can_give_to_peer %}
+	      <p><a href="{% locale_url assessment_create slug=badge.slug %}" title="{{ badge.name }}" class="badge-call-to-action-button">{{ _('Award Badge to Peer')}}</a></p>
+	    {% endif %}
+      </div>
+      <div id="badge-description">
+	    <h1>{{ badge }}</h1>
+	    <p>{{ badge.description }}</p>
+        <p>{{ _('This badge can be earned at all challenges.') }}</p>
+        {% if badge.requirements %}
+          <h2>{{ _('Requirements:') }}</h2> 
+          {{ badge.requirements|embed|safe }}
+        {% endif %}
+		{% if prerequisites %}
+		  <br><br>
+	      <h3>{{ _('You need to have these badges:') }}</h3>
+	      <br>
+	      {% for prerequisite in prerequisites %}
+	        <a href="{{ prerequisite.get_absolute_url }}" title="{{ prerequisite }}">
+	          <img src="{{ prerequisite.get_image_url }}" width="60" height="60" alt="{{ prerequisite }}"/>
+	        </a>
+	      {% endfor %}
+	    {% endif %}
+    
+	  </div>
+    </div>
+
+  {% if other_badges_can_apply_for %}
+    <br clear="both"><br>
+    <div id="other-badges">
+      <h3>{{ _('Other badges you can apply for:') }}</h2>
+      <a class="carousel-callback" href={% locale_url other_badges slug=badge.slug %}></a>
+      <ul class="carousel jcarousel-skin-tango">
+        <!-- The content will be dynamically loaded in here -->
+      </ul>
+    </div>
+  {% endif %}
+
+    <div class="clear" id="badge-more">
+
+    {% if awarded_users_pagination_current_page.object_list %}
+      <hr>
+      <h2>{{ _('Peers that have received this badge:') }}</h2>
+      <br>
+      {% for awarded_user in awarded_users_pagination_current_page.object_list %}
+        <a href="{% locale_url user_awards_show slug=badge.slug username=awarded_user.username %}" title="{{ awarded_user }}"><img class="member-picture" src="{{ awarded_user.image_or_default }}" height="30" width="30" alt="{{ awarded_user }}"></a>
+      {% endfor %}
+      {% with prefix='awarded_users_' page_url=badge.get_absolute_url %}
+        {% pagination_links %}
+      {% endwith %}
+    {% endif %}
+
+    {% if not badge.all_groups and related_projects %}
+      <hr>
+      <h2>{{ _('This badge can be earned at these Challenges:') }}</h2>
+      <br>
+      {% for related_project in related_projects %}
+        <a href="{{ related_project.get_absolute_url }}" title="{{ related_project|title }}"><img src="{{ related_project.get_image_url }}" width="113.4" height="70" alt="{{ related_project|title }}" class="badge-graphic"></a>
+      {% endfor %}
+    {% endif %}
+
+    {% if submissions_pagination_current_page.object_list %}
+      <hr>
+      <br><a name="submissions"></a><br>
+      <h2>{{ _('Peers that are applying for this badge:') }}</h2>
+      <br>
+      <p>{{ badge.awards.count }} {{ _('Awarded') }}, {{ badge.get_pending_submissions.count }} {{ _('Pending') }}</p>
+      <ul id="posts">
+        {% for submission in submissions_pagination_current_page.object_list %}
+          {% include "badges/_submission_item.html" %}
+        {% endfor %}
+      </ul>
+      {% with prefix='submissions_' page_url=badge.get_absolute_url %}
+        {% pagination_links %}
+      {% endwith %}
+    {% endif %}
+    
+    </div>
+  </div>	
+{% endblock %}

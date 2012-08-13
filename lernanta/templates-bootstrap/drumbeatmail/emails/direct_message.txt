@@ -1,0 +1,11 @@
+{% load l10n_tags %}
+{{ _('You have received a new direct message from') }} {{ sender}}:
+
+{{ message|safe }}
+
+{{ _('Reply:') }} http://{{domain}}{{ reply_url }}
+
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}
+
+{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/

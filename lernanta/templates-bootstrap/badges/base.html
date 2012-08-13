@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{{ badge }}{% endblock %}
+
+{% block bodyid %}badges-page{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url badges_list %}">{{ _('Badges') }}</a>
+  {% if badge %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url badges_show slug=badge.slug %}">{{ badge }}</a>
+  {% endif %}
+{% endblock %}
+

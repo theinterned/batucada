@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+ 
+{% block title %}{{ _('Scoreboard') }}{% endblock %}
+ 
+{% block bodyid %}one-column-page{% endblock %}
+{% block bodyclasses %}scoreboard{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}js/libs/datatables/media/css/demo_page.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}js/libs/datatables/media/css/demo_table.css">
+{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url metrics_scoreboard %}">{{ _('Scoreboard') }}</a>
+{% endblock %}
+
+{% block body %} 
+  <div id="main">
+    <h1>{{ _('Scoreboard') }}</h1>
+    <p>{{ stats_date|date:"j M Y H:i T" }}</p>
+    <table id="metrics-scoreboard">
+      <tr>
+        {% for stat in stats %}
+          <th colspan="3"><span class="scoreboard-status-{{ stat.status_color }}">{{ stat.name|title }}</span></th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for stat in stats %}
+          <td colspan="3" class="todays-count">{{ stat.today }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for stat in stats %}
+          <td>actual</td>
+          <td>pace</td>
+          <td>last</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for stat in stats %}
+          <td>{{ stat.this_month }}</td>
+          <td>{{ stat.pace }}</td>
+          <td>{{ stat.prev_month }}</td>
+        {% endfor %}
+      </tr>
+    </table>
+    <div id="scoreboard-details">
+      <h2>{{ _('Users Registered this Month') }}</h2>
+      <table id="users-scoreboard-details" cellpadding="0" cellspacing="0" class="display">
+        <thead>
+          <tr>
+            <th>{{ _('User') }}</th>
+            <th>{{ _('Comments') }}</th>
+            <th>{{ _('Joins') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2>{{ _('Comments Posted at Groups this Month') }}</h2>
+      <table id="top-groups-comments-scoreboard-details" cellpadding="0" cellspacing="0" class="display">
+        <thead>
+          <tr>
+            <th>{{ _('Group') }}</th>
+            <th>{{ _('Comments') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2>{{ _('Joins to Groups this Month') }}</h2>
+      <table id="top-groups-joins-scoreboard-details" cellpadding="0" cellspacing="0" class="display">
+        <thead>
+          <tr>
+            <th>{{ _('Group') }}</th>
+            <th>{{ _('Joins') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2>{{ _('Groups Created this Month') }}</h2>
+      <table id="groups-scoreboard-details" cellpadding="0" cellspacing="0" class="display">
+        <thead>
+          <tr>
+            <th>{{ _('Group') }}</th>
+            <th>{{ _('Comments') }}</th>
+            <th>{{ _('Joins') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script src="{{ STATIC_URL }}js/libs/datatables/dataTables.js" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {
+      $('#scoreboard-details table#users-scoreboard-details').dataTable({
+        "aaSorting": [[ 1, "desc" ]],
+        "bProcessing": true,
+        "sAjaxSource": "{% locale_url metrics_scoreboard_users %}",
+        "bDeferRender": true
+      });
+      $('#scoreboard-details table#top-groups-comments-scoreboard-details').dataTable({
+        "aaSorting": [[ 1, "desc" ]],
+        "bProcessing": true,
+        "sAjaxSource": "{% locale_url metrics_scoreboard_top_groups_comments %}",
+        "bDeferRender": true
+      });
+      $('#scoreboard-details table#top-groups-joins-scoreboard-details').dataTable({
+        "aaSorting": [[ 1, "desc" ]],
+        "bProcessing": true,
+        "sAjaxSource": "{% locale_url metrics_scoreboard_top_groups_joins %}",
+        "bDeferRender": true
+      });
+      $('#scoreboard-details table#groups-scoreboard-details').dataTable({
+        "aaSorting": [[ 1, "desc" ]],
+        "bProcessing": true,
+        "sAjaxSource": "{% locale_url metrics_scoreboard_groups %}",
+        "bDeferRender": true
+      });
+    });
+  </script>
+{%endblock %}

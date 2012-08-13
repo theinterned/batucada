@@ -1,0 +1,3 @@
+{% load i18n %}
+{% load l10n_tags %}
+{% blocktrans with obi_url=obi_url email=email %}The badges were send succesfully! You can now see your badges at <a href="{{ obi_url }}" target="_blank">{{ obi_url }}</a>. Be sure to log in using the email <strong>{{ email }}</strong>.{% endblocktrans%}
