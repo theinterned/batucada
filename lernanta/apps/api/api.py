@@ -51,3 +51,4 @@ class ProjectResource(ModelResource):
                 'long_description', 'name', 'other', 'other_description',
                 'resource_uri', 'short_description', 'slug', 'start_date',
                 'completion_badges']
+        resource_name = 'courses'
