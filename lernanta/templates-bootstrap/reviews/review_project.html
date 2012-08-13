@@ -1,0 +1,48 @@
+{% extends "reviews/base.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}review-project{% endblock %}
+
+{% block body %} 
+  <div id="main">
+    <h1>{{ _('Review') }} <a href="{{ project.get_absolute_url }}" target="_blank">{{ project }}</a></h1>
+    <br>
+    <fieldset id="review-project">
+      <form method="post" action="{% locale_url review_project slug=project.slug %}">
+        {% csrf_token %}
+        <div class="field{% if form.content.errors %} error{% endif %}">
+          <label for="id_content">{{ _('Feedback') }}</label>
+          {{ form.content }}
+          {{ form.content.errors }}
+        </div>
+        <p>
+          <label for="id_accepted">
+            {{ form.accepted }}
+            {{ _('Mark as Reviewed') }}
+          </label>
+          {{ form.accepted.errors }}
+        </p>
+        {% if reviewer.can_feature %}
+          <p>
+            <label for="id_mark_featured">
+              {{ form.mark_featured }}
+              {{ _('Feature as Community Pick') }}
+            </label>
+            {{ form.mark_featured.errors }}
+          </p>
+        {% endif %}
+        {% if reviewer.can_delete %}
+          <p>
+            <label for="id_mark_deleted">
+              {{ form.mark_deleted }}
+              {{ _('Mark as Deleted (Spam)') }}
+            </label>
+            {{ form.mark_deleted.errors }}
+          </p>
+        {% endif %}
+        <p class="buttons">
+          <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+        </p>
+      </form>
+    </fieldset>
+  </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% load l10n_tags %}
+{{ user }} {{ _('is now following ') }}{% if project %}{{ project|safe }}{% else %}{{ _('you') }}{% endif %} {{ _('on P2PU!') }}
+
+{{ _('Bio:') }} {{ user.bio|striptags|safe }}
+
+{{ _('Location:') }} {{ user.location }}
+
+{{ _('You can see their profile here:') }}
+http://{{ domain }}{{ user.get_absolute_url }}
+
+{{ _('Sincerely,') }}
+{{ _('The P2PU Team') }}
+
+{{ _('Manage your subscriptions:') }} http://{{domain}}/profile/edit/settings/

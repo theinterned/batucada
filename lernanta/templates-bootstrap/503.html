@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block header %}{% endblock %}
+{% block body %}
+<p style="font-size: 200%;">{{ _('Down for maintenance, come back soon') }}.</p>
+<p>
+{{ _('We are probably in the process of upgrading the site. We apologize for any inconvenience, and hope that you will like the new features.') }}
+</p>
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "projects/base.html" %}
+{% load l10n_tags %}
+{% load embed %}
+
+{% block project_title %}{% if page %}{{ page.title }}{% endif %}{% endblock %}
+
+{% block body %}
+
+<section class="modal">
+  <article>
+    {% block page_form_title %}{% endblock %}
+    <br />
+    <fieldset>
+    <form action="{% block page_form_url %}{% endblock %}" method="post" {% block form_extra_attributes %}{% endblock %}>
+      {% csrf_token %}
+      {{ form.next_url }}
+      {% if preview %}
+        <div class="preview">
+            <h1 class="{% if page.collaborative %}collaborative{% endif %} school_header">
+              {{ _('[Preview]') }} {{ page.title }}
+            </h1>
+            {% if is_challenge %}<br>{{ page.sub_header|default:"" }} {% endif %}
+            <hr />
+            <div id="task-body-preview">
+              {{ page.content|embed|safe }}
+            </div>
+        </div>
+        <br />
+      {% endif %}
+      {% block extra_fields %}{%endblock%}
+      {% if form.title %}
+        <div class="field{% if form.title.errors %} error{% endif %}">
+          <label for="id_title">{{ _('Title') }}</label>
+          <span class="hint block">{{ _('A good title is short and descriptive.') }}</span>
+          {{ form.title }}
+          {{ form.title.errors }}
+        </div>
+      {% endif %}
+      {% if is_challenge %}
+        <div class="field{% if form.sub_header.errors %} error{% endif %}">
+          <label for="id_sub_header">{{ _('One sentence description') }}</label>
+          <span class="hint block">{{ _('This description will be used as sub header below the task title.') }}</span>
+          {{ form.sub_header }}
+          {{ form.sub_header.errors }}
+        </div>
+      {% endif %}
+      <div class="field{% if form.content.errors %} error{% endif %}">
+        {{ form.content }}
+        {{ form.content.errors }}
+      </div>
+      {% if form.collaborative %}
+        <div class="field{% if form.collaborative.errors %} error{% endif %}">
+          {{ form.collaborative }} {{ _('Collaborative work (editable by all the participants).') }}
+          {{ form.collaborative.errors }}
+        </div>
+      {% endif %}
+      <p class="content_buttons">
+        {% block page_form_buttons %}{% endblock %}
+        <button type="submit" id="previewButton" name="show_preview" value="{{ _('Preview') }}">{{ _('Preview') }}</button>
+      </p>
+    </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

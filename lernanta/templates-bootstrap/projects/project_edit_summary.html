@@ -1,0 +1,128 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% load project_tags %}
+{% block bodyclasses %}project edit summary{% endblock %}
+
+{% block links %}{% if school %}<link rel="stylesheet" href="{% locale_url schools_css slug=school.slug %}?v=1">{% endif %}{% endblock %}
+
+{% block form %}
+<fieldset id="project_edit_summary" class="project edit summary tabpane">
+<form id="project-edit-summary-form" action="{% if project %}{% locale_url projects_edit slug=project.slug %}{% else %}{% if is_challenge %}{% locale_url projects_create_challenge %}{% else %}{% locale_url projects_create %}{% endif %}{% if school %}?school={{ school.slug }}{% endif %}{% endif %}" method="post" {% if category and not project %}enctype="multipart/form-data"{% endif %}>
+  {% csrf_token %}
+  <div class="field{% if form.name.errors %} error{% endif %}">
+    <label for="id_test">
+        {{ form.test }}
+        {{ _('This is a test course') }}
+    </label>
+    <span class="hint block">{{ _('Please check this if you are just testing. Your course will not generate updates or notification emails for other users.') }}</span>
+    {{ form.test.errors }}
+  </div>
+  <div class="field{% if form.name.errors %} error{% endif %}">
+    {% if is_challenge %}
+      <label for="id_name">{{ _('Title') }}</label>
+    {% else %}
+      <label for="id_name">{{ _('Name') }}</label>
+      <span class="hint block">{{ _('Short and descriptive works best.') }}</span>
+    {% endif %}
+    {{ form.name }}
+    {{ form.name.errors }}
+  </div>
+  <div class="field{% if form.short_description.errors %} error{% endif %}">
+    {% if is_challenge %}
+      <label for="id_short_description">{{ _('Tagline') }}</label>
+    {% else %}
+      <label for="id_short_description">{{ _('One sentence description') }}</label>
+      <span class="hint block">{{ _('Used in search results and listings.') }}</span>
+    {% endif %}
+    {{ form.short_description }}
+    {{ form.short_description.errors }}
+  </div>
+
+  {% if not project and is_challenge %}
+    <div class="field duration {% if form.duration.errors %} error{% endif %} ">
+      <label for="id_duration">{{ _('How many hours will this challenge take to complete?') }} {{ form.duration }}</label>
+      {{ form.duration.errors }}
+    </div>
+  {% endif %}
+  
+  <div class="field long-description{% if form.long_description.errors %} error{% endif %}">
+    {% if is_challenge %}
+        <label for="id_long_description">{{ _('Description') }}</label>
+    {% else %}
+      <label for="id_long_description">{{ _('One paragraph description') }}</label>
+      <span class="hint block">{{ _("What's this about? What will I learn? Tell me more, but keep it to the point.") }}</span>
+    {% endif %}
+    {{ form.long_description }}
+    {{ form.long_description.errors }}
+  </div>
+
+  <div class="field{% if form.language.errors %} error{% endif %}">
+    <label for="id_language">{{ _('Language') }}</label>
+    {{ form.language }}
+    {{ form.language.errors }}
+  </div>
+
+  <div class="field{% if form.tags.errors %} error{% endif %}">
+    {% if is_challenge %}
+      <label for="id_tags">{{ _('Skills') }}</label>
+    {% else %}
+      <label for="id_tags">{{ _('Tags') }}</label>
+      <span class="hint block">{{ _('Comma-separated list of keywords.') }}</span>
+    {% endif %}
+    {{ form.tags }}
+    {{ form.tags.errors }}
+  </div>
+
+  {% if not category or project %}
+    <div class="field{% if form.category.errors %} error{% endif %}">
+      <label for="id_category">{{ _('Type') }}</label>
+      <span class="hint block">{{ _('What kind of learning environment do you want to create?') }}</span>
+      {{ form.category }}
+      {{ form.category.errors }}
+    </div>
+    <span class="hint block">{{ _('Or make up your own term.') }}</span>
+    <div class="field term{% if form.other.errors %} error{% endif %}">
+      <label for="id_other">{{ _('Term') }}</label>
+      {{ form.other }}
+      {{ form.other.errors }}
+    </div> -- <div class="field term_desc{% if form.other_description.errors %} error{% endif %}">
+      <label for="id_other_description">{{ _('Description') }}</label>
+      {{ form.other_description }}
+      {{ form.other_description.errors }}
+    </div>
+  {% endif %}
+
+  {% if category and not project %}
+    {% with form=image_form %}
+      {% include "projects/_project_edit_image.html" %}
+    {% endwith %}
+  {% endif %}
+
+  <br><br>
+  <p class="buttons">
+    {% if project %}
+    <a class="button" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+    {% else %}
+    <a class="button" href="{% learn_default %}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+    {% endif %}
+  </p>
+</form>
+</fieldset>
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $('#id_kind').autocomplete({
+        source: function( request, response ) {
+                url = "{% url matching_kinds %}?term=" + request.term;
+                $.getJSON(url, function(data) {
+                    response(data);
+                });
+            }
+    });
+  </script>
+{% endblock %}
+

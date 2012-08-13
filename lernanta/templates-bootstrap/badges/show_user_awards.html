@@ -1,0 +1,64 @@
+{% extends "badges/base.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+{% load embed %}
+
+{% block bodyclasses %}badge-show-user-awards{% endblock %}
+
+{% block body %}
+  <div id="main">
+    <h1>{{ badge }}{{ _('\'s Awards to') }} {{ profile }}</h1>
+    <br>
+    <div id="badge-image">
+        <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge }}"/>        
+    </div>
+    <div id="badge-description">
+        <h1>{{ badge }}</h1>
+        <p>{{ badge.description }}</p>
+        {% if badge.requirements %}
+          <h2>{{ _('Requirements:') }}</h2> 
+          {{ badge.requirements|embed|safe }}
+        {% endif %}
+
+	    {% if not badge.logic.unique %}
+	        <p><b>{{'Number of Awards to '}} {{ profile }}:</b> {{ awards_count }}</p>
+	    {% endif %} 
+
+	    {% if prerequisites %}
+	      <br><br>
+	      <h1>{{ _('Prerequisites') }}</h1>
+	      <br>
+	      {% for prerequisite in prerequisites %}
+	        <a href="{{ prerequisite.get_absolute_url }}" title="{{ prerequisite }}">
+	          <img src="{{ prerequisite.get_image_url }}" width="80" height="80" alt="{{ prerequisite }}"/>
+	        </a>
+	      {% endfor %}
+	    {% endif %}
+	    {% if related_projects %}
+	      <br><br>
+	      <h1>{{ _('Awarded At') }}</h1>
+	      <br>
+	      {% for related_project in related_projects %}
+	        <a href="{{ related_project.get_absolute_url }}" title="{{ related_project|title }}"><img src="{{ related_project.get_image_url }}" width="113.4" height="70" alt="{{ related_project|title }}" class="badge-graphic"></a>
+	      {% endfor %}
+	    {% endif %}
+  </div>
+    <br class="clear"/>
+
+    {% if submissions or assessments %}
+      <br><br>
+      <h1>{{ _('Evidence') }}</h1>
+      <br>
+      <ul id="posts">
+        {% for submission in submissions %}
+          {% include "badges/_submission_item.html" %}
+        {% endfor %}
+        {% for assessment in assessments %}
+          {% include "badges/_assessment_item.html" %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+  </div>	
+{% endblock %}

@@ -1,0 +1,2 @@
+{% load l10n_tags %}
+{{ _('Abuse Report') }}

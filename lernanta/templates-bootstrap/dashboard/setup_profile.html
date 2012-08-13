@@ -1,0 +1,10 @@
+{% extends "users/profile_form_base.html" %}
+
+{% load l10n_tags %}
+
+{% block title %}{{ _('Create Profile') }}{% endblock %}
+{% block bodyid %}create_profile{% endblock %}
+{% block heading %}{{ _('Create Profile') }}{% endblock %}
+{% block action %}{% locale_url users_profile_create %}{% endblock %}
+{% block button_label %}{{ _('Save') }}{% endblock %}
+

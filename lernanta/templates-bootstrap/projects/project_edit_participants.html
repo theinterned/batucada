@@ -1,0 +1,102 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit participants{% endblock %}
+
+{% block form %}
+<fieldset id="project_edit_participants" class="project edit participants tabpane">
+<h2>{{ _('Participants') }}</h2>
+<p class="hint">
+  {% if is_challenge %}
+    {{ _('View and add participants.') }}
+  {% else %}
+    {{ _('View, add and remove participants.') }}
+  {% endif %}
+</p>
+<form action="{% locale_url projects_edit_participants slug=project.slug %}" method="post">
+  {% csrf_token %}
+    <div class="field user{% if form.user.errors %} error{% endif %}">
+      <label for="id_user">{{ _('Username') }}</label>
+      {{ form.user }}
+      {{ form.user.errors }}
+    </div>
+    <div class="field organizer{% if form.organizer.errors %} error{% endif %}">
+      <label for="id_organizer">{{ _('Organizer') }}</label>
+      {{ form.organizer }}
+      {{ form.organizer.errors }}
+    </div>
+  <p class="buttons add-participant">
+    <button type="submit">{{ _('Add') }}</button>
+  </p>
+</form>
+
+{% if participations %}
+<table>
+<thead>
+  <tr>
+    <th>{{ _('Name') }}</th>
+    <th>{{ _('Organizer') }}</th>
+    {% if is_challenge %}<th>{{ _('Adopter') }}</th>{% endif %}
+    <th>{{ _('Actions') }}</th>
+  </tr>
+</thead>
+<tbody>
+  {% for participation in participations %}
+    <tr>
+      <td class="name"><a href="{{ participation.user.get_absolute_url }}">{{ participation.user }}</a></td>
+      <td class="organizer">
+        {% if participation.organizing %}
+          <span class="yes" title="{{_('Organizing.') }}">{{ _('yes') }}</span>
+        {% else %}
+          <span class="no" title="{{_('Not Organizing.') }}">{{ _('no') }}</span>
+        {% endif %}
+      </td>
+      {% if is_challenge %}
+        <td class="adopter">
+          {% if participation.adopter or participation.organizing %}
+            <span class="yes" title="{{_('Adopter.') }}">{{ _('yes') }}</span>
+          {% else %}
+            <span class="no" title="{{_('Participant.') }}">{{ _('no') }}</span>
+          {% endif %}
+        </td>
+      {% endif %}
+      <td class="actions">
+        {% if not participation.organizing %}
+        <form action="{% locale_url projects_edit_participants_make_organizer slug=project.slug username=participation.user.username %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="{{ _('Add Organizer') }}">{{ _('Add Organizer') }}</button>
+        </form>
+
+        {% if not is_challenge %}
+        <form action="{% locale_url projects_edit_participants_delete slug=project.slug username=participation.user.username %}" method="post">
+          {% csrf_token %}
+          <button class="delete" type="submit" value="{{ _('Remove') }}">{{ _('Remove') }}</button>
+        </form>
+        {% endif %}
+        {% else %}
+        <form action="{% locale_url projects_edit_participants_organizer_delete slug=project.slug username=participation.user.username %}" method="post">
+          {% csrf_token %}
+          <button class="delete" type="submit" value="{{ _('Remove organizer') }}">{{ _('Remove organizer') }}</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+</fieldset>
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $('#id_user').autocomplete({
+        source: function( request, response ) {
+                url = "{% url matching_non_participants slug=project.slug %}?term=" + request.term;
+                $.getJSON(url, function(data) {
+                    response(data);
+                });
+            }
+    });
+  </script>
+{% endblock %}

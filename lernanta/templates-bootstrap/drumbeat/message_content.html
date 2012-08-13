@@ -1,0 +1,9 @@
+{% if message %}
+  <p>
+    {% if safe %}
+      {{ message|safe }}
+    {% else %}
+      {{ message }}
+    {% endif %}
+  </p>
+{% endif %}

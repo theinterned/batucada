@@ -1,0 +1,66 @@
+{% extends "badges/base.html" %}
+
+{% load l10n_tags %}
+{% load embed %}
+
+{% block title %}{{ _('Submission for') }} {{ badge.name }}{% endblock %}
+
+{% block bodyclasses %}submission-show summary{% endblock %}
+
+{% block body %} 
+  <div id="main">
+    <div id="badge-image">
+      <p>
+        <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+          <img src="{{ badge.get_image_url }}" width="150" height="150" alt="{{ badge.name }}"/>
+          <br>
+          {{ badge.name }}
+        </a>
+        <br>
+        {{ _('Submission') }}
+      </p>
+    </div>
+    <div id="submission">
+       <div id="submission-details">
+
+           <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
+
+           <div id="submission-detail">
+               <h2>{{ submission.author }}</h2>
+               {{ submission.content|embed|safe }}
+               <a href="{{ submission.url }}" target="_blank">{{ _('Link to work submitted') }}</a>
+            </div>
+            <br><br>
+		    <div id="progress"><h3>{{ _('Progress:') }}</h3>
+				<ul>
+			         {% if badge.logic.min_votes %}
+			           <li>{{ _('Received') }} {{ assessments.count }} {{ _(' reviews of the') }} {{ badge.logic.min_votes }} {{ _('reviews needed.') }}</li>
+			         {% endif %}
+			         {% if badge.logic.min_avg_rating %}
+			           <li>{{ _('The posted reviews give this work submission a total average score of') }} {{ avg_rating|floatformat:2 }} {{ _('(needs to be at least') }} {{ badge.logic.min_avg_rating }} {{ _('for the badge to be awarded).')}}</li>
+			         {% endif %}
+			    </ul>
+			</div>
+	</div>
+    {% if can_review_submission %}
+       <br class="clear"><br>
+       <p><a href="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}" class="assess-button" style="clear:both;">{{ _('Review This Submission') }}</a></p>
+    {% endif %}
+</div>
+
+
+	
+    <br class="clear"/>
+
+	{% if assessments %}
+       <br><br>
+	   <h1>{{ _('Reviews') }}</h1>
+	   <ul id="posts">
+	   {% for assessment in assessments %}
+			{% include "badges/_assessment_body.html" with assessment=assessment %}
+	   {% endfor %}
+	   </ul>
+	{% endif %}
+    </div>
+
+{% endblock %}

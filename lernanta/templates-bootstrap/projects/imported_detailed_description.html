@@ -1,0 +1,20 @@
+{% load l10n_tags %}
+{% if summary %}
+  <h2> {{ _('Summary') }}</h2>
+  <br>
+  {{ summary|safe }}
+  <br>
+{% endif %}
+{% if objectives %}
+  <h2>{{ _('Learning Objectives') }}</h2>
+  <br>
+  {{ objectives|safe }}
+  <br>
+{% endif %}
+{% if prerequisites %}
+  <h2>{{ _('Prerequisites') }}</h2>
+  <br>
+  {{ prerequisites|safe }}
+  <br>
+{% endif %}
+

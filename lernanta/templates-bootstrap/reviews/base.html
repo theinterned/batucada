@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block title %}{% if project %}{{ project }} {% endif %}{{ _('Reviews')}} {% endblock %}
+
+{% block bodyid %}project-reviews{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url reviews_show_new %}">{{ _('Reviews') }}</a>
+  {% if project %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url show_project_reviews slug=project.slug %}">{{ project }}</a>
+  {% endif %}
+{% endblock %}

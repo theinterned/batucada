@@ -1,0 +1,40 @@
+{% extends "reviews/base.html" %}
+{% load l10n_tags %}
+{% load pagination_tags %}
+
+{% block bodyclasses %}projects-reviews-list{% endblock %}
+
+{% block body %}
+  <div id="main">
+    <div id="projects-reviews-list" class="{% if toggled_reviewed %}toggled-reviewed{% endif %}">
+      <div id="projects-reviews-list-toggle">
+        <input type="radio" id="radio1" name="radio" {% if not toggled_reviewed %}checked="checked"{% endif %} /><label for="radio1">{{ _('New Courses') }}</label>
+        <input type="radio" id="radio2" name="radio" {% if toggled_reviewed %}checked="checked"{% endif %}/><label for="radio2">{{ _('Reviewed') }}</label>
+      </div>
+      <div id="new-projects-reviews-list">
+        <ul>
+          {% for project in new_pagination_current_page.object_list %}
+            <li>
+              {% include "reviews/_projects_reviews_list_item.html" %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% with prefix='new_' page_url=show_new_page_url %}
+          {% pagination_links %}
+        {% endwith %}
+      </div>
+      <div id="reviewed-projects-reviews-list">
+        <ul>
+          {% for project in reviewed_pagination_current_page.object_list %}
+            <li>
+              {% include "reviews/_projects_reviews_list_item.html" %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% with prefix='reviewed_' page_url=show_reviewed_page_url %}
+          {% pagination_links %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

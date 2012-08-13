@@ -1,0 +1,77 @@
+{% extends "badges/base.html" %}
+
+{% load l10n_tags %}
+{% load embed %}
+
+{% block bodyclasses %}assessment-edit summary assess-submission{% endblock %}
+
+{% block body %} 
+	<div id="main">
+	<br>
+    <div id="badge-image">
+      <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+        <img src="{{ badge.get_image_url }}" width="155" height="155" alt="{{ badge.name }}"/>
+        <br>
+        {{ badge.name }}
+      </a>
+    </div>
+    <div id="submission">
+      <h1>{{ _('Review this submission:') }}</h1>
+      <br>
+	   <div id="submission-details">
+		   
+		   <img class="member-picture" width="54" height="54" src="{{ submission.author.image_or_default }}">
+		   
+		   <div id="submission-detail">
+			   <h2>{{ submission.author }}</h2>
+			   {{ submission.content|embed|safe }}
+			   <a href="{{ submission.url }}" target="_blank">{{ _('Link to work submitted') }}</a>
+			</div>
+	   </div>
+    <br class="clear"/>
+    <br>
+    {% if rating_forms %}
+      <h2>{{ _('How well was this peer able to:') }}</h2>
+    {% endif %}
+    <br>
+	{% block form %}
+	<fieldset id="assessment_edit" class="assessment edit tabpane">
+	  <form method="post" action="{% locale_url assess_submission slug=badge.slug submission_id=submission.id %}">
+	    {% csrf_token %}
+        <ol id="ratings">
+          {% for rubric, rating_form in rating_forms %}
+            <li class="clear rating-row">
+              <div class="question">{{ rubric.question }}</div>
+              <div class="stars {% if rating_form.score.errors %} error{% endif %}">
+	            {{ rating_form.score }}
+	            {{ rating_form.score.errors }}
+	            <div class="rating-key">{{ rating.get_score_display }}</div>
+	          </div>
+            </li>
+          {% endfor %}
+        </ol>
+
+	    <div class="clear field{% if form.comment.errors %} error{% endif %}">
+          {% if rating_forms %}
+	        <label for="id_comment">{{ _('Please explain your ratings.') }}</label>
+            <p class="hint">{{ _('What did this peer do well? What advice or suggestions would you give?') }}</p>
+          {% else %}
+            <label for="id_comment">{{ _('Why do you feel this person deserves this badge? Any additional comments?') }}</label>
+          {% endif %}
+	      {{ form.comment }}
+	      {{ form.comment.errors }}
+	    </div>
+	
+	    <p class="buttons">
+	      <button type="submit" name="submit" value="{{ _('Submit') }}">{{ _('Submit') }}</button>
+	    </p>
+	    
+	  </form>
+	</fieldset>
+	</div>
+	{% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}/js/rating.js"></script> 
+{% endblock %}

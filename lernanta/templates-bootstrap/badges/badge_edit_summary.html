@@ -1,0 +1,44 @@
+{% extends "badges/badge_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}badge edit summary{% endblock %}
+
+{% block form %}
+<fieldset id="badge_edit_summary" class="badge edit summary tabpane">
+<form action="{% if badge %}{% locale_url badges_edit slug=badge.slug %}{% else %}{% locale_url badges_create %}{% endif %}" method="post">
+  {% csrf_token %}
+  <div class="field{% if form.name.errors %} error{% endif %}">
+    <label for="id_name">{{ _('Name') }}</label>
+    {{ form.name }}
+    {{ form.name.errors }}
+  </div>
+  <div class="field{% if form.description.errors %} error{% endif %}">
+    <label for="id_description">{{ _('Brief description') }}</label>
+    <span class="hint block">{{ _('This is used both on P2PU and within the Open Badges Infrastructure (OBI)') }}</span>
+    {{ form.description }}
+    {{ form.description.errors }}
+  </div>
+  <div class="field requirements{% if form.requirements.errors %} error{% endif %}">
+    <label for="id_requirements">{{ _('Requirements to get badge') }}</label>
+    <span class="hint block">{{ _('Description of any requirements that must be satisfied to award the badge.') }}</span>
+    {{ form.requirements }}
+    {{ form.requirements.errors }}
+  </div>
+  <div class="field{% if form.logic.errors %} error{% endif %}">
+    <label for="id_logic">{{ _('Badge Type') }}</label>
+    <span class="hint block">{{ _('The logic behind badge awarding will change depending on the badge type.') }}</span>
+    {{ form.logic }}
+    {{ form.logic.errors }}
+  </div>
+  <br><br>
+  <p class="buttons">
+    {% if badge %}
+    <a class="button" href="{{ badge.get_absolute_url }}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+    {% else %}
+    <a class="button" href="">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Create') }}">{{ _('Create') }}</button>
+    {% endif %}
+  </p>
+</form>
+</fieldset>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% load l10n_tags %}
+{% load pagination_tags %}
+
+<div id="submissions-list" class="{% if badge %}has-badge{% endif %} {% if toggled_awards %}toggled-awards{% endif %}{% if toggled_mine %}toggled-mine{% endif %}">
+  <h1 class="submissionListHeader">
+    <strong><i>{{ _('WOW!') }}</i></strong> {{ _('Check out all these submissions!') }}
+  </h1>
+  <p class="submissionListSubheader">{{ _('Please take a few minutes and help a fellow peer.') }}</p>
+  <div id="submissions-list-toogle">
+    <input type="radio" id="radio1" name="radio" {% if not toggled_awards and not toggled_mine %}checked="checked"{% endif %} /><label for="radio1">{{ _('Awaiting Review') }}</label>
+    <input type="radio" id="radio2" name="radio" {% if toggled_awards %}checked="checked"{% endif %}/><label for="radio2">{{ _('Previously Awarded') }}</label>
+    {% if show_my_submissions_tab %}<input type="radio" id="radio3" name="radio" {% if toggled_mine %}checked="checked"{% endif %}/><label for="radio3">{{ _('My Submissions') }}</label>{% endif %} 
+  </div>
+  <div id="pending-submission-list">
+    <ul>
+      {% for submission in pending_submissions_pagination_current_page.object_list %}
+        <li>
+          {% include "badges/_submissions_list_item.html" %}
+        </li>
+      {% endfor %}
+    </ul>
+    {% with prefix='pending_submissions_' page_url=pending_page_url %}
+      {% pagination_links %}
+    {% endwith %}
+  </div>
+  <div id="awarded-submission-list">
+    <ul>
+      {% for submission in awarded_submissions_pagination_current_page.object_list %}
+        <li>
+          {% include "badges/_submissions_list_item.html" %}
+        </li>
+      {% endfor %}
+    </ul>
+    {% with prefix='awarded_submissions_' page_url=awarded_page_url %}
+      {% pagination_links %}
+    {% endwith %}
+  </div>
+  {% if show_my_submissions_tab %}
+    <div id="my-submissions-list">
+      <ul>
+        {% for submission in my_submissions_pagination_current_page.object_list %}
+          <li>
+            {% include "badges/_submissions_list_item.html" %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% with prefix='my_submissions_' page_url=mine_page_url %}
+        {% pagination_links %}
+      {% endwith %}
+    </div>
+  {% endif %}
+</div>

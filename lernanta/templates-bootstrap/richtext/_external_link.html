@@ -1,0 +1,2 @@
+{% load l10n %}
+<a {% if external_task %}class="external-task"{% endif %} href="{{ url }}" {% if external_task %}title="{{ _('Work on this Task') }}"{% endif %} target="_blank"><span class="external-task-text">{{ url }}</span></a>

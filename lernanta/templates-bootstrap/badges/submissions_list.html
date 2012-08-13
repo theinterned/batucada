@@ -1,0 +1,32 @@
+{% extends "badges/base.html" %}
+{% load l10n_tags %}
+{% load badge_tags %}
+
+{% block bodyclasses %}submissions-list{% endblock %}
+
+{% block title %}{% if badge %}{{ badge }} {% endif %} {{ _('Submissions') }}{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url submissions_list %}">{{ _('Submissions') }}</a>
+  {% if badge %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{% locale_url matching_submissions slug=badge.slug %}">{{ badge }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <div id="main">
+    <br>
+    {% if badge %}
+      <div id="badge-image">
+        <a href="{% locale_url badges_show slug=badge.slug %}" title="{{ badge }}">
+          <img src="{{ badge.get_image_url }}" width="155" height="155" alt="{{ badge.name }}"/>
+          <br>
+          {{ badge.name }}
+        </a>
+      </div>
+    {% endif %}
+    {% badge_submissions request pending_page_url awarded_page_url mine_page_url toggled_awards toggled_mine badge %}
+  </div>
+{% endblock %}

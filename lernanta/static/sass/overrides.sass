@@ -1,0 +1,116 @@
+@import bootstrap
+@import compass/css3/border-radius
+
+@mixin input-placeholder($color)
+  &.placeholder
+    color: $color
+  &:-moz-placeholder
+    color: $color
+  &::-webkit-input-placeholder
+    color: $color
+
+$primary-font: "arvo", helvetica, sans-serif
+$secondary-font: "sense", helvetica, sans-serif
+
+$light-gray: #f3f4f8
+// Headings
+body
+  font-family: $secondary-font, sans-serif
+  font-size: 16px
+  background-color: $light-gray
+
+h1
+  font-family: $primary-font
+  font-size: 24px
+  font-weight: bold
+
+h2
+  font-family: $primary-font
+  font-size: 18px
+
+h3
+  font-family: $secondary-font
+  font-size: 16px
+  font-weight: bold
+  margin-top: 15px
+
+p
+  line-height: 22px
+  margin-top: 5px
+  margin-bottom: 10px
+
+a
+  color: #05c6b4
+  &:hover
+    color: lighten(#05c6b4, 10%)
+//Buttons
+.btn
+  font-family: "arvo"
+  font-size: 15px
+  font-weight: bold
+  padding: 4px 10px 5px
+  background-image: None
+  +border-radius(2px)
+  background-color: #515665
+  text-shadow: 0px 1px 1px #515665
+  border: none
+  border-bottom: 1px solid #343741  
+  color: #eeeeee
+  &.btn-primary
+    color: #ffffff  
+    text-shadow: 0px 1px 1px #83be00
+    background-color: #abd600
+    border-bottom: 1px solid #83be00  
+    &:hover
+      text-shadow: 0px 1px 1px #d0d3dc
+      background-color: lighten(#abd600, 10%)
+  &.btn-mini
+    font-size: 13px
+    font-weight: bold
+  &:hover
+    color: #ffffff
+    background-color: lighten(#515665, 10%)
+
+// Forms
+input
+  &[type="text"], &[type="password"], &[type="datetime"], &[type="datetime-local"], &[type="date"], &[type="month"], &[type="time"], &[type="week"], &[type="number"], &[type="email"], &[type="url"], &[type="search"], &[type="tel"], &[type="color"]
+    background-color: #aab0bf
+    +border-radius(2px)
+    border: none
+    border-top: 1px solid #8b91a0
+    border-bottom: 1px solid #ffffff
+    color: #515665
+    &:focus
+      background-color: $light-gray
+      font-family: "sense"
+      +input-placeholder(#515665)
+    +input-placeholder(#ffffff)
+    font-family: "arvo"
+
+// Navigation
+.nav-tabs
+  font-family: $primary-font
+  font-size: 16px
+  border-bottom: 1px solid #ffffff
+  a
+    color: inherit
+    &:hover
+      color: #05c6b4
+  .dropdown-toggle
+    background-color: inherit
+    border: none
+    color: inherit
+    .active a
+      &:hover
+        background-color: #dfe4ec
+  .active a
+    border: 1px solid #ffffff
+    border-bottom: 0px
+    background-color: #fcfcfc
+    box-shadow: 1px 1px 1px #ffffff
+    &:hover
+      color: #05c6b4
+      background-color: #ffffff
+      border: 1px solid #ffffff
+      border-bottom: 0px
+ 
