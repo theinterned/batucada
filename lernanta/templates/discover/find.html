@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load project_tags %}
+{% block title %}{{ _('Learn') }}{% endblock %}
+{% block bodyid %}learn{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
+
+{% block links %}<link rel="stylesheet" href="{% locale_url multiple_schools_css %}?v=1">{% endblock %}
+
+{% block breadcrumbs %}
+  {% if learn_school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ learn_school.get_absolute_url }}">{{ learn_school.name }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumbs_actions %}
+  {% if user.is_authenticated %}
+    <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <div id="sidebar">
+    <a class="filter {% if not learn_showcase and not learn_community and not learn_fresh and not learn_school and not learn_tag %}active{% endif %}" href="{% locale_url projects_learn %}?all_languages=on">{{ _('View All') }}</a>
+    <h2><i class="icon-star-empty icon-large"></i>{{ _('Featured') }}</h2>
+    <a class="filter {% if learn_community %}active{% endif %}" href="{% locale_url projects_learn %}?all_languages=on&featured=community">
+      {{ _('Community Picks') }}
+    </a>
+    <a class="filter {% if learn_showcase %}active{% endif %}" href="{% locale_url projects_learn %}?all_languages=on&featured=showcase">
+      {{ _('Showcase') }}
+    </a>
+    <a class="filter {% if learn_fresh %}active{% endif %}" href="{% locale_url projects_learn %}?all_languages=on&featured=fresh">
+      {{ _('Fresh Additions') }}
+    </a>
+    <h2><i class="icon-trophy icon-large"></i>{{ _('Schools') }}</h2>
+    {% for school in schools %}
+      <a class="filter {% if learn_school.id == school.id %}active{% endif %}" href="{% locale_url projects_learn %}?all_languages=on&school={{ school.id }}">
+        {{ school.short_name|title }}
+      </a>
+    {% endfor %}
+    <a href="{% locale_url projects_learn_tags %}">
+      <strong>{{ _('Browse Tags') }}</strong>
+      <i class="icon-arrow-right"></i>
+    </a>
+    <h2><i class="icon-pencil icon-large"></i>{{ _('Preferences') }}</h2>
+      <form id="learn-projects-filter" action="{% locale_url projects_find %}" method="get">
+        <div class="field">
+          <label for="id_search_language">
+            {{ _('Language:') }}
+            {{ form.search_language }}
+          </label>
+        </div>
+        <div class="field">
+        <label for="id_reviewed">
+          {{ form.reviewed }}
+          {{ _('Community Reviewed') }}
+        </label>
+      </div>
+    </form>
+  </div>
+
+  <div id="main">
+    <br>
+    
+    <form><label></label><input type="text" placeholder="search title and tags"/></form>
+    <section>
+      <h1 id="learn-header">
+        {% include "projects/_learn_header.html"%}
+      </h1>
+      <br>
+      <ul class="project-list">
+        {% include "projects/_learn_projects.html" %}
+      </ul>
+      <br clear="both">
+      <div id="learn-pagination">
+        {% include "projects/_learn_pagination.html" %}
+      </div>
+      <a id="show-more-results" class="button" href="#">{{ _('Show More Results') }}</a>
+    </section>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    {% if infinite_scroll %}
+        $(window).scroll(function(){
+            var $project_list = $('#learn #main ul.project-list');
+            if ($project_list.offset().top + $project_list.height() < $(document).scrollTop() + $(window).height()) {
+                var $show_more_results = $('#learn #main #show-more-results');
+                if ( !$show_more_results.hasClass('disabled')) {
+                    $show_more_results.trigger('click');
+                }
+            }
+        });
+    {% endif %}
+  </script>
+{% endblock %}

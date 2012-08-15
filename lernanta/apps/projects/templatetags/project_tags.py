@@ -88,10 +88,11 @@ register.inclusion_tag('projects/sidebar.html', takes_context=True)(sidebar)
 
 
 def learn_default(tag=None, school=None):
-    learn_url = reverse('projects_learn')
+    learn_url = reverse('discover_learn')
     params = []
     if school:
-        params += ["school=%s" % school.id]
+        learn_url = reverse('discover_schools',
+            kwargs={'school_slug':school.slug})
     if tag:
         params += ['tag=%s' % tag.name]
     if not school and not tag:
@@ -101,11 +102,7 @@ def learn_default(tag=None, school=None):
         learn_url += "&".join(params)
     return learn_url
 
-def school_learn_default(school, tag=None):
-    return learn_default(tag=tag, school=school)
-
 register.simple_tag(learn_default)
-register.simple_tag(school_learn_default)
 
 
 def task_list(project, user, show_all_tasks=True, short_list_length=3):

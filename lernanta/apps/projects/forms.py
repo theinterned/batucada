@@ -5,18 +5,15 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
-from django.db.models import Count
 
 from links.models import Link
 from users.models import UserProfile
 from users.tasks import SendPrivateMessages
 from tags.forms import GeneralTagField
 from tags.models import GeneralTaggedItem
-from schools.models import School
 
 from projects.models import Project
 from projects import drupal
-
 
 log = logging.getLogger(__name__)
 
@@ -180,6 +177,7 @@ class ProjectContactOrganizersForm(forms.Form):
         except Project.DoesNotExist:
             raise forms.ValidationError(
                 _('That study group, course, ... does not exist.'))
+        #CS - this SHOULDN'T happen in forms.py!!
         recipients = project.organizers()
         subject = "[%s] " % project.name[:20] + self.cleaned_data['subject']
         body = render_to_string(
@@ -216,32 +214,3 @@ class ImportProjectForm(forms.Form):
             raise forms.ValidationError(
                 _('There is no course with this short name on the archive.'))
         return course
-
-
-class ProjectsFilterForm(forms.Form):
-    # Not Listed by Default
-    archived = forms.BooleanField(required=False, widget=forms.HiddenInput)
-    under_development = forms.BooleanField(required=False, widget=forms.HiddenInput)
-    closed_signup = forms.BooleanField(required=False, widget=forms.HiddenInput)
-    # Filter Links
-    COMMUNITY = 'community'
-    SHOWCASE = 'showcase'
-    FRESH = 'fresh'
-    POPULAR = 'popular'
-    UPDATED = 'updated'
-    FEATURED_CHOICES = (
-        (COMMUNITY, _('Community Picks')),
-        (SHOWCASE, _('Showcase')),
-        (FRESH, _('Fresh Additions')),
-        (POPULAR, _('Popular')),
-        (UPDATED, _('Last Updated'))
-    )
-    featured = forms.ChoiceField(required=False, widget=forms.HiddenInput,
-        choices=FEATURED_CHOICES)
-    school = forms.ModelChoiceField(required=False, queryset=School.objects.all(),
-        widget=forms.HiddenInput)
-    tag = forms.CharField(required=False, widget=forms.HiddenInput)
-    # Filter Form
-    language = forms.ChoiceField(required=False, choices=[('all', 'All')] + Project.get_active_languages())
-    reviewed = forms.BooleanField(required=False)
-
