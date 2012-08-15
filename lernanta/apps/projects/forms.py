@@ -242,18 +242,6 @@ class ProjectsFilterForm(forms.Form):
         widget=forms.HiddenInput)
     tag = forms.CharField(required=False, widget=forms.HiddenInput)
     # Filter Form
-    all_languages = forms.BooleanField(required=False)
-    language = forms.ChoiceField(required=False, choices=settings.LANGUAGES)
+    language = forms.ChoiceField(required=False, choices=[('all', 'All')] + Project.get_active_languages())
     reviewed = forms.BooleanField(required=False)
 
-    def __init__(self, projects, *args, **kwargs):
-        super(ProjectsFilterForm, self).__init__(*args, **kwargs)
-        existing_locales = set(loc for loc, lang in settings.LANGUAGES)
-        locale_counts = projects.values('language').annotate(
-            project_language_count=Count('id')).order_by()
-        visible_locales = set(locale_counts.filter(
-            project_language_count__gt=1).values_list(
-            'language', flat=True))
-        language_choices = tuple((loc, lang) for loc, lang in settings.LANGUAGES
-            if loc in visible_locales and (len(loc) == 2 or loc[:2] not in existing_locales))
-        self.fields['language'].widget.choices = language_choices

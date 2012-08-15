@@ -426,6 +426,14 @@ class Project(ModelBase):
             return Project.objects.none()
 
     @classmethod
+    def get_active_languages(cls):
+        """ Return a list of the active language currently in use """
+        language_list = Project.objects.all().values_list('language').distinct('language')
+        language_dict = dict(settings.LANGUAGES)
+        languages = [(l[0], language_dict[l[0]],) for l in language_list]
+        return languages
+
+    @classmethod
     def get_listed_projects(cls):
         """ return all the projects that should be listed """
         listed = Project.objects.filter(

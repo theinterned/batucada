@@ -50,8 +50,9 @@ def learn(request, max_count=24):
         deleted=False).order_by('-created_on')
     get_params = request.GET.copy()
     if not 'language' in get_params:
-        get_params['language'] = get_language()
-    form = project_forms.ProjectsFilterForm(projects, get_params)
+        language = request.session.get('search_language') or 'all'
+        get_params['language'] = language
+    form = project_forms.ProjectsFilterForm(get_params)
     context = {
         'schools': School.objects.all(),
         'popular_tags': Project.get_popular_tags(),
@@ -110,9 +111,12 @@ def learn(request, max_count=24):
         if tag:
             context['learn_tag'] = tag
             projects = Project.get_tagged_projects(tag, projects)
-        if not form.cleaned_data['all_languages']:
-            language = form.cleaned_data['language']
+
+        language = form.cleaned_data['language']
+        request.session['search_language'] = language
+        if language != 'all':
             projects = projects.filter(language__startswith=language)
+
         reviewed = form.cleaned_data['reviewed']
         if reviewed:
             accepted_reviews = Review.objects.filter(

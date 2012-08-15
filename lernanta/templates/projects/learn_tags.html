@@ -15,7 +15,7 @@
 {% block body %}
   <div id="main">
     {% for tag in tags %}
-      <a href="{% locale_url projects_learn %}?all_languages=on&tag={{ tag.tag__name }}">
+      <a href="{% locale_url projects_learn %}?tag={{ tag.tag__name }}">
           <font size={{tag.weight|floatformat:0}}>{{tag.tag__name}}</font>
       </a>
     {% endfor %}
