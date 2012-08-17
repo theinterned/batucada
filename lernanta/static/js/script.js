@@ -280,14 +280,6 @@ var batucada = {
             }
         }
     },
-    signup: {
-        onload: function() {
-            var $inputs = $('input[type=file]');
-            if ($inputs) {
-                attachFileUploadHandler($inputs);
-            }
-        }
-    },
     inbox: {
         onload: function() {
             loadMoreMessages();
