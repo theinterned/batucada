@@ -15,11 +15,12 @@ from django.contrib.contenttypes.models import ContentType
 # from links.tasks import UnsubscribeFromFeed
 from pagination.views import get_pagination_context
 
-from discover import forms as project_forms
 from projects.models import Project
+from discover import forms as project_forms
 from discover.models import get_popular_tags
 from discover.models import get_weighted_tags
 from discover.models import get_tagged_projects
+from discover.models import get_course_list
 from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from schools.models import School
@@ -46,48 +47,19 @@ def learn(request, max_count=24):
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
     if form.is_valid():
-        archived = form.cleaned_data['archived']
-        under_development = form.cleaned_data['under_development']
-        projects = projects.filter(archived=archived,
-            under_development=under_development)
-        closed_signup = form.cleaned_data['closed_signup']
-        if closed_signup:
-            projects = projects.exclude(
-                category=Project.CHALLENGE).filter(
-                sign_up__status=Signup.CLOSED)
-        else:
-            projects = projects.filter(Q(category=Project.CHALLENGE)
-                | Q(sign_up__status=Signup.MODERATED)
-                | Q(sign_up__status=Signup.NON_MODERATED))
+        projects = projects.filter(Q(category=Project.CHALLENGE)
+            | Q(sign_up__status=Signup.MODERATED)
+            | Q(sign_up__status=Signup.NON_MODERATED))
+        
         featured = form.cleaned_data['featured']
+        projects = get_course_list(featured, projects)
         if featured == project_forms.ProjectsFilterForm.SHOWCASE:
             context['learn_showcase'] = True
-            projects = projects.filter(featured=True)
         elif featured == project_forms.ProjectsFilterForm.COMMUNITY:
             context['learn_community'] = True
-            projects = projects.filter(community_featured=True)
         elif featured == project_forms.ProjectsFilterForm.FRESH:
             context['learn_fresh'] = True
-            one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
-            projects = projects.filter(created_on__gte=one_week)
-        elif featured == project_forms.ProjectsFilterForm.POPULAR:
-            popular = Relationship.objects.filter(
-                deleted=False, target_project__isnull=False).values(
-                'target_project').annotate(Count('source')).order_by(
-                '-source__count')[:max_count]
-            popular_ids = [d['target_project'] for d in popular]
-            projects = projects.filter(id__in=popular_ids)
-        elif featured == project_forms.ProjectsFilterForm.UPDATED:
-            external_ct = ContentType.objects.get_for_model(RemoteObject)
-            relationship_ct = ContentType.objects.get_for_model(Relationship)
-            last_updated = Activity.objects.filter(
-                deleted=False, scope_object__isnull=False).exclude(
-                target_content_type=external_ct).exclude(
-                target_content_type=relationship_ct).values(
-                'scope_object').annotate(Max('created_on')).order_by(
-                '-created_on__max')[:max_count]
-            last_updated_ids = [d['scope_object'] for d in last_updated]
-            projects = projects.filter(id__in=last_updated_ids)
+
         tag = form.cleaned_data['tag']
         if tag:
             context['learn_tag'] = tag
@@ -103,6 +75,7 @@ def learn(request, max_count=24):
             accepted_reviews = Review.objects.filter(
                 accepted=True).values('project_id')
             projects = projects.filter(id__in=accepted_reviews)
+
     context['projects'] = projects
     context.update(get_pagination_context(request, projects, max_count))
     if request.is_ajax():
@@ -206,34 +179,13 @@ def featured(request, feature, max_count=24):
 
     if form.is_valid():
         featured = form.cleaned_data['featured']
+        projects = get_course_list(featured, projects)
         if featured == project_forms.ProjectsFilterForm.SHOWCASE:
             context['learn_showcase'] = True
-            projects = projects.filter(featured=True)
         elif featured == project_forms.ProjectsFilterForm.COMMUNITY:
             context['learn_community'] = True
-            projects = projects.filter(community_featured=True)
         elif featured == project_forms.ProjectsFilterForm.FRESH:
             context['learn_fresh'] = True
-            one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
-            projects = projects.filter(created_on__gte=one_week)
-        elif featured == project_forms.ProjectsFilterForm.POPULAR:
-            popular = Relationship.objects.filter(
-                deleted=False, target_project__isnull=False).values(
-                'target_project').annotate(Count('source')).order_by(
-                '-source__count')[:max_count]
-            popular_ids = [d['target_project'] for d in popular]
-            projects = projects.filter(id__in=popular_ids)
-        elif featured == project_forms.ProjectsFilterForm.UPDATED:
-            external_ct = ContentType.objects.get_for_model(RemoteObject)
-            relationship_ct = ContentType.objects.get_for_model(Relationship)
-            last_updated = Activity.objects.filter(
-                deleted=False, scope_object__isnull=False).exclude(
-                target_content_type=external_ct).exclude(
-                target_content_type=relationship_ct).values(
-                'scope_object').annotate(Max('created_on')).order_by(
-                '-created_on__max')[:max_count]
-            last_updated_ids = [d['scope_object'] for d in last_updated]
-            projects = projects.filter(id__in=last_updated_ids)
 
     if form.is_valid():
         language = form.cleaned_data['language']

@@ -5,6 +5,7 @@ from django.db.models import Count
 from tags.models import GeneralTaggedItem
 from projects.models import Project
 
+import datetime
 
 def get_active_languages():
     """ Return a list of the active language currently in use """
@@ -36,6 +37,7 @@ def get_listed_projects():
 
 
 def get_popular_tags(max_count=10):
+    """ return a list of popular tags """
     ct = ContentType.objects.get_for_model(Project)
     listed = list(get_listed_projects().values_list('id', flat=True))
     return GeneralTaggedItem.objects.filter(
@@ -73,3 +75,39 @@ def get_tagged_projects(tag_name, projects=None):
         projects = Project.objects
     return projects.filter(id__in=items)
 
+
+def get_course_list(list_name, projects=None):
+    """ return a list of projects
+        if projects != None, only the courses in projects and the list
+        will be returned.
+    """
+    if not projects:
+        projects = Project.objects
+
+    if list_name == 'showcase':
+        projects = projects.filter(featured=True)
+    elif list_name == 'community':
+        projects = projects.filter(community_featured=True)
+    elif list_name == 'fresh':
+        one_week = datetime.datetime.now() - datetime.timedelta(weeks=1)
+        projects = projects.filter(created_on__gte=one_week)
+    elif list_name == 'popular':
+        popular = Relationship.objects.filter(
+            deleted=False, target_project__isnull=False).values(
+            'target_project').annotate(Count('source')).order_by(
+            '-source__count')[:max_count]
+        popular_ids = [d['target_project'] for d in popular]
+        projects = projects.filter(id__in=popular_ids)
+    elif list_name == 'updated':
+        external_ct = ContentType.objects.get_for_model(RemoteObject)
+        relationship_ct = ContentType.objects.get_for_model(Relationship)
+        last_updated = Activity.objects.filter(
+            deleted=False, scope_object__isnull=False).exclude(
+            target_content_type=external_ct).exclude(
+            target_content_type=relationship_ct).values(
+            'scope_object').annotate(Max('created_on')).order_by(
+            '-created_on__max')[:max_count]
+        last_updated_ids = [d['scope_object'] for d in last_updated]
+        projects = projects.filter(id__in=last_updated_ids)
+
+    return projects
