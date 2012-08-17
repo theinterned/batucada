@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from tags.models import GeneralTaggedItem
 from projects.models import Project
+from signups.models import Signup
 
 import datetime
 
@@ -33,6 +34,9 @@ def get_listed_courses():
         archived=False,
         under_development=False,
         test=False)
+    listed = listed.filter(Q(category=Project.CHALLENGE)
+        | Q(sign_up__status=Signup.MODERATED)
+        | Q(sign_up__status=Signup.NON_MODERATED))
     return listed
 
 

@@ -17,6 +17,7 @@ from pagination.views import get_pagination_context
 
 from projects.models import Project
 from discover import forms as project_forms
+from discover.models import get_listed_courses
 from discover.models import get_popular_tags
 from discover.models import get_weighted_tags
 from discover.models import get_courses_by_tag
@@ -68,8 +69,7 @@ def _filter_and_return(request, context, projects, max_count):
 
 
 def learn(request, max_count=24):
-    projects = Project.objects.filter(not_listed=False,
-        deleted=False).order_by('-created_on')
+    projects = get_listed_courses().order_by('-created_on')
     get_params = request.GET.copy()
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
@@ -84,10 +84,6 @@ def learn(request, max_count=24):
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
     if form.is_valid():
-        projects = projects.filter(Q(category=Project.CHALLENGE)
-            | Q(sign_up__status=Signup.MODERATED)
-            | Q(sign_up__status=Signup.NON_MODERATED))
-
         language = form.cleaned_data['language']
         request.session['search_language'] = language
         if language != 'all':
@@ -104,8 +100,7 @@ def learn(request, max_count=24):
 
 def schools(request, school_slug, max_count=24):
     school = get_object_or_404(School, slug=school_slug)
-    projects = Project.objects.filter(not_listed=False,
-        deleted=False).order_by('-created_on')
+    projects = get_listed_courses().order_by('-created_on')
 
     get_params = request.GET.copy()
     if not 'language' in get_params:
@@ -122,10 +117,6 @@ def schools(request, school_slug, max_count=24):
         'learn_school': school,
     }
 
-    projects = projects.filter(Q(category=Project.CHALLENGE)
-        | Q(sign_up__status=Signup.MODERATED)
-        | Q(sign_up__status=Signup.NON_MODERATED))
-    
     projects = projects.filter(school=school)
 
     if form.is_valid():
@@ -138,8 +129,7 @@ def schools(request, school_slug, max_count=24):
 
    
 def featured(request, feature, max_count=24):
-    projects = Project.objects.filter(not_listed=False,
-        deleted=False).order_by('-created_on')
+    projects = get_listed_courses().order_by('-created_on')
     get_params = request.GET.copy()
 
     if not 'language' in get_params:
@@ -155,9 +145,6 @@ def featured(request, feature, max_count=24):
         'learn_url': reverse('discover_learn'),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
-    projects = projects.filter(Q(category=Project.CHALLENGE)
-        | Q(sign_up__status=Signup.MODERATED)
-        | Q(sign_up__status=Signup.NON_MODERATED))
 
     projects = get_courses_by_list(feature, projects)
     context['learn_{0}'.format(feature)] = True
