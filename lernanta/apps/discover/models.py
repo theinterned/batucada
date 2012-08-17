@@ -21,11 +21,11 @@ def search(keyword, limit = 10):
     """
     results = []
     results += Project.objects.filter(name__icontains=keyword)[:limit]
-    results += get_tagged_projects(keyword)[:limit]
+    results += get_courses_by_tag(keyword)[:limit]
     return list(set(results))[:limit]
 
 
-def get_listed_projects():
+def get_listed_courses():
     """ return all the projects that should be listed """
     listed = Project.objects.filter(
         not_listed=False,
@@ -39,7 +39,7 @@ def get_listed_projects():
 def get_popular_tags(max_count=10):
     """ return a list of popular tags """
     ct = ContentType.objects.get_for_model(Project)
-    listed = list(get_listed_projects().values_list('id', flat=True))
+    listed = list(get_listed_courses().values_list('id', flat=True))
     return GeneralTaggedItem.objects.filter(
         content_type=ct, object_id__in=listed).values(
         'tag__name').annotate(tagged_count=Count('object_id')).order_by(
@@ -48,7 +48,7 @@ def get_popular_tags(max_count=10):
 
 def get_weighted_tags(min_count=2, min_weight=1.0, max_weight=7.0):
     ct = ContentType.objects.get_for_model(Project)
-    listed = get_listed_projects().values('id')
+    listed = get_listed_courses().values('id')
     tags = GeneralTaggedItem.objects.filter(
         content_type=ct, object_id__in=listed).values(
         'tag__name').annotate(tagged_count=Count('object_id')).filter(
@@ -66,7 +66,17 @@ def get_weighted_tags(min_count=2, min_weight=1.0, max_weight=7.0):
     return tags
 
 
-def get_tagged_projects(tag_name, projects=None):
+def get_tags_for_courses(courses, exclude=[], max_tags=6):
+    ct = ContentType.objects.get_for_model(Project)
+    course_ids = courses.values('id')
+    tags = GeneralTaggedItem.objects.filter(
+        content_type=ct, object_id__in=course_ids).values(
+        'tag__name').exclude(tag__name__in=exclude).annotate(
+        tagged_count=Count('object_id'))
+    return tags.order_by('-tagged_count')[:max_tags]
+
+
+def get_courses_by_tag(tag_name, projects=None):
     ct = ContentType.objects.get_for_model(Project)
     items = GeneralTaggedItem.objects.filter(
         content_type=ct, tag__name=tag_name).values(
@@ -76,7 +86,16 @@ def get_tagged_projects(tag_name, projects=None):
     return projects.filter(id__in=items)
 
 
-def get_course_list(list_name, projects=None):
+def get_courses_by_tags(tag_list, courses=None):
+    "this will return courses that have all the tags in tag_list"
+    if not courses:
+        courses = Project.objects
+    for tag in tag_list:
+        courses = get_courses_by_tag(tag, courses)
+    return courses
+
+
+def get_courses_by_list(list_name, projects=None):
     """ return a list of projects
         if projects != None, only the courses in projects and the list
         will be returned.

@@ -1,4 +1,5 @@
 {% load l10n_tags %}
+{% load learn_tags %}
   <a class="filter {% if not learn_showcase and not learn_community and not learn_fresh and not learn_school and not learn_tag %}active{% endif %}" href="{% locale_url discover_learn %}">{{ _('View All') }}</a>
   <h2><i class="icon-star-empty icon-large"></i>{{ _('Featured') }}</h2>
   <a class="filter {% if learn_community %}active{% endif %}" href="{% locale_url discover_featured feature='community' %}">
@@ -18,7 +19,7 @@
   {% endfor %}
   <h2><i class="icon-tags icon-large"></i>{{ _('Tags') }}</h2>
   {% for tag in popular_tags %}
-    <a class="filter {% if learn_tag == tag.tag__name %}active{% endif %}" href="{% locale_url discover_learn %}?tag={{ tag.tag__name }}">
+    <a class="filter {% if learn_tag == tag.tag__name %}active{% endif %}" href="./?filter_tags={% tag_string filter_tags tag.tag__name %}">
       {{ tag.tag__name }} ({{ tag.tagged_count }})
     </a>
   {% endfor %}

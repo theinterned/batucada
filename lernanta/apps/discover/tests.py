@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from users.models import create_profile
 from projects.models import Project
+from discover.models import get_listed_courses
 
 from test_utils import TestCase
 
@@ -24,7 +25,7 @@ class ProjectTests(TestCase):
         self.user.set_password(self.test_password)
         self.user.save()
 
-    def test_get_listed_projects(self):
+    def test_get_listed_courses(self):
         deleted_project = Project(deleted=True, test=False)
         deleted_project.save()
        
@@ -43,7 +44,7 @@ class ProjectTests(TestCase):
         project = Project(name="listed", under_development=False, test=False)
         project.save()
        
-        listed_projects = Project.get_listed_projects()
+        listed_projects = get_listed_courses()
 
         self.assertFalse(deleted_project in listed_projects)
         self.assertFalse(not_listed_project in listed_projects)
