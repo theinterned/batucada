@@ -15,7 +15,7 @@
 {% block body %}
   <div id="main">
     {% for tag in tags %}
-      <a href="{% locale_url discover_learn %}?tag={{ tag.tag__name }}">
+      <a href="{% locale_url discover_learn %}?filter_tags={{ tag.tag__name }}">
           <font size={{tag.weight|floatformat:0}}>{{tag.tag__name}}</font>
       </a>
     {% endfor %}

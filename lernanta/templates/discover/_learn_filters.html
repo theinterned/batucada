@@ -18,8 +18,13 @@
     </a>
   {% endfor %}
   <h2><i class="icon-tags icon-large"></i>{{ _('Tags') }}</h2>
+  {% for tag in filter_tags %}
+    <a class="filter active_tag" href="./?filter_tags={% filter_remove_tag filter_tags tag %}">
+        {{tag}}<img src="{{STATIC_URL}}/images/delete-x.png">
+    </a>
+  {% endfor %}
   {% for tag in popular_tags %}
-    <a class="filter {% if learn_tag == tag.tag__name %}active{% endif %}" href="./?filter_tags={% tag_string filter_tags tag.tag__name %}">
+    <a class="filter" href="./?filter_tags={% filter_add_tag filter_tags tag.tag__name %}">
       {{ tag.tag__name }} ({{ tag.tagged_count }})
     </a>
   {% endfor %}

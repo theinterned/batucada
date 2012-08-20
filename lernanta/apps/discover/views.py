@@ -28,7 +28,6 @@ from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from schools.models import School
 from activity.models import Activity, RemoteObject
-from signups.models import Signup
 from reviews.models import Review
 
 log = logging.getLogger(__name__)
