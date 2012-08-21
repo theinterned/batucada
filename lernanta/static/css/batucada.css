@@ -5738,20 +5738,28 @@ table.display thead, table.display tfoot {
     color: #FFFFFF;
 }
 
-#learn #sidebar a.active_tag {
-    background-color: #CC0000;
-    color: #FFFFFF;
-    /*background: url("/static/images/delete-x.png") no-repeat;
-    background-position: right 1em;*/
-}
-
-#learn #sidebar a.active_tag img {
+#learn #sidebar a.active img {
     float: right;
 }
 
-#learn #sidebar a.active_tag:hover {
-    /*background-color: #CC0000;
-    color: #FFFFFF;*/
+#learn div.hint {
+	padding: 24px 24px 24px;
+	background: -moz-linear-gradient(top, 
+		#FFFAE4 0%, 
+		#FFF4BE 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, 
+		color-stop(0%,#FFFAE4), 
+		color-stop(100%,#FFF4BE)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( 
+		startColorstr='#FFFAE4',
+		endColorstr='#FFF4BE',GradientType=0 );
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	margin-bottom: 18px;
+	box-shadow: #999 1px 1px 5px;
+	-moz-box-shadow: #999 1px 1px 5px;
+	-webkit-box-shadow: #999 1px 1px 5px;
+	position: relative;
 }
 
 #learn #sidebar a:hover, #learn #sidebar a:active {
