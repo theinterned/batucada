@@ -13,11 +13,122 @@ $primary-font: "arvo", helvetica, sans-serif
 $secondary-font: "sense", helvetica, sans-serif
 
 $light-gray: #f3f4f8
+
+
+/* Text-Header-Link Colors */
+$cyan: #05c6b4 /* highlighted header text, and, hovered link text */
+$steel: #aab0bf /* normal header text, nav-bar link sub-text, 'Find Courses' - 'OR' - 'Create Course' text, 'Featured Courses' sub-text, and, '35 minutes ago' & 'p2pu.org' link text */
+/*NOTE: $steel is also used for: thumbnail footer-badge-holder background, and nav-bar search box background */
+$slate: #515665 /* body text, small headers text, small container text, nav-bar link text, thumbnail text, thumbnail image dimensions text, AND, nav-bar search box icon*/
+$white: #ffffff /* nav-bar search placeholder text, 'Find Course' & 'Create Course' button text, thumbnail 'OK' badge text, and, thumbnail footer-badge-holder text */
+$apricot: #ff7300 /* highlighted-2 header text */
+/*NOTE: $apricot is also used for: 'Find Course' button background */
+
+
+/* Background Colors */
+$olive: #b7d500 /* 'Create Course' button background, and, 'OK' badge background */
+$snow: #fcfcfc /* nav-bar background, small container background, thumbnail background, and, general row-span container background */
+$cloud: #f3f4f8 /* body background */
+$silver: #cccccc /* thumbnail image placeholder background */
+/*NOTE: $apricot is also used for: 'Find Course' button background */
+/*NOTE: $steel is also used for: thumbnail footer-badge-holder background, and nav-bar search box background */
+
+
+/* Border Colors */
+$zinc: #d1d4dd /* bottom-only border on activity posts and 'P2PU Blog' container box */
+$pewter: #8e95a8 /* top-only border on thumbnail footer-badge-holder */
+$metal: #d0d3dc /* bottom-only border on 'Find Course' & 'Create Course' button container */
+$pale-olive: #a4b359 /* inner-lower-bottom-only border on 'OK' badges */
+$gray-olive: #b4bb92 /* upper-outer-top-only border on 'OK' badges */
+$dark-pewter: #8b91a0 /* top-only border on nav-bar search box */
+$dark-apricot: #bc5500 /* bottom-only border on 'Find Courses' button */
+$dark-olive: #a3be00 /* bottom-only border on 'Create Course' button */
+
+
+@mixin square-corners
+  border-radius: 0px
+  -webkit-border-radius: 0px
+  -moz-border-radius: 0px
+
+@mixin no-shadow
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 0px rgba(0, 0, 0, 0)
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 0px rgba(0, 0, 0, 0)
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 0px rgba(0, 0, 0, 0)
+
+@mixin no-gradient($color)
+  background-image: -moz-linear-gradient(top, $color, $color)
+  background-image: -ms-linear-gradient(top, $color, $color)
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($color), to($color))
+  background-image: -webkit-linear-gradient(top, $color, $color)
+  background-image: -o-linear-gradient(top, $color, $color)
+  background-image: linear-gradient(top, $color, $color)
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='$color', endColorstr='$color', GradientType=0)
+  
+@mixin inset-1px-box-shadow-on-one-side($color, $side)
+  @if $side == top
+    -webkit-box-shadow: 0px 0px 0px $color, inset 0px -1px 0px $color
+    -moz-box-shadow: 0px 0px 0px $color, inset 0px -1px 0px $color
+    box-shadow: 0px 0px 0px $color, inset 0px -1px 0px $color
+  @if $side == bottom
+    -webkit-box-shadow: 0px 0px 0px $color, inset 0px 1px 0px $color
+    -moz-box-shadow: 0px 0px 0px $color, inset 0px 1px 0px $color
+    box-shadow: 0px 0px 0px $color, inset 0px 1px 0px $color
+
+@mixin glowing-shadow($color)
+  $lighter-color: lighten($color, 50%)
+  -webkit-box-shadow: 0px 0px 3px $lighter-color
+  -moz-box-shadow: 0px 0px 3px $lighter-color
+  box-shadow: 0px 0px 3px $lighter-color
+    
+/*Border radius unsupported if lte IE 8 */
+@mixin round-corners-on-one-side($side, $radius: 1px)
+  border-#{$side}-left-radius: $radius
+  border-#{$side}-right-radius: $radius
+  -webkit-border-#{$side}-left-radius: $radius
+  -webkit-border-#{$side}-right-radius: $radius
+  -moz-border-radius-#{$side}left: $radius
+  -moz-border-radius-#{$side}right: $radius
+
+/* Works only in newer browsers */
+@mixin add-text-shadow($text-color, $bkgd-color, $side)
+  $mixed-color: mix($text-color, $bkgd-color)
+  @if $side == top
+    -webkit-text-shadow: 0px -1px 1px $mixed-color
+    -moz-text-shadow: 0px -1px 1px $mixed-color
+    text-shadow: 0px -1px 1px $mixed-color
+  @if $side == right
+    -webkit-text-shadow: 1px 0px 1px $mixed-color 
+    -moz-text-shadow: 1px 0px 1px $mixed-color
+    text-shadow: 1px 0px 1px $mixed-color
+  @if $side == bottom
+    -webkit-text-shadow: 0px 1px 1px $mixed-color
+    -moz-text-shadow: 0px 1px 1px $mixed-color
+    text-shadow: 0px 1px 1px $mixed-color
+  @if $side == left
+    -webkit-text-shadow: -1px 0px 1px $mixed-color
+    -moz-text-shadow: -1px 0px 1px $mixed-color
+    text-shadow: -1px 0px 1px $mixed-color
+    
+@mixin add-left-right-text-shadow($t-color, $b-color)
+  @include add-text-shadow($t-color, $b-color, left)
+  @include add-text-shadow($t-color, $b-color, right)
+
+@mixin add-top-bottom-text-shadow($t-color, $b-color)
+  @include add-text-shadow($t-color, $b-color, top)
+  @include add-text-shadow($t-color, $b-color, bottom)
+  
+@mixin add-all-sides-text-shadow($t-color, $b-color)
+  @include add-left-right-text-shadow($t-color, $b-color)
+  @include add-top-bottom-text-shadow($t-color, $b-color)
+
 // Headings
+header
+  background-color: $snow
+
 body
   font-family: $secondary-font, sans-serif
   font-size: 16px
-  background-color: $light-gray
+  background-color: $cloud
 
 h1
   font-family: $primary-font
@@ -40,9 +151,10 @@ p
   margin-bottom: 10px
 
 a
-  color: #05c6b4
+  color: $cyan
   &:hover
-    color: lighten(#05c6b4, 10%)
+    color: lighten($cyan, 10%)
+    
 //Buttons
 .btn
   font-family: "arvo"
@@ -115,97 +227,33 @@ input
       border-bottom: 0px
 
 .navbar
+  font-family: $primary-font
   *position: relative
   *z-index: 2
-  margin-bottom: 32px
+  height: 110px
   overflow: visible
-
-.navbar-inner
-  min-height: 40px
-  padding-right: 20px
-  padding-left: 20px
-  background-color: #fcfcfc
-  background-image: -moz-linear-gradient(top, #fcfcfc, #fcfcfc)
-  background-image: -ms-linear-gradient(top, #fcfcfc, #fcfcfc)
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fcfcfc), to(#fcfcfc))
-  background-image: -webkit-linear-gradient(top, #fcfcfc, #fcfcfc)
-  background-image: -o-linear-gradient(top, #fcfcfc, #fcfcfc)
-  background-image: linear-gradient(top, #fcfcfc, #fcfcfc)
-  background-repeat: repeat-x
-  -webkit-border-radius: 4px
-  -moz-border-radius: 4px
-  border-radius: 4px
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#fcfcfc', GradientType=0)
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-
-.navbar
-  color: #fcfcfc
+  color: $steel
+  background-color: $snow
+  padding-right: 0
+  padding-left: 0
   .brand
-    &:hover
-      text-decoration: none
-    display: block
-    float: left
-    padding: 0px 0px 0px 0px
-    margin-left: -20px
-    font-size: 20px
-    font-weight: 200
-    line-height: 1
-    color: #fcfcfc
-    width: 141px 
+    margin: 0px
+    margin-top: 34px
     background-image: url("/static/images/logo.png")
-    height: 44px
+    background-repeat: no-repeat
+    width: 131px
+    height: 41px
   .navbar-text
     margin-bottom: 0
-    line-height: 40px
+    line-height: 15px
+    font-size: 10px
+    color: $steel
+    font-family: $secondary-font
+    @include add-all-sides-text-shadow($steel, $snow)
   .navbar-link
-    color: #fcfcfc
+    color: $slate
     &:hover
-      color: #05c6b4
-  .btn
-    margin-top: 5px
-  .btn-group
-    margin-top: 5px
-    .btn
-      margin: 0
-
-.navbar-search
-  position: relative
-  float: left
-  margin-top: 6px
-  margin-bottom: 0
-  .search-query
-    padding: 4px 9px
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-    font-size: 13px
-    font-weight: normal
-    line-height: 1
-    color: #ffffff
-    background-color: #626262
-    border: 1px solid #151515
-    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15)
-    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15)
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15)
-    -webkit-transition: none
-    -moz-transition: none
-    -ms-transition: none
-    -o-transition: none
-    transition: none
-    &:-moz-placeholder, &:-ms-input-placeholder, &::-webkit-input-placeholder
-      color: #cccccc
-    &:focus, &.focused
-      padding: 5px 10px
-      color: #333333
-      text-shadow: 0 1px 0 #ffffff
-      background-color: #ffffff
-      border: 0
-      outline: 0
-      -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15)
-      -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15)
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.15)
-
-.navbar
+      color: $cyan
   .nav
     position: relative
     left: 0
@@ -221,37 +269,87 @@ input
         float: none
         padding: 9px 10px 11px
         line-height: 19px
-        color: #fcfcfc
+        color: $slate
         text-decoration: none
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
-  .btn
-    display: inline-block
-    padding: 4px 10px 4px
-    margin: 5px 5px 6px
-    line-height: 18px
-  .btn-group
-    padding: 5px 5px 6px
-    margin: 0
-  .nav
+        @include add-all-sides-text-shadow($slate, $snow)
     > a:hover
-      color: #ffffff
+      color: $cyan
       text-decoration: none
       background-color: transparent
     .active a
-      color: #ffffff
+      color: $cyan
       text-decoration: none
-      background-color: #222222
+      background-color: $snow
+      @include add-all-sides-text-shadow($slate, $snow)
       &:hover
-        color: #ffffff
+        color: $cyan
         text-decoration: none
-        background-color: #222222
+        background-color: $snow
   .divider-vertical
     width: 1px
-    height: 40px
-    margin: 0 9px
+    height: 13px
+    margin-top: 48px
     overflow: hidden
-    background-color: #222222
-    border-right: 1px solid #333333
+    border-right: 1px solid $slate
   .nav.pull-right
     margin-right: 0
     margin-left: 10px
+
+.navbar-inner
+  min-height: 110px
+  padding-right: 10px
+  padding-left: 10px
+  background-color: $snow
+  @include square-corners
+  @include no-shadow
+  @include no-gradient($snow)
+
+.navbar-search
+  position: relative
+  float: left
+  margin-top: 42px
+  height: 26px
+  width: 230px
+  .search-query
+    padding: inherit
+    font-family: $primary-font
+    font-size: 16px
+    font-weight: normal
+    line-height: 1
+    color: $white
+    background-color: $steel
+    border: 0px 0px 0px 0px
+    @include round-corners-on-one-side(top)
+    @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
+    -webkit-transition: none
+    -moz-transition: none
+    -ms-transition: none
+    -o-transition: none
+    transition: none
+    &:-moz-placeholder, &:-ms-input-placeholder, &::-webkit-input-placeholder
+      color: $white
+    &:focus, &.focused
+      padding: 5px 10px
+      color: $white
+      @include add-all-sides-text-shadow($white, $steel)
+      background-color: $steel
+      @include glowing-shadow($steel)
+
+.container
+  margin: 0 auto
+  &:before
+    display: table
+    content: ""
+    position: absolute
+    top: 0
+    width: 9999px
+    right: 100%
+    overflow-x: hidden
+  &:after
+    display: table
+    content: ""
+    position: absolute
+    top: 0
+    width: 9999px
+    left: 100%
+    overflow-x: hidden

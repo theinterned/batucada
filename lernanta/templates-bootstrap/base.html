@@ -51,43 +51,26 @@
 
 {% block header %}
   <header>
-
-	<div class="navbar">
-	  <div class="navbar-inner">
-		<div class="container">
+	<div class="container">
+	  <div class="navbar">
+		<div class="navbar-inner">
 		  <a class="brand" href="{% if user.is_authenticated %}{% locale_url dashboard %}{% else %}{% locale_url splash %}{% endif %}"></a>
 		  <ul class="nav">
 			<li>
             	<a href="{% learn_default %}">{{ _('Find') }}</a>
-				{{ _('Great Courses') }}
+				<div class="navbar-text">{{ _('Great Courses') }}</div>
 			</li>
 			<li class="divider-vertical"></li>
             <li>
 				<a href="{% locale_url static_page_show 'get-involved' %}">{{ _('Create') }}</a>
-				{{ _('a Course') }}
+				<div class="navbar-text">{{ _('a Course') }}</div>
 			</li>
           </ul>
           <form class="navbar-search pull-left" action>
 		    <input type="text" class="search-query span2" placeholder="">
 		  </form>
-
           {% if user.is_authenticated %}
-            <ul class="nav">
-				<li>
-	            	<a href="http://info.p2pu.org" target="_blank">{{ _('Blog') }}</a>
-				</li>
-	            <li>
-					<a href="http://help.p2pu.org" id="help-link" target="_blank">{{ _('Help') }}</a>
-				</li>
-				<li class="divider-vertical"></li>
-				<li>
-					<a href="{{ login_with_redirect_url }}">{{ _('Login') }}</a>
-				</li>
-	          </ul>
-          {% else %} {# user not logged in #}
-           
-		<!-- switched code from user.is_authenticated to else for testing purposes -->
-		  	<ul>
+			<ul>
               <li id="user" class="menu">
                 <a href="#" id="user-link" class="top-level">
                   {# todo - come up with something better than image_or_default as profile isn't guaranteed to exist. #}
@@ -122,11 +105,24 @@
                 </a>
               </li>
             </ul>
+          {% else %} {# user not logged in #}
+            <ul class="nav">
+				<li>
+	            	<a href="http://info.p2pu.org" target="_blank">{{ _('Blog') }}</a>
+				</li>
+	            <li>
+					<a href="http://help.p2pu.org" id="help-link" target="_blank">{{ _('Help') }}</a>
+				</li>
+				<li class="divider-vertical"></li>
+				<li>
+					<a href="{{ login_with_redirect_url }}">{{ _('Login') }}</a>
+				</li>
+	        </ul>	
           {% endif %}
-        </nav> <!-- /#user-nav -->
 
-<!-- old search box display and script>
-<!--        <div id="cse-search-form" style="width: 100%;">{{ _('Loading') }}</div>
+<!-- START old search box display and script -->
+<!--
+        <div id="cse-search-form" style="width: 100%;">{{ _('Loading') }}</div>
         <script src="https://www.google.com/jsapi" type="text/javascript"></script>
         <script type="text/javascript"> 
           google.load('search', '1', {language : '{{ _('en') }}'});
@@ -138,12 +134,19 @@
             options.enableSearchboxOnly(search_page_url);
             customSearchControl.draw('cse-search-form', options);
           }, true);
-        </script>   -->
+        </script>   
+-->
+<!-- END old search box display and script -->
 
+	    </div>
+	  </div>
+	</div>
 
+<!-- START Not sure what this does....ask -->
 {% block join_p2pu_section %}{% endblock %}
+<!-- END Not sure what this does....ask -->
 
-<!-- old breadcrumbs code -->
+<!-- START Breadcrumbs code -->
 <!--
     <div id="breadcrumbs">
       <div class="container">
@@ -156,12 +159,14 @@
           {% block breadcrumbs_actions %}{% endblock %}
         </div>
       </div>
-    </div>    -->
+    </div>    
+-->
+<!-- END Breadcrumbs code -->
 
   </header>
 {% endblock %}
 
-  <div id="content" class="container">
+  <div class="container">
     {% if messages %}
     <ul class="messages">
     {% for message in messages %}
