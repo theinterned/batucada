@@ -1,19 +1,19 @@
 {% load l10n_tags %}
 {% load learn_tags %}
-  <a class="filter {% if not learn_showcase and not learn_community and not learn_fresh and not learn_school and not learn_tag %}active{% endif %}" href="{% locale_url discover_learn %}">{{ _('View All') }}</a>
+  <a class="filter {% if not learn_showcase and not learn_community and not learn_fresh and not learn_school and not learn_tag %}active{% endif %}" href="{% locale_url learn_all %}">{{ _('View All') }}</a>
   <h2><i class="icon-star-empty icon-large"></i>{{ _('Featured') }}</h2>
-  <a class="filter {% if learn_community %}active{% endif %}" href="{% locale_url discover_featured feature='community' %}">
+  <a class="filter {% if learn_community %}active{% endif %}" href="{% locale_url learn_featured feature='community' %}">
     {{ _('Community Picks') }}
   </a>
-  <a class="filter {% if learn_showcase %}active{% endif %}" href="{% locale_url discover_featured feature='showcase' %}">
+  <a class="filter {% if learn_showcase %}active{% endif %}" href="{% locale_url learn_featured feature='showcase' %}">
     {{ _('Showcase') }}
   </a>
-  <a class="filter {% if learn_fresh %}active{% endif %}" href="{% locale_url discover_featured feature='fresh' %}">
+  <a class="filter {% if learn_fresh %}active{% endif %}" href="{% locale_url learn_featured feature='fresh' %}">
     {{ _('Fresh Additions') }}
   </a>
   <h2><i class="icon-trophy icon-large"></i>{{ _('Schools') }}</h2>
   {% for school in schools %}
-    <a class="filter {% if learn_school.id == school.id %}active{% endif %}" href="{% locale_url discover_schools school_slug=school.slug %}">
+    <a class="filter {% if learn_school.id == school.id %}active{% endif %}" href="{% locale_url learn_schools school_slug=school.slug %}">
       {{ school.short_name|title }}
     </a>
   {% endfor %}
@@ -30,12 +30,12 @@
     </a>
   {% endfor %}
   <a href="./"><strong>{{ _('Clear Tags') }}</strong></a>
-  <a href="{% locale_url discover_learn_tags %}">
+  <a href="{% locale_url learn_tags %}">
     <strong>{{ _('Browse All Tags') }}</strong>
     <i class="icon-arrow-right"></i>
   </a>
   <h2><i class="icon-pencil icon-large"></i>{{ _('Preferences') }}</h2>
-    <form id="learn-projects-filter" action="{% locale_url discover_learn %}" method="get">
+    <form id="learn-projects-filter" action="{% locale_url learn_all %}" method="get">
     {{ form.featured }}
     {{ form.school }}
     {{ form.tag }}
@@ -45,8 +45,8 @@
         {{ form.language }}
       </label>
       {{ form.language.errors }}
-    </div>
-    <div class="field{% if form.reviewed.errors %} error{% endif %}">
+      </div>
+      <div class="field{% if form.reviewed.errors %} error{% endif %}">
       <label for="id_reviewed">
         {{ form.reviewed }}
         {{ _('Community Reviewed') }}

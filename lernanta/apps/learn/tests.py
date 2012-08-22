@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from users.models import create_profile
 from projects.models import Project
-from discover.models import get_listed_courses
+from learn.models import get_listed_courses
 
 from test_utils import TestCase
 

@@ -13,7 +13,7 @@
     {% if user.is_authenticated %}
        <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
     {% endif %}
-    <a class="button" href="{% locale_url discover_schools school_slug=school.slug %}">{{ _('Browse') }}</a>
+    <a class="button" href="{% locale_url learn_schools school_slug=school.slug %}">{{ _('Browse') }}</a>
 {% endblock %}
 
 {% block body %}

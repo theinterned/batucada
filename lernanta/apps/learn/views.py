@@ -16,14 +16,14 @@ from django.contrib.contenttypes.models import ContentType
 from pagination.views import get_pagination_context
 
 from projects.models import Project
-from discover import forms as project_forms
-from discover.models import get_listed_courses
-from discover.models import get_popular_tags
-from discover.models import get_weighted_tags
-from discover.models import get_courses_by_tag
-from discover.models import get_courses_by_tags
-from discover.models import get_courses_by_list
-from discover.models import get_tags_for_courses
+from learn import forms as project_forms
+from learn.models import get_listed_courses
+from learn.models import get_popular_tags
+from learn.models import get_weighted_tags
+from learn.models import get_courses_by_tag
+from learn.models import get_courses_by_tags
+from learn.models import get_courses_by_list
+from learn.models import get_tags_for_courses
 from l10n.urlresolvers import reverse
 from relationships.models import Relationship
 from schools.models import School
@@ -47,13 +47,13 @@ def _filter_and_return(request, context, projects, max_count):
     context['projects'] = projects
     context.update(get_pagination_context(request, projects, max_count))
     if request.is_ajax():
-        projects_html = render_to_string('discover/_learn_projects.html',
+        projects_html = render_to_string('learn/_learn_projects.html',
             context, context_instance=RequestContext(request))
-        projects_pagination = render_to_string('discover/_learn_pagination.html',
+        projects_pagination = render_to_string('learn/_learn_pagination.html',
             context, context_instance=RequestContext(request))
-        learn_header = render_to_string('discover/_learn_header.html',
+        learn_header = render_to_string('learn/_learn_header.html',
             context, context_instance=RequestContext(request))
-        learn_filters = render_to_string('discover/_learn_filters.html',
+        learn_filters = render_to_string('learn/_learn_filters.html',
             context, context_instance=RequestContext(request))
         data = {
             'projects_html': projects_html,
@@ -63,7 +63,7 @@ def _filter_and_return(request, context, projects, max_count):
         }
         json = simplejson.dumps(data)
         return http.HttpResponse(json, mimetype="application/json")
-    return render_to_response('discover/discover.html', context,
+    return render_to_response('learn/learn.html', context,
         context_instance=RequestContext(request))
 
 
@@ -79,7 +79,7 @@ def learn(request, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'learn_url': reverse('discover_learn'),
+        'learn_url': reverse('learn_all'),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
     if form.is_valid():
@@ -111,7 +111,7 @@ def schools(request, school_slug, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'learn_url': reverse('discover_learn'),
+        'learn_url': reverse('learn_all'),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
         'learn_school': school,
     }
@@ -141,7 +141,7 @@ def featured(request, feature, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'learn_url': reverse('discover_learn'),
+        'learn_url': reverse('learn_all'),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
 
@@ -159,6 +159,6 @@ def featured(request, feature, max_count=24):
     
 def learn_tags(request):
     tags = get_weighted_tags()
-    return render_to_response('discover/discover_tags.html', {'tags': tags},
+    return render_to_response('learn/learn_tags.html', {'tags': tags},
         context_instance=RequestContext(request))
 

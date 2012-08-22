@@ -9,7 +9,7 @@ from django.db.models import Count
 
 from schools.models import School
 
-from discover.models import get_active_languages
+from learn.models import get_active_languages
 
 log = logging.getLogger(__name__)
 
@@ -22,7 +22,3 @@ class ProjectsFilterForm(forms.Form):
     language = forms.ChoiceField(required=False, choices=[('all', 'All')] + get_active_languages())
     reviewed = forms.BooleanField(required=False)
 
-
-class SearchPreferenceForm(forms.Form):
-    search_language = forms.ChoiceField(required=False, choices=[('all', 'All')] + get_active_languages())
-    reviewed = forms.BooleanField(required=False)
