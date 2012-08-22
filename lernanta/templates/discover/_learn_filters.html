@@ -17,6 +17,7 @@
       {{ school.short_name|title }}
     </a>
   {% endfor %}
+  <hr>
   <h2><i class="icon-tags icon-large"></i>{{ _('Tags') }}</h2>
   {% for tag in filter_tags %}
     <a class="filter active" href="./?filter_tags={% filter_remove_tag filter_tags tag %}">
