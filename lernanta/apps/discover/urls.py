@@ -10,9 +10,6 @@ urlpatterns = patterns('',
     url(r'^featured/(?P<feature>[\w-]+)/', 'discover.views.featured',
         name='discover_featured'),
 
-    url(r'^find/$', 'discover.views.find',
-        name='discover_find'),
-
     url(r'^tags/$', 'discover.views.learn_tags',
         name='discover_learn_tags'),
 )
