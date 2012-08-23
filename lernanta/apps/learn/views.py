@@ -37,7 +37,7 @@ def _filter_and_return(request, context, projects, max_count):
     tag_string = request.GET.get('filter_tags')
     filter_tags = []
     if tag_string:
-        filter_tags = tag_string.split(' ')
+        filter_tags = tag_string.split('|')
     context['filter_tags'] = filter_tags
 
     if filter_tags:

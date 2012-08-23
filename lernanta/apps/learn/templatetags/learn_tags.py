@@ -13,7 +13,8 @@ def learn_default(tag=None, school=None):
         learn_url = reverse('learn_schools',
             kwargs={'school_slug':school.slug})
     if tag:
-        params += ['tag=%s' % tag.name]
+        learn_url = reverse('learn_all')
+        params += ['filter_tags=%s' % tag.name]
     if len(params):
         learn_url += "?"
         learn_url += "&".join(params)
@@ -26,7 +27,7 @@ def filter_add_tag(filter_tags, tag):
     filter_list = []
     filter_list += filter_tags
     filter_list += [tag]
-    return '+'.join(filter_list)
+    return '|'.join(filter_list)
 
 
 @register.simple_tag
@@ -38,4 +39,4 @@ def filter_remove_tag(filter_tags, tag):
         filter_list.remove(tag)
     except:
         pass
-    return '+'.join(filter_list)
+    return '|'.join(filter_list)
