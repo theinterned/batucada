@@ -1,5 +1,5 @@
-@import bootstrap
-@import compass/css3/border-radius
+@import _pems.scss
+@import "compass"
 
 @mixin input-placeholder($color)
   &.placeholder
@@ -12,17 +12,16 @@
 $primary-font: "arvo", helvetica, sans-serif
 $secondary-font: "sense", helvetica, sans-serif
 
-$light-gray: #f3f4f8
-
-
 /* Text-Header-Link Colors */
 $cyan: #05c6b4 /* highlighted header text, and, hovered link text */
 $steel: #aab0bf /* normal header text, nav-bar link sub-text, 'Find Courses' - 'OR' - 'Create Course' text, 'Featured Courses' sub-text, and, '35 minutes ago' & 'p2pu.org' link text */
-/*NOTE: $steel is also used for: thumbnail footer-badge-holder background, and nav-bar search box background */
-$slate: #515665 /* body text, small headers text, small container text, nav-bar link text, thumbnail text, thumbnail image dimensions text, AND, nav-bar search box icon*/
+/*NOTE: $steel is also used for: thumbnail footer-badge-holder background, and nav-bar search box background, also for horizontal dividers in footer */
+$slate: #515665 /* body text, small headers text, small container text, nav-bar link text, search box search text, thumbnail text, thumbnail image dimensions text, AND, nav-bar search box icon*/
+/*also: footer header text and footer body text */
 $white: #ffffff /* nav-bar search placeholder text, 'Find Course' & 'Create Course' button text, thumbnail 'OK' badge text, and, thumbnail footer-badge-holder text */
 $apricot: #ff7300 /* highlighted-2 header text */
 /*NOTE: $apricot is also used for: 'Find Course' button background */
+$clemintine: #ffbc1a /* navbar-link-h1-right hover */
 
 
 /* Background Colors */
@@ -30,6 +29,7 @@ $olive: #b7d500 /* 'Create Course' button background, and, 'OK' badge background
 $snow: #fcfcfc /* nav-bar background, small container background, thumbnail background, and, general row-span container background */
 $cloud: #f3f4f8 /* body background */
 $silver: #cccccc /* thumbnail image placeholder background */
+$fog: #e1e4ed /* footer background */
 /*NOTE: $apricot is also used for: 'Find Course' button background */
 /*NOTE: $steel is also used for: thumbnail footer-badge-holder background, and nav-bar search box background */
 
@@ -43,83 +43,195 @@ $gray-olive: #b4bb92 /* upper-outer-top-only border on 'OK' badges */
 $dark-pewter: #8b91a0 /* top-only border on nav-bar search box */
 $dark-apricot: #bc5500 /* bottom-only border on 'Find Courses' button */
 $dark-olive: #a3be00 /* bottom-only border on 'Create Course' button */
+$dark-fog: #c7cbd7 /* bottom only border on Supporters' image links in footer */
+
+/* SELECT OVERRIDE OF BOOTSTRAP SYSTEM VARIABLES DEFAULTS */
+// Scaffolding
+// -------------------------
+$bodyBackground:        $cloud
+$textColor:             $slate
+// Links
+// -------------------------
+$linkColor:             $cyan
+$linkColorHover:        $clemintine
+// Typography
+// -------------------------
+// $baseFontSize:       16px -- default value already overridden in _pems.scss
+$baseFontFamily:        $primary-font
+$baseLineHeight:        22px
+$altFontFamily:         $secondary-font
+$headingsFontWeight:    inherit
+$headingsColor:         $steel
+// Hr border color
+// -------------------------
+$hrBorder:                $steel
+// Navbar
+// -------------------------
+$navbarHeight:                    110px
+$navbarBackground:                $snow
+$navbarBackgroundHighlight:       $snow
+$navbarText:                      $headingsColor
+$navbarLinkColor:                 $slate
+$navbarLinkColorHover:            $linkColorHover
+$navbarLinkColorActive:           $linkColorHover
+$navbarLinkBackgroundHover:       $navbarBackground
+$navbarLinkBackgroundActive:      $navbarBackground
+$navbarSearchBackground:          $steel
+$navbarSearchBackgroundFocus:     $navbarSearchBackground
+$navbarSearchBorder:              $dark-pewter
+$navbarSearchPlaceholderColor:    $white
+// Hero unit
+// -------------------------
+$heroUnitBackground:              $bodyBackground
+$heroUnitHeadingColor:            $headingsColor
+// Sprite icons path
+// -------------------------
+$iconSpritePath:          "../images/glyphicons-halflings.png"
+$iconWhiteSpritePath:     "../images/glyphicons-halflings-white.png"
+
+
+/* FONT SIZES */
+/* Custom Default Values */
+$baseFontSize-header: 18px
+$baseFontSize-subtext: 14px
+/* Navbar */
+$navbar-link-h1-left: pem(20px) /* navbar link title left */
+$navbar-link-h1-subtitle: pem($baseFontSize-subtext) /* navbar link subtitle */
+$navbar-search-box: pem($baseFontSize) /* navbar search box */
+$navbar-link-h1-right: pem($baseFontSize) /* navbar link title right */
+$navbar-link-h1-right-hover: pem(15px) /* navbar link title right hover */
+/* Hero Unit */
+$hero-unit-h1: 58px /* hero unit title */
+$hero-unit-h2: 34px /* hero unit subtitle */
+$hero-unit-p: 20px /* hero unit message */
+/* Bulitin Box */
+$bulitin-btn: pem(24px) /* bulitin box button title */
+$bulitin-note: pem($baseFontSize-subtext) /* bulitin box small font */
+$bulitin-text: pem($baseFontSize) /* bulitin box message */
+/* Feature */
+$feature-h1: pem(24px) /* feature title */
+$feature-h1-subtitle: pem($baseFontSize-subtext) /*  feature subtitle */
+$feature-hanging-badge-title: pem(11px) /* feature hanging badge title */
+$feature-h2: pem($baseFontSize-header) /* thumbnail title */
+$feature-text: pem($baseFontSize) /* feature main text */
+$feature-badge-title: pem(12px) /* feature badge title */
+$feature-badge-count: pem($baseFontSize-subtext) /* feature badge count text */
+/* Footer */
+$footer-h1: pem($baseFontSize-header)
+$footer-text: pem($baseFontSize)
+$footer-nav-lang-links: pem($baseFontSize-subtext)
+
+/* LINE HEIGHTS (for elements displaying more than one line of text) */
+/* Navbar */
+$navbar-link-h1-subtitle-lh: pem(16px) /* navbar link subtitle */
+/* Hero Unit */
+$hero-unit-h1-lh: 62px /* hero unit title */
+$hero-unit-h2-lh: 68px /* hero unit subtitle */
+$hero-unit-p-lh: 26px /* hero unit message */
+/* Bulitin Box */
+$bulitin-text-lh: pem($baseLineHeight) /* bulitin box message */
+/* Feature */
+$feature-h1-subtitle-lh: pem(18px) /*  feature subtitle */
+$feature-h2-lh: pem($baseLineHeight) /* thumbnail title */
+$feature-text-lh: pem($baseLineHeight) /* feature main text */
+/* Footer */
+$footer-text-lh: pem($baseLineHeight)
+$footer-nav-lang-links-lh: pem(24px)
+
+/* TOP MARGIN VALUES (does not include elements able to be centered with ) */
+/* Custom Default Values */
+$baseFontSize-header-tm: 18px
+$baseFontSize-subtext-tm: 14px
+/* Navbar */
+$navbar-link-h1-left-tm: pem(20px) /* navbar link title left */
+$navbar-link-h1-subtitle-tm: pem($baseFontSize-subtext) /* navbar link subtitle */
+$navbar-search-box-tm: pem($baseFontSize) /* navbar search box */
+$navbar-link-h1-right-tm: pem($baseFontSize) /* navbar link title right */
+$navbar-link-h1-right-hover-tm: pem(15px) /* navbar link title right hover */
+/* Hero Unit */
+$hero-unit-h1-tm: 23px /* hero unit title top margin */
+$hero-unit-h2-tm: 34px /* hero unit subtitle */
+$hero-unit-p-first-tm: 45px
+/* Bulitin Box */
+$bulitin-btn-tm: pem(24px) /* bulitin box button title */
+$bulitin-note-tm: pem($baseFontSize-subtext) /* bulitin box small font */
+$bulitin-text-tm: pem($baseFontSize) /* bulitin box message */
+/* Feature */
+$feature-h1-tm: pem(24px) /* feature title */
+$feature-h1-subtitle-tm: pem($baseFontSize-subtext) /*  feature subtitle */
+$feature-hanging-badge-title-tm: pem(11px) /* feature hanging badge title */
+$feature-h2-tm: pem($baseFontSize-header) /* thumbnail title */
+$feature-text-tm: pem($baseFontSize) /* feature main text */
+$feature-badge-title-tm: pem(12px) /* feature badge title */
+$feature-badge-count-tm: pem($baseFontSize-subtext) /* feature badge count text */
+/* Footer */
+$footer-h1-tm: pem($baseFontSize-header)
+$footer-text-tm: pem($baseFontSize)
+$footer-nav-lang-links-tm: pem($baseFontSize-subtext)
+
+
+/* START: Importing Bootstrap and compass_twitter_bootstrap files AFTER variables have been set*/
+@import bootstrap-lib/bootstrap.scss
+@import bootstrap-lib/responsive.scss
+/* @import compass_twitter_bootstrap -- not used because using the orignal version of the compass in ruby is better */
+/*  END: Importing Bootstrap and compass_twitter_bootstrap files AFTER variables have been set*/
+
 
 
 @mixin square-corners
-  border-radius: 0px
-  -webkit-border-radius: 0px
-  -moz-border-radius: 0px
+  @include border-radius(0px)
 
 @mixin no-shadow
-  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 0px rgba(0, 0, 0, 0)
-  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 0px rgba(0, 0, 0, 0)
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 0px rgba(0, 0, 0, 0)
+  @include box-shadow(0px 0px 0px rgba(0, 0, 0, 0))
+  @include box-shadow(inset 0px 0px 0px rgba(0, 0, 0, 0))
 
-@mixin no-gradient($color)
-  background-image: -moz-linear-gradient(top, $color, $color)
-  background-image: -ms-linear-gradient(top, $color, $color)
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($color), to($color))
-  background-image: -webkit-linear-gradient(top, $color, $color)
-  background-image: -o-linear-gradient(top, $color, $color)
-  background-image: linear-gradient(top, $color, $color)
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='$color', endColorstr='$color', GradientType=0)
-  
 @mixin inset-1px-box-shadow-on-one-side($color, $side)
   @if $side == top
-    -webkit-box-shadow: 0px 0px 0px $color, inset 0px -1px 0px $color
-    -moz-box-shadow: 0px 0px 0px $color, inset 0px -1px 0px $color
-    box-shadow: 0px 0px 0px $color, inset 0px -1px 0px $color
+    @include box-shadow(0px 0px 0px $color)
+    @include box-shadow(inset 0px -1px 0px $color)
   @if $side == bottom
-    -webkit-box-shadow: 0px 0px 0px $color, inset 0px 1px 0px $color
-    -moz-box-shadow: 0px 0px 0px $color, inset 0px 1px 0px $color
-    box-shadow: 0px 0px 0px $color, inset 0px 1px 0px $color
+    @include box-shadow(0px 0px 0px $color)
+    @include box-shadow(inset 0px 1px 0px $color)
 
 @mixin glowing-shadow($color)
   $lighter-color: lighten($color, 50%)
-  -webkit-box-shadow: 0px 0px 3px $lighter-color
-  -moz-box-shadow: 0px 0px 3px $lighter-color
-  box-shadow: 0px 0px 3px $lighter-color
-    
-/*Border radius unsupported if lte IE 8 */
-@mixin round-corners-on-one-side($side, $radius: 1px)
-  border-#{$side}-left-radius: $radius
-  border-#{$side}-right-radius: $radius
-  -webkit-border-#{$side}-left-radius: $radius
-  -webkit-border-#{$side}-right-radius: $radius
-  -moz-border-radius-#{$side}left: $radius
-  -moz-border-radius-#{$side}right: $radius
+  @include box-shadow(0px 0px 3px $lighter-color)
 
-/* Works only in newer browsers */
-@mixin add-text-shadow($text-color, $bkgd-color, $side)
+@mixin add-custom-text-shadow($text-color, $bkgd-color, $side)
   $mixed-color: mix($text-color, $bkgd-color)
   @if $side == top
-    -webkit-text-shadow: 0px -1px 1px $mixed-color
-    -moz-text-shadow: 0px -1px 1px $mixed-color
-    text-shadow: 0px -1px 1px $mixed-color
+    @include text-shadow(0px -1px 1px $mixed-color)
   @if $side == right
-    -webkit-text-shadow: 1px 0px 1px $mixed-color 
-    -moz-text-shadow: 1px 0px 1px $mixed-color
-    text-shadow: 1px 0px 1px $mixed-color
+    @include text-shadow(1px 0px 1px $mixed-color)
   @if $side == bottom
-    -webkit-text-shadow: 0px 1px 1px $mixed-color
-    -moz-text-shadow: 0px 1px 1px $mixed-color
-    text-shadow: 0px 1px 1px $mixed-color
+    @include text-shadow(0px 1px 1px $mixed-color)
   @if $side == left
-    -webkit-text-shadow: -1px 0px 1px $mixed-color
-    -moz-text-shadow: -1px 0px 1px $mixed-color
-    text-shadow: -1px 0px 1px $mixed-color
+    @include text-shadow(-1px 0px 1px $mixed-color)
     
 @mixin add-left-right-text-shadow($t-color, $b-color)
-  @include add-text-shadow($t-color, $b-color, left)
-  @include add-text-shadow($t-color, $b-color, right)
+  @include add-custom-text-shadow($t-color, $b-color, left)
+  @include add-custom-text-shadow($t-color, $b-color, right)
 
 @mixin add-top-bottom-text-shadow($t-color, $b-color)
-  @include add-text-shadow($t-color, $b-color, top)
-  @include add-text-shadow($t-color, $b-color, bottom)
+  @include add-custom-text-shadow($t-color, $b-color, top)
+  @include add-custom-text-shadow($t-color, $b-color, bottom)
   
 @mixin add-all-sides-text-shadow($t-color, $b-color)
   @include add-left-right-text-shadow($t-color, $b-color)
   @include add-top-bottom-text-shadow($t-color, $b-color)
+
+
+
+	
+	
+
+
+/* Vertical Rhythm Compass Settings */
+$base-font-size: $baseFontSize
+$base-line-height: $baseLineHeight
+@include establish-baseline
+
+$base-no-leader-line-height: $base-font-size / $base-line-height
 
 // Headings
 header
@@ -127,34 +239,33 @@ header
 
 body
   font-family: $secondary-font, sans-serif
-  font-size: 16px
+  font-size: pem($baseFontSize)
   background-color: $cloud
 
 h1
   font-family: $primary-font
-  font-size: 24px
-  font-weight: bold
+  font-size: pem(24px)
+  font-weight: normal
 
 h2
   font-family: $primary-font
-  font-size: 18px
+  font-size: pem(18px)
 
 h3
   font-family: $secondary-font
-  font-size: 16px
+  font-size: pem(16px)
   font-weight: bold
-  margin-top: 15px
+  margin-top: pem(15px)
 
 p
-  line-height: 22px
-  margin-top: 5px
-  margin-bottom: 10px
+  line-height: pem(22px)
+  margin: 0px
 
 a
   color: $cyan
   &:hover
     color: lighten($cyan, 10%)
-    
+
 //Buttons
 .btn
   font-family: "arvo"
@@ -163,13 +274,13 @@ a
   padding: 4px 10px 5px
   background-image: None
   +border-radius(2px)
-  background-color: #515665
-  text-shadow: 0px 1px 1px #515665
+  background-color: $slate
+  text-shadow: 0px 1px 1px $slate
   border: none
   border-bottom: 1px solid #343741  
   color: #eeeeee
   &.btn-primary
-    color: #ffffff  
+    color: $white  
     text-shadow: 0px 1px 1px #83be00
     background-color: #abd600
     border-bottom: 1px solid #83be00  
@@ -180,34 +291,37 @@ a
     font-size: 13px
     font-weight: bold
   &:hover
-    color: #ffffff
-    background-color: lighten(#515665, 10%)
+    color: $white
+    background-color: lighten($slate, 10%)
 
 // Forms
 input
   &[type="text"], &[type="password"], &[type="datetime"], &[type="datetime-local"], &[type="date"], &[type="month"], &[type="time"], &[type="week"], &[type="number"], &[type="email"], &[type="url"], &[type="search"], &[type="tel"], &[type="color"]
-    background-color: #aab0bf
-    +border-radius(2px)
+    background-color: $steel
     border: none
-    border-top: 1px solid #8b91a0
-    border-bottom: 1px solid #ffffff
-    color: #515665
+    @include border-radius(none)
+    @include border-radius(1px)
+    @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
+    color: $slate
     &:focus
-      background-color: $light-gray
+      background-color: $cloud
       font-family: "sense"
-      +input-placeholder(#515665)
-    +input-placeholder(#ffffff)
+      +input-placeholder($slate)
+    +input-placeholder($white)
     font-family: "arvo"
+
+input, textarea
+  width: 230px
 
 // Navigation
 .nav-tabs
   font-family: $primary-font
   font-size: 16px
-  border-bottom: 1px solid #ffffff
+  border-bottom: 1px solid $white
   a
     color: inherit
     &:hover
-      color: #05c6b4
+      color: $cyan
   .dropdown-toggle
     background-color: inherit
     border: none
@@ -216,18 +330,18 @@ input
       &:hover
         background-color: #dfe4ec
   .active a
-    border: 1px solid #ffffff
+    border: 1px solid $white
     border-bottom: 0px
-    background-color: #fcfcfc
-    box-shadow: 1px 1px 1px #ffffff
+    background-color: $snow
+    box-shadow: 1px 1px 1px $white
     &:hover
-      color: #05c6b4
-      background-color: #ffffff
-      border: 1px solid #ffffff
+      color: $cyan
+      background-color: $white
+      border: 1px solid $white
       border-bottom: 0px
 
 .navbar
-  font-family: $primary-font
+  font-family: $baseFontFamily
   *position: relative
   *z-index: 2
   height: 110px
@@ -239,16 +353,16 @@ input
   .brand
     margin: 0px
     margin-top: 34px
-    background-image: url("/static/images/logo.png")
+    @include background-image(url("/static/images/logo.png"))
     background-repeat: no-repeat
     width: 131px
     height: 41px
   .navbar-text
+    @include adjust-font-size-to(14px)
+    @include adjust-leading-to($base-no-leader-line-height)
     margin-bottom: 0
-    line-height: 15px
-    font-size: 10px
     color: $steel
-    font-family: $secondary-font
+    font-family: $altFontFamily
     @include add-all-sides-text-shadow($steel, $snow)
   .navbar-link
     color: $slate
@@ -259,19 +373,26 @@ input
     left: 0
     display: block
     float: left
-    margin: 0 10px 0 0
+    margin-top: pem(39px)
     &.pull-right
       float: right
+      margin-top: pem(48px)
     > li
       display: block
       float: left
       > a
+        @include adjust-font-size-to(20px)
         float: none
-        padding: 9px 10px 11px
-        line-height: 19px
+        padding-top: 0px
+        padding-bottom: 0px
+        padding-left: 0px
+        @include adjust-leading-to($base-no-leader-line-height)
         color: $slate
         text-decoration: none
         @include add-all-sides-text-shadow($slate, $snow)
+        &.right-links
+          @include adjust-font-size-to($base-font-size)
+          @include adjust-leading-to($base-no-leader-line-height) 
     > a:hover
       color: $cyan
       text-decoration: none
@@ -288,9 +409,13 @@ input
   .divider-vertical
     width: 1px
     height: 13px
-    margin-top: 48px
+    margin-top: 9px
     overflow: hidden
     border-right: 1px solid $slate
+    margin-left: pem(26px)
+    margin-right: pem(23px)
+    &.right-divider
+      margin-top: 0px
   .nav.pull-right
     margin-right: 0
     margin-left: 10px
@@ -302,14 +427,18 @@ input
   background-color: $snow
   @include square-corners
   @include no-shadow
-  @include no-gradient($snow)
+  @include background-image(none)
 
 .navbar-search
   position: relative
   float: left
   margin-top: 42px
+  margin-left: pem(53px)
+  padding: 0px
   height: 26px
   width: 230px
+  @include border-radius(1px)
+  border-left: 10px $steel
   .search-query
     padding: inherit
     font-family: $primary-font
@@ -318,9 +447,8 @@ input
     line-height: 1
     color: $white
     background-color: $steel
+    /* @include background(url($iconSpritePath) no-repeat 100% 50% $steel) */
     border: 0px 0px 0px 0px
-    @include round-corners-on-one-side(top)
-    @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
     -webkit-transition: none
     -moz-transition: none
     -ms-transition: none
@@ -329,11 +457,54 @@ input
     &:-moz-placeholder, &:-ms-input-placeholder, &::-webkit-input-placeholder
       color: $white
     &:focus, &.focused
-      padding: 5px 10px
+      padding: 0px
       color: $white
       @include add-all-sides-text-shadow($white, $steel)
+      @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
       background-color: $steel
       @include glowing-shadow($steel)
+
+// HERO UNIT
+// ---------
+
+.custom-hero-unit
+  margin-bottom: 0px
+  background-color: $heroUnitBackground
+  @include border-radius(0px)
+  @include padding-leader($hero-unit-h1-tm / $base-line-height)
+  .p-first-line
+    @include margin-leader($base-no-leader-line-height * ($hero-unit-p-first-tm / $hero-unit-p))
+  h1
+    margin-bottom: 0
+    @include adjust-font-size-to($hero-unit-h1)
+    @include adjust-leading-to($base-no-leader-line-height * ($hero-unit-h1-lh / $hero-unit-h1))
+    color: $heroUnitHeadingColor
+    letter-spacing: normal
+    .highlight-1
+      color: $cyan
+    .highlight-2
+      color: $apricot
+  h2
+    color: $heroUnitHeadingColor
+    @include adjust-font-size-to($hero-unit-h2)
+    @include adjust-leading-to($base-no-leader-line-height)
+    @include margin-leader($base-no-leader-line-height * ($hero-unit-h2-tm / $hero-unit-h2))
+    .highlight-1
+      color: $cyan
+    .highlight-2
+      color: $apricot
+  p
+    @include adjust-font-size-to($hero-unit-p)
+    @include adjust-leading-to($base-no-leader-line-height * ($hero-unit-p-lh / $hero-unit-p)) 
+    font-weight: normal
+    color: $textColor
+    .make-bold
+      font-weight: bold
+
+.icon-search
+  position: relative
+  left: pem(208)
+  top: pem(-29)
 
 .container
   margin: 0 auto
@@ -353,3 +524,5 @@ input
     width: 9999px
     left: 100%
     overflow-x: hidden
+    
+    

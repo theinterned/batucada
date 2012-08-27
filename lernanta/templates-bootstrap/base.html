@@ -27,10 +27,9 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/jcarousel/tango/skin.css">
   <link rel="stylesheet" href="https://www.google.com/cse/style/look/default.css" type="text/css" />
 {% flag 'css-framework' %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-lib/bootstrap.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-lib/responsive.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/overrides.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-custom.css">
   <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
 {% else %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
@@ -67,7 +66,8 @@
 			</li>
           </ul>
           <form class="navbar-search pull-left" action>
-		    <input type="text" class="search-query span2" placeholder="">
+		    <input type="text" class="search-query" placeholder="  web design">
+			<i class="icon-search"></i>
 		  </form>
           {% if user.is_authenticated %}
 			<ul>
@@ -106,16 +106,16 @@
               </li>
             </ul>
           {% else %} {# user not logged in #}
-            <ul class="nav">
-				<li>
-	            	<a href="http://info.p2pu.org" target="_blank">{{ _('Blog') }}</a>
+            <ul class="nav pull-right">
+				<li >
+	            	<a class="right-links" href="http://info.p2pu.org" target="_blank">{{ _('Blog') }}</a>
 				</li>
 	            <li>
-					<a href="http://help.p2pu.org" id="help-link" target="_blank">{{ _('Help') }}</a>
+					<a class="right-links" href="http://help.p2pu.org" id="help-link" target="_blank">{{ _('Help') }}</a>
 				</li>
-				<li class="divider-vertical"></li>
+				<li class="divider-vertical right-divider"></li>
 				<li>
-					<a href="{{ login_with_redirect_url }}">{{ _('Login') }}</a>
+					<a class="right-links" href="{{ login_with_redirect_url }}">{{ _('Login') }}</a>
 				</li>
 	        </ul>	
           {% endif %}
