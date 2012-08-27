@@ -396,6 +396,8 @@ input, textarea
         color: $slate
         text-decoration: none
         @include add-all-sides-text-shadow($slate, $snow)
+        &.make-blue
+          @include link-colors($cyan)
         &.right-link-1
           @include adjust-font-size-to($base-font-size)
           @include adjust-leading-to($base-no-leader-line-height)
