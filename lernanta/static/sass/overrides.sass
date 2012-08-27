@@ -64,7 +64,7 @@ $headingsFontWeight:    inherit
 $headingsColor:         $steel
 // Hr border color
 // -------------------------
-$hrBorder:                $steel
+$hrBorder:              $steel
 // Navbar
 // -------------------------
 $navbarHeight:                    110px
@@ -105,9 +105,9 @@ $hero-unit-h1: 58px /* hero unit title */
 $hero-unit-h2: 34px /* hero unit subtitle */
 $hero-unit-p: 20px /* hero unit message */
 /* Bulitin Box */
-$bulitin-btn: pem(24px) /* bulitin box button title */
-$bulitin-note: pem($baseFontSize-subtext) /* bulitin box small font */
-$bulitin-text: pem($baseFontSize) /* bulitin box message */
+$bulitin-btn: 24px /* bulitin box button title */
+$bulitin-note: $baseFontSize-subtext /* bulitin box small font */
+$bulitin-p: $baseFontSize /* bulitin box message */
 /* Feature */
 $feature-h1: pem(24px) /* feature title */
 $feature-h1-subtitle: pem($baseFontSize-subtext) /*  feature subtitle */
@@ -129,7 +129,7 @@ $hero-unit-h1-lh: 62px /* hero unit title */
 $hero-unit-h2-lh: 68px /* hero unit subtitle */
 $hero-unit-p-lh: 26px /* hero unit message */
 /* Bulitin Box */
-$bulitin-text-lh: pem($baseLineHeight) /* bulitin box message */
+$bulitin-p-lh: $baseLineHeight /* bulitin box message */
 /* Feature */
 $feature-h1-subtitle-lh: pem(18px) /*  feature subtitle */
 $feature-h2-lh: pem($baseLineHeight) /* thumbnail title */
@@ -153,11 +153,14 @@ $hero-unit-h1-tm: 23px /* hero unit title top margin */
 $hero-unit-h2-tm: 34px /* hero unit subtitle */
 $hero-unit-p-first-tm: 45px
 /* Bulitin Box */
-$bulitin-btn-tm: pem(24px) /* bulitin box button title */
-$bulitin-note-tm: pem($baseFontSize-subtext) /* bulitin box small font */
-$bulitin-text-tm: pem($baseFontSize) /* bulitin box message */
+$bulitin-tm: 23px
+$bulitin-tp: 15px
+$bulitin-btn-tm: 14px /* bulitin box button title */
+$bulitin-btn-pd: 19px /* bulitin box button title */
+$bulitin-note-tm: 14px /* bulitin box small font */
+$bulitin-p-first-tm: 14px /* bulitin box message */
 /* Feature */
-$feature-h1-tm: pem(24px) /* feature title */
+$feature-h1-tm: 23px /* feature title */
 $feature-h1-subtitle-tm: pem($baseFontSize-subtext) /*  feature subtitle */
 $feature-hanging-badge-title-tm: pem(11px) /* feature hanging badge title */
 $feature-h2-tm: pem($baseFontSize-header) /* thumbnail title */
@@ -348,10 +351,13 @@ input, textarea
   overflow: visible
   color: $steel
   background-color: $snow
-  padding-right: 0
-  padding-left: 0
+  padding-right: 0px
+  padding-left: 0px
+  margin-bottom: 0px
   .brand
     margin: 0px
+    padding-bottom: 0px
+    padding-top: 0px
     margin-top: 34px
     @include background-image(url("/static/images/logo.png"))
     background-repeat: no-repeat
@@ -390,9 +396,19 @@ input, textarea
         color: $slate
         text-decoration: none
         @include add-all-sides-text-shadow($slate, $snow)
-        &.right-links
+        &.right-link-1
           @include adjust-font-size-to($base-font-size)
-          @include adjust-leading-to($base-no-leader-line-height) 
+          @include adjust-leading-to($base-no-leader-line-height)
+          margin-right: pem(29px)
+          margin-left: 0px
+        &.right-link-2
+          @include adjust-font-size-to($base-font-size)
+          @include adjust-leading-to($base-no-leader-line-height)
+          margin-right: pem(24px)
+          margin-left: 0px
+        &.right-link-3
+          @include adjust-font-size-to($base-font-size)
+          @include adjust-leading-to($base-no-leader-line-height)
     > a:hover
       color: $cyan
       text-decoration: none
@@ -416,9 +432,10 @@ input, textarea
     margin-right: pem(23px)
     &.right-divider
       margin-top: 0px
+      margin-left: 0px
   .nav.pull-right
-    margin-right: 0
-    margin-left: 10px
+    margin-right: 0px
+    margin-left: 0px
 
 .navbar-inner
   min-height: 110px
@@ -471,7 +488,7 @@ input, textarea
   margin-bottom: 0px
   background-color: $heroUnitBackground
   @include border-radius(0px)
-  @include padding-leader($hero-unit-h1-tm / $base-line-height)
+  @include margin-leader($base-no-leader-line-height * ($hero-unit-h1-tm / $base-font-size))
   .p-first-line
     @include margin-leader($base-no-leader-line-height * ($hero-unit-p-first-tm / $hero-unit-p))
   h1
@@ -496,10 +513,59 @@ input, textarea
   p
     @include adjust-font-size-to($hero-unit-p)
     @include adjust-leading-to($base-no-leader-line-height * ($hero-unit-p-lh / $hero-unit-p)) 
-    font-weight: normal
+    font-weight: 100
     color: $textColor
     .make-bold
       font-weight: bold
+
+// BULITIN FEATURE
+// ---------
+
+.bulitin-feature
+  margin-bottom: 0px
+  background-color: $snow
+  @include border-radius(0px)
+  @include padding-leader($bulitin-tp / $base-line-height)
+  @include margin-leader($base-no-leader-line-height * ($bulitin-tm / $base-font-size))
+  border-bottom: pem(2px) $metal
+  a
+    @include link-colors($white, $white, $white, $white, $white)
+    @include hover-link
+  h1
+    margin-bottom: 0
+    text-align: center
+    vertical-align: middle
+    @include adjust-font-size-to($bulitin-btn)
+    @include adjust-leading-to($base-no-leader-line-height)
+    @include padding-leader($base-no-leader-line-height * ($bulitin-btn-pd / $bulitin-btn))
+    @include padding-trailer($base-no-leader-line-height * ($bulitin-btn-pd / $bulitin-btn))
+    @include border-radius(pem(1px))
+    margin-left: pem(15px, $bulitin-btn)
+    margin-right: pem(15px, $bulitin-btn)
+    color: $white
+    letter-spacing: normal
+    &.top-bulitin-button
+      @include background($apricot)
+      border-bottom: pem(2px) $dark-apricot
+    &.bottom-bulitin-button
+      @include background($olive)
+      border-bottom: pem(2px) $dark-olive
+  h2
+    text-align: center
+    color: $steel
+    @include adjust-font-size-to($bulitin-note)
+    @include adjust-leading-to($base-no-leader-line-height)
+    @include padding-leader($bulitin-note-tm / $bulitin-note)
+    @include padding-trailer($bulitin-note-tm / $bulitin-note)
+  p
+    @include adjust-font-size-to($bulitin-p)
+    @include adjust-leading-to($base-no-leader-line-height * ($bulitin-p-lh / $bulitin-p)) 
+    @include margin-leader($base-no-leader-line-height * ($bulitin-p-first-tm / $bulitin-p))
+    @include padding-trailer($base-no-leader-line-height * ($bulitin-p-first-tm / $bulitin-p))
+    font-weight: normal
+    color: $textColor
+    margin-left: pem(15px)
+    margin-right: pem(15px)
 
 .icon-search
   position: relative

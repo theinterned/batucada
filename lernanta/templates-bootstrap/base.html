@@ -27,8 +27,6 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/jcarousel/tango/skin.css">
   <link rel="stylesheet" href="https://www.google.com/cse/style/look/default.css" type="text/css" />
 {% flag 'css-framework' %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-lib/bootstrap.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-lib/responsive.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/overrides.css">
   <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
 {% else %}
@@ -108,14 +106,14 @@
           {% else %} {# user not logged in #}
             <ul class="nav pull-right">
 				<li >
-	            	<a class="right-links" href="http://info.p2pu.org" target="_blank">{{ _('Blog') }}</a>
+	            	<a class="right-link-1" href="http://info.p2pu.org" target="_blank">{{ _('Blog') }}</a>
 				</li>
 	            <li>
-					<a class="right-links" href="http://help.p2pu.org" id="help-link" target="_blank">{{ _('Help') }}</a>
+					<a class="right-link-2" href="http://help.p2pu.org" id="help-link" target="_blank">{{ _('Help') }}</a>
 				</li>
 				<li class="divider-vertical right-divider"></li>
 				<li>
-					<a class="right-links" href="{{ login_with_redirect_url }}">{{ _('Login') }}</a>
+					<a class="right-link-3" href="{{ login_with_redirect_url }}">{{ _('Login') }}</a>
 				</li>
 	        </ul>	
           {% endif %}
