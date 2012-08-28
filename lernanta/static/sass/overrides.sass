@@ -109,13 +109,13 @@ $bulitin-btn: 24px /* bulitin box button title */
 $bulitin-note: $baseFontSize-subtext /* bulitin box small font */
 $bulitin-p: $baseFontSize /* bulitin box message */
 /* Feature */
-$feature-h1: pem(24px) /* feature title */
-$feature-h1-subtitle: pem($baseFontSize-subtext) /*  feature subtitle */
-$feature-hanging-badge-title: pem(11px) /* feature hanging badge title */
-$feature-h2: pem($baseFontSize-header) /* thumbnail title */
-$feature-text: pem($baseFontSize) /* feature main text */
-$feature-badge-title: pem(12px) /* feature badge title */
-$feature-badge-count: pem($baseFontSize-subtext) /* feature badge count text */
+$feature-h1: 24px /* feature title */
+$feature-h1-subtitle: $baseFontSize-subtext /*  feature subtitle */
+$feature-hanging-badge-title: 11px /* feature hanging badge title */
+$feature-h2: $baseFontSize-header /* thumbnail title */
+$feature-p: $baseFontSize /* feature main text */
+$feature-badge-title: 12px /* feature badge title */
+$feature-badge-count: $baseFontSize-subtext /* feature badge count text */
 /* Footer */
 $footer-h1: pem($baseFontSize-header)
 $footer-text: pem($baseFontSize)
@@ -131,9 +131,9 @@ $hero-unit-p-lh: 26px /* hero unit message */
 /* Bulitin Box */
 $bulitin-p-lh: $baseLineHeight /* bulitin box message */
 /* Feature */
-$feature-h1-subtitle-lh: pem(18px) /*  feature subtitle */
-$feature-h2-lh: pem($baseLineHeight) /* thumbnail title */
-$feature-text-lh: pem($baseLineHeight) /* feature main text */
+$feature-h1-subtitle-lh: 18px /*  feature subtitle */
+$feature-h2-lh: $baseLineHeight /* thumbnail title */
+$feature-p-lh: $baseLineHeight /* feature main text */
 /* Footer */
 $footer-text-lh: pem($baseLineHeight)
 $footer-nav-lang-links-lh: pem(24px)
@@ -160,13 +160,13 @@ $bulitin-btn-pd: 19px /* bulitin box button title */
 $bulitin-note-tm: 14px /* bulitin box small font */
 $bulitin-p-first-tm: 14px /* bulitin box message */
 /* Feature */
-$feature-h1-tm: 23px /* feature title */
-$feature-h1-subtitle-tm: pem($baseFontSize-subtext) /*  feature subtitle */
-$feature-hanging-badge-title-tm: pem(11px) /* feature hanging badge title */
-$feature-h2-tm: pem($baseFontSize-header) /* thumbnail title */
-$feature-text-tm: pem($baseFontSize) /* feature main text */
-$feature-badge-title-tm: pem(12px) /* feature badge title */
-$feature-badge-count-tm: pem($baseFontSize-subtext) /* feature badge count text */
+$feature-h1-tm: 58px /* feature title */
+$feature-h1-subtitle-tm: 27px /*  feature subtitle */
+$feature-hanging-badge-title-tm: 11px /* feature hanging badge title */
+$feature-h2-tm: 9px /* thumbnail title */
+$feature-p-tm: $baseFontSize /* feature main text */
+$feature-badge-title-tm: 12px /* feature badge title */
+$feature-badge-count-tm: $baseFontSize-subtext /* feature badge count text */
 /* Footer */
 $footer-h1-tm: pem($baseFontSize-header)
 $footer-text-tm: pem($baseFontSize)
@@ -456,9 +456,9 @@ input, textarea
   padding: 0px
   height: 26px
   width: 230px
-  @include border-radius(1px)
   border-left: 10px $steel
   .search-query
+    @include border-radius(3px)
     padding: inherit
     font-family: $primary-font
     font-size: 16px
@@ -466,17 +466,25 @@ input, textarea
     line-height: 1
     color: $white
     background-color: $steel
-    /* @include background(url($iconSpritePath) no-repeat 100% 50% $steel) */
-    border: 0px 0px 0px 0px
+    border: 0px
+    border-top: 1px solid $dark-pewter
     -webkit-transition: none
     -moz-transition: none
     -ms-transition: none
     -o-transition: none
     transition: none
+    padding-left: 10px
+    width: 220px
     &:-moz-placeholder, &:-ms-input-placeholder, &::-webkit-input-placeholder
       color: $white
     &:focus, &.focused
+      font-family: $primary-font
+      @include border-radius(3px)
+      border: 0px
+      border-top: 1px solid $dark-pewter
       padding: 0px
+      padding-left: 10px
+      width: 220px
       color: $white
       @include add-all-sides-text-shadow($white, $steel)
       @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
@@ -493,6 +501,7 @@ input, textarea
   @include margin-leader($base-no-leader-line-height * ($hero-unit-h1-tm / $base-font-size))
   .p-first-line
     @include margin-leader($base-no-leader-line-height * ($hero-unit-p-first-tm / $hero-unit-p))
+    font-weight: 100
   h1
     margin-bottom: 0
     @include adjust-font-size-to($hero-unit-h1)
@@ -529,7 +538,7 @@ input, textarea
   @include border-radius(0px)
   @include padding-leader($bulitin-tp / $base-line-height)
   @include margin-leader($base-no-leader-line-height * ($bulitin-tm / $base-font-size))
-  border-bottom: pem(2px) $metal
+  border-bottom: 2px solid $metal
   a
     @include link-colors($white, $white, $white, $white, $white)
     @include hover-link
@@ -541,17 +550,17 @@ input, textarea
     @include adjust-leading-to($base-no-leader-line-height)
     @include padding-leader($base-no-leader-line-height * ($bulitin-btn-pd / $bulitin-btn))
     @include padding-trailer($base-no-leader-line-height * ($bulitin-btn-pd / $bulitin-btn))
-    @include border-radius(pem(1px))
+    @include border-radius(3px)
     margin-left: pem(15px, $bulitin-btn)
     margin-right: pem(15px, $bulitin-btn)
     color: $white
     letter-spacing: normal
     &.top-bulitin-button
       @include background($apricot)
-      border-bottom: pem(2px) $dark-apricot
+      border-bottom: 2px solid $dark-apricot
     &.bottom-bulitin-button
       @include background($olive)
-      border-bottom: pem(2px) $dark-olive
+      border-bottom: 2px solid $dark-olive
   h2
     text-align: center
     color: $steel
@@ -568,6 +577,75 @@ input, textarea
     color: $textColor
     margin-left: pem(15px)
     margin-right: pem(15px)
+
+// FEATURE
+// -----------
+.feature-box
+  h1
+    @include adjust-font-size-to($feature-h1)
+    @include adjust-leading-to($base-no-leader-line-height)
+    @include margin-leader($base-no-leader-line-height * ($feature-h1-tm / $feature-h1))
+    color: $slate
+  h2
+    @include adjust-font-size-to($feature-h1-subtitle)
+    @include adjust-leading-to($base-no-leader-line-height)
+    color: $steel
+    font-family: $secondary-font
+    @include margin-trailer($base-no-leader-line-height * ($feature-h1-subtitle-tm / $feature-h1-subtitle))
+
+.thumbnail
+  width: pem(220px)
+  @include background($snow)
+  @include square-corners
+  padding: 0px
+  .caption
+    padding: 0px pem(9px)
+    h3
+      @include adjust-font-size-to($feature-h2)
+      @include adjust-leading-to($base-no-leader-line-height * ($feature-h2-lh / $feature-h2))
+      margin-top: 0px
+      @include margin-leader($base-no-leader-line-height * ($feature-h2-tm / $feature-h2))
+      width: pem(160px * ($base-font-size / $feature-h2))
+      font-weight: normal
+      color: $slate
+      font-family: $primary-font
+    p
+      font-family: $secondary-font
+      @include adjust-font-size-to($feature-p)
+      @include adjust-leading-to($base-no-leader-line-height * ($feature-p-lh / $feature-p))
+      @include margin-leader($base-no-leader-line-height * ($feature-p-tm / $feature-p))
+      @include margin-trailer($base-no-leader-line-height * ($feature-p-tm / $feature-p))
+  img
+    padding-top: pem(5px)
+  .badge-box
+    padding: 0px
+    @include background($steel)
+    border-top: 1px $pewter
+    height: pem(34px)
+    p
+      color: $white
+      @include adjust-font-size-to($feature-badge-title)
+      @include adjust-leading-to($base-no-leader-line-height)
+      @include padding-leader($feature-badge-title-tm / $base-font-size)
+      text-align: center
+      font-weight: bold
+      font-family: $primary-font
+      padding-left: auto
+      padding-right: auto
+      #badge-count-format
+        @include adjust-font-size-to($feature-badge-count * ($base-font-size / $feature-badge-title))
+        @include adjust-leading-to($base-no-leader-line-height)
+        font-weight: normal
+        font-family: $secondary-font
+        text-align: center
+    
+
+//    $feature-hanging-badge-title: 11px /* feature hanging badge title */
+//    $feature-h2: $baseFontSize-header /* thumbnail title */
+//    $feature-text: $baseFontSize /* feature main text */
+//    $feature-badge-title: 12px /* feature badge title */
+//    $feature-badge-count: $baseFontSize-subtext /* feature badge count text */
+
 
 .icon-search
   position: relative
