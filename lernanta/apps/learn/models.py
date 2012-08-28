@@ -10,7 +10,7 @@ import datetime
 
 def get_active_languages():
     """ Return a list of the active language currently in use """
-    language_list = Project.objects.all().values_list('language').distinct('language')
+    language_list = get_listed_courses().values_list('language').distinct('language')
     language_dict = dict(settings.LANGUAGES)
     languages = [(l[0], language_dict[l[0]],) for l in language_list]
     return languages
