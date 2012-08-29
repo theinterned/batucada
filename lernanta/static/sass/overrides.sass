@@ -491,6 +491,57 @@ input, textarea
       background-color: $steel
       @include glowing-shadow($steel)
 
+#user-menu-btn
+  background-color: #fed713
+  color: #5b6b73
+  font-size: 12px
+  font-weight: normal
+  margin: 0
+  margin-top: -4px
+  padding: 0
+  border: 0
+  height: 30px
+  #user-picture
+    left: 0
+    top: 0
+    margin: 0
+    padding: 0
+    display: block
+    float: left
+  #username
+    display: block
+    float: left
+    min-width: 100px
+    height: 100%
+    padding-top: 3px
+    padding-left: 5px
+    padding-right: 5px
+
+#user-menu-area
+  position: relative
+  &:open button
+    background-color: #5b6b73
+
+#user-dropdown-menu
+  @include square-corners
+  background-color: #5b6b73
+  color: #e6f9ff
+  font-family: sense
+  font-size: 12px
+  font-weight: medium
+  font-align: center
+  content: none
+  margin: 0
+  padding: 0
+  border: 0
+  right: auto
+  min-width: 0
+  margin-left: 30px
+  &:after, &:before
+    content: none
+    
+    
+
 // HERO UNIT
 // ---------
 
