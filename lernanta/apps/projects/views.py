@@ -50,8 +50,11 @@ def create(request, category=None):
                 project.category = category
             image_form = project_forms.ProjectImageForm(request.POST,
                 request.FILES, instance=project)
-            if image_form.is_valid():
-                image_form.save()
+            try:
+                if image_form.is_valid():
+                    image_form.save()
+            except:
+                pass
             project.set_duration(form.cleaned_data['duration'] or 0)
             #CS - too much logic in view
             act = Activity(actor=user,
