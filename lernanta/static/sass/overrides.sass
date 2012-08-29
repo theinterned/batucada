@@ -175,7 +175,7 @@ $footer-nav-lang-links-tm: pem($baseFontSize-subtext)
 
 /* START: Importing Bootstrap and compass_twitter_bootstrap files AFTER variables have been set*/
 @import bootstrap-lib/bootstrap.scss
-@import bootstrap-lib/responsive.scss
+/* @import bootstrap-lib/responsive.scss */
 /* @import compass_twitter_bootstrap -- not used because using the orignal version of the compass in ruby is better */
 /*  END: Importing Bootstrap and compass_twitter_bootstrap files AFTER variables have been set*/
 
@@ -382,7 +382,7 @@ input, textarea
     margin-top: pem(39px)
     &.pull-right
       float: right
-      margin-top: pem(48px)
+      margin-top: pem(42px)
     > li
       display: block
       float: left
@@ -396,6 +396,7 @@ input, textarea
         color: $slate
         text-decoration: none
         @include add-all-sides-text-shadow($slate, $snow)
+        @include margin-leader($base-no-leader-line-height * (6px / $base-font-size)) 
         &.make-blue
           @include link-colors($cyan)
         &.right-link-1
@@ -492,13 +493,13 @@ input, textarea
       @include glowing-shadow($steel)
 
 #user-menu-btn
-  background-color: #fed713
+  @include background(#fed713)
   color: #5b6b73
-  font-size: 12px
+  @include adjust-font-size-to(12px) 
   font-weight: normal
-  margin: 0
+  margin: 0px
   margin-top: -4px
-  padding: 0
+  padding: 0px
   border: 0
   height: 30px
   #user-picture
