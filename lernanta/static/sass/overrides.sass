@@ -44,6 +44,7 @@ $dark-pewter: #8b91a0 /* top-only border on nav-bar search box */
 $dark-apricot: #bc5500 /* bottom-only border on 'Find Courses' button */
 $dark-olive: #a3be00 /* bottom-only border on 'Create Course' button */
 $dark-fog: #c7cbd7 /* bottom only border on Supporters' image links in footer */
+$oranitang: #f2b202 /* verticle divider in nav bar user logged-in dropdown menu */
 
 /* SELECT OVERRIDE OF BOOTSTRAP SYSTEM VARIABLES DEFAULTS */
 // Scaffolding
@@ -442,6 +443,30 @@ input, textarea
         color: $cyan
         text-decoration: none
         background-color: $snow
+    li
+      &.dropdown
+        > a
+          @include background(#fed713)
+          color: #5b6b73
+          @include adjust-font-size-to(12px) 
+          font-weight: normal
+          display: inline-block
+        a
+          &.inbox-link-icon
+            margin: 0px
+            margin-left: -4px
+            padding-top: 4px
+            padding-bottom: 4px
+            padding-left: 9px
+            border-left: 2px solid $oranitang
+        .dropdown-toggle
+          .caret
+            border-bottom-color: #5b6b73
+            border-top-color: #5b6b73
+            text-shadow: none
+            vertical-align: inline
+            margin-top: 13px
+            opacity: 1.0	           
   .divider-vertical
     width: 1px
     height: 13px
@@ -456,6 +481,29 @@ input, textarea
   .nav.pull-right
     margin-right: 0px
     margin-left: 0px
+    
+.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle 
+  background-color: #5b6b73
+  color: #e6f9ff
+  
+.dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover
+  background-color: $snow
+  color: $slate
+  text-decoration: none
+  
+.dropdown-menu
+  @include background(#5b6b73)
+  margin-top: 0px
+  min-width: 97px
+  @include square-corners
+  li
+    a
+      @include link-colors(#e6f9ff)
+      @include adjust-font-size-to(12px)
+
+.navbar .pull-right .dropdown-menu, .navbar .dropdown-menu.pull-right
+  left: 30px
+  right: auto
 
 .navbar-inner
   min-height: 110px
@@ -567,7 +615,6 @@ input, textarea
   margin-bottom: 0px
   background-color: $heroUnitBackground
   @include border-radius(0px)
-  @include margin-leader($base-no-leader-line-height * ($hero-unit-h1-tm / $base-font-size))
   .p-first-line
     @include margin-leader($base-no-leader-line-height * ($hero-unit-p-first-tm / $hero-unit-p))
     font-weight: 100
@@ -606,7 +653,8 @@ input, textarea
   background-color: $snow
   @include border-radius(0px)
   @include padding-leader($bulitin-tp / $base-line-height)
-  @include margin-leader($base-no-leader-line-height * ($bulitin-tm / $base-font-size))
+  &.with-leader
+    @include margin-leader($base-no-leader-line-height * ($bulitin-tm / $base-font-size))
   border-bottom: 2px solid $metal
   h1
     margin-bottom: 0
@@ -722,7 +770,7 @@ input, textarea
           a
             @include link-colors($steel) /* THIS IS THE BEST EXAMPLE OF HOW TO USE CLASSES FOR DIVs AND SPANs EFFECTIVELY */
             text-decoration: underline
-      
+
 .thumbnail
   width: pem(220px)
   @include background($snow)
@@ -859,8 +907,18 @@ input, textarea
   left: pem(208)
   top: pem(-29)
 
+.modal
+  max-height: pem(560px)
+  width: pem(560px)
+  padding-left: 10px
+  padding-right: 25px
+  overflow-x: visible
+  overflow-y: auto
+
 .container
   margin: 0 auto
+  &.body
+    margin-top: pem(23px)
   &:before
     display: table
     content: ""
@@ -877,5 +935,7 @@ input, textarea
     width: 9999px
     left: 100%
     overflow-x: hidden
-    
+
+.add-standard-left-padding
+  padding-left: 10px
     
