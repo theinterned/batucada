@@ -416,7 +416,7 @@ input, textarea
         @include add-all-sides-text-shadow($slate, $snow)
         @include margin-leader($base-no-leader-line-height * (6px / $base-font-size)) 
         &.make-blue
-          @include link-colors($cyan)
+          @include link-colors($linkColor, $linkColorHover, $linkColorHover, $linkColor, $linkColorHover)
         &.right-link-1
           @include adjust-font-size-to($base-font-size)
           @include adjust-leading-to($base-no-leader-line-height)
@@ -446,11 +446,12 @@ input, textarea
     li
       &.dropdown
         > a
+          margin-top: 0px
           @include background(#fed713)
           color: #5b6b73
           @include adjust-font-size-to(12px) 
           font-weight: normal
-          display: inline-block
+          @include inline-block
         a
           &.inbox-link-icon
             margin: 0px
@@ -459,6 +460,7 @@ input, textarea
             padding-bottom: 4px
             padding-left: 9px
             border-left: 2px solid $oranitang
+            vertical-align: inline
         .dropdown-toggle
           .caret
             border-bottom-color: #5b6b73
@@ -818,6 +820,7 @@ input, textarea
         text-align: center
 
 .custom-footer
+  
   @include background($fog)
   @include padding-leader($base-no-leader-line-height * ($footer-h1-tm / $base-font-size))
   h1
