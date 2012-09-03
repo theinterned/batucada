@@ -307,3 +307,5 @@ TRACKING_PREFIXES = [
     r'^/\w{2}/schools/[\w-]+/sets/[\w-]+/$',
     r'^/\w{2}/schools/[\w-]+/$',
 ]
+
+BOT_NAMES = []
