@@ -20,3 +20,4 @@ SRC
 *.DS_Store
 *.sublime-project
 lernanta/lernanta
+.sass-cache
