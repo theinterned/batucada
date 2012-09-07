@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'lernanta.apps.pages',
     'lernanta.apps.projects',
     'lernanta.apps.learn',
+    'lernanta.apps.courses',
     'lernanta.apps.badges',
     'lernanta.apps.drumbeat',
     'django_obi',

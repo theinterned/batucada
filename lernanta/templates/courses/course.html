@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load i18n %}
+{% load learn_tags %}
+
+{% block title %}{{course.title}}{% endblock %}
+{% block bodyclasses %}course-landing{% endblock%}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css?v=1">
+{% endblock %}
+
+{% block links %}
+{% if project %}
+  <meta name="thumbnail" property="og:image" content="{{ project.get_image_url }}" />
+{% endif %}
+{% endblock %}
+
+{% block breadcrumbs_title %}
+  <h1 id="project-name">{{course.title}}</h1>
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block body %}
+
+<div id="sidebar-wrapper">
+
+<div id="sidebar">
+  <section id="project" class="panel">
+    <figure class="project_img">
+      <a id="id-course-image-link" href="{{ project.get_absolute_url }}">
+        {% if project.image %}
+  	         <img id="id-course-image" src="{{ MEDIA_URL }}{{ project.image }}" alt="course image"/>
+        {% else %}
+             <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
+        {% endif %}
+        {% if project.under_development %}
+          <img id="id-course-image-overlay" src="{{ STATIC_URL }}images/course-draft.png" alt="draft course"/>
+        {% endif %}
+      </a>
+    </figure>
+    <br>
+    <div id="project-description">
+        {{ project.short_description }}
+    </div>
+    <br>
+    <div id="project-summary">
+      {{ project.long_description|safe }}
+    </div>
+
+      {% if not organizing and not participating %}
+        {% if not archived %}
+          {% if user.is_authenticated %}
+            <form method="post" action="locale_url direct_signup slug=project.slug">
+              {% csrf_token %}
+              <button id="direct_signup_button">{{ _('Start Course') }}</button>
+            </form>
+          {% else %}
+              <a id="direct_signup_button" href="{{ login_with_redirect_url }}">{{ _('Start Challenge')}}</a>
+          {% endif %}
+        {% endif %}
+     {% else %}
+       {% if not organizing %}
+          <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
+            {% csrf_token %}
+            <a id="leave_direct_signup_button">{{ _('Leave Challenge') }}</a>
+          </form>
+        {% endif %}
+      {% endif %}
+
+    {% if tags %}
+      <h3><b>{{ _('Tags') }}</b></h3>
+      <ul class="tags">
+        {% for tag in tags %}
+          <li>
+            <a href="{% learn_default tag %}" title="{{ _('View more tagged with ') }}{{ tag.name }}">
+              {{ tag.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+  </section>
+
+</div> <!-- /#sidebar -->
+</div>
+
+{% if submission_enabled_badges %}
+  <div class="bottom-sidebar">
+    {% for badge in submission_enabled_badges %}
+      {% if not forloop.first %}<hr class="badge-break">{% endif %}
+      <div class="badge">
+        {% with awards_count=badge.awards.count pending_count=badge.get_pending_submissions.count %}
+          <div class="badge-top">
+            <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img class="badge-graphic" src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
+            <div class="badge-awarded">
+              <a class="badge-awarded-header" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ _('Awarded') }}</a>
+              <a class="badge-awarded-number" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ awards_count }}</a>
+            </div>
+            <div class="badge-pending">
+              <a class="badge-pending-header" href="{% locale_url matching_submissions slug=badge.slug %}">{{ _('Pending') }}</a>
+              <a class="badge-pending-number" href="{% locale_url matching_submissions slug=badge.slug %}">{{ pending_count }}</a>
+            </div>
+          </div>
+          <div class="badge-bottom">
+            {% if pending_count %}
+              <a href="{% locale_url matching_submissions slug=badge.slug %}">
+                {% blocktrans count counter=pending_count %}{{ counter }} peer needs your review!{% plural %}{{ counter }} peers need your review!{% endblocktrans %} {{ _('Go') }} →
+              </a>
+            {% endif %}
+          </div>
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+<div id="main">
+
+  <div id="about-tab">
+    <h2>About</h2>
+    {{ about.content }}
+  </div>
+
+  <div id="content-tab">
+    <h2>Content</h2>
+    {% if course.content|length %}
+      <ul>
+        {% for task in course.content %}
+          <li class="{% cycle 'odd' 'even' %}">
+            <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
+              {% with task_activity=task.recent_activity %}
+                <span class="taskActivity">
+                  {% if task_activity.0 %}
+                    <a href="{{ task.get_absolute_url }}">{{task_activity.0}} {{ _('new') }}
+                      <br>
+                      <span class="subtaskActivity">
+                      {% blocktrans count counter=task_activity.0 %}comment{% plural %}comments{% endblocktrans %} {{ task_activity.1 }}</span>
+                    </a>
+                  {% endif %}
+                </span>
+              {% endwith %}
+            {% if organizing and show_all %}
+	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url page_index_up slug=project.slug page_slug=task.slug %}">(UP)</a>{% endif %}
+	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url page_index_down slug=project.slug page_slug=task.slug %}">(DOWN)</a>{% endif %}
+            {% endif %}
+            <a class="taskView" href="{{ task.get_absolute_url }}">{{ _('View and Discuss') }}</a>
+            <span class="taskSubheader">{{ task.sub_header|default:"&nbsp;" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{{ _('No tasks have been added.') }}</p><br>
+    {% endif %}
+  </div>
+
+  <div id="discussion-tab">
+    <h2>Discussion</h2>
+  </div>
+
+  <div id="badges-tab">
+    <h2>Badges</h2>
+  </div>
+
+  <div id="people-tab">
+    <h2>People</h2>
+      {% for user in cohort.users %}
+        <div class="user-tile">
+          <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png">{{user.username}}</a>
+        </div>
+      {% empty %}
+        {{ _("No users are taking this course, be the first to sign up!!") }}
+      {% endfor %}
+  </div>
+</div> <!-- /#main -->
+
+
+{% endblock %}

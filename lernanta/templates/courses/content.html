@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n%}
+{% load l10n_tags %}
+
+{% block title %}{{content.title}}{% endblock %}
+
+{% block breadcrumbs %}
+  <a href="{% locale_url courses_show course_id=course_id slug=course_slug%}">{{course_title}}</a>
+{% endblock %}
+
+{% block body %}
+  <div id="content-container">
+    <h1>{{ content.title }}</h1>
+    {{ content.content }}
+  </div>
+{% endblock %}
