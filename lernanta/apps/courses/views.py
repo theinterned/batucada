@@ -39,6 +39,9 @@ def create_course( request ):
 
 def course_slug_redirect( request, course_id ):
     course = course_model.get_course('/uri/courses/{0}/'.format(course_id))
+    if course == None:
+        raise http.Http404
+
     redirect_url = reverse('courses_show', 
         kwargs={'course_id': course_id, 'slug': course['slug']})
     return http.HttpResponseRedirect(redirect_url)
@@ -46,7 +49,9 @@ def course_slug_redirect( request, course_id ):
 
 def show_course( request, course_id, slug=None ):
     course = course_model.get_course('/uri/courses/{0}/'.format(course_id))
-
+    if course == None:
+        raise http.Http404
+ 
     if slug != course['slug']:
         return course_slug_redirect( request, course_id)
 
