@@ -456,7 +456,7 @@ msgstr ""
 msgid ""
 "Tag your course so folks can find it. What will your audience be looking "
 "for? Separate with commas."
-msgstr ""
+msgstr "בחר מילות מפתח לקורס שלך כדי שאנשים יוכלו למצוא אותו. מה קהל היעד שלך מחפש? הפרד עם פסיקים."
 
 #: apps/projects/forms.py:90 apps/schools/forms.py:36 apps/schools/forms.py:50
 #: apps/schools/forms.py:64 apps/schools/forms.py:78 apps/users/forms.py:260
@@ -2101,74 +2101,70 @@ msgstr "פרסם את הקישור הזה ובקש את הbadge להלן"
 msgid "Apply for this badge"
 msgstr "בקש את הbadge הזה"
 
-# #############################################################################
-# #############################################################################
-# ## Bookmark                                                                ##
-# #############################################################################
-# #############################################################################
-
 #: templates/content/_toggle_completion.html:60
+#, fuzzy
 msgid "Badge Application Form"
-msgstr "Formulario de Aplicación"
+msgstr "טופס בקשת badge"
 
 #: templates/content/_toggle_completion.html:62
-msgid "Url to the work you are submitting"
-msgstr "Enlace al trabajo que esta presentando"
+msgid "URL to the work you are submitting"
+msgstr "קישור לעבודה אותה אתה מגיש"
 
 #: templates/content/_toggle_completion.html:70
+#, fuzzy
 msgid "Submit and move to the next badge application"
-msgstr "Enviar y pasar a la siguiente aplicación para una medalla"
+msgstr "פרסם ועבור לבקשת הbadge הבאה"
 
 #: templates/content/_toggle_completion.html:75
 msgid "Move on to next task"
-msgstr "Ir a la siguiente tarea"
+msgstr "עבור למשימה הבאה"
 
 #: templates/content/_toggle_completion.html:83
+#, fuzzy
 msgid "Did you know that you can apply for these badges in this task?"
-msgstr "¿Sabías que puedes aplicar para las siguientes medallas en esta tarea?"
+msgstr "הידעת שאתה יכול לבקש את הbadges האלו במשימה הזאת?"
 
 #: templates/content/_toggle_completion.html:92
 msgid "Received!"
-msgstr "¡Recibido!"
+msgstr "התקבל!"
 
 #: templates/content/_toggle_completion.html:95
 msgid "Apply"
-msgstr "Aplicar"
+msgstr "בקש"
 
 #: templates/content/_toggle_completion.html:98
 msgid "Submitted"
-msgstr "¡Enviada!"
+msgstr "נשלח!"
 
 #: templates/content/base_page_form.html:20
 #: templates/replies/comment_page.html:59
 #: templates/signups/answer_sign_up.html:24
 msgid "[Preview]"
-msgstr "[Vista Previa]"
+msgstr "[תצוגה מקדימה]"
 
 #: templates/content/base_page_form.html:34
 msgid "A good title is short and descriptive."
-msgstr "Un buen título es corto y descriptivo."
+msgstr "כותרת טובה הינה קצרה ותיאורית."
 
 #: templates/content/base_page_form.html:41
 #: templates/projects/project_edit_summary.html:34
 msgid "One sentence description"
-msgstr "Descripción de una línea"
+msgstr "תיאור במשפט אחד"
 
 #: templates/content/base_page_form.html:42
 msgid "This description will be used as sub header below the task title."
-msgstr ""
-"Esta descripción se usará como subcabecera debajo del título de la tarea."
+msgstr "התיאור הזה ישמש ככותרת המשנה מתחת לכותרת המשימה."
 
 #: templates/content/base_page_form.html:53
 msgid "Collaborative work (editable by all the participants)."
-msgstr "Trabajo colaborativo (editable por todos los participantes)."
+msgstr "עבודה שיתופית )(יכולה להיערך על ידי כל המשתתפים)."
 
 #: templates/content/base_page_form.html:59
 #: templates/content/edit_pages.html:38
 #: templates/replies/comment_page.html:105
 #: templates/signups/answer_sign_up.html:98
 msgid "Preview"
-msgstr "Vista Previa"
+msgstr "תצוגה מקדימה"
 
 #: templates/content/confirm_delete_page.html:11
 #: templates/content/create_page.html:11 templates/content/edit_page.html:11
@@ -2177,15 +2173,15 @@ msgstr "Vista Previa"
 #: templates/content/version_page.html:12
 #: templates/projects/project_task_list.html:9
 msgid "Task List"
-msgstr "Lista de Tareas"
+msgstr "רשימת המשימות"
 
 #: templates/content/confirm_delete_page.html:24
 msgid "Are you sure you want to delete this task?"
-msgstr "¿Está seguro que desea eliminar esta tarea?"
+msgstr "אתה בטוח שאתה רוצה למחוק את המשימה הזאת?"
 
 #: templates/content/create_page.html:5 templates/content/create_page.html:15
 msgid "Create Task"
-msgstr "Crear Tarea"
+msgstr "יצירת משימה"
 
 #: templates/content/create_page.html:19 templates/content/edit_page.html:27
 msgid ""
@@ -2196,12 +2192,10 @@ msgid ""
 "constructed over a week, a project that lasts for a few weeks, or a month-"
 "long endeavour that everyone works on."
 msgstr ""
-"Construir una buena tarea es crucial para el proceso de aprendizaje. La "
-"tarea debe tener una meta clara y ser secuencial durante el proceso de "
-"aprendizaje.  Una tarea puede ser grande o pequeña y durar tanto como usted "
-"desee - puede ser una discusión planeada para un día, un documento escrito "
-"preparado a lo largo de una semana, un proyecto que dure algunas semanas, o "
-"una empresa en la que todos trabajen durante un mes."
+"יצירת משימה טובה הינה קריטית לתהליך הלימוד. למשימות צריך להיות מטרה ברורה, "
+"ומוטב שיהיו רציפות לאורך כל תהליך הלימוד. משימה יכולה להיות גדולה או קטנה "
+"ולהארך ככל שתרצה - הם יכולים להיות דיון ממוקד בשביל יום אחד, מטלת כתיבה "
+"לאורך שבוע, פרויקט שנמשך כמה שבועות, או מאמץ של חודש שכולם עובדים עליו."
 
 #: templates/content/edit_page.html:18 templates/content/edit_pages.html:13
 #: templates/content/edit_pages.html:36 templates/content/page.html:22
@@ -2221,48 +2215,49 @@ msgstr "עריכה"
 #: templates/content/edit_page.html:33
 #: templates/content/restore_version.html:30
 msgid "Minor update (not posted to the wall)."
-msgstr "Actualización menor (no se publica en el muro)."
+msgstr "עידכון מינורי (לא מתפרסם בקיר)."
 
 #: templates/content/edit_pages.html:20
 msgid "Edit Tasks"
-msgstr "Editar Tareas"
+msgstr "עריכת המשימות"
 
 #: templates/content/edit_pages.html:34
 msgid "Add Another Task"
-msgstr "Añadir Otra Tarea"
+msgstr "הוספת משימה חדשה"
 
 #: templates/content/edit_pages.html:40
 msgid "Save Progress"
-msgstr "Salvar Progreso"
+msgstr "שמור את ההתקדמות"
 
 #: templates/content/edit_pages.html:41
 #: templates/projects/project_create_review.html:62
 msgid "Finish"
-msgstr "Terminar"
+msgstr "גמור"
 
 #: templates/content/history_page.html:15
 #: templates/content/history_page.html:21
 #: templates/content/restore_version.html:14
 #: templates/content/version_page.html:16
 msgid "History"
-msgstr "Historial"
+msgstr "היסטוריה"
 
 #: templates/content/history_page.html:25
 #: templates/content/history_page.html:33
 msgid "deleted"
-msgstr "eliminado"
+msgstr "נמחק"
 
 #: templates/content/history_page.html:27
 msgid "(current)"
-msgstr "(actual)"
+msgstr "(נוכחית)"
 
 #: templates/content/page.html:25
 msgid "View History"
-msgstr "Ver Historial"
+msgstr "צפה בהיסטוריה"
 
 #: templates/content/page.html:34
+#, fuzzy
 msgid "Task Navigation"
-msgstr "Accesos rápidos"
+msgstr "ניווט משימות"
 
 #: templates/content/page.html:65
 msgid "Post Comment"
@@ -2270,17 +2265,16 @@ msgstr "פרסם תגובה"
 
 #: templates/content/page.html:67
 msgid "Task Discussion"
-msgstr "Discusión de la Tarea"
+msgstr "דיון אודות המשימה"
 
 #: templates/content/emails/content_update.txt:2
 #: templates/replies/emails/post_comment.txt:3
 msgid " was updated."
-msgstr " fue actualizado."
+msgstr " עודכן."
 
 #: templates/content/emails/content_update.txt:4
-#, fuzzy
 msgid " contributed with a new task: "
-msgstr " creó una nueva tarea: "
+msgstr " תרם משימה חדשה: "
 
 #: templates/content/emails/content_update.txt:4
 #: templates/content/emails/content_update_subject.txt:2
@@ -2292,39 +2286,39 @@ msgstr "."
 
 #: templates/content/emails/content_update.txt:9
 msgid "Check out their update and respond at:"
-msgstr "Ver tarea en:"
+msgstr "בדוק את העדכון שלהם והשב ב:"
 
 #: templates/content/emails/content_update.txt:11
 msgid "Booyah,"
-msgstr ""
+msgstr "להתראות,"
 
 #: templates/content/emails/content_update.txt:12
 #: templates/drumbeatmail/emails/direct_message.txt:9
 #: templates/relationships/emails/new_follower.txt:12
-#: templates/replies/emails/post_comment.txt:14
+#: templates/replies/emails/post_comment.txt:16
 #: templates/signups/emails/new_signup_answer.txt:22
-#: templates/statuses/emails/wall_updated.txt:15
-#: templates/users/emails/forgot_password.txt:12
+#: templates/statuses/emails/wall_updated.txt:17
+#: templates/users/emails/forgot_password.txt:11
 #: templates/users/emails/registration_confirm.txt:13
 msgid "The P2PU Team"
-msgstr "El Equipo de P2PU"
+msgstr "צוות P2PU"
 
 #: templates/content/emails/content_update_subject.txt:2
 #, fuzzy
 msgid " made a new task for "
-msgstr " creó una nueva tarea: "
+msgstr " יצר משימה חדשה בשביל "
 
 #: templates/dashboard/_join_p2pu.html:6
 msgid "Join the Community"
-msgstr "Únase a la comunidad"
+msgstr "הצטרף לקהילה"
 
 #: templates/dashboard/_join_p2pu.html:6
 msgid "It's free!"
-msgstr "¡Es gratis!"
+msgstr "זה בחינם!"
 
 #: templates/dashboard/_join_p2pu.html:7
 msgid "Learn anything, with your peers."
-msgstr "Aprenda sobre cualquier cosa, con sus colegas."
+msgstr "למד הכל, עם העמיתים שלך."
 
 #: templates/dashboard/_join_p2pu.html:8
 msgid ""
@@ -2332,91 +2326,89 @@ msgid ""
 "tasks, assessing individual and group work, and providing constructive "
 "feedback."
 msgstr ""
-"En P2PU, la gente trabaja unida para aprender sobre un tema particular "
-"completando tareas, evaluando el trabajo individual y colectivo, y brindando "
-"retroalimentación constructiva."
+"בP2PU, אנשים עובדים ביחד כדי ללמוד נושא מסוים, על ידי השלמת משימות, הערכת "
+"עבודות פרטיות וקבוצתיות, ונתינת ביקורת בונה."
 
 #: templates/dashboard/dashboard.html:9
 msgid "Your Dashboard"
-msgstr "Mi Página"
+msgstr ""
 
 #: templates/dashboard/dashboard.html:11
 msgid "Activity from your profile"
-msgstr "Actividad de mi perfil"
+msgstr "פעילות מהפרופיל שלך"
 
 #: templates/dashboard/dashboard.html:12
 msgid "Activity from your dashboard"
-msgstr "Actividad que estoy siguiendo"
+msgstr ""
 
 #: templates/dashboard/dashboard.html:29
 #: templates/users/emails/registration_confirm.txt:3
 msgid "Welcome to P2PU!"
-msgstr "¡Bienvenido a P2PU!"
+msgstr "ברוכים הבאים לP2PU!"
 
 #: templates/dashboard/dashboard.html:30
 msgid "To get started, you should "
-msgstr "Para comenzar debería "
+msgstr "כדי להתחיל, כדאי "
 
 #: templates/dashboard/dashboard.html:30
 msgid ""
 "update your profile</a>. This is a great way to tell people a bit more about "
 "yourself. Then find "
 msgstr ""
-"actualizar su perfil</a>. Esta es una buena forma de decirle a otros un poco "
-"más acerca de usted. Después busque "
+"לעדכן את הפרופיל שלך</a>. זוהי דרך מצויינת כדי לספר לאנשים יותר על עצמך אחר "
+"תמצא "
 
 #: templates/dashboard/dashboard.html:30
 msgid "people</a> and "
-msgstr "personas</a> y "
+msgstr "אנשים</a> ו"
 
 #: templates/dashboard/dashboard.html:30
 msgid "groups</a> that interest you and start following them! You can also "
-msgstr ""
-"grupos</a> que sean de su interés y ¡comience a seguirlos! También puede "
+msgstr "קבוצות</a> שמעניינים אותך ותתחיל לעקוב אחריהם! אפשר גם "
 
 #: templates/dashboard/dashboard.html:30
 msgid "create new groups</a> and update how often P2PU "
-msgstr "crear nuevos grupos</a> y actualizar la frecuencia con la que P2PU "
+msgstr "ליצור קבוצות חדשות</a> ולעדכן את התדירות בה P2PU "
 
 #: templates/dashboard/dashboard.html:30
 msgid "contacts you</a>."
-msgstr "lo contacta</a>."
+msgstr "שולח לך הודעות</a>."
 
 #: templates/dashboard/dashboard.html:37
 msgid "Post a message to your followers"
-msgstr "Publicar un mensaje para sus seguidores"
+msgstr "פרסם הודעה לעוקבים אחריך"
 
 #: templates/dashboard/dashboard.html:46
 msgid "Post Update"
-msgstr "Publicar"
+msgstr "פרסם עדכון"
 
 #: templates/dashboard/setup_profile.html:5
 #: templates/dashboard/setup_profile.html:7
 msgid "Create Profile"
-msgstr "Crear Perfil"
+msgstr "יצירת פרופיל"
 
 #: templates/dashboard/sidebar.html:20
 #: templates/relationships/emails/new_follower.txt:6
 #: templates/signups/answer_sign_up.html:28 templates/signups/sign_up.html:80
 #: templates/signups/emails/new_signup_answer.txt:6
 msgid "Location:"
-msgstr "Ubicación:"
+msgstr "מיקום:"
 
 #: templates/dashboard/sidebar.html:25
 msgid "Interests"
-msgstr "Intereses"
+msgstr "תחומי עניין"
 
 #: templates/dashboard/sidebar.html:29 templates/users/_profile_info.html:78
 msgid "View more interested in "
-msgstr "Ver más intereses en "
+msgstr "צפייה באנשים המעוניינים ב"
 
 #: templates/dashboard/sidebar.html:37 templates/users/_profile_edit.html:33
 msgid "Want to learn more about"
-msgstr "Quiero aprender más sobre"
+msgstr "רוצה ללמוד יותר על"
 
 #: templates/dashboard/sidebar.html:41 templates/users/_profile_info.html:90
 msgid "View more interested in learning more about "
-msgstr "Ver más sobre que está interesado en aprender "
+msgstr "צפייה באנשים המעוניינים ללמוד יותר על "
 
 #: templates/dashboard/sidebar.html:54
 #: templates/projects/_project_card.html:35
@@ -2424,35 +2416,35 @@ msgstr "Ver más sobre que está interesado en aprender "
 #: templates/schools/school_edit_statistics.html:20
 #: templates/users/_profile_info.html:5 templates/users/_user_card.html:12
 msgid "Followers"
-msgstr "Seguidores"
+msgstr "עוקבים"
 
 #: templates/dashboard/sidebar.html:64 templates/users/_user_card.html:16
 msgid "Following"
-msgstr "Siguiendo"
+msgstr "עוקב אחרי"
 
 #: templates/dashboard/sidebar.html:75
 msgid "Learning"
-msgstr "Aprendiendo"
+msgstr "לומד"
 
 #: templates/dashboard/sidebar.html:98 templates/users/sidebar.html:60
 msgid "(UP)"
-msgstr "(ARRIBA)"
+msgstr "(למעלה)"
 
 #: templates/dashboard/sidebar.html:101 templates/users/sidebar.html:63
 msgid "(DOWN)"
-msgstr "(ABAJO)"
+msgstr "(למטה)"
 
 #: templates/dashboard/splash.html:6
 msgid "Learning for everyone, by everyone, about almost anything"
-msgstr "Aprendizaje para todos, por todos y acerca de casi todo"
+msgstr "לימוד לכולם, מאת כולם, אודות כמעט הכול"
 
 #: templates/dashboard/splash.html:19
 msgid "Browse Groups & Courses"
-msgstr "Busque Grupos y Cursos"
+msgstr "דפדוף בקבוצות וקורסים"
 
 #: templates/dashboard/splash.html:20
 msgid "Start Your Own"
-msgstr "Inicie el Suyo Propio"
+msgstr "התחל את שלך"
 
 #: templates/dashboard/splash.html:23
 msgid ""
@@ -2461,84 +2453,82 @@ msgid ""
 "\"highlight2\">online</em> and totally <em class=\"highlight3\">free</em></"
 "span>."
 msgstr ""
-"<em class=\"highlight3\">Aprenda</em> cualquier cosa<br>con sus <em class="
-"\"highlight2\">colegas</em>.<br><span class=\"sub\">Es <em class="
-"\"highlight2\">en línea</em> y totalmente <em class=\"highlight3\">gratis</"
-"em></span>."
+"<em class=\"highlight3\">למד</em> הכל<br>עם <em class=\"highlight2\">העמיתים"
+"</em> שלך.<br><span class=\"sub\">זה <em class=\"highlight2\">אונליין</em> "
+"<em class=\"highlight3\">וחינמי</em> לחלוטין</span>."
 
 #: templates/dashboard/splash.html:25
 msgid "At"
-msgstr "En"
+msgstr "אצל"
 
 #: templates/dashboard/splash.html:25
 msgid ""
 "people work together to learn a particular topic by completing tasks, "
 "assessing individual and group work, and providing constructive feedback."
 msgstr ""
-"la gente trabaja unida para aprender sobre un tema particular completando "
-"tareas, evaluando el trabajo individual y colectivo y brindando "
-"retroalimentación constructiva."
+"אנשים עובדים ביחד כדי ללמוד נושא מסוים, על ידי השלמת משימות, הערכת עבודות "
+"פרטיות וקבוצתיות, ונתינת ביקורת בונה."
 
 #: templates/dashboard/splash.html:38 templates/projects/_learn_filters.html:3
 #: templates/schools/home.html:57 templates/schools/school_edit.html:23
 #: templates/schools/school_edit_featured.html:7
 #: templates/users/user_list.html:30
 msgid "Featured"
-msgstr "Destacado"
+msgstr "מומלץ"
 
 #: templates/dashboard/splash.html:48
 msgid "P2PU Blog"
-msgstr "Blog de P2PU"
+msgstr "הבלוג של P2PU"
 
 #: templates/dashboard/splash.html:48
 msgid "Subscribe to the Peer 2 Peer University blog"
-msgstr "Suscribirse al blog de Peer 2 Peer University"
+msgstr ""
 
 #: templates/dashboard/splash.html:48
 msgid "feed"
-msgstr "alimentador"
+msgstr ""
 
 #: templates/drumbeat/report_abuse.html:5
 #: templates/drumbeat/report_received.html:5
 msgid "Abuse Report Received"
-msgstr "Reporte de Abuso Recibido"
+msgstr "הדיווח אודות שימוש לרעה התקבל"
 
 #: templates/drumbeat/report_abuse.html:14
 msgid ""
 "Would you like to report this content as objectionable? This can be anything "
 "from suspected spam to offensive content."
 msgstr ""
-"¿Desea reportar este contenido como objetable?  Objetable puede ser "
-"cualquier cosa entre publicidad no solicitada y contenido ofensivo."
+"הנך רוצה לדווח על התוכן הזה כבעייתי?  זה יכול להיות הכל מחשד לספאם ועד לתוכן "
+"פוגעני."
 
 #: templates/drumbeat/report_abuse.html:17
 msgid "Report"
-msgstr "Reportar"
+msgstr "דיווח"
 
 #: templates/drumbeat/report_received.html:12
 msgid "Thank You,"
-msgstr "Gracias,"
+msgstr "תודה רבה,"
 
 #: templates/drumbeat/report_received.html:13
 msgid "We have received your report and will investigate further."
-msgstr "Hemos recibido su reporte e investigaremos más."
+msgstr "קיבלנו את הדיווח שלך ונחקור את העניין."
 
 #: templates/drumbeat/emails/abuse_report.txt:2
 msgid "has reported the following content as objectionable:"
-msgstr "ha reportado el siguiente contenido como objetable:"
+msgstr "דיווח את התוכן הזה כבעייתי:"
 
 #: templates/drumbeat/emails/abuse_report_subject.txt:2
 msgid "Abuse Report"
-msgstr "Reporte de Abuso"
+msgstr "דיווח על תוכן בעייתי"
 
 #: templates/drumbeatmail/base.html:12
 msgid "To"
-msgstr "Para"
+msgstr ""
 
 #: templates/drumbeatmail/base.html:22
 #: templates/projects/contact_organizers.html:17
 msgid "Message"
-msgstr "Mensaje"
+msgstr "הודעה"
 
 #: templates/drumbeatmail/base.html:35
 #: templates/projects/contact_organizers.html:29
@@ -2546,95 +2536,93 @@ msgstr "Mensaje"
 msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
 "will."
-msgstr ""
-"Bienvenidos Robots, ReCaptch ha sido deshabilitado para su conveniencia.  "
-"Envíe spam como lo desee."
+msgstr "שלום רובוטים, ReCaptcha נוטרל לנוחיותכם. שלחו ספאם לרצונכם."
 
 #: templates/drumbeatmail/base.html:41 templates/messages/compose.html:8
 #: templates/projects/contact_organizers.html:36
 #: templates/users/forgot_password.html:18
 msgid "Send"
-msgstr "Enviar"
+msgstr "שלח"
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
-msgstr "Componer Mensaje"
+msgstr "חיבור הודעה"
 
 #: templates/drumbeatmail/compose.html:6
 msgid "New Private Message"
-msgstr "Nuevo Mensaje Privado"
+msgstr "הודעה פרטית חדשה"
 
 #: templates/drumbeatmail/inbox.html:14
 msgid "New Private Discussion"
-msgstr "Nuevo Mensaje Privado"
+msgstr "דיון פרטי חדש"
 
 #: templates/drumbeatmail/inbox.html:25
 msgid "All Messages"
-msgstr "Todos los Mensajes"
+msgstr "כל ההודעות"
 
 #: templates/drumbeatmail/inbox.html:26
 msgid "Sent"
-msgstr "Enviados"
+msgstr "נשלח"
 
 #: templates/drumbeatmail/inbox.html:41
 msgid "You have no messages"
-msgstr "No tiene mensajes"
+msgstr "אין לך הודעות חדשות"
 
 #: templates/drumbeatmail/inbox.html:116
 msgid "More"
-msgstr "Más"
+msgstr "יותר"
 
 #: templates/drumbeatmail/emails/direct_message.txt:2
 msgid "You have received a new direct message from"
-msgstr "Ha recibido un nuevo mensaje directo de"
+msgstr "קיבלת הודעה ישירה חדשה מ"
 
 #: templates/drumbeatmail/emails/direct_message.txt:6
 msgid "Reply:"
-msgstr "Respuesta:"
+msgstr "השב:"
 
 #: templates/drumbeatmail/emails/direct_message.txt:8
 #: templates/relationships/emails/new_follower.txt:11
 #: templates/replies/emails/post_comment.txt:15
 #: templates/signups/emails/new_signup_answer.txt:21
 msgid "Sincerely,"
-msgstr "Sinceramente,"
+msgstr "מעומק הלב,"
 
 #: templates/drumbeatmail/emails/direct_message.txt:11
 #: templates/relationships/emails/new_follower.txt:14
 msgid "Manage your subscriptions:"
-msgstr "Configure sus notificaciones:"
+msgstr "ניהול המנויים שלך:"
 
 #: templates/drumbeatmail/emails/direct_message_subject.txt:2
 msgid "New Message from"
-msgstr "Nuevo Mensaje de"
+msgstr "הודעה חדשה מ"
 
 #: templates/messages/compose.html:4 templates/messages/inbox.html:40
 msgid "New Message"
-msgstr "Nuevo Mensaje"
+msgstr "הודעה חדשה"
 
 #: templates/messages/inbox.html:4
 msgid "Your Messages"
-msgstr "Sus Mensajes"
+msgstr "ההודעות שלך"
 
 #: templates/messages/inbox.html:6
 msgid "You have no messages in your inbox"
-msgstr "No tiene mensajes en su bandeja de entrada"
+msgstr ""
 
 #: templates/messages/inbox.html:11
 msgid "From"
-msgstr "De"
+msgstr "מאת"
 
 #: templates/messages/inbox.html:14
 msgid "Action"
-msgstr "Acción"
+msgstr "פעולה"
 
 #: templates/messages/inbox.html:29
 msgid "DATETIME_FORMAT"
-msgstr "j N Y P"
+msgstr ""
 
 #: templates/messages/inbox.html:32
 msgid "delete"
-msgstr "borrar"
+msgstr "מחיקה"
 
 #: templates/pages/get_involved_page.html:14
 #: templates/pages/get_involved_page.html:20
@@ -2791,70 +2779,70 @@ msgstr ""
 #: templates/pagination/pagination_links.html:4
 #: templates/pagination/pagination_links.html:6
 msgid "previous"
-msgstr "anterior"
+msgstr "הקודם"
 
 #: templates/pagination/pagination_links.html:9
 #: templates/pagination/pagination_links.html:11
 msgid "next"
-msgstr "siguiente"
+msgstr "הבא"
 
 #: templates/projects/_learn_filters.html:2
 #: templates/users/_profile_info.html:13 templates/users/_profile_info.html:47
 msgid "View All"
-msgstr "Ver Todos"
+msgstr "צפייה בהכל"
 
 #: templates/projects/_learn_filters.html:13 templates/schools/menu.html:4
 msgid "Schools"
-msgstr "Escuelas"
+msgstr "בתי ספר"
 
 #: templates/projects/_learn_filters.html:26
 msgid "Browse More Tags"
-msgstr "Vea Más Etiquetas"
+msgstr "דפדוף בתגים נוספים"
 
 #: templates/projects/_learn_filters.html:29
 msgid "Filters"
-msgstr "Filtros"
+msgstr "מסננים"
 
 #: templates/projects/_learn_filters.html:37
 msgid "All Languages"
-msgstr "Todos los Idiomas"
+msgstr "כל השפות"
 
 #: templates/projects/_learn_filters.html:43
 msgid "Language:"
-msgstr "Idioma:"
+msgstr "שפה:"
 
 #: templates/projects/_learn_filters.html:51
 msgid "Community Reviewed"
-msgstr "Revisado por la Comunidad"
+msgstr ""
 
 #: templates/projects/_learn_filters.html:55
 msgid "Filter"
-msgstr "Filtro"
+msgstr "סינון"
 
 #: templates/projects/_learn_header.html:4
 msgid "Featured - Community Picks"
-msgstr "Destacados - Selecciones de la Comunidad"
+msgstr "מומלץ - בחירות הקהילה"
 
 #: templates/projects/_learn_header.html:6
 msgid "Featured - Showcase"
-msgstr "Destacados - Exhibición"
+msgstr ""
 
 #: templates/projects/_learn_header.html:8
 msgid "Featured - Fresh Additions"
-msgstr "Destacados - Adiciones Nuevas"
+msgstr "מומלץ - הוספות חדשות"
 
 #: templates/projects/_learn_header.html:12
 msgid "Tags - "
-msgstr "Etiquetas - "
+msgstr "תגים - "
 
 #: templates/projects/_learn_header.html:14
 msgid "All"
-msgstr "Todos"
+msgstr "הכל"
 
 #: templates/projects/_project_card.html:23
 #: templates/projects/sidebar.html:173 templates/users/_user_card.html:20
 msgid "Updates"
-msgstr "Actualizaciones"
+msgstr "עדכונים"
 
 #: templates/projects/_project_card.html:27
 #: templates/projects/_user_list.html:71
@@ -2870,33 +2858,32 @@ msgstr "משתתפים"
 #: templates/projects/_project_edit_image.html:1
 #: templates/projects/project_create_overview.html:143
 msgid "Cover Image"
-msgstr "Imagen"
+msgstr "תמונה"
 
 #: templates/projects/_project_edit_image.html:3
 msgid ""
 "Upload an image file from your computer. This image is shown in search "
 "results and on the listing page."
 msgstr ""
-"Suba una imagen de su computadora. Esta imagen sera mostrada en los "
-"resultados de búsquedas y otros listados"
+"העלה קובץ תמונה מהמחשב שלך. התמונה הזאת מוצגת בתוצאות חיפוש ובדפי הרשימות."
 
 #: templates/projects/_project_edit_image.html:17
 msgid ""
 "File Types: JPG, GIF or PNG only<br/> Max size: 700k <br/> Dimensions: "
 "243x150 pixels"
 msgstr ""
-"Tipos de Archivos: JPG, GIF o PNG unicamente<br/> Tamaño máximo: 700k <br/> "
-"Dimensiones: 243x150 pixels"
+"סוגי קבצים: JPG, GIF או PNG בלבד<br/> גודל מקסימלי: 700k <br/> "
+"ממדים: 243x150 פיקסלים"
 
 #: templates/projects/_task_list.html:6
 #: templates/projects/_tasks_list_wall.html:9
 #: templates/projects/sidebar.html:222
 msgid "Tasks"
-msgstr "Tareas"
+msgstr "משימות"
 
 #: templates/projects/_task_list.html:22
 msgid "new"
-msgstr "nuevo"
+msgstr "חדש"
 
 #: templates/projects/_task_list.html:25
 msgid "comment"
@@ -2906,7 +2893,7 @@ msgstr[1] "תגובות"
 
 #: templates/projects/_task_list.html:36
 msgid "View and Discuss"
-msgstr "Ver y Discutir"
+msgstr "צפייה ודיון"
 
 #: templates/projects/_task_list.html:39
 #: templates/projects/project_edit.html:34
@@ -2915,126 +2902,123 @@ msgstr "צפה"
 
 #: templates/projects/_task_list.html:45 templates/projects/sidebar.html:241
 msgid "No tasks have been added."
-msgstr "Ninguna tarea ha sido añadida."
+msgstr "אף משימה לא נוספה."
 
 #: templates/projects/_task_list.html:49
 msgid "Displaying"
-msgstr "Presentando"
+msgstr "מציג"
 
 #: templates/projects/_task_list.html:49
 msgid "of"
-msgstr "de"
+msgstr "מתוך"
 
 #: templates/projects/_task_list.html:49
 msgid "total tasks"
-msgstr "total de tareas"
+msgstr "משימות"
 
 #: templates/projects/_task_list.html:50
 msgid "See All Tasks"
-msgstr "Ver Todas las Tareas"
+msgstr "צפייה בכל המשימות"
 
 #: templates/projects/_tasks_completed_msg.html:3
 msgid "Congratulations!"
-msgstr "¡Felicidades!"
+msgstr "יישר כוח!"
 
 #: templates/projects/_tasks_completed_msg.html:4
 msgid "Good job completing all the tasks."
-msgstr "Has completado todas las tareas."
+msgstr ""
 
 #: templates/projects/_tasks_completed_msg.html:8
 msgid "Badges Awarded"
-msgstr "Medallas Otorgadas"
+msgstr ""
 
 #: templates/projects/_tasks_completed_msg.html:26
 msgid "Earn More Badges"
-msgstr "Ganar Más Medallas"
+msgstr ""
 
 #: templates/projects/_tasks_completed_msg.html:35
 msgid "Next Challenges"
-msgstr "Siguientes Retos"
+msgstr "האתגרים הבאים"
 
 #: templates/projects/_tasks_completed_msg.html:47
 msgid "Help Others with this Challenge"
-msgstr "Ayude a Otros con este Reto"
+msgstr "עזור לאחרים עם האתגר הזה"
 
 #: templates/projects/_tasks_completed_msg.html:50
 msgid "Adopt this Challenge"
-msgstr "Adoptar este Reto"
+msgstr "אמץ את האתגר הזה"
 
 #: templates/projects/_tasks_list_wall.html:10
 msgid "Discussions"
-msgstr "Discusiones"
+msgstr "דיונים"
 
 #: templates/projects/_tasks_list_wall.html:15
 msgid "Completed"
-msgstr "Completadas"
+msgstr "נשלם"
 
 #: templates/projects/_tasks_list_wall.html:22
 msgid "Badges you can earn in this challenge:"
-msgstr "Medallas que puede ganar en este reto:"
+msgstr ""
 
 #: templates/projects/_user_list.html:6
 msgid "See All"
-msgstr "Ver Todos"
+msgstr "צפייה בהכל"
 
 #: templates/projects/_user_list.html:24
 msgid "Peers who have offered their help"
-msgstr "Colegas que han ofrecido su ayuda"
+msgstr "עמיתים שהציעו את העזרה שלהם"
 
 #: templates/projects/_user_list.html:38 templates/projects/sidebar.html:177
 #: templates/schools/school_edit_statistics.html:18
 msgid "Organizers"
-msgstr "Organizadores"
+msgstr "מארגנים"
 
 #: templates/projects/_user_list.html:58
 msgid "Peers taking this challenge"
-msgstr "Colegas emprendiendo este reto"
+msgstr "עמיתים המשתתפים באתגר"
 
 #: templates/projects/_user_list.html:91
 msgid "Peers who have completed this challenge"
-msgstr "Colegas que completaron este reto"
+msgstr "עמיתים שסיימו את האתגר"
 
 #: templates/projects/_user_list.html:123
 msgid "View all"
-msgstr "Ver todas"
+msgstr "צפייה בהכל"
 
 #: templates/projects/_wall.html:11
 msgid "Post a message"
-msgstr "Publicar un mensajes"
+msgstr "פרסום הודעה"
 
 #: templates/projects/_wall.html:15
 msgid ""
 "Important message (participants can not turn off notifications for important "
 "messages)."
 msgstr ""
-"Mensaje importante (los participantes no pueden desactivar notificación de "
-"mensajes importantes)."
+"הודעה חשובה (משתתפים אינם יכולים למנוע שליחת הודעות אודות הודעות חשובות)."
 
 #: templates/projects/_wall.html:22
 msgid "Post Message"
-msgstr "Publicar Mensaje"
+msgstr "פרסום הודעה"
 
 #: templates/projects/contact_organizers.html:6
 msgid "Contact Organizers of "
-msgstr "Contactar Organizadores de "
+msgstr "יצירת קשר עם המארגנים של "
 
 #: templates/projects/detailed_description_initial_content.html:4
 #, python-format
 msgid "Please fill out the  %(kind)s's full description."
-msgstr "Por favor escriba la descripción completa del %(kind)s."
+msgstr "בבקשה מלא את התיאור המלא של %(kind)s."
 
 #: templates/projects/detailed_description_initial_content.html:4
 msgid "In this page you could:"
-msgstr "En esta página usted puede:"
+msgstr "בדף הזה אתה יכול:"
 
 #: templates/projects/detailed_description_initial_content.html:7
 #, python-format
 msgid ""
 "Describe the purpose of the %(kind)s and the learning goals for the tasks "
 "within."
-msgstr ""
-"Describa el propósito del %(kind)s y las metas de aprendizaje para las "
-"tareas del mismo."
+msgstr "תאר את המטרה של ה%(kind)s ואת מטרות הלימוד של המשימות."
 
 #: templates/projects/detailed_description_initial_content.html:8
 #, python-format
@@ -3043,9 +3027,8 @@ msgid ""
 "topic? What do you hope to achieve by organizing this  %(kind)s? Are you an "
 "expert, enthusiastic or a novice?"
 msgstr ""
-"Describa su rol en este %(kind)s. ¿Qué lo hizo interesarse en este tema? "
-"¿Qué espera lograr organizando el %(kind)s? ¿Usted es un experto, entusiasta "
-"o novato en este tema?"
+"תאר את התפקיד של ב%(kind)s הזה. מה גרם לך להתעניין בנושא הזה? מה אתה מנסה "
+"לעשות על ידי ארגון ה%(kind)s הזה? האם אתה מומחה, נלהב, או טירון?"
 
 #: templates/projects/detailed_description_initial_content.html:9
 #, python-format
@@ -3055,10 +3038,6 @@ msgid ""
 "work, and the length of time the participants can expect to work together (a "
 "few days, a few weeks, or forever)."
 msgstr ""
-"Incluya los pre-requisitos o habilidades necesarias para participar en el "
-"%(kind)s, la fecha de incio planeada, velocidad estimada, compromiso, "
-"cantidad de trabajo, y cuanto tiempo se espera que el grupo de estudio "
-"trabaje junto (unos pocos días, unas pocas semanas o por siempre)."
 
 #: templates/projects/detailed_description_initial_content.html:10
 #, python-format
@@ -3068,10 +3047,6 @@ msgid ""
 "the creation of tasks and assessing each others\\' contributions? What will "
 "the final task comprise?"
 msgstr ""
-"De otra información que pueda ser útil a los que deseen inscribirse en el  "
-"%(kind)s.  ¿De qué formas los participantes pueden esperar contribuir en la "
-"creación de tareas y en valorar las contribuciones de otros?¿En que "
-"consistirá la tarea final?"
 
 #: templates/projects/imported_detailed_description.html:3
 #: templates/projects/project_edit.html:38
@@ -3081,11 +3056,11 @@ msgstr "סיכום"
 
 #: templates/projects/imported_detailed_description.html:9
 msgid "Learning Objectives"
-msgstr "Objetivos de Aprendizaje"
+msgstr "מטרות לימוד"
 
 #: templates/projects/learn.html:43
 msgid "Show More Results"
-msgstr "Mostrar más Resultados"
+msgstr "הראה תוצאות נוספות"
 
 #: templates/projects/project.html:23 templates/projects/project_edit.html:33
 msgid "Admin"
@@ -3097,62 +3072,60 @@ msgstr "לוח פעילויות"
 
 #: templates/projects/project_admin_metrics.html:12
 msgid "Organizer Quick View"
-msgstr "Vista Rápida"
+msgstr ""
 
 #: templates/projects/project_admin_metrics.html:14
 msgid "export data"
-msgstr "exportar datos"
+msgstr ""
 
 #: templates/projects/project_admin_metrics.html:16
 msgid "This table shows the overview of participant data. "
-msgstr "Esta tabla muestra el resumen de datos de los participantes."
+msgstr "הטבלה הזאת מראה סיכום של המידע על המשתתפים."
 
 #: templates/projects/project_admin_metrics.html:17
 msgid ""
 "To see follower data or non-loggedin user data, use export for a <acronym "
 "title=\"Comma Separated Values\">CSV</acronym> file."
 msgstr ""
-"Para ver los datos de los seguidores o usuarios no logueados,exporte el "
-"fichero <acronym title=\"Comma Separated Values\">CSV</acronym>."
+"כדי לראות את המידע על העוקבים או המשתמשים שלא נכנסו לחשבון, השתמשו בexport "
+"כדי לקבל קובץ <acronym title=\"Comma Separated Values\">CSV</acronym>."
 
 #: templates/projects/project_admin_metrics.html:23
 #: templates/projects/project_admin_metrics.html:34
 msgid "Participant"
-msgstr "Participante"
+msgstr "משתתף"
 
 #: templates/projects/project_admin_metrics.html:24
 #: templates/projects/project_admin_metrics.html:35
 msgid "Last Active Date"
-msgstr "Última Fecha Activo"
+msgstr "תאריך הפעילות האחרונה"
 
 #: templates/projects/project_admin_metrics.html:26
 #: templates/projects/project_admin_metrics.html:37
 msgid "Task Edits"
-msgstr "Ediciones a Tareas"
+msgstr "עריכות של משימות"
 
 #: templates/projects/project_admin_metrics.html:27
 #: templates/projects/project_admin_metrics.html:38
 msgid "Time on Course Pages"
-msgstr "Tiempo en Páginas del Curso"
+msgstr "זמן בדפי הקורס"
 
 #: templates/projects/project_admin_metrics.html:45
 msgid ""
 "The information about course page visits is not available on the same day."
-msgstr ""
-"La información sobre visitas a páginas del curso no está disponible en el "
-"mismo día."
+msgstr "המידע אודות ביקורים בדפי הקורס אינו זמין באותו היום."
 
 #: templates/projects/project_admin_metrics.html:46
 msgid "Last date the user visited a course page."
-msgstr "Última fecha en la que visitó una página del curso."
+msgstr "התאריך האחרון בו המשתמש ביקר בדף של הקורס."
 
 #: templates/projects/project_admin_metrics.html:47
 msgid "Total includes comments on wall and task pages."
-msgstr "El total incluye comentarios en el muro y las tareas."
+msgstr "הסכום כולל תגובות בקיר ובדפי המשימות."
 
 #: templates/projects/project_admin_metrics.html:48
 msgid "Total includes edits to the full description and task pages."
-msgstr "Incluye ediciones a la página de descripción completa y a las tareas."
+msgstr "הסכום כולל עריכות לתיאור המלא ולדפי המשימות."
 
 #: templates/projects/project_admin_metrics.html:49
 msgid ""
@@ -3161,10 +3134,6 @@ msgid ""
 "default to one minute when the user does not access another page in an "
 "interval of one hour."
 msgstr ""
-"Tiempo total (en minutos) empleado en visitar las páginas del curso. Los "
-"estimados están basados en tiempos consecutivos de acceso a páginas en la "
-"misma sessión, y por defecto se considera que la visita duro un minuto si el "
-"usuario no accede a otra página en un intervalo de una hora."
 
 #: templates/projects/project_admin_metrics.html:50
 msgid ""
@@ -3172,18 +3141,14 @@ msgid ""
 "estimates to the time on page so you can choose another constant to give "
 "weight to these page visits."
 msgstr ""
-"El fichero CSV contiene información más detallada y no adiciona los "
-"estimados de un minuto a los valores de tiempo en página. Esto le permite "
-"elegir otra constante para dar peso a estas visitas."
 
 #: templates/projects/project_clone.html:33
 #: templates/projects/project_create_overview.html:33
 #: templates/projects/project_create_review.html:31
 #: templates/projects/project_create_tasks.html:31
 #: templates/projects/project_import.html:33
-#, fuzzy
 msgid "Create Course"
-msgstr "Cursos Recientes"
+msgstr "יצירת קורס"
 
 #: templates/projects/project_clone.html:38
 #: templates/projects/project_create_overview.html:38
@@ -3198,14 +3163,14 @@ msgstr ""
 #: templates/projects/project_create_overview.html:46
 #: templates/projects/project_import.html:43
 msgid "Clone Existing"
-msgstr "Clonar Existente"
+msgstr ""
 
 #: templates/projects/project_clone.html:47
 #: templates/projects/project_create_overview.html:50
 #: templates/projects/project_import.html:46
 #, fuzzy
 msgid "Import from old site"
-msgstr "Importa del Sitio Anterior"
+msgstr "יבוא מהאתר הישן"
 
 #: templates/projects/project_clone.html:51
 #: templates/projects/project_import.html:50
@@ -3226,8 +3191,6 @@ msgid ""
 "Create a new study group, course ... based on an existing one. Note that if "
 "you start typing the matching suggestions will be displayed."
 msgstr ""
-"Crear un nuevo grupo de estudio, curso ...  basado en uno existente. Note "
-"que si comienza a teclear va a poder ver la lista de sugerencias que machean."
 
 #: templates/projects/project_clone.html:66
 #: templates/projects/project_edit_next_steps.html:12
@@ -3235,11 +3198,11 @@ msgstr ""
 #: templates/schools/school_edit_membership.html:13
 #: templates/schools/school_edit_summary.html:16
 msgid "Short Name"
-msgstr "Nombre Corto"
+msgstr "שם קצר"
 
 #: templates/projects/project_clone.html:73
 msgid "Clone"
-msgstr "Clonar"
+msgstr ""
 
 #: templates/projects/project_create_overview.html:55
 #: templates/projects/project_create_overview.html:62
@@ -3247,7 +3210,7 @@ msgstr "Clonar"
 #: templates/projects/project_create_tasks.html:39
 #, fuzzy
 msgid "Step 2: Add Tasks"
-msgstr "Ver Todas las Tareas"
+msgstr "שלב 2: הוספת משימות"
 
 #: templates/projects/project_create_overview.html:79
 #, python-format
@@ -3279,7 +3242,7 @@ msgstr ""
 #: templates/projects/project_edit_summary.html:89
 #: templates/schools/school_edit_summary.html:22
 msgid "Description"
-msgstr "Descripción"
+msgstr "תיאור"
 
 #: templates/projects/project_create_overview.html:113
 #: templates/projects/project_edit_summary.html:60
@@ -3287,24 +3250,23 @@ msgid "Language"
 msgstr "שפה"
 
 #: templates/projects/project_create_overview.html:126
-#, fuzzy
 msgid "Course style"
-msgstr "Cursos"
+msgstr ""
 
 #: templates/projects/project_create_overview.html:127
 #: templates/projects/project_edit_summary.html:79
 msgid "What kind of learning environment do you want to create?"
-msgstr "¿Qué tipo de entorno de aprendizaje desea crear?"
+msgstr "איזה סוג סביבת לימוד אתה רוצה ליצור?"
 
 #: templates/projects/project_create_overview.html:131
 #: templates/projects/project_edit_summary.html:83
 msgid "Or make up your own term."
-msgstr "O cree su propio término."
+msgstr "או המצא מונח משלך."
 
 #: templates/projects/project_create_overview.html:133
 #: templates/projects/project_edit_summary.html:85
 msgid "Term"
-msgstr "Término"
+msgstr ""
 
 #: templates/projects/project_create_overview.html:148
 msgid ""
@@ -3320,7 +3282,7 @@ msgstr ""
 #: templates/projects/project_create_review.html:47
 #, fuzzy
 msgid "Review your course"
-msgstr "Evaluación publicada!"
+msgstr "בחון שוב את הקורס שלך"
 
 #: templates/projects/project_create_review.html:49
 msgid ""
@@ -3356,9 +3318,8 @@ msgstr ""
 
 #: templates/projects/project_create_tasks.html:7
 #: templates/projects/project_create_tasks.html:51
-#, fuzzy
 msgid "Create tasks"
-msgstr "Crear Tarea"
+msgstr "יצירת משימות"
 
 #: templates/projects/project_create_tasks.html:60
 msgid "Up"
@@ -3369,9 +3330,8 @@ msgid "Down"
 msgstr ""
 
 #: templates/projects/project_create_tasks.html:71
-#, fuzzy
 msgid "Add Task"
-msgstr "Añadir Otra Tarea"
+msgstr "הוספת משימה"
 
 #: templates/projects/project_create_tasks.html:72
 msgid "Go to step 3"
@@ -3419,18 +3379,17 @@ msgstr "מדדים"
 #: templates/schools/school_edit_site_logo.html:24
 #: templates/users/profile_edit_main.html:15
 msgid "Upload"
-msgstr "Subir"
+msgstr ""
 
 #: templates/projects/project_edit_links.html:5
 msgid "Add links to websites associated with this "
-msgstr "Añadir enlaces a sitios web asociados con este "
+msgstr "הוסף קישורים לאתרים הקשורים ל"
 
 #: templates/projects/project_edit_links.html:5
 #: templates/projects/project_edit_links_edit.html:5
 msgid " such as a blog, homepage, twitter profile, github repository etc."
 msgstr ""
-" tales como un blog, página personal, perfil en twitter, repositorio en "
-"github, etc. "
+" הזה, כגון בלוג, דף בית, פרופיל טוויטר, או github repository וכדומה."
 
 #: templates/projects/project_edit_links.html:7
 #: templates/projects/project_edit_next_steps.html:17
@@ -3440,7 +3399,7 @@ msgstr ""
 #: templates/schools/school_edit_organizers.html:19
 #: templates/users/profile_edit_links.html:28
 msgid "Add"
-msgstr "Añadir"
+msgstr ""
 
 #: templates/projects/project_edit_links.html:15
 #: templates/users/profile_edit_links.html:36
@@ -3450,7 +3409,7 @@ msgstr "URL"
 #: templates/projects/project_edit_links.html:16
 #: templates/users/profile_edit_links.html:37
 msgid "Subscribed"
-msgstr "Suscrito"
+msgstr ""
 
 #: templates/projects/project_edit_links.html:17
 #: templates/projects/project_edit_next_steps.html:27
@@ -3460,12 +3419,12 @@ msgstr "Suscrito"
 #: templates/users/profile_edit_links.html:38
 #: templates/users/profile_edit_openids.html:20
 msgid "Actions"
-msgstr "Acciones"
+msgstr "פעולות"
 
 #: templates/projects/project_edit_links.html:27
 #: templates/users/profile_edit_links.html:48
 msgid "Subscribed."
-msgstr "Suscrito."
+msgstr ""
 
 #: templates/projects/project_edit_links.html:27
 #: templates/projects/project_edit_participants.html:48
@@ -3473,29 +3432,29 @@ msgstr "Suscrito."
 #: templates/schools/school_edit_organizers.html:36
 #: templates/users/profile_edit_links.html:48
 msgid "yes"
-msgstr "si"
+msgstr "כן"
 
 #: templates/projects/project_edit_links.html:28
 #: templates/users/profile_edit_links.html:49
 msgid "Error saving subscription."
-msgstr "Error al guardar suscripción."
+msgstr ""
 
 #: templates/projects/project_edit_links.html:28
 #: templates/users/profile_edit_links.html:49
 msgid "error"
-msgstr "error"
+msgstr "שגיאה"
 
 #: templates/projects/project_edit_links.html:31
 #: templates/users/profile_edit_links.html:52
 msgid "Not subscribed."
-msgstr "No suscrito."
+msgstr ""
 
 #: templates/projects/project_edit_links.html:31
 #: templates/projects/project_edit_participants.html:50
 #: templates/projects/project_edit_participants.html:58
 #: templates/users/profile_edit_links.html:52
 msgid "no"
-msgstr "no"
+msgstr "לא"
 
 #: templates/projects/project_edit_links_base.html:18
 #: templates/users/profile_edit_links.html:18
@@ -3507,103 +3466,99 @@ msgstr "Url"
 #: templates/users/profile_edit_links.html:23
 #: templates/users/profile_edit_links_edit.html:23
 msgid "Subscribe"
-msgstr "Suscribir"
+msgstr ""
 
 #: templates/projects/project_edit_links_edit.html:5
 msgid "Edit links to websites associated with this "
-msgstr "Editar enlaces a sitios web asociados con este "
+msgstr "עריכת קישורים לאתרים הקשורים ל"
 
 #: templates/projects/project_edit_links_edit.html:7
 #: templates/users/forgot_password_confirm.html:26
 #: templates/users/profile_edit_links_edit.html:27
 msgid "Update"
-msgstr "Actualizar"
+msgstr "עדכון"
 
 #: templates/projects/project_edit_next_steps.html:8
 msgid ""
 "View, add and remove associated study groups and courses that a learner "
 "might want to visit after completing the challenge."
 msgstr ""
-"Ver, añadir y remover retos, grupos de estudio y cursos que el usuario "
-"podría querer visitar luego de completar las tareas de este reto."
 
 #: templates/projects/project_edit_next_steps.html:26
 #: templates/projects/sidebar.html:161
 msgid "Kind"
-msgstr "Tipo"
+msgstr "סוג"
 
 #: templates/projects/project_edit_next_steps.html:38
 #: templates/projects/project_edit_participants.html:72
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "הסרה"
 
 #: templates/projects/project_edit_participants.html:10
 msgid "View and add participants."
-msgstr "Ver y añadir participantes."
+msgstr "צפייה והוספת משתתפים."
 
 #: templates/projects/project_edit_participants.html:12
 msgid "View, add and remove participants."
-msgstr "Ver, añadir y remover participantes."
+msgstr "צפייה, הוספת, והסרת משתתפים."
 
 #: templates/projects/project_edit_participants.html:18
 #: templates/schools/school_edit_organizers.html:13
 #: templates/users/profile_form_base.html:19
 msgid "Username"
-msgstr "Nombre de usuario"
+msgstr "שם משתמש"
 
 #: templates/projects/project_edit_participants.html:23
 #: templates/projects/project_edit_participants.html:37
 msgid "Organizer"
-msgstr "Organizador"
+msgstr "מארגן"
 
 #: templates/projects/project_edit_participants.html:38
 msgid "Adopter"
-msgstr "Que Adoptó"
+msgstr "מאמץ"
 
 #: templates/projects/project_edit_participants.html:48
 msgid "Organizing."
-msgstr "Organizando."
+msgstr ""
 
 #: templates/projects/project_edit_participants.html:50
 msgid "Not Organizing."
-msgstr "No Organizando."
+msgstr ""
 
 #: templates/projects/project_edit_participants.html:56
 msgid "Adopter."
-msgstr "Que Adoptó."
+msgstr ""
 
 #: templates/projects/project_edit_participants.html:58
 msgid "Participant."
-msgstr "Participante."
+msgstr ""
 
 #: templates/projects/project_edit_participants.html:66
 #: templates/signups/sign_up.html:102
 msgid "Add Organizer"
-msgstr "Añadir Organizador"
+msgstr "הוספת מארגן"
 
 #: templates/projects/project_edit_participants.html:78
 msgid "Remove organizer"
-msgstr "Remover organizador"
+msgstr "הסרת מארגן"
 
 #: templates/projects/project_edit_status.html:17
 #, python-format
 msgid ""
 "Configure your %(kind)s's status so that it appears in the appropriate lists."
-msgstr ""
-"Configure el estado de su %(kind)s, de forma que aparezca en las listas "
-"apropiadas."
+msgstr "הגדר את הסטטוס של ה%(kind)s שלך, כדי שיופיע ברשימות הנכונות."
 
 #: templates/projects/project_edit_status.html:21
 msgid "Under Development."
-msgstr "En Desarrollo."
+msgstr "בעבודה."
 
 #: templates/projects/project_edit_status.html:28
 msgid "Not Listed."
-msgstr "No Listado."
+msgstr "לא רשום."
 
 #: templates/projects/project_edit_status.html:35
 msgid "Archived."
-msgstr "Archivado."
+msgstr "מאורכב."
 
 #: templates/projects/project_edit_status.html:44
 #: templates/projects/project_edit_summary.html:43
@@ -3616,79 +3571,80 @@ msgid ""
 "Optionally, provide the period of time in which you expect the %(kind)s to "
 "be active. These dates are optional and will be displayed on the home page."
 msgstr ""
-"Opcionalmente, incluya el período de tiempo en el que espera que el %(kind)s "
-"esté activo. Estas fechas son opcionales y aparencerán en la página del "
-"grupo."
 
 #: templates/projects/project_edit_status.html:54
 msgid "Active from"
-msgstr "Activo desde el"
+msgstr "פעיל מ"
 
 #: templates/projects/project_edit_summary.html:15
 #, fuzzy
 msgid "This is a test course"
-msgstr "Cursos Recientes"
+msgstr "זהו קורס נסיוני"
 
 #: templates/projects/project_edit_summary.html:25
 msgid "Short and descriptive works best."
-msgstr "Breve y descriptivo funciona mejor."
+msgstr "קצר ותיאורי עובד הכי טוב."
 
 #: templates/projects/project_edit_summary.html:35
 msgid "Used in search results and listings."
-msgstr "Usado en resultados de búsquedas y en páginas con listados"
+msgstr ""
 
 #: templates/projects/project_edit_summary.html:52
 msgid "One paragraph description"
-msgstr "Un párrafo de descripción"
+msgstr "תיאור בפסקה אחת"
 
 #: templates/projects/project_edit_summary.html:53
 msgid ""
 "What's this about? What will I learn? Tell me more, but keep it to the point."
-msgstr "¿Sobre que trata? ¿Qué voy a aprender? Diga más, pero vaya al grano."
+msgstr "על מה זה? מה אלמד? ספר לי יותר, אך שזה יהיה קצר."
 
 #: templates/projects/project_edit_summary.html:67
 msgid "Skills"
-msgstr "Habilidades"
+msgstr "מיומנויות"
 
 #: templates/projects/project_edit_summary.html:70
 msgid "Comma-separated list of keywords."
-msgstr "Lista de palabras clave separadas por comas."
+msgstr "רשימת מילות מפתח המופרדות בפסיקים."
 
 #: templates/projects/project_edit_summary.html:78
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #: templates/projects/project_import.html:59
 msgid "Import from Old Site"
-msgstr "Importa del Sitio Anterior"
+msgstr "ייבוא מהאתר הישן"
 
 #: templates/projects/project_import.html:60
 msgid ""
 "Import a course from the old p2pu site. Note that if you start typing the "
 "matching suggestions will be displayed."
 msgstr ""
-"Importar un curso del antiguo sitio web de p2pu. Note que si comienza a "
-"teclear va a poder ver la lista de sugerencias que machean."
 
 #: templates/projects/project_import.html:65
 msgid "Course"
-msgstr "Curso"
+msgstr "קורס"
 
 #: templates/projects/project_import.html:72
 msgid "Import"
-msgstr "Importar"
+msgstr "ייבוא"
 
 #: templates/projects/sidebar.html:26 templates/users/sidebar.html:37
 msgid "Unfollow"
-msgstr "Dejar de Seguir"
+msgstr "הפסק לעקוב"
 
 #: templates/projects/sidebar.html:31 templates/users/sidebar.html:42
 msgid "Follow"
-msgstr "Seguir"
+msgstr "עקוב"
 
 #: templates/projects/sidebar.html:36
 msgid "Participate"
-msgstr "Participar"
+msgstr "השתתף"
+
+# #############################################################################
+# #############################################################################
+# ## Bookmark                                                                ##
+# #############################################################################
+# #############################################################################
 
 #: templates/projects/sidebar.html:57
 msgid "Time it should take to complete:"
