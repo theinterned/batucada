@@ -1,12 +1,6 @@
 from django.conf.urls.defaults import patterns, url, include
 
 urlpatterns = patterns('',
-    url(r'^$', 'projects.views.learn',
-        name='projects_learn'),
-
-    url(r'^tags/$', 'projects.views.learn_tags',
-        name='projects_learn_tags'),
-
     url(r'^create/$', 'projects.views.create',
         name='projects_create'),
 
@@ -139,4 +133,8 @@ urlpatterns = patterns('',
     url(r'^(?P<slug>[\w-]+)/admin/export_detailed_csv/$',
         'projects.views.export_detailed_csv',
         name='projects_admin_export_detailed_csv'),
+
+    url(r'(?P<slug>[\w-]+)/edit/publish/$',
+        'projects.views.publish',
+        name='projects_publish'),
 )
