@@ -48,7 +48,8 @@ def course_slug_redirect( request, course_id ):
 
 
 def show_course( request, course_id, slug=None ):
-    course = course_model.get_course('/uri/courses/{0}/'.format(course_id))
+    course_uri = '/uri/courses/{0}/'.format(course_id)
+    course = course_model.get_course(course_uri)
     if course == None:
         raise http.Http404
  
@@ -57,12 +58,15 @@ def show_course( request, course_id, slug=None ):
 
     context = { 'course': course }
     context['about'] = course_model.get_content(course['about_uri'])
-    context['cohort'] = course_model.get_course_cohort(course)
+    context['cohort'] = course_model.get_course_cohort(course_uri)
     return render_to_response('courses/course.html', context, context_instance=RequestContext(request))
 
 
-def show_content( request, course_id, content_id):
+def course_signup( request, course_id ):
+    pass
 
+
+def show_content( request, course_id, content_id):
     content = course_model.get_content('/uri/content/{0}'.format(content_id))
     course = course_model.get_course('/uri/courses/{0}/'.format(course_id))
     context = { 'content': content }

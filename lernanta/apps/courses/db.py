@@ -11,9 +11,48 @@ class Course(ModelBase):
 
 class CourseContent(ModelBase):
 
-    course = models.ForeignKey('courses.Course', related_name='content')
+    course = models.ForeignKey(Course, related_name='content')
     content_uri = models.CharField(max_length=256) #use URI because content should be in a separate module
     index = models.PositiveIntegerField()
+
+
+class Cohort(ModelBase):
+
+    OPEN = "OPEN"
+    MODERATED = "MODERATED"
+    CLOSED = "CLOSED"
+    SIGNUP_MODELS = (
+        (OPEN, "Anyone can sign up"),
+        (MODERATED, "Signups are moderated"),
+        (CLOSED, "Signups are closed"),
+    )
+
+    ROLLING = "ROLLING"
+    FIXED = "FIXED"
+    TERM_CHOICES = (
+        (ROLLING, "Rolling"),
+        (FIXED, "Fixed"),
+    )
+
+    course = models.ForeignKey(Course, related_name="cohort_set")
+    term = models.CharField(max_length=32, choices=TERM_CHOICES)
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+    signup = models.CharField(max_length=32, choices=SIGNUP_MODELS)
+
+
+class CohortSignup(ModelBase):
+
+    LEARNER = "LEARNER"
+    ORGANIZER = "ORGANIZER"
+    SIGNUP_ROLE_CHOICES = (
+        (LEARNER, "Learner"),
+        (ORGANIZER, "Organizer"),
+    )
+
+    cohort = models.ForeignKey(Cohort, related_name="signup_set")
+    user_uri = models.CharField(max_length=256)
+    role = models.CharField(max_length=10, choices=SIGNUP_ROLE_CHOICES)
 
 
 #TODO separate from other course stuff
