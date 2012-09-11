@@ -19,11 +19,14 @@ class CourseTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.locale = 'en'
-        self.course = course_model.create_course({
-            "title": self.test_title,
-            "short_title": self.test_short_title,
-            "plug": self.test_plug,
-        })
+        self.course = course_model.create_course(
+            {
+                "title": self.test_title,
+                "short_title": self.test_short_title,
+                "plug": self.test_plug,
+            },
+            '/uri/users/testuser'
+        )
         #django_user = User(
         #    username=self.test_username,
         #    email=self.test_email,
@@ -33,11 +36,14 @@ class CourseTests(TestCase):
         #self.user.save()
 
     def test_course_creation(self):
-        course = course_model.create_course({
-            "title": "A test course",
-            "short_title": "ATC 1",
-            "plug": "This course is all about ABC",
-        })
+        course = course_model.create_course(
+            {
+                "title": "A test course",
+                "short_title": "ATC 1",
+                "plug": "This course is all about ABC",
+            },
+            '/uri/users/testuser'
+        )
 
         self.assertTrue(not course == None)
 

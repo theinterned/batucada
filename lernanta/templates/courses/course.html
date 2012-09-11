@@ -53,7 +53,7 @@
       {% if not organizing and not participating %}
         {% if not archived %}
           {% if user.is_authenticated %}
-            <form method="post" action="locale_url direct_signup slug=project.slug">
+            <form method="post" action="{% locale_url courses_signup course_id=course.id %}">
               {% csrf_token %}
               <button id="direct_signup_button">{{ _('Start Course') }}</button>
             </form>

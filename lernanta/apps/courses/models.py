@@ -25,24 +25,24 @@ def get_course(course_uri):
     try:
         course_db = db.Course.objects.get(id=course_id)
     except:
-        #TODO
+        # TODO
         return None
 
     course = {
-        "id": 1,
+        "id": course_db.id,
         "uri": "/uri/course/{0}".format(course_db.id),
         "title": course_db.title,
         "short_title": course_db.short_title,
-        "about_uri": "/uri/content/1/",
+        "about_uri": "/uri/content/1/", # TODO
         "slug": slugify(course_db.title),
         "plug": course_db.plug,
-        "creator": "/uri/user/dirk",
+        "creator": "/uri/user/dirk", # TODO
         "content": get_course_content(course_uri),
     }
     return course
 
 
-def create_course(course_data):
+def create_course(course_data, organizer_uri):
     course_db = db.Course(
         title=course_data['title'],
         short_title=course_data['short_title'],
@@ -58,7 +58,7 @@ def create_course(course_data):
 
     about = create_content({"title": _("About"), "content": ""})
     add_course_content("/uri/course/{0}".format(course_db.id), about['uri'])
-    create_course_cohort("/uri/course/{0}".format(course_db.id), "/uri/user/dirk")
+    create_course_cohort("/uri/course/{0}".format(course_db.id), organizer_uri)
     course = get_course("/uri/course/{0}".format(course_db.id))
     return course
 
@@ -123,53 +123,6 @@ def delete_course_content():
 def content_uri2id(content_uri):
     return content_uri.strip('/').split('/')[-1]
 
-#TODO seperate from course stuff
-def get_content(content_uri, fields=[]):
-    content_id = content_uri2id(content_uri)
-    try:
-        wrapper_db = db.Content.objects.get(id=content_id)
-        latest_db = wrapper_db.latest
-    except Exception, e:
-        #TODO
-        log.debug(e)
-        return None
-    
-    content = {
-        "id": wrapper_db.id,
-        "uri": "/uri/content/{0}".format(wrapper_db.id),
-        "title": latest_db.title,
-        "content": latest_db.content,
-    }
-    if "history" in fields:
-        content["history"] = []
-        for version in wrapper_db.versions.sort_by("date"):
-            content['history'] += {
-                "date": version.date,
-                "author": "/uri/user/bob/",
-                "title": version.title,
-                "comment": version.comment,
-            }
-
-    return content
-
-
-#TODO seperate from course stuff
-def create_content(content):
-    #TODO check all required properties
-    container_db = db.Content()
-    container_db.save()
-    content_db = db.ContentVersion(
-        container=container_db,
-        title=content["title"],
-        content=content["content"],
-    )
-    if "comment" in content:
-        content_db.comment = content["comment"]
-    content_db.save()
-    container_db.latest = content_db
-    container_db.save()
-    return get_content("/uri/content/{0}".format(container_db.id))
-
 
 def create_course_cohort(course_uri, admin_user_uri):
     course_db = _get_course_db(course_uri)
@@ -228,12 +181,12 @@ def get_cohort(cohort_uri):
         cohort_data["start_date"] = cohort_db.start_date
         cohort_data["end_date"] = cohort_db.end_date
 
-    users = []
-    for singup in cohort_db.signup_set.all():
-        users += [{
-            "username": "dirk", "uri": "/uri/user/dirk", "role": "ORGANIZER"
+    cohort_data["users"] = []
+    for signup in cohort_db.signup_set.all():
+        username = signup.user_uri.strip('/').split('/')[-1]
+        cohort_data["users"] += [{
+            "username": username, "uri": signup.user_uri, "role": signup.role
         }]
-    cohort_data["users"] = users
 
     return cohort_data
 
@@ -255,5 +208,53 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
         "user_uri": user_uri,
         "role": role
     }
-
     return signup
+
+
+#TODO seperate from course stuff
+def get_content(content_uri, fields=[]):
+    content_id = content_uri2id(content_uri)
+    try:
+        wrapper_db = db.Content.objects.get(id=content_id)
+        latest_db = wrapper_db.latest
+    except Exception, e:
+        #TODO
+        log.debug(e)
+        return None
+    
+    content = {
+        "id": wrapper_db.id,
+        "uri": "/uri/content/{0}".format(wrapper_db.id),
+        "title": latest_db.title,
+        "content": latest_db.content,
+    }
+    if "history" in fields:
+        content["history"] = []
+        for version in wrapper_db.versions.sort_by("date"):
+            content['history'] += {
+                "date": version.date,
+                "author": "/uri/user/bob/",
+                "title": version.title,
+                "comment": version.comment,
+            }
+
+    return content
+
+
+#TODO seperate from course stuff
+def create_content(content):
+    #TODO check all required properties
+    container_db = db.Content()
+    container_db.save()
+    content_db = db.ContentVersion(
+        container=container_db,
+        title=content["title"],
+        content=content["content"],
+    )
+    if "comment" in content:
+        content_db.comment = content["comment"]
+    content_db.save()
+    container_db.latest = content_db
+    container_db.save()
+    return get_content("/uri/content/{0}".format(container_db.id))
+

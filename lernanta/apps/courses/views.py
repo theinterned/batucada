@@ -14,6 +14,7 @@ from courses.forms import CourseCreationForm
 
 log = logging.getLogger(__name__)
 
+@login_required
 def create_course( request ):
     if request.method == "POST":
         form = CourseCreationForm(request.POST)
@@ -23,7 +24,9 @@ def create_course( request ):
                 'short_title': form.cleaned_data.get('short_title'),
                 'plug': form.cleaned_data.get('plug'),
             }
-            course = course_model.create_course(course)
+            user = request.user.get_profile()
+            user_uri = "/uri/user/{0}".format(user.username)
+            course = course_model.create_course(course, user_uri)
             redirect_url = reverse('courses_show', 
                 kwargs={'course_id': course['id'], 'slug': course['slug']}
             )
@@ -38,7 +41,7 @@ def create_course( request ):
 
 
 def course_slug_redirect( request, course_id ):
-    course = course_model.get_course('/uri/courses/{0}/'.format(course_id))
+    course = course_model.get_course('/uri/course/{0}/'.format(course_id))
     if course == None:
         raise http.Http404
 
@@ -48,7 +51,7 @@ def course_slug_redirect( request, course_id ):
 
 
 def show_course( request, course_id, slug=None ):
-    course_uri = '/uri/courses/{0}/'.format(course_id)
+    course_uri = '/uri/course/{0}/'.format(course_id)
     course = course_model.get_course(course_uri)
     if course == None:
         raise http.Http404
@@ -62,13 +65,19 @@ def show_course( request, course_id, slug=None ):
     return render_to_response('courses/course.html', context, context_instance=RequestContext(request))
 
 
+@login_required
 def course_signup( request, course_id ):
-    pass
+    #NOTE: consider using cohort_id in URL to avoid cohort lookup
+    cohort = course_model.get_course_cohort( course_id )
+    user = request.user.get_profile()
+    user_uri = "/uri/user/{0}".format(user.username)
+    course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
+    return course_slug_redirect( request, course_id )
 
 
 def show_content( request, course_id, content_id):
     content = course_model.get_content('/uri/content/{0}'.format(content_id))
-    course = course_model.get_course('/uri/courses/{0}/'.format(course_id))
+    course = course_model.get_course('/uri/course/{0}/'.format(course_id))
     context = { 'content': content }
     context['course_id'] = course_id
     context['course_slug'] = course['slug']

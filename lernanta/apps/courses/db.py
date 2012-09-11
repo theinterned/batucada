@@ -7,6 +7,7 @@ class Course(ModelBase):
     title = models.CharField(max_length=255)
     short_title = models.CharField(max_length=20)
     plug = models.CharField(max_length=1000)
+    creation_date = models.DateTimeField(auto_now_add=True)
 
 
 class CourseContent(ModelBase):
@@ -53,6 +54,7 @@ class CohortSignup(ModelBase):
     cohort = models.ForeignKey(Cohort, related_name="signup_set")
     user_uri = models.CharField(max_length=256)
     role = models.CharField(max_length=10, choices=SIGNUP_ROLE_CHOICES)
+    signup_date = models.DateTimeField(auto_now_add=True)
 
 
 #TODO separate from other course stuff
