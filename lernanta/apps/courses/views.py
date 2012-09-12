@@ -112,6 +112,7 @@ def show_content( request, course_id, content_id):
     return render_to_response('courses/content.html', context, context_instance=RequestContext(request))
 
 
+@login_required
 def create_content( request, course_id ):
     course = course_model.get_course('/uri/course/{0}/'.format(course_id))
     if request.method == "POST":
@@ -137,9 +138,11 @@ def create_content( request, course_id ):
         context, context_instance=RequestContext(request)
     )
 
-def edit_content( request, content_id):
+
+@login_required
+def edit_content( request, course_id, content_id ):
     content = content_model.get_content("/uri/content/{0}".format(content_id))
-    
+
     if request.method == "POST":
         form = ContentForm(request.POST)
         if form.is_valid():
@@ -152,12 +155,9 @@ def edit_content( request, content_id):
             content = content_model.update_content(
                 content['uri'], content_data, user_uri
             )
-            redirect_url = reverse('courses_show',
-                kwargs={'course_id': course['id'], 'slug': course['slug']}
-            )
-            return http.HttpResponseRedirect(redirect_url)
+            return course_slug_redirect( request, course_id )
     else:
-        form = ContentForm()
+        form = ContentForm(content)
 
     context = { 'form': form }
     return render_to_response('courses/edit_content.html', 

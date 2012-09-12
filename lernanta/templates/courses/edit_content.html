@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+
+{% block title %}Create a new course{% endblock %}
+{% block bodyclasses %}course-create{% endblock%}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css">
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+{% block breadcrumbs_title %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block body %}
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% trans 'Update content!' %}"/>
+  </form>
+{% endblock %}

@@ -60,4 +60,23 @@ def create_content(content, author_uri):
 
 
 def update_content( content_uri, content, author_uri ):
-    pass
+    content_id = content_uri2id(content_uri)
+    try:
+        wrapper_db = db.Content.objects.get(id=content_id)
+    except Exception, e:
+        #TODO
+        log.debug(e)
+        return None
+
+    content_db = db.ContentVersion(
+        container=wrapper_db,
+        title=content["title"],
+        content=content["content"],
+        author_uri = author_uri,
+    )
+    if "comment" in content:
+        content_db.comment = content["comment"]
+    content_db.save()
+    wrapper_db.latest = content_db
+    wrapper_db.save()
+    return get_content("/uri/content/{0}".format(wrapper_db.id))

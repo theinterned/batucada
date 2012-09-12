@@ -85,12 +85,17 @@
   <div id="about-tab">
     {% if about.content|length == 0 %}
       <h2>About</h2>
-      <p>{% blocktrans %}There is no description what this course is about. You can add a description by <a href="#">editing this page.</a>{% endblocktrans %}
+      <p>{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
       </p>
     {% else %}
     <h2>{{about.title}}</h2>
     {{ about.content }}
     {% endif %}
+    <p>
+    <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}">
+        <i class="icon-edit"></i>
+    </a>
+    </p>
   </div>
 
   <div id="content-tab">
@@ -105,7 +110,10 @@
 	            {% if not forloop.last %}<a class="robttn dwn" href="#">(DOWN)</a>{% endif %}
             {% endif %}
             <a class="taskView" href="#">{{ _('View and Discuss') }}</a>
-            <span class="taskSubheader">{{ task.sub_header|default:"&nbsp;" }}</span>
+            <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}">
+                <i class="icon-edit"></i>
+            </a>
+
           </li>
         {% endfor %}
         {% if organizer %}
