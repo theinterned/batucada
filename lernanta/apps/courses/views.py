@@ -12,7 +12,9 @@ from drumbeat import messages
 
 from courses import models as course_model
 from courses.forms import CourseCreationForm
-from courses.forms import ContentForm
+
+from content2 import models as content_model
+from content2.forms import ContentForm
 
 log = logging.getLogger(__name__)
 
@@ -62,7 +64,7 @@ def show_course( request, course_id, slug=None ):
         return course_slug_redirect( request, course_id)
 
     context = { 'course': course }
-    context['about'] = course_model.get_content(course['about_uri'])
+    context['about'] = content_model.get_content(course['about_uri'])
     context['cohort'] = course_model.get_course_cohort(course_uri)
     context['organizer'] = True #TODO
     
@@ -101,7 +103,7 @@ def course_leave( request, course_id, username ):
 
 
 def show_content( request, course_id, content_id):
-    content = course_model.get_content('/uri/content/{0}'.format(content_id))
+    content = content_model.get_content('/uri/content/{0}'.format(content_id))
     course = course_model.get_course('/uri/course/{0}/'.format(course_id))
     context = { 'content': content }
     context['course_id'] = course_id
@@ -121,7 +123,7 @@ def create_content( request, course_id ):
             }
             user = request.user.get_profile()
             user_uri = "/uri/user/{0}".format(user.username)
-            content = course_model.create_content(content_data, user_uri)
+            content = content_model.create_content(content_data, user_uri)
             course_model.add_course_content(course['uri'], content['uri'])
             redirect_url = reverse('courses_show',
                 kwargs={'course_id': course['id'], 'slug': course['slug']}
@@ -136,7 +138,7 @@ def create_content( request, course_id ):
     )
 
 def edit_content( request, content_id):
-    content = course_model.get_content("/uri/content/{0}".format(content_id))
+    content = content_model.get_content("/uri/content/{0}".format(content_id))
     
     if request.method == "POST":
         form = ContentForm(request.POST)
@@ -147,8 +149,9 @@ def edit_content( request, content_id):
             }
             user = request.user.get_profile()
             user_uri = "/uri/user/{0}".format(user.username)
-            content = course_model.create_content(content_data, user_uri)
-            course_model.add_course_content(course['uri'], content['uri'])
+            content = content_model.update_content(
+                content['uri'], content_data, user_uri
+            )
             redirect_url = reverse('courses_show',
                 kwargs={'course_id': course['id'], 'slug': course['slug']}
             )

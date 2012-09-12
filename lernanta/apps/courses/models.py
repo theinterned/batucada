@@ -1,8 +1,10 @@
 import simplejson as json
 
-from courses import db
-from drumbeat.utils import slugify
 from django.utils.translation import ugettext as _
+
+from drumbeat.utils import slugify
+from courses import db
+from content2 import models as content_model
 
 import logging
 log = logging.getLogger(__name__)
@@ -67,7 +69,10 @@ def create_course(course_data, organizer_uri):
         # TODO
         return None
 
-    about = create_content({"title": _("About"), "content": ""}, organizer_uri)
+    about = content_model.create_content(
+        {"title": _("About"), "content": ""},
+        organizer_uri
+    )
     add_course_content("/uri/course/{0}".format(course_db.id), about['uri'])
     create_course_cohort("/uri/course/{0}".format(course_db.id), organizer_uri)
     course = get_course("/uri/course/{0}".format(course_db.id))
@@ -89,7 +94,7 @@ def get_course_content(course_uri):
         # TODO
         return None
     for course_content_db in course_db.content.order_by('index'):
-        content_data = get_content(course_content_db.content_uri)
+        content_data = content_model.get_content(course_content_db.content_uri)
         content += [{
             "id": content_data["id"],
             "uri": content_data["uri"],
@@ -109,7 +114,7 @@ def add_course_content(course_uri, content_uri):
         return None
     next_index = 0
     try:
-        next_index = db.CourseContent.objects.filter(course = course_db).order_by('index')[0].index
+        next_index = db.CourseContent.objects.filter(course = course_db).order_by('-index')[0].index + 1
     except:
         # TODO
         pass
@@ -129,10 +134,6 @@ def update_course_content():
 def delete_course_content():
     # TODO
     pass
-
-
-def content_uri2id(content_uri):
-    return content_uri.strip('/').split('/')[-1]
 
 
 def create_course_cohort(course_uri, admin_user_uri):
@@ -238,53 +239,4 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
 def remove_user_from_cohort(cohort_uri, user_uri):
     # TODO
     return False, _("Cannot remove last organizer")
-
-
-# TODO seperate from course stuff
-def get_content(content_uri, fields=[]):
-    content_id = content_uri2id(content_uri)
-    try:
-        wrapper_db = db.Content.objects.get(id=content_id)
-        latest_db = wrapper_db.latest
-    except Exception, e:
-        #TODO
-        log.debug(e)
-        return None
-    
-    content = {
-        "id": wrapper_db.id,
-        "uri": "/uri/content/{0}".format(wrapper_db.id),
-        "title": latest_db.title,
-        "content": latest_db.content,
-    }
-    if "history" in fields:
-        content["history"] = []
-        for version in wrapper_db.versions.sort_by("date"):
-            content['history'] += {
-                "date": version.date,
-                "author": "/uri/user/bob/",
-                "title": version.title,
-                "comment": version.comment,
-            }
-
-    return content
-
-
-#TODO seperate from course stuff
-def create_content(content, author_uri):
-    #TODO check all required properties
-    container_db = db.Content()
-    container_db.save()
-    content_db = db.ContentVersion(
-        container=container_db,
-        title=content["title"],
-        content=content["content"],
-        author_uri = author_uri,
-    )
-    if "comment" in content:
-        content_db.comment = content["comment"]
-    content_db.save()
-    container_db.latest = content_db
-    container_db.save()
-    return get_content("/uri/content/{0}".format(container_db.id))
 

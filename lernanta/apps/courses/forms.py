@@ -5,8 +5,3 @@ class CourseCreationForm(forms.Form):
     short_title = forms.CharField()
     plug = forms.CharField(widget=forms.Textarea)
 
-
-class ContentForm(forms.Form):
-    title = forms.CharField()
-    content = forms.CharField(widget=forms.Textarea)
-

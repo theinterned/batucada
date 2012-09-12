@@ -1,9 +1,10 @@
 from django.test import Client
 from django.contrib.auth.models import User
 
-from courses import models as course_model
-
 from test_utils import TestCase
+
+from courses import models as course_model
+from content2 import models as content_model
 
 
 class CourseTests(TestCase):
@@ -48,7 +49,7 @@ class CourseTests(TestCase):
         self.assertTrue(not course == None)
 
         # test that about content was created
-        about = course_model.get_content(course['about_uri'])
+        about = content_model.get_content(course['about_uri'])
         self.assertTrue(not about == None)
         self.assertEqual(about['title'], "About")
 

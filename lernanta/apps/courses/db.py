@@ -15,7 +15,7 @@ class Course(ModelBase):
 class CourseContent(ModelBase):
 
     course = models.ForeignKey(Course, related_name='content')
-    content_uri = models.CharField(max_length=256) #use URI because content should be in a separate module
+    content_uri = models.CharField(max_length=256) 
     index = models.PositiveIntegerField()
 
 
@@ -58,19 +58,3 @@ class CohortSignup(ModelBase):
     role = models.CharField(max_length=10, choices=SIGNUP_ROLE_CHOICES)
     signup_date = models.DateTimeField(auto_now_add=True)
 
-
-#TODO separate from other course stuff
-class Content(ModelBase):
-
-    latest = models.ForeignKey('courses.ContentVersion', related_name='+', null=True, blank=True)
-
-
-#TODO separate from other course stuff
-class ContentVersion(ModelBase):
-
-    container = models.ForeignKey(Content, related_name='versions')
-    title = models.CharField(max_length = 100)
-    content = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
-    comment = models.CharField(max_length = 100)
-    author_uri = models.CharField(max_length=256)
