@@ -12,12 +12,25 @@ urlpatterns = patterns('',
         'courses.views.show_course',
         name='courses_show'),
 
-    url(r'^(?P<course_id>[\d]+)/signup',
+    url(r'^(?P<course_id>[\d]+)/signup/',
         'courses.views.course_signup',
         name='courses_signup'),
+
+    url(r'^(?P<course_id>[\d]+)/remove/(?P<username>[\w\-\.]+)/$',
+        'courses.views.course_leave',
+        name='courses_leave'),
+
+    url(r'^(?P<course_id>[\d]+)/content/create/$', 
+        'courses.views.create_content',
+        name='courses_create_content'),
 
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/$', 
         'courses.views.show_content',
         name='courses_content_show'),
+    
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/edit/$', 
+        'courses.views.edit_content',
+        name='courses_edit_content'),
+
 
 )

@@ -3,11 +3,13 @@ from django.db import models
 from drumbeat.models import ModelBase
 
 class Course(ModelBase):
-    
+
     title = models.CharField(max_length=255)
     short_title = models.CharField(max_length=20)
     plug = models.CharField(max_length=1000)
     creation_date = models.DateTimeField(auto_now_add=True)
+    draft = models.BooleanField(default=True)
+    archived = models.BooleanField(default=False)
 
 
 class CourseContent(ModelBase):
@@ -71,4 +73,4 @@ class ContentVersion(ModelBase):
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     comment = models.CharField(max_length = 100)
-    #TODO author
+    author_uri = models.CharField(max_length=256)

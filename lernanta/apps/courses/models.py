@@ -7,6 +7,7 @@ from django.utils.translation import ugettext as _
 import logging
 log = logging.getLogger(__name__)
 
+
 def course_uri2id(course_uri):
     return course_uri.strip('/').split('/')[-1]
 
@@ -33,12 +34,22 @@ def get_course(course_uri):
         "uri": "/uri/course/{0}".format(course_db.id),
         "title": course_db.title,
         "short_title": course_db.short_title,
-        "about_uri": "/uri/content/1/", # TODO
         "slug": slugify(course_db.title),
         "plug": course_db.plug,
-        "creator": "/uri/user/dirk", # TODO
-        "content": get_course_content(course_uri),
     }
+    if course_db.draft:
+        course["draft"] = True
+    if course_db.archived:
+        course["archived"] = True
+
+    content = get_course_content(course_uri)
+    if len(content) > 0:
+        course["about_uri"] = content[0]['uri']
+    else:
+        log.error("missing about content")
+        return None
+
+    course["content"] = content[1:]
     return course
 
 
@@ -56,7 +67,7 @@ def create_course(course_data, organizer_uri):
         # TODO
         return None
 
-    about = create_content({"title": _("About"), "content": ""})
+    about = create_content({"title": _("About"), "content": ""}, organizer_uri)
     add_course_content("/uri/course/{0}".format(course_db.id), about['uri'])
     create_course_cohort("/uri/course/{0}".format(course_db.id), organizer_uri)
     course = get_course("/uri/course/{0}".format(course_db.id))
@@ -182,13 +193,26 @@ def get_cohort(cohort_uri):
         cohort_data["end_date"] = cohort_db.end_date
 
     cohort_data["users"] = []
+    cohort_data["organizers"] = []
     for signup in cohort_db.signup_set.all():
         username = signup.user_uri.strip('/').split('/')[-1]
         cohort_data["users"] += [{
             "username": username, "uri": signup.user_uri, "role": signup.role
         }]
+        if signup.role == db.CohortSignup.ORGANIZER:
+            cohort_data["organizers"] += [{
+                "username": username, "uri": signup.user_uri,
+            }]
 
     return cohort_data
+
+
+def user_in_cohort(user_uri, cohort_uri):
+    cohort_db = _get_cohort_db(cohort_uri)
+    if not cohort_db:
+        return False
+
+    return cohort_db.signup_set.filter(user_uri=user_uri).count() > 0
 
 
 def add_user_to_cohort(cohort_uri, user_uri, role):
@@ -211,7 +235,12 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
     return signup
 
 
-#TODO seperate from course stuff
+def remove_user_from_cohort(cohort_uri, user_uri):
+    # TODO
+    return False, _("Cannot remove last organizer")
+
+
+# TODO seperate from course stuff
 def get_content(content_uri, fields=[]):
     content_id = content_uri2id(content_uri)
     try:
@@ -242,7 +271,7 @@ def get_content(content_uri, fields=[]):
 
 
 #TODO seperate from course stuff
-def create_content(content):
+def create_content(content, author_uri):
     #TODO check all required properties
     container_db = db.Content()
     container_db.save()
@@ -250,6 +279,7 @@ def create_content(content):
         container=container_db,
         title=content["title"],
         content=content["content"],
+        author_uri = author_uri,
     )
     if "comment" in content:
         content_db.comment = content["comment"]
