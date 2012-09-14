@@ -1,9 +1,11 @@
 import logging
+import markdown
 
 from django import http
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_http_methods
 
 from l10n.urlresolvers import reverse
 from users.models import UserProfile
@@ -15,6 +17,8 @@ from courses.forms import CourseCreationForm
 
 from content2 import models as content_model
 from content2.forms import ContentForm
+
+from replies import models as comment_model
 
 log = logging.getLogger(__name__)
 
@@ -65,6 +69,7 @@ def show_course( request, course_id, slug=None ):
 
     context = { 'course': course }
     context['about'] = content_model.get_content(course['about_uri'])
+    context['about']['content'] = markdown.markdown(context['about']['content'], ['tables'])
     context['cohort'] = course_model.get_course_cohort(course_uri)
     context['organizer'] = True #TODO
     
@@ -103,13 +108,21 @@ def course_leave( request, course_id, username ):
 
 
 def show_content( request, course_id, content_id):
-    content = content_model.get_content('/uri/content/{0}'.format(content_id))
+    content_uri = '/uri/content/{0}'.format(content_id)
+    content = content_model.get_content(content_uri)
     course = course_model.get_course('/uri/course/{0}/'.format(course_id))
+    cohort = course_model.get_course_cohort('/uri/course/{0}/'.format(course_id))
     context = { 'content': content }
+    context['content']['content'] = markdown.markdown(context['content']['content'])
     context['course_id'] = course_id
     context['course_slug'] = course['slug']
     context['course_title'] = course['title']
-    return render_to_response('courses/content.html', context, context_instance=RequestContext(request))
+    context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
+    return render_to_response(
+        'courses/content.html', 
+        context, 
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required
@@ -155,7 +168,10 @@ def edit_content( request, course_id, content_id ):
             content = content_model.update_content(
                 content['uri'], content_data, user_uri
             )
-            return course_slug_redirect( request, course_id )
+            redirect_url = reverse('courses_content_show',
+                kwargs={'course_id': course_id, 'content_id': content_id}
+            )
+            return http.HttpResponseRedirect(redirect_url)
     else:
         form = ContentForm(content)
 
@@ -163,4 +179,25 @@ def edit_content( request, course_id, content_id ):
     return render_to_response('courses/edit_content.html', 
         context, context_instance=RequestContext(request)
     )
+
+@login_required
+@require_http_methods(['POST'])
+def post_content_comment( request, course_id, content_id):
+    #TODO use form with field that sanitizes the input!
+    comment_content = request.POST.get('comment')
+    user = request.user.get_profile()
+    user_uri = "/uri/user/{0}".format(user.username)
+    comment = comment_model.create_comment(comment_content, user_uri)
+
+    reference_uri = "/uri/content/{0}".format(content_id)
+    course_uri = "/uri/course/{0}".format(course_id)
+    cohort = course_model.get_course_cohort(course_uri)
+    course_model.add_comment_to_cohort(
+        comment['uri'], cohort['uri'], reference_uri
+    )
+
+    redirect_url = reverse('courses_content_show', 
+        kwargs={'course_id': course['id'], 'content_id': content_id}
+    )
+    return http.HttpResponseRedirect(redirect_url)
 

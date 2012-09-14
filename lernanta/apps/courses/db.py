@@ -58,3 +58,10 @@ class CohortSignup(ModelBase):
     role = models.CharField(max_length=10, choices=SIGNUP_ROLE_CHOICES)
     signup_date = models.DateTimeField(auto_now_add=True)
 
+
+class CohortComment(ModelBase):
+
+    cohort = models.ForeignKey(Cohort, related_name="comment_set")
+    comment_uri = models.CharField(max_length=256)
+    reference_uri = models.CharField(max_length=256)
+

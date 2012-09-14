@@ -41,9 +41,31 @@
         {% endif %}
       </a>
     </figure>
+    <div>
+        <p>
+            {% trans "draft" %}
+            <i class="icon-chevron-right"></i> 
+            {% trans "published" %}
+            <i class="icon-chevron-right"></i> 
+            {% trans "archived" %}
+        </p>
+        {% if course.draft and organizer %}
+            <a class="button" href="#">{% trans "Publish" %}</a>
+        {% endif %}
+    </div>
+        <p>
+            {% trans "open" %}
+            <i class="icon-chevron-right"></i> 
+            {% trans "moderated" %}
+            <i class="icon-chevron-right"></i> 
+            {% trans "closed" %}
+        </p>
+
+    <div>
+    </div>
     <br>
     <div id="project-description">
-        {{ course.plug }}
+        <p>{{ course.plug }}</p>
     </div>
     <br>
 
@@ -89,7 +111,7 @@
       </p>
     {% else %}
     <h2>{{about.title}}</h2>
-    {{ about.content }}
+    <div class="markup">{{ about.content|safe }}</div>
     {% endif %}
     <p>
     <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}">
@@ -131,6 +153,13 @@
 
   <div id="discussion-tab">
     <h2>Discussion</h2>
+    <div>
+      <form action="#" method="POST">
+        {% csrf_token %}
+        <textarea id="id_comment" name="comment" cols="40" rows="6"></textarea>
+        <input type="submit" value="{% trans "Post comment" %}"/>
+      </form>
+    </div>
   </div>
 
   <div id="badges-tab">
@@ -172,9 +201,12 @@
     <h2>{% trans "People" %}</h2>
       {% for user in cohort.users %}
         <div class="user-tile">
-          <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png">{{user.username}}</a>
+          <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png" alt="{{user.username}}"></a>
           {% if organizer %}
             <a href="{% locale_url courses_leave course_id=course.id username=user.username %}">{% trans "Remove user" %}</a>
+          {% endif %}
+          {% if user.role == "LEARNER" %}
+            <a href="#">{% trans "Make organizer" %}</a>
           {% endif %}
         </div>
       {% empty %}

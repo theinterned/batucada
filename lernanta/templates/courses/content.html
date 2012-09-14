@@ -11,6 +11,24 @@
 {% block body %}
   <div id="content-container">
     <h1>{{ content.title }}</h1>
-    {{ content.content }}
+    {{ content.content|safe }}
+  </div>
+  <a href="{% locale_url courses_edit_content course_id=course_id content_id=content.id %}">
+    <i class="icon-edit"></i>
+  </a>
+
+  <div id="content-comments">
+    <h1>Comments</h1>
+
+    {% for comment in comments %}
+      <div class="post-container">{{comment.content}}</div>
+
+    {% endfor %}
+
+    <form action={% locale_url courses_post_content_comment course_id=course_id content_id=content.id %} method="POST">
+      {% csrf_token %}
+      <textarea id="id_comment" name="comment" cols="40" rows="6"></textarea>
+      <input type="submit" value="{% trans "Post comment" %}"/>
+    </form>
   </div>
 {% endblock %}

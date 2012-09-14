@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from drumbeat.utils import slugify
 from courses import db
 from content2 import models as content_model
+from replies import models as comment_model
 
 import logging
 log = logging.getLogger(__name__)
@@ -126,7 +127,7 @@ def add_course_content(course_uri, content_uri):
     course_content_db.save()
 
 
-def update_course_content():
+def reorder_course_content():
     # TODO
     pass
 
@@ -225,7 +226,8 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
     )
     try:
         signup_db.save()
-    except:
+    except Exception, e:
+        log.error(e)
         return None
     
     signup = {
@@ -239,4 +241,35 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
 def remove_user_from_cohort(cohort_uri, user_uri):
     # TODO
     return False, _("Cannot remove last organizer")
+
+
+def add_comment_to_cohort(comment_uri, cohort_uri, reference_uri):
+    #NOTE maybe create comment and update comment reference to simplify use?
+    cohort_db = _get_cohort_db(cohort_uri)
+    cohort_comment_db = db.CohortComment(
+        cohort=cohort_db,
+        comment_uri=comment_uri,
+        reference_uri=reference_uri
+    )
+
+    try:
+        cohort_comment_db.save()
+    except:
+        return None
+
+    #TODO update the reference for the comment to point to this cohort comment
+    #NOTE maybe eliminate this psuedo resource by using a combined URI cohort+ref
+
+    return comment_model.get_comment(comment_uri)
+
+
+def get_cohort_comments(cohort_uri, reference_uri):
+    cohort_db = _get_cohort_db(cohort_uri)
+    cohort_comments = []
+    for cohort_comment in cohort_db.comment_set.filter(reference_uri=reference_uri):
+        #NOTE: possible performance problem!!
+        comment = comment_model.get_comment(cohort_comment.comment_uri)
+        cohort_comments += [comment]
+        #yield comment
+    return cohort_comments
 
