@@ -201,3 +201,22 @@ def post_content_comment( request, course_id, content_id):
     )
     return http.HttpResponseRedirect(redirect_url)
 
+
+@login_required
+@require_http_methods(['POST'])
+def post_comment_reply( request, course_id, content_id, comment_id):
+    #TODO use form with field that sanitizes the input!
+    comment_content = request.POST.get('comment')
+    user = request.user.get_profile()
+    user_uri = "/uri/user/{0}".format(user.username)
+    comment_uri = "/uri/comment/{0}".format(comment_id)
+    reply = comment_model.reply_to_comment(
+        comment_uri, comment_content, user_uri
+    )
+
+    #TODO: need to set reference so that lookup from comment works!
+
+    redirect_url = reverse('courses_content_show',
+        kwargs={'course_id': course_id, 'content_id': content_id}
+    )
+    return http.HttpResponseRedirect(redirect_url)

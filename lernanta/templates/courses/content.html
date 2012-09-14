@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n%}
+{% load i18n %}
 {% load l10n_tags %}
 
 {% block title %}{{content.title}}{% endblock %}
@@ -21,13 +21,25 @@
     <h1>Comments</h1>
 
     {% for comment in comments %}
-      <div class="post-container">{{comment.content}}</div>
-
+      <div class="post-container">
+        <a name="comment-{{comment.id}}"></a>
+        {{comment.content}}
+        {% if comment.replies|length > 0 %}
+          <p>
+            {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
+          </p>
+        {% endif %}
+        <form action={% locale_url courses_post_comment_reply course_id=course_id content_id=content.id comment_id=comment.id %} method="POST">
+          {% csrf_token %}
+          <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
+          <input type="submit" value="{% trans "Post comment" %}"/>
+        </form>
+      </div>
     {% endfor %}
 
     <form action={% locale_url courses_post_content_comment course_id=course_id content_id=content.id %} method="POST">
       {% csrf_token %}
-      <textarea id="id_comment" name="comment" cols="40" rows="6"></textarea>
+      <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
       <input type="submit" value="{% trans "Post comment" %}"/>
     </form>
   </div>

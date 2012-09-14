@@ -12,7 +12,7 @@ urlpatterns = patterns('',
         'courses.views.course_signup',
         name='courses_signup'),
 
-    url(r'^(?P<course_id>[\d]+)/(?P<slug>[\w-]+)/$', 
+    url(r'^(?P<course_id>[\d]+)/(?P<slug>[\w-]+)/$',
         'courses.views.show_course',
         name='courses_show'),
 
@@ -20,20 +20,24 @@ urlpatterns = patterns('',
         'courses.views.course_leave',
         name='courses_leave'),
 
-    url(r'^(?P<course_id>[\d]+)/content/create/$', 
+    url(r'^(?P<course_id>[\d]+)/content/create/$',
         'courses.views.create_content',
         name='courses_create_content'),
 
-    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/$', 
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/$',
         'courses.views.show_content',
         name='courses_content_show'),
     
-    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/edit/$', 
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/edit/$',
         'courses.views.edit_content',
         name='courses_edit_content'),
 
-    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/comment/$', 
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/comment/$',
         'courses.views.post_content_comment',
         name='courses_post_content_comment'),
+
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/comment/(?P<comment_id>[\d]+)/reply/$',
+        'courses.views.post_comment_reply',
+        name='courses_post_comment_reply'),
 
 )

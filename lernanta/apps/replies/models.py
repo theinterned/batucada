@@ -86,10 +86,12 @@ class PageComment(ModelBase):
         reply_comment.sent_by_email = sent_by_email
         reply_comment.save()
         reply_comment.send_comment_notification()
-        return True
+        return reply_comment
 
     def send_comment_notification(self):
-        recipients = self.page_object.comment_notification_recipients(self)
+        recipients = []
+        if self.page_object:
+            recipients = self.page_object.comment_notification_recipients(self)
         subject_template = 'replies/emails/post_comment_subject.txt'
         body_template = 'replies/emails/post_comment.txt'
         context = {
@@ -157,8 +159,28 @@ def get_comment( comment_uri ):
         "content": comment_db.content,
         "user_uri": "/uri/user/{0}".format(comment_db.author.username)
     }
+
+    comment['replies'] = []
+    for reply in comment_db.replies.all():
+        comment['replies'] += [{
+            "id": reply.id,
+            "uri": "/uri/comment/{0}".format(reply.id)
+        }]
     return comment
 
 
-def create_reply( comment_uri, comment_data, user_uri ):
-    pass
+def reply_to_comment( comment_uri, comment_content, user_uri ):
+    # TODO: comments should only use user_uri
+    from users.models import UserProfile
+    username = user_uri.strip('/').split('/')[-1]
+    user = UserProfile.objects.get(username=username)
+
+    comment_id = comment_uri.strip('/').split('/')[-1]
+    try:
+        comment_db = PageComment.objects.get(id=comment_id)
+    except:
+        return None
+
+    reply = comment_db.reply(user, comment_content)
+    return get_comment("/uri/comment/{0}".format(reply.id))
+
