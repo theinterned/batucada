@@ -32,6 +32,7 @@
 {% flag 'css-framework' %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/overrides.css">
   <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+  <script src="{{ STATIC_URL }}js/trunk8.js"></script>
 {% else %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1">
@@ -48,7 +49,7 @@
 
 {% block header %}
 <header>
-	<div class="container">
+    <div class="container">
 	  <div class="navbar">
         <div class="navbar-inner">
           <a class="brand" href="{% if user.is_authenticated %}{% locale_url dashboard %}{% else %}{% locale_url splash %}{% endif %}"></a>
@@ -133,26 +134,26 @@
 
   <!-- START Not sure what this does....ask -->
   {% block join_p2pu_section %}{% endblock %}
-  <!-- END Not sure what this does....ask -->
-
-  <!-- START Breadcrumbs code -->
-  <!--
-      <div id="breadcrumbs">
-      <div class="container">
-      {% block breadcrumbs_title %}{% endblock %}
-      <nav>
-      <a href="{% locale_url splash %}">{{ _('Home') }}</a>
-      {% block breadcrumbs %}{% endblock %}
-      </nav>
-      <div id="breadcrumbs-actions">
-      {% block breadcrumbs_actions %}{% endblock %}
-      </div>
-      </div>
-      </div>    
-  -->
-  <!-- END Breadcrumbs code -->
+  <!-- END Not sure what this does....ask -->    
 
 </header>
+
+<div class="container breadcrumb-box">
+  <div class="row-fluid">
+	<div class="span9">
+      <ul class="breadcrumb">
+        <!-- Currently unused because there is now a title inside the main body of the page -->  
+        <!-- {% block breadcrumbs_title %}{% endblock %} -->
+        <li><a href="{% locale_url splash %}">{{ _('Home') }}</a></li>
+        {% block breadcrumbs %}{% endblock %}
+        <span id="breadcrumbs-actions" class="pull-right">
+          {% block breadcrumbs_actions %}{% endblock %}
+        </span>
+      </ul>
+	</div>
+  </div>
+</div>
+
 {% endblock %}
 
     <div class="container body">

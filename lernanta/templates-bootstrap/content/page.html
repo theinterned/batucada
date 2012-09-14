@@ -11,18 +11,16 @@
 {% block bodyid %}page{% endblock %}
 
 {% block project_breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a>
-  <span class="arrow">&rsaquo;</span>
-  <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+  <li><span class="divider">&rsaquo;</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a></li>
+  <li><span class="divider">&rsaquo;</span><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
 {% endblock %}
 
 {% block breadcrumbs_actions%}
   {% if can_edit %}
-    <a class="button" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit') }}</a>
-    {% if page.listed %}<a class="button" href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>{% endif %}
+    <a class="btn btn-skinny btn-cyan" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit') }}</a>
+    {% if page.listed %}<a class="btn btn-skinny btn-apricot" href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>{% endif %}
   {% endif %}
-  <a class="button" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
+  <a class="btn btn-skinny btn-olive" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
 {% endblock %}
 
 {% block body %}

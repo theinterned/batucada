@@ -331,6 +331,14 @@ $(document).ready(function() {
         return false;
     });
 
+	// initialize and set trunk8 plugin
+	$('.truncate-to-3-lines').trunk8({
+	   lines: 3
+	});
+	
+	$('.truncate-to-2-lines').trunk8({
+	   lines: 2
+	});
     
     $('li.contribute-nav').click(function(){
     	var number = $(this).index();

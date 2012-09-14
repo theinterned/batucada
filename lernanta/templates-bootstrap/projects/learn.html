@@ -9,40 +9,46 @@
 
 {% block breadcrumbs %}
   {% if learn_school %}
-    <span class="arrow">&rsaquo;</span>
-    <a href="{{ learn_school.get_absolute_url }}">{{ learn_school.name }}</a>
+    <li><span class="divider">&rsaquo;</span><a href="{{ learn_school.get_absolute_url }}">{{ learn_school.name }}</a></li>
   {% endif %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{% if learn_school %}{% school_learn_default learn_school %}{% else %}{% learn_default %}{% endif %}">{{ _('Learn') }}</a>
+  <li><span class="divider">&rsaquo;</span><a href="{% if learn_school %}{% school_learn_default learn_school %}{% else %}{% learn_default %}{% endif %}">{{ _('Learn') }}</a></li>
 {% endblock %}
 {% block breadcrumbs_actions %}
   {% if user.is_authenticated %}
-    <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+    <a id="create-project" class="btn btn-olive" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
   {% endif %}
 {% endblock %}
 
 {% block body %}
-  <div id="sidebar">
-    {% include "projects/_learn_filters.html"%}
-  </div>
 
-  <div id="main">
-    <br>
-    <section>
-      <h1 id="learn-header">
-        {% include "projects/_learn_header.html"%}
-      </h1>
-      <br>
-      <ul class="project-list">
-        {% include "projects/_learn_projects.html" %}
-      </ul>
-      <br clear="both">
-      <div id="learn-pagination">
-        {% include "projects/_learn_pagination.html" %}
+<div class="container-fluid">
+  <div class="row-fluid">
+	<div class="span9">
+	<!--Body content-->
+	  <div class="row-fluid">
+        <h1>{{ _('Find a Course') }}</h1>
+	    <h1><small>{{ _('Browse great courses available on P2PU by exploring featured ones, schools, and tags.') }}</small></h1>
+	    <!--  Old Learn Headers currently unused -->
+	    <!--  <h1 id="learn-header">{% include "projects/_learn_header.html"%}</h1>  -->
+	  </div>
+	  <div class="row-fluid">
+	    {% include "projects/_learn_projects.html" %}
+	  </div>
+	  <div class="row-fluid">
+		<div class="well well-large">
+		  <h2>{{ _('Didn\'t find yours? How about creating one?') }}</h2>
+		  <a class="btn btn-large btn-olive">{{ _('Create a Course') }}</a>
+		</div> 
       </div>
-      <a id="show-more-results" class="button" href="#">{{ _('Show More Results') }}</a>
-    </section>
+	<!--End Body content-->
+	</div>
+	<div class="span3">
+	<!--Sidebar content-->
+	  {% include "projects/_learn_filters.html"%}
+	<!--End Sidebar content-->
+	</div>
   </div>
+</div>
 
 {% endblock %}
 
