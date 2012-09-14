@@ -180,6 +180,29 @@ def edit_content( request, course_id, content_id ):
         context, context_instance=RequestContext(request)
     )
 
+
+@login_required
+def content_up( request, course_id, content_id ):
+    #TODO check admin
+    result = course_model.reorder_course_content(
+        "/uri/content/{0}".format(content_id), "UP"
+    )
+    if not result:
+        messages.error(request, _("Could not move content up!"))
+    return course_slug_redirect( request, course_id )
+
+
+@login_required
+def content_down( request, course_id, content_id ):
+    #TODO check admin
+    result = course_model.reorder_course_content(
+        "/uri/content/{0}".format(content_id), "DOWN"
+    )
+    if not result:
+        messages.error(request, _("Could not move content down!"))
+    return course_slug_redirect( request, course_id )
+
+
 @login_required
 @require_http_methods(['POST'])
 def post_content_comment( request, course_id, content_id):

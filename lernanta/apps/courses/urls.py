@@ -32,6 +32,14 @@ urlpatterns = patterns('',
         'courses.views.edit_content',
         name='courses_edit_content'),
 
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/up/$',
+        'courses.views.content_up',
+        name='courses_content_up'),
+
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/down/$',
+        'courses.views.content_down',
+        name='courses_content_down'),
+
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/comment/$',
         'courses.views.post_content_comment',
         name='courses_post_content_comment'),

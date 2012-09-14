@@ -127,10 +127,32 @@ def add_course_content(course_uri, content_uri):
     course_content_db.save()
 
 
-def reorder_course_content():
-    # TODO
-    pass
+def reorder_course_content(content_uri, direction):
+    course_content_db = None
+    try:
+        course_content_db = db.CourseContent.objects.get(content_uri=content_uri)
+    except Exception, e:
+        # TODO
+        return None
+    new_index = course_content_db.index + 1
+    if direction == "UP":
+        new_index = course_content_db.index - 1
 
+    if new_index < 1:
+        return None
+
+    try:
+        swap_course_content_db = db.CourseContent.objects.get(
+            course=course_content_db.course, index=new_index
+        )
+    except:
+        return None
+
+    swap_course_content_db.index = course_content_db.index
+    course_content_db.index = new_index
+    swap_course_content_db.save()
+    course_content_db.save()
+    return True
 
 def delete_course_content():
     # TODO
