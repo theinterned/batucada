@@ -29,7 +29,7 @@
             {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
           </p>
         {% endif %}
-        <form action={% locale_url courses_post_comment_reply course_id=course_id content_id=content.id comment_id=comment.id %} method="POST">
+        <form action="{% locale_url courses_post_comment_reply course_id=course_id content_id=content.id comment_id=comment.id %}" method="POST">
           {% csrf_token %}
           <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
           <input type="submit" value="{% trans "Post comment" %}"/>
@@ -37,7 +37,7 @@
       </div>
     {% endfor %}
 
-    <form action={% locale_url courses_post_content_comment course_id=course_id content_id=content.id %} method="POST">
+    <form action="{% locale_url courses_post_content_comment course_id=course_id content_id=content.id %}" method="POST">
       {% csrf_token %}
       <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
       <input type="submit" value="{% trans "Post comment" %}"/>

@@ -49,7 +49,8 @@ def create_course( request ):
 
 
 def course_slug_redirect( request, course_id ):
-    course = course_model.get_course('/uri/course/{0}/'.format(course_id))
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
     if course == None:
         raise http.Http404
 
@@ -59,7 +60,7 @@ def course_slug_redirect( request, course_id ):
 
 
 def show_course( request, course_id, slug=None ):
-    course_uri = '/uri/course/{0}/'.format(course_id)
+    course_uri = course_model.course_id2uri(course_id)
     course = course_model.get_course(course_uri)
     if course == None:
         raise http.Http404
@@ -69,15 +70,24 @@ def show_course( request, course_id, slug=None ):
 
     context = { 'course': course }
     context['about'] = content_model.get_content(course['about_uri'])
-    context['about']['content'] = markdown.markdown(context['about']['content'], ['tables'])
-    context['cohort'] = course_model.get_course_cohort(course_uri)
-    context['organizer'] = True #TODO
+    context['about']['content'] = markdown.markdown(
+        context['about']['content'], ['tables']
+    )
+    cohort = course_model.get_course_cohort(course_uri)
+    context['cohort'] = cohort
+    context['comments'] = course_model.get_cohort_comments(
+        cohort['uri'], course['about_uri']
+    )
     
-    user = request.user.get_profile()
-    user_uri = "/uri/user/{0}".format(user.username)
-    if not course_model.user_in_cohort(user_uri, context['cohort']['uri']):
+    user_uri = "/uri/user/{0}".format(request.user.username)
+    if not course_model.user_in_cohort(user_uri, cohort['uri']):
         context['show_signup'] = True
-    return render_to_response('courses/course.html', context, context_instance=RequestContext(request))
+    context['organizer'] = True #TODO
+    return render_to_response(
+        'courses/course.html',
+        context,
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required
@@ -127,7 +137,8 @@ def show_content( request, course_id, content_id):
 
 @login_required
 def create_content( request, course_id ):
-    course = course_model.get_course('/uri/course/{0}/'.format(course_id))
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
     if request.method == "POST":
         form = ContentForm(request.POST)
         if form.is_valid():
@@ -213,14 +224,14 @@ def post_content_comment( request, course_id, content_id):
     comment = comment_model.create_comment(comment_content, user_uri)
 
     reference_uri = "/uri/content/{0}".format(content_id)
-    course_uri = "/uri/course/{0}".format(course_id)
+    course_uri = course_model.course_id2uri(course_id)
     cohort = course_model.get_course_cohort(course_uri)
     course_model.add_comment_to_cohort(
         comment['uri'], cohort['uri'], reference_uri
     )
 
     redirect_url = reverse('courses_content_show', 
-        kwargs={'course_id': course['id'], 'content_id': content_id}
+        kwargs={'course_id': course_id, 'content_id': content_id}
     )
     return http.HttpResponseRedirect(redirect_url)
 

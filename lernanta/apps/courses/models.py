@@ -15,6 +15,10 @@ def course_uri2id(course_uri):
     return course_uri.strip('/').split('/')[-1]
 
 
+def course_id2uri(course_id):
+    return '/uri/course/{0}/'.format(course_id)
+
+
 def _get_course_db(course_uri):
     course_id = course_uri2id(course_uri)
     try:

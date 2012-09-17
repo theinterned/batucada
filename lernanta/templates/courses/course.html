@@ -153,8 +153,25 @@
 
   <div id="discussion-tab">
     <h2>Discussion</h2>
+    {% for comment in comments %}
+      <div class="post-container">
+        <a name="comment-{{comment.id}}"></a>
+        {{comment.content}}
+        {% if comment.replies|length > 0 %}
+          <p>
+            {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
+          </p>
+        {% endif %}
+        <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
+          {% csrf_token %}
+          <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
+          <input type="submit" value="{% trans "Post comment" %}"/>
+        </form>
+      </div>
+    {% endfor %}
+
     <div>
-      <form action="#" method="POST">
+      <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
         {% csrf_token %}
         <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
         <input type="submit" value="{% trans "Post comment" %}"/>

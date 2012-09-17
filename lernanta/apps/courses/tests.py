@@ -43,7 +43,7 @@ class CourseTests(TestCase):
                 "short_title": "ATC 1",
                 "plug": "This course is all about ABC",
             },
-            '/uri/users/testuser'
+            '/uri/user/testuser'
         )
 
         self.assertTrue(not course == None)
@@ -56,6 +56,7 @@ class CourseTests(TestCase):
         # test that cohort was created
         cohort = course_model.get_course_cohort(course['uri'])
         self.assertTrue(not cohort == None)
+        # TODO check that /uri/user/testuser is in cohort
 
     def test_course_get(self):
         course = course_model.get_course(self.course['uri'])
