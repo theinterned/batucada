@@ -42,47 +42,60 @@
       </a>
     </figure>
     <div>
-        <p>
-            {% trans "draft" %}
-            <i class="icon-chevron-right"></i> 
-            {% trans "published" %}
-            <i class="icon-chevron-right"></i> 
-            {% trans "archived" %}
-        </p>
-        {% if course.draft and organizer %}
-            <a class="button" href="#">{% trans "Publish" %}</a>
-        {% endif %}
+      <p>
+        {% trans "draft" %}
+        <i class="icon-arrow-right"></i> 
+        {% trans "published" %}
+        <i class="icon-arrow-right"></i> 
+        {% trans "archived" %}
+      </p>
+      {% if organizer and course.draft %}
+        <p>Draft</p>
+        <p><a class="button" href="{% locale_url courses_status course_id=course.id status='publish' %}">{% trans "Publish" %}</a></p>
+      {% endif %}
+      {% if organizer and not course.draft and not course.archived %}
+        <p>Published</p>
+        <p><a class="button" href="{% locale_url courses_status course_id=course.id status='archive' %}">{% trans "Archive" %}</a></p>
+      {% endif %}
+      {% if organizer and course.archived %}
+        <p>Archived</p>
+        <p><a class="button" href="{% locale_url courses_status course_id=course.id status='publish' %}">{% trans "Resurrect" %}</a></p>
+      {% endif %}
     </div>
-        <p>
-            {% trans "open" %}
-            <i class="icon-chevron-right"></i> 
-            {% trans "moderated" %}
-            <i class="icon-chevron-right"></i> 
-            {% trans "closed" %}
-        </p>
-
     <div>
+      <p>
+        {% trans "open" %}
+        <i>|</i> 
+        {% trans "moderated" %}
+        <i>|</i> 
+        {% trans "closed" %}
+      </p>
+      {% if organizer and cohort.signup != 'OPEN' %}
+        <p><a href="{% locale_url courses_change_signup course_id=course.id signup='open'%}">Change to Open</a></p>
+      {% endif %}
+      {% if organizer and cohort.signup != 'MODERATED' %}
+        <p><a href="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}">Change to Moderated</a></p>
+      {% endif %}
+      {% if organizer and cohort.signup != 'CLOSED' %}
+        <p><a href="{% locale_url courses_change_signup course_id=course.id signup='closed'%}">Change to Closed</a></p>
+      {% endif %}
     </div>
-    <br>
-    <div id="project-description">
+    <div id="course-description">
         <p>{{ course.plug }}</p>
     </div>
-    <br>
-
-     {% if show_signup %}
+    <div id="course-singup">
+      {% if show_signup %}
         <form method="post" action="{% locale_url courses_signup course_id=course.id %}">
           {% csrf_token %}
           <button id="signup_button">{{ _('Start Course') }}</button>
         </form>
-     {% else %}
-       {% if not organizing %}
-          <form method="post" action="{% locale_url courses_leave course_id=course.id username=user.username %}">
-            {% csrf_token %}
-            <button id="leave_direct_signup_button">{{ _('Leave Course') }}</button>
-          </form>
-        {% endif %}
+      {% else %}
+        <form method="post" action="{% locale_url courses_leave course_id=course.id username=user.username %}">
+          {% csrf_token %}
+          <button id="leave_direct_signup_button">{{ _('Leave Course') }}</button>
+        </form>
       {% endif %}
-
+    </div>
     {% if tags %}
       <h3><b>{{ _('Tags') }}</b></h3>
       <ul class="tags">
@@ -162,6 +175,7 @@
             {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
           </p>
         {% endif %}
+        <a href="#"><i class="icon-comment"></i></a>
         <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
           {% csrf_token %}
           <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
@@ -171,6 +185,7 @@
     {% endfor %}
 
     <div>
+      <a href="#"><i class="icon-comment"></i></a>
       <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
         {% csrf_token %}
         <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>

@@ -89,6 +89,32 @@ def update_course(course_json):
     return False
 
 
+def publish_course(course_uri):
+    course_db = _get_course_db(course_uri)
+    if not course_db:
+        return None
+    course_db.draft = False
+    course_db.archived = False
+    try:
+        course_db.save()
+    except:
+        log.error("could not save Course db object!")
+    # TODO: Notify interested people in new course
+    return get_course(course_uri)
+
+
+def archive_course(course_uri):
+    course_db = _get_course_db(course_uri)
+    if not course_db:
+        return None
+    course_db.archived = True
+    try:
+        course_db.save()
+    except:
+        log.error("Could not save course db object!")
+    return get_course(course_uri)
+
+
 def get_course_content(course_uri):
     content = []
     course_id = course_uri2id(course_uri)
@@ -233,6 +259,22 @@ def get_cohort(cohort_uri):
             }]
 
     return cohort_data
+
+
+def update_cohort( cohort_data ):
+    if not 'uri' in cohort_data:
+        return None
+    cohort_db = _get_cohort_db(cohort_data['uri'])
+
+    if 'term' in cohort_data:
+        cohort_db.term = cohort_data['term']
+    if 'signup' in cohort_data:
+        cohort_db.signup = cohort_data['signup']
+    try:
+        cohort_db.save()
+    except:
+        return None
+    return get_cohort(cohort_data['uri'])
 
 
 def user_in_cohort(user_uri, cohort_uri):

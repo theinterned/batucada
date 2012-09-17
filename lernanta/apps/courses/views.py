@@ -94,8 +94,7 @@ def show_course( request, course_id, slug=None ):
 def course_signup( request, course_id ):
     #NOTE: consider using cohort_id in URL to avoid cohort lookup
     cohort = course_model.get_course_cohort( course_id )
-    user = request.user.get_profile()
-    user_uri = "/uri/user/{0}".format(user.username)
+    user_uri = "/uri/user/{0}".format(request.user.username)
     course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
     return course_slug_redirect( request, course_id )
 
@@ -103,12 +102,11 @@ def course_signup( request, course_id ):
 @login_required
 def course_leave( request, course_id, username ):
     cohort = course_model.get_course_cohort( course_id )
-    user = request.user.get_profile()
-    user_uri = "/uri/user/{0}".format(user.username)
+    user_uri = "/uri/user/{0}".format(request.user.username)
     # check if user is in admin or trying to remove himself
     removed = False
     error_message = _("Could not remove user")
-    if username == user.username:
+    if username == request.user.username:
         removed, error_message = course_model.remove_user_from_cohort(cohort['uri'], user_uri)
 
     if not removed:
@@ -116,6 +114,29 @@ def course_leave( request, course_id, username ):
 
     return course_slug_redirect( request, course_id)
 
+
+@login_required
+def course_status( request, course_id, status ):
+    # TODO check organizer
+    cohort = course_model.get_course_cohort( course_id )
+    user_uri = "/uri/user/{0}".format(request.user.username)
+    course_uri = course_model.course_id2uri(course_id)
+    if status == 'publish':
+        course = course_model.publish_course(course_uri)
+    elif status == 'archive':
+        course = course_model.archive_course(course_uri)
+    return course_slug_redirect( request, course_id )
+
+
+@login_required
+def course_change_signup( request, course_id, signup ):
+    # TODO check organizer
+    cohort = course_model.get_course_cohort( course_id )
+    cohort['signup'] = signup.upper()
+    cohort = course_model.update_cohort(cohort)
+    if not cohort:
+        messages.error( request, _("Could not change cohort signup"))
+    return course_slug_redirect( request, course_id )
 
 def show_content( request, course_id, content_id):
     content_uri = '/uri/content/{0}'.format(content_id)
