@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.redirects',
     'django.contrib.staticfiles',
-    'south',
+    #'south',
     'robots',
     'wellknown',
     'lernanta.apps.pagination',
