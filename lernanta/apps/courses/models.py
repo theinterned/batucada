@@ -287,7 +287,16 @@ def user_in_cohort(user_uri, cohort_uri):
     if not cohort_db:
         return False
     return cohort_db.signup_set.filter(
-        user_uri=user_uri, leave_date__isnull=True).count() > 0
+        user_uri=user_uri, leave_date__isnull=True).exists()
+
+
+def is_cohort_organizer(user_uri, cohort_uri):
+    cohort_db = _get_cohort_db(cohort_uri)
+    if not cohort_db:
+        return False
+    return cohort_db.signup_set.filter(
+        user_uri=user_uri, leave_date__isnull=True,
+        role=db.CohortSignup.ORGANIZER).exists()
 
 
 def add_user_to_cohort(cohort_uri, user_uri, role):

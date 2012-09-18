@@ -82,7 +82,9 @@ def show_course( request, course_id, slug=None ):
     user_uri = "/uri/user/{0}".format(request.user.username)
     if not course_model.user_in_cohort(user_uri, cohort['uri']):
         context['show_signup'] = True
-    context['organizer'] = True #TODO
+    context['organizer'] = course_model.is_cohort_organizer(
+        user_uri, cohort['uri']
+    )
     return render_to_response(
         'courses/course.html',
         context,
@@ -103,11 +105,15 @@ def course_signup( request, course_id ):
 def course_leave( request, course_id, username ):
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
-    # check if user is in admin or trying to remove himself
+    is_organizer = course_model.is_cohort_organizer(
+        user_uri, cohort['uri']
+    )
     removed = False
     error_message = _("Could not remove user")
-    if username == request.user.username:
-        removed, error_message = course_model.remove_user_from_cohort(cohort['uri'], user_uri)
+    if username == request.user.username or is_organizer:
+        removed, error_message = course_model.remove_user_from_cohort(
+            cohort['uri'], "/uri/user/{0}".format(username)
+        )
 
     if not removed:
         messages.error(request, error_message)
