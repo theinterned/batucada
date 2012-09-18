@@ -41,6 +41,12 @@
         {% endif %}
       </a>
     </figure>
+    <div id="course-description">
+        <p>{{ course.plug }}</p>
+    </div>
+    <div id="course-language">
+        <p>{% language_name course.language %}</p>
+    </div>
     <div>
       <p>
         {% trans "draft" %}
@@ -80,8 +86,23 @@
         <p><a href="{% locale_url courses_change_signup course_id=course.id signup='closed'%}">Change to Closed</a></p>
       {% endif %}
     </div>
-    <div id="course-description">
-        <p>{{ course.plug }}</p>
+    <div id="course-term">
+      {% if cohort.term == 'ROLLING' %}
+      <p>{%trans "This course doesn't have start and end dates"%}</p>
+        {% if organizer %}
+          {%trans "Switch to fixed term and set dates"%}
+          <form action="#" method="POST">
+            {% csrf_token %}
+            <p><input type="date" /></p>
+            <p><input type="date" /></p>
+            <p><input type="submit" value="{% trans "Convert term" %}"/></p>
+          </form>
+        {% endif %}
+      {% else %}
+        {% blocktrans with start_date=cohort.start_date end_date=cohort.end_date %}
+          <p>This course runs from {{start_date}} to {{end_date}}</p>
+        {% endblocktrans %}
+      {% endif %}
     </div>
     <div id="course-singup">
       {% if show_signup %}
@@ -89,7 +110,8 @@
           {% csrf_token %}
           <button id="signup_button">{{ _('Start Course') }}</button>
         </form>
-      {% else %}
+      {% endif %}
+      {% if show_leave_course %}
         <form method="post" action="{% locale_url courses_leave course_id=course.id username=user.username %}">
           {% csrf_token %}
           <button id="leave_direct_signup_button">{{ _('Leave Course') }}</button>
@@ -236,9 +258,9 @@
           <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png" alt="{{user.username}}"></a>
           {% if organizer %}
             <a href="{% locale_url courses_leave course_id=course.id username=user.username %}">{% trans "Remove user" %}</a>
-          {% endif %}
-          {% if user.role == "LEARNER" %}
-            <a href="#">{% trans "Make organizer" %}</a>
+            {% if user.role == "LEARNER" %}
+              <a href="#">{% trans "Make organizer" %}</a>
+            {% endif %}
           {% endif %}
         </div>
       {% empty %}

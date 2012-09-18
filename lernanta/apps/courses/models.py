@@ -44,6 +44,7 @@ def get_course(course_uri):
         "short_title": course_db.short_title,
         "slug": slugify(course_db.title),
         "plug": course_db.plug,
+        "language": course_db.language,
     }
     if course_db.draft:
         course["draft"] = True
@@ -65,7 +66,8 @@ def create_course(course_data, organizer_uri):
     course_db = db.Course(
         title=course_data['title'],
         short_title=course_data['short_title'],
-        plug=course_data['plug']
+        plug=course_data['plug'],
+        language=course_data['language']
     )
 
     course_db.save()

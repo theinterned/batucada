@@ -31,6 +31,7 @@ def create_course( request ):
                 'title': form.cleaned_data.get('title'),
                 'short_title': form.cleaned_data.get('short_title'),
                 'plug': form.cleaned_data.get('plug'),
+                'language': form.cleaned_data.get('language')
             }
             user = request.user.get_profile()
             user_uri = "/uri/user/{0}".format(user.username)
@@ -80,8 +81,12 @@ def show_course( request, course_id, slug=None ):
     )
     
     user_uri = "/uri/user/{0}".format(request.user.username)
-    if not course_model.user_in_cohort(user_uri, cohort['uri']):
+    if course_model.user_in_cohort(user_uri, cohort['uri']):
+        context['show_leave_course'] = True
+    elif cohort['signup'] == "OPEN":
         context['show_signup'] = True
+
+
     context['organizer'] = course_model.is_cohort_organizer(
         user_uri, cohort['uri']
     )
