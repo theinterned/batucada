@@ -1,4 +1,5 @@
 import simplejson as json
+import datetime
 
 from django.utils.translation import ugettext as _
 
@@ -248,7 +249,7 @@ def get_cohort(cohort_uri):
 
     cohort_data["users"] = []
     cohort_data["organizers"] = []
-    for signup in cohort_db.signup_set.all():
+    for signup in cohort_db.signup_set.filter(leave_date__isnull=True):
         username = signup.user_uri.strip('/').split('/')[-1]
         cohort_data["users"] += [{
             "username": username, "uri": signup.user_uri, "role": signup.role
@@ -270,6 +271,10 @@ def update_cohort( cohort_data ):
         cohort_db.term = cohort_data['term']
     if 'signup' in cohort_data:
         cohort_db.signup = cohort_data['signup']
+    if 'start_date' in cohort_data:
+        cohort_db.start_date = cohort_data['start_date']
+    if 'end_date' in cohort_data:
+        cohort_db.end_date = cohort_data['end_date']
     try:
         cohort_db.save()
     except:
@@ -281,8 +286,8 @@ def user_in_cohort(user_uri, cohort_uri):
     cohort_db = _get_cohort_db(cohort_uri)
     if not cohort_db:
         return False
-
-    return cohort_db.signup_set.filter(user_uri=user_uri).count() > 0
+    return cohort_db.signup_set.filter(
+        user_uri=user_uri, leave_date__isnull=True).count() > 0
 
 
 def add_user_to_cohort(cohort_uri, user_uri, role):
@@ -307,8 +312,25 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
 
 
 def remove_user_from_cohort(cohort_uri, user_uri):
-    # TODO
-    return False, _("Cannot remove last organizer")
+    cohort_db = _get_cohort_db(cohort_uri)
+    try:
+        user_signup_db = cohort_db.signup_set.get(
+            user_uri=user_uri, leave_date__isnull=True
+        )
+    except:
+        return False, _("No such user in cohort")
+
+    organizer_count = cohort_db.signup_set.filter(
+        role=db.CohortSignup.ORGANIZER,
+        leave_date__isnull=True
+    ).count() == 1
+
+    if user_signup_db.role == db.CohortSignup.ORGANIZER and organizer_count == 1:
+        return False, _("Cannot remove last organizer")
+
+    user_signup_db.leave_date = datetime.datetime.utcnow()
+    user_signup_db.save()
+    return True, None
 
 
 def add_comment_to_cohort(comment_uri, cohort_uri, reference_uri):

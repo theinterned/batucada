@@ -57,6 +57,7 @@ class CohortSignup(ModelBase):
     user_uri = models.CharField(max_length=256)
     role = models.CharField(max_length=10, choices=SIGNUP_ROLE_CHOICES)
     signup_date = models.DateTimeField(auto_now_add=True)
+    leave_date = models.DateTimeField(blank=True, null=True)
 
 
 class CohortComment(ModelBase):
