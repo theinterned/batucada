@@ -14,13 +14,16 @@
 
 {% block bodyid %}project_landing{% endblock %}
 
-
 {% block join_p2pu_section %}{% join_p2pu request %}{% endblock %}
 
 {% block breadcrumbs_actions%}
   {% if is_challenge and organizing %}
-    <a class="btn btn-olive" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
-    <a class="btn btn-apricot" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Admin') }} {{ project.kind|title }}</a>
+    <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
+    <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Admin') }} {{ project.kind|title }}</a>
+    {% if project.under_development %}
+      <a href="{% locale_url projects_publish slug=project.slug %}" class="button">Publish</a>
+    {% endif %}
+
   {% endif %}
   {% project_review_action project user %}
 {% endblock %}
@@ -28,32 +31,29 @@
 
 {% block body %}
 
-<div class="row-fluid">
-  <div class="span3">
-    {% sidebar %}
-  </div>
-  <div class="span9">
-    <div id="main">
-      {% if is_challenge %}
-        {% tasks_list_wall request project user toggled_tasks %}
-      {% else %}
-        {% task_list project user show_all_tasks %}
-        <div id="wall_section">
-          <h2 class="school_header"><span>{{ _('Activity Wall') }}</span></h2>
-        </div>
-        {% project_wall request project %}
-      {% endif %}
-    </div> <!-- /#main -->
+{% sidebar %}
 
-    {% if is_challenge %}
-      <div id="main-people">
-        <section id="people" class="panel">
-          {% project_user_list request project 168 "True" %}
-        </section>
-      </div>
-    {% endif %}
+<div id="main">
+
+  {% if is_challenge %}
+    {% tasks_list_wall request project user toggled_tasks %}
+  {% else %}
+    {% task_list project user show_all_tasks %}
+    <div id="wall_section">
+      <h2 class="school_header"><span>{{ _('Activity Wall') }}</span></h2>
+    </div>
+    {% project_wall request project %}
+  {% endif %}
+
+</div> <!-- /#main -->
+
+{% if is_challenge %}
+  <div id="main-people">
+    <section id="people" class="panel">
+      {% project_user_list request project 168 "True" %}
+    </section>
   </div>
-</div>
+{% endif %}
 
 {% endblock %}
 

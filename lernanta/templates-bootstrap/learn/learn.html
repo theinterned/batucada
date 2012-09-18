@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load learn_tags %}
+{% block title %}{{ _('Learn') }}{% endblock %}
+{% block bodyid %}learn{% endblock %}
+{% block bodyclasses %}card-list{% endblock %}
+
+{% block links %}<link rel="stylesheet" href="{% locale_url multiple_schools_css %}?v=1">{% endblock %}
+
+{% block breadcrumbs %}
+  {% if learn_school %}
+    <span class="arrow">&rsaquo;</span>
+    <a href="{{ learn_school.get_absolute_url }}">{{ learn_school.name }}</a>
+  {% endif %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% if learn_school %}{% locale_url learn_schools school_slug=learn_school.slug %}{% else %}{% learn_default %}{% endif %}">{{ _('Learn') }}</a>
+{% endblock %}
+{% block breadcrumbs_actions %}
+  {% if user.is_authenticated %}
+    <a id="create-project" class="button" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <div id="sidebar">
+    {% include "learn/_learn_filters.html"%}
+  </div>
+
+  <div id="main">
+    <br>
+    <section>
+      <h1 id="learn-header">
+        {% include "learn/_learn_header.html"%}
+      </h1>
+      <br>
+      <ul class="project-list">
+        {% include "learn/_learn_projects.html" %}
+      </ul>
+      <br clear="both">
+      <div id="learn-pagination">
+        {% include "learn/_learn_pagination.html" %}
+      </div>
+      <a id="show-more-results" class="button" href="#">{{ _('Show More Results') }}</a>
+    </section>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    {% if infinite_scroll %}
+        $(window).scroll(function(){
+            var $project_list = $('#learn #main ul.project-list');
+            if ($project_list.offset().top + $project_list.height() < $(document).scrollTop() + $(window).height()) {
+                var $show_more_results = $('#learn #main #show-more-results');
+                if ( !$show_more_results.hasClass('disabled')) {
+                    $show_more_results.trigger('click');
+                }
+            }
+        });
+    {% endif %}
+  </script>
+{% endblock %}
