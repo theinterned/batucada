@@ -29,8 +29,13 @@
   <link rel="stylesheet" href="https://www.google.com/cse/style/look/default.css" type="text/css" />
 {% flag 'css-framework' %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/overrides.css">
+  <script src="{{ STATIC_URL }}js/libs/jquery-1.7.2.min.js"></script>
   <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
   <script src="{{ STATIC_URL }}js/trunk8.js"></script>
+  
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/toolbar.min.css">
+  <script src="{{ STATIC_URL }}js/toolbar.min.js"></script>
+  
 {% else %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1">
@@ -43,7 +48,6 @@
   {% block css %}{% endblock %}
   <script src="{{ STATIC_URL }}js/libs/modernizr-1.6.min.js"></script>
   <script src="{{ STATIC_URL }}ckeditor/ckeditor/ckeditor.js"></script>
-  <script src="{{ STATIC_URL }}js/libs/jquery-1.4.2.min.js"></script>
   {% block links %}{% endblock %}
 </head>
 <body id="{% block bodyid %}body{% endblock %}" class="{% block bodyclasses %}.body{% endblock %}">
