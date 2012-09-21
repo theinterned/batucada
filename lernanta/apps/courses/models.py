@@ -46,10 +46,8 @@ def get_course(course_uri):
         "plug": course_db.plug,
         "language": course_db.language,
     }
-    if course_db.draft:
-        course["draft"] = True
-    if course_db.archived:
-        course["archived"] = True
+    course["draft"] = course_db.draft
+    course["archived"] = course_db.archived
 
     content = get_course_content(course_uri)
     if len(content) > 0:
