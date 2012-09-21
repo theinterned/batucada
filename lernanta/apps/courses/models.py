@@ -303,6 +303,8 @@ def is_cohort_organizer(user_uri, cohort_uri):
 
 def add_user_to_cohort(cohort_uri, user_uri, role):
     cohort_db = _get_cohort_db(cohort_uri)
+    if db.CohortSignup.objects.filter(cohort=cohort_db, user_uri=user_uri, leave_date__isnull=True).exists():
+        return None
     signup_db = db.CohortSignup(
         cohort=cohort_db,
         user_uri=user_uri,
