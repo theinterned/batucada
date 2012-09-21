@@ -57,33 +57,54 @@
       </p>
       {% if organizer and course.draft %}
         <p>Draft</p>
-        <p><a class="button" href="{% locale_url courses_change_status course_id=course.id status='publish' %}">{% trans "Publish" %}</a></p>
+        <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
+            {% csrf_token %}
+            <p><button type="submit">{% trans "Publish" %}</button></p>
+        </form>
       {% endif %}
       {% if organizer and not course.draft and not course.archived %}
         <p>Published</p>
-        <p><a class="button" href="{% locale_url courses_status course_id=course.id status='archive' %}">{% trans "Archive" %}</a></p>
+          <form action="{% locale_url courses_change_status course_id=course.id status='archive' %}" method="POST">
+            {% csrf_token %}
+            <p><button type="submit">{% trans "Archive" %}</button></p>
+        </form>
       {% endif %}
       {% if organizer and course.archived %}
         <p>Archived</p>
-        <p><a class="button" href="{% locale_url courses_status course_id=course.id status='publish' %}">{% trans "Resurrect" %}</a></p>
+        <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
+            {% csrf_token %}
+            <p><button type="submit">{% trans "Resurrect" %}</button></p>
+        </form>
       {% endif %}
     </div>
     <div>
-      <p>
-        {% trans "open" %}
-        <i>|</i> 
-        {% trans "moderated" %}
-        <i>|</i> 
-        {% trans "closed" %}
-      </p>
+      {% if cohort.signup == 'OPEN' %}
+        <p>{% trans 'Singup is open. Anyone can sign up once the course is publised!' %}</p>
+      {% endif %}
+      {% if cohort.signup == 'MODERATED' %}
+        <p>{% trans 'Singup is moderated. To sign up for this course you should contact one of the course organizer.' %}</p>
+      {% endif %}
+      {% if cohort.signup == 'CLOSED' %}
+        <p>{% trans 'Singup is closed. Only organizer can add more people.' %}</p>
+      {% endif %}
+
       {% if organizer and cohort.signup != 'OPEN' %}
-        <p><a href="{% locale_url courses_change_signup course_id=course.id signup='open'%}">Change to Open</a></p>
+        <form action="{% locale_url courses_change_signup course_id=course.id signup='open'%}" method="POST">
+          {% csrf_token %}
+          <p><button type="submit">{% trans 'Change to Open' %}</button></p>
+        </form>
       {% endif %}
       {% if organizer and cohort.signup != 'MODERATED' %}
-        <p><a href="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}">Change to Moderated</a></p>
+        <form action="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}" method="POST">
+          {% csrf_token %}
+          <p><button type="submit">{% trans 'Change to Moderated' %}</button></p>
+        </form>
       {% endif %}
       {% if organizer and cohort.signup != 'CLOSED' %}
-        <p><a href="{% locale_url courses_change_signup course_id=course.id signup='closed'%}">Change to Closed</a></p>
+        <form action="{% locale_url courses_change_signup course_id=course.id signup='closed'%}" method="POST">
+          {% csrf_token %}
+          <p><button type="submit">{% trans 'Change to Closed' %}</button></p>
+        </form>
       {% endif %}
     </div>
     <div id="course-term">
@@ -269,7 +290,10 @@
               {% if organizer %}
                 <a href="{% locale_url courses_leave course_id=course.id username=user.username %}">{% trans "Remove user" %}</a>
                 {% if user.role == "LEARNER" %}
-                  <a href="#">{% trans "Make organizer" %}</a>
+                  <form action="{% locale_url courses_add_organizer course_id=course.id username=user.username %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">{% trans "Make organizer" %}</button>
+                  </form>
                 {% endif %}
               {% endif %}
             </li>

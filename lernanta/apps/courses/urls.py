@@ -32,6 +32,10 @@ urlpatterns = patterns('',
         'courses.views.course_leave',
         name='courses_leave'),
 
+    url(r'^(?P<course_id>[\d]+)/add_organizer/(?P<username>[\w\-\.]+)/$',
+        'courses.views.course_add_organizer',
+        name='courses_add_organizer'),
+
     url(r'^(?P<course_id>[\d]+)/content/create/$',
         'courses.views.create_content',
         name='courses_create_content'),

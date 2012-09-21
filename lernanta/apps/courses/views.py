@@ -131,6 +131,25 @@ def course_leave( request, course_id, username ):
 
 
 @login_required
+def course_add_organizer( request, course_id, username ):
+    cohort = course_model.get_course_cohort( course_id )
+    user_uri = "/uri/user/{0}".format(request.user.username)
+    is_organizer = course_model.is_cohort_organizer(
+        user_uri, cohort['uri']
+    )
+    if not is_organizer:
+        messages.error( request, _("Only other organizers can add a new organizer") )
+        return course_slug_redirect( request, course_id)
+    new_organizer_uri = "/uri/user/{0}".format(username)
+    course_model.remove_user_from_cohort(cohort['uri'], new_organizer_uri)
+    course_model.add_user_to_cohort(cohort['uri'], new_organizer_uri, "ORGANIZER")
+
+    #TODO
+    return course_slug_redirect( request, course_id)
+
+
+@login_required
+@require_http_methods(['POST'])
 def course_change_status( request, course_id, status ):
     # TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
@@ -144,6 +163,7 @@ def course_change_status( request, course_id, status ):
 
 
 @login_required
+@require_http_methods(['POST'])
 def course_change_signup( request, course_id, signup ):
     # TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
@@ -155,6 +175,7 @@ def course_change_signup( request, course_id, signup ):
 
 
 @login_required
+@require_http_methods(['POST'])
 def course_change_term( request, course_id, term ):
     cohort = course_model.get_course_cohort( course_id )
     cohort['term'] = term.upper()
