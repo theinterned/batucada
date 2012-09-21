@@ -7,3 +7,7 @@ class CourseCreationForm(forms.Form):
     plug = forms.CharField(widget=forms.Textarea)
     language = forms.ChoiceField(choices=settings.LANGUAGES)
 
+
+class CourseTermForm(forms.Form):
+    start_date = forms.DateField()
+    end_date = forms.DateField()

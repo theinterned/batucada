@@ -25,8 +25,8 @@
 
 {% block body %}
 
-<div id="sidebar-wrapper">
-
+<div class="row">
+<div id="sidebar-wrapper" class="span3">
 <div id="sidebar">
   <section id="project" class="panel">
     <figure class="project_img">
@@ -57,7 +57,7 @@
       </p>
       {% if organizer and course.draft %}
         <p>Draft</p>
-        <p><a class="button" href="{% locale_url courses_status course_id=course.id status='publish' %}">{% trans "Publish" %}</a></p>
+        <p><a class="button" href="{% locale_url courses_change_status course_id=course.id status='publish' %}">{% trans "Publish" %}</a></p>
       {% endif %}
       {% if organizer and not course.draft and not course.archived %}
         <p>Published</p>
@@ -88,20 +88,26 @@
     </div>
     <div id="course-term">
       {% if cohort.term == 'ROLLING' %}
-      <p>{%trans "This course doesn't have start and end dates"%}</p>
-        {% if organizer %}
-          {%trans "Switch to fixed term and set dates"%}
-          <form action="#" method="POST">
-            {% csrf_token %}
-            <p><input type="date" /></p>
-            <p><input type="date" /></p>
-            <p><input type="submit" value="{% trans "Convert term" %}"/></p>
-          </form>
-        {% endif %}
+        <p>{%trans "This course doesn't have start and end dates"%}</p>
       {% else %}
         {% blocktrans with start_date=cohort.start_date end_date=cohort.end_date %}
           <p>This course runs from {{start_date}} to {{end_date}}</p>
         {% endblocktrans %}
+      {% endif %}
+
+      {% if organizer %}
+        {%trans "Switch to fixed term and set dates"%}
+        <form action="{% locale_url courses_change_term course_id=course.id term='fixed' %}" method="POST">
+          {% csrf_token %}
+          <p><label for="id_start_date">{% trans 'Start:' %}</label>{{term_form.start_date}}</p>
+          <p><label for="id_end_date">{% trans 'End:' %}</label>{{term_form.end_date}}</p>
+          <p><input type="submit" value="{% trans "Update fixed term" %}"/></p>
+        </form>
+        {% if cohort.term == 'FIXED' %}
+          <form action="{% locale_url courses_change_term course_id=course.id term='rolling' %}">
+            <p><input type="submit" value="{% trans "Switch to rolling term" %}"/></p>
+          </form>
+        {% endif %}
       {% endif %}
     </div>
     <div id="course-singup">
@@ -137,137 +143,152 @@
 </div>
 
 
-<div id="main">
+<div id="main" class="span9">
 
-  <div id="about-tab">
-    {% if about.content|length == 0 %}
-      <h2>About</h2>
-      <p>{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
-      </p>
-    {% else %}
-    <h2>{{about.title}}</h2>
-    <div class="markup">{{ about.content|safe }}</div>
-    {% endif %}
-    <p>
-    <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}">
-        <i class="icon-edit"></i>
-    </a>
-    </p>
-  </div>
-
-  <div id="content-tab">
-    <h2>Content</h2>
-    {% if course.content|length %}
-      <ul>
-        {% for task in course.content %}
-          <li class="{% cycle 'odd' 'even' %}">
-            <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
-            {% if organizer %}
-	            {% if not forloop.first %}<a class="robttn up" href="{% locale_url courses_content_up course_id=course.id content_id=task.id %}">(UP)</a>{% endif %}
-	            {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url courses_content_down course_id=course.id content_id=task.id%}">(DOWN)</a>{% endif %}
-            {% endif %}
-            <a class="taskView" href="#">{{ _('View and Discuss') }}</a>
-            <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}">
-                <i class="icon-edit"></i>
-            </a>
-
-          </li>
-        {% endfor %}
-        {% if organizer %}
-          <a href="{% locale_url courses_create_content course_id=course.id %}">
-            <i class="icon-plus"></i>
-          </a>
-        {% endif %}
-      </ul>
-    {% else %}
-      {% if organizer %}
-        <p>{% blocktrans %}No content have been added. {% endblocktrans %}<a href="{% locale_url courses_create_content course_id=course.id%}">Click here</a> to add some content</p>
-      {% endif %}
-    {% endif %}
-  </div>
-
-  <div id="discussion-tab">
-    <h2>Discussion</h2>
-    {% for comment in comments %}
-      <div class="post-container">
-        <a name="comment-{{comment.id}}"></a>
-        {{comment.content}}
-        {% if comment.replies|length > 0 %}
-          <p>
-            {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#about-tab" data-toggle="tab">{% trans 'About' %}</a></li>
+      <li><a href="#content-tab" data-toggle="tab">{% trans 'Content' %}</a></li>
+      <li><a href="#discussion-tab" data-toggle="tab">{% trans 'Discussion' %}</a></li>
+      <li><a href="#badges-tab" data-toggle="tab">{% trans 'Badges' %}</a></li>
+      <li><a href="#people-tab" data-toggle="tab">{% trans 'People' %}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="about-tab">
+        {% if about.content|length == 0 %}
+          <p>{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
           </p>
+        {% else %}
+          <div class="markup">{{ about.content|safe }}</div>
         {% endif %}
-        <a href="#"><i class="icon-comment"></i></a>
-        <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
-          {% csrf_token %}
-          <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
-          <input type="submit" value="{% trans "Post comment" %}"/>
-        </form>
+        <p>
+        <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}">
+            <i class="icon-edit">edit</i>
+        </a>
+        </p>
       </div>
-    {% endfor %}
-
-    <div>
-      <a href="#"><i class="icon-comment"></i></a>
-      <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
-        {% csrf_token %}
-        <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
-        <input type="submit" value="{% trans "Post comment" %}"/>
-      </form>
-    </div>
-  </div>
-
-  <div id="badges-tab">
-    <h2>Badges</h2>
-    {% if submission_enabled_badges %}
-      <div class="bottom-sidebar">
-        {% for badge in submission_enabled_badges %}
-          {% if not forloop.first %}<hr class="badge-break">{% endif %}
-          <div class="badge">
-            {% with awards_count=badge.awards.count pending_count=badge.get_pending_submissions.count %}
-              <div class="badge-top">
-                <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img class="badge-graphic" src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
-                <div class="badge-awarded">
-                  <a class="badge-awarded-header" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ _('Awarded') }}</a>
-                  <a class="badge-awarded-number" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ awards_count }}</a>
-                </div>
-                <div class="badge-pending">
-                  <a class="badge-pending-header" href="{% locale_url matching_submissions slug=badge.slug %}">{{ _('Pending') }}</a>
-                  <a class="badge-pending-number" href="{% locale_url matching_submissions slug=badge.slug %}">{{ pending_count }}</a>
-                </div>
-              </div>
-              <div class="badge-bottom">
-                {% if pending_count %}
-                  <a href="{% locale_url matching_submissions slug=badge.slug %}">
-                    {% blocktrans count counter=pending_count %}{{ counter }} peer needs your review!{% plural %}{{ counter }} peers need your review!{% endblocktrans %} {{ _('Go') }} →
-                  </a>
+  
+      <div class="tab-pane" id="content-tab">
+        {% if course.content|length %}
+          <ul>
+            {% for task in course.content %}
+              <li class="{% cycle 'odd' 'even' %}">
+                <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
+                {% if organizer %}
+                    {% if not forloop.first %}<a class="robttn up" href="{% locale_url courses_content_up course_id=course.id content_id=task.id %}">(UP)</a>{% endif %}
+                    {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url courses_content_down course_id=course.id content_id=task.id%}">(DOWN)</a>{% endif %}
                 {% endif %}
-              </div>
-            {% endwith %}
+                <a class="taskView" href="#">{{ _('View and Discuss') }}</a>
+                <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}">
+                    <i class="icon-edit">edit</i>
+                </a>
+  
+              </li>
+            {% endfor %}
+            {% if organizer %}
+              <a href="{% locale_url courses_create_content course_id=course.id %}">
+                <i class="icon-plus">add</i>
+              </a>
+            {% endif %}
+          </ul>
+        {% else %}
+          {% if organizer %}
+            <p>{% blocktrans %}No content have been added. {% endblocktrans %}<a href="{% locale_url courses_create_content course_id=course.id%}">Click here</a> to add some content</p>
+          {% endif %}
+        {% endif %}
+      </div>
+  
+      <div class="tab-pane" id="discussion-tab">
+        {% for comment in comments %}
+          <div class="post-container">
+            <a name="comment-{{comment.id}}"></a>
+            {{comment.content}}
+            {% if comment.replies|length > 0 %}
+              <p>
+                {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
+              </p>
+            {% endif %}
+            <a href="#"><i class="icon-comment">comment</i></a>
+            <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
+              {% csrf_token %}
+              <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
+              <input type="submit" value="{% trans "Post comment" %}"/>
+            </form>
           </div>
         {% endfor %}
-      </div>
-    {% endif %}
-
-
-  </div>
-
-  <div id="people-tab">
-    <h2>{% trans "People" %}</h2>
-      {% for user in cohort.users %}
-        <div class="user-tile">
-          <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png" alt="{{user.username}}"></a>
-          {% if organizer %}
-            <a href="{% locale_url courses_leave course_id=course.id username=user.username %}">{% trans "Remove user" %}</a>
-            {% if user.role == "LEARNER" %}
-              <a href="#">{% trans "Make organizer" %}</a>
-            {% endif %}
-          {% endif %}
+  
+        <div>
+          <a href="#"><i class="icon-comment">comment</i></a>
+          <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
+            {% csrf_token %}
+            <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
+            <input type="submit" value="{% trans "Post comment" %}"/>
+          </form>
         </div>
-      {% empty %}
-        {{ _("No users are taking this course, be the first to sign up!!") }}
-      {% endfor %}
-  </div>
+      </div>
+  
+      <div class="tab-pane" id="badges-tab">
+        {% if submission_enabled_badges %}
+          <div class="bottom-sidebar">
+            {% for badge in submission_enabled_badges %}
+              {% if not forloop.first %}<hr class="badge-break">{% endif %}
+              <div class="badge">
+                {% with awards_count=badge.awards.count pending_count=badge.get_pending_submissions.count %}
+                  <div class="badge-top">
+                    <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img class="badge-graphic" src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
+                    <div class="badge-awarded">
+                      <a class="badge-awarded-header" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ _('Awarded') }}</a>
+                      <a class="badge-awarded-number" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ awards_count }}</a>
+                    </div>
+                    <div class="badge-pending">
+                      <a class="badge-pending-header" href="{% locale_url matching_submissions slug=badge.slug %}">{{ _('Pending') }}</a>
+                      <a class="badge-pending-number" href="{% locale_url matching_submissions slug=badge.slug %}">{{ pending_count }}</a>
+                    </div>
+                  </div>
+                  <div class="badge-bottom">
+                    {% if pending_count %}
+                      <a href="{% locale_url matching_submissions slug=badge.slug %}">
+                        {% blocktrans count counter=pending_count %}{{ counter }} peer needs your review!{% plural %}{{ counter }} peers need your review!{% endblocktrans %} {{ _('Go') }} →
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endwith %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+  
+  
+      </div>
+ 
+      <div class="tab-pane" id="people-tab">
+        <ul>
+          {% for user in cohort.users %}
+            <li class="user-tile">
+              <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png" alt="{{user.username}}"></a>
+              {% if organizer %}
+                <a href="{% locale_url courses_leave course_id=course.id username=user.username %}">{% trans "Remove user" %}</a>
+                {% if user.role == "LEARNER" %}
+                  <a href="#">{% trans "Make organizer" %}</a>
+                {% endif %}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div> <!-- /#tabbable -->
 </div> <!-- /#main -->
 
+</div> <!-- /#row -->
 
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(document).ready(function(){
+      $("#id_start_date").datepicker();
+    });
+  </script>
 {% endblock %}

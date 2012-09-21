@@ -12,13 +12,17 @@ urlpatterns = patterns('',
         'courses.views.course_signup',
         name='courses_signup'),
 
-    url(r'^(?P<course_id>[\d]+)/status/(?P<status>draft|publish|archive)/$',
-        'courses.views.course_status',
-        name='courses_status'),
+    url(r'^(?P<course_id>[\d]+)/change_status/(?P<status>draft|publish|archive)/$',
+        'courses.views.course_change_status',
+        name='courses_change_status'),
 
     url(r'^(?P<course_id>[\d]+)/change_signup/(?P<signup>open|moderated|closed)/$',
         'courses.views.course_change_signup',
         name='courses_change_signup'),
+
+    url(r'^(?P<course_id>[\d]+)/change_term/(?P<term>fixed|rolling)/$',
+        'courses.views.course_change_term',
+        name='courses_change_term'),
 
     url(r'^(?P<course_id>[\d]+)/(?P<slug>[\w-]+)/$',
         'courses.views.show_course',

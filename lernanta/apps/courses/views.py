@@ -13,7 +13,7 @@ from users.decorators import login_required
 from drumbeat import messages
 
 from courses import models as course_model
-from courses.forms import CourseCreationForm
+from courses.forms import CourseCreationForm, CourseTermForm
 
 from content2 import models as content_model
 from content2.forms import ContentForm
@@ -79,11 +79,15 @@ def show_course( request, course_id, slug=None ):
     context['comments'] = course_model.get_cohort_comments(
         cohort['uri'], course['about_uri']
     )
+    if cohort['term'] == 'FIXED':
+        context['term_form'] = CourseTermForm(cohort)
+    else:
+        context['term_form'] = CourseTermForm()
     
     user_uri = "/uri/user/{0}".format(request.user.username)
     if course_model.user_in_cohort(user_uri, cohort['uri']):
         context['show_leave_course'] = True
-    elif cohort['signup'] == "OPEN":
+    elif cohort['signup'] == "OPEN" and course['draft'] == False:
         context['show_signup'] = True
 
 
@@ -127,7 +131,7 @@ def course_leave( request, course_id, username ):
 
 
 @login_required
-def course_status( request, course_id, status ):
+def course_change_status( request, course_id, status ):
     # TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
@@ -148,6 +152,24 @@ def course_change_signup( request, course_id, signup ):
     if not cohort:
         messages.error( request, _("Could not change cohort signup"))
     return course_slug_redirect( request, course_id )
+
+
+@login_required
+def course_change_term( request, course_id, term ):
+    cohort = course_model.get_course_cohort( course_id )
+    cohort['term'] = term.upper()
+    if term == 'fixed':
+        form = CourseTermForm(request.POST)
+        if form.is_valid():
+            cohort['start_date'] = form.cleaned_data['start_date']
+            cohort['end_date'] = form.cleaned_data['end_date']
+            cohort = course_model.update_cohort(cohort)
+        else:
+            messages.error( request, _("Could not update fixed term dates"))
+    elif term == 'rolling':
+        cohort = course_model.update_cohort(cohort)
+    return course_slug_redirect( request, course_id)
+
 
 def show_content( request, course_id, content_id):
     content_uri = '/uri/content/{0}'.format(content_id)
