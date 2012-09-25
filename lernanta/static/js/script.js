@@ -324,12 +324,44 @@ $(document).ready(function() {
     });
 
 	// initialize and set trunk8 plugin
-	$('.truncate-to-3-lines').trunk8({
-	   lines: 3
+	$('.truncate-to-1-line').trunk8({
+	   lines: 1
 	});
 	
 	$('.truncate-to-2-lines').trunk8({
 	   lines: 2
+	});
+	
+	$('.truncate-to-3-lines').trunk8({
+	   lines: 3
+	});
+	
+	$('.truncate-to-4-lines').trunk8({
+	   lines: 4
+	});
+	
+	$('.truncate-to-5-lines').trunk8({
+	   lines: 5
+	});
+	
+	$('.truncate-to-6-lines').trunk8({
+	   lines: 6
+	});
+	
+	$('.truncate-to-7-lines').trunk8({
+	   lines: 7
+	});
+	
+	$('.truncate-to-8-lines').trunk8({
+	   lines: 8
+	});
+	
+	$('.truncate-to-9-lines').trunk8({
+	   lines: 9
+	});
+	
+	$('.truncate-to-10-lines').trunk8({
+	   lines: 10
 	});
     
     $('li.contribute-nav').click(function(){

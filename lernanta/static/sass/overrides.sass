@@ -260,11 +260,18 @@ header
   
 footer
   background-color: $fog
+  &.schools
+    background-color: $white
+    border-top: 1px solid #ccc
+    border-bottom: 1px solid #ccc
 
 body
   font-family: $secondary-font, sans-serif
   font-size: pem($baseFontSize)
   background-color: $cloud
+  
+small
+  font-size: 65%
 
 h1
   font-family: $primary-font
@@ -840,6 +847,10 @@ input, textarea
       height: 2.5em
       text-overflow-y: hidden
       overflow-y: hidden
+      a
+        height: auto
+        span
+          height: auto
     p
       font-family: $secondary-font
       @include adjust-font-size-to($feature-p)
@@ -1028,20 +1039,23 @@ input, textarea
   height: pem(89px)
   margin-bottom: 0px
   text-align: center
-  &:before
-    content: ""
+  ul
     @include inline-block
-    height: 100%
-    vertical-align: middle
-  &:after
-    content: ""
-    @include inline-block
-    height: 100%
-    vertical-align: middle
+    @include inline-block-list
+    padding: 7px 15px 0px 15px
+    text-align: justify
+    /*ie*/
+    text-justify: inter-word
+    clear: none
+    li
+      float: none
+      &.wrap
+        white-space: normal
   h2
     @include inline-block
     color: $dark-slate
     @include adjust-leading-to($base-no-leader-line-height)
+    padding-left: pem(10px)
   dl
     @include inline-block
     @include adjust-leading-to($base-no-leader-line-height)
@@ -1093,6 +1107,9 @@ input, textarea
 .btn-skinny
   padding-left: 2px
   padding-right: 2px
+.btn-short
+  padding-top: 10px
+  padding-bottom: 5px
 // Set text color
 // -------------------------
 .btn-apricot,
@@ -1148,13 +1165,12 @@ input, textarea
 .container
   margin: 0 auto
   &.breadcrumb-box
-    margin-bottom: pem(-40px)
+    margin-bottom: pem(0px)
   &.body
     margin-top: pem(23px)
   &.footer-schools
-    margin-top: 40px
     background: #fff
-    border-top: 1px solid #ccc
+    height: 100%
     h5
       color: #ccc
       width: 100%
@@ -1164,10 +1180,9 @@ input, textarea
       margin: 15px 0 15px 0
     .school-small-icon
       width: 200px
-      float: right
+      @include inline-block
       text-align: center
-      margin-bottom: 10px
-    .school-small-icon 
+      margin-bottom: 10px 
       a
         color: #555
         &:hover
@@ -1203,4 +1218,34 @@ input, textarea
 
 .add-standard-left-padding
   padding-left: 10px
-    
+  
+.row-fluid.center-content [class*="span"]:first-child
+  @include center-block
+  
+@media (min-width: 1200px)
+  .row-fluid.center-content [class*="span"]:first-child
+    @include center-block
+
+[class*="span"] .inherit-height
+  height: inherit
+
+.vertical-center
+  @include inline-block
+  height: inherit
+  &:before
+    content: ""
+    @include inline-block
+    height: 100%
+    vertical-align: middle
+  &:after
+    content: ""
+    @include inline-block
+    height: 100%
+    vertical-align: middle
+
+.wrap
+  @include inline-block
+  white-space: normal
+  vertical-align: middle
+  width: 95%
+
