@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load learn_tags %}
 
-{% block title %}{{course.title}}{% endblock %}
+{% block title %}[{{course.short_title}}] {{course.title}}{% endblock %}
 {% block bodyclasses %}course-landing{% endblock%}
 
 {% block css %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block breadcrumbs_title %}
-  <h1 id="project-name">{{course.title}}</h1>
+  <h1 id="project-name">[{{course.short_title}}] {{course.title}}</h1>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -45,7 +45,14 @@
         <p>{{ course.plug }}</p>
     </div>
     <div id="course-language">
-        <p>{% language_name course.language %}</p>
+      <p>{% language_name course.language %}</p>
+      {% if organizer %}
+        <form action="{% locale_url courses_change_language course_id=course.id %}" method="POST">
+          {% csrf_token %}
+          {{ language_form }}
+          <button type="submit">{% trans "update language" %}</button>
+        </form>
+      {% endif %}
     </div>
     <div>
       <p>
@@ -200,9 +207,12 @@
                     {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url courses_content_down course_id=course.id content_id=task.id%}">(DOWN)</a>{% endif %}
                 {% endif %}
                 <a class="taskView" href="#">{{ _('View and Discuss') }}</a>
+
+                {% if organizer %}
                 <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}">
                     <i class="icon-edit">edit</i>
                 </a>
+                {% endif %}
   
               </li>
             {% endfor %}

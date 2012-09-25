@@ -68,11 +68,10 @@ def create_course(course_data, organizer_uri):
         language=course_data['language']
     )
 
-    course_db.save()
     try:
         course_db.save()
     except:
-        # TODO
+        log.error("could not save Course to database!")
         return None
 
     about = content_model.create_content(
@@ -85,9 +84,18 @@ def create_course(course_data, organizer_uri):
     return course
 
 
-def update_course(course_json):
+def update_course(course_uri, language=None):
     # TODO
-    return False
+    course_db = _get_course_db(course_uri)
+    if not course_db:
+        return None
+    if language:
+        course_db.language = language
+    try:
+        course_db.save()
+    except:
+        log.error("could not save Course to database!")
+    return get_course(course_uri)
 
 
 def publish_course(course_uri):
@@ -99,7 +107,7 @@ def publish_course(course_uri):
     try:
         course_db.save()
     except:
-        log.error("could not save Course db object!")
+        log.error("could not save Course to database!")
     # TODO: Notify interested people in new course
     return get_course(course_uri)
 

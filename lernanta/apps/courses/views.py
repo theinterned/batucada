@@ -13,7 +13,7 @@ from users.decorators import login_required
 from drumbeat import messages
 
 from courses import models as course_model
-from courses.forms import CourseCreationForm, CourseTermForm
+from courses.forms import CourseCreationForm, CourseTermForm, CourseLanguageForm
 
 from content2 import models as content_model
 from content2.forms import ContentForm
@@ -70,6 +70,7 @@ def show_course( request, course_id, slug=None ):
         return course_slug_redirect( request, course_id)
 
     context = { 'course': course }
+    context['language_form'] = CourseLanguageForm(course)
     context['about'] = content_model.get_content(course['about_uri'])
     context['about']['content'] = markdown.markdown(
         context['about']['content'], ['tables']
@@ -211,6 +212,20 @@ def course_change_term( request, course_id, term ):
     elif term == 'rolling':
         cohort = course_model.update_cohort(cohort)
     return course_slug_redirect( request, course_id)
+
+
+@login_required
+@require_http_methods(['POST'])
+def course_change_language( request, course_id ):
+    # TODO check organizer
+    course_uri = course_model.course_id2uri(course_id)
+    form = CourseLanguageForm(request.POST)
+    if form.is_valid():
+        course_model.update_course(
+            course_uri,
+            language=form.cleaned_data['language']
+        )
+    return course_slug_redirect( request, course_id )
 
 
 def show_content( request, course_id, content_id):
