@@ -299,6 +299,13 @@
             </li>
           {% endfor %}
         </ul>
+        <p>
+            <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" />
+                <button type="submit">{% trans "Add user" %}</button>
+            </form>
+        </p>
       </div>
 
     </div>

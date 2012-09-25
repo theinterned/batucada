@@ -8,9 +8,13 @@ urlpatterns = patterns('',
         'courses.views.course_slug_redirect',
         name='courses_slug_redirect'),
 
-    url(r'^(?P<course_id>[\d]+)/signup/',
+    url(r'^(?P<course_id>[\d]+)/signup/$',
         'courses.views.course_signup',
         name='courses_signup'),
+
+    url(r'^(?P<course_id>[\d]+)/add_user/$',
+        'courses.views.course_add_user',
+        name='courses_add_user'),
 
     url(r'^(?P<course_id>[\d]+)/change_status/(?P<status>draft|publish|archive)/$',
         'courses.views.course_change_status',
@@ -28,7 +32,7 @@ urlpatterns = patterns('',
         'courses.views.show_course',
         name='courses_show'),
 
-    url(r'^(?P<course_id>[\d]+)/remove/(?P<username>[\w\-\.]+)/$',
+    url(r'^(?P<course_id>[\d]+)/remove_user/(?P<username>[\w\-\.]+)/$',
         'courses.views.course_leave',
         name='courses_leave'),
 

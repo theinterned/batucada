@@ -111,6 +111,26 @@ def course_signup( request, course_id ):
 
 
 @login_required
+@require_http_methods(['POST'])
+def course_add_user( request, course_id ):
+    cohort = course_model.get_course_cohort( course_id )
+    admin_uri = "/uri/user/{0}".format(request.user.username)
+    is_organizer = course_model.is_cohort_organizer(
+        admin_uri, cohort['uri']
+    )
+    username = request.POST.get('username', None)
+    if not is_organizer:
+        messages.error(request, _("Only organizer are allowed to add new users"))
+        return course_slug_redirect(request, course_id)
+    if not username:
+        messages.error(request, _("Please select a user"))
+        return course_slug_redirect(request, course_id)
+    user_uri = "/uri/user/{0}".format(username)
+    course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
+    return course_slug_redirect(request, course_id)
+
+
+@login_required
 def course_leave( request, course_id, username ):
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
@@ -131,6 +151,7 @@ def course_leave( request, course_id, username ):
 
 
 @login_required
+@require_http_methods(['POST'])
 def course_add_organizer( request, course_id, username ):
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
