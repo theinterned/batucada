@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  {% if featured_project %}
+  {% if featured_projects %}
     <div class="feature-box">
       <div class="row-fluid">
         <div class="span12 pull-left">
@@ -47,9 +47,9 @@
       </div>
       <div class="row-fluid">
 	      <ul class="thumbnails">
-          {% with featured_project as project %}
+          {% for project in featured_projects %}
             <li>{% include "projects/_project_card.html" %}</li>
-          {% endwith %}
+          {% endfor %}
         </ul>
       </div>
     </div>
