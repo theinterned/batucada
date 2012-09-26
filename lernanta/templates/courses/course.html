@@ -94,24 +94,28 @@
       {% if cohort.signup == 'CLOSED' %}
         <p>{% trans 'Singup is closed. Only organizer can add more people.' %}</p>
       {% endif %}
-
-      {% if organizer and cohort.signup != 'OPEN' %}
-        <form action="{% locale_url courses_change_signup course_id=course.id signup='open'%}" method="POST">
-          {% csrf_token %}
-          <p><button type="submit">{% trans 'Change to Open' %}</button></p>
-        </form>
-      {% endif %}
-      {% if organizer and cohort.signup != 'MODERATED' %}
-        <form action="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}" method="POST">
-          {% csrf_token %}
-          <p><button type="submit">{% trans 'Change to Moderated' %}</button></p>
-        </form>
-      {% endif %}
-      {% if organizer and cohort.signup != 'CLOSED' %}
-        <form action="{% locale_url courses_change_signup course_id=course.id signup='closed'%}" method="POST">
-          {% csrf_token %}
-          <p><button type="submit">{% trans 'Change to Closed' %}</button></p>
-        </form>
+      {% if organizer %}
+        <p><a data-toggle="collapse" data-target="#signup-edit">{% trans "change" %}</a></p>
+        <div id="signup-edit" class="collapse">
+          {% if cohort.signup != 'OPEN' %}
+            <form action="{% locale_url courses_change_signup course_id=course.id signup='open'%}" method="POST">
+              {% csrf_token %}
+              <p><button type="submit">{% trans 'Change to Open' %}</button></p>
+            </form>
+          {% endif %}
+          {% if cohort.signup != 'MODERATED' %}
+            <form action="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}" method="POST">
+              {% csrf_token %}
+              <p><button type="submit">{% trans 'Change to Moderated' %}</button></p>
+            </form>
+          {% endif %}
+          {% if cohort.signup != 'CLOSED' %}
+            <form action="{% locale_url courses_change_signup course_id=course.id signup='closed'%}" method="POST">
+              {% csrf_token %}
+              <p><button type="submit">{% trans 'Change to Closed' %}</button></p>
+            </form>
+          {% endif %}
+        </div>
       {% endif %}
     </div>
     <div id="course-term">
@@ -124,18 +128,21 @@
       {% endif %}
 
       {% if organizer %}
-        {%trans "Switch to fixed term and set dates"%}
-        <form action="{% locale_url courses_change_term course_id=course.id term='fixed' %}" method="POST">
-          {% csrf_token %}
-          <p><label for="id_start_date">{% trans 'Start:' %}</label>{{term_form.start_date}}</p>
-          <p><label for="id_end_date">{% trans 'End:' %}</label>{{term_form.end_date}}</p>
-          <p><input type="submit" value="{% trans "Update fixed term" %}"/></p>
-        </form>
-        {% if cohort.term == 'FIXED' %}
-          <form action="{% locale_url courses_change_term course_id=course.id term='rolling' %}">
-            <p><input type="submit" value="{% trans "Switch to rolling term" %}"/></p>
+        <p><a data-toggle="collapse" data-target="#term-edit">{% trans 'edit' %}</a></p>
+        <div id="term-edit" class="collapse">
+          {%trans "Switch to fixed term and set dates"%}
+          <form action="{% locale_url courses_change_term course_id=course.id term='fixed' %}" method="POST">
+            {% csrf_token %}
+            <p><label for="id_start_date">{% trans 'Start:' %}</label>{{term_form.start_date}}</p>
+            <p><label for="id_end_date">{% trans 'End:' %}</label>{{term_form.end_date}}</p>
+            <p><input type="submit" value="{% trans "Update fixed term" %}"/></p>
           </form>
-        {% endif %}
+          {% if cohort.term == 'FIXED' %}
+            <form action="{% locale_url courses_change_term course_id=course.id term='rolling' %}">
+              <p><input type="submit" value="{% trans "Switch to rolling term" %}"/></p>
+            </form>
+          {% endif %}
+        </div>
       {% endif %}
     </div>
     <div id="course-singup">
@@ -191,7 +198,7 @@
         {% endif %}
         <p>
         <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}">
-            <i class="icon-edit">edit</i>
+            <i class="icon-edit"></i>
         </a>
         </p>
       </div>
@@ -210,7 +217,7 @@
 
                 {% if organizer %}
                 <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}">
-                    <i class="icon-edit">edit</i>
+                    <i class="icon-edit"></i>
                 </a>
                 {% endif %}
   
@@ -218,7 +225,7 @@
             {% endfor %}
             {% if organizer %}
               <a href="{% locale_url courses_create_content course_id=course.id %}">
-                <i class="icon-plus">add</i>
+                <i class="icon-plus"></i>
               </a>
             {% endif %}
           </ul>
@@ -239,22 +246,26 @@
                 {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
               </p>
             {% endif %}
-            <a href="#"><i class="icon-comment">comment</i></a>
-            <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
+            <a data-toggle="collapse" data-target="#comment-{{comment.id}}-reply"><i class="icon-comment"></i></a>
+            <div id="comment-{{comment.id}}-reply" class="collapse">
+              <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
+                {% csrf_token %}
+                <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
+                <input type="submit" value="{% trans "Post comment" %}"/>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+  
+        <div>
+          <a data-toggle="collapse" data-target="#comment-new"><i class="icon-comment"></i></a>
+          <div id="comment-new" class="collapse">
+            <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
               {% csrf_token %}
               <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
               <input type="submit" value="{% trans "Post comment" %}"/>
             </form>
           </div>
-        {% endfor %}
-  
-        <div>
-          <a href="#"><i class="icon-comment">comment</i></a>
-          <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
-            {% csrf_token %}
-            <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
-            <input type="submit" value="{% trans "Post comment" %}"/>
-          </form>
         </div>
       </div>
   
