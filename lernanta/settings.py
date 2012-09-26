@@ -116,7 +116,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
     'tracker.middleware.PageViewTrackerMiddleware',
-    'waffle.middleware.WaffleMiddleware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'
@@ -174,7 +173,6 @@ INSTALLED_APPS = (
     'lernanta.apps.tracker',
     'lernanta.apps.reviews',
     'lernanta.apps.notifications',
-    'waffle',
     'lernanta.apps.api',
     'tastypie',
 )
