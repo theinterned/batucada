@@ -3,6 +3,8 @@
 {% load project_tags %}
 {% load learn_tags %}
 
+<div class="bulitin-feature with-leader">
+
 <div id="sidebar-wrapper">
 
 <div id="sidebar">
@@ -47,11 +49,14 @@
     {% endif %}
 
     <div id="project-description">
-        {{ project.short_description }}
+	  <h2><small>
+		{{ project.short_description }}
+	  </small></h2>
     </div>
-    <br>
     <div id="project-summary">
-      {{ project.long_description|safe }}
+	  <p>
+        {{ project.long_description|safe }}
+      </p>
     </div>
 
     {% if is_challenge %}
@@ -75,22 +80,22 @@
           {% endif %}
         {% endif %}
         {% if not toggled_tasks %}
-          <a href="{{ project.get_absolute_url }}" class="discuss-link">{{ _('View Tasks')}}</a>
+          <a href="{{ project.get_absolute_url }}" class="btn discuss-link">{{ _('View Tasks')}}</a>
         {% else %}
-          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-link">{{ _('View Discussions')}}</a>
+          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="btn discuss-link">{{ _('View Discussions')}}</a>
         {% endif %}
       {% else %}
         {% if project.school.mentee_form_url %}
-          <a href="{{ project.school.mentee_form_url }}" class="discuss-button" target="_blank">{{ _('Request a Mentor')}}</a>
+          <a href="{{ project.school.mentee_form_url }}" class="btn discuss-button" target="_blank">{{ _('Request a Mentor')}}</a>
         {% else %}{% if not toggled_tasks %}
-          <a href="{{ project.get_absolute_url }}" class="discuss-button">{{ _('View Tasks')}}</a>
+          <a href="{{ project.get_absolute_url }}" class="btn discuss-button">{{ _('View Tasks')}}</a>
         {% else %}
-          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="discuss-button">{{ _('Discuss Challenge')}}</a>
+          <a href="{% locale_url projects_discussion_area slug=project.slug %}" class="btn discuss-button">{{ _('Discuss Challenge')}}</a>
         {% endif %}{% endif %}
         {% if not organizing %}
           <form method="post" action="{% locale_url direct_signup slug=project.slug %}">
             {% csrf_token %}
-            <a id="leave_direct_signup_button">{{ _('Leave Challenge') }}</a>
+            <a class="btn" id="leave_direct_signup_button">{{ _('Leave Challenge') }}</a>
           </form>
         {% endif %}
       {% endif %}
@@ -331,5 +336,7 @@
     {% endfor %}
   </div>
 {% endif %}
+
+</div>
 
 </div>

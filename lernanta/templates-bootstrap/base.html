@@ -32,6 +32,12 @@
   <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
   <script src="{{ STATIC_URL }}js/trunk8.js"></script>
   
+  
+  <!-- Added to turn on DJWT -->
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/toolbar.min.css">
+  <script src="{{ STATIC_URL }}js/toolbar.min.js"></script>
+  
+  
   <!--link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/batucada.css?v=1">
@@ -137,15 +143,14 @@
 <div class="container breadcrumb-box">
   <div class="row-fluid">
 	<div class="span9">
-      <ul class="breadcrumb">
-        <!-- Currently unused because there is now a title inside the main body of the page -->  
-        <!-- {% block breadcrumbs_title %}{% endblock %} -->
+      <ul class="breadcrumb"> 
         <li><a href="{% locale_url splash %}">{{ _('Home') }}</a></li>
         {% block breadcrumbs %}{% endblock %}
         <span id="breadcrumbs-actions" class="pull-right">
           {% block breadcrumbs_actions %}{% endblock %}
         </span>
       </ul>
+	  {% block breadcrumbs_title %}{% endblock %}
 	</div>
   </div>
 </div>
@@ -166,6 +171,8 @@
     </div>
 
     {% block footer %}{% include "_footer.html" %}{% endblock %}
+
+<a href="{% locale_url users_logout %}" class="sub-level">{{ _('Logout') }}</a>
 
 
   <script src="{{ STATIC_URL }}js/libs/jquery-ui-1.8.7.custom.min.js"></script>  

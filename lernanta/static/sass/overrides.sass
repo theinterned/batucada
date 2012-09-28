@@ -1144,6 +1144,7 @@ input, textarea
   @include background($bodyBackground)
   border: 0px
   padding: pem(20px) 0px
+  margin-bottom: 0px
   @include adjust-font-size-to($baseFontSize-subtext)
   .btn
     &:last-child
@@ -1228,6 +1229,9 @@ input, textarea
 
 [class*="span"] .inherit-height
   height: inherit
+  
+[class*="span"] .remove-left-margin
+  margin-left: -25px
 
 .vertical-center
   @include inline-block
@@ -1248,4 +1252,57 @@ input, textarea
   white-space: normal
   vertical-align: middle
   width: 95%
+  a
+    @include link-colors($slate, $slate, $linkColorHover, $linkColorHover, $linkColorHover)
 
+// PROGRESS BARS
+// -------------
+// COLORS
+// ------
+// Apricot
+.progress-clemintine .bar
+  @include gradient-vertical($clemintine, $clemintine)
+
+.progress-clemintine.progress-striped .bar
+  @include gradient-striped(lighten($clemintine, 15%))
+
+// LABELS & BADGES
+// ---------------
+// Colors
+// Only give background-color difference to links (and to simplify, we don't qualifty with `a` but [href] attribute)
+// Clemintine (New Comments)
+.label-clemintine, .badge-clemintine
+  background-color: $clemintine
+.label-clemintine[href], .badge-clemintine[href]
+  background-color: darken($clemintine, 4%)
+
+.row-fluid.odd
+  @include background($cloud)
+  
+#tasks-tab
+  ul .nav .nav-list
+    @include background($snow)
+
+.tab-content
+  @include background($snow)
+  
+.nav-tabs
+  margin-bottom: 0px
+  a
+    @include background($cloud)
+    &:hover
+      @include background($snow)
+  li > a:hover
+    @include background($snow)
+
+.add-top-bottom-margins
+  margin-top: pem(40px)
+  margin-bottom: pem(30px)
+
+.add-top-margin-20
+  padding-top: pem(25px)
+
+a.show-on-hover
+  text-align: center
+  a:hover
+    visibility: visible

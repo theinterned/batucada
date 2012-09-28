@@ -30,30 +30,58 @@
 
 {% block body %}
 
+<!-- https://p2pu.org/en/groups/programming-101/ -->
+<!-- https://p2pu.org/en/groups/ive-always-wanted-to-write-that/ -->
+<!-- https://p2pu.org/en/groups/build-the-last-language-textbook/ -->
+<!-- https://p2pu.org/en/groups/timebanking-and-co-production-family-support-study-group/ -->
+
+<!-- http://localhost:8001/en/groups/programming-101/ -->
+<!-- http://localhost:8001/en/groups/ive-always-wanted-to-write-that/ -->
+<!-- http://localhost:8001/en/groups/build-the-last-language-textbook/ -->
+<!-- http://localhost:8001/en/groups/timebanking-and-co-production-family-support-study-group/ -->
+
 <div class="row-fluid">
+  <div class="span9">
+    <div class="row-fluid"> <!-- Main Section -->
+      {% if is_challenge %}
+        {% tasks_list_wall request project user toggled_tasks %} <!-- Nav-Tabs Navagation Area: Tasks List -OR- Discussions -->
+      {% else %}
+        <div class="row-fluid"> <!-- ProjectCourse:NotChallenge Nav Tab -->
+          <div id="task_list_wall" class="tabbable">
+            <ul class="nav nav-tabs" id="task_list_wall_toogle"> <!-- ProjectCourse:NotChallenge Nav Tab LIST -->
+              <li><a href="#tasks-tab" data-toggle="tab">{{ _('Tasks') }}</a></li>
+              <li class="active"><a href="#activity-wall-tab" data-toggle="tab">{{ _('Activity Wall') }}</a></li>
+              <li><a href="#people-tab" data-toggle="tab">{{ _('People') }}</a></li>
+              <li><a href="#links-tab" data-toggle="tab">{{ _('Links') }}</a></li>
+            </ul> <!-- /ProjectCourse:NotChallenge Nav Tab LIST-->
+            <div class="tab-content"> <!-- ProjectCourse:NotChallenge Nav Tab CONTENT -->
+              <div class="tab-pane" id="tasks-tab"> <!-- Task List Tab Content -->
+                {% task_list project user %}
+                <!-- {% if not tasks %}
+                                  {{ _('Unfortunately no tasks have been added yet. Sorry for the inconvenience.') }}
+                                {% endif %} -->
+              </div> <!-- /Task List Tab Content -->
+              <div class="tab-pane active" id="activity-wall-tab"> <!-- Activity Wall:Default Tab Content -->
+                {% project_wall request project %}
+              </div> <!-- /Activity Wall:Default Tab Content -->
+              <div class="tab-pane" id="people-tab"> <!-- People Tab Content-->
+                <div id="main-people">
+                  <section id="people" class="panel">
+                    {% project_user_list request project 168 "True" %}
+                  </section>
+                </div>
+              </div> <!-- /People Tab Content -->
+              <div class="tab-pane" id="links-tab"> <!-- Links Tab Content -->
+                Links Tab Content
+              </div> <!-- /Links Tab Content -->
+            </div> <!-- /ProjectCourse:NotChallenge Nav Tab CONTENT-->
+          </div>
+        </div> <!-- /ProjectCourse:NotChallenge Nav Tab -->
+      {% endif %}
+    </div> <!-- /Main Section -->
+  </div>
   <div class="span3">
     {% sidebar %}
-  </div>
-  <div class="span9">
-    <div id="main">
-      {% if is_challenge %}
-        {% tasks_list_wall request project user toggled_tasks %}
-      {% else %}
-        {% task_list project user show_all_tasks %}
-        <div id="wall_section">
-          <h2 class="school_header"><span>{{ _('Activity Wall') }}</span></h2>
-        </div>
-        {% project_wall request project %}
-      {% endif %}
-    </div> <!-- /#main -->
-
-    {% if is_challenge %}
-      <div id="main-people">
-        <section id="people" class="panel">
-          {% project_user_list request project 168 "True" %}
-        </section>
-      </div>
-    {% endif %}
   </div>
 </div>
 
