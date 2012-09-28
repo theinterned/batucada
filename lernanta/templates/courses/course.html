@@ -225,7 +225,7 @@
               </li>
             {% endfor %}
             {% if organizer %}
-              <a href="{% locale_url courses_create_content course_id=course.id %}">
+              <a href="{% locale_url courses_create_content course_id=course.id %}?next_url={% locale_url courses_show course_id=course.id slug=course.slug %}">
                 <i class="icon-plus"></i>
               </a>
             {% endif %}

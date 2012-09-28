@@ -262,14 +262,20 @@ def create_content( request, course_id ):
             user_uri = "/uri/user/{0}".format(user.username)
             content = content_model.create_content(content_data, user_uri)
             course_model.add_course_content(course['uri'], content['uri'])
-            redirect_url = reverse('courses_show',
-                kwargs={'course_id': course['id'], 'slug': course['slug']}
-            )
+
+            redirect_url = request.POST.get('next_url', None)
+            if not redirect_url:
+                redirect_url = reverse('courses_show',
+                    kwargs={'course_id': course['id'], 'slug': course['slug']}
+                )
             return http.HttpResponseRedirect(redirect_url)
     else:
         form = ContentForm()
 
     context = { 'form': form }
+    if request.GET.get('next_url', None):
+        context['next_url'] = request.GET.get('next_url', None)
+
     return render_to_response('courses/create_content.html', 
         context, context_instance=RequestContext(request)
     )
@@ -294,7 +300,7 @@ def edit_content( request, course_id, content_id ):
                 content['uri'], content_data, user_uri
             )
             
-            redirect_url = request.GET.get('next_url', None)
+            redirect_url = request.POST.get('next_url', None)
             if not redirect_url:
                 redirect_url = reverse('courses_content_show',
                     kwargs={'course_id': course_id, 'content_id': content_id}
