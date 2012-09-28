@@ -21,12 +21,13 @@ class CourseTests(TestCase):
         self.client = Client()
         self.locale = 'en'
         self.course = course_model.create_course(
-            {
+            **{
                 "title": self.test_title,
                 "short_title": self.test_short_title,
                 "plug": self.test_plug,
-            },
-            '/uri/users/testuser'
+                "language": "en",
+                "organizer_uri": '/uri/users/testuser',
+            }
         )
         #django_user = User(
         #    username=self.test_username,
@@ -38,12 +39,13 @@ class CourseTests(TestCase):
 
     def test_course_creation(self):
         course = course_model.create_course(
-            {
+            **{
                 "title": "A test course",
                 "short_title": "ATC 1",
                 "plug": "This course is all about ABC",
-            },
-            '/uri/user/testuser'
+                "language": "en",
+                "organizer_uri": '/uri/user/testuser'
+            }
         )
 
         self.assertTrue(not course == None)
@@ -80,3 +82,9 @@ class CourseTests(TestCase):
             cohort['uri'], '/uri/user/bob', 'ORGANIZER')
         cohort2 = course_model.get_course_cohort(self.course['uri'])
         self.assertEqual(len(cohort['users']), len(cohort2['users'])-1)
+
+    def test_remove_user(self):
+        pass
+
+    def test_make_organizer(self):
+        pass

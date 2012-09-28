@@ -197,9 +197,11 @@
           <div class="markup">{{ about.content|safe }}</div>
         {% endif %}
         <p>
-        <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}">
+        {% if organizer %}
+          <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}?next_url={% locale_url courses_show course_id=course.id slug=course.slug %}">
             <i class="icon-edit"></i>
-        </a>
+          </a>
+        {% endif %}
         </p>
       </div>
   
@@ -216,11 +218,10 @@
                 <a class="taskView" href="#">{{ _('View and Discuss') }}</a>
 
                 {% if organizer %}
-                <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}">
+                <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}?next_url={% locale_url courses_show course_id=course.id slug=course.slug %}">
                     <i class="icon-edit"></i>
                 </a>
                 {% endif %}
-  
               </li>
             {% endfor %}
             {% if organizer %}
@@ -338,7 +339,7 @@
 {% endblock %}
 
 {% block js %}
-  <script>
+  <script type="text/javascript">
     $(document).ready(function(){
       $("#id_start_date").datepicker();
     });

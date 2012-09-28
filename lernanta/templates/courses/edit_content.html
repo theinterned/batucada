@@ -22,6 +22,7 @@
 {% block body %}
   <form action="" method="POST">
     {% csrf_token %}
+    <div><input type="hidden" value="{{next_url}}" name="next_url"/></div>
     <p><label for="id_title">Title</label>{{ form.title }}</p>
     <p>{{form.content}}</p>
 

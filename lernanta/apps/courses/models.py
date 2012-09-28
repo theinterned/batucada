@@ -60,12 +60,12 @@ def get_course(course_uri):
     return course
 
 
-def create_course(course_data, organizer_uri):
+def create_course(title, short_title, plug, language, organizer_uri):
     course_db = db.Course(
-        title=course_data['title'],
-        short_title=course_data['short_title'],
-        plug=course_data['plug'],
-        language=course_data['language']
+        title=title,
+        short_title=short_title,
+        plug=plug,
+        language=language
     )
 
     try:
