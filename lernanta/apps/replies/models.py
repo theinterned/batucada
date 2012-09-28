@@ -146,7 +146,7 @@ def create_comment( comment_text, user_uri ):
     return get_comment("/uri/comment/{0}".format(comment.id))
 
 
-def get_comment( comment_uri ):
+def get_comment( comment_uri, limit_replies=-1 ):
     comment_id = comment_uri.strip('/').split('/')[-1]
     try:
         comment_db = PageComment.objects.get(id=comment_id)
@@ -157,15 +157,22 @@ def get_comment( comment_uri ):
         "id": comment_db.id,
         "uri": "/uri/comment/{0}".format(comment_db.id),
         "content": comment_db.content,
-        "user_uri": "/uri/user/{0}".format(comment_db.author.username)
+        "user_uri": "/uri/user/{0}".format(comment_db.author.username),
+        "replies": []
     }
 
-    comment['replies'] = []
-    for reply in comment_db.replies.all():
-        comment['replies'] += [{
-            "id": reply.id,
-            "uri": "/uri/comment/{0}".format(reply.id)
-        }]
+    if limit_replies != 0:
+        replies = comment_db.replies.all().order_by("-created_on")
+        if limit_replies > 0:
+            replies = replies[:limit_replies]
+
+        for reply in replies:
+            comment['replies'] += [{
+                "id": reply.id,
+                "uri": "/uri/comment/{0}".format(reply.id),
+                "content": reply.content,
+                "user_uri": "/uri/user/{0}".format(reply.author.username),
+            }]
     return comment
 
 
