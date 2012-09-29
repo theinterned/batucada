@@ -22,6 +22,7 @@ $white: #ffffff /* nav-bar search placeholder text, 'Find Course' & 'Create Cour
 $apricot: #ff7300 /* highlighted-2 header text */
 /*NOTE: $apricot is also used for: 'Find Course' button background */
 $clemintine: #ffbc1a /* navbar-link-h1-right hover */
+$pumpkin: #f1b106 /* user dropdown */
 $dark-slate: #5b6b73 /* navbar dropdown menu links (and background) and bold text in large wells (e.g. on the bottom of the Find [FKA Learn] Page) */
 
 
@@ -46,6 +47,7 @@ $dark-pewter: #8b91a0 /* top-only border on nav-bar search box */
 $dark-apricot: #bc5500 /* bottom-only border on 'Find Courses' button */
 $dark-olive: #a3be00 /* bottom-only border on 'Create Course' button */
 $dark-fog: #c7cbd7 /* bottom only border on Supporters' image links in footer */
+$darker-slate: #343741 /* bottom only border on slate button */
 $oranitang: #f2b202 /* verticle divider in nav bar user logged-in dropdown menu */
 
 
@@ -285,13 +287,14 @@ h1
     @include link-colors($slate, $slate, $slate, $slate, $slate)
   small
     font-size: $baseFontSize-subtext
-    display: block
-    @include adjust-leading-to($base-no-leader-line-height * ($baseFontSize-subtext / $baseFontSize-h1-header))
-    @include margin-leader($base-no-leader-line-height * ($baseFontSize-subtext-tm / $baseFontSize-h1-header))
-    @include margin-trailer($base-no-leader-line-height * ($baseFontSize-subtext-bm / $baseFontSize-h1-header))
     color: $steel
     font-family: $secondary-font
-
+    &.directly-below
+      @include adjust-leading-to($base-no-leader-line-height * ($baseFontSize-subtext / $baseFontSize-h1-header))
+      @include margin-leader($base-no-leader-line-height * ($baseFontSize-subtext-tm / $baseFontSize-h1-header))
+      @include margin-trailer($base-no-leader-line-height * ($baseFontSize-subtext-bm / $baseFontSize-h1-header))
+      display: block
+    
 h2
   font-family: $primary-font
   font-size: pem(18px)
@@ -486,6 +489,15 @@ input, textarea
             padding-left: 9px
             border-left: 2px solid $oranitang
             vertical-align: inline
+        &.open
+          span
+            color: $pumpkin
+            text-shadow: none
+          .dropdown-toggle
+            .caret
+              border-bottom-color: white
+              border-top-color: white
+              @include rotate(180deg)
         .dropdown-toggle
           .caret
             border-bottom-color: $dark-slate
@@ -547,7 +559,11 @@ input, textarea
         @include link-colors($slate)
         @include adjust-font-size-to($baseFontSize)
   .nav-header
+    margin-left: -42px
     @include adjust-font-size-to($baseFontSize-header)
+  .icon-large
+    margin-right: 12px
+    vertical-align: 0px
 
 .navbar .pull-right .dropdown-menu, .navbar .dropdown-menu.pull-right
   left: 30px
@@ -653,6 +669,12 @@ input, textarea
   margin-left: 30px
   &:after, &:before
     content: none
+
+.navbar
+  .dropdown-menu:before
+    display: none
+  .dropdown-menu:after
+    display: none
     
     
 
@@ -784,40 +806,41 @@ input, textarea
     a
       @include adjust-font-size-to($baseFontSize-header * ($base-font-size / $feature-h1-subtitle))
       @include adjust-leading-to($base-no-leader-line-height)
-  .table-bordered
+
+.table-bordered
+  @include square-corners
+  border-top: pem(5px) solid $bodyBackground
+  border-left: 0px
+  border-right: 0px
+  border-bottom: 0px
+  @include background($snow)
+  tbody
+    border-top: 0px
     @include square-corners
-    border-top: pem(5px) solid $bodyBackground
-    border-left: 0px
-    border-right: 0px
-    border-bottom: 0px
-    @include background($snow)
-    tbody
+    &:first-child
       border-top: 0px
       @include square-corners
-      &:first-child
+      tr
         border-top: 0px
         @include square-corners
-        tr
+        &:first-child
           border-top: 0px
           @include square-corners
-          &:first-child
-            border-top: 0px
+          td
+            border-top: pem(20px) solid $bodyBackground
             @include square-corners
-            td
-              border-top: pem(20px) solid $bodyBackground
-              @include square-corners
-      td
-        @include square-corners
-        vertical-align: middle
-        border-top: pem(20px) solid $bodyBackground
-        border-bottom: 1px solid $zinc
-        border-left: 0px
-        border-right: 0px
-        padding: 0px
-        .reference-link-area  /* THIS IS THE BEST EXAMPLE OF HOW TO USE CLASSES FOR DIVs AND SPANs EFFECTIVELY */
-          a
-            @include link-colors($steel) /* THIS IS THE BEST EXAMPLE OF HOW TO USE CLASSES FOR DIVs AND SPANs EFFECTIVELY */
-            text-decoration: underline
+    td
+      @include square-corners
+      vertical-align: middle
+      border-top: pem(20px) solid $bodyBackground
+      border-bottom: 1px solid $zinc
+      border-left: 0px
+      border-right: 0px
+      padding: 0px
+      .reference-link-area  /* THIS IS THE BEST EXAMPLE OF HOW TO USE CLASSES FOR DIVs AND SPANs EFFECTIVELY */
+        a
+          @include link-colors($steel) /* THIS IS THE BEST EXAMPLE OF HOW TO USE CLASSES FOR DIVs AND SPANs EFFECTIVELY */
+          text-decoration: underline
 
 .thumbnail
   h1
@@ -1117,13 +1140,16 @@ input, textarea
 .btn-cyan,
 .btn-cyan:hover,
 .btn-olive,
-.btn-olive:hover
+.btn-olive:hover,
+.btn-slate,
+.btn-slate:hover,
   color: $white
   text-shadow: 0 -1px 0 rgba(0,0,0,.25)
 // Provide *some* extra contrast for those who can get it
 .btn-apricot.active,
 .btn-cyan.active,
 .btn-olive.active
+.btn-slate.active
   color: rgba(255,255,255,.75)
 // Set the backgrounds
 // -------------------------
@@ -1135,6 +1161,10 @@ input, textarea
   @include buttonBackground($olive, $olive)
   border: 0px
   border-bottom: 2px solid $dark-olive
+.btn-slate
+  @include buttonBackground($slate, $slate)
+  border: 0px
+  border-bottom: 2px solid $darker-slate
 .btn-cyan
   @include buttonBackground($cyan, $cyan)
   border: 0px
@@ -1158,10 +1188,13 @@ input, textarea
 .modal
   max-height: pem(560px)
   width: pem(560px)
+  padding-top: 10px
   padding-left: 10px
   padding-right: 25px
   overflow-x: visible
   overflow-y: auto
+  h1
+    padding-bottom: 10px
 
 .container
   margin: 0 auto
@@ -1285,6 +1318,12 @@ input, textarea
 
 .tab-content
   @include background($snow)
+  padding-left: 15px
+  padding-right: 15px
+  ul.nav-list
+    padding-left: 0px
+    padding-right: 0px
+    
   
 .nav-tabs
   margin-bottom: 0px
@@ -1306,3 +1345,31 @@ a.show-on-hover
   text-align: center
   a:hover
     visibility: visible
+
+/* #cse-search-form */
+/*   margin-top: -10px */
+/*   margin-right: 300px */
+/*   width: 161px */
+
+/* #cse-search-form input */
+/*   background: #ccc */
+/*   border: 1px solid #aaa */
+/*   border-radius: 20px */
+/*   color: #5A6579 */
+/*   height: 22px */
+/*   width: 161px */
+/*   padding: 0 17px */
+/*   float: right */
+
+#cse-search-form .gsc-search-button, #cse-search-form .gsc-clear-button
+  display: none
+
+#cse .gsc-search-box
+  display: none
+
+.gsc-control-cse
+  border-radius: 10px
+  border: solid 1px #EEE
+  width: 960px
+    
+

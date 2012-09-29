@@ -14,52 +14,82 @@
 {% block bodyid %}dashboard{%endblock%}
 
 {% block breadcrumbs %}
-  <span class="arrow">&rsaquo;</span>
-  <a href="{{ dashboard_url }}">{{ _('Dashboard') }}</a>
+<li><span class="divider">&rsaquo;</span><a href="{{ dashboard_url }}">{{ _('Dashboard') }}</a></li>
 {% endblock %}
 
 {% block body %}
 
-{% include "dashboard/sidebar.html" %}
+<div class="row-fluid">
+  <div class="span3">
+    {% include "dashboard/sidebar.html" %}
+  </div>
+  <div class="span9"> <!-- Main Area -->
+    <div class="row-fluid">
+      {% if show_welcome %}
+      <div class="well well-large"> <!-- Welcome Box -->
+        <span class="pull-right"><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ STATIC_URL }}images/closeButton.png"></a></span>
+        <div class="row-fluid">
+          <h2>{{ _('Welcome to P2PU!') }}</h2>
+        </div>
+        <div class="row-fluid">
+          {{ _('To get started, you should ') }}<a href="{% locale_url users_profile_edit %}">{{ _('update your profile</a>. This is a great way to tell people a bit more about yourself. Then find ') }}<a href="{% locale_url users_user_list %}">{{_('people</a> and ') }}<a href="{% learn_default %}">{{ _('groups</a> that interest you and start following them! You can also ') }}<a href="{% locale_url projects_create %}">{{ _('create new groups</a> and update how often P2PU ') }}<a href="{% locale_url preferences_settings %}">{{_('contacts you</a>.') }}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="row-fluid">
+      <div id="create-post" class="row-fluid">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>
+                <a href="{{ activity.actor.get_absolute_url }}">
+                  <img class="member-picture" width="80px" height="80px" src="{{ activity.actor.image_or_default }}" alt="{{ activity.actor }}" />
+                </a>
+              </td>
+              <td>
+                <form id="post-status-update" method="post" action="{% locale_url statuses_create %}">
+                  {% csrf_token %}
+                  <input id="fake-message-input" type="text" value="{{ _('Post a message to your followers') }}" />
+                  <textarea name="status"></textarea>
+                  <div class="status-and-actions">
+                    <div class="post-char-count">750</div>
+                    <a class="button update cancel" href="{% locale_url dashboard %}">
+                      {{ _('Cancel') }}
+                    </a>
+                    <button class="button update submit" id="post-update">{{ _('Post Update') }}</button>
+                  </div> <!-- /.status-and-actions -->
+                </form>
+              </td>
+              <td>
+                <a name="activity-{{ activity.id }}"></a>
+                {% if user.is_authenticated %}
 
-<div id="main">
-  {% if show_welcome %}
-    <article class="welcome">
-      <header><a href="{% locale_url dashboard_hide_welcome %}" title="Hide this message"><img class="close_button" src="{{ STATIC_URL }}images/closeButton.png"></a></header>
-      <h1>{{ _('Welcome to P2PU!') }}</h1>
-      <p>{{ _('To get started, you should ') }}<a href="{% locale_url users_profile_edit %}">{{ _('update your profile</a>. This is a great way to tell people a bit more about yourself. Then find ') }}<a href="{% locale_url users_user_list %}">{{_('people</a> and ') }}<a href="{% learn_default %}">{{ _('groups</a> that interest you and start following them! You can also ') }}<a href="{% locale_url projects_create %}">{{ _('create new groups</a> and update how often P2PU ') }}<a href="{% locale_url preferences_settings %}">{{_('contacts you</a>.') }}</p>
-    </article>
-  {% endif %}
-  <div id="create-post">
-    <div class="post-container">
-      <form id="post-status-update" method="post" action="{% locale_url statuses_create %}">
-	{% csrf_token %}
-	<input id="fake-message-input" type="text" value="{{ _('Post a message to your followers') }}">
-	<textarea name="status"></textarea>
-
-	<div class="status-and-actions">
-	  <div class="post-char-count">750</div>
-
-          <a class="button update cancel" href="{% locale_url dashboard %}">
-	    {{ _('Cancel') }}
-	  </a>
-          <button class="button update submit" id="post-update">{{ _('Post Update') }}</button>
-	</div> <!-- /.status-and-actions -->
-
-      </form>
-    </div> <!-- /.post-container -->
-  </div> <!-- /#create-post -->
-
-  <ul id="posts">
-    {% activity_filters request dashboard_url %}
-    {% for activity in pagination_current_page.object_list %}
+                {% endif %}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row-fluid">
+        <div class="btn-group pull-right">
+          {% activity_filters request dashboard_url %}
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      {% for activity in pagination_current_page.object_list %}
       {% include "activity/_activity_resource.html" %}
-    {% endfor %}
-  </ul>
-  {% with prefix='' page_url=dashboard_url %}
-    {% pagination_links %}
-  {% endwith %}
+      {% endfor %}
 
-</div> <!-- /#main -->
+      {% with prefix='' page_url=dashboard_url %}
+      {% pagination_links %}
+      {% endwith %}
+    </div> 
+  </div>
+</div>    
+
+
+
 
 {% endblock %}
