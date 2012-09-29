@@ -30,11 +30,24 @@
   {% activity_filters request project.get_absolute_url %}
 {% endif %}
 
-<ul id="posts">
-  {% for activity in pagination_current_page.object_list %}
-    {% include "activity/_activity_resource.html" %}
-  {% endfor %}
-</ul>
+<div class="feature-box">	
+    <div class="pull-left">
+      <div class="row-fluid">
+        <h1>{{ _('Activity Feed') }}</h1>
+      </div>
+      <div class="row-fluid">
+        <table class="table table-bordered">
+          <tbody>
+            {% for activity in pagination_current_page.object_list %}
+              <tr>
+                {% include "activity/_activity_resource.html" %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>	
 
 {% with prefix='' page_url=wall_url %}
   {% pagination_links %}

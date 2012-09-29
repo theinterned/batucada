@@ -8,25 +8,26 @@
 <div class="row-fluid"> <!-- ProjectCourse:Challenge Nav Tab -->
   <div id="task_list_wall" class="tabbable">
     <ul class="nav nav-tabs" id="task_list_wall_toogle">
-      <!-- ALTERNATE CODE USING BOTH NAV-TAB AND DROPDOWN MENU -->
-      <!-- <li class="active dropdown"> -->
-        <!-- <a class="dropdown-toggle" data-toggle="dropdown" data-toggle="tab" href="#tasks-tab"> -->
-            <!-- {{ _('Tasks') }} -->
-            <!-- <b class="caret"></b> -->
-        <!-- </a> -->
-        <!-- <ul class="dropdown-menu"> -->
-          <!-- {% if tasks %} -->
-            <!-- {% for task in tasks %} -->
-              <!-- {% if forloop.counter <= 7 %} -->
-                <!-- <li><a class="taskLink" href="{{ task.get_absolute_url }}"><span class="taskNumber">{{ forloop.counter }}{% if is_challenge %}.{% endif %}</span> {{ task.title }}</a></li> -->
-              <!-- {% else %}{% if forloop.last %} -->
-                <!-- <li><a class="taskLink" href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></li> -->
-              <!-- {% endif %}{% endif %} -->
-            <!-- {% endfor %} -->
-          <!-- {% endif %} -->
-        <!-- </ul> -->
-      <!-- </li> -->
       <li class="active"><a href="#tasks-tab" data-toggle="tab">{{ _('Tasks') }}</a></li>
+
+      <!-- ALTERNATE CODE USING BOTH NAV-TAB AND DROPDOWN MENU -->
+      <!-- <li id="the-d" class="dropdown active" data-dropdown="dropdown"> -->
+      <!--   <a class="dropdown-toggle" href="#"> -->
+      <!--       {{ _('Tasks') }} -->
+      <!--       <b class="caret"></b> -->
+      <!--   </a> -->
+      <!--   <ul class="dropdown-menu"> -->
+      <!--     {% if tasks %} -->
+      <!--       {% for task in tasks %} -->
+      <!--         {% if forloop.counter <= 7 %} -->
+      <!--           <li><a class="taskLink" href="{{ task.get_absolute_url }}"><span class="taskNumber">{{ forloop.counter }}{% if is_challenge %}.{% endif %}</span> {{ task.title }}</a></li> -->
+      <!--         {% else %}{% if forloop.last %} -->
+      <!--           <li><a class="taskLink" href="{% locale_url projects_task_list slug=project.slug %}">{{ _('See All Tasks') }} &raquo;</a></li> -->
+      <!--         {% endif %}{% endif %} -->
+      <!--       {% endfor %} -->
+      <!--     {% endif %} -->
+      <!--   </ul> -->
+      <!-- </li> -->
       <li><a href="#discussions-tab" data-toggle="tab">{{ _('Discussions') }}</a></li>
       <li><a href="#people-tab" data-toggle="tab">{{ _('People') }}</a></li>
       <li><a href="#links-tab" data-toggle="tab">{{ _('Links') }}</a></li>
