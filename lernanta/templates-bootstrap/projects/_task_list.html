@@ -19,7 +19,7 @@
                     <form method='post' action='{% locale_url toggle_task_completion slug=task.project.slug page_slug=task.slug %}'>
                       {% csrf_token %}
                       <label class="checkbox">
-                        <input class="taskCheckbox" type="checkbox" {% if task.is_done %}checked="checked"{% endif%} value="" title="Completed">
+                        <input class="taskCheckbox" type="checkbox" {% if task.is_done %}checked="checked"{% endif%} value="Completed" title="Completed">
                       </label>
                     </form>
                   {% endif %}
@@ -94,7 +94,15 @@
         </div>
       </ul>
     {% else %}
-      <h2>{{ _('No tasks have been added.') }}<br /><br /></h2>
+      <div class="row-fluid"><div class="span1"></div></div>
+      <div class="row-fluid"><div class="span1"></div></div>
+      <div class="span1"></div>
+      <div class="span10">
+        <div class="well">
+          <h2>{{ _('No tasks have been added.') }}<br /><br /></h2>
+        </div>
+      </div>
+      <div class="span1"></div>
     {% endif %}
   </div>
 {% endif %}

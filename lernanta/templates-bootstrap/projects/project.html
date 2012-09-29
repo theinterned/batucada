@@ -57,9 +57,10 @@
             <div class="tab-content"> <!-- ProjectCourse:NotChallenge Nav Tab CONTENT -->
               <div class="tab-pane" id="tasks-tab"> <!-- Task List Tab Content -->
                 {% task_list project user %}
-                <!-- {% if not tasks %}
-                                  {{ _('Unfortunately no tasks have been added yet. Sorry for the inconvenience.') }}
-                                {% endif %} -->
+                <!-- TODO: Reimplement -->
+                <!-- {% if not tasks %} -->
+                  <!-- {{ _('Unfortunately no tasks have been added yet. Sorry for the inconvenience.') }} -->
+                <!-- {% endif %} -->
               </div> <!-- /Task List Tab Content -->
               <div class="tab-pane active" id="activity-wall-tab"> <!-- Activity Wall:Default Tab Content -->
                 {% project_wall request project %}
