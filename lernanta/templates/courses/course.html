@@ -198,7 +198,7 @@
         {% endif %}
         <p>
         {% if organizer %}
-          <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}?next_url={% locale_url courses_show course_id=course.id slug=course.slug %}">
+          <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}?next_url={{ course_url }}">
             <i class="icon-edit"></i>
           </a>
         {% endif %}
@@ -218,14 +218,14 @@
                 <!--a class="taskView" href="#">{{ _('View and Discuss') }}</a-->
 
                 {% if organizer %}
-                <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}?next_url={% locale_url courses_show course_id=course.id slug=course.slug %}">
+                <a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}?next_url={{ course_url }}">
                     <i class="icon-edit"></i>
                 </a>
                 {% endif %}
               </li>
             {% endfor %}
             {% if organizer %}
-              <a href="{% locale_url courses_create_content course_id=course.id %}?next_url={% locale_url courses_show course_id=course.id slug=course.slug %}">
+              <a href="{% locale_url courses_create_content course_id=course.id %}?next_url={{ course_url }}">
                 <i class="icon-plus"></i>
               </a>
             {% endif %}
@@ -259,6 +259,7 @@
             <div id="comment-{{comment.id}}-reply" class="collapse">
               <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="next_url" value="{{course_url}}">
                 <p><textarea id="id_comment" name="comment" cols="40" rows="2"></textarea></p>
                 <input type="submit" value="{% trans "Post comment" %}"/>
               </form>
@@ -271,6 +272,7 @@
           <div id="comment-new" class="collapse">
             <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
               {% csrf_token %}
+              <input type="hidden" name="next_url" value="{{course_url}}">
               <p><textarea id="id_comment" name="comment" cols="40" rows="2"></textarea></p>
               <input type="submit" value="{% trans "Post comment" %}"/>
             </form>

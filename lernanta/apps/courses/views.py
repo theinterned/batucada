@@ -71,6 +71,7 @@ def show_course( request, course_id, slug=None ):
         return course_slug_redirect( request, course_id)
 
     context = { 'course': course }
+    context['course_url'] = request.get_full_path()
     context['language_form'] = CourseLanguageForm(course)
     context['about'] = content_model.get_content(course['about_uri'])
     context['about']['content'] = markdown.markdown(
@@ -359,9 +360,12 @@ def post_content_comment( request, course_id, content_id):
         comment['uri'], cohort['uri'], reference_uri
     )
 
-    redirect_url = reverse('courses_content_show', 
-        kwargs={'course_id': course_id, 'content_id': content_id}
-    )
+    if request.POST.get('next_url'):
+        redirect_url = request.POST.get('next_url')
+    else:
+        redirect_url = reverse('courses_content_show',
+            kwargs={'course_id': course_id, 'content_id': content_id}
+        )
     return http.HttpResponseRedirect(redirect_url)
 
 
@@ -379,7 +383,10 @@ def post_comment_reply( request, course_id, content_id, comment_id):
 
     #TODO: need to set reference so that lookup from comment works!
 
-    redirect_url = reverse('courses_content_show',
-        kwargs={'course_id': course_id, 'content_id': content_id}
-    )
+    if request.POST.get('next_url'):
+        redirect_url = request.POST.get('next_url')
+    else:
+        redirect_url = reverse('courses_content_show',
+            kwargs={'course_id': course_id, 'content_id': content_id}
+        )
     return http.HttpResponseRedirect(redirect_url)
