@@ -40,14 +40,15 @@
                 {% include "activity/_activity_resource.html" %}
               </tr>
             {% endfor %}
+            <tr>
+              {% with prefix='' page_url=wall_url %}
+                {% pagination_links %}
+              {% endwith %}
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>	
-
-  {% with prefix='' page_url=wall_url %}
-    {% pagination_links %}
-  {% endwith %}
 
 </div>

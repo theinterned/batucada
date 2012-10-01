@@ -1422,7 +1422,8 @@ a.show-on-hover
 .center-via-text-align
   text-align: center
 
-
+.make-inline-block
+  @include inline-block
 
 
 
@@ -1521,7 +1522,66 @@ a.show-on-hover
           @include background($steel)
           padding: 0px
 
-
+.thumbnail#small
+  width: pem(220px) /* was 220px */
+  @include background($snow)
+  @include square-corners
+  padding: 0px
+  .caption
+    padding: 0px pem(9px)
+    a
+      @include inline-block
+    h3
+      @include inline-block
+      @include adjust-font-size-to($feature-h2)
+      @include adjust-leading-to($base-no-leader-line-height * ($feature-h2-lh / $feature-h2))
+      margin-top: 0px
+      width: 95%
+      font-weight: normal
+      color: $slate
+      font-family: $primary-font
+      height: 2.5em
+      text-overflow-y: hidden
+      overflow-y: hidden
+      a
+        @include inline-block
+        height: auto
+        span
+          @include inline-block
+          height: auto
+  img
+    padding-top: pem(5px)
+    @include inline-block
+  .well-large
+    height: pem(57px)
+    text-align: center
+    dl
+      @include inline-block
+      @include adjust-leading-to($base-no-leader-line-height)
+      margin-top: 0px
+      margin-bottom: 0px
+      text-align: center /* important tag for centering stuff elements inside the p tag */
+      padding-left: 5px
+      padding-right: 5px
+      dt
+        .label
+          color: $white
+          @include adjust-font-size-to($feature-badge-title)
+          @include adjust-leading-to($base-no-leader-line-height)
+          font-weight: normal
+          font-family: $secondary-font
+          @include background($steel)
+          padding: 0px
+      dd
+        margin-left: 0px
+        .badge
+          color: $white
+          @include adjust-font-size-to($feature-badge-title)
+          @include adjust-leading-to($base-no-leader-line-height)
+          font-weight: bold
+          font-family: $primary-font
+          @include background($steel)
+          padding: 0px
 
 
 
