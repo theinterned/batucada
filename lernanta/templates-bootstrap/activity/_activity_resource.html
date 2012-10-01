@@ -42,20 +42,20 @@
       {% endif %}
     </span>
   </p>
-</td>
-<td>
-  <a name="activity-{{ activity.id }}"></a>
-  {% if user.is_authenticated %}
-    {% if user.id != activity.actor.id %}
-      <a class="report abuse action" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
-      {% if is_challenge and activity.scope_object %}
-        <div class="action-top">
-          {% give_badge_action activity.scope_object activity.actor %}
-        </div>
+  <div class="pull-right">
+    <a name="activity-{{ activity.id }}"></a>
+    {% if user.is_authenticated %}
+      {% if user.id != activity.actor.id %}
+        <a class="report abuse action btn btn-skinny btn-slate" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
+        {% if is_challenge and activity.scope_object %}
+          <span class="action-top">
+            {% give_badge_action activity.scope_object activity.actor %}
+          </span>
+        {% endif %}
+      {% else %}
+        <a class="action delete btn btn-skinny btn-blood-orange" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
       {% endif %}
-    {% else %}
-      <a class="action delete" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
+      {% activity_reply_action activity user %}
     {% endif %}
-    {% activity_reply_action activity user %}
-  {% endif %}
+  </div>
 </td>

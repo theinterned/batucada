@@ -32,6 +32,7 @@ $snow: #fcfcfc /* nav-bar background, small container background, thumbnail back
 $cloud: #f3f4f8 /* body background */
 $silver: #cccccc /* thumbnail image placeholder background */
 $fog: #e1e4ed /* footer background */
+$blood-orange: #ff7503 /* delete button */
 /*NOTE: $apricot is also used for: 'Find Course' button background */
 /*NOTE: $steel is also used for: thumbnail footer-badge-holder background, and nav-bar search box background */
 
@@ -49,6 +50,7 @@ $dark-olive: #a3be00 /* bottom-only border on 'Create Course' button */
 $dark-fog: #c7cbd7 /* bottom only border on Supporters' image links in footer */
 $darker-slate: #343741 /* bottom only border on slate button */
 $oranitang: #f2b202 /* verticle divider in nav bar user logged-in dropdown menu */
+$dark-clemintine: #d29502 /* bottom border only on clemintine buttons and task list progress bar */
 
 
 /* SELECT OVERRIDE OF BOOTSTRAP SYSTEM VARIABLES DEFAULTS */
@@ -305,9 +307,17 @@ h3
   font-weight: bold
   margin-top: pem(15px)
 
+h4
+  font-family: $primary-font
+  font-size: pem(18px)
+  color: $slate
+
 p
   line-height: pem(22px)
   margin: 0px
+  margin-top: pem(10px)
+  .no-top-margin
+    margin: 0px
 
 a
   color: $cyan
@@ -544,6 +554,7 @@ input, textarea
   font-family: $primary-font
   @include adjust-font-size-to($baseFontSize)
   li
+    padding-left: 15px
     a
       @include link-colors($slate, $cyan, $slate, $slate, $slate)
     &.dropdown
@@ -559,7 +570,6 @@ input, textarea
         @include link-colors($slate)
         @include adjust-font-size-to($baseFontSize)
   .nav-header
-    margin-left: -42px
     @include adjust-font-size-to($baseFontSize-header)
   .icon-large
     margin-right: 12px
@@ -823,10 +833,17 @@ input, textarea
       tr
         border-top: 0px
         @include square-corners
+        td
+          &:first-child
+            vertical-align: top
+            min-width: 80px
+            max-width: 80px
+          &:last-child
+            vertical-align: bottom 
         &:first-child
           border-top: 0px
           @include square-corners
-          td
+          td 
             border-top: pem(20px) solid $bodyBackground
             @include square-corners
     td
@@ -1051,6 +1068,10 @@ input, textarea
   position: relative
   left: pem(208)
   top: pem(-29)
+.well
+  @include square-corners
+  @include background($snow)
+  padding: pem(10px)
 
 .well-large
   padding: 0px
@@ -1130,6 +1151,12 @@ input, textarea
 .btn-skinny
   padding-left: 2px
   padding-right: 2px
+.btn-fit
+  padding-left: pem(5px)
+  padding-right: pem(5px)
+  @media (min-width: 1200px)
+    padding-left: pem(20px)
+    padding-right: pem(20px)
 .btn-short
   padding-top: 10px
   padding-bottom: 5px
@@ -1142,14 +1169,20 @@ input, textarea
 .btn-olive,
 .btn-olive:hover,
 .btn-slate,
-.btn-slate:hover
+.btn-slate:hover,
+.btn-blood-orange,
+.btn-blood-orange:hover,
+.btn-clemintine,
+.btn-clemintine:hover
   color: $white
   text-shadow: 0 -1px 0 rgba(0,0,0,.25)
 // Provide *some* extra contrast for those who can get it
 .btn-apricot.active,
 .btn-cyan.active,
 .btn-olive.active,
-.btn-slate.active
+.btn-slate.active,
+.btn-blood-orange.active,
+.btn-clemintine.active
   color: rgba(255,255,255,.75)
 // Set the backgrounds
 // -------------------------
@@ -1161,14 +1194,22 @@ input, textarea
   @include buttonBackground($olive, $olive)
   border: 0px
   border-bottom: 2px solid $dark-olive
-.btn-slate
-  @include buttonBackground($slate, $slate)
-  border: 0px
-  border-bottom: 2px solid $darker-slate
 .btn-cyan
   @include buttonBackground($cyan, $cyan)
   border: 0px
   border-bottom: 2px solid darken($cyan, 5%)
+.btn-slate
+  @include buttonBackground($slate, $slate)
+  border: 0px
+  border-bottom: 2px solid $darker-slate
+.btn-blood-orange
+  @include buttonBackground($blood-orange, $blood-orange)
+  border: 0px
+  border-bottom: 2px solid darken($blood-orange, 10%)
+.btn-clemintine
+  @include buttonBackground($clemintine, $clemintine)
+  border: 0px
+  border-bottom: 2px solid $dark-clemintine
 
 .breadcrumb
   @include background($bodyBackground)
@@ -1340,6 +1381,12 @@ input, textarea
 
 .add-top-margin-20
   padding-top: pem(25px)
+  
+.add-top-margin-15
+  padding-top: pem(15px)
+  
+.add-top-margin-10
+  margin-top: pem(10px)
 
 a.show-on-hover
   text-align: center
@@ -1371,5 +1418,208 @@ a.show-on-hover
   border-radius: 10px
   border: solid 1px #EEE
   width: 960px
-    
+
+.center-via-text-align
+  text-align: center
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.thumbnail#large
+  h1
+    @include adjust-font-size-to(20px)
+    @include adjust-leading-to($base-no-leader-line-height)
+    margin-top: 0px
+    color: $white
+    text-align: center
+    @include text-shadow(0 1px 1px #2d5f74)
+    a
+      @include link-colors($white, $white, $clemintine, $white, $clemintine)
+      &:hover
+        text-decoration: none
+  width: pem(416px)
+  @include background($snow)
+  @include square-corners
+  padding: 0px
+  margin-bottom: pem(40px)
+  .caption
+    padding: 0px pem(8px)
+    p
+      font-family: $secondary-font
+      @include adjust-font-size-to($feature-p)
+      @include adjust-leading-to($base-no-leader-line-height * ($feature-p-lh / $feature-p))
+      @include margin-leader($base-no-leader-line-height * ($feature-p-tm / $feature-p))
+      @include margin-trailer($base-no-leader-line-height * ($feature-p-tm / $feature-p))
+      height: 3.0em
+  img
+    padding-top: pem(8px)
+    display: block
+    max-width: 100%
+    margin-left: auto
+    margin-right: auto
+  .well 
+    padding: 0px
+    @include square-corners
+    @include background($steel)
+    border: 0px
+    border-top: 1px solid $pewter
+    height: pem(34px)
+    //padding: 30px 8px 20px 8px
+    margin-top: -15px
+    margin-bottom: -15px
+    &:before
+      content: ""
+      @include inline-block
+      height: 100%
+      vertical-align: middle
+    &:after
+      content: ""
+      @include inline-block
+      height: 100%
+      vertical-align: middle
+  .well-large
+    height: pem(57px)
+    text-align: center
+    dl
+      @include inline-block
+      @include adjust-leading-to($base-no-leader-line-height)
+      margin-top: 0px
+      margin-bottom: 0px
+      text-align: center /* important tag for centering stuff elements inside the p tag */
+      padding-left: 5px
+      padding-right: 5px
+      dd
+        margin-bottom: -5px
+        .label
+          color: $white
+          @include adjust-font-size-to($feature-badge-title)
+          @include adjust-leading-to($base-no-leader-line-height)
+          font-weight: normal
+          font-family: $secondary-font
+          @include background($steel)
+          padding: 0px
+      dt
+        margin-left: 0px
+        margin-bottom: -10px
+        .badge
+          color: $white
+          @include adjust-font-size-to($feature-badge-title)
+          @include adjust-leading-to($base-no-leader-line-height)
+          font-weight: bold
+          font-family: $primary-font
+          @include background($steel)
+          padding: 0px
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----Batucada _projectsets_card.html Ribbon Creation Code----
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+#challenge-sets .card .ribbon-wrapper
+  position: relative
+  margin: -30px 0 20px 0px
+
+#challenge-sets .card .ribbon-front
+  background-color: #8fbbca
+  background: -moz-linear-gradient(top, #4b8fba 0%, #3e6493 100%)
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4b8fba), color-stop(100%,#3e6493))
+  background: -webkit-linear-gradient(top, #4b8fba 0%,#3e6493 100%)
+  background: -o-linear-gradient(top, #4b8fba 0%,#3e6493 100%)
+  background: -ms-linear-gradient(top, #4b8fba 0%,#3e6493 100%)
+  background: linear-gradient(top, #4b8fba 0%,#3e6493 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4b8fba', endColorstr='#3e6493',GradientType=0 )
+  height: 40px
+  width: 456px
+  position: relative
+  left: -20px
+  z-index: 2
+  padding-top: 20px
+
+#challenge-sets .card .ribbon-front,
+#challenge-sets .card .ribbon-back-left,
+#challenge-sets .card .ribbon-back-right
+  -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.55)
+  -khtml-box-shadow: 0px 0px 4px rgba(0,0,0,0.55)
+  -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.55)
+  -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.55)
+
+#challenge-sets .card .ribbon-edge-topleft,
+#challenge-sets .card .ribbon-edge-topright,
+#challenge-sets .card .ribbon-edge-bottomleft,
+#challenge-sets .card .ribbon-edge-bottomright
+  position: absolute
+  z-index: 1
+  border-style: solid
+  height: 0px
+  width: 0px
+
+#challenge-sets .card .ribbon-edge-bottomleft,
+#challenge-sets .card .ribbon-edge-bottomright
+  top: 40px
+
+#challenge-sets .card .ribbon-edge-topleft,
+#challenge-sets .card .ribbon-edge-bottomleft
+  left: -20px
+  border-color: transparent #2d5f74 transparent transparent
+
+#challenge-sets .card .ribbon-edge-topleft
+  top: -10px
+  border-width: 10px 20px 0 0
+
+#challenge-sets .card .ribbon-edge-bottomleft
+  border-width: 0 20px 0px 0
+
+#challenge-sets .card .ribbon-edge-topright,
+#challenge-sets .card .ribbon-edge-bottomright
+  left: 416px
+  border-color: transparent transparent transparent #2d5f74
+
+#challenge-sets .card .ribbon-edge-topright
+  top: -10px
+  border-width: 10px 0 0 20px
+
+#challenge-sets .card .ribbon-edge-bottomright
+  border-width: 0 0 0px 20px
+
+#challenge-sets .card .ribbon-back-left
+  position: absolute
+  top: -10px
+  left: 0px
+  width: 0px
+  height: 40px
+  z-index: 0
+
+#challenge-sets .card .ribbon-back-right
+  position: absolute
+  top: -10px
+  right: 0px
+  width: 0px
+  height: 40px
+  z-index: 0
+
+
+
+
+
 

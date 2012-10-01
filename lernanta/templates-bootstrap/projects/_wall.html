@@ -3,38 +3,35 @@
 {% load pagination_tags %}
 
 <div id="project_wall_section">
-{% if participating %}  
-  <div id="create-post">
-    <div class="post-container">
-      <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
-        {% csrf_token %}
-        <input id="fake-message-input" type="text" value="{{ _('Post a message') }}">
-        <textarea name="status"></textarea>
-        {% if organizing %}
-          <div id="important-message" class="field{% if form.important.errors %} error{% endif %}">
-            {{ form.important }} {{ _('Important message (participants can not turn off notifications for important messages).') }}
-            {{ form.important.errors }}
-          </div>
-        {% endif %}
-        <div class="status-and-actions">
-          <div class="post-char-count">750</div>
-          <a class="button update cancel" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
-          <button class="button update submit" id="post-project-update">{{ _('Post Message') }}</button>
-        </div> <!-- /.status-and-actions -->
-      </form>
-    </div> <!-- /.post-container -->
-  </div> <!-- /.#create-post -->
-{% endif %}
+  {% if participating %}  
+    <div id="create-post">
+      <div class="post-container">
+        <form action="{% locale_url statuses_create_project project_id=project.id %}" method="post" id="post-project-status-update">
+          {% csrf_token %}
+          <input id="fake-message-input" type="text" value="{{ _('Post a message') }}">
+          <textarea name="status"></textarea>
+          {% if organizing %}
+            <div id="important-message" class="field{% if form.important.errors %} error{% endif %}">
+              {{ form.important }} {{ _('Important message (participants can not turn off notifications for important messages).') }}
+              {{ form.important.errors }}
+            </div>
+          {% endif %}
+          <div class="status-and-actions">
+            <div class="post-char-count">750</div>
+            <a class="button update cancel" href="{{ project.get_absolute_url }}">{{ _('Cancel') }}</a>
+            <button class="button update submit" id="post-project-update">{{ _('Post Message') }}</button>
+          </div> <!-- /.status-and-actions -->
+        </form>
+      </div> <!-- /.post-container -->
+    </div> <!-- /.#create-post -->
+  {% endif %}
 
-{% if not discussion_area %}
-  {% activity_filters request project.get_absolute_url %}
-{% endif %}
+  {% if not discussion_area %}
+    {% activity_filters request project.get_absolute_url %}
+  {% endif %}
 
-<div class="feature-box">	
+  <div class="feature-box">	
     <div class="pull-left">
-      <div class="row-fluid">
-        <h1>{{ _('Activity Feed') }}</h1>
-      </div>
       <div class="row-fluid">
         <table class="table table-bordered">
           <tbody>
@@ -47,10 +44,10 @@
         </table>
       </div>
     </div>
-</div>	
+  </div>	
 
-{% with prefix='' page_url=wall_url %}
-  {% pagination_links %}
-{% endwith %}
-<br clear="both">
+  {% with prefix='' page_url=wall_url %}
+    {% pagination_links %}
+  {% endwith %}
+
 </div>
