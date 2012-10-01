@@ -121,7 +121,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'lernanta.urls'
 
 TEMPLATE_DIRS = (
-    path('templates-bootstrap'),
+    path('templates'),
 )
 
 # Use the fully qualified name for our apps so django_nose does not
