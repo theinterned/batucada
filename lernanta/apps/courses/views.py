@@ -231,15 +231,19 @@ def course_change_language( request, course_id ):
 
 def show_content( request, course_id, content_id):
     content_uri = '/uri/content/{0}'.format(content_id)
+    user_uri = "/uri/user/{0}".format(request.user.username)
     content = content_model.get_content(content_uri)
     course = course_model.get_course('/uri/course/{0}/'.format(course_id))
     cohort = course_model.get_course_cohort('/uri/course/{0}/'.format(course_id))
-    context = { 'content': content }
+    context = { 
+        'content': content, 
+        'course': course,
+    }
     context['content']['content'] = markdown.markdown(context['content']['content'])
-    context['course_id'] = course_id
-    context['course_slug'] = course['slug']
-    context['course_title'] = course['title']
     context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
+    context['organizer'] = course_model.is_cohort_organizer(
+        user_uri, cohort['uri']
+    )
     return render_to_response(
         'courses/content.html', 
         context, 

@@ -3,17 +3,54 @@
 {% load l10n_tags %}
 
 {% block title %}{{content.title}}{% endblock %}
+{% block bodyclasses %}course-content{% endblock%}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css?v=1">
+{% endblock %}
 
 {% block breadcrumbs %}
-  <a href="{% locale_url courses_show course_id=course_id slug=course_slug%}">{{course_title}}</a>
+  <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a>
 {% endblock %}
 
 {% block body %}
-  <div id="content-container">
+
+<div class="row">
+<div id="sidebar-wrapper" class="span3">
+  <div id="sidebar">
+    <figure class="project_img">
+      <a id="id-course-image-link" href="{% locale_url courses_show course_id=course.id slug=course.slug%}">
+        {% if course.image %}
+  	         <img id="id-course-image" src="{{ MEDIA_URL }}{{ course.image }}" alt="course image"/>
+        {% else %}
+             <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
+        {% endif %}
+        {% if course.draft %}
+          <img id="id-course-image-overlay" src="{{ STATIC_URL }}images/course-draft.png" alt="draft course"/>
+        {% endif %}
+      </a>
+    </figure>
+    <div>
+        {% if course.content|length %}
+          <ul class="nav nav-list">
+            <li class="nav-header">Course content</li>
+            {% for task in course.content %}
+                <li class="{% if task.id = content.id %}active{% endif %}">
+                <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+    </div>
+  </div>
+</div>
+ 
+<div id="content-container" class="span9">
+  <div>
     <h1>{{ content.title }}</h1>
     {{ content.content|safe }}
   </div>
-  <a href="{% locale_url courses_edit_content course_id=course_id content_id=content.id %}">
+  <a href="{% locale_url courses_edit_content course_id=course.id content_id=content.id %}">
     <i class="icon-edit"></i>
   </a>
 
@@ -29,18 +66,19 @@
             {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
           </p>
         {% endif %}
-        <form action="{% locale_url courses_post_comment_reply course_id=course_id content_id=content.id comment_id=comment.id %}" method="POST">
+        <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=content.id comment_id=comment.id %}" method="POST">
           {% csrf_token %}
-          <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
-          <input type="submit" value="{% trans "Post comment" %}"/>
+          <p><textarea id="id_comment" name="comment" cols="40" rows="2"></textarea></p>
+          <p><input type="submit" value="{% trans "Post comment" %}"/></p>
         </form>
       </div>
     {% endfor %}
 
-    <form action="{% locale_url courses_post_content_comment course_id=course_id content_id=content.id %}" method="POST">
+    <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=content.id %}" method="POST">
       {% csrf_token %}
       <textarea id="id_comment" name="comment" cols="40" rows="2"></textarea>
       <input type="submit" value="{% trans "Post comment" %}"/>
     </form>
-  </div>
+</div>
+</div>
 {% endblock %}
