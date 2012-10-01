@@ -282,6 +282,7 @@ h1
   font-weight: normal
   @include adjust-font-size-to($baseFontSize-h1-header)
   @include adjust-leading-to($base-no-leader-line-height)
+  margin-bottom: 15px
   color: $slate
   &.add-top-margin
     @include margin-leader($base-no-leader-line-height * ($baseFontSize-header-h1-tm / $baseFontSize-h1-header))
@@ -1343,8 +1344,9 @@ input, textarea
 // LABELS & BADGES
 // ---------------
 // Colors
-// Only give background-color difference to links (and to simplify, we don't qualifty with `a` but [href] attribute)
+// Only give background-color difference to links (and to simplify, we dont qualifty with `a` but [href] attribute)
 // Clemintine (New Comments)
+    
 .label-clemintine, .badge-clemintine
   background-color: $clemintine
 .label-clemintine[href], .badge-clemintine[href]
@@ -1677,6 +1679,62 @@ a.show-on-hover
   width: 0px
   height: 40px
   z-index: 0
+
+
+// batucada create posts
+
+    
+#create-post .post-container 
+  min-height: 46px
+  margin-top: 15px
+
+#create-post #fake-message-input, #create-post textarea 
+  /* width: 99%    */
+  display: block
+  font-size: 16px
+  padding: 12px
+  /* margin-righct: 50px */
+
+#create-post #fake-message-input 
+  /* color: #919191 */
+  margin-bottom: 0
+
+#create-post textarea, #create-post #important-message, #create-post .status-and-actions 
+  display: none
+
+#create-post .status-and-actions 
+  margin-top: 10px
+  height: 28px
+  text-align: right
+
+#create-post #fake-message-input
+  color: white
+  min-height: 50px
+  &:hover
+    background-color: $dark-slate
+  
+#create-post .update 
+  font-size: 14px
+  line-height: 25px
+  min-height: 31px
+    
+#create-post .cancel 
+  font-size: 14px
+  line-height: 25px
+  min-height: 25px
+  margin-left: 5px
+  font-weight: bold
+
+#create-post.expanded 
+
+#create-post.expanded #fake-message-input 
+  display: none
+
+#create-post.expanded textarea, #create-post.expanded #important-message, #create-post.expanded .status-and-actions 
+  display: block
+
+#create-post.expanded textarea 
+  height: 160px
 
 
 

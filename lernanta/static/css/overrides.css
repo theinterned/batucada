@@ -6654,48 +6654,49 @@ html {
   line-height: 1.375em;
 }
 
-/* line 260, ../sass/overrides.sass */
+/* line 262, ../sass/overrides.sass */
 header {
   background-color: #fcfcfc;
 }
 
-/* line 263, ../sass/overrides.sass */
+/* line 265, ../sass/overrides.sass */
 footer {
   background-color: #e1e4ed;
 }
-/* line 265, ../sass/overrides.sass */
+/* line 267, ../sass/overrides.sass */
 footer.schools {
   background-color: white;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
 }
 
-/* line 270, ../sass/overrides.sass */
+/* line 272, ../sass/overrides.sass */
 body {
   font-family: "sense", helvetica, sans-serif, sans-serif;
   font-size: 1em;
   background-color: #f3f4f8;
 }
 
-/* line 275, ../sass/overrides.sass */
+/* line 277, ../sass/overrides.sass */
 small {
   font-size: 65%;
 }
 
-/* line 278, ../sass/overrides.sass */
+/* line 280, ../sass/overrides.sass */
 h1 {
   font-family: "arvo", helvetica, sans-serif;
   font-weight: normal;
   font-size: 1.5em;
   line-height: 1.83333em;
   line-height: 1em;
+  margin-bottom: 15px;
   color: #515665;
 }
-/* line 284, ../sass/overrides.sass */
+/* line 287, ../sass/overrides.sass */
 h1.add-top-margin {
   margin-top: 2.41667em;
 }
-/* line 286, ../sass/overrides.sass */
+/* line 289, ../sass/overrides.sass */
 h1 a {
   color: #515665;
 }
@@ -6715,13 +6716,13 @@ h1 a:hover {
 h1 a:active {
   color: #515665;
 }
-/* line 288, ../sass/overrides.sass */
+/* line 291, ../sass/overrides.sass */
 h1 small {
   font-size: 14px;
   color: #aab0bf;
   font-family: "sense", helvetica, sans-serif;
 }
-/* line 292, ../sass/overrides.sass */
+/* line 295, ../sass/overrides.sass */
 h1 small.directly-below {
   line-height: 0.58333em;
   margin-top: 0.16667em;
@@ -6729,13 +6730,13 @@ h1 small.directly-below {
   display: block;
 }
 
-/* line 298, ../sass/overrides.sass */
+/* line 301, ../sass/overrides.sass */
 h2 {
   font-family: "arvo", helvetica, sans-serif;
   font-size: 1.125em;
 }
 
-/* line 302, ../sass/overrides.sass */
+/* line 305, ../sass/overrides.sass */
 h3 {
   font-family: "sense", helvetica, sans-serif;
   font-size: 1em;
@@ -6743,22 +6744,34 @@ h3 {
   margin-top: 0.9375em;
 }
 
-/* line 308, ../sass/overrides.sass */
+/* line 311, ../sass/overrides.sass */
+h4 {
+  font-family: "arvo", helvetica, sans-serif;
+  font-size: 1.125em;
+  color: #515665;
+}
+
+/* line 316, ../sass/overrides.sass */
 p {
   line-height: 1.375em;
   margin: 0px;
+  margin-top: 0.625em;
+}
+/* line 320, ../sass/overrides.sass */
+p .no-top-margin {
+  margin: 0px;
 }
 
-/* line 312, ../sass/overrides.sass */
+/* line 323, ../sass/overrides.sass */
 a {
   color: #05c6b4;
 }
-/* line 314, ../sass/overrides.sass */
+/* line 325, ../sass/overrides.sass */
 a:hover {
   color: #06f8e1;
 }
 
-/* line 348, ../sass/overrides.sass */
+/* line 359, ../sass/overrides.sass */
 input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
   background-color: #aab0bf;
   border: none;
@@ -6777,7 +6790,7 @@ input[type="text"], input[type="password"], input[type="datetime"], input[type="
   color: #515665;
   font-family: "arvo";
 }
-/* line 355, ../sass/overrides.sass */
+/* line 366, ../sass/overrides.sass */
 input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus {
   background-color: #f3f4f8;
   font-family: "sense";
@@ -6807,43 +6820,43 @@ input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-i
   color: white;
 }
 
-/* line 362, ../sass/overrides.sass */
+/* line 373, ../sass/overrides.sass */
 input, textarea {
   width: 230px;
 }
 
-/* line 366, ../sass/overrides.sass */
+/* line 377, ../sass/overrides.sass */
 .nav-tabs {
   font-family: "arvo", helvetica, sans-serif;
   font-size: 16px;
   border-bottom: 1px solid white;
 }
-/* line 370, ../sass/overrides.sass */
+/* line 381, ../sass/overrides.sass */
 .nav-tabs a {
   color: inherit;
 }
-/* line 372, ../sass/overrides.sass */
+/* line 383, ../sass/overrides.sass */
 .nav-tabs a:hover {
   color: #05c6b4;
 }
-/* line 374, ../sass/overrides.sass */
+/* line 385, ../sass/overrides.sass */
 .nav-tabs .dropdown-toggle {
   background-color: inherit;
   border: none;
   color: inherit;
 }
-/* line 379, ../sass/overrides.sass */
+/* line 390, ../sass/overrides.sass */
 .nav-tabs .dropdown-toggle .active a:hover {
   background-color: #dfe4ec;
 }
-/* line 381, ../sass/overrides.sass */
+/* line 392, ../sass/overrides.sass */
 .nav-tabs .active a {
   border: 1px solid white;
   border-bottom: 0px;
   background-color: #fcfcfc;
   box-shadow: 1px 1px 1px white;
 }
-/* line 386, ../sass/overrides.sass */
+/* line 397, ../sass/overrides.sass */
 .nav-tabs .active a:hover {
   color: #05c6b4;
   background-color: white;
@@ -6851,7 +6864,7 @@ input, textarea {
   border-bottom: 0px;
 }
 
-/* line 392, ../sass/overrides.sass */
+/* line 403, ../sass/overrides.sass */
 .navbar {
   font-family: "arvo", helvetica, sans-serif;
   *position: relative;
@@ -6864,7 +6877,7 @@ input, textarea {
   padding-left: 0px;
   margin-bottom: 0px;
 }
-/* line 403, ../sass/overrides.sass */
+/* line 414, ../sass/overrides.sass */
 .navbar .brand {
   margin: 0px;
   padding-bottom: 0px;
@@ -6875,7 +6888,7 @@ input, textarea {
   width: 131px;
   height: 41px;
 }
-/* line 412, ../sass/overrides.sass */
+/* line 423, ../sass/overrides.sass */
 .navbar .navbar-text {
   font-size: 0.875em;
   line-height: 1.57143em;
@@ -6888,15 +6901,15 @@ input, textarea {
   text-shadow: 0px -1px 1px #d3d6dd;
   text-shadow: 0px 1px 1px #d3d6dd;
 }
-/* line 419, ../sass/overrides.sass */
+/* line 430, ../sass/overrides.sass */
 .navbar .navbar-link {
   color: #515665;
 }
-/* line 421, ../sass/overrides.sass */
+/* line 432, ../sass/overrides.sass */
 .navbar .navbar-link:hover {
   color: #05c6b4;
 }
-/* line 423, ../sass/overrides.sass */
+/* line 434, ../sass/overrides.sass */
 .navbar .nav {
   position: relative;
   left: 0;
@@ -6904,17 +6917,17 @@ input, textarea {
   float: left;
   margin-top: 2.4375em;
 }
-/* line 429, ../sass/overrides.sass */
+/* line 440, ../sass/overrides.sass */
 .navbar .nav.pull-right {
   float: right;
   margin-top: 2.625em;
 }
-/* line 432, ../sass/overrides.sass */
+/* line 443, ../sass/overrides.sass */
 .navbar .nav > li {
   display: block;
   float: left;
 }
-/* line 435, ../sass/overrides.sass */
+/* line 446, ../sass/overrides.sass */
 .navbar .nav > li > a {
   font-size: 1.25em;
   line-height: 2.2em;
@@ -6931,7 +6944,7 @@ input, textarea {
   text-shadow: 0px 1px 1px #a6a9b0;
   margin-top: 0.375em;
 }
-/* line 446, ../sass/overrides.sass */
+/* line 457, ../sass/overrides.sass */
 .navbar .nav > li > a.make-blue {
   color: #05c6b4;
 }
@@ -6951,7 +6964,7 @@ input, textarea {
 .navbar .nav > li > a.make-blue:active {
   color: #ffbc1a;
 }
-/* line 448, ../sass/overrides.sass */
+/* line 459, ../sass/overrides.sass */
 .navbar .nav > li > a.right-link-1 {
   font-size: 1em;
   line-height: 1.375em;
@@ -6959,7 +6972,7 @@ input, textarea {
   margin-right: 1.8125em;
   margin-left: 0px;
 }
-/* line 453, ../sass/overrides.sass */
+/* line 464, ../sass/overrides.sass */
 .navbar .nav > li > a.right-link-2 {
   font-size: 1em;
   line-height: 1.375em;
@@ -6967,19 +6980,19 @@ input, textarea {
   margin-right: 1.5em;
   margin-left: 0px;
 }
-/* line 458, ../sass/overrides.sass */
+/* line 469, ../sass/overrides.sass */
 .navbar .nav > li > a.right-link-3 {
   font-size: 1em;
   line-height: 1.375em;
   line-height: 1em;
 }
-/* line 461, ../sass/overrides.sass */
+/* line 472, ../sass/overrides.sass */
 .navbar .nav > a:hover {
   color: #05c6b4;
   text-decoration: none;
   background-color: transparent;
 }
-/* line 465, ../sass/overrides.sass */
+/* line 476, ../sass/overrides.sass */
 .navbar .nav .active a {
   color: #05c6b4;
   text-decoration: none;
@@ -6989,13 +7002,13 @@ input, textarea {
   text-shadow: 0px -1px 1px #a6a9b0;
   text-shadow: 0px 1px 1px #a6a9b0;
 }
-/* line 470, ../sass/overrides.sass */
+/* line 481, ../sass/overrides.sass */
 .navbar .nav .active a:hover {
   color: #05c6b4;
   text-decoration: none;
   background-color: #fcfcfc;
 }
-/* line 476, ../sass/overrides.sass */
+/* line 487, ../sass/overrides.sass */
 .navbar .nav li.dropdown > a {
   margin-top: 0px;
   background: #fed713;
@@ -7010,7 +7023,7 @@ input, textarea {
   zoom: 1;
   *display: inline;
 }
-/* line 484, ../sass/overrides.sass */
+/* line 495, ../sass/overrides.sass */
 .navbar .nav li.dropdown a.inbox-link-icon {
   margin: 0px;
   margin-left: -4px;
@@ -7020,12 +7033,12 @@ input, textarea {
   border-left: 2px solid #f2b202;
   vertical-align: inline;
 }
-/* line 493, ../sass/overrides.sass */
+/* line 504, ../sass/overrides.sass */
 .navbar .nav li.dropdown.open span {
   color: #f1b106;
   text-shadow: none;
 }
-/* line 497, ../sass/overrides.sass */
+/* line 508, ../sass/overrides.sass */
 .navbar .nav li.dropdown.open .dropdown-toggle .caret {
   border-bottom-color: white;
   border-top-color: white;
@@ -7035,7 +7048,7 @@ input, textarea {
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-/* line 502, ../sass/overrides.sass */
+/* line 513, ../sass/overrides.sass */
 .navbar .nav li.dropdown .dropdown-toggle .caret {
   border-bottom-color: #5b6b73;
   border-top-color: #5b6b73;
@@ -7044,7 +7057,7 @@ input, textarea {
   margin-top: 13px;
   opacity: 1;
 }
-/* line 509, ../sass/overrides.sass */
+/* line 520, ../sass/overrides.sass */
 .navbar .divider-vertical {
   width: 1px;
   height: 13px;
@@ -7054,31 +7067,31 @@ input, textarea {
   margin-left: 1.625em;
   margin-right: 1.4375em;
 }
-/* line 517, ../sass/overrides.sass */
+/* line 528, ../sass/overrides.sass */
 .navbar .divider-vertical.right-divider {
   margin-top: 0.375em;
   margin-left: 0px;
 }
-/* line 520, ../sass/overrides.sass */
+/* line 531, ../sass/overrides.sass */
 .navbar .nav.pull-right {
   margin-right: 0px;
   margin-left: 0px;
 }
 
-/* line 524, ../sass/overrides.sass */
+/* line 535, ../sass/overrides.sass */
 .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
   background-color: #5b6b73;
   color: #e6f9ff;
 }
 
-/* line 528, ../sass/overrides.sass */
+/* line 539, ../sass/overrides.sass */
 .dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
   background-color: #fcfcfc;
   color: #515665;
   text-decoration: none;
 }
 
-/* line 533, ../sass/overrides.sass */
+/* line 544, ../sass/overrides.sass */
 .dropdown-menu {
   background: #5b6b73;
   margin-top: 0px;
@@ -7087,20 +7100,24 @@ input, textarea {
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 539, ../sass/overrides.sass */
+/* line 550, ../sass/overrides.sass */
 .dropdown-menu li a {
   color: #e6f9ff;
   font-size: 0.75em;
   line-height: 1.83333em;
 }
 
-/* line 543, ../sass/overrides.sass */
+/* line 554, ../sass/overrides.sass */
 .nav-list {
   font-family: "arvo", helvetica, sans-serif;
   font-size: 1em;
   line-height: 1.375em;
 }
-/* line 547, ../sass/overrides.sass */
+/* line 557, ../sass/overrides.sass */
+.nav-list li {
+  padding-left: 15px;
+}
+/* line 559, ../sass/overrides.sass */
 .nav-list li a {
   color: #515665;
 }
@@ -7120,43 +7137,42 @@ input, textarea {
 .nav-list li a:active {
   color: #515665;
 }
-/* line 550, ../sass/overrides.sass */
+/* line 562, ../sass/overrides.sass */
 .nav-list li.dropdown > a {
   background: #515665;
   color: white;
   font-size: 1em;
   line-height: 1.375em;
 }
-/* line 554, ../sass/overrides.sass */
+/* line 566, ../sass/overrides.sass */
 .nav-list .dropdown-menu {
   min-width: 100%;
   background: #e1e4ed;
 }
-/* line 558, ../sass/overrides.sass */
+/* line 570, ../sass/overrides.sass */
 .nav-list .dropdown-menu li a {
   color: #515665;
   font-size: 1em;
   line-height: 1.375em;
 }
-/* line 561, ../sass/overrides.sass */
+/* line 573, ../sass/overrides.sass */
 .nav-list .nav-header {
-  margin-left: -42px;
   font-size: 1.125em;
   line-height: 1.22222em;
 }
-/* line 564, ../sass/overrides.sass */
+/* line 575, ../sass/overrides.sass */
 .nav-list .icon-large {
   margin-right: 12px;
   vertical-align: 0px;
 }
 
-/* line 568, ../sass/overrides.sass */
+/* line 579, ../sass/overrides.sass */
 .navbar .pull-right .dropdown-menu, .navbar .dropdown-menu.pull-right {
   left: 30px;
   right: auto;
 }
 
-/* line 572, ../sass/overrides.sass */
+/* line 583, ../sass/overrides.sass */
 .navbar-inner {
   min-height: 110px;
   padding-right: 10px;
@@ -7174,7 +7190,7 @@ input, textarea {
   background-image: none;
 }
 
-/* line 581, ../sass/overrides.sass */
+/* line 592, ../sass/overrides.sass */
 .navbar-search {
   position: relative;
   float: left;
@@ -7185,7 +7201,7 @@ input, textarea {
   width: 230px;
   border-left: 10px #aab0bf;
 }
-/* line 590, ../sass/overrides.sass */
+/* line 601, ../sass/overrides.sass */
 .navbar-search .search-query {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -7207,11 +7223,11 @@ input, textarea {
   padding-left: 10px;
   width: 220px;
 }
-/* line 608, ../sass/overrides.sass */
+/* line 619, ../sass/overrides.sass */
 .navbar-search .search-query:-moz-placeholder, .navbar-search .search-query:-ms-input-placeholder, .navbar-search .search-query::-webkit-input-placeholder {
   color: white;
 }
-/* line 610, ../sass/overrides.sass */
+/* line 621, ../sass/overrides.sass */
 .navbar-search .search-query:focus, .navbar-search .search-query.focused {
   font-family: "arvo", helvetica, sans-serif;
   -webkit-border-radius: 3px;
@@ -7239,7 +7255,7 @@ input, textarea {
   box-shadow: 0px 0px 3px white;
 }
 
-/* line 624, ../sass/overrides.sass */
+/* line 635, ../sass/overrides.sass */
 #user-menu-btn {
   background: #fed713;
   color: #5b6b73;
@@ -7252,7 +7268,7 @@ input, textarea {
   border: 0;
   height: 30px;
 }
-/* line 634, ../sass/overrides.sass */
+/* line 645, ../sass/overrides.sass */
 #user-menu-btn #user-picture {
   left: 0;
   top: 0;
@@ -7261,7 +7277,7 @@ input, textarea {
   display: block;
   float: left;
 }
-/* line 641, ../sass/overrides.sass */
+/* line 652, ../sass/overrides.sass */
 #user-menu-btn #username {
   display: block;
   float: left;
@@ -7272,16 +7288,16 @@ input, textarea {
   padding-right: 5px;
 }
 
-/* line 650, ../sass/overrides.sass */
+/* line 661, ../sass/overrides.sass */
 #user-menu-area {
   position: relative;
 }
-/* line 652, ../sass/overrides.sass */
+/* line 663, ../sass/overrides.sass */
 #user-menu-area:open button {
   background-color: #5b6b73;
 }
 
-/* line 655, ../sass/overrides.sass */
+/* line 666, ../sass/overrides.sass */
 #user-dropdown-menu {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -7300,21 +7316,21 @@ input, textarea {
   min-width: 0;
   margin-left: 30px;
 }
-/* line 670, ../sass/overrides.sass */
+/* line 681, ../sass/overrides.sass */
 #user-dropdown-menu:after, #user-dropdown-menu:before {
   content: none;
 }
 
-/* line 674, ../sass/overrides.sass */
+/* line 685, ../sass/overrides.sass */
 .navbar .dropdown-menu:before {
   display: none;
 }
-/* line 676, ../sass/overrides.sass */
+/* line 687, ../sass/overrides.sass */
 .navbar .dropdown-menu:after {
   display: none;
 }
 
-/* line 684, ../sass/overrides.sass */
+/* line 695, ../sass/overrides.sass */
 .custom-hero-unit {
   margin-bottom: 0px;
   background-color: #f3f4f8;
@@ -7322,12 +7338,12 @@ input, textarea {
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 688, ../sass/overrides.sass */
+/* line 699, ../sass/overrides.sass */
 .custom-hero-unit .p-first-line {
   margin-top: 2.25em;
   font-weight: 100;
 }
-/* line 691, ../sass/overrides.sass */
+/* line 702, ../sass/overrides.sass */
 .custom-hero-unit h1 {
   margin-bottom: 0;
   font-size: 3.625em;
@@ -7336,15 +7352,15 @@ input, textarea {
   color: #aab0bf;
   letter-spacing: normal;
 }
-/* line 697, ../sass/overrides.sass */
+/* line 708, ../sass/overrides.sass */
 .custom-hero-unit h1 .highlight-1 {
   color: #05c6b4;
 }
-/* line 699, ../sass/overrides.sass */
+/* line 710, ../sass/overrides.sass */
 .custom-hero-unit h1 .highlight-2 {
   color: #ff7300;
 }
-/* line 701, ../sass/overrides.sass */
+/* line 712, ../sass/overrides.sass */
 .custom-hero-unit h2 {
   color: #aab0bf;
   font-size: 2.125em;
@@ -7352,15 +7368,15 @@ input, textarea {
   line-height: 1em;
   margin-top: 1em;
 }
-/* line 706, ../sass/overrides.sass */
+/* line 717, ../sass/overrides.sass */
 .custom-hero-unit h2 .highlight-1 {
   color: #05c6b4;
 }
-/* line 708, ../sass/overrides.sass */
+/* line 719, ../sass/overrides.sass */
 .custom-hero-unit h2 .highlight-2 {
   color: #ff7300;
 }
-/* line 710, ../sass/overrides.sass */
+/* line 721, ../sass/overrides.sass */
 .custom-hero-unit p {
   font-size: 1.25em;
   line-height: 2.2em;
@@ -7368,12 +7384,12 @@ input, textarea {
   font-weight: 100;
   color: #515665;
 }
-/* line 715, ../sass/overrides.sass */
+/* line 726, ../sass/overrides.sass */
 .custom-hero-unit p .make-bold {
   font-weight: bold;
 }
 
-/* line 721, ../sass/overrides.sass */
+/* line 732, ../sass/overrides.sass */
 .bulitin-feature {
   margin-bottom: 0px;
   background-color: #fcfcfc;
@@ -7383,11 +7399,11 @@ input, textarea {
   padding-top: 0.9375em;
   border-bottom: 2px solid #d0d3dc;
 }
-/* line 726, ../sass/overrides.sass */
+/* line 737, ../sass/overrides.sass */
 .bulitin-feature.with-leader {
   margin-top: 1.4375em;
 }
-/* line 729, ../sass/overrides.sass */
+/* line 740, ../sass/overrides.sass */
 .bulitin-feature h1 {
   margin-bottom: 0;
   font-size: 1.5em;
@@ -7403,14 +7419,14 @@ input, textarea {
   color: white;
   letter-spacing: normal;
 }
-/* line 740, ../sass/overrides.sass */
+/* line 751, ../sass/overrides.sass */
 .bulitin-feature h1.top-bulitin-button {
   background: #ff7300;
   border-bottom: 2px solid #bc5500;
   text-align: center;
   vertical-align: middle;
 }
-/* line 745, ../sass/overrides.sass */
+/* line 756, ../sass/overrides.sass */
 .bulitin-feature h1.top-bulitin-button a {
   color: white;
   text-decoration: none;
@@ -7435,14 +7451,14 @@ input, textarea {
 .bulitin-feature h1.top-bulitin-button a:hover {
   text-decoration: underline;
 }
-/* line 748, ../sass/overrides.sass */
+/* line 759, ../sass/overrides.sass */
 .bulitin-feature h1.bottom-bulitin-button {
   background: #b7d500;
   border-bottom: 2px solid #a3be00;
   text-align: center;
   vertical-align: middle;
 }
-/* line 753, ../sass/overrides.sass */
+/* line 764, ../sass/overrides.sass */
 .bulitin-feature h1.bottom-bulitin-button a {
   color: white;
   text-decoration: none;
@@ -7467,7 +7483,7 @@ input, textarea {
 .bulitin-feature h1.bottom-bulitin-button a:hover {
   text-decoration: underline;
 }
-/* line 757, ../sass/overrides.sass */
+/* line 768, ../sass/overrides.sass */
 .bulitin-feature h2 {
   color: #aab0bf;
   font-size: 0.875em;
@@ -7476,20 +7492,20 @@ input, textarea {
   margin-left: 1.42857em;
   margin-right: 1.42857em;
 }
-/* line 758, ../sass/overrides.sass */
+/* line 769, ../sass/overrides.sass */
 .bulitin-feature h2.top-bulitin-box-note-format {
   text-align: center;
   padding-top: 1.375em;
   padding-bottom: 1.375em;
 }
-/* line 767, ../sass/overrides.sass */
+/* line 778, ../sass/overrides.sass */
 .bulitin-feature h2 a {
   font-size: 1.28571em;
   line-height: 2.13889em;
   line-height: 1.22222em;
   font-family: "arvo", helvetica, sans-serif;
 }
-/* line 771, ../sass/overrides.sass */
+/* line 782, ../sass/overrides.sass */
 .bulitin-feature p {
   font-size: 1em;
   line-height: 1.375em;
@@ -7501,21 +7517,21 @@ input, textarea {
   margin-left: 1.25em;
   margin-right: 1.25em;
 }
-/* line 780, ../sass/overrides.sass */
+/* line 791, ../sass/overrides.sass */
 .bulitin-feature p.top-bulitin-box {
   margin-left: 0.9375em;
   margin-right: 0.9375em;
 }
-/* line 783, ../sass/overrides.sass */
+/* line 794, ../sass/overrides.sass */
 .bulitin-feature p.bottom-bulitin-box {
   padding-bottom: 3.375em;
 }
-/* line 785, ../sass/overrides.sass */
+/* line 796, ../sass/overrides.sass */
 .bulitin-feature p.bottom-bulitin-box-lower {
   padding-bottom: 2.75em;
 }
 
-/* line 791, ../sass/overrides.sass */
+/* line 802, ../sass/overrides.sass */
 .feature-box h1 {
   font-size: 1.5em;
   line-height: 1.83333em;
@@ -7523,15 +7539,15 @@ input, textarea {
   margin-top: 2.41667em;
   color: #515665;
 }
-/* line 796, ../sass/overrides.sass */
+/* line 807, ../sass/overrides.sass */
 .feature-box h1 a {
   color: #515665;
 }
-/* line 798, ../sass/overrides.sass */
+/* line 809, ../sass/overrides.sass */
 .feature-box h1 a:hover {
   text-decoration: underline;
 }
-/* line 800, ../sass/overrides.sass */
+/* line 811, ../sass/overrides.sass */
 .feature-box h2 {
   font-size: 0.875em;
   line-height: 1.57143em;
@@ -7540,14 +7556,14 @@ input, textarea {
   font-family: "sense", helvetica, sans-serif;
   margin-bottom: 1.92857em;
 }
-/* line 806, ../sass/overrides.sass */
+/* line 817, ../sass/overrides.sass */
 .feature-box h2 a {
   font-size: 1.28571em;
   line-height: 2.13889em;
   line-height: 1em;
 }
 
-/* line 810, ../sass/overrides.sass */
+/* line 821, ../sass/overrides.sass */
 .table-bordered {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -7558,42 +7574,52 @@ input, textarea {
   border-bottom: 0px;
   background: #fcfcfc;
 }
-/* line 817, ../sass/overrides.sass */
+/* line 828, ../sass/overrides.sass */
 .table-bordered tbody {
   border-top: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 820, ../sass/overrides.sass */
+/* line 831, ../sass/overrides.sass */
 .table-bordered tbody:first-child {
   border-top: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 823, ../sass/overrides.sass */
+/* line 834, ../sass/overrides.sass */
 .table-bordered tbody:first-child tr {
   border-top: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 826, ../sass/overrides.sass */
+/* line 838, ../sass/overrides.sass */
+.table-bordered tbody:first-child tr td:first-child {
+  vertical-align: top;
+  min-width: 80px;
+  max-width: 80px;
+}
+/* line 842, ../sass/overrides.sass */
+.table-bordered tbody:first-child tr td:last-child {
+  vertical-align: bottom;
+}
+/* line 844, ../sass/overrides.sass */
 .table-bordered tbody:first-child tr:first-child {
   border-top: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 829, ../sass/overrides.sass */
+/* line 847, ../sass/overrides.sass */
 .table-bordered tbody:first-child tr:first-child td {
   border-top: 1.25em solid #f3f4f8;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 832, ../sass/overrides.sass */
+/* line 850, ../sass/overrides.sass */
 .table-bordered tbody td {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -7605,13 +7631,13 @@ input, textarea {
   border-right: 0px;
   padding: 0px;
 }
-/* line 841, ../sass/overrides.sass */
+/* line 859, ../sass/overrides.sass */
 .table-bordered tbody td .reference-link-area a {
   color: #aab0bf;
   text-decoration: underline;
 }
 
-/* line 845, ../sass/overrides.sass */
+/* line 863, ../sass/overrides.sass */
 .thumbnail {
   width: 13.75em;
   background: #fcfcfc;
@@ -7620,7 +7646,7 @@ input, textarea {
   border-radius: 0px;
   padding: 0px;
 }
-/* line 846, ../sass/overrides.sass */
+/* line 864, ../sass/overrides.sass */
 .thumbnail h1 {
   font-size: 1.5em;
   line-height: 1.83333em;
@@ -7628,19 +7654,19 @@ input, textarea {
   margin-top: 2.41667em;
   color: #515665;
 }
-/* line 851, ../sass/overrides.sass */
+/* line 869, ../sass/overrides.sass */
 .thumbnail h1 a {
   color: #515665;
 }
-/* line 853, ../sass/overrides.sass */
+/* line 871, ../sass/overrides.sass */
 .thumbnail h1 a:hover {
   text-decoration: underline;
 }
-/* line 859, ../sass/overrides.sass */
+/* line 877, ../sass/overrides.sass */
 .thumbnail .caption {
   padding: 0px 0.5625em;
 }
-/* line 861, ../sass/overrides.sass */
+/* line 879, ../sass/overrides.sass */
 .thumbnail .caption h3 {
   font-size: 1.125em;
   line-height: 1.22222em;
@@ -7655,15 +7681,15 @@ input, textarea {
   text-overflow-y: hidden;
   overflow-y: hidden;
 }
-/* line 873, ../sass/overrides.sass */
+/* line 891, ../sass/overrides.sass */
 .thumbnail .caption h3 a {
   height: auto;
 }
-/* line 875, ../sass/overrides.sass */
+/* line 893, ../sass/overrides.sass */
 .thumbnail .caption h3 a span {
   height: auto;
 }
-/* line 877, ../sass/overrides.sass */
+/* line 895, ../sass/overrides.sass */
 .thumbnail .caption p {
   font-family: "sense", helvetica, sans-serif;
   font-size: 1em;
@@ -7675,7 +7701,7 @@ input, textarea {
   text-overflow-y: hidden;
   overflow-y: hidden;
 }
-/* line 886, ../sass/overrides.sass */
+/* line 904, ../sass/overrides.sass */
 .thumbnail img {
   padding-top: 0.3125em;
   display: block;
@@ -7683,7 +7709,7 @@ input, textarea {
   margin-left: auto;
   margin-right: auto;
 }
-/* line 892, ../sass/overrides.sass */
+/* line 910, ../sass/overrides.sass */
 .thumbnail .well {
   padding: 0px;
   -webkit-border-radius: 0px;
@@ -7695,7 +7721,7 @@ input, textarea {
   height: 2.125em;
   margin-bottom: 0px;
 }
-/* line 900, ../sass/overrides.sass */
+/* line 918, ../sass/overrides.sass */
 .thumbnail .well:before {
   content: "";
   display: -moz-inline-stack;
@@ -7707,7 +7733,7 @@ input, textarea {
   height: 100%;
   vertical-align: middle;
 }
-/* line 905, ../sass/overrides.sass */
+/* line 923, ../sass/overrides.sass */
 .thumbnail .well:after {
   content: "";
   display: -moz-inline-stack;
@@ -7719,7 +7745,7 @@ input, textarea {
   height: 100%;
   vertical-align: middle;
 }
-/* line 910, ../sass/overrides.sass */
+/* line 928, ../sass/overrides.sass */
 .thumbnail .well p {
   width: 13.125em;
   display: -moz-inline-stack;
@@ -7731,7 +7757,7 @@ input, textarea {
   line-height: 1em;
   text-align: center;
 }
-/* line 915, ../sass/overrides.sass */
+/* line 933, ../sass/overrides.sass */
 .thumbnail .well p .label {
   color: white;
   font-size: 0.75em;
@@ -7743,7 +7769,7 @@ input, textarea {
   padding-right: 5px;
   background: #aab0bf;
 }
-/* line 924, ../sass/overrides.sass */
+/* line 942, ../sass/overrides.sass */
 .thumbnail .well p .badge {
   color: white;
   font-size: 0.875em;
@@ -7756,12 +7782,12 @@ input, textarea {
   padding: auto;
   background: #aab0bf;
 }
-/* line 934, ../sass/overrides.sass */
+/* line 952, ../sass/overrides.sass */
 .thumbnail .well-large {
   height: 3.5625em;
   text-align: center;
 }
-/* line 937, ../sass/overrides.sass */
+/* line 955, ../sass/overrides.sass */
 .thumbnail .well-large dl {
   display: -moz-inline-stack;
   display: inline-block;
@@ -7776,7 +7802,7 @@ input, textarea {
   padding-left: 5px;
   padding-right: 5px;
 }
-/* line 946, ../sass/overrides.sass */
+/* line 964, ../sass/overrides.sass */
 .thumbnail .well-large dl dt .label {
   color: white;
   font-size: 0.75em;
@@ -7787,11 +7813,11 @@ input, textarea {
   background: #aab0bf;
   padding: 0px;
 }
-/* line 954, ../sass/overrides.sass */
+/* line 972, ../sass/overrides.sass */
 .thumbnail .well-large dl dd {
   margin-left: 0px;
 }
-/* line 956, ../sass/overrides.sass */
+/* line 974, ../sass/overrides.sass */
 .thumbnail .well-large dl dd .badge {
   color: white;
   font-size: 0.75em;
@@ -7803,43 +7829,43 @@ input, textarea {
   padding: 0px;
 }
 
-/* line 965, ../sass/overrides.sass */
+/* line 983, ../sass/overrides.sass */
 .custom-footer {
   background: #e1e4ed;
   padding-top: 2.25em;
 }
-/* line 968, ../sass/overrides.sass */
+/* line 986, ../sass/overrides.sass */
 .custom-footer h1 {
   color: #515665;
   font-size: 1.125em;
   line-height: 1.22222em;
   line-height: 1em;
 }
-/* line 972, ../sass/overrides.sass */
+/* line 990, ../sass/overrides.sass */
 .custom-footer ul {
   margin: 0px;
   list-style-type: none;
 }
-/* line 974, ../sass/overrides.sass */
+/* line 992, ../sass/overrides.sass */
 .custom-footer ul hr {
   margin: 0.4375em 0px 0px 0px;
 }
-/* line 976, ../sass/overrides.sass */
+/* line 994, ../sass/overrides.sass */
 .custom-footer ul.connect-links {
   padding-top: 0.8125em;
 }
-/* line 978, ../sass/overrides.sass */
+/* line 996, ../sass/overrides.sass */
 .custom-footer ul.connect-links li {
   padding-top: 0.4375em;
 }
-/* line 981, ../sass/overrides.sass */
+/* line 999, ../sass/overrides.sass */
 .custom-footer p {
   text-align: justify;
   /*ie */
   text-justify: inter-word;
   padding-top: 1.0625em;
 }
-/* line 987, ../sass/overrides.sass */
+/* line 1005, ../sass/overrides.sass */
 .custom-footer img.supporter-image {
   margin-top: 1.25em;
   -webkit-border-radius: 0px;
@@ -7851,28 +7877,28 @@ input, textarea {
   border-bottom: 1px solid #c7cbd7;
   background: white;
 }
-/* line 993, ../sass/overrides.sass */
+/* line 1011, ../sass/overrides.sass */
 .custom-footer img.cc-icons-image {
   max-width: none;
   position: relative;
   left: -20px;
 }
-/* line 998, ../sass/overrides.sass */
+/* line 1016, ../sass/overrides.sass */
 .custom-footer a.align-supporter-link-right {
   padding-top: 0.9375em;
   float: right;
 }
-/* line 1001, ../sass/overrides.sass */
+/* line 1019, ../sass/overrides.sass */
 .custom-footer hr {
   margin: 2.1875em 0px 1.5em 0px;
 }
-/* line 1003, ../sass/overrides.sass */
+/* line 1021, ../sass/overrides.sass */
 .custom-footer .language-box {
   padding-bottom: 5px;
   margin-bottom: 28px;
   background: white;
 }
-/* line 1007, ../sass/overrides.sass */
+/* line 1025, ../sass/overrides.sass */
 .custom-footer .language-box .table {
   margin-bottom: 5px;
   -webkit-border-radius: 0px;
@@ -7881,48 +7907,48 @@ input, textarea {
   border: 0px;
   background: white;
 }
-/* line 1012, ../sass/overrides.sass */
+/* line 1030, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody {
   border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 1015, ../sass/overrides.sass */
+/* line 1033, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody:first-child {
   border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 1018, ../sass/overrides.sass */
+/* line 1036, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody:first-child tr {
   border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 1021, ../sass/overrides.sass */
+/* line 1039, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody:first-child tr:first-child {
   border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 1024, ../sass/overrides.sass */
+/* line 1042, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody:first-child tr:first-child td {
   border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
-/* line 1027, ../sass/overrides.sass */
+/* line 1045, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody:first-child tr:first-child td img {
   padding-left: 1.875em;
   padding-right: 0.3125em;
   padding-top: 7px;
 }
-/* line 1031, ../sass/overrides.sass */
+/* line 1049, ../sass/overrides.sass */
 .custom-footer .language-box .table tbody td {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -7931,7 +7957,7 @@ input, textarea {
   border: 0px;
   padding: 0px;
 }
-/* line 1036, ../sass/overrides.sass */
+/* line 1054, ../sass/overrides.sass */
 .custom-footer .language-box ul {
   margin: 0;
   padding: 0;
@@ -7964,7 +7990,7 @@ input, textarea {
   *display: inline;
   white-space: nowrap;
 }
-/* line 1043, ../sass/overrides.sass */
+/* line 1061, ../sass/overrides.sass */
 .custom-footer .info-links-box ul {
   margin: 0;
   padding: 0;
@@ -7998,14 +8024,23 @@ input, textarea {
   white-space: nowrap;
 }
 
-/* line 1050, ../sass/overrides.sass */
+/* line 1068, ../sass/overrides.sass */
 .icon-search {
   position: relative;
   left: 13em;
   top: -1.8125em;
 }
 
-/* line 1055, ../sass/overrides.sass */
+/* line 1072, ../sass/overrides.sass */
+.well {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  background: #fcfcfc;
+  padding: 0.625em;
+}
+
+/* line 1077, ../sass/overrides.sass */
 .well-large {
   padding: 0px;
   -webkit-border-radius: 0px;
@@ -8019,7 +8054,7 @@ input, textarea {
   margin-bottom: 0px;
   text-align: center;
 }
-/* line 1065, ../sass/overrides.sass */
+/* line 1087, ../sass/overrides.sass */
 .well-large ul {
   display: -moz-inline-stack;
   display: inline-block;
@@ -8059,15 +8094,15 @@ input, textarea {
   *display: inline;
   white-space: nowrap;
 }
-/* line 1073, ../sass/overrides.sass */
+/* line 1095, ../sass/overrides.sass */
 .well-large ul li {
   float: none;
 }
-/* line 1075, ../sass/overrides.sass */
+/* line 1097, ../sass/overrides.sass */
 .well-large ul li.wrap {
   white-space: normal;
 }
-/* line 1077, ../sass/overrides.sass */
+/* line 1099, ../sass/overrides.sass */
 .well-large h2 {
   display: -moz-inline-stack;
   display: inline-block;
@@ -8079,7 +8114,7 @@ input, textarea {
   line-height: 1em;
   padding-left: 0.625em;
 }
-/* line 1082, ../sass/overrides.sass */
+/* line 1104, ../sass/overrides.sass */
 .well-large dl {
   display: -moz-inline-stack;
   display: inline-block;
@@ -8094,7 +8129,7 @@ input, textarea {
   padding-left: 5px;
   padding-right: 5px;
 }
-/* line 1091, ../sass/overrides.sass */
+/* line 1113, ../sass/overrides.sass */
 .well-large dl dt .label {
   color: white;
   font-size: 0.75em;
@@ -8105,11 +8140,11 @@ input, textarea {
   background: #aab0bf;
   padding: 0px;
 }
-/* line 1099, ../sass/overrides.sass */
+/* line 1121, ../sass/overrides.sass */
 .well-large dl dd {
   margin-left: 0px;
 }
-/* line 1101, ../sass/overrides.sass */
+/* line 1123, ../sass/overrides.sass */
 .well-large dl dd .badge {
   color: white;
   font-size: 0.75em;
@@ -8121,7 +8156,7 @@ input, textarea {
   padding: 0px;
 }
 
-/* line 1113, ../sass/overrides.sass */
+/* line 1135, ../sass/overrides.sass */
 .btn-large {
   padding: 0px;
   font-family: "arvo", helvetica, sans-serif;
@@ -8139,19 +8174,32 @@ input, textarea {
   vertical-align: middle;
 }
 
-/* line 1130, ../sass/overrides.sass */
+/* line 1152, ../sass/overrides.sass */
 .btn-skinny {
   padding-left: 2px;
   padding-right: 2px;
 }
 
-/* line 1133, ../sass/overrides.sass */
+/* line 1155, ../sass/overrides.sass */
+.btn-fit {
+  padding-left: 0.3125em;
+  padding-right: 0.3125em;
+}
+@media (min-width: 1200px) {
+  /* line 1155, ../sass/overrides.sass */
+  .btn-fit {
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+  }
+}
+
+/* line 1161, ../sass/overrides.sass */
 .btn-short {
   padding-top: 10px;
   padding-bottom: 5px;
 }
 
-/* line 1138, ../sass/overrides.sass */
+/* line 1166, ../sass/overrides.sass */
 .btn-apricot,
 .btn-apricot:hover,
 .btn-cyan,
@@ -8159,20 +8207,26 @@ input, textarea {
 .btn-olive,
 .btn-olive:hover,
 .btn-slate,
-.btn-slate:hover {
+.btn-slate:hover,
+.btn-blood-orange,
+.btn-blood-orange:hover,
+.btn-clemintine,
+.btn-clemintine:hover {
   color: white;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
-/* line 1149, ../sass/overrides.sass */
+/* line 1181, ../sass/overrides.sass */
 .btn-apricot.active,
 .btn-cyan.active,
 .btn-olive.active,
-.btn-slate.active {
+.btn-slate.active,
+.btn-blood-orange.active,
+.btn-clemintine.active {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 1156, ../sass/overrides.sass */
+/* line 1190, ../sass/overrides.sass */
 .btn-apricot {
   background-color: #ff7300;
   background-image: -moz-linear-gradient(top, #ff7300, #ff7300);
@@ -8201,7 +8255,7 @@ input, textarea {
   background-color: #cc5c00 \9;
 }
 
-/* line 1160, ../sass/overrides.sass */
+/* line 1194, ../sass/overrides.sass */
 .btn-olive {
   background-color: #b7d500;
   background-image: -moz-linear-gradient(top, #b7d500, #b7d500);
@@ -8230,36 +8284,7 @@ input, textarea {
   background-color: #8ba200 \9;
 }
 
-/* line 1164, ../sass/overrides.sass */
-.btn-slate {
-  background-color: #515665;
-  background-image: -moz-linear-gradient(top, #515665, #515665);
-  background-image: -ms-linear-gradient(top, #515665, #515665);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#515665), to(#515665));
-  background-image: -webkit-linear-gradient(top, #515665, #515665);
-  background-image: -o-linear-gradient(top, #515665, #515665);
-  background-image: linear-gradient(top, #515665, #515665);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4f5462', endColorstr='#4f5462', GradientType=0);
-  border-color: #515665 #515665 #2f323b;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  *background-color: #515665;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-  border: 0px;
-  border-bottom: 2px solid #343741;
-}
-/* line 466, ../sass/bootstrap-lib/_mixins.scss */
-.btn-slate:hover, .btn-slate:active, .btn-slate.active, .btn-slate.disabled, .btn-slate[disabled] {
-  background-color: #515665;
-  *background-color: #464a57;
-}
-/* line 473, ../sass/bootstrap-lib/_mixins.scss */
-.btn-slate:active, .btn-slate.active {
-  background-color: #3a3e49 \9;
-}
-
-/* line 1168, ../sass/overrides.sass */
+/* line 1198, ../sass/overrides.sass */
 .btn-cyan {
   background-color: #05c6b4;
   background-image: -moz-linear-gradient(top, #05c6b4, #05c6b4);
@@ -8288,7 +8313,94 @@ input, textarea {
   background-color: #049487 \9;
 }
 
-/* line 1173, ../sass/overrides.sass */
+/* line 1202, ../sass/overrides.sass */
+.btn-slate {
+  background-color: #515665;
+  background-image: -moz-linear-gradient(top, #515665, #515665);
+  background-image: -ms-linear-gradient(top, #515665, #515665);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#515665), to(#515665));
+  background-image: -webkit-linear-gradient(top, #515665, #515665);
+  background-image: -o-linear-gradient(top, #515665, #515665);
+  background-image: linear-gradient(top, #515665, #515665);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4f5462', endColorstr='#4f5462', GradientType=0);
+  border-color: #515665 #515665 #2f323b;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #515665;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 0px;
+  border-bottom: 2px solid #343741;
+}
+/* line 466, ../sass/bootstrap-lib/_mixins.scss */
+.btn-slate:hover, .btn-slate:active, .btn-slate.active, .btn-slate.disabled, .btn-slate[disabled] {
+  background-color: #515665;
+  *background-color: #464a57;
+}
+/* line 473, ../sass/bootstrap-lib/_mixins.scss */
+.btn-slate:active, .btn-slate.active {
+  background-color: #3a3e49 \9;
+}
+
+/* line 1206, ../sass/overrides.sass */
+.btn-blood-orange {
+  background-color: #ff7503;
+  background-image: -moz-linear-gradient(top, #ff7503, #ff7503);
+  background-image: -ms-linear-gradient(top, #ff7503, #ff7503);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff7503), to(#ff7503));
+  background-image: -webkit-linear-gradient(top, #ff7503, #ff7503);
+  background-image: -o-linear-gradient(top, #ff7503, #ff7503);
+  background-image: linear-gradient(top, #ff7503, #ff7503);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fd7200', endColorstr='#fd7200', GradientType=0);
+  border-color: #ff7503 #ff7503 #b55200;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #ff7503;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 0px;
+  border-bottom: 2px solid #cf5e00;
+}
+/* line 466, ../sass/bootstrap-lib/_mixins.scss */
+.btn-blood-orange:hover, .btn-blood-orange:active, .btn-blood-orange.active, .btn-blood-orange.disabled, .btn-blood-orange[disabled] {
+  background-color: #ff7503;
+  *background-color: #e96900;
+}
+/* line 473, ../sass/bootstrap-lib/_mixins.scss */
+.btn-blood-orange:active, .btn-blood-orange.active {
+  background-color: #cf5e00 \9;
+}
+
+/* line 1210, ../sass/overrides.sass */
+.btn-clemintine {
+  background-color: #ffbc1a;
+  background-image: -moz-linear-gradient(top, #ffbc1a, #ffbc1a);
+  background-image: -ms-linear-gradient(top, #ffbc1a, #ffbc1a);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffbc1a), to(#ffbc1a));
+  background-image: -webkit-linear-gradient(top, #ffbc1a, #ffbc1a);
+  background-image: -o-linear-gradient(top, #ffbc1a, #ffbc1a);
+  background-image: linear-gradient(top, #ffbc1a, #ffbc1a);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbb15', endColorstr='#ffbb15', GradientType=0);
+  border-color: #ffbc1a #ffbc1a #cd9100;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #ffbc1a;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 0px;
+  border-bottom: 2px solid #d29502;
+}
+/* line 466, ../sass/bootstrap-lib/_mixins.scss */
+.btn-clemintine:hover, .btn-clemintine:active, .btn-clemintine.active, .btn-clemintine.disabled, .btn-clemintine[disabled] {
+  background-color: #ffbc1a;
+  *background-color: #ffb500;
+}
+/* line 473, ../sass/bootstrap-lib/_mixins.scss */
+.btn-clemintine:active, .btn-clemintine.active {
+  background-color: #e6a300 \9;
+}
+
+/* line 1215, ../sass/overrides.sass */
 .breadcrumb {
   background: #f3f4f8;
   border: 0px;
@@ -8297,23 +8409,23 @@ input, textarea {
   font-size: 0.875em;
   line-height: 1.57143em;
 }
-/* line 1180, ../sass/overrides.sass */
+/* line 1222, ../sass/overrides.sass */
 .breadcrumb .btn:last-child {
   margin-right: 3px;
 }
 @media (min-width: 1200px) {
-  /* line 1180, ../sass/overrides.sass */
+  /* line 1222, ../sass/overrides.sass */
   .breadcrumb .btn:last-child {
     margin-right: 3.4375em;
   }
 }
 
-/* line 1185, ../sass/overrides.sass */
+/* line 1227, ../sass/overrides.sass */
 #splash .breadcrumb {
   display: none;
 }
 
-/* line 1188, ../sass/overrides.sass */
+/* line 1230, ../sass/overrides.sass */
 .modal {
   max-height: 35em;
   width: 35em;
@@ -8323,29 +8435,29 @@ input, textarea {
   overflow-x: visible;
   overflow-y: auto;
 }
-/* line 1196, ../sass/overrides.sass */
+/* line 1238, ../sass/overrides.sass */
 .modal h1 {
   padding-bottom: 10px;
 }
 
-/* line 1199, ../sass/overrides.sass */
+/* line 1241, ../sass/overrides.sass */
 .container {
   margin: 0 auto;
 }
-/* line 1201, ../sass/overrides.sass */
+/* line 1243, ../sass/overrides.sass */
 .container.breadcrumb-box {
   margin-bottom: 0em;
 }
-/* line 1203, ../sass/overrides.sass */
+/* line 1245, ../sass/overrides.sass */
 .container.body {
   margin-top: 1.4375em;
 }
-/* line 1205, ../sass/overrides.sass */
+/* line 1247, ../sass/overrides.sass */
 .container.footer-schools {
   background: white;
   height: 100%;
 }
-/* line 1208, ../sass/overrides.sass */
+/* line 1250, ../sass/overrides.sass */
 .container.footer-schools h5 {
   color: #cccccc;
   width: 100%;
@@ -8354,7 +8466,7 @@ input, textarea {
   font-weight: normal;
   margin: 15px 0 15px 0;
 }
-/* line 1215, ../sass/overrides.sass */
+/* line 1257, ../sass/overrides.sass */
 .container.footer-schools .school-small-icon {
   width: 200px;
   display: -moz-inline-stack;
@@ -8366,27 +8478,27 @@ input, textarea {
   text-align: center;
   margin-bottom: 10px;
 }
-/* line 1220, ../sass/overrides.sass */
+/* line 1262, ../sass/overrides.sass */
 .container.footer-schools .school-small-icon a {
   color: #555555;
 }
-/* line 1222, ../sass/overrides.sass */
+/* line 1264, ../sass/overrides.sass */
 .container.footer-schools .school-small-icon a:hover {
   color: #2184ca;
   text-decoration: underline;
 }
-/* line 1225, ../sass/overrides.sass */
+/* line 1267, ../sass/overrides.sass */
 .container.footer-schools .school-small-icon img {
   display: block;
   margin: auto;
   margin-bottom: 10px;
 }
-/* line 1229, ../sass/overrides.sass */
+/* line 1271, ../sass/overrides.sass */
 .container.footer-schools .school-small-icon p {
   font-size: 18px;
   height: 3em;
 }
-/* line 1232, ../sass/overrides.sass */
+/* line 1274, ../sass/overrides.sass */
 .container:before {
   display: table;
   content: "";
@@ -8396,7 +8508,7 @@ input, textarea {
   right: 100%;
   overflow-x: hidden;
 }
-/* line 1240, ../sass/overrides.sass */
+/* line 1282, ../sass/overrides.sass */
 .container:after {
   display: table;
   content: "";
@@ -8407,18 +8519,18 @@ input, textarea {
   overflow-x: hidden;
 }
 
-/* line 1249, ../sass/overrides.sass */
+/* line 1291, ../sass/overrides.sass */
 .container-fluid {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-/* line 1253, ../sass/overrides.sass */
+/* line 1295, ../sass/overrides.sass */
 .add-standard-left-padding {
   padding-left: 10px;
 }
 
-/* line 1256, ../sass/overrides.sass */
+/* line 1298, ../sass/overrides.sass */
 .row-fluid.center-content [class*="span"]:first-child {
   display: block;
   margin-left: auto;
@@ -8426,24 +8538,24 @@ input, textarea {
 }
 
 @media (min-width: 1200px) {
-  /* line 1260, ../sass/overrides.sass */
+  /* line 1302, ../sass/overrides.sass */
   .row-fluid.center-content [class*="span"]:first-child {
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
 }
-/* line 1263, ../sass/overrides.sass */
+/* line 1305, ../sass/overrides.sass */
 [class*="span"] .inherit-height {
   height: inherit;
 }
 
-/* line 1266, ../sass/overrides.sass */
+/* line 1308, ../sass/overrides.sass */
 [class*="span"] .remove-left-margin {
   margin-left: -25px;
 }
 
-/* line 1269, ../sass/overrides.sass */
+/* line 1311, ../sass/overrides.sass */
 .vertical-center {
   display: -moz-inline-stack;
   display: inline-block;
@@ -8453,7 +8565,7 @@ input, textarea {
   *display: inline;
   height: inherit;
 }
-/* line 1272, ../sass/overrides.sass */
+/* line 1314, ../sass/overrides.sass */
 .vertical-center:before {
   content: "";
   display: -moz-inline-stack;
@@ -8465,7 +8577,7 @@ input, textarea {
   height: 100%;
   vertical-align: middle;
 }
-/* line 1277, ../sass/overrides.sass */
+/* line 1319, ../sass/overrides.sass */
 .vertical-center:after {
   content: "";
   display: -moz-inline-stack;
@@ -8478,7 +8590,7 @@ input, textarea {
   vertical-align: middle;
 }
 
-/* line 1283, ../sass/overrides.sass */
+/* line 1325, ../sass/overrides.sass */
 .wrap {
   display: -moz-inline-stack;
   display: inline-block;
@@ -8490,7 +8602,7 @@ input, textarea {
   vertical-align: middle;
   width: 95%;
 }
-/* line 1288, ../sass/overrides.sass */
+/* line 1330, ../sass/overrides.sass */
 .wrap a {
   color: #515665;
 }
@@ -8511,7 +8623,7 @@ input, textarea {
   color: #ffbc1a;
 }
 
-/* line 1296, ../sass/overrides.sass */
+/* line 1338, ../sass/overrides.sass */
 .progress-clemintine .bar {
   background-color: #ffbc1a;
   background-image: -moz-linear-gradient(top, #ffbc1a, #ffbc1a);
@@ -8524,7 +8636,7 @@ input, textarea {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbb15', endColorstr='#ffbb15', GradientType=0);
 }
 
-/* line 1299, ../sass/overrides.sass */
+/* line 1341, ../sass/overrides.sass */
 .progress-clemintine.progress-striped .bar {
   background-color: #ffd266;
   background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
@@ -8535,71 +8647,81 @@ input, textarea {
   background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
 
-/* line 1307, ../sass/overrides.sass */
+/* line 1350, ../sass/overrides.sass */
 .label-clemintine, .badge-clemintine {
   background-color: #ffbc1a;
 }
 
-/* line 1309, ../sass/overrides.sass */
+/* line 1352, ../sass/overrides.sass */
 .label-clemintine[href], .badge-clemintine[href] {
   background-color: #ffb606;
 }
 
-/* line 1312, ../sass/overrides.sass */
+/* line 1355, ../sass/overrides.sass */
 .row-fluid.odd {
   background: #f3f4f8;
 }
 
-/* line 1316, ../sass/overrides.sass */
+/* line 1359, ../sass/overrides.sass */
 #tasks-tab ul .nav .nav-list {
   background: #fcfcfc;
 }
 
-/* line 1319, ../sass/overrides.sass */
+/* line 1362, ../sass/overrides.sass */
 .tab-content {
   background: #fcfcfc;
   padding-left: 15px;
   padding-right: 15px;
 }
-/* line 1323, ../sass/overrides.sass */
+/* line 1366, ../sass/overrides.sass */
 .tab-content ul.nav-list {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-/* line 1328, ../sass/overrides.sass */
+/* line 1371, ../sass/overrides.sass */
 .nav-tabs {
   margin-bottom: 0px;
 }
-/* line 1330, ../sass/overrides.sass */
+/* line 1373, ../sass/overrides.sass */
 .nav-tabs a {
   background: #f3f4f8;
 }
-/* line 1332, ../sass/overrides.sass */
+/* line 1375, ../sass/overrides.sass */
 .nav-tabs a:hover {
   background: #fcfcfc;
 }
-/* line 1334, ../sass/overrides.sass */
+/* line 1377, ../sass/overrides.sass */
 .nav-tabs li > a:hover {
   background: #fcfcfc;
 }
 
-/* line 1337, ../sass/overrides.sass */
+/* line 1380, ../sass/overrides.sass */
 .add-top-bottom-margins {
   margin-top: 2.5em;
   margin-bottom: 1.875em;
 }
 
-/* line 1341, ../sass/overrides.sass */
+/* line 1384, ../sass/overrides.sass */
 .add-top-margin-20 {
   padding-top: 1.5625em;
 }
 
-/* line 1344, ../sass/overrides.sass */
+/* line 1387, ../sass/overrides.sass */
+.add-top-margin-15 {
+  padding-top: 0.9375em;
+}
+
+/* line 1390, ../sass/overrides.sass */
+.add-top-margin-10 {
+  margin-top: 0.625em;
+}
+
+/* line 1393, ../sass/overrides.sass */
 a.show-on-hover {
   text-align: center;
 }
-/* line 1346, ../sass/overrides.sass */
+/* line 1395, ../sass/overrides.sass */
 a.show-on-hover a:hover {
   visibility: visible;
 }
@@ -8617,19 +8739,361 @@ a.show-on-hover a:hover {
 /*   width: 161px */
 /*   padding: 0 17px */
 /*   float: right */
-/* line 1364, ../sass/overrides.sass */
+/* line 1413, ../sass/overrides.sass */
 #cse-search-form .gsc-search-button, #cse-search-form .gsc-clear-button {
   display: none;
 }
 
-/* line 1367, ../sass/overrides.sass */
+/* line 1416, ../sass/overrides.sass */
 #cse .gsc-search-box {
   display: none;
 }
 
-/* line 1370, ../sass/overrides.sass */
+/* line 1419, ../sass/overrides.sass */
 .gsc-control-cse {
   border-radius: 10px;
   border: solid 1px #eeeeee;
   width: 960px;
+}
+
+/* line 1424, ../sass/overrides.sass */
+.center-via-text-align {
+  text-align: center;
+}
+
+/* line 1441, ../sass/overrides.sass */
+.thumbnail#large {
+  width: 26em;
+  background: #fcfcfc;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  margin-bottom: 2.5em;
+}
+/* line 1442, ../sass/overrides.sass */
+.thumbnail#large h1 {
+  font-size: 1.25em;
+  line-height: 2.2em;
+  line-height: 1em;
+  margin-top: 0px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 1px #2d5f74;
+}
+/* line 1449, ../sass/overrides.sass */
+.thumbnail#large h1 a {
+  color: white;
+}
+/* line 18, ../../../../../../../../Users/chris/.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+.thumbnail#large h1 a:visited {
+  color: white;
+}
+/* line 21, ../../../../../../../../Users/chris/.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+.thumbnail#large h1 a:focus {
+  color: #ffbc1a;
+}
+/* line 24, ../../../../../../../../Users/chris/.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+.thumbnail#large h1 a:hover {
+  color: white;
+}
+/* line 27, ../../../../../../../../Users/chris/.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
+.thumbnail#large h1 a:active {
+  color: #ffbc1a;
+}
+/* line 1451, ../sass/overrides.sass */
+.thumbnail#large h1 a:hover {
+  text-decoration: none;
+}
+/* line 1458, ../sass/overrides.sass */
+.thumbnail#large .caption {
+  padding: 0px 0.5em;
+}
+/* line 1460, ../sass/overrides.sass */
+.thumbnail#large .caption p {
+  font-family: "sense", helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 1.375em;
+  line-height: 1.375em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  height: 3em;
+}
+/* line 1467, ../sass/overrides.sass */
+.thumbnail#large img {
+  padding-top: 0.5em;
+  display: block;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 1473, ../sass/overrides.sass */
+.thumbnail#large .well {
+  padding: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  background: #aab0bf;
+  border: 0px;
+  border-top: 1px solid #8e95a8;
+  height: 2.125em;
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
+/* line 1483, ../sass/overrides.sass */
+.thumbnail#large .well:before {
+  content: "";
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  height: 100%;
+  vertical-align: middle;
+}
+/* line 1488, ../sass/overrides.sass */
+.thumbnail#large .well:after {
+  content: "";
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  height: 100%;
+  vertical-align: middle;
+}
+/* line 1493, ../sass/overrides.sass */
+.thumbnail#large .well-large {
+  height: 3.5625em;
+  text-align: center;
+}
+/* line 1496, ../sass/overrides.sass */
+.thumbnail#large .well-large dl {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  line-height: 1em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 1504, ../sass/overrides.sass */
+.thumbnail#large .well-large dl dd {
+  margin-bottom: -5px;
+}
+/* line 1506, ../sass/overrides.sass */
+.thumbnail#large .well-large dl dd .label {
+  color: white;
+  font-size: 0.75em;
+  line-height: 1.83333em;
+  line-height: 1em;
+  font-weight: normal;
+  font-family: "sense", helvetica, sans-serif;
+  background: #aab0bf;
+  padding: 0px;
+}
+/* line 1514, ../sass/overrides.sass */
+.thumbnail#large .well-large dl dt {
+  margin-left: 0px;
+  margin-bottom: -10px;
+}
+/* line 1517, ../sass/overrides.sass */
+.thumbnail#large .well-large dl dt .badge {
+  color: white;
+  font-size: 0.75em;
+  line-height: 1.83333em;
+  line-height: 1em;
+  font-weight: bold;
+  font-family: "arvo", helvetica, sans-serif;
+  background: #aab0bf;
+  padding: 0px;
+}
+
+/* line 1541, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-wrapper {
+  position: relative;
+  margin: -30px 0 20px 0px;
+}
+
+/* line 1545, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-front {
+  background-color: #8fbbca;
+  background: -moz-linear-gradient(top, #4b8fba 0%, #3e6493 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4b8fba), color-stop(100%, #3e6493));
+  background: -webkit-linear-gradient(top, #4b8fba 0%, #3e6493 100%);
+  background: -o-linear-gradient(top, #4b8fba 0%, #3e6493 100%);
+  background: -ms-linear-gradient(top, #4b8fba 0%, #3e6493 100%);
+  background: linear-gradient(top, #4b8fba 0%, #3e6493 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4b8fba', endColorstr='#3e6493',GradientType=0 );
+  height: 40px;
+  width: 456px;
+  position: relative;
+  left: -20px;
+  z-index: 2;
+  padding-top: 20px;
+}
+
+/* line 1561, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-front,
+#challenge-sets .card .ribbon-back-left,
+#challenge-sets .card .ribbon-back-right {
+  -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.55);
+  -khtml-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.55);
+  -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.55);
+  -o-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.55);
+}
+
+/* line 1569, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-topleft,
+#challenge-sets .card .ribbon-edge-topright,
+#challenge-sets .card .ribbon-edge-bottomleft,
+#challenge-sets .card .ribbon-edge-bottomright {
+  position: absolute;
+  z-index: 1;
+  border-style: solid;
+  height: 0px;
+  width: 0px;
+}
+
+/* line 1579, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-bottomleft,
+#challenge-sets .card .ribbon-edge-bottomright {
+  top: 40px;
+}
+
+/* line 1583, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-topleft,
+#challenge-sets .card .ribbon-edge-bottomleft {
+  left: -20px;
+  border-color: transparent #2d5f74 transparent transparent;
+}
+
+/* line 1588, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-topleft {
+  top: -10px;
+  border-width: 10px 20px 0 0;
+}
+
+/* line 1592, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-bottomleft {
+  border-width: 0 20px 0px 0;
+}
+
+/* line 1595, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-topright,
+#challenge-sets .card .ribbon-edge-bottomright {
+  left: 416px;
+  border-color: transparent transparent transparent #2d5f74;
+}
+
+/* line 1600, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-topright {
+  top: -10px;
+  border-width: 10px 0 0 20px;
+}
+
+/* line 1604, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-edge-bottomright {
+  border-width: 0 0 0px 20px;
+}
+
+/* line 1607, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-back-left {
+  position: absolute;
+  top: -10px;
+  left: 0px;
+  width: 0px;
+  height: 40px;
+  z-index: 0;
+}
+
+/* line 1615, ../sass/overrides.sass */
+#challenge-sets .card .ribbon-back-right {
+  position: absolute;
+  top: -10px;
+  right: 0px;
+  width: 0px;
+  height: 40px;
+  z-index: 0;
+}
+
+/* line 1627, ../sass/overrides.sass */
+#create-post .post-container {
+  min-height: 46px;
+  margin-top: 15px;
+}
+
+/* line 1631, ../sass/overrides.sass */
+#create-post #fake-message-input, #create-post textarea {
+  /* width: 99%    */
+  display: block;
+  font-size: 16px;
+  padding: 12px;
+  /* margin-righct: 50px */
+}
+
+/* line 1638, ../sass/overrides.sass */
+#create-post #fake-message-input {
+  /* color: #919191 */
+  margin-bottom: 0;
+}
+
+/* line 1642, ../sass/overrides.sass */
+#create-post textarea, #create-post #important-message, #create-post .status-and-actions {
+  display: none;
+}
+
+/* line 1645, ../sass/overrides.sass */
+#create-post .status-and-actions {
+  margin-top: 10px;
+  height: 28px;
+  text-align: right;
+}
+
+/* line 1650, ../sass/overrides.sass */
+#create-post #fake-message-input {
+  color: white;
+  min-height: 50px;
+}
+/* line 1653, ../sass/overrides.sass */
+#create-post #fake-message-input:hover {
+  background-color: #5b6b73;
+}
+
+/* line 1656, ../sass/overrides.sass */
+#create-post .update {
+  font-size: 14px;
+  line-height: 25px;
+  min-height: 31px;
+}
+
+/* line 1661, ../sass/overrides.sass */
+#create-post .cancel {
+  font-size: 14px;
+  line-height: 25px;
+  min-height: 25px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+/* line 1670, ../sass/overrides.sass */
+#create-post.expanded #fake-message-input {
+  display: none;
+}
+
+/* line 1673, ../sass/overrides.sass */
+#create-post.expanded textarea, #create-post.expanded #important-message, #create-post.expanded .status-and-actions {
+  display: block;
+}
+
+/* line 1676, ../sass/overrides.sass */
+#create-post.expanded textarea {
+  height: 160px;
 }

@@ -383,9 +383,13 @@ $(document).ready(function() {
         $('#id_duration').spinner({min:0, max:9000, step:1, places:0});
     }
 
+    // Now using twitter bootstrap progressbar
     if ($('.project-kind-challenge #task_list_wall #progressbar').length) {
-        var progressbar_value = $(".project-kind-challenge #task_list_wall #progressbar").attr('value');
-        $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});
+        var $tasks_progressbar = $(".project-kind-challenge #task_list_wall #progressbar");
+        var percentage_done = (completed_count / total_count) * 100;
+        $tasks_progressbar.find('.bar').css('width', percentage_done + '%');
+        // var progressbar_value = $(".project-kind-challenge #task_list_wall #progressbar").attr('value');
+        // $(".project-kind-challenge #task_list_wall #progressbar").progressbar({'value': parseInt(progressbar_value)});
     }
 
     if ( $('#other-badges').length ) {
@@ -540,7 +544,9 @@ $(".project-kind-challenge #task_list_section .taskCheckbox").click(function(){
         $(".project-kind-challenge #task_list_wall #total_count").html(total_count);
         $(".project-kind-challenge #task_list_wall #completed_count").html(completed_count);
         var $tasks_progressbar = $(".project-kind-challenge #task_list_wall #progressbar");
-        $tasks_progressbar.progressbar("option", "value", progressbar_value);
+        var percentage_done = (completed_count / total_count) * 100;
+        $tasks_progressbar.find('.bar').css('width', percentage_done + '%');
+        // $tasks_progressbar.progressbar("option", "value", progressbar_value);
         $task_completion_checkbox.removeAttr('disabled');
         var $tasks_completed_msg = $('.project-kind-challenge .tasks-completed-msg');
         if( progressbar_value == "100" ) {

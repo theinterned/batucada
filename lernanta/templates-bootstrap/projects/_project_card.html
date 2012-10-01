@@ -15,10 +15,12 @@
 	<p><span class="truncate-to-3-lines">{{ project.short_description }}</span></p>
   </div>
   <div class="well well-large">
+  {% if project.duration_hours %}
 	<dl>
 	  <dt><span class="label">{{ _('Time to Finish') }}</span></dt>
-	    <dd><span class="badge">10{{ _(' hours') }}</span></dd>
+	    <dd><span class="badge"> {{ project.duration_hours }} {{ _('hrs') }}</span></dd>
 	</dl>
+  {% endif %}
 	<dl>
 	  <dt><span class="label">{{ _('Peers') }}</span></dt>
 	    <dd><span class="badge">{{ project.participants.count }}</span></dd>
