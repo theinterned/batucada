@@ -1,2 +1,0 @@
-{% load l10n_tags %}
-{{ _('New ') }} {{ project.kind|title }}: {{ project.name|safe }}

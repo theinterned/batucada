@@ -1,3 +1,0 @@
-{% load i18n %}
-{% load l10n_tags %}
-{% blocktrans with project_name=project.name %} Take {{ project_name }} to the next level.{% endblocktrans %}

@@ -1,3 +1,0 @@
-{% load i18n %}
-{% load l10n_tags %}
-{% blocktrans with user=reviewer course_name=course|safe %}{{ user }} had a look at {{ course_name }}!{% endblocktrans %}
