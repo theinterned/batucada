@@ -8,6 +8,10 @@ class CourseCreationForm(forms.Form):
     language = forms.ChoiceField(choices=settings.LANGUAGES)
 
 
+class CourseImageForm(forms.Form):
+    image = forms.ImageField()
+
+
 class CourseLanguageForm(forms.Form):
     language = forms.ChoiceField(choices=settings.LANGUAGES)
 

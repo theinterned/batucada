@@ -84,13 +84,15 @@ def create_course(title, short_title, plug, language, organizer_uri):
     return course
 
 
-def update_course(course_uri, language=None):
+def update_course(course_uri, language=None, image_uri=None):
     # TODO
     course_db = _get_course_db(course_uri)
     if not course_db:
         return None
     if language:
         course_db.language = language
+    if image_uri:
+        course_db.image_uri = image_uri
     try:
         course_db.save()
     except:

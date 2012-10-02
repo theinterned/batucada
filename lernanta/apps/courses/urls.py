@@ -12,6 +12,10 @@ urlpatterns = patterns('',
         'courses.views.course_signup',
         name='courses_signup'),
 
+    url(r'^(?P<course_id>[\d]+)/upload_image/$',
+        'courses.views.course_image',
+        name='courses_image'),
+
     url(r'^(?P<course_id>[\d]+)/add_user/$',
         'courses.views.course_add_user',
         name='courses_add_user'),

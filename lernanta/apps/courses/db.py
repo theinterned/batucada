@@ -8,6 +8,7 @@ class Course(ModelBase):
     short_title = models.CharField(max_length=20)
     plug = models.CharField(max_length=1000)
     language = models.CharField(max_length=32)
+    image_uri = models.CharField(max_length=256)
     creation_date = models.DateTimeField(auto_now_add=True)
     draft = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)

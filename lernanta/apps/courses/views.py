@@ -13,10 +13,15 @@ from users.decorators import login_required
 from drumbeat import messages
 
 from courses import models as course_model
-from courses.forms import CourseCreationForm, CourseTermForm, CourseLanguageForm
+from courses.forms import CourseCreationForm
+from courses.forms import CourseTermForm
+from courses.forms import CourseLanguageForm
+from courses.forms import CourseImageForm
 
 from content2 import models as content_model
 from content2.forms import ContentForm
+
+from media import models as media_model
 
 from replies import models as comment_model
 
@@ -72,7 +77,9 @@ def show_course( request, course_id, slug=None ):
 
     context = { 'course': course }
     context['course_url'] = request.get_full_path()
+    #NOTE: maybe only include forms in context if the user is the organizer?
     context['language_form'] = CourseLanguageForm(course)
+    context['image_form'] = CourseImageForm()
     context['about'] = content_model.get_content(course['about_uri'])
     context['about']['content'] = markdown.markdown(
         context['about']['content'], ['tables']
@@ -102,6 +109,24 @@ def show_course( request, course_id, slug=None ):
         context,
         context_instance=RequestContext(request)
     )
+
+
+@login_required
+@require_http_methods(['POST'])
+def course_image( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    #TODO check organizer
+    image_form = CourseImageForm(request.POST, request.FILES)
+    if image_form.is_valid():
+        image_file = request.FILES['image']
+        image = media_model.upload_image(image_file)
+        course_model.update_course(
+            course_uri=course_uri,
+            image_uri=image['uri'],
+        )
+    else:
+        messages.error(request, _("Could not upload image"))
+    return course_slug_redirect( request, course_id )
 
 
 @login_required
