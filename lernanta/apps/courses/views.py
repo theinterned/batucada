@@ -14,6 +14,7 @@ from drumbeat import messages
 
 from courses import models as course_model
 from courses.forms import CourseCreationForm
+from courses.forms import CourseTitleForm
 from courses.forms import CourseTermForm
 from courses.forms import CourseLanguageForm
 from courses.forms import CourseImageForm
@@ -77,33 +78,30 @@ def show_course( request, course_id, slug=None ):
 
     context = { 'course': course }
     context['course_url'] = request.get_full_path()
-    #NOTE: maybe only include forms in context if the user is the organizer?
-    context['language_form'] = CourseLanguageForm(course)
-    context['image_form'] = CourseImageForm()
+    cohort = course_model.get_course_cohort(course_uri)
+    context['cohort'] = cohort
+    user_uri = "/uri/user/{0}".format(request.user.username)
+    context['organizer'] = course_model.is_cohort_organizer(
+        user_uri, cohort['uri']
+    )
+    if context['organizer']:
+        context['language_form'] = CourseLanguageForm(course)
+        context['image_form'] = CourseImageForm()
+        if cohort['term'] == 'FIXED':
+            context['term_form'] = CourseTermForm(cohort)
+        else:
+            context['term_form'] = CourseTermForm()
     context['about'] = content_model.get_content(course['about_uri'])
     context['about']['content'] = markdown.markdown(
         context['about']['content'], ['tables']
     )
-    cohort = course_model.get_course_cohort(course_uri)
-    context['cohort'] = cohort
     context['comments'] = course_model.get_cohort_comments(
         cohort['uri'], course['about_uri']
     )
-    if cohort['term'] == 'FIXED':
-        context['term_form'] = CourseTermForm(cohort)
-    else:
-        context['term_form'] = CourseTermForm()
-    
-    user_uri = "/uri/user/{0}".format(request.user.username)
     if course_model.user_in_cohort(user_uri, cohort['uri']):
         context['show_leave_course'] = True
     elif cohort['signup'] == "OPEN" and course['draft'] == False:
         context['show_signup'] = True
-
-
-    context['organizer'] = course_model.is_cohort_organizer(
-        user_uri, cohort['uri']
-    )
     return render_to_response(
         'courses/course.html',
         context,
@@ -243,6 +241,20 @@ def course_change_term( request, course_id, term ):
 
 @login_required
 @require_http_methods(['POST'])
+def course_update_title( request, course_id ):
+    # TODO check organizer
+    course_uri = course_model.course_id2uri(course_id)
+    form = CourseTitleForm(request.POST)
+    if form.is_valid():
+        course_model.update_course(
+            course_uri,
+            language=form.cleaned_data['title']
+        )
+    return course_slug_redirect( request, course_id )
+
+
+@login_required
+@require_http_methods(['POST'])
 def course_change_language( request, course_id ):
     # TODO check organizer
     course_uri = course_model.course_id2uri(course_id)
@@ -259,17 +271,19 @@ def show_content( request, course_id, content_id):
     content_uri = '/uri/content/{0}'.format(content_id)
     user_uri = "/uri/user/{0}".format(request.user.username)
     content = content_model.get_content(content_uri)
+    content['rows'] = content['content'].count('\n')
     course = course_model.get_course('/uri/course/{0}/'.format(course_id))
     cohort = course_model.get_course_cohort('/uri/course/{0}/'.format(course_id))
     context = { 
         'content': content, 
         'course': course,
     }
-    context['content']['content'] = markdown.markdown(context['content']['content'])
     context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
     context['organizer'] = course_model.is_cohort_organizer(
         user_uri, cohort['uri']
     )
+    context['can_edit'] = context['organizer']
+    context['form'] = ContentForm(content)
     return render_to_response(
         'courses/content.html', 
         context, 

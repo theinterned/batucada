@@ -6,7 +6,8 @@
 {% block bodyclasses %}course-content{% endblock%}
 
 {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css?v=1">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}pagedown/pagedown.css">
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -14,7 +15,6 @@
 {% endblock %}
 
 {% block body %}
-
 <div class="row">
 <div id="sidebar-wrapper" class="span3">
   <div id="sidebar">
@@ -48,11 +48,24 @@
 <div id="content-container" class="span9">
   <div>
     <h1>{{ content.title }}</h1>
-    {{ content.content|safe }}
+    <div id="id_content-wmd-preview"></div>
   </div>
-  <a href="{% locale_url courses_edit_content course_id=course.id content_id=content.id %}">
+  {% if can_edit %}
+  <a data-toggle="collapse" data-target="#content-editor">
     <i class="icon-edit"></i>
   </a>
+  {% endif %}
+  <div id="content-editor" class="collapse">
+    <form action="{% locale_url courses_edit_content course_id=course.id content_id=content.id %}" method="POST">
+      {% csrf_token %}
+      <p><label for="id_title">Title</label>{{ form.title }}</p>
+      <div id="id_content-wmd-button-bar"></div>
+      <p>
+        <textarea id="id_content" name="content" class="span9" rows="{{content.rows}}">{{content.content}}</textarea>
+      </p>
+      <input type="submit" value="{% trans 'Update content!' %}"/>
+    </form>
+  </div>
 
   <div id="content-comments">
     <h1>Comments</h1>
@@ -81,4 +94,20 @@
     </form>
 </div>
 </div>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ STATIC_URL }}pagedown/Markdown.Converter.js"></script>
+  <script src="{{ STATIC_URL }}pagedown/Markdown.Sanitizer.js"></script>
+  <script src="{{ STATIC_URL }}pagedown/Markdown.Editor.js"></script>
+  <script src="{{ STATIC_URL }}pagedown/Markdown.JQueryPlugin.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var converter1 = Markdown.getSanitizingConverter();
+      var editor1 = new Markdown.Editor(converter1, "id_content");
+      editor1.run();
+    });
+  </script>
+
 {% endblock %}
