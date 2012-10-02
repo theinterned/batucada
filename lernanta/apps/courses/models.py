@@ -256,8 +256,8 @@ def get_cohort(cohort_uri):
     #NOTE-Q: does cohort.course.id fetch the course data?
 
     if cohort_db.term != db.Cohort.ROLLING:
-        cohort_data["start_date"] = cohort_db.start_date
-        cohort_data["end_date"] = cohort_db.end_date
+        cohort_data["start_date"] = cohort_db.start_date.date()
+        cohort_data["end_date"] = cohort_db.end_date.date()
 
     cohort_data["users"] = []
     cohort_data["organizers"] = []
