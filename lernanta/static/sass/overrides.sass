@@ -1391,6 +1391,7 @@ input, textarea
   margin-top: pem(10px)
 
 a.show-on-hover
+  visibility: hidden
   text-align: center
   a:hover
     visibility: visible
@@ -1683,9 +1684,11 @@ a.show-on-hover
 
 // batucada create posts
 
+#posts .post-container
+  margin-left: 0px
     
 #create-post .post-container 
-  min-height: 46px
+  /* min-height: 46px */
   margin-top: 15px
 
 #create-post #fake-message-input, #create-post textarea 
@@ -1698,6 +1701,10 @@ a.show-on-hover
 #create-post #fake-message-input 
   /* color: #919191 */
   margin-bottom: 0
+  min-height: 40px
+
+#create-post form
+  margin: 0px
 
 #create-post textarea, #create-post #important-message, #create-post .status-and-actions 
   display: none
@@ -1708,11 +1715,10 @@ a.show-on-hover
   text-align: right
 
 #create-post #fake-message-input
-  color: white
-  min-height: 50px
-  &:hover
-    background-color: $dark-slate
-  
+  color: $slate
+  background-color: white
+    
+    
 #create-post .update 
   font-size: 14px
   line-height: 25px
@@ -1725,7 +1731,7 @@ a.show-on-hover
   margin-left: 5px
   font-weight: bold
 
-#create-post.expanded 
+/* #create-post.expanded  */
 
 #create-post.expanded #fake-message-input 
   display: none

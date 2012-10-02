@@ -9,18 +9,18 @@ a, a:active, a:visited {
     text-shadow: none;
 }
 
-.container {
-  width: 1000px;
-  height: 100%;
-  margin: auto;
-  zoom: 1;
-}
-.container:before, .container:after{
-	content: "\0020"; display: block; height: 0; visibility: hidden;
-}
-.container:after{
-	clear: both;
-}
+/* .container { */
+/*   width: 1000px; */
+/*   height: 100%; */
+/*   margin: auto; */
+/*   zoom: 1; */
+/* } */
+/* .container:before, .container:after{ */
+/* 	content: "\0020"; display: block; height: 0; visibility: hidden; */
+/* } */
+/* .container:after{ */
+/* 	clear: both; */
+/* } */
 
 .lernanta-style h1, h2, h3, h4, h5, h6{
   text-shadow:  1px 1px #fff;
@@ -283,49 +283,49 @@ input[type=submit]:active,
 /*   font-weight: normal; */
 /* } */
 
-.project-kind-challenge #sidebar button#direct_signup_button,
-.project-kind-challenge #sidebar a#direct_signup_button,
-.badge-show .badge-call-to-action-button {
-    float: left;
-    margin: 0 0 0 20px;
-    background-color: #7fbf4d;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f));
-    /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: -o-linear-gradient(top, #7fbf4d, #63a62f);
-    background-image: linear-gradient(top, #7fbf4d, #63a62f);
-    border: 1px solid #63a62f;
-    border-bottom: 1px solid #5b992b;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
-    -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
-    -ms-box-shadow: inset 0 1px 0 0 #96ca6d;
-    -o-box-shadow: inset 0 1px 0 0 #96ca6d;
-    box-shadow: inset 0 1px 0 0 #96ca6d;
-    color: #fff;
-    font: bold 17px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    line-height: 1;
-    padding: 7px 8px 8px 8px;
-    text-align: center;
-    text-shadow: 0 -1px 0 #4c9021;
-    width: 180px;
-}
+/* .project-kind-challenge #sidebar button#direct_signup_button, */
+/* .project-kind-challenge #sidebar a#direct_signup_button, */
+/* .badge-show .badge-call-to-action-button { */
+/*     float: left; */
+/*     margin: 0 0 0 20px; */
+/*     background-color: #7fbf4d; */
+/*     background-image: -webkit-gradient(linear, left top, left bottom, from(#7fbf4d), to(#63a62f)); */
+/*     /\* Saf4+, Chrome *\/ */
+/*     background-image: -webkit-linear-gradient(top, #7fbf4d, #63a62f); */
+/*     background-image: -moz-linear-gradient(top, #7fbf4d, #63a62f); */
+/*     background-image: -ms-linear-gradient(top, #7fbf4d, #63a62f); */
+/*     background-image: -o-linear-gradient(top, #7fbf4d, #63a62f); */
+/*     background-image: linear-gradient(top, #7fbf4d, #63a62f); */
+/*     border: 1px solid #63a62f; */
+/*     border-bottom: 1px solid #5b992b; */
+/*     -webkit-border-radius: 3px; */
+/*     -moz-border-radius: 3px; */
+/*     -ms-border-radius: 3px; */
+/*     -o-border-radius: 3px; */
+/*     border-radius: 3px; */
+/*     -webkit-box-shadow: inset 0 1px 0 0 #96ca6d; */
+/*     -moz-box-shadow: inset 0 1px 0 0 #96ca6d; */
+/*     -ms-box-shadow: inset 0 1px 0 0 #96ca6d; */
+/*     -o-box-shadow: inset 0 1px 0 0 #96ca6d; */
+/*     box-shadow: inset 0 1px 0 0 #96ca6d; */
+/*     color: #fff; */
+/*     font: bold 17px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif; */
+/*     line-height: 1; */
+/*     padding: 7px 8px 8px 8px; */
+/*     text-align: center; */
+/*     text-shadow: 0 -1px 0 #4c9021; */
+/*     width: 180px; */
+/* } */
 
-.project-kind-challenge #sidebar button#direct_signup_button {
-    width: 198px;
-}
+/* .project-kind-challenge #sidebar button#direct_signup_button { */
+/*     width: 198px; */
+/* } */
 
-.project-kind-challenge #sidebar a#leave_direct_signup_button, .project-kind-challenge #sidebar a.discuss-link {
-  margin: 0 0 0 65px;
-  padding-top: 40px;
-  display: block;
-}
+/* .project-kind-challenge #sidebar a#leave_direct_signup_button, .project-kind-challenge #sidebar a.discuss-link { */
+/*   margin: 0 0 0 65px; */
+/*   padding-top: 40px; */
+/*   display: block; */
+/* } */
 
 .badge-show .badge-call-to-action-button {
     float: none;
@@ -1531,6 +1531,7 @@ header {}
   background-color: white;
   margin-left: 75px;
   margin-top: 20px;
+  margin-bottom: 20px;
   padding: 20px;
   width: 652px;
   /* float: right; */
@@ -1580,29 +1581,30 @@ header {}
 /*   margin-left: 0; */
 /* } */
 
-    /* .post-container { */
-    /*   -pie-background: linear-gradient(top,#fff,#f4f4f4); */
-    /*   border-radius: 6px; */
-    /*   -moz-border-radius: 6px; */
-    /*   -o-border-radius: 6px; */
-    /*   -webkit-border-radius: 6px; */
-    /*   min-height: 56px; */
-    /*   margin: 0 0 9px; */
-    /*   border: 1px solid #c6c6c6; */
-    /*   border-bottom: 2px solid #c6c6c6; */
-    /*   padding: 8px; */
-    /*   behavior: url("/static/css/PIE.htc"); */
-    /*   float: left; */
-    /*   width: 630px; */
-    /* } */
-    /* .project-kind-challenge .post-container { */
-    /*     margin: 0 0 20px; */
-    /*     padding: 9px; */
-    /* } */
-    /* .modal .post-container { */
-    /*     width: 550px; */
-    /*     margin-left: 10px; */
-    /* } */
+    .post-container {
+      -pie-background: linear-gradient(top,#fff,#f4f4f4);
+      border-radius: 6px;
+      -moz-border-radius: 6px;
+      -o-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      /* min-height: 56px; */
+      margin: 0 0 9px;
+      border: 1px solid #c6c6c6;
+      border-bottom: 2px solid #c6c6c6;
+      padding: 8px;
+      behavior: url("/static/css/PIE.htc");
+      /* float: left; */
+      /* width: 630px; */
+    }
+
+    .project-kind-challenge .post-container {
+        margin: 0 0 20px;
+        padding: 9px;
+    }
+    .modal .post-container {
+        width: 550px;
+        margin-left: 10px;
+    }
 
    #main .post-container.deleted {
      min-height: 10px;
@@ -1610,10 +1612,10 @@ header {}
      padding-left: 20px;
    }
 
-    .post-container.post-replies, #extra-indent-post-replies .post-container {
-	    margin-left: 30px;
-	    width: 575px;
-	}
+  /*   .post-container.post-replies, #extra-indent-post-replies .post-container { */
+	/*     margin-left: 30px; */
+	/*     width: 575px; */
+	/* } */
 
     .project-kind-challenge .post-container .post-replies, .project-kind-challenge #extra-indent-post-replies .post-container {
       width: 544px;
@@ -3554,10 +3556,10 @@ div.voting div.score {
 /*     border-top: none; */
 /* } */
 
-.project-kind-challenge #project_wall_section {
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-top-color: #bebebe;
+.project-kind-challenge #project_wall_section{
+    /* border-top-width: 1px; */
+    /* border-top-style: solid; */
+    /* border-top-color: #bebebe; */
     margin-top: 26px;
     margin-right: 0pt;
     margin-bottom: 0pt;
@@ -3618,7 +3620,7 @@ div.voting div.score {
 .project-kind-challenge #task_list_wall .help-request .help-others {
     text-align: center;
     clear: both;
-    border-top: 1px solid #eeeeee;
+    /* border-top: 1px solid #eeeeee; */
     padding: 10px 0 10px 0;
 }
 

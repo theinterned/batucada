@@ -8,7 +8,7 @@
     {% if tasks %}
       <ul class="nav nav-list">
         {% for task in tasks %}
-          <div class="row-fluid {% cycle 'odd' 'even' %} add-top-margin-20">
+          <div class="row-fluid {% cycle 'odd' 'even' %} add-top-margin-20 task">
             <li class="{% if task.is_done %}taskSelected{% endif %}">
               
               <!-- Completion Checkbox -->
@@ -28,7 +28,7 @@
               <!-- Task Number-Title-Subtitle -->
               <div class="span8 inherit-height">
                 <h1><span class="taskNumber">{{ forloop.counter }}.</span> <a class="taskLink" href="{{ task.get_absolute_url }}">{{ task.title }}</a><h1>
-                <h2 style="background-color: inherit;"><small>{{ task.sub_header|default:"&nbsp;" }}</small></h2>
+                <h3 style="background-color: inherit;"><small>{{ task.sub_header|default:"&nbsp;" }}</small></h3>
               </div>
               <!-- /Task Number-Title-Subtitle -->
               

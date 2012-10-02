@@ -4,23 +4,42 @@
 {% load activity_tags %}
 {% load badge_tags %}
 
-<td>
-  <a href="{{ activity.actor.get_absolute_url }}">
-    <img class="member-picture" width="80px" height="80px" src="{{ activity.actor.image_or_default }}" alt="{{ activity.actor }}">
-  </a>
-</td>
-<td>
-  <p>
+<div class="post-container span12">  
+<div class="row-fluid">
+  <div class="span2">
+    <a href="{{ activity.actor.get_absolute_url }}">
+      <img class="member-picture" width="80px" height="80px" src="{{ activity.actor.image_or_default }}" alt="{{ activity.actor }}">
+    </a>
+  </div>
+  <div class="span10">
+  <!-- <div class="pull-right"> -->
+    <a name="activity-{{ activity.id }}"></a>
+    {% if user.is_authenticated %}
+      {% if user.id != activity.actor.id %}
+        <a class="report abuse action" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
+        {% if is_challenge and activity.scope_object %}
+          <span class="action-top">
+            {% give_badge_action activity.scope_object activity.actor %}
+          </span>
+        {% endif %}
+      {% else %}
+        <a class="action delete" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
+      {% endif %}
+      {% activity_reply_action activity user %}
+    {% endif %}
+  <!-- </div> -->
+
+  <div>
     <a class="member-name" href="{{ activity.actor.get_absolute_url }}">{{ activity.actor }}</a>
     {% if activity.scope_object %}
       {{ _('at') }}
       <a class="member-name" href="{{ activity.scope_object.get_absolute_url }}">{{ activity.scope_object.name|slice:":50" }}</a>
     {% endif %}
-  </p>
-  <p>
+  </div>
+  <div>
     {% include "activity/_activity_body.html" %}
-  </p>
-  <p>
+  </div>
+  <div>
     <span class="reference-link-area">
       <a href="#" onclick="return false">{{ activity|time_since }}</a>
       {{ _('via') }}
@@ -41,21 +60,10 @@
         </div>
       {% endif %}
     </span>
-  </p>
-  <div class="pull-right">
-    <a name="activity-{{ activity.id }}"></a>
-    {% if user.is_authenticated %}
-      {% if user.id != activity.actor.id %}
-        <a class="report abuse action btn btn-skinny btn-slate" href="{% locale_url drumbeat_abuse model="activity" app_label="activity" pk=activity.id %}">{{ _('Report Abuse') }}</a>
-        {% if is_challenge and activity.scope_object %}
-          <span class="action-top">
-            {% give_badge_action activity.scope_object activity.actor %}
-          </span>
-        {% endif %}
-      {% else %}
-        <a class="action delete btn btn-skinny btn-blood-orange" href="{% locale_url activity_delete activity_id=activity.id %}">{{ _('Delete') }}</a>
-      {% endif %}
-      {% activity_reply_action activity user %}
-    {% endif %}
+  </div>        
+
   </div>
-</td>
+</div>
+</div>
+  
+

@@ -6,7 +6,8 @@
   <div id="sidebar">
     <div class="row-fluid vcard panel center-via-text-align">
       <div class="row-fluid">
-        <img class="member-picture" src="{{ profile.image_or_default }}" height="80" width="80" alt="{{ profile }}">
+        <img class="member-picture" src="{{ profile.image_or_default
+  }}" height="80" width="80" alt="{{ profile }}" />
       </div>
       <div class="row-fluid member-details">
         <h1 class="member-name"><span class="fn">{{ profile }}</span></h1>
@@ -55,7 +56,7 @@
                       {{ topic.name }}
                     </a>
                 {% endfor %}
-              </ul>
+              </div>
             </div>
           </div>
         {% endif %}
