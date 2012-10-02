@@ -85,6 +85,7 @@ def show_course( request, course_id, slug=None ):
         user_uri, cohort['uri']
     )
     if context['organizer']:
+        context['title_form'] = CourseTitleForm(course)
         context['language_form'] = CourseLanguageForm(course)
         context['image_form'] = CourseImageForm()
         if cohort['term'] == 'FIXED':
@@ -248,8 +249,10 @@ def course_update_title( request, course_id ):
     if form.is_valid():
         course_model.update_course(
             course_uri,
-            language=form.cleaned_data['title']
+            title=form.cleaned_data['title']
         )
+    else:
+        messages.error(request, _("Could not update course title"))
     return course_slug_redirect( request, course_id )
 
 
