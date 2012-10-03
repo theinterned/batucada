@@ -49,6 +49,9 @@ def get_course(course_uri):
     course["draft"] = course_db.draft
     course["archived"] = course_db.archived
 
+    if len(course_db.image_uri) > 0:
+        course["image_uri"] = course_db.image_uri
+
     content = get_course_content(course_uri)
     if len(content) > 0:
         course["about_uri"] = content[0]['uri']

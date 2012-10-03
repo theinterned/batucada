@@ -78,6 +78,10 @@ def show_course( request, course_id, slug=None ):
 
     context = { 'course': course }
     context['course_url'] = request.get_full_path()
+
+    if 'image_uri' in course:
+        context['course']['image'] = media_model.get_image(course['image_uri'])
+
     cohort = course_model.get_course_cohort(course_uri)
     context['cohort'] = cohort
     user_uri = "/uri/user/{0}".format(request.user.username)
@@ -114,11 +118,12 @@ def show_course( request, course_id, slug=None ):
 @require_http_methods(['POST'])
 def course_image( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
+    user_uri = "/uri/user/{0}".format(request.user.username)
     #TODO check organizer
     image_form = CourseImageForm(request.POST, request.FILES)
     if image_form.is_valid():
         image_file = request.FILES['image']
-        image = media_model.upload_image(image_file)
+        image = media_model.upload_image(image_file, course_uri)
         course_model.update_course(
             course_uri=course_uri,
             image_uri=image['uri'],
