@@ -87,13 +87,17 @@ def create_course(title, short_title, plug, language, organizer_uri):
     return course
 
 
-def update_course(course_uri, title=None, language=None, image_uri=None):
+def update_course(course_uri, title=None, short_title=None, plug=None, language=None, image_uri=None):
     # TODO
     course_db = _get_course_db(course_uri)
     if not course_db:
         return None
     if title:
         course_db.title = title
+    if short_title:
+        course_db.short_title = short_title
+    if plug:
+        course_db.plug = plug
     if language:
         course_db.language = language
     if image_uri:

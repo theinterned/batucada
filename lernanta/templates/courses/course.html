@@ -7,7 +7,8 @@
 {% block bodyclasses %}course-landing{% endblock%}
 
 {% block css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css?v=1">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}pagedown/pagedown.css">
 {% endblock %}
 
 {% block links %}
@@ -17,12 +18,26 @@
 {% endblock %}
 
 {% block breadcrumbs_title %}
-  <h1 id="project-name">[{{course.short_title}}] {{course.title}}</h1>
-  <a data-toggle="collapse" data-target="#title-edit">{% trans "edit" %}</a>
-  <div id="title-edit" class="collapse">
-    <form action="{% locale_url courses_update_title course_id=course.id%}" method="POST">
+  <h1 id="project-name">
+    [{{course.short_title}}{% if organizer %}
+      <a data-toggle="collapse" data-target="#short-title-edit" href="#"><i class="icon-edit"></i></a>
+    {% endif %}] 
+    {{course.title}}
+    {% if organizer %}
+      <a data-toggle="collapse" data-target="#title-edit" href="#"><i class="icon-edit"></i></a>
+    {% endif %}
+  </h1>
+  <div id="short-title-edit" class="collapse">
+    <form action="{% locale_url courses_update_attribute course_id=course.id attribute='short_title' %}" method="POST">
       {% csrf_token %}
-      {{ title_form.as_p }}
+      <p>{{ update_form.short_title }}</p>
+      <button type="submit">{% trans "Update short title" %}</button>
+    </form>
+  </div>
+  <div id="title-edit" class="collapse">
+    <form action="{% locale_url courses_update_attribute course_id=course.id attribute='title' %}" method="POST">
+      {% csrf_token %}
+      <p>{{ update_form.title }}</p>
       <button type="submit">{% trans "Update title" %}</button>
     </form>
   </div>
@@ -65,19 +80,22 @@
     {% endif %}
     <hr/>
     <div id="course-description">
-        <p>{{ course.plug }}</p>
+      <p>{{ course.plug }}</p>
+      {% if organizer %}
+      <a data-toggle="collapse" data-target="#plug-edit">{% trans "edit" %}</a>
+      <div id="plug-edit" class="collapse">
+        <form action="{% locale_url courses_update_attribute course_id=course.id attribute='plug' %}" method="POST">
+          {% csrf_token %}
+          {{ update_form.plug }}
+          <p><button type="submit">{% trans "Update plug" %}</button></p>
+        </form>
+      </div>
+      {% endif %}
     </div>
   {% if organizer and course.draft %}
     <hr/>
     <div>
-      <p>
-        {% trans "draft" %}
-        <i class="icon-arrow-right"></i> 
-        {% trans "published" %}
-        <i class="icon-arrow-right"></i> 
-        {% trans "archived" %}
-      </p>
-      <p>{% trans "This course is still a draft" %}</p>
+     <p>{% trans "This course is still a draft" %}</p>
       <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
         {% csrf_token %}
         <p><button type="submit">{% trans "Publish" %}</button></p>
@@ -221,16 +239,27 @@
         {% if about.content|length == 0 %}
           <p>{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
           </p>
-        {% else %}
-          <div class="markup">{{ about.content|safe }}</div>
         {% endif %}
+        <div id="id_content-wmd-preview"></div>
         <p>
         {% if organizer %}
-          <a href="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}?next_url={{ course_url }}">
+          <a data-toggle="collapse" data-target="#about-editor">
             <i class="icon-edit"></i>
           </a>
         {% endif %}
         </p>
+        <div id="about-editor" class="collapse">
+          <form action="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{course_url}}" name="next_url"/>
+            <input type="hidden" value="About" name="title"/>
+            <div id="id_content-wmd-button-bar"></div>
+            <p>
+              <textarea id="id_content" name="content" class="span9" rows="{{about.rows}}">{{about.content}}</textarea>
+            </p>
+            <input type="submit" value="{% trans 'Update about page!' %}"/>
+          </form>
+        </div>
       </div>
   
       <div class="tab-pane" id="content-tab">
@@ -266,13 +295,11 @@
       </div>
   
       <div class="tab-pane" id="discussion-tab">
-        <script type="text/javascript">
-          var disqus_developer = 1;
-        </script>
         <div id="disqus_thread"></div>
           <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'p2pu'; // required: replace example with your forum shortname
+            var disqus_developer = 1;
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -397,6 +424,21 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $("#id_start_date").datepicker();
+
     });
   </script>
+
+  <script src="{{ STATIC_URL }}pagedown/Markdown.Converter.js"></script>
+  <script src="{{ STATIC_URL }}pagedown/Markdown.Sanitizer.js"></script>
+  <script src="{{ STATIC_URL }}pagedown/Markdown.Editor.js"></script>
+  <script src="{{ STATIC_URL }}pagedown/Markdown.JQueryPlugin.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var converter1 = Markdown.getSanitizingConverter();
+      var editor1 = new Markdown.Editor(converter1, "id_content");
+      editor1.run();
+    });
+  </script>
+
 {% endblock %}

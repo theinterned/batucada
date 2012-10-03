@@ -10,8 +10,16 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}pagedown/pagedown.css">
 {% endblock %}
 
+{% block breadcrumbs_title %}
+  <h1>{{ content.title }}</h1>
+{% endblock %}
+
 {% block breadcrumbs %}
-  <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a>
+  <li>
+    <span class="divider">&rsaquo;</span>
+    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a>
+  </li>
+
 {% endblock %}
 
 {% block body %}
@@ -47,7 +55,6 @@
  
 <div id="content-container" class="span9">
   <div>
-    <h1>{{ content.title }}</h1>
     <div id="id_content-wmd-preview"></div>
   </div>
   {% if can_edit %}
@@ -73,6 +80,7 @@
       <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'p2pu'; // required: replace example with your forum shortname
+        var disqus_developer = 1;
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

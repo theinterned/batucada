@@ -8,8 +8,11 @@ class CourseCreationForm(forms.Form):
     language = forms.ChoiceField(choices=settings.LANGUAGES)
 
 
-class CourseTitleForm(forms.Form):
-    title = forms.CharField()
+class CourseUpdateForm(forms.Form):
+    title = forms.CharField(required=False)
+    short_title = forms.CharField(required=False)
+    plug = forms.CharField(widget=forms.Textarea, required=False)
+    language = forms.ChoiceField(choices=settings.LANGUAGES, required=False)
 
 
 class CourseImageForm(forms.Form):

@@ -14,7 +14,7 @@ from drumbeat import messages
 
 from courses import models as course_model
 from courses.forms import CourseCreationForm
-from courses.forms import CourseTitleForm
+from courses.forms import CourseUpdateForm
 from courses.forms import CourseTermForm
 from courses.forms import CourseLanguageForm
 from courses.forms import CourseImageForm
@@ -89,7 +89,7 @@ def show_course( request, course_id, slug=None ):
         user_uri, cohort['uri']
     )
     if context['organizer']:
-        context['title_form'] = CourseTitleForm(course)
+        context['update_form'] = CourseUpdateForm(course)
         context['language_form'] = CourseLanguageForm(course)
         context['image_form'] = CourseImageForm()
         if cohort['term'] == 'FIXED':
@@ -97,9 +97,10 @@ def show_course( request, course_id, slug=None ):
         else:
             context['term_form'] = CourseTermForm()
     context['about'] = content_model.get_content(course['about_uri'])
-    context['about']['content'] = markdown.markdown(
-        context['about']['content'], ['tables']
-    )
+    context['about']['rows'] = context['about']['content'].count('\n')
+    #context['about']['content'] = markdown.markdown(
+    #    context['about']['content'], ['tables']
+    #)
     context['comments'] = course_model.get_cohort_comments(
         cohort['uri'], course['about_uri']
     )
@@ -247,17 +248,15 @@ def course_change_term( request, course_id, term ):
 
 @login_required
 @require_http_methods(['POST'])
-def course_update_title( request, course_id ):
+def course_update_attribute( request, course_id, attribute):
     # TODO check organizer
     course_uri = course_model.course_id2uri(course_id)
-    form = CourseTitleForm(request.POST)
+    form = CourseUpdateForm(request.POST)
     if form.is_valid():
-        course_model.update_course(
-            course_uri,
-            title=form.cleaned_data['title']
-        )
+        kwargs = { attribute: form.cleaned_data[attribute] }
+        course_model.update_course( course_uri, **kwargs )
     else:
-        messages.error(request, _("Could not update course title"))
+        messages.error(request, _("Could not update {0}.".format(attribute)))
     return course_slug_redirect( request, course_id )
 
 
