@@ -142,7 +142,7 @@
             {% else %}
               {% if user.is_authenticated %}
                 <div class="supplemental_actions">
-                  <a class="report abuse action btn btn-blood-orange add-top-margin-10" href="{% locale_url drumbeat_abuse  model="project" app_label="projects" pk=project.id %}">{{_('Report Abuse')}}</a>
+                  <a class="report abuse action" href="{% locale_url drumbeat_abuse  model="project" app_label="projects" pk=project.id %}">{{_('Report Abuse')}}</a>
                 </div>
               {% endif %}
             {% endif %}
@@ -170,57 +170,58 @@
               <div class="beta-development">{{ _('Not Listed') }}</li>
             {% endif %}
             <!-- This line is here so the {{ _('DATE_FORMAT') }} gets configured for different locales -->
+			<hr />
             {% if project.start_date or project.end_date %}
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Runs') }}</span>
-              {% if project.start_date %} {{ project.start_date }} {% endif %} 
-              {% if project.end_date %} {{ _('to') }} {{ project.end_date }}{% endif %}
+              <span class="pull-left label label-clemintine">{{ _('Runs') }}</span>
+              <span class="pull-right">{% if project.start_date %} {{ project.start_date }} {% endif %} 
+              {% if project.end_date %} {{ _('to') }} {{ project.end_date }}{% endif %}</span>
             </div>
             {% endif %}
             {% if project.clone_of %}
               <div class="row-fluid add-top-margin-10">
-                <span class="label label-clemintine">{{ _('Based on') }}</span>
-                <a href="{{ project.clone_of.get_absolute_url }}">{{ project.clone_of.name }}</a>
+                <span class="pull-left label label-clemintine">{{ _('Based on') }}</span>
+                <span class="pull-right"><a href="{{ project.clone_of.get_absolute_url }}">{{ project.clone_of.name }}</a></span>
               </div>
             {% endif %}
             {% if imported_from %}
               <div class="row-fluid add-top-margin-10">
-                <span class="label label-clemintine">{{ _('Based on') }}</span>
-                <a href="{{ imported_from.url }}">{{ imported_from.name }}</a>
+                <span class="pull-left label label-clemintine">{{ _('Based on') }}</span>
+                <span class="pull-right"><a href="{{ imported_from.url }}">{{ imported_from.name }}</a></span>
               </div>
             {% endif %}
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Kind') }}</span>
-              {{ project.kind|title }}
+              <span class="pull-left label label-clemintine">{{ _('Kind') }}</span>
+              <span class="pull-right">{{ project.kind|title }}</span>
             </div>
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Signup') }}</span>
-              <a href="{{ sign_up.get_absolute_url }}">{{ sign_up.get_status_display }}</a>
+              <span class="pull-left label label-clemintine">{{ _('Signup') }}</span>
+              <span class="pull-right"><a href="{{ sign_up.get_absolute_url }}">{{ sign_up.get_status_display }}</a></span>
             </div>
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Chat') }}</span>
-              <a href="{% locale_url chat %}" target="_blank">{{ chat }}</a>
+              <span class="pull-left label label-clemintine">{{ _('Chat') }}</span>
+              <span class="pull-right"><a href="{% locale_url chat %}" target="_blank">{{ chat }}</a></span>
             </div>
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Updates') }}</span>
-              {{ update_count }}
+              <span class="pull-left label label-clemintine">{{ _('Updates') }}</span>
+              <span class="pull-right">{{ update_count }}</span>
             </div>
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Organizers') }}</span>
-              {{ organizers_count }}
+              <span class="pull-left label label-clemintine">{{ _('Organizers') }}</span>
+              <span class="pull-right">{{ organizers_count }}</span>
             </div>
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Participants') }}</span>
-              {{ participants_count }}
+              <span class="pull-left label label-clemintine">{{ _('Participants') }}</span>
+              <span class="pull-right">{{ participants_count }}</span>
             </div>
             <div class="row-fluid add-top-margin-10">
-              <span class="label label-clemintine">{{ _('Followers') }}</span>
-              {{ followers_count }}
+              <span class="pull-left label label-clemintine">{{ _('Followers') }}</span>
+              <span class="pull-right">{{ followers_count }}</span>
             </div>
             {% if organizing %}
               <div class="row-fluid add-top-margin-10">
-                <span class="label label-clemintine">{{ _('Pending Applicants') }}</span>
-                <a href="{{ sign_up.get_absolute_url }}">{{ pending_signup_answers_count }}</a>
+                <span class="pull-left label label-clemintine">{{ _('Pending Applicants') }}</span>
+                <span class="pull-right"><a href="{{ sign_up.get_absolute_url }}">{{ pending_signup_answers_count }}</a></span>
               </div>
             {% endif %}
             <hr />
@@ -250,7 +251,7 @@
               <form id="reorder_tasks" method="post" action="{%locale_url page_index_reorder slug=project.slug%}">
               {% csrf_token %}
               <div style='display:none'><input type='hiden' name='canChangeOrder' value='{{can_change_order}}'/></div>
-                <ul>
+                <ol>
                   {% for page in content_pages %}
                     <li>	
                       <a class="taskLink" id="{{page.slug}}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
@@ -260,7 +261,7 @@
                       {% endif %}
                     </li>
                   {% endfor %}
-                </ul>
+                </ol>
               </form>
               </nav>
             {% else %}
@@ -277,17 +278,13 @@
             <br>
             {% if links %}
               <nav id="project-links">
-                <ul>
-                  {% for link in links %}
-                    <li>
-                      <a class="externalLink" href="{{ link.url }}" target="_blank">{{ link.name }}</a>
-                      {% if can_change_order %}
-                        {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
-                        {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
-                      {% endif %}
-                    </li>
-                  {% endfor %}
-                </ul>
+                {% for link in links %}
+                  <a class="externalLink" href="{{ link.url }}" target="_blank">{{ link.name }}</a>
+                  {% if can_change_order %}
+                    {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
+                    {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
+                  {% endif %}
+                {% endfor %}
               </nav>
             {% else %}
               {{ _('No external links have been added.') }}

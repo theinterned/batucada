@@ -151,8 +151,8 @@ $footer-nav-lang-links-lh: pem(24px)
 /* Custom Default Values */
 $baseFontSize-header-tm: 18px
 $baseFontSize-header-h1-tm: 58px
-$baseFontSize-subtext-tm: 4px
-$baseFontSize-subtext-bm: 27px
+$baseFontSize-subtext-tm: 16px
+$baseFontSize-subtext-bm: 40px
 $baseFontSize-btn-large-tm: 15px
 $baseFontSize-btn-large-sides-p: 40px
 /* Navbar */
@@ -221,6 +221,25 @@ $footer-nav-lang-links-tm: pem($baseFontSize-subtext)
 @mixin glowing-shadow($color)
   $lighter-color: lighten($color, 50%)
   @include box-shadow(0px 0px 3px $lighter-color)
+  
+@mixin custom-box-shadow-1
+  border-top: 1px solid darken($cyan, 5%)
+  border-left: 1px solid darken($cyan, 5%)
+  border-bottom: 1px solid darken($dark-pewter, 15%)
+  border-right: 1px solid darken($dark-pewter, 15%)
+  @include box-shadow(darken($dark-pewter, 5%) 2px 2px 4px)
+
+@mixin custom-box-shadow-2
+  border-top: 1px solid darken($slate, 2%)
+  border-left: 1px solid darken($slate, 2%)
+  border-bottom: 1px solid $black
+  border-right: 1px solid $black
+  @include box-shadow(lighten($black, 15%) 2px 2px 4px)
+  
+@mixin custom-box-shadow-3
+  border-bottom: 1px solid darken($dark-pewter, 8%)
+  border-right: 1px solid darken($dark-pewter, 8%)
+  @include box-shadow(darken($dark-pewter, 5%) 2px 2px 4px)
 
 @mixin add-custom-text-shadow($text-color, $bkgd-color, $side)
   $mixed-color: mix($text-color, $bkgd-color)
@@ -324,35 +343,6 @@ a
   color: $cyan
   &:hover
     color: lighten($cyan, 10%)
-
-//Currently Unsed - Instead Overridden for desired functionality farther down in overrides.sass
-//Buttons
-//.btn
-//  font-family: "arvo"
-//  font-size: 15px
-//  font-weight: bold
-//  padding: 4px 10px 5px
-//  background-image: None
-//  +border-radius(2px)
-//  background-color: $slate
-//  text-shadow: 0px 1px 1px $slate
-//  border: none
-//  border-bottom: 1px solid #343741  
-//  color: #eeeeee
-//  &.btn-primary
-//    color: $white  
-//    text-shadow: 0px 1px 1px #83be00
-//    background-color: #abd600
-//    border-bottom: 1px solid #83be00  
-//    &:hover
-//      text-shadow: 0px 1px 1px #d0d3dc
-//      background-color: lighten(#abd600, 10%)
-//  &.btn-mini
-//    font-size: 13px
-//    font-weight: bold
-//  &:hover
-//    color: $white
-//    background-color: lighten($slate, 10%)
 
 // Forms
 input
@@ -552,6 +542,8 @@ input, textarea
       @include adjust-font-size-to(12px)
 
 .nav-list
+  .divider
+    margin: 5px 1px
   font-family: $primary-font
   @include adjust-font-size-to($baseFontSize)
   li
@@ -563,18 +555,86 @@ input, textarea
         @include background($slate)
         color: $white
         @include adjust-font-size-to($baseFontSize)
+        @include border-radius(5px)
+        @include custom-box-shadow-2
+        border: 1px solid $black
+        &:hover
+          @include background(darken($steel, 20%))
   .dropdown-menu
-    min-width: 100%
+    min-width: 95%
+    max-width: 95%
+    margin-left: 20px
     @include background($fog)
     li
       a
         @include link-colors($slate)
         @include adjust-font-size-to($baseFontSize)
   .nav-header
-    @include adjust-font-size-to($baseFontSize-header)
+    @include adjust-font-size-to($baseFontSize-h1-header)
   .icon-large
     margin-right: 12px
-    vertical-align: 0px
+    vertical-align: 2px
+
+.nav .nav-header 
+  padding: 30px 15px 0px 15px
+
+.nav-list > li > form
+  margin-left: -15px
+  margin-top: 0px
+  input[type="checkbox"]
+    vertical-align: top
+    @media (min-width: 1200px)
+      margin-left: 15px
+  select
+    margin-top: 0px
+    width: 100%
+
+.nav-list > li > a
+  margin-left: -15px
+  padding-left: 30px
+  margin-right: 0px
+
+.nav-list .nav-header
+  margin-left: -11px
+  margin-right: 0px
+  
+.nav-list > .active > a
+  @include border-radius(5px)
+  @include custom-box-shadow-1
+  position: relative
+  img
+    position: absolute
+    top: 7px
+    right: 10px
+
+.nav-list > .active > a:hover
+  @include border-radius(5px)
+  @include background(darken($cyan, 5%))
+  
+.nav-list li a:hover
+  @include border-radius(5px)
+  @include background(darken($cloud, 5%))
+  @include text-shadow(0px 0px 0px)
+
+.nav-list li.active a:visited
+  color: $white
+
+#sidebar .nav-list
+  i
+    position: absolute
+    left: 77px
+    top: 41px
+  font-size: 14px
+  padding-left: 0px
+  li
+    padding-left: 0px
+  & > li > a
+    margin-left: 0px
+    padding-left: 0px
+  .nav-header
+    padding-left: 10px
+    position: relative
+
 
 .navbar .pull-right .dropdown-menu, .navbar .dropdown-menu.pull-right
   left: 30px
@@ -1149,9 +1209,6 @@ input, textarea
   //a
     //@include link-colors($white, $white, $white, $white, $white)
     //@include hover-link
-.btn-skinny
-  padding-left: 2px
-  padding-right: 2px
 .btn-fit
   padding-left: pem(5px)
   padding-right: pem(5px)
@@ -1188,27 +1245,27 @@ input, textarea
 // Set the backgrounds
 // -------------------------
 .btn-apricot
-  @include buttonBackground($apricot, $apricot)
+  @include buttonBackground($apricot, darken($apricot, 10%))
   border: 0px
   border-bottom: 2px solid $dark-apricot
 .btn-olive
-  @include buttonBackground($olive, $olive)
+  @include buttonBackground($olive, darken($olive, 10%))
   border: 0px
   border-bottom: 2px solid $dark-olive
 .btn-cyan
-  @include buttonBackground($cyan, $cyan)
+  @include buttonBackground($cyan, darken($cyan, 10%))
   border: 0px
   border-bottom: 2px solid darken($cyan, 5%)
 .btn-slate
-  @include buttonBackground($slate, $slate)
+  @include buttonBackground($slate, darken($slate, 10%))
   border: 0px
   border-bottom: 2px solid $darker-slate
 .btn-blood-orange
-  @include buttonBackground($blood-orange, $blood-orange)
+  @include buttonBackground($blood-orange, darken($blood-orange, 10%))
   border: 0px
   border-bottom: 2px solid darken($blood-orange, 10%)
 .btn-clemintine
-  @include buttonBackground($clemintine, $clemintine)
+  @include buttonBackground($clemintine, darken($clemintine, 10%))
   border: 0px
   border-bottom: 2px solid $dark-clemintine
 
@@ -1308,6 +1365,21 @@ input, textarea
 [class*="span"] .remove-left-margin
   margin-left: -25px
 
+.row-fluid ul.thumbnails [class*="span"] .thumbnail
+  float: none
+  margin-left: auto
+  margin-right: auto
+
+.row-fluid ul.thumbnails [class*="span"]:last-child .thumbnail
+  float: right
+
+.row-fluid ul.thumbnails [class*="span"]:first-child .thumbnail
+  float: left
+
+.row-fluid ul.thumbnails [class*="span"]
+  margin-left: auto
+  margin-right: auto
+
 .vertical-center
   @include inline-block
   height: inherit
@@ -1366,7 +1438,6 @@ input, textarea
   ul.nav-list
     padding-left: 0px
     padding-right: 0px
-    
   
 .nav-tabs
   margin-bottom: 0px
@@ -1428,7 +1499,9 @@ a.show-on-hover
 .make-inline-block
   @include inline-block
 
-
+.center-via-auto-margins
+  margin-left: auto
+  margin-right: auto
 
 
 
@@ -1595,9 +1668,8 @@ a.show-on-hover
 
 
 
-
-// ----Batucada _projectsets_card.html Ribbon Creation Code----
 // ------------------------------------------------------------
+// ----Batucada _projectsets_card.html Ribbon Creation Code----
 // ------------------------------------------------------------
 #challenge-sets .card .ribbon-wrapper
   position: relative
@@ -1730,8 +1802,6 @@ a.show-on-hover
   min-height: 25px
   margin-left: 5px
   font-weight: bold
-
-/* #create-post.expanded  */
 
 #create-post.expanded #fake-message-input 
   display: none

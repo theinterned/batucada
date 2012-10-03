@@ -5,6 +5,7 @@
   <li class="{% if not learn_showcase and not learn_community and not learn_fresh and not learn_school and not learn_tag %}active{% endif %}">
     <a class="filter" href="{% locale_url learn_all %}">{{ _('View All') }}</a>
   </li>
+  <li class="divider"></li>
   <li class="nav-header">
     <i class="icon-star-empty icon-large"></i>{{ _('Featured') }}
   </li>
@@ -38,7 +39,7 @@
   {% for tag in filter_tags %}
     <li class="active">
       <a class="filter" href="./?filter_tags={% filter_remove_tag filter_tags tag %}">
-		{{tag}}<img style="float: right" src="{{STATIC_URL}}/images/delete-x.png">
+		{{tag}}<img src="{{STATIC_URL}}/images/delete-x.png">
 	  </a>
     </li>
     <li class="divider"></li>
@@ -74,7 +75,11 @@
   </li>
   <li class="divider"></li>
   <li>
-    <a href="./"><strong>{{ _('Clear Tags') }}</strong></a>
+    <a href="./" style="letter-spacing: 3px;">{{ _('CLEAR TAGS') }}</a>
+  </li>
+  <li class="divider"></li>
+  <li class="nav-header">
+    <i class="icon-globe icon-large"></i>{{ _('Language') }}
   </li>
   <li class="divider"></li>
   <li>
@@ -84,7 +89,6 @@
       {{ form.tag }}
       <div class="field{% if form.language.errors %} error{% endif %}">
         <label for="id_language">
-          {{ _('Show Courses in') }}
           {{ form.language }}
         </label>
         {{ form.language.errors }}
