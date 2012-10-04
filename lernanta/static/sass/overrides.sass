@@ -363,6 +363,10 @@ input
 input, textarea
   width: 230px
 
+.form-horizontal
+  input, textarea
+    width: 400px
+
 // Navigation
 .nav-tabs
   font-family: $primary-font
@@ -389,6 +393,13 @@ input, textarea
       background-color: $white
       border: 1px solid $white
       border-bottom: 0px
+
+.tabs-left 
+  .nav-tabs
+    margin-right: 0px
+  .tab-content
+    border: 1px solid rgb(221, 221, 221)
+    min-height: 350px
 
 .navbar
   font-family: $baseFontFamily
@@ -943,7 +954,6 @@ input, textarea
       @include link-colors($slate)
       &:hover
         text-decoration: underline
-  width: pem(220px) /* was 220px */
   @include background($snow)
   @include square-corners
   padding: 0px
@@ -1052,6 +1062,10 @@ input, textarea
           font-family: $primary-font
           @include background($steel)
           padding: 0px
+
+#learn
+  .thumbnail
+    width: pem(220px) /* was 220px */
         
 .custom-footer
   @include background($fog)
