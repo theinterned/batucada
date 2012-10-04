@@ -28,14 +28,14 @@
     {% endif %}
   </h1>
   <div id="short-title-edit" class="collapse">
-    <form action="{% locale_url courses_update_attribute course_id=course.id attribute='short_title' %}" method="POST">
+    <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='short_title' %}" method="POST">
       {% csrf_token %}
       <p>{{ update_form.short_title }}</p>
       <button type="submit">{% trans "Update short title" %}</button>
     </form>
   </div>
   <div id="title-edit" class="collapse">
-    <form action="{% locale_url courses_update_attribute course_id=course.id attribute='title' %}" method="POST">
+    <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='title' %}" method="POST">
       {% csrf_token %}
       <p>{{ update_form.title }}</p>
       <button type="submit">{% trans "Update title" %}</button>
@@ -387,22 +387,22 @@
       </div>
  
       <div class="tab-pane" id="people-tab">
-        <ul>
-          {% for user in cohort.users %}
-            <li class="user-tile">
-              <a href="#"><img src="{{ STATIC_URL }}/images/member-missing.png" alt="{{user.username}}"></a>
-              {% if organizer %}
-                <a href="{% locale_url courses_leave course_id=course.id username=user.username %}">{% trans "Remove user" %}</a>
-                {% if user.role == "LEARNER" %}
-                  <form action="{% locale_url courses_add_organizer course_id=course.id username=user.username %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit">{% trans "Make organizer" %}</button>
-                  </form>
-                {% endif %}
-              {% endif %}
-            </li>
+        <div id="learner-list" class="user-list">
+          <h3>{% trans "Learners" %}</h3>
+          <ul class="thumbnails">
+            {% for user in cohort.learners %}
+              {% include "courses/course_user_snip.html" %}
+            {% endfor %}
+          </ul>
+        </div>
+        <div id="learner-list" class="user-list">
+          <h3>{% trans "Organizers" %}</h3>
+          <ul class="unstyled">
+          {% for user in cohort.organizers %}
+            {% include "courses/course_user_snip.html" %}           
           {% endfor %}
-        </ul>
+          </ul>
+        </div>
         <p>
             <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
                 {% csrf_token %}

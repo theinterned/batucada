@@ -273,10 +273,12 @@ def get_cohort(cohort_uri):
         cohort_data["users"] += [{
             "username": username, "uri": signup.user_uri, "role": signup.role
         }]
-        if signup.role == db.CohortSignup.ORGANIZER:
-            cohort_data["organizers"] += [{
-                "username": username, "uri": signup.user_uri,
-            }]
+        key = "{0}s".format(signup.role.lower())
+        if not key in cohort_data:
+            cohort_data[key] = []
+        cohort_data[key] += [{
+            "username": username, "uri": signup.user_uri, "role": signup.role
+        }]
 
     return cohort_data
 
