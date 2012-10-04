@@ -11,7 +11,6 @@
 {% block bodyid %}page{% endblock %}
 
 {% block project_breadcrumbs %}
-  <li><span class="divider">&rsaquo;</span><a href="{% locale_url projects_task_list slug=project.slug %}">{{ _('Task List') }}</a></li>
   <li><span class="divider">&rsaquo;</span><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
 {% endblock %}
 
