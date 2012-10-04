@@ -285,6 +285,9 @@ def show_content( request, course_id, content_id):
         'content': content, 
         'course': course,
     }
+    if 'image_uri' in course:
+        context['course']['image'] = media_model.get_image(course['image_uri'])
+
     context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
     context['organizer'] = course_model.is_cohort_organizer(
         user_uri, cohort['uri']

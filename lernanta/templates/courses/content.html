@@ -27,9 +27,9 @@
 <div id="sidebar-wrapper" class="span3">
   <div id="sidebar">
     <figure class="project_img">
-      <a id="id-course-image-link" href="{% locale_url courses_show course_id=course.id slug=course.slug%}">
+      <a id="id-course-image-link" href="{{ course.get_absolute_url }}">
         {% if course.image %}
-  	         <img id="id-course-image" src="{{ MEDIA_URL }}{{ course.image }}" alt="course image"/>
+  	         <img id="id-course-image" src="{{ course.image.url }}" alt="course image"/>
         {% else %}
              <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
         {% endif %}
@@ -38,7 +38,8 @@
         {% endif %}
       </a>
     </figure>
-    <div>
+
+   <div>
         {% if course.content|length %}
           <ul class="nav nav-list">
             <li class="nav-header">Course content</li>

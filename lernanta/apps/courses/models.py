@@ -63,6 +63,22 @@ def get_course(course_uri):
     return course
 
 
+def get_courses(title=None, short_title=None, language=None, organizer_uri=None, draft=None, archived=None):
+    results = db.Course.objects
+    #NOTE: could also take **kwargs and do results.filter(**kwargs)
+    filters = {}
+    if title:
+        filters['title'] = title
+    if short_title:
+        filters['short_title'] = short_title
+    if language:
+        filters['language'] = language
+    if organizer_uri:
+        filters['organizer_uri'] = organizer_uri
+    results = results.filter(**filters)
+    return [ get_course(course_id2uri(course_db.id)) for course_db in results ]
+
+
 def create_course(title, short_title, plug, language, organizer_uri):
     course_db = db.Course(
         title=title,

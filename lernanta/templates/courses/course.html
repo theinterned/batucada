@@ -264,7 +264,7 @@
   
       <div class="tab-pane" id="content-tab">
         {% if course.content|length %}
-          <ul>
+          <ul class="unstyled">
             {% for task in course.content %}
               <li class="{% cycle 'odd' 'even' %}">
                 <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
@@ -397,7 +397,7 @@
         </div>
         <div id="learner-list" class="user-list">
           <h3>{% trans "Organizers" %}</h3>
-          <ul class="unstyled">
+          <ul class="thumbnails">
           {% for user in cohort.organizers %}
             {% include "courses/course_user_snip.html" %}           
           {% endfor %}
