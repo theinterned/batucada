@@ -117,7 +117,7 @@
               <ul class="nav nav-list">
                 <li class="divider"></li>
                 <li class="nav-header">
-                  <i class="icon-tags icon-large"></i>{{ _('Tags') }}
+                  {{ _('Tags') }}<i class="icon-tags icon-large"></i>
                 </li>
                 {% for tag in tags %}
                   <li>
@@ -170,7 +170,7 @@
               <div class="beta-development">{{ _('Not Listed') }}</li>
             {% endif %}
             <!-- This line is here so the {{ _('DATE_FORMAT') }} gets configured for different locales -->
-			<hr />
+            <hr />
             {% if project.start_date or project.end_date %}
             <div class="row-fluid add-top-margin-10">
               <span class="pull-left label label-clemintine">{{ _('Runs') }}</span>
@@ -235,10 +235,10 @@
             {% project_user_list request project 64 %}
             <div class="row-fluid center-via-text-align add-top-margin-10">
               {% if organizing %}
-                <a class="button btn btn-slate" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
-                <a class="button btn btn-cyan" href="{% locale_url projects_contact_organizers slug=project.slug %}">{{ _('Contact Organizer(s)')}}</a>
+                <a class="btn btn-slate" href="{% locale_url projects_edit_participants slug=project.slug %}">{{ _('Edit Participants') }}</a>
+                <a class="btn btn-cyan" href="{% locale_url projects_contact_organizers slug=project.slug %}">{{ _('Contact Organizer(s)')}}</a>
               {% else %}{% if user.is_authenticated %}
-                <a class="button btn btn-cyan" href="{% locale_url projects_contact_organizers slug=project.slug %}">{{ _('Contact Organizer')}}</a>
+                <a class="btn btn-cyan" href="{% locale_url projects_contact_organizers slug=project.slug %}">{{ _('Contact Organizer')}}</a>
               {% endif %}{% endif %}
             </div>
             <hr />
@@ -279,11 +279,13 @@
             {% if links %}
               <nav id="project-links">
                 {% for link in links %}
-                  <a class="externalLink" href="{{ link.url }}" target="_blank">{{ link.name }}</a>
-                  {% if can_change_order %}
-                    {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
-                    {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
-                  {% endif %}
+                  <div class="row-fluid">
+                    <a class="externalLink" href="{{ link.url }}" target="_blank">{{ link.name }}</a>
+                    {% if can_change_order %}
+                      {% if not forloop.first %}<a class="robttn up" href="{% locale_url link_index_up slug=project.slug counter=forloop.counter0 %}">(UP)</a>{% endif %}
+                      {% if not forloop.last %}<a class="robttn dwn" href="{% locale_url link_index_down slug=project.slug counter=forloop.counter0 %}">(DOWN)</a>{% endif %}
+                    {% endif %}
+                  </div>
                 {% endfor %}
               </nav>
             {% else %}

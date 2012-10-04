@@ -118,6 +118,7 @@ button[type=submit],
 	    inset -1px -1px rgba(0,0,0,0.1);
     behavior: url("/static/css/PIE.htc");
 	}
+/*
 button:hover,
 input[type=button]:hover,
 .button:hover{
@@ -126,6 +127,7 @@ input[type=button]:hover,
     -pie-background: linear-gradient(top,#fff,#f6f6f6);
 	background: -webkit-gradient(linear,0 top,0 bottom,from(#fff),to(#f6f6f6));
 	}
+*/
 button:focus,
 input[type=button]:focus,
 .button:focus {
@@ -194,7 +196,7 @@ input[type=submit]:active,
     -pie-background: linear-gradient(top,#2171a9,#3fa3e9);
 	}
 	
-
+/*
 #follow_button button, #unfollow_button button, #participate_button a {
     color: #fff;
     background: #36cdc4;
@@ -237,6 +239,8 @@ input[type=submit]:active,
 .login_participate_button {
     margin-top: 0px !important;
 }
+*/
+
 
 /* .project-kind-challenge #sidebar .duration-time { */
 /*   background: #f9f9f9; */
@@ -1175,7 +1179,7 @@ header {}
         margin-right: 5px;
         border: 1px solid #d0d0d0;
       }
-
+/*
       #project-description-link {
         margin: 18px 0 13px;
         display: block;
@@ -1197,6 +1201,7 @@ header {}
         -moz-text-shadow: #fff -1px -1px 0px;
         -webkit-text-shadow: #fff -1px -1px 0px;
       }
+*/
       
       #project-links {}
         #project-links ul,
@@ -3056,7 +3061,7 @@ ul.ui-autocomplete #ui-active-menuitem {
 }
 
 
-/*task list styling*/
+/* task list styling ---- this line is a comment not a class/id ----
 	#content-pages li,
 	#project-links li,
 	#member_links li {
@@ -3078,7 +3083,7 @@ ul.ui-autocomplete #ui-active-menuitem {
 	#member_links ul li .externalLink {
 	   display:inline-block; width:200px
 	}
-
+*/
 
 .project-kind-challenge #task_list_section .taskActivity {
     width: 130px;

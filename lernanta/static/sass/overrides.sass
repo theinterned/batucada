@@ -545,9 +545,8 @@ input, textarea
   .divider
     margin: 5px 1px
   font-family: $primary-font
-  @include adjust-font-size-to($baseFontSize)
+  @include adjust-font-size-to($baseFontSize-subtext)
   li
-    padding-left: 15px
     a
       @include link-colors($slate, $cyan, $slate, $slate, $slate)
     &.dropdown
@@ -563,7 +562,7 @@ input, textarea
   .dropdown-menu
     min-width: 95%
     max-width: 95%
-    margin-left: 20px
+    margin-left: 6px
     @include background($fog)
     li
       a
@@ -571,38 +570,40 @@ input, textarea
         @include adjust-font-size-to($baseFontSize)
   .nav-header
     @include adjust-font-size-to($baseFontSize-h1-header)
-  .icon-large
-    margin-right: 12px
-    vertical-align: 2px
+    .icon-large
+      vertical-align: baseline
+      margin-right: 8px
+      margin-left: 8px
 
 .nav .nav-header 
-  padding: 30px 15px 0px 15px
+  padding: 30px 0px 0px 0px
 
 .nav-list > li > form
-  margin-left: -15px
+  margin-left: 0px
   margin-top: 0px
   input[type="checkbox"]
     vertical-align: top
     @media (min-width: 1200px)
-      margin-left: 15px
+      margin-left: 8px
+      margin-right: 8px
   select
     margin-top: 0px
     width: 100%
 
 .nav-list > li > a
-  margin-left: -15px
-  padding-left: 30px
+  margin-left: 0px
   margin-right: 0px
+  padding-left: 30px
 
 .nav-list .nav-header
-  margin-left: -11px
+  margin-left: 0px
   margin-right: 0px
   
 .nav-list > .active > a
   @include border-radius(5px)
   @include custom-box-shadow-1
   position: relative
-  img
+  img /* used for close tag 'x' image */
     position: absolute
     top: 7px
     right: 10px
@@ -619,21 +620,33 @@ input, textarea
 .nav-list li.active a:visited
   color: $white
 
-#sidebar .nav-list
-  i
-    position: absolute
-    left: 77px
-    top: 41px
-  font-size: 14px
-  padding-left: 0px
+#sidebar #project 
+  form
+    margin-top: 15px
+  h2, .more_people_link
+    line-height: 24px
+  ol
+    margin-left: 0px
+    li
+      list-style-position: inside
+      padding-top: 5px
+      padding-bottom: 5px
+      border-bottom: solid 1px #eee
+      &:first-child
+        border-top: solid 1px #eee
+
+#project .nav .nav-header
+  padding-top: 0px
+
+#project .nav-list
+  padding-left: 10px
   li
     padding-left: 0px
   & > li > a
     margin-left: 0px
-    padding-left: 0px
+    padding-left: 10px
   .nav-header
     padding-left: 10px
-    position: relative
 
 
 .navbar .pull-right .dropdown-menu, .navbar .dropdown-menu.pull-right
