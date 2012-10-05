@@ -2,32 +2,82 @@
 {% load i18n %}
 {% load l10n_tags %}
 
-{% block title %}Create a new course{% endblock %}
-{% block bodyclasses %}course-create{% endblock%}
+{% block title %}{{content.title}}{% endblock %}
+{% block bodyclasses %}course-content{% endblock%}
 
 {% block css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/course.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}pagedown/pagedown.css">
 {% endblock %}
 
-{% block links %}
-{% endblock %}
-
 {% block breadcrumbs_title %}
+  <h1>{{ content.title }}</h1>
 {% endblock %}
 
 {% block breadcrumbs %}
+  <li>
+    <span class="divider">&rsaquo;</span>
+    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a>
+  </li>
+
 {% endblock %}
 
 {% block body %}
-  <form action="" method="POST">
-    {% csrf_token %}
-    <div><input type="hidden" value="{{next_url}}" name="next_url"/></div>
-    <p><label for="id_title">Title</label>{{ form.title }}</p>
-    <p>{{form.content}}</p>
+<div class="row">
+<div id="sidebar-wrapper" class="span3">
+  <div id="sidebar">
+    <figure class="project_img">
+      <a id="id-course-image-link" href="{{ course.get_absolute_url }}">
+        {% if course.image %}
+  	         <img id="id-course-image" src="{{ course.image.url }}" alt="course image"/>
+        {% else %}
+             <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
+        {% endif %}
+        {% if course.draft %}
+          <img id="id-course-image-overlay" src="{{ STATIC_URL }}images/course-draft.png" alt="draft course"/>
+        {% endif %}
+      </a>
+    </figure>
 
-    <input type="submit" value="{% trans 'Update content!' %}"/>
-  </form>
+   <div>
+        {% if course.content|length %}
+          <ul class="nav nav-list">
+            <li class="nav-header">Course content</li>
+            {% for task in course.content %}
+                <li class="{% if task.id = content.id %}active{% endif %}">
+                <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+    </div>
+  </div>
+</div>
+ 
+<div id="content-container" class="span9">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#edit-tab" data-toggle="tab">{% trans "Edit" %}</a></li>
+      <li><a href="#view-tab" data-toggle="tab">{% trans "Preview" %}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="edit-tab">
+        <div id="content-editor" class="">
+          <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
+            {% csrf_token %}
+            <!--p><label for="id_title">Title</label>{{ form.title }}</p-->
+            <div id="id_content-wmd-button-bar"></div>
+            <textarea id="id_content" name="content" class="span8" rows="25">{{content.content}}</textarea>
+            <input type="submit" value="{% trans 'Update content!' %}"/>
+          </form>
+        </div>
+      </div>
+      <div class="tab-pane" id="view-tab">
+        <div id="id_content-wmd-preview"></div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
@@ -38,7 +88,9 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      $("#id_content").daveDown();
+      var converter1 = Markdown.getSanitizingConverter();
+      var editor1 = new Markdown.Editor(converter1, "id_content");
+      editor1.run();
     });
   </script>
 

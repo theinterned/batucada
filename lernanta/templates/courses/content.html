@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block breadcrumbs_title %}
-  <h1>{{ content.title }}</h1>
+  <h1 id="project-name">
+    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">[{{course.short_title}}] {{course.title}}</a></h1>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -19,6 +20,7 @@
     <span class="divider">&rsaquo;</span>
     <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a>
   </li>
+  <li class="active"><span class="divider">&rsaquo;</span>{{ content.title }}</li>
 
 {% endblock %}
 
@@ -55,6 +57,7 @@
 </div>
  
 <div id="content-container" class="span9">
+  <h1>{{ content.title }}</h1>
   <div>
     <div id="id_content-wmd-preview"></div>
   </div>

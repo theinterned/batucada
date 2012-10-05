@@ -337,6 +337,8 @@ def create_content( request, course_id ):
 
 @login_required
 def content_edit( request, course_id, content_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
     content = content_model.get_content("/uri/content/{0}".format(content_id))
 
     #TODO Check users permission
@@ -363,7 +365,11 @@ def content_edit( request, course_id, content_id ):
     else:
         form = ContentForm(content)
 
-    context = { 'form': form }
+    context = {
+        'form': form,
+        'course': course,
+        'content': content,
+    }
     if request.GET.get('next_url', None):
         context['next_url'] = request.GET.get('next_url', None)
     return render_to_response('courses/edit_content.html', 

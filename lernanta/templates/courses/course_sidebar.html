@@ -1,0 +1,177 @@
+{% load l10n_tags %}
+{% load i18n %}
+
+<div id="sidebar-wrapper" class="span3">
+<div id="sidebar">
+  <section id="project" class="panel">
+    <figure class="project_img">
+      <a id="id-course-image-link" href="{{ course.get_absolute_url }}">
+        {% if course.image %}
+  	         <img id="id-course-image" src="{{ course.image.url }}" alt="course image"/>
+        {% else %}
+             <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
+        {% endif %}
+        {% if course.draft %}
+          <img id="id-course-image-overlay" src="{{ STATIC_URL }}images/course-draft.png" alt="draft course"/>
+        {% endif %}
+      </a>
+    </figure>
+    {% if organizer %}
+      <p>
+        <a data-toggle="collapse" data-target="#image-edit">
+          {% trans 'Change image' %}
+        </a>
+      </p>
+      <div id="image-edit" class="collapse">
+        <form action="{% locale_url courses_image course_id=course.id %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <p>{{image_form.image}}</p>
+          <p><button type="submit" >{% trans 'Upload new image' %}</button></p>
+        </form>
+      </div>
+    {% endif %}
+    <hr/>
+    <div id="course-description">
+      <p>{{ course.plug }}</p>
+      {% if organizer %}
+      <a data-toggle="collapse" data-target="#plug-edit">{% trans "edit" %}</a>
+      <div id="plug-edit" class="collapse">
+        <form action="{% locale_url courses_update_attribute course_id=course.id attribute='plug' %}" method="POST">
+          {% csrf_token %}
+          {{ update_form.plug }}
+          <p><button type="submit">{% trans "Update plug" %}</button></p>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  {% if organizer %}
+    <hr/>
+    <div>
+      {% if course.draft %} 
+        <p>{% trans "This course is still a draft" %}</p>
+        <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
+          {% csrf_token %}
+          <p><button type="submit">{% trans "Publish" %}</button></p>
+        </form>
+      {% endif %}
+      {% if not course.draft and not course.archived %}
+        <p>{% trans "Published" %}</p>
+          <form action="{% locale_url courses_change_status course_id=course.id status='archive' %}" method="POST">
+            {% csrf_token %}
+            <p><button type="submit">{% trans "Archive" %}</button></p>
+        </form>
+      {% endif %}
+      {% if course.archived %}
+        <p>{% trans "Archived" %}</p>
+        <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
+            {% csrf_token %}
+            <p><button type="submit">{% trans "Resurrect" %}</button></p>
+        </form>
+      {% endif %}
+    </div>
+  {% endif %}
+    <hr/>
+    <div id="course-term">
+      {% if cohort.term == 'ROLLING' %}
+        <p>{%trans "This course doesn't have start and end dates"%}</p>
+      {% else %}
+        {% blocktrans with start_date=cohort.start_date end_date=cohort.end_date %}
+          <p>This course runs from {{ start_date }} to {{end_date}}</p>
+        {% endblocktrans %}
+      {% endif %}
+
+      {% if organizer %}
+        <p><a data-toggle="collapse" data-target="#term-edit">{% trans 'edit' %}</a></p>
+        <div id="term-edit" class="collapse">
+          {%trans "Switch to fixed term and set dates"%}
+          <form action="{% locale_url courses_change_term course_id=course.id term='fixed' %}" method="POST">
+            {% csrf_token %}
+            <p><label for="id_start_date">{% trans 'Start:' %}</label>{{term_form.start_date}}</p>
+            <p><label for="id_end_date">{% trans 'End:' %}</label>{{term_form.end_date}}</p>
+            <p><input type="submit" value="{% trans "Update fixed term" %}"/></p>
+          </form>
+          {% if cohort.term == 'FIXED' %}
+            <form action="{% locale_url courses_change_term course_id=course.id term='rolling' %}">
+              <p><input type="submit" value="{% trans "Switch to rolling term" %}"/></p>
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <hr/>
+    <div>
+      {% if cohort.signup == 'OPEN' %}
+        <p>{% trans 'Singup is open. Anyone can sign up once the course is published!' %}</p>
+      {% endif %}
+      {% if cohort.signup == 'MODERATED' %}
+        <p>{% trans 'Singup is moderated. To sign up for this course you should contact one of the course organizer.' %}</p>
+      {% endif %}
+      {% if cohort.signup == 'CLOSED' %}
+        <p>{% trans 'Singup is closed. Only organizer can add more people.' %}</p>
+      {% endif %}
+      {% if organizer %}
+        <p><a data-toggle="collapse" data-target="#signup-edit">{% trans "change" %}</a></p>
+        <div id="signup-edit" class="collapse">
+          {% if cohort.signup != 'OPEN' %}
+            <form action="{% locale_url courses_change_signup course_id=course.id signup='open'%}" method="POST">
+              {% csrf_token %}
+              <p><button type="submit">{% trans 'Change to Open' %}</button></p>
+            </form>
+          {% endif %}
+          {% if cohort.signup != 'MODERATED' %}
+            <form action="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}" method="POST">
+              {% csrf_token %}
+              <p><button type="submit">{% trans 'Change to Moderated' %}</button></p>
+            </form>
+          {% endif %}
+          {% if cohort.signup != 'CLOSED' %}
+            <form action="{% locale_url courses_change_signup course_id=course.id signup='closed'%}" method="POST">
+              {% csrf_token %}
+              <p><button type="submit">{% trans 'Change to Closed' %}</button></p>
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <div id="course-singup">
+      {% if show_signup %}
+        <form method="post" action="{% locale_url courses_signup course_id=course.id %}">
+          {% csrf_token %}
+          <p><button id="signup_button">{{ _('Start Course') }}</button></p>
+        </form>
+      {% endif %}
+      {% if show_leave_course %}
+        <form method="post" action="{% locale_url courses_leave course_id=course.id username=user.username %}">
+          {% csrf_token %}
+          <p><button id="leave_direct_signup_button">{{ _('Leave Course') }}</button></p>
+        </form>
+      {% endif %}
+    </div>
+    {% if tags %}
+      <h3><b>{{ _('Tags') }}</b></h3>
+      <ul class="tags">
+        {% for tag in tags %}
+          <li>
+              {{ tag.name }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if organizer %}
+      <hr/>
+      <div id="course-language">
+        <a data-toggle="collapse" data-target="#language-edit">Change language of course</a>
+        <div id="language-edit" class="collapse">
+          <form action="{% locale_url courses_change_language course_id=course.id %}" method="POST">
+            {% csrf_token %}
+            {{ language_form }}
+            <button type="submit">{% trans "update language" %}</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+  </section>
+
+</div> <!-- /#sidebar -->
+</div>
+
