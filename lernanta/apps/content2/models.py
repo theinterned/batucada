@@ -41,26 +41,26 @@ def get_content(content_uri, fields=[]):
     return content
 
 
-def create_content(content, author_uri):
+def create_content(title, content, author_uri):
     #TODO check all required properties
     container_db = db.Content()
     container_db.save()
     content_db = db.ContentVersion(
         container=container_db,
-        title=content["title"],
-        content=content["content"],
+        title=title,
+        content=content,
         author_uri = author_uri,
     )
-    if "comment" in content:
-        content_db.comment = content["comment"]
+    #TODO if "comment" in content:
+    #    content_db.comment = content["comment"]
     content_db.save()
     container_db.latest = content_db
     container_db.save()
     return get_content("/uri/content/{0}".format(container_db.id))
 
 
-def update_content( content_uri, content, author_uri ):
-    content_id = content_uri2id(content_uri)
+def update_content( uri, title, content, author_uri ):
+    content_id = content_uri2id(uri)
     try:
         wrapper_db = db.Content.objects.get(id=content_id)
     except Exception, e:
@@ -70,12 +70,12 @@ def update_content( content_uri, content, author_uri ):
 
     content_db = db.ContentVersion(
         container=wrapper_db,
-        title=content["title"],
-        content=content["content"],
+        title=title,
+        content=content,
         author_uri = author_uri,
     )
-    if "comment" in content:
-        content_db.comment = content["comment"]
+    #TODO if "comment" in content:
+    #    content_db.comment = content["comment"]
     content_db.save()
     wrapper_db.latest = content_db
     wrapper_db.save()

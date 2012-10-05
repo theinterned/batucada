@@ -308,13 +308,14 @@ def create_content( request, course_id ):
     if request.method == "POST":
         form = ContentForm(request.POST)
         if form.is_valid():
+            user = request.user.get_profile()
+            user_uri = "/uri/user/{0}".format(user.username)
             content_data = {
                 'title': form.cleaned_data.get('title'),
                 'content': form.cleaned_data.get('content'),
+                'author_uri': user_uri,
             }
-            user = request.user.get_profile()
-            user_uri = "/uri/user/{0}".format(user.username)
-            content = content_model.create_content(content_data, user_uri)
+            content = content_model.create_content(**content_data)
             course_model.add_course_content(course['uri'], content['uri'])
 
             redirect_url = request.POST.get('next_url', None)
@@ -353,7 +354,8 @@ def content_edit( request, course_id, content_id ):
             user = request.user.get_profile()
             user_uri = "/uri/user/{0}".format(user.username)
             content = content_model.update_content(
-                content['uri'], content_data, user_uri
+                content['uri'], content_data['title'], 
+                content_data['content'], user_uri
             )
             
             redirect_url = request.POST.get('next_url', None)

@@ -94,8 +94,7 @@ def create_course(title, short_title, plug, language, organizer_uri):
         return None
 
     about = content_model.create_content(
-        {"title": _("About"), "content": ""},
-        organizer_uri
+       **{"title": _("About"), "content": "", "author_uri": organizer_uri}
     )
     add_course_content("/uri/course/{0}".format(course_db.id), about['uri'])
     create_course_cohort("/uri/course/{0}".format(course_db.id), organizer_uri)
