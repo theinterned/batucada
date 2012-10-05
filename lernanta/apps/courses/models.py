@@ -193,6 +193,21 @@ def add_course_content(course_uri, content_uri):
     course_content_db.save()
 
 
+def remove_course_content(course_uri, content_uri):
+    course_id = course_uri2id(course_uri)
+    course_db = None
+    try:
+        course_db = db.Course.objects.get(id=course_id)
+    except:
+        log.error("Could not find course")
+        return None
+    course_content_db = course_db.content.get(content_uri=content_uri)
+    course_content_db.delete()
+    for content in course_db.content.filter(index__gt=course_content_db.index):
+        content.index = content.index - 1
+        content.save()
+
+
 def reorder_course_content(content_uri, direction):
     course_content_db = None
     try:
@@ -219,10 +234,6 @@ def reorder_course_content(content_uri, direction):
     swap_course_content_db.save()
     course_content_db.save()
     return True
-
-def delete_course_content():
-    # TODO
-    pass
 
 
 def create_course_cohort(course_uri, admin_user_uri):

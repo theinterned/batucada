@@ -61,8 +61,12 @@ urlpatterns = patterns('',
         name='courses_content_show'),
     
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/edit/$',
-        'courses.views.edit_content',
-        name='courses_edit_content'),
+        'courses.views.content_edit',
+        name='courses_content_edit'),
+
+    url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/remove/$',
+        'courses.views.content_remove',
+        name='courses_content_remove'),
 
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/up/$',
         'courses.views.content_up',

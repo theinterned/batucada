@@ -249,7 +249,7 @@
         {% endif %}
         </p>
         <div id="about-editor" class="collapse">
-          <form action="{% locale_url courses_edit_content course_id=course.id content_id=about.id %}" method="POST">
+          <form action="{% locale_url courses_content_edit course_id=course.id content_id=about.id %}" method="POST">
             {% csrf_token %}
             <input type="hidden" value="{{course_url}}" name="next_url"/>
             <input type="hidden" value="About" name="title"/>
@@ -275,7 +275,11 @@
                 <!--a class="taskView" href="#">{{ _('View and Discuss') }}</a-->
 
                 {% if organizer %}
-                <!--a href="{% locale_url courses_edit_content course_id=course.id content_id=task.id %}?next_url={{ course_url }}">
+                  <form action="{% locale_url courses_content_remove course_id=course.id content_id=task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-mini btn-danger" type="submit">{% trans "remove" %}</button>
+                  </form>
+                <!--a href="{% locale_url courses_content_edit course_id=course.id content_id=task.id %}?next_url={{ course_url }}">
                     <i class="icon-edit"></i>
                 </a-->
                 {% endif %}

@@ -336,7 +336,7 @@ def create_content( request, course_id ):
 
 
 @login_required
-def edit_content( request, course_id, content_id ):
+def content_edit( request, course_id, content_id ):
     content = content_model.get_content("/uri/content/{0}".format(content_id))
 
     #TODO Check users permission
@@ -372,6 +372,15 @@ def edit_content( request, course_id, content_id ):
 
 
 @login_required
+def content_remove( request, course_id, content_id ):
+    #TODO check organizer
+    course_uri = course_model.course_id2uri(course_id)
+    content_uri = "/uri/content/{0}".format(content_id)
+    course_model.remove_course_content(course_uri, content_uri)
+    return course_slug_redirect(request, course_id)
+
+
+@login_required
 def content_up( request, course_id, content_id ):
     #TODO check admin
     result = course_model.reorder_course_content(
@@ -379,7 +388,7 @@ def content_up( request, course_id, content_id ):
     )
     if not result:
         messages.error(request, _("Could not move content up!"))
-    return course_slug_redirect( request, course_id )
+    return course_slug_redirect(request, course_id)
 
 
 @login_required
