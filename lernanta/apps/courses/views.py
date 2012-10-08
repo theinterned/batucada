@@ -222,7 +222,7 @@ def course_change_signup( request, course_id, signup ):
     # TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
     cohort['signup'] = signup.upper()
-    cohort = course_model.update_cohort(cohort)
+    cohort = course_model.update_cohort(**cohort)
     if not cohort:
         messages.error( request, _("Could not change cohort signup"))
     return course_slug_redirect( request, course_id )
@@ -238,11 +238,11 @@ def course_change_term( request, course_id, term ):
         if form.is_valid():
             cohort['start_date'] = form.cleaned_data['start_date']
             cohort['end_date'] = form.cleaned_data['end_date']
-            cohort = course_model.update_cohort(cohort)
+            cohort = course_model.update_cohort(**cohort)
         else:
             messages.error( request, _("Could not update fixed term dates"))
     elif term == 'rolling':
-        cohort = course_model.update_cohort(cohort)
+        cohort = course_model.update_cohort(**cohort)
     return course_slug_redirect( request, course_id)
 
 

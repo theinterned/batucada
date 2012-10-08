@@ -309,24 +309,22 @@ def get_cohort(cohort_uri):
     return cohort_data
 
 
-def update_cohort( cohort_data ):
-    if not 'uri' in cohort_data:
-        return None
-    cohort_db = _get_cohort_db(cohort_data['uri'])
+def update_cohort( uri, term=None, signup=None, start_date=None, end_date=None ):
+    cohort_db = _get_cohort_db(uri)
 
-    if 'term' in cohort_data:
-        cohort_db.term = cohort_data['term']
-    if 'signup' in cohort_data:
-        cohort_db.signup = cohort_data['signup']
-    if 'start_date' in cohort_data:
-        cohort_db.start_date = cohort_data['start_date']
-    if 'end_date' in cohort_data:
-        cohort_db.end_date = cohort_data['end_date']
+    if term:
+        cohort_db.term = term
+    if signup:
+        cohort_db.signup = signup
+    if start_date:
+        cohort_db.start_date = start_date
+    if end_date:
+        cohort_db.end_date = end_date
     try:
         cohort_db.save()
     except:
         return None
-    return get_cohort(cohort_data['uri'])
+    return get_cohort(uri)
 
 
 def user_in_cohort(user_uri, cohort_uri):

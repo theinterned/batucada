@@ -55,10 +55,16 @@ class CourseTests(TestCase):
         self.assertTrue(not about == None)
         self.assertEqual(about['title'], "About")
 
-        # test that cohort was created
+        # test that a cohort was created
         cohort = course_model.get_course_cohort(course['uri'])
         self.assertTrue(not cohort == None)
-        # TODO check that /uri/user/testuser is in cohort
+
+        self.assertTrue(
+            course_model.user_in_cohort('/uri/user/testuser', cohort['uri'])
+        )
+        self.assertTrue(
+            course_model.is_cohort_organizer('/uri/user/testuser', cohort['uri'])
+        )
 
     def test_course_get(self):
         course = course_model.get_course(self.course['uri'])
@@ -69,9 +75,11 @@ class CourseTests(TestCase):
         self.assertTrue('about_uri' in course)
         self.assertTrue('slug' in course)
         self.assertTrue('plug' in course)
-        self.assertTrue('creator' in course)
+        self.assertTrue('language' in course)
+        self.assertTrue('draft' in course)
+        self.assertTrue('archived' in course)
+        self.assertTrue('about_uri' in course)
         self.assertTrue('content' in course)
-        pass
 
     def test_add_content(self):
         pass
