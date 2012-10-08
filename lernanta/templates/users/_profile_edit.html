@@ -26,8 +26,10 @@
       {{ profile_form.bio.errors }}
     </div>
   </div>
-<p>{{ _('Please describe your skills, interest, and the things you will want to learn, by providing a comma-separated list of tags.')}}
-  <br /><br />
+  <p>
+    {{ _('Please describe your skills, interest, and the things you will want to learn, by providing a comma-separated list of tags.')}}
+    <br />
+    <br />
   </p>
   <div class="control-group field{% if profile_form.skill.errors %} error{% endif %}">
     <label class="control-label" for="id_skill">{{ _('Skilled in') }}</label>
