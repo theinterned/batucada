@@ -177,6 +177,7 @@ INSTALLED_APPS = (
     'lernanta.apps.notifications',
     'lernanta.apps.api',
     'tastypie',
+    'lernanta.apps.media',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
