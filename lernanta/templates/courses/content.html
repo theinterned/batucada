@@ -27,33 +27,7 @@
 {% block body %}
 <div class="row">
 <div id="sidebar-wrapper" class="span3">
-  <div id="sidebar">
-    <figure class="project_img">
-      <a id="id-course-image-link" href="{{ course.get_absolute_url }}">
-        {% if course.image %}
-  	         <img id="id-course-image" src="{{ course.image.url }}" alt="course image"/>
-        {% else %}
-             <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
-        {% endif %}
-        {% if course.draft %}
-          <img id="id-course-image-overlay" src="{{ STATIC_URL }}images/course-draft.png" alt="draft course"/>
-        {% endif %}
-      </a>
-    </figure>
-
-   <div>
-        {% if course.content|length %}
-          <ul class="nav nav-list">
-            <li class="nav-header">Course content</li>
-            {% for task in course.content %}
-                <li class="{% if task.id = content.id %}active{% endif %}">
-                <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-    </div>
-  </div>
+  {% include "courses/content_sidebar.html" %}
 </div>
  
 <div id="content-container" class="span9">

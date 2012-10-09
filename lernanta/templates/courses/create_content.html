@@ -14,19 +14,36 @@
 {% endblock %}
 
 {% block breadcrumbs_title %}
+  <h1 id="project-name">
+    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">[{{course.short_title}}] {{course.title}}</a></h1>
 {% endblock %}
 
 {% block breadcrumbs %}
+  <li>
+    <span class="divider">&rsaquo;</span>
+    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a>
+  </li>
 {% endblock %}
 
+
 {% block body %}
-  <form action="" method="POST">
-    {% csrf_token %}
-    <div><input type="hidden" value="{{next_url}}" name="next_url"/></div>
-    <p><label for="id_title">Title</label>{{ form.title }}</p>
-    <p>{{form.content}}</p>
-    <button type="submit">{% trans 'Create content!' %}</button>
-  </form>
+
+<div class="row">
+  <div id="sidebar-wrapper" class="span3">
+    {% include "courses/content_sidebar.html" %}
+  </div>
+ 
+  <div class="span9">
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div><input type="hidden" value="{{next_url}}" name="next_url"/></div>
+      <p><label for="id_title">Title</label>{{ form.title }}</p>
+      <p>{{form.content}}</p>
+      <button type="submit">{% trans 'Create content!' %}</button>
+    </form>
+  </div>
+
+</div>
 {% endblock %}
 
 {% block js %}

@@ -88,6 +88,7 @@ def show_course( request, course_id, slug=None ):
     context['organizer'] = course_model.is_cohort_organizer(
         user_uri, cohort['uri']
     )
+    context['organizer'] |= request.user.is_superuser
     if context['organizer']:
         context['update_form'] = CourseUpdateForm(course)
         context['language_form'] = CourseLanguageForm(course)
@@ -152,8 +153,11 @@ def course_add_user( request, course_id ):
         admin_uri, cohort['uri']
     )
     username = request.POST.get('username', None)
-    if not is_organizer:
-        messages.error(request, _("Only organizer are allowed to add new users"))
+    if not UserProfile.objects.filter(username=username).exists():
+        messages.error(request, _("User doesn not exist."))
+        return course_slug_redirect(request, course_id)
+    if not is_organizer and not request.user.is_superuser:
+        messages.error(request, _("Only organizer are allowed to add new users."))
         return course_slug_redirect(request, course_id)
     if not username:
         messages.error(request, _("Please select a user"))
@@ -191,7 +195,7 @@ def course_add_organizer( request, course_id, username ):
     is_organizer = course_model.is_cohort_organizer(
         user_uri, cohort['uri']
     )
-    if not is_organizer:
+    if not is_organizer and not request.user.is_superuser:
         messages.error( request, _("Only other organizers can add a new organizer") )
         return course_slug_redirect( request, course_id)
     new_organizer_uri = "/uri/user/{0}".format(username)
@@ -205,11 +209,14 @@ def course_add_organizer( request, course_id, username ):
 @login_required
 @require_http_methods(['POST'])
 def course_change_status( request, course_id, status ):
-    # TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
     course_uri = course_model.course_id2uri(course_id)
-    if status == 'publish':
+    # TODO check organizer
+    if status == 'draft':
+        #TODO
+        pass
+    elif status == 'publish':
         course = course_model.publish_course(course_uri)
     elif status == 'archive':
         course = course_model.archive_course(course_uri)
@@ -231,6 +238,7 @@ def course_change_signup( request, course_id, signup ):
 @login_required
 @require_http_methods(['POST'])
 def course_change_term( request, course_id, term ):
+    #TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
     cohort['term'] = term.upper()
     if term == 'fixed':
@@ -327,7 +335,7 @@ def create_content( request, course_id ):
     else:
         form = ContentForm()
 
-    context = { 'form': form }
+    context = { 'form': form, 'course': course }
     if request.GET.get('next_url', None):
         context['next_url'] = request.GET.get('next_url', None)
 

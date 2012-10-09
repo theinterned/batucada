@@ -56,9 +56,13 @@
       {% endif %}
       {% if not course.draft and not course.archived %}
         <p>{% trans "Published" %}</p>
-          <form action="{% locale_url courses_change_status course_id=course.id status='archive' %}" method="POST">
-            {% csrf_token %}
-            <p><button type="submit">{% trans "Archive" %}</button></p>
+        <form action="{% locale_url courses_change_status course_id=course.id status='draft' %}" method="POST">
+          {% csrf_token %}
+          <p><button type="submit">{% trans "Switch back to draft" %}</button></p>
+        </form>
+        <form action="{% locale_url courses_change_status course_id=course.id status='archive' %}" method="POST">
+          {% csrf_token %}
+          <p><button type="submit">{% trans "Archive" %}</button></p>
         </form>
       {% endif %}
       {% if course.archived %}
