@@ -235,7 +235,7 @@ def reorder_course_content(content_uri, direction):
     return True
 
 
-def create_course_cohort(course_uri, admin_user_uri):
+def create_course_cohort(course_uri, organizer_uri):
     course_db = _get_course_db(course_uri)
     if not course_db:
         return None
@@ -253,7 +253,7 @@ def create_course_cohort(course_uri, admin_user_uri):
     if not cohort:
         log.error("Could not create new cohort!")
         return None
-    add_user_to_cohort(cohort["uri"], admin_user_uri, db.CohortSignup.ORGANIZER)
+    add_user_to_cohort(cohort["uri"], organizer_uri, db.CohortSignup.ORGANIZER)
     return get_course_cohort(course_uri)
 
 
@@ -279,6 +279,7 @@ def get_cohort(cohort_uri):
     cohort_db = _get_cohort_db(cohort_uri)
     if not cohort_db:
         return None
+
     cohort_data = {
         "uri": "/uri/cohort/{0}".format(cohort_db.id),
         "course_uri": "/uri/course/{0}".format(cohort_db.course.id),
@@ -311,6 +312,8 @@ def get_cohort(cohort_uri):
 
 def update_cohort( uri, term=None, signup=None, start_date=None, end_date=None ):
     cohort_db = _get_cohort_db(uri)
+    if not cohort_db:
+        return None
 
     if term:
         cohort_db.term = term
