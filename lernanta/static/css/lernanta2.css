@@ -1071,19 +1071,19 @@ header {}
     /*     margin-bottom: 0; */
     /* } */
 
-#content {
-  padding-top: 17px;
-}
+/* #content { */
+/*   padding-top: 17px; */
+/* } */
 
-  .project-kind-challenge #sidebar-wrapper {
-    width: 245px;
-    float: left;
-    clear: both;
-  }
+  /* .project-kind-challenge #sidebar-wrapper { */
+  /*   width: 245px; */
+  /*   float: left; */
+  /*   clear: both; */
+  /* } */
 
-  #school_home #sidebar {
-      float: right;
-  }
+  /* #school_home #sidebar { */
+  /*     float: right; */
+  /* } */
 
   /* 	#sidebar h2{ */
 	/* 	font-size: 18px; */

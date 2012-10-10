@@ -54,22 +54,22 @@
 {% block header %}
 <header>
     <div class="container">
-	  <div class="navbar">
-        <div class="navbar-inner">
+	  <div class="navbar-custom-header">
+        <div class="navbar-custom-header-inner">
           <a class="brand" href="{% if user.is_authenticated %}{% locale_url dashboard %}{% else %}{% locale_url splash %}{% endif %}"></a>
           <ul class="nav">
             <li>
               <a href="{% learn_default %}">{{ _('Find') }}</a>
-              <div class="navbar-text">{{ _('Great Courses') }}</div>
+              <div class="navbar-custom-header-text">{{ _('Great Courses') }}</div>
             </li>
             <li class="divider-vertical"></li>
             <li>
               <a class="make-blue" href="{% locale_url static_page_show 'get-involved' %}">{{ _('Create') }}</a>
-              <div class="navbar-text">{{ _('a Course') }}</div>
+              <div class="navbar-custom-header-text">{{ _('a Course') }}</div>
             </li>
           </ul>
           
-          <span id="cse-search-form" class="navbar-search pull-left" action>
+          <span id="cse-search-form" class="navbar-custom-header-search pull-left" action>
             <!-- This will apply the updated styles to the search -->
             <!-- bar. Google doesn't let you white label the box.  -->
             <!-- <input type="text" class="search-query" placeholder="web design" /> -->
