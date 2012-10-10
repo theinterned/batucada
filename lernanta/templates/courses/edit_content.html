@@ -41,7 +41,7 @@
         <div id="content-editor" class="">
           <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
             {% csrf_token %}
-            <!--p><label for="id_title">Title</label>{{ form.title }}</p-->
+            <p><label for="id_title">Title</label>{{ form.title }}</p>
             <div id="id_content-wmd-button-bar"></div>
             <textarea id="id_content" name="content" class="span8" rows="25">{{content.content}}</textarea>
             <input type="submit" value="{% trans 'Update content!' %}"/>
