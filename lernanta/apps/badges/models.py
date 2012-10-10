@@ -194,6 +194,8 @@ class Badge(ModelBase):
             return False
         if user.is_authenticated():
             profile = user.get_profile()
+            if not profile.can_post():
+                return False
             if not self.is_eligible(profile):
                 return False
             awards = Award.objects.filter(user=profile, badge=self)
