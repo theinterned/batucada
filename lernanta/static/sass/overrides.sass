@@ -75,9 +75,9 @@ $headingsColor:         $steel
 $hrBorder:              $steel
 // Navbar
 // -------------------------
-$navbarHeight:                    110px
+/* $navbarHeight:                    110px
 $navbarBackground:                $snow
-$navbarBackgroundHighlight:       $snow
+$navbarBackgroundHighlight:       $cloud
 $navbarText:                      $headingsColor
 $navbarLinkColor:                 $slate
 $navbarLinkColorHover:            $linkColorHover
@@ -345,6 +345,10 @@ a
     color: lighten($cyan, 10%)
 
 // Forms
+
+form
+  margin: 0px
+
 input
   &[type="text"], &[type="password"], &[type="datetime"], &[type="datetime-local"], &[type="date"], &[type="month"], &[type="time"], &[type="week"], &[type="number"], &[type="email"], &[type="url"], &[type="search"], &[type="tel"], &[type="color"]
     background-color: $steel
@@ -362,6 +366,10 @@ input
 
 input, textarea
   width: 230px
+
+.form-horizontal
+  input, textarea
+    width: 400px
 
 // Navigation
 .nav-tabs
@@ -390,7 +398,30 @@ input, textarea
       border: 1px solid $white
       border-bottom: 0px
 
-.navbar
+.tabs-left 
+  .nav-tabs
+    margin-right: 0px
+  .tab-content
+    border: 1px solid rgb(221, 221, 221)
+    min-height: 350px
+
+.navbar-title
+  @extend .navbar
+  .navbar-center
+    float: right
+    position: relative
+    left: -50%
+    .nav
+      left: 50%
+  li
+    margin-left: 20px
+    margin-right: 20px
+  .navbar-inner .nav li a:hover
+    background-color: transparent
+    /* color: transparent
+ 
+.navbar-custom-header
+  @extend .navbar
   font-family: $baseFontFamily
   *position: relative
   *z-index: 2
@@ -410,14 +441,14 @@ input, textarea
     background-repeat: no-repeat
     width: 131px
     height: 41px
-  .navbar-text
+  .navbar-custom-header-text
     @include adjust-font-size-to(14px)
     @include adjust-leading-to($base-no-leader-line-height)
     margin-bottom: 0
     color: $steel
     font-family: $altFontFamily
     @include add-all-sides-text-shadow($steel, $snow)
-  .navbar-link
+  .navbar-custom-header-link
     color: $slate
     &:hover
       color: $cyan
@@ -522,7 +553,7 @@ input, textarea
     margin-right: 0px
     margin-left: 0px
     
-.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle 
+.navbar-custom-header .nav li.dropdown.open > .dropdown-toggle, .navbar-custom-header .nav li.dropdown.active > .dropdown-toggle, .navbar-custom-header .nav li.dropdown.open.active > .dropdown-toggle 
   background-color: $dark-slate
   color: #e6f9ff
   
@@ -649,11 +680,12 @@ input, textarea
     padding-left: 10px
 
 
-.navbar .pull-right .dropdown-menu, .navbar .dropdown-menu.pull-right
+.navbar-custom-header .pull-right .dropdown-menu, .navbar-custom-header .dropdown-menu.pull-right
   left: 30px
   right: auto
 
-.navbar-inner
+.navbar-custom-header-inner
+  /* @extend .navbar-inner
   min-height: 110px
   padding-right: 10px
   padding-left: 10px
@@ -662,7 +694,7 @@ input, textarea
   @include no-shadow
   @include background-image(none)
 
-.navbar-search
+.navbar-custom-header-search
   position: relative
   float: left
   margin-top: 42px
@@ -754,7 +786,7 @@ input, textarea
   &:after, &:before
     content: none
 
-.navbar
+.navbar-custom-header
   .dropdown-menu:before
     display: none
   .dropdown-menu:after
@@ -943,7 +975,6 @@ input, textarea
       @include link-colors($slate)
       &:hover
         text-decoration: underline
-  width: pem(220px) /* was 220px */
   @include background($snow)
   @include square-corners
   padding: 0px
@@ -1052,6 +1083,10 @@ input, textarea
           font-family: $primary-font
           @include background($steel)
           padding: 0px
+
+#learn, #splash
+  .thumbnail
+    width: pem(220px) /* was 220px */
         
 .custom-footer
   @include background($fog)
@@ -1466,10 +1501,10 @@ input, textarea
   margin-bottom: pem(30px)
 
 .add-top-margin-20
-  padding-top: pem(25px)
+  margin-top: pem(25px)
   
 .add-top-margin-15
-  padding-top: pem(15px)
+  margin-top: pem(15px)
   
 .add-top-margin-10
   margin-top: pem(10px)
@@ -1825,8 +1860,48 @@ a.show-on-hover
 #create-post.expanded textarea 
   height: 160px
 
+/* batucada activity feed styles */
 
 
 
+.supplemental_actions .action
+  display: block
+  float: right
+  color: #919191
+  text-decoration: none
+  padding-left: 20px
+  margin-left: 18px
+  left: 1px
+  height: 16px
+  line-height: 16px
 
+.supplemental_actions
+  margin: 5px 0
+  font-size: 11px
+  line-height: 1.5
 
+/* .supplemental_actions .action
+/*   display: inline
+/*   margin: 0 5px 0 0px
+/*   float: none
+
+.supplemental_actions .report
+  background: url("/static/images/report.icon.png") 0 1px no-repeat
+  padding-left: 15px
+
+#member_links ul
+  list-style: none
+  margin-left: 0px
+	
+.member-location
+  margin-bottom: 0px
+
+.profile-wrapper
+  ul
+    list-style: none
+  li
+    display: inline-block
+
+.profile-courses img
+  margin: 5px
+  /* border: 1px solid $slate
