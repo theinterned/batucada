@@ -4,6 +4,10 @@ urlpatterns = patterns('',
     url(r'^create/$', 'courses.views.create_course',
         name='courses_create'),
 
+    url(r'^import_project/(?P<project_slug>[\w-]+)/$',
+        'courses.views.import_project',
+        name='courses_import_project'),
+
     url(r'^(?P<course_id>[\d]+)/$', 
         'courses.views.course_slug_redirect',
         name='courses_slug_redirect'),

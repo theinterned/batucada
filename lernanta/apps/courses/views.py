@@ -56,6 +56,17 @@ def create_course( request ):
     )
 
 
+def import_project( request, project_slug ):
+    from projects.models import Project
+    project = get_object_or_404(Project, slug=project_slug)
+    from courses import utils
+    course = utils.import_project(project, project.name[:3])
+    cohort = course_model.get_course_cohort(course['uri'])
+    user_uri = "/uri/user/{0}".format(request.user.username)
+    course_model.add_user_to_cohort(cohort['uri'], user_uri, "ORGANIZER")
+    return course_slug_redirect(request, course['id'])
+
+
 def course_slug_redirect( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
     course = course_model.get_course(course_uri)
