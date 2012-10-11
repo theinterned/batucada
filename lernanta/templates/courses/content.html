@@ -31,45 +31,51 @@
 </div>
  
 <div id="content-container" class="span9">
-  <h1>{{ content.title }}</h1>
-  <div>
-    <div id="id_content-wmd-preview"></div>
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#content-tab-pane" data-toggle="tab">{% trans "Content" %}</a></li>
+      <li><a id="discussion-tab" href="#discussion-tab-pane" data-toggle="tab">{% trans "Discussion" %}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="content-tab-pane">
+        <h1>{{ content.title }}</h1>
+        <div>
+          <div id="id_content-wmd-preview"></div>
+        </div>
+        {% if can_edit %}
+        <a data-toggle="collapse" data-target="#content-editor">
+          <i class="icon-edit"></i>
+        </a>
+        {% endif %}
+        <div id="content-editor" class="collapse">
+          <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
+            {% csrf_token %}
+            <p><label for="id_title">Title</label>{{ form.title }}</p>
+            <div id="id_content-wmd-button-bar"></div>
+            <p>
+              <textarea id="id_content" name="content" class="span9" rows="{{content.rows}}">{{content.content}}</textarea>
+            </p>
+            <input type="submit" value="{% trans 'Update content!' %}"/>
+          </form>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="discussion-tab-pane">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
   </div>
-  {% if can_edit %}
-  <a data-toggle="collapse" data-target="#content-editor">
-    <i class="icon-edit"></i>
-  </a>
-  {% endif %}
-  <div id="content-editor" class="collapse">
-    <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
-      {% csrf_token %}
-      <p><label for="id_title">Title</label>{{ form.title }}</p>
-      <div id="id_content-wmd-button-bar"></div>
-      <p>
-        <textarea id="id_content" name="content" class="span9" rows="{{content.rows}}">{{content.content}}</textarea>
-      </p>
-      <input type="submit" value="{% trans 'Update content!' %}"/>
-    </form>
-  </div>
+
+
+
 
   <div id="content-comments">
 
-    <div id="disqus_thread"></div>
-      <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'p2pu'; // required: replace example with your forum shortname
-        var disqus_developer = 1;
-        var disqus_identifier = "{{course.id}}" + "-" + "{{content.id}}";
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-     
+    
 
     <!--
     <h1>Comments</h1>
@@ -114,5 +120,25 @@
       editor1.run();
     });
   </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#discussion-tab').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        var disqus_shortname = 'p2pu';
+        var disqus_developer = 1;
+        var disqus_identifier = "{{course.id}}";
+        var disqus_identifier = "{{course.id}}" + "-" + "{{content.id}}";
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      });
+    });
+  </script>
+
 
 {% endblock %}
