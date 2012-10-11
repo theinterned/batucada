@@ -246,7 +246,7 @@ def create_course_cohort(course_uri, organizer_uri):
     cohort_db = db.Cohort(
         course=course_db,
         term=db.Cohort.ROLLING,
-        signup=db.Cohort.OPEN
+        signup=db.Cohort.CLOSED
     )
     cohort_db.save()
     cohort = get_course_cohort(course_uri)

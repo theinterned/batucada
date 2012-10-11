@@ -109,7 +109,6 @@ def show_course( request, course_id, slug=None ):
         else:
             context['term_form'] = CourseTermForm()
     context['about'] = content_model.get_content(course['about_uri'])
-    context['about']['rows'] = context['about']['content'].count('\n')
     #context['about']['content'] = markdown.markdown(
     #    context['about']['content'], ['tables']
     #)
@@ -118,7 +117,8 @@ def show_course( request, course_id, slug=None ):
     )
     if course_model.user_in_cohort(user_uri, cohort['uri']):
         context['show_leave_course'] = True
-    elif cohort['signup'] == "OPEN" and course['draft'] == False:
+        context['learner'] = True
+    elif cohort['signup'] == "OPEN":
         context['show_signup'] = True
     return render_to_response(
         'courses/course.html',
@@ -356,7 +356,7 @@ def create_content( request, course_id ):
 
 
 @login_required
-def content_edit( request, course_id, content_id ):
+def edit_content( request, course_id, content_id ):
     course_uri = course_model.course_id2uri(course_id)
     course = course_model.get_course(course_uri)
     content = content_model.get_content("/uri/content/{0}".format(content_id))
@@ -399,7 +399,20 @@ def content_edit( request, course_id, content_id ):
 
 
 @login_required
-def content_remove( request, course_id, content_id ):
+@require_http_methods(['POST'])
+def preview_content( request ):
+    content = request.POST.get('content')
+    from content2 import utils
+    content = utils.clean_user_content(content)
+    content = markdown.markdown(content, ['tables'])
+    #TODO add embeds
+    import bleach
+    content = bleach.linkify(content)
+    return http.HttpResponse(content, mimetype="application/json")
+
+
+@login_required
+def remove_content( request, course_id, content_id ):
     #TODO check organizer
     course_uri = course_model.course_id2uri(course_id)
     content_uri = "/uri/content/{0}".format(content_id)
@@ -408,7 +421,7 @@ def content_remove( request, course_id, content_id ):
 
 
 @login_required
-def content_up( request, course_id, content_id ):
+def move_content_up( request, course_id, content_id ):
     #TODO check admin
     result = course_model.reorder_course_content(
         "/uri/content/{0}".format(content_id), "UP"
@@ -419,7 +432,7 @@ def content_up( request, course_id, content_id ):
 
 
 @login_required
-def content_down( request, course_id, content_id ):
+def move_content_down( request, course_id, content_id ):
     #TODO check admin
     result = course_model.reorder_course_content(
         "/uri/content/{0}".format(content_id), "DOWN"

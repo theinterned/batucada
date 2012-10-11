@@ -60,24 +60,28 @@ urlpatterns = patterns('',
         'courses.views.create_content',
         name='courses_create_content'),
 
+    url(r'content/preview/$',
+        'courses.views.preview_content',
+        name='courses_preview_content'),
+
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/$',
         'courses.views.show_content',
         name='courses_content_show'),
     
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/edit/$',
-        'courses.views.content_edit',
+        'courses.views.edit_content',
         name='courses_content_edit'),
 
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/remove/$',
-        'courses.views.content_remove',
+        'courses.views.remove_content',
         name='courses_content_remove'),
 
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/up/$',
-        'courses.views.content_up',
+        'courses.views.move_content_up',
         name='courses_content_up'),
 
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/down/$',
-        'courses.views.content_down',
+        'courses.views.move_content_down',
         name='courses_content_down'),
 
     url(r'^(?P<course_id>[\d]+)/content/(?P<content_id>[\d]+)/comment/$',
