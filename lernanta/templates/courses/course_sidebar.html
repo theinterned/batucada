@@ -3,7 +3,6 @@
 
 <div id="sidebar-wrapper" class="span3">
 <div id="sidebar">
-  <section id="project" class="panel">
     <figure class="project_img">
       <a id="id-course-image-link" href="{{ course.get_absolute_url }}">
         {% if course.image %}
@@ -28,6 +27,25 @@
           <p>{{image_form.image}}</p>
           <p><button type="submit" >{% trans 'Upload new image' %}</button></p>
         </form>
+      </div>
+    {% endif %}
+    {% if organizer or learner %}
+      <hr/>
+      <div>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="{% trans 'Come join me at P2PU' %}" data-url="https://p2pu.org{{ course_url }}">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <!-- Place this tag where you want the +1 button to render. -->
+        <div class="g-plusone" data-size="medium"></div>
+
+        <!-- Place this tag after the last +1 button tag. -->
+        <script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
       </div>
     {% endif %}
     <hr/>
@@ -105,13 +123,13 @@
     <hr/>
     <div>
       {% if cohort.signup == 'OPEN' %}
-        <p>{% trans 'Singup is open. Anyone can sign up once the course is published!' %}</p>
+        <p>{% trans 'Singup is open to anyone.' %}</p>
       {% endif %}
       {% if cohort.signup == 'MODERATED' %}
         <p>{% trans 'Singup is moderated. To sign up for this course you should contact one of the course organizer.' %}</p>
       {% endif %}
       {% if cohort.signup == 'CLOSED' %}
-        <p>{% trans 'Singup is closed. Only organizer can add more people.' %}</p>
+        <p>{% trans 'Singup is closed. Only organizers can add more people.' %}</p>
       {% endif %}
       {% if organizer %}
         <p><a data-toggle="collapse" data-target="#signup-edit">{% trans "change" %}</a></p>
@@ -174,7 +192,6 @@
         </div>
       </div>
     {% endif %}
-  </section>
 
 </div> <!-- /#sidebar -->
 </div>
