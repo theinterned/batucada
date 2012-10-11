@@ -36,10 +36,6 @@ urlpatterns = patterns('',
         'courses.views.course_change_term',
         name='courses_change_term'),
 
-    url(r'^(?P<course_id>[\d]+)/change_language/$',
-        'courses.views.course_change_language',
-        name='courses_change_language'),
-
     url(r'^(?P<course_id>[\d]+)/update/(?P<attribute>[\w_]+)/$',
         'courses.views.course_update_attribute',
         name='courses_update_attribute'),

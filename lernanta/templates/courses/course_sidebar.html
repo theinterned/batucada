@@ -184,10 +184,10 @@
       <div id="course-language">
         <a data-toggle="collapse" data-target="#language-edit">Change language of course</a>
         <div id="language-edit" class="collapse">
-          <form action="{% locale_url courses_change_language course_id=course.id %}" method="POST">
+          <form action="{% locale_url courses_update_attribute course_id=course.id attribute='language' %}" method="POST">
             {% csrf_token %}
-            {{ language_form }}
-            <button type="submit">{% trans "update language" %}</button>
+            {{ update_form.language }}
+            <p><button type="submit">{% trans "Update language" %}</button></p>
           </form>
         </div>
       </div>

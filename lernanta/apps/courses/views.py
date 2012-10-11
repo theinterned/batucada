@@ -16,7 +16,6 @@ from courses import models as course_model
 from courses.forms import CourseCreationForm
 from courses.forms import CourseUpdateForm
 from courses.forms import CourseTermForm
-from courses.forms import CourseLanguageForm
 from courses.forms import CourseImageForm
 
 from content2 import models as content_model
@@ -102,7 +101,6 @@ def show_course( request, course_id, slug=None ):
     context['organizer'] |= request.user.is_superuser
     if context['organizer']:
         context['update_form'] = CourseUpdateForm(course)
-        context['language_form'] = CourseLanguageForm(course)
         context['image_form'] = CourseImageForm()
         if cohort['term'] == 'FIXED':
             context['term_form'] = CourseTermForm(cohort)
@@ -276,20 +274,6 @@ def course_update_attribute( request, course_id, attribute):
         course_model.update_course( course_uri, **kwargs )
     else:
         messages.error(request, _("Could not update {0}.".format(attribute)))
-    return course_slug_redirect( request, course_id )
-
-
-@login_required
-@require_http_methods(['POST'])
-def course_change_language( request, course_id ):
-    # TODO check organizer
-    course_uri = course_model.course_id2uri(course_id)
-    form = CourseLanguageForm(request.POST)
-    if form.is_valid():
-        course_model.update_course(
-            course_uri,
-            language=form.cleaned_data['language']
-        )
     return course_slug_redirect( request, course_id )
 
 

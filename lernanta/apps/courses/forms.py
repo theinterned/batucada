@@ -19,10 +19,6 @@ class CourseImageForm(forms.Form):
     image = forms.ImageField()
 
 
-class CourseLanguageForm(forms.Form):
-    language = forms.ChoiceField(choices=settings.LANGUAGES)
-
-
 class CourseTermForm(forms.Form):
     start_date = forms.DateField()
     end_date = forms.DateField()
