@@ -31,28 +31,34 @@
  
 <div id="content-container" class="span9">
   <h2>{{ content.title }}</h2>
-  <div class="tabbable">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#edit-tab" data-toggle="tab">{% trans "Edit" %}</a></li>
-      <li><a href="#view-tab" data-toggle="tab">{% trans "Preview" %}</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="edit-tab">
-        <div id="content-editor" class="">
-          <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
-            {% csrf_token %}
-            <p><label for="id_title">Title</label>{{ form.title }}</p>
-            <div id="id_content-wmd-button-bar"></div>
-            <textarea id="id_content" name="content" class="span8" rows="25">{{content.content}}</textarea>
-            <input type="submit" value="{% trans 'Update content!' %}"/>
-          </form>
+  <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
+    <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Update content!' %}"/>
+    <a class="pull-right btn btn-danger" href="{% locale_url courses_content_show course_id=course.id content_id=content.id %}">{% trans 'Discard updates' %}</a>
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#edit-tab-pane" data-toggle="tab">{% trans "Edit" %}</a></li>
+        <li><a id="preview-tab" href="#preview-tab-pane" data-toggle="tab">{% trans "Preview" %}</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="edit-tab-pane">
+          <div id="content-editor" class="">
+              {% csrf_token %}
+              <p>
+                <label for="id_title">{% trans "Title" %}</label>
+                <input class="span8" type="text" id="id_title" name="title" value="{{content.title}}"/>
+              </p>
+              <div id="id_content-wmd-button-bar"></div>
+              <textarea id="id_content" name="content" class="span8" rows="25">{{content.content}}</textarea>
+          </div>
+        </div>
+        <div class="tab-pane" id="preview-tab-pane">
+          <div class="hidden" id="id_content-wmd-preview"></div>
+          <div id="content-preview-placeholder"></div>
         </div>
       </div>
-      <div class="tab-pane" id="view-tab">
-        <div id="id_content-wmd-preview"></div>
-      </div>
-    </div>
-  </div>
+    </div>            
+  </form>
+
 </div>
 {% endblock %}
 
@@ -67,6 +73,22 @@
       var converter1 = Markdown.getSanitizingConverter();
       var editor1 = new Markdown.Editor(converter1, "id_content");
       editor1.run();
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#preview-tab').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        $("#content-preview-placeholder").load(
+            "{% locale_url courses_preview_content %}",
+            {
+                "content":$("#id_content").attr("value"),
+                "csrfmiddlewaretoken": "{{ csrf_token }}"
+            }
+        );
+      });
     });
   </script>
 
