@@ -57,7 +57,8 @@
                   <input class="span8" type="text" id="id_title" name="title" value="{{content.title}}"/>
                 </p>
                 <div id="id_content-wmd-button-bar"></div>
-                <textarea id="id_content" name="content" class="span8" rows="25">{{content.content}}</textarea>
+                <textarea id="id_content" name="content" class="span8" rows="20">{{content.content}}</textarea>
+              <p class="help-block">{% blocktrans %}You can use markdown for your content. For some help on using markdown, look <a href="http://daringfireball.net/projects/markdown/basics">here</a>{% endblocktrans %}</p>
             </div>
           </div>
           <div class="tab-pane" id="preview-tab-pane">
@@ -65,7 +66,14 @@
             <div id="content-preview-placeholder"></div>
           </div>
         </div>
-      </div>            
+      </div>
+      <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Update content!' %}"/>
+      {% if next_url %}
+        <a class="pull-right btn btn-danger" href="{{ next_url }}">{% trans 'Discard updates' %}</a>
+      {% else %}
+        <a class="pull-right btn btn-danger" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Discard updates' %}</a>
+      {% endif %}
+
     </form>
   </div>
 {% endblock %}
