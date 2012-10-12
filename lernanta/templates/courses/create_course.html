@@ -19,30 +19,41 @@
 {% endblock %}
 
 {% block body %}
-  <form action="" method="POST">
-    {% csrf_token %}
-    <p>
-      <label for="id_title">{% trans "Title:" %}</label>
-      {{form.title.errors}}
-      <input class="span6" type="text" name="title" id="id_title" placeholder="{% trans 'Ex. An introduction to webcraft' %}" value="{{form.title.value|default_if_none:""}}"/>
-      <span class="help-inline"></span>
-    </p>
-    <p>
-      <label for="id_short_title">{% trans "Short title:"%}</label> 
-      {{form.short_title.errors}}
-      <input class="span6" type="text" name="short_title" id="id_short_title" placeholder="{% trans 'Ex. webcraft101' %}" value="{{form.short_title.value|default_if_none:""}}"/>
-    </p>
-    <p>
-      <label for="id_plug">{% trans "Plug:" %} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "The plug is used in places where your course will be listed."%}">?</a></label> 
-      {{form.plug.errors}}
-      <textarea class="span6" id="id_plug" rows="10" cols="40" name="plug">{{form.plug.value|default_if_none:""}}</textarea>
-    </p>
-    <p>
-      <label for="id_language">Language:</label>
-      {{ form.language }}
-    </p>
-    <button class="btn btn-primary" type="submit">{% trans "Create my course!" %}</button>
-  </form>
+  <div class="row">
+    <div class="span7 offset1">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <p>
+          <label for="id_title">{% trans "Title:" %}</label>
+          {{form.title.errors}}
+          <input class="span6" type="text" name="title" id="id_title" placeholder="{% trans 'Ex. An introduction to webcraft' %}" value="{{form.title.value|default_if_none:""}}"/>
+          <span class="help-inline"></span>
+        </p>
+        <p>
+          <label for="id_short_title">{% trans "Short title:"%}</label> 
+          {{form.short_title.errors}}
+          <input class="span6" type="text" name="short_title" id="id_short_title" placeholder="{% trans 'Ex. webcraft101' %}" value="{{form.short_title.value|default_if_none:""}}"/>
+        </p>
+        <p>
+          <label for="id_plug">{% trans "Plug:" %} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "The plug is used in places where your course will be listed."%}">?</a></label> 
+          {{form.plug.errors}}
+          <textarea class="span6" id="id_plug" rows="10" cols="40" name="plug">{{form.plug.value|default_if_none:""}}</textarea>
+        </p>
+        <p>
+          <label for="id_language">Language:</label>
+          {{ form.language }}
+        </p>
+        <button class="btn btn-primary" type="submit">{% trans "Create my course!" %}</button>
+      </form>
+    </div>
+    <div class="span3">
+      {% blocktrans %}
+        <h2>Creating a new course!</h2>
+        <p>Creating a new course is really easy with P2PU. Once you've filled in this form, you will be able to create content for your course, update and finetune all the settings!</p>
+        <p>Like anything in life, it requires a bit of planning. We have some resources that you may find helpfull!</p>
+      {% endblocktrans %}
+    </div>
+  </div>
 {% endblock %}
 
 {% block js %}
