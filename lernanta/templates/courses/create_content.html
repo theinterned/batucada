@@ -32,29 +32,70 @@
   <div id="sidebar-wrapper" class="span3">
     {% include "courses/content_sidebar.html" %}
   </div>
- 
-  <div class="span9">
+
+  <div id="content-container" class="span9">
+    <h2>{{ content.title }}</h2>
     <form action="" method="POST">
       {% csrf_token %}
-      <div><input type="hidden" value="{{next_url}}" name="next_url"/></div>
-      <p><label for="id_title">Title</label>{{ form.title }}</p>
-      <p>{{form.content}}</p>
-      <button type="submit">{% trans 'Create content!' %}</button>
+      <input type="hidden" name="next_url" value="{{next_url}}"/>
+      <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Update content!' %}"/>
+      {% if next_url %}
+        <a class="pull-right btn btn-danger" href="{{ next_url }}">{% trans 'Discard updates' %}</a>
+      {% else %}
+        <a class="pull-right btn btn-danger" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Discard updates' %}</a>
+      {% endif %}
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#edit-tab-pane" data-toggle="tab">{% trans "Edit" %}</a></li>
+          <li><a id="preview-tab" href="#preview-tab-pane" data-toggle="tab">{% trans "Preview" %}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="edit-tab-pane">
+            <div id="content-editor" class="">
+                <p>
+                  <label for="id_title">{% trans "Title" %}</label>
+                  <input class="span8" type="text" id="id_title" name="title" value="{{content.title}}"/>
+                </p>
+                <div id="id_content-wmd-button-bar"></div>
+                <textarea id="id_content" name="content" class="span8" rows="25">{{content.content}}</textarea>
+            </div>
+          </div>
+          <div class="tab-pane" id="preview-tab-pane">
+            <div class="hidden" id="id_content-wmd-preview"></div>
+            <div id="content-preview-placeholder"></div>
+          </div>
+        </div>
+      </div>            
     </form>
   </div>
-
-</div>
 {% endblock %}
 
 {% block js %}
   <script src="{{ STATIC_URL }}pagedown/Markdown.Converter.js"></script>
   <script src="{{ STATIC_URL }}pagedown/Markdown.Sanitizer.js"></script>
   <script src="{{ STATIC_URL }}pagedown/Markdown.Editor.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.JQueryPlugin.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function(){
-      $("#id_content").daveDown();
+      var converter1 = Markdown.getSanitizingConverter();
+      var editor1 = new Markdown.Editor(converter1, "id_content");
+      editor1.run();
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#preview-tab').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        $("#content-preview-placeholder").load(
+            "{% locale_url courses_preview_content %}",
+            {
+                "content":$("#id_content").attr("value"),
+                "csrfmiddlewaretoken": "{{ csrf_token }}"
+            }
+        );
+      });
     });
   </script>
 {% endblock %}
