@@ -21,6 +21,7 @@ from courses.forms import CourseImageForm
 
 from content2 import models as content_model
 from content2.forms import ContentForm
+from content2 import utils
 
 from media import models as media_model
 
@@ -394,7 +395,6 @@ def preview_content( request ):
     from content2 import utils
     content = utils.clean_user_content(content)
     content = markdown.markdown(content, ['tables'])
-    #TODO add embeds
     # import bleach
     # content = bleach.linkify(content)
     content = render_to_string("courses/preview_content_snip.html", 

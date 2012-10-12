@@ -2,8 +2,8 @@ import bleach
 
 def clean_user_content(content):
     config = {
-        'tags': ['table', 'tr', 'th', 'td', 'tbody'],
-        'attributes': [],
+        'tags': ['table', 'tr', 'th', 'td', 'tbody', 'a'],
+        'attributes': {'a': ['href']},
         'styles': [],
         'strip': True
     }

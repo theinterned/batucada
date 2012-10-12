@@ -1,6 +1,6 @@
 import courses.models as course_model
 import content2.models as content_model
-import bleach
+from content2 import utils as content_utils
 
 def import_project(project, short_title):
     course = {}
@@ -26,7 +26,7 @@ def import_project(project, short_title):
     for page in project.pages.filter(deleted=False, listed=True).order_by('index'):
         content = {
             "title": page.title,
-            "content": bleach.clean(page.content, strip=True),
+            "content": content_utils.clean_user_content(page.content),
             "author_uri": "/uri/user/{0}".format(page.author.username),
         }
         content = content_model.create_content(**content)
