@@ -2,6 +2,7 @@
 {% load l10n_tags %}
 {% load i18n %}
 {% load learn_tags %}
+{% load embed %}
 
 {% block title %}[{{course.short_title}}] {{course.title}}{% endblock %}
 {% block bodyclasses %}course-landing{% endblock%}
@@ -68,27 +69,14 @@
         {% if about.content|length == 0 %}
           <p>{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
           </p>
+        {% else %}
+          <div>{{about.content|embed|safe}}</div>
         {% endif %}
-        <div id="id_content-wmd-preview"></div>
         <p>
         {% if organizer %}
-          <a data-toggle="collapse" data-target="#about-editor">
-            <i class="icon-edit"></i>
-          </a>
+          <a href="{% locale_url courses_content_edit course_id=course.id content_id=about.id %}?next_url={{course_url}}"><i class="icon-edit"></i></a>
         {% endif %}
         </p>
-        <div id="about-editor" class="collapse">
-          <form action="{% locale_url courses_content_edit course_id=course.id content_id=about.id %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" value="{{course_url}}" name="next_url"/>
-            <input type="hidden" value="About" name="title"/>
-            <div id="id_content-wmd-button-bar"></div>
-            <p>
-              <textarea id="id_content" name="content" class="span9" rows="25">{{about.content}}</textarea>
-            </p>
-            <input type="submit" value="{% trans 'Update about page!' %}"/>
-          </form>
-        </div>
       </div>
   
       <div class="tab-pane" id="content-tab-pane">
@@ -132,81 +120,9 @@
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        
-        <!--
-        {% for comment in comments %}
-          <div class="comment">
-            <a name="comment-{{comment.id}}"></a>
-            <p>{{comment.content}}</p>
-            {% if comment.replies|length > 0 %}
-              <a data-toggle="collapse" data-target="#comment-{{comment.id}}-replies">
-                {% blocktrans with reply_count=comment.replies|length %}{{reply_count}} replies{% endblocktrans %}
-              </a>
-              <div id="comment-{{comment.id}}-replies" class="collapse">
-                {% for reply in comment.replies %}
-                  <div class="reply">
-                    <a name="comment-{{reply.id}}"></a>
-                    <p>{{reply.content}}</p>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
-            <a data-toggle="collapse" data-target="#comment-{{comment.id}}-reply"><i class="icon-comment"></i>{% trans 'Reply to comment' %}</a>
-            <div id="comment-{{comment.id}}-reply" class="collapse">
-              <form action="{% locale_url courses_post_comment_reply course_id=course.id content_id=about.id comment_id=comment.id %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="next_url" value="{{course_url}}">
-                <p><textarea id="id_comment" name="comment" cols="40" rows="2"></textarea></p>
-                <input type="submit" value="{% trans "Post comment" %}"/>
-              </form>
-            </div>
-          </div>
-        {% endfor %}
-  
-        <div>
-          <h3>{% trans 'Post new comment' %}</h3>
-          <form action="{% locale_url courses_post_content_comment course_id=course.id content_id=about.id %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="next_url" value="{{course_url}}">
-            <p><textarea id="id_comment" name="comment" cols="40" rows="2"></textarea></p>
-            <input type="submit" value="{% trans "Post comment" %}"/>
-          </form>
-        </div>
-        -->
       </div>
   
       <div class="tab-pane" id="badges-tab-pane">
-        {% if submission_enabled_badges %}
-          <div class="bottom-sidebar">
-            {% for badge in submission_enabled_badges %}
-              {% if not forloop.first %}<hr class="badge-break">{% endif %}
-              <div class="badge">
-                {% with awards_count=badge.awards.count pending_count=badge.get_pending_submissions.count %}
-                  <div class="badge-top">
-                    <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img class="badge-graphic" src="{{ badge.get_image_url }}" width="80" height="80" alt="{{ badge|title }}"/></a>
-                    <div class="badge-awarded">
-                      <a class="badge-awarded-header" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ _('Awarded') }}</a>
-                      <a class="badge-awarded-number" href="{% locale_url awarded_matching_submissions slug=badge.slug %}">{{ awards_count }}</a>
-                    </div>
-                    <div class="badge-pending">
-                      <a class="badge-pending-header" href="{% locale_url matching_submissions slug=badge.slug %}">{{ _('Pending') }}</a>
-                      <a class="badge-pending-number" href="{% locale_url matching_submissions slug=badge.slug %}">{{ pending_count }}</a>
-                    </div>
-                  </div>
-                  <div class="badge-bottom">
-                    {% if pending_count %}
-                      <a href="{% locale_url matching_submissions slug=badge.slug %}">
-                        {% blocktrans count counter=pending_count %}{{ counter }} peer needs your review!{% plural %}{{ counter }} peers need your review!{% endblocktrans %} {{ _('Go') }} →
-                      </a>
-                    {% endif %}
-                  </div>
-                {% endwith %}
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
-  
-  
       </div>
  
       <div class="tab-pane" id="people-tab-pane">
@@ -247,26 +163,12 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $("#id_start_date").datepicker();
-
-    });
-  </script>
-
-  <script src="{{ STATIC_URL }}pagedown/Markdown.Converter.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.Sanitizer.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.Editor.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.JQueryPlugin.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      var converter1 = Markdown.getSanitizingConverter();
-      var editor1 = new Markdown.Editor(converter1, "id_content");
-      editor1.run();
     });
   </script>
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#discussion-tab').click(function (e) {
+      $('#discussion-tab').one("click", function (e) {
         e.preventDefault();
         $(this).tab('show');
         var disqus_shortname = 'p2pu';

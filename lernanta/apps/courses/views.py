@@ -3,6 +3,7 @@ import markdown
 
 from django import http
 from django.shortcuts import render_to_response, get_object_or_404
+from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_http_methods
@@ -107,9 +108,10 @@ def show_course( request, course_id, slug=None ):
         else:
             context['term_form'] = CourseTermForm()
     context['about'] = content_model.get_content(course['about_uri'])
-    #context['about']['content'] = markdown.markdown(
-    #    context['about']['content'], ['tables']
-    #)
+    #NOTE: maybe move this to a template tag like embed?
+    context['about']['content'] = markdown.markdown(
+        context['about']['content'], ['tables']
+    )
     context['comments'] = course_model.get_cohort_comments(
         cohort['uri'], course['about_uri']
     )
@@ -290,7 +292,10 @@ def show_content( request, course_id, content_id):
     }
     if 'image_uri' in course:
         context['course']['image'] = media_model.get_image(course['image_uri'])
-
+    
+    context['content']['content'] = markdown.markdown(
+        context['content']['content'], ['tables']
+    )
     context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
     context['organizer'] = course_model.is_cohort_organizer(
         user_uri, cohort['uri']
@@ -390,8 +395,10 @@ def preview_content( request ):
     content = utils.clean_user_content(content)
     content = markdown.markdown(content, ['tables'])
     #TODO add embeds
-    import bleach
-    content = bleach.linkify(content)
+    # import bleach
+    # content = bleach.linkify(content)
+    content = render_to_string("courses/preview_content_snip.html", 
+        {'content':content })
     return http.HttpResponse(content, mimetype="application/json")
 
 

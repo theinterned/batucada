@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load l10n_tags %}
+{% load embed %}
 
 {% block title %}{{content.title}}{% endblock %}
 {% block bodyclasses %}course-content{% endblock%}
@@ -39,25 +40,14 @@
         <div class="tab-pane active" id="content-tab-pane">
           <h1>{{ content.title }}</h1>
           <div>
-            <div id="id_content-wmd-preview"></div>
+            <div>{{content.content|embed|safe}}</div>
           </div>
           {% if can_edit %}
-          <a data-toggle="collapse" data-target="#content-editor">
+          <a href="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}">
             <i class="icon-edit"></i>
           </a>
           {% endif %}
-          <div id="content-editor" class="collapse">
-            <form action="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}" method="POST">
-              {% csrf_token %}
-              <p><label for="id_title">Title</label>{{ form.title }}</p>
-              <div id="id_content-wmd-button-bar"></div>
-              <p>
-                <textarea id="id_content" name="content" class="span9" rows="{{content.rows}}">{{content.content}}</textarea>
-              </p>
-              <input type="submit" value="{% trans 'Update content!' %}"/>
-            </form>
-          </div>
-        </div>
+       </div>
  
         <div class="tab-pane" id="discussion-tab-pane">
           <div id="disqus_thread"></div>
@@ -73,22 +63,9 @@
 {% endblock %}
 
 {% block js %}
-  <script src="{{ STATIC_URL }}pagedown/Markdown.Converter.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.Sanitizer.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.Editor.js"></script>
-  <script src="{{ STATIC_URL }}pagedown/Markdown.JQueryPlugin.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      var converter1 = Markdown.getSanitizingConverter();
-      var editor1 = new Markdown.Editor(converter1, "id_content");
-      editor1.run();
-    });
-  </script>
-
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#discussion-tab').click(function (e) {
+      $('#discussion-tab').one("click", function (e) {
         e.preventDefault();
         $(this).tab('show');
         var disqus_shortname = 'p2pu';
@@ -104,5 +81,4 @@
       });
     });
   </script>
-
 {% endblock %}
