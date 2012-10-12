@@ -52,109 +52,203 @@
 
 <div class="row">
 
-{% include "courses/course_sidebar.html" %}
+  <div id="sidebar-wrapper" class="span3">
+    {% include "courses/course_sidebar.html" %}
+  </div>
 
-<div id="main" class="span9">
-
-  <div class="tabbable">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#about-tab-pane" data-toggle="tab">{% trans 'About' %}</a></li>
-      <li><a href="#content-tab-pane" data-toggle="tab">{% trans 'Content' %}</a></li>
-      <li><a id="discussion-tab" href="#discussion-tab-pane" data-toggle="tab">{% trans 'Discussion' %}</a></li>
-      <li><a href="#badges-tab-pane" data-toggle="tab">{% trans 'Badges' %}</a></li>
-      <li><a href="#people-tab-pane" data-toggle="tab">{% trans 'People' %}</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="about-tab-pane">
-        {% if about.content|length == 0 %}
-          <p>{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
-          </p>
-        {% else %}
-          <div>{{about.content|embed|safe}}</div>
-        {% endif %}
-        <p>
+  <div id="main" class="span9">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#about-tab-pane" data-toggle="tab">{% trans 'About' %}</a></li>
+        <li><a id="discussion-tab" href="#discussion-tab-pane" data-toggle="tab">{% trans 'Discussion' %}</a></li>
+        <li><a href="#people-tab-pane" data-toggle="tab">{% trans 'People' %}</a></li>
+        <li><a href="#badges-tab-pane" data-toggle="tab">{% trans 'Badges' %}</a></li>
         {% if organizer %}
-          <a href="{% locale_url courses_content_edit course_id=course.id content_id=about.id %}?next_url={{course_url}}"><i class="icon-edit"></i></a>
+          <li><a href="#settings-tab-pane" data-toggle="tab">{% trans 'Settings' %}</a></li>
         {% endif %}
-        </p>
-      </div>
-  
-      <div class="tab-pane" id="content-tab-pane">
-        {% if course.content|length %}
-          <table class="table table-striped">
-            {% for task in course.content %}
-              <tr>
-                <td><a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a></td>
-                {% if organizer %}
-                    <td>{% if not forloop.first %}<a class="robttn up" href="{% locale_url courses_content_up course_id=course.id content_id=task.id %}"><i class="icon-arrow-up"></i></a>{% endif %}</td>
-                    <td>{% if not forloop.last %}<a class="robttn dwn" href="{% locale_url courses_content_down course_id=course.id content_id=task.id%}"><i class="icon-arrow-down"></i></a>{% endif %}</td>
-                {% endif %}
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="about-tab-pane">
+          {% if about.content|length == 0 %}
+            <p class="text-info">{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
+            </p>
+          {% else %}
+            <div>{{about.content|embed|safe}}</div>
+          {% endif %}
+          <p>
+          {% if organizer %}
+            <a href="{% locale_url courses_content_edit course_id=course.id content_id=about.id %}?next_url={{course_url}}"><i class="icon-edit"></i></a>
+          {% endif %}
+          </p>
+        </div>
+   
+        <div class="tab-pane" id="discussion-tab-pane">
+          <p class="text-info">{% blocktrans %}This page is for general discussion of the course. Feel free to post questions, comments, ideas.{% endblocktrans %}</p>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    
+        <div class="tab-pane" id="people-tab-pane">
+          <div id="learner-list" class="user-list">
+            <h3>{% trans "Learners" %}</h3>
+            <ul class="thumbnails">
+              {% for user in cohort.learners %}
+                {% include "courses/course_user_snip.html" %}
+              {% endfor %}
+            </ul>
+          </div>
+          <div id="learner-list" class="user-list">
+            <h3>{% trans "Organizers" %}</h3>
+            <ul class="thumbnails">
+            {% for user in cohort.organizers %}
+              {% include "courses/course_user_snip.html" %}           
+            {% endfor %}
+            </ul>
+          </div>
+          <p>
+              <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
+                  {% csrf_token %}
+                  <input type="text" name="username" />
+                  <button type="submit">{% trans "Add user" %}</button>
+              </form>
+          </p>
+        </div>
 
-                {% if organizer %}
-                  <td><form class="form-inline" action="{% locale_url courses_content_remove course_id=course.id content_id=task.id %}" method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn-mini btn-danger" type="submit">{% trans "remove" %}</button>
-                  </form></td>
-                <td><a href="{% locale_url courses_content_edit course_id=course.id content_id=task.id %}?next_url={{ course_url }}">
-                    <i class="icon-edit"></i>
-                </a></td>
-                {% endif %}
-              </tr>
-            {% endfor %}
-          </table>
-          {% if organizer %}
-            <a href="{% locale_url courses_create_content course_id=course.id %}?next_url={{ course_url }}">
-              <i class="icon-plus"></i>
-            </a>
-          {% endif %}
-        {% else %}
-          {% if organizer %}
-            <p>{% blocktrans %}No content have been added. {% endblocktrans %}<a href="{% locale_url courses_create_content course_id=course.id%}">Click here</a> to add some content</p>
-          {% endif %}
-        {% endif %}
-      </div>
-  
-      <div class="tab-pane" id="discussion-tab-pane">
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      </div>
-  
-      <div class="tab-pane" id="badges-tab-pane">
-      </div>
- 
-      <div class="tab-pane" id="people-tab-pane">
-        <div id="learner-list" class="user-list">
-          <h3>{% trans "Learners" %}</h3>
-          <ul class="thumbnails">
-            {% for user in cohort.learners %}
-              {% include "courses/course_user_snip.html" %}
-            {% endfor %}
-          </ul>
+        <div class="tab-pane" id="badges-tab-pane">
+          <p>{% blocktrans %}Woah ... hold on amigo. Badges, coming soon.{% endblocktrans%}</p>
         </div>
-        <div id="learner-list" class="user-list">
-          <h3>{% trans "Organizers" %}</h3>
-          <ul class="thumbnails">
-          {% for user in cohort.organizers %}
-            {% include "courses/course_user_snip.html" %}           
-          {% endfor %}
-          </ul>
-        </div>
-        <p>
-            <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
+
+        {% if organizer %}
+          <div class="tab-pane" id="settings-tab-pane">
+            <p>
+              <a data-toggle="collapse" data-target="#image-edit">
+                {% trans 'Change image' %}
+              </a>
+            </p>
+            <div id="image-edit" class="collapse">
+              <form action="{% locale_url courses_image course_id=course.id %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="text" name="username" />
-                <button type="submit">{% trans "Add user" %}</button>
-            </form>
-        </p>
+                <p>{{image_form.image}}</p>
+                <p><button type="submit" >{% trans 'Upload new image' %}</button></p>
+              </form>
+            </div>
+         
+            <a data-toggle="collapse" data-target="#plug-edit">{% trans "edit" %}</a>
+            <div id="plug-edit" class="collapse">
+              <form action="{% locale_url courses_update_attribute course_id=course.id attribute='plug' %}" method="POST">
+                {% csrf_token %}
+                {{ update_form.plug }}
+                <p><button type="submit">{% trans "Update plug" %}</button></p>
+              </form>
+            </div>
+            <hr/>
+            <div>
+              {% if course.draft %} 
+                <p>{% trans "This course is still a draft" %}</p>
+                <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
+                  {% csrf_token %}
+                  <p><button type="submit">{% trans "Publish" %}</button></p>
+                </form>
+              {% endif %}
+              {% if not course.draft and not course.archived %}
+                <p>{% trans "Published" %}</p>
+                <form action="{% locale_url courses_change_status course_id=course.id status='draft' %}" method="POST">
+                  {% csrf_token %}
+                  <p><button type="submit">{% trans "Switch back to draft" %}</button></p>
+                </form>
+                <form action="{% locale_url courses_change_status course_id=course.id status='archive' %}" method="POST">
+                  {% csrf_token %}
+                  <p><button type="submit">{% trans "Archive" %}</button></p>
+                </form>
+              {% endif %}
+              {% if course.archived %}
+                <p>{% trans "Archived" %}</p>
+                <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
+                    {% csrf_token %}
+                    <p><button type="submit">{% trans "Resurrect" %}</button></p>
+                </form>
+              {% endif %}
+            </div>
+            <hr/>
+            <div id="course-term">
+              {% if cohort.term == 'ROLLING' %}
+                <p>{%trans "Users can join this course at any time."%}</p>
+              {% else %}
+                {% blocktrans with start_date=cohort.start_date end_date=cohort.end_date %}
+                  <p>This course runs from {{ start_date }} to {{end_date}}.</p>
+                {% endblocktrans %}
+              {% endif %}
+         
+              <p><a data-toggle="collapse" data-target="#term-edit">{% trans 'edit' %}</a></p>
+              <div id="term-edit" class="collapse">
+                {%trans "Switch to fixed term and set dates"%}
+                <form action="{% locale_url courses_change_term course_id=course.id term='fixed' %}" method="POST">
+                  {% csrf_token %}
+                  <p><label for="id_start_date">{% trans 'Start:' %}</label>{{term_form.start_date}}</p>
+                  <p><label for="id_end_date">{% trans 'End:' %}</label>{{term_form.end_date}}</p>
+                  <p><input type="submit" value="{% trans "Update fixed term" %}"/></p>
+                </form>
+                {% if cohort.term == 'FIXED' %}
+                  <form action="{% locale_url courses_change_term course_id=course.id term='rolling' %}" method="POST">
+                    {% csrf_token %}
+                    <p><input type="submit" value="{% trans "Switch to rolling term" %}"/></p>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+            <hr/>
+            <div>
+              {% if cohort.signup == 'OPEN' %}
+                <p>{% trans 'Singup is open to anyone.' %}</p>
+              {% endif %}
+              {% if cohort.signup == 'MODERATED' %}
+                <p>{% trans 'Singup is moderated. To sign up for this course you should contact one of the course organizer.' %}</p>
+              {% endif %}
+              {% if cohort.signup == 'CLOSED' %}
+                <p>{% trans 'Singup is closed. Only organizers can add more people.' %}</p>
+              {% endif %}
+              <p><a data-toggle="collapse" data-target="#signup-edit">{% trans "change" %}</a></p>
+              <div id="signup-edit" class="collapse">
+                {% if cohort.signup != 'OPEN' %}
+                  <form action="{% locale_url courses_change_signup course_id=course.id signup='open'%}" method="POST">
+                    {% csrf_token %}
+                    <p><button type="submit">{% trans 'Change to Open' %}</button></p>
+                  </form>
+                {% endif %}
+                {% if cohort.signup != 'MODERATED' %}
+                  <form action="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}" method="POST">
+                    {% csrf_token %}
+                    <p><button type="submit">{% trans 'Change to Moderated' %}</button></p>
+                  </form>
+                {% endif %}
+                {% if cohort.signup != 'CLOSED' %}
+                  <form action="{% locale_url courses_change_signup course_id=course.id signup='closed'%}" method="POST">
+                    {% csrf_token %}
+                    <p><button type="submit">{% trans 'Change to Closed' %}</button></p>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+            <hr/>
+            <div id="course-language">
+              <a data-toggle="collapse" data-target="#language-edit">Change language of course</a>
+              <div id="language-edit" class="collapse">
+                <form action="{% locale_url courses_update_attribute course_id=course.id attribute='language' %}" method="POST">
+                  {% csrf_token %}
+                  {{ update_form.language }}
+                  <p><button type="submit">{% trans "Update language" %}</button></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+   
       </div>
-
-    </div>
-  </div> <!-- /#tabbable -->
-</div> <!-- /#main -->
-
+    </div> <!-- /#tabbable -->
+  </div> <!-- /#main -->
 </div> <!-- /#row -->
 
 {% endblock %}

@@ -27,18 +27,17 @@
 {% block body %}
 <div class="row">
   <div id="sidebar-wrapper" class="span3">
-    {% include "courses/content_sidebar.html" %}
+    {% include "courses/course_sidebar.html" %}
   </div>
  
   <div id="content-container" class="span9">
+    <a class="pull-right" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans "back to course home" %}</a>
     <div class="tabbable">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#content-tab-pane" data-toggle="tab">{% trans "Content" %}</a></li>
-        <li><a id="discussion-tab" href="#discussion-tab-pane" data-toggle="tab">{% trans "Discussion" %}</a></li>
+        <li class="active"><a href="#content-tab-pane" data-toggle="tab">{{ content.title }}</a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="content-tab-pane">
-          <h1>{{ content.title }}</h1>
           <div>
             <div>{{content.content|embed|safe}}</div>
           </div>
@@ -47,17 +46,19 @@
             <i class="icon-edit"></i>
           </a>
           {% endif %}
+          
+
        </div>
- 
-        <div class="tab-pane" id="discussion-tab-pane">
-          <div id="disqus_thread"></div>
-          <script type="text/javascript">
-          </script>
-          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        </div>
       </div>
     </div>
+
+    <h2>{% trans "Comments" %}</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
   </div>
 </div>
 {% endblock %}
@@ -65,9 +66,6 @@
 {% block js %}
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#discussion-tab').one("click", function (e) {
-        e.preventDefault();
-        $(this).tab('show');
         var disqus_shortname = 'p2pu';
         var disqus_developer = 1;
         var disqus_identifier = "{{course.id}}";
@@ -78,7 +76,6 @@
           dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
-      });
     });
   </script>
 {% endblock %}
