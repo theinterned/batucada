@@ -15,17 +15,17 @@
     </a>
   </figure>
 
- <div>
-      {% if course.content|length %}
-        <ul class="nav nav-list">
-          <li class="nav-header">Course content</li>
-          {% for task in course.content %}
-              <li class="{% if task.id = content.id %}active{% endif %}">
-              <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
+  <div>
+    {% if course.content|length %}
+      <ul class="nav nav-list">
+        <li class="nav-header">{% trans "Course content" %}</li>
+        {% for task in course.content %}
+          <li class="{% if task.id = content.id %}active{% endif %}">
+            <a class="taskLink" href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
   </div>
 </div>
 
