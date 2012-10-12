@@ -201,3 +201,10 @@ figure {
     height: 40px;
 }
 
+#sidebar-content-list li:nth-child(2n+1){
+    background-color: #FFFFFF;
+}
+
+#sidebar-content-list li {
+    margin-bottom: 0.5em;
+}
