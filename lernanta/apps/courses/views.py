@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.utils.translation import get_language
 from django.views.decorators.http import require_http_methods
 
 from l10n.urlresolvers import reverse
@@ -49,7 +50,7 @@ def create_course( request ):
             )
             return http.HttpResponseRedirect(redirect_url)
     else:
-        form = CourseCreationForm()
+        form = CourseCreationForm(initial={'language': get_language()})
 
     context = { 'form': form }
     return render_to_response('courses/create_course.html', 
@@ -264,7 +265,7 @@ def course_change_term( request, course_id, term ):
             messages.error( request, _("Could not update fixed term dates"))
     elif term == 'rolling':
         cohort = course_model.update_cohort(cohort['uri'], term=term.upper())
-    return course_slug_redirect( request, course_id)
+    return course_slug_redirect(request, course_id)
 
 
 @login_required
