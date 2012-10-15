@@ -28,7 +28,7 @@ urlpatterns = patterns('',
         'courses.views.course_change_status',
         name='courses_change_status'),
 
-    url(r'^(?P<course_id>[\d]+)/change_signup/(?P<signup>open|moderated|closed)/$',
+    url(r'^(?P<course_id>[\d]+)/change_signup/$',
         'courses.views.course_change_signup',
         name='courses_change_signup'),
 

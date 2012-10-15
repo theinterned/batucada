@@ -19,6 +19,7 @@ from courses.forms import CourseCreationForm
 from courses.forms import CourseUpdateForm
 from courses.forms import CourseTermForm
 from courses.forms import CourseImageForm
+from courses.forms import CohortSignupForm
 
 from content2 import models as content_model
 from content2.forms import ContentForm
@@ -109,6 +110,7 @@ def show_course( request, course_id, slug=None ):
             context['term_form'] = CourseTermForm(cohort)
         else:
             context['term_form'] = CourseTermForm()
+        context['signup_form'] = CohortSignupForm(initial={'signup':cohort['signup']})
     context['about'] = content_model.get_content(course['about_uri'])
     #NOTE: maybe move this to a template tag like embed?
     context['about']['content'] = markdown.markdown(
@@ -238,13 +240,19 @@ def course_change_status( request, course_id, status ):
 
 @login_required
 @require_http_methods(['POST'])
-def course_change_signup( request, course_id, signup ):
+def course_change_signup( request, course_id ):
     # TODO check organizer
-    cohort = course_model.get_course_cohort( course_id )
-    cohort = course_model.update_cohort(cohort['uri'], signup.upper())
-    if not cohort:
-        messages.error( request, _("Could not change cohort signup"))
-    return course_slug_redirect( request, course_id )
+
+    form = CohortSignupForm(request.POST)
+    if form.is_valid():
+        signup = form.cleaned_data['signup']
+        cohort = course_model.get_course_cohort( course_id )
+        cohort = course_model.update_cohort(cohort['uri'], signup=signup.upper())
+        if not cohort:
+            messages.error( request, _("Could not change cohort signup"))
+    else:
+        request.messages.error(request, _("Invalid choice for signup"))
+    return course_slug_redirect(request, course_id)
 
 
 @login_required
@@ -376,7 +384,7 @@ def edit_content( request, course_id, content_id ):
                 )
             return http.HttpResponseRedirect(redirect_url)
     else:
-        form = ContentForm(content)
+        form = ContentForm(initial=content)
 
     context = {
         'form': form,

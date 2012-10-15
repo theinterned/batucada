@@ -20,21 +20,11 @@
 
 {% block breadcrumbs_title %}
   <h1 id="project-name">
-    [{{course.hashtag}}{% if organizer %}
-      <a data-toggle="collapse" data-target="#short-title-edit" href="#"><i class="icon-edit"></i></a>
-    {% endif %}] 
     {{course.title}}
     {% if organizer %}
       <a data-toggle="collapse" data-target="#title-edit" href="#"><i class="icon-edit"></i></a>
     {% endif %}
   </h1>
-  <div id="short-title-edit" class="collapse">
-    <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='hashtag' %}" method="POST">
-      {% csrf_token %}
-      <p>{{ update_form.hashtag }}</p>
-      <button type="submit">{% trans "Save" %}</button>
-    </form>
-  </div>
   <div id="title-edit" class="collapse">
     <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='title' %}" method="POST">
       {% csrf_token %}
@@ -123,6 +113,21 @@
 
         {% if organizer %}
           <div class="tab-pane" id="settings-tab-pane">
+            <h2>{% trans "Hashtag" %}</h2>
+            <p>{{course.hashtag}}</p>
+            <p>
+              <a data-toggle="collapse" data-target="#hashtag-edit" href="#">{% trans "Edit" %}</a>
+            </p>
+            <div id="hashtag-edit" class="collapse">
+              <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='hashtag' %}" method="POST">
+                {% csrf_token %}
+                <p>{{ update_form.hashtag }}</p>
+                <button type="submit">{% trans "Save" %}</button>
+              </form>
+            </div>
+
+            <hr/>
+
             <p>
               <a data-toggle="collapse" data-target="#image-edit">
                 {% trans 'Change image' %}
@@ -136,6 +141,8 @@
               </form>
             </div>
          
+            <hr>
+            <h2>{% trans "Description" %}</h2>
             <a data-toggle="collapse" data-target="#description-edit">{% trans "edit" %}</a>
             <div id="description-edit" class="collapse">
               <form action="{% locale_url courses_update_attribute course_id=course.id attribute='description' %}" method="POST">
@@ -210,34 +217,22 @@
               {% if cohort.signup == 'CLOSED' %}
                 <p>{% trans 'Singup is closed. Only organizers can add more people.' %}</p>
               {% endif %}
+              
               <p><a data-toggle="collapse" data-target="#signup-edit">{% trans "change" %}</a></p>
               <div id="signup-edit" class="collapse">
-                {% if cohort.signup != 'OPEN' %}
-                  <form action="{% locale_url courses_change_signup course_id=course.id signup='open'%}" method="POST">
-                    {% csrf_token %}
-                    <p><button type="submit">{% trans 'Change to Open' %}</button></p>
-                  </form>
-                {% endif %}
-                {% if cohort.signup != 'MODERATED' %}
-                  <form action="{% locale_url courses_change_signup course_id=course.id signup='moderated'%}" method="POST">
-                    {% csrf_token %}
-                    <p><button type="submit">{% trans 'Change to Moderated' %}</button></p>
-                  </form>
-                {% endif %}
-                {% if cohort.signup != 'CLOSED' %}
-                  <form action="{% locale_url courses_change_signup course_id=course.id signup='closed'%}" method="POST">
-                    {% csrf_token %}
-                    <p><button type="submit">{% trans 'Change to Closed' %}</button></p>
-                  </form>
-                {% endif %}
+                <form action="{% locale_url courses_change_signup course_id=course.id %}" method="POST">
+                  {% csrf_token %}
+                  {{ signup_form.signup }}
+                  <button type="submit">{% trans "Save" %}</button>
+                </form>
               </div>
             </div>
             <hr/>
             <div id="course-language">
-              <a data-toggle="collapse" data-target="#language-edit">Change language of course</a>
-              <div id="language-edit" class="collapse">
+              <div id="language-edit">
                 <form action="{% locale_url courses_update_attribute course_id=course.id attribute='language' %}" method="POST">
                   {% csrf_token %}
+                  <label for="id_language">{% trans "Course languge" %}</label>
                   {{ update_form.language }}
                   <p><button type="submit">{% trans "Update language" %}</button></p>
                 </form>

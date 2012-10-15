@@ -1,5 +1,7 @@
 from django import forms
 from django.conf import settings
+from django.utils.translation import ugettext as _
+from django.forms.widgets import RadioSelect
 
 class CourseCreationForm(forms.Form):
     title = forms.CharField()
@@ -22,3 +24,13 @@ class CourseImageForm(forms.Form):
 class CourseTermForm(forms.Form):
     start_date = forms.DateField()
     end_date = forms.DateField()
+
+
+SIGNUP_CHOICES = [
+    ("OPEN", _("Open"),), 
+    ("MODERATED", _("Moderated"),),
+    ("CLOSED", _("Closed"),)
+]
+
+class CohortSignupForm(forms.Form):
+    signup = forms.ChoiceField(choices=SIGNUP_CHOICES, widget=RadioSelect)
