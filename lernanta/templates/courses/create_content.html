@@ -15,7 +15,7 @@
 
 {% block breadcrumbs_title %}
   <h1 id="project-name">
-    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">[{{course.short_title}}] {{course.title}}</a></h1>
+    <a href="{% locale_url courses_show course_id=course.id slug=course.slug%}">{{course.title}}</a></h1>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -30,51 +30,11 @@
 
 <div class="row">
   <div id="sidebar-wrapper" class="span3">
-    {% include "courses/content_sidebar.html" %}
+    {% include "courses/course_sidebar.html" %}
   </div>
 
   <div id="content-container" class="span9">
-    <h2>{{ content.title }}</h2>
-    <form action="" method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="next_url" value="{{next_url}}"/>
-      <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Update content!' %}"/>
-      {% if next_url %}
-        <a class="pull-right btn btn-danger" href="{{ next_url }}">{% trans 'Discard updates' %}</a>
-      {% else %}
-        <a class="pull-right btn btn-danger" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Discard updates' %}</a>
-      {% endif %}
-      <div class="tabbable">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#edit-tab-pane" data-toggle="tab">{% trans "Edit" %}</a></li>
-          <li><a id="preview-tab" href="#preview-tab-pane" data-toggle="tab">{% trans "Preview" %}</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="edit-tab-pane">
-            <div id="content-editor" class="">
-                <p>
-                  <label for="id_title">{% trans "Title" %}</label>
-                  <input class="span8" type="text" id="id_title" name="title" value="{{content.title}}"/>
-                </p>
-                <div id="id_content-wmd-button-bar"></div>
-                <textarea id="id_content" name="content" class="span8" rows="20">{{content.content}}</textarea>
-              <p class="help-block">{% blocktrans %}You can use markdown for your content. For some help on using markdown, look <a href="http://daringfireball.net/projects/markdown/basics">here</a>{% endblocktrans %}</p>
-            </div>
-          </div>
-          <div class="tab-pane" id="preview-tab-pane">
-            <div class="hidden" id="id_content-wmd-preview"></div>
-            <div id="content-preview-placeholder"></div>
-          </div>
-        </div>
-      </div>
-      <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Update content!' %}"/>
-      {% if next_url %}
-        <a class="pull-right btn btn-danger" href="{{ next_url }}">{% trans 'Discard updates' %}</a>
-      {% else %}
-        <a class="pull-right btn btn-danger" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Discard updates' %}</a>
-      {% endif %}
-
-    </form>
+    {% include "courses/content_form_snip.html" %}
   </div>
 {% endblock %}
 

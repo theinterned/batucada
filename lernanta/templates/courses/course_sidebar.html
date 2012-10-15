@@ -82,15 +82,15 @@
         {% endif %}
       {% else %}
         {% if organizer %}
-          <p class="text-info">{% blocktrans %}No content has been added. {% endblocktrans %}<a href="{% locale_url courses_create_content course_id=course.id%}">Click here</a> to add some content</p>
+          <p class="text-info">{% blocktrans %}This course doesn't have any content yet. {% endblocktrans %}<a href="{% locale_url courses_create_content course_id=course.id%}">Click here</a> to add some.</p>
         {% endif %}
       {% endif %}
     </div>
 
     <hr/>
     <div id="course-description">
-      <h2>{% trans "description" %}</h2>
-      <p>{{ course.plug }}</p>
+      <h2>{% trans "Description" %}</h2>
+      <p>{{ course.description }}</p>
     </div>
     {% if tags %}
       <h3><b>{{ _('Tags') }}</b></h3>
