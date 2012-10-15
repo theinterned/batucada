@@ -14,8 +14,8 @@ class CourseTests(TestCase):
     test_password = 'testpass'
 
     test_title = "A test course"
-    test_short_title = "Short title"
-    test_plug = "Test plug"
+    test_hashtag = "hashtag"
+    test_description = "This is only a test."
 
     def setUp(self):
         self.client = Client()
@@ -23,8 +23,8 @@ class CourseTests(TestCase):
         self.course = course_model.create_course(
             **{
                 "title": self.test_title,
-                "short_title": self.test_short_title,
-                "plug": self.test_plug,
+                "hashtag": self.test_hashtag,
+                "description": self.test_description,
                 "language": "en",
                 "organizer_uri": '/uri/users/testuser',
             }
@@ -41,8 +41,8 @@ class CourseTests(TestCase):
         course = course_model.create_course(
             **{
                 "title": "A test course",
-                "short_title": "ATC 1",
-                "plug": "This course is all about ABC",
+                "hashtag": "ATC-1",
+                "description": "This course is all about ABC",
                 "language": "en",
                 "organizer_uri": '/uri/user/testuser'
             }
@@ -71,10 +71,10 @@ class CourseTests(TestCase):
         self.assertTrue('id' in course)
         self.assertTrue('uri' in course)
         self.assertTrue('title' in course)
-        self.assertTrue('short_title' in course)
+        self.assertTrue('hashtag' in course)
         self.assertTrue('about_uri' in course)
         self.assertTrue('slug' in course)
-        self.assertTrue('plug' in course)
+        self.assertTrue('description' in course)
         self.assertTrue('language' in course)
         self.assertTrue('draft' in course)
         self.assertTrue('archived' in course)

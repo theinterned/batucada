@@ -41,9 +41,9 @@ def get_course(course_uri):
         "id": course_db.id,
         "uri": "/uri/course/{0}".format(course_db.id),
         "title": course_db.title,
-        "short_title": course_db.short_title,
+        "hashtag": course_db.short_title,
         "slug": slugify(course_db.title),
-        "plug": course_db.plug,
+        "description": course_db.plug,
         "language": course_db.language,
     }
     course["draft"] = course_db.draft
@@ -63,27 +63,28 @@ def get_course(course_uri):
     return course
 
 
-def get_courses(title=None, short_title=None, language=None, organizer_uri=None, draft=None, archived=None):
+def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, draft=None, archived=None):
     results = db.Course.objects
     #NOTE: could also take **kwargs and do results.filter(**kwargs)
     filters = {}
     if title:
         filters['title'] = title
-    if short_title:
-        filters['short_title'] = short_title
+    if hashtag:
+        filters['short_title'] = hashtag
     if language:
         filters['language'] = language
     if organizer_uri:
         filters['organizer_uri'] = organizer_uri
+    #TODO draft and archived
     results = results.filter(**filters)
     return [ get_course(course_id2uri(course_db.id)) for course_db in results ]
 
 
-def create_course(title, short_title, plug, language, organizer_uri):
+def create_course(title, hashtag, description, language, organizer_uri):
     course_db = db.Course(
         title=title,
-        short_title=short_title,
-        plug=plug,
+        short_title=hashtag,
+        plug=description,
         language=language
     )
 
@@ -102,17 +103,17 @@ def create_course(title, short_title, plug, language, organizer_uri):
     return course
 
 
-def update_course(course_uri, title=None, short_title=None, plug=None, language=None, image_uri=None):
+def update_course(course_uri, title=None, hashtag=None, description=None, language=None, image_uri=None):
     # TODO
     course_db = _get_course_db(course_uri)
     if not course_db:
         return None
     if title:
         course_db.title = title
-    if short_title:
-        course_db.short_title = short_title
-    if plug:
-        course_db.plug = plug
+    if hashtag:
+        course_db.short_title = hashtag
+    if description:
+        course_db.plug = description
     if language:
         course_db.language = language
     if image_uri:

@@ -20,7 +20,7 @@
 
 {% block breadcrumbs_title %}
   <h1 id="project-name">
-    [{{course.short_title}}{% if organizer %}
+    [{{course.hashtag}}{% if organizer %}
       <a data-toggle="collapse" data-target="#short-title-edit" href="#"><i class="icon-edit"></i></a>
     {% endif %}] 
     {{course.title}}
@@ -29,17 +29,17 @@
     {% endif %}
   </h1>
   <div id="short-title-edit" class="collapse">
-    <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='short_title' %}" method="POST">
+    <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='hashtag' %}" method="POST">
       {% csrf_token %}
-      <p>{{ update_form.short_title }}</p>
-      <button type="submit">{% trans "Update short title" %}</button>
+      <p>{{ update_form.hashtag }}</p>
+      <button type="submit">{% trans "Save" %}</button>
     </form>
   </div>
   <div id="title-edit" class="collapse">
     <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='title' %}" method="POST">
       {% csrf_token %}
       <p>{{ update_form.title }}</p>
-      <button type="submit">{% trans "Update title" %}</button>
+      <button type="submit">{% trans "Save" %}</button>
     </form>
   </div>
 {% endblock %}
@@ -70,7 +70,7 @@
       <div class="tab-content">
         <div class="tab-pane active" id="about-tab-pane">
           {% if about.content|length == 0 %}
-            <p class="text-info">{% blocktrans %}There is no description what this course is about. You can add a description by editing this page.</a>{% endblocktrans %}
+            <p class="text-info">{% blocktrans %}You can add some information to this tab by editing this page!</a>{% endblocktrans %}
             </p>
           {% else %}
             <div>{{about.content|embed|safe}}</div>
@@ -136,12 +136,12 @@
               </form>
             </div>
          
-            <a data-toggle="collapse" data-target="#plug-edit">{% trans "edit" %}</a>
-            <div id="plug-edit" class="collapse">
-              <form action="{% locale_url courses_update_attribute course_id=course.id attribute='plug' %}" method="POST">
+            <a data-toggle="collapse" data-target="#description-edit">{% trans "edit" %}</a>
+            <div id="description-edit" class="collapse">
+              <form action="{% locale_url courses_update_attribute course_id=course.id attribute='description' %}" method="POST">
                 {% csrf_token %}
-                {{ update_form.plug }}
-                <p><button type="submit">{% trans "Update plug" %}</button></p>
+                {{ update_form.description }}
+                <p><button type="submit">{% trans "Update description" %}</button></p>
               </form>
             </div>
             <hr/>

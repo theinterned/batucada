@@ -39,8 +39,8 @@ def create_course( request ):
             user_uri = "/uri/user/{0}".format(user.username)
             course = {
                 'title': form.cleaned_data.get('title'),
-                'short_title': form.cleaned_data.get('short_title'),
-                'plug': form.cleaned_data.get('plug'),
+                'hashtag': form.cleaned_data.get('hashtag'),
+                'description': form.cleaned_data.get('description'),
                 'language': form.cleaned_data.get('language'),
                 'organizer_uri': user_uri
             }

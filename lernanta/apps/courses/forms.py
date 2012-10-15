@@ -3,15 +3,15 @@ from django.conf import settings
 
 class CourseCreationForm(forms.Form):
     title = forms.CharField()
-    short_title = forms.CharField()
-    plug = forms.CharField(widget=forms.Textarea)
+    hashtag = forms.CharField(max_length=20)
+    description = forms.CharField(widget=forms.Textarea)
     language = forms.ChoiceField(choices=settings.LANGUAGES)
 
 
 class CourseUpdateForm(forms.Form):
     title = forms.CharField(required=False)
-    short_title = forms.CharField(required=False)
-    plug = forms.CharField(widget=forms.Textarea, required=False)
+    hashtag = forms.CharField(required=False, max_length=20)
+    description = forms.CharField(widget=forms.Textarea, required=False)
     language = forms.ChoiceField(choices=settings.LANGUAGES, required=False)
 
 

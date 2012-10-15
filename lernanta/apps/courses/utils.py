@@ -2,11 +2,11 @@ import courses.models as course_model
 import content2.models as content_model
 from content2 import utils as content_utils
 
-def import_project(project, short_title):
+def import_project(project, hashtag):
     course = {}
     course['title'] = project.name
-    course['short_title'] = short_title
-    course['plug'] = project.short_description
+    course['hashtag'] = hashtag
+    course['description'] = project.short_description
     course['language'] = project.language
     user_uri = "/uri/user/{0}".format(project.participations.filter(organizing=True).order_by('joined_on')[0].user.username)
     course['organizer_uri'] = user_uri
