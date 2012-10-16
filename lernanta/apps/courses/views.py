@@ -20,6 +20,7 @@ from courses.forms import CourseUpdateForm
 from courses.forms import CourseTermForm
 from courses.forms import CourseImageForm
 from courses.forms import CohortSignupForm
+from courses.decorators import require_organizer
 
 from content2 import models as content_model
 from content2.forms import ContentForm
@@ -120,7 +121,7 @@ def show_course( request, course_id, slug=None ):
         context['update_form'] = CourseUpdateForm(course)
         context['image_form'] = CourseImageForm()
         if context['cohort']['term'] == 'FIXED':
-            context['term_form'] = CourseTermForm(cohort)
+            context['term_form'] = CourseTermForm(context['cohort'])
         else:
             context['term_form'] = CourseTermForm()
         context['signup_form'] = CohortSignupForm(
@@ -144,10 +145,10 @@ def show_course( request, course_id, slug=None ):
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_image( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
     user_uri = "/uri/user/{0}".format(request.user.username)
-    #TODO check organizer
     image_form = CourseImageForm(request.POST, request.FILES)
     if image_form.is_valid():
         image_file = request.FILES['image']
@@ -215,6 +216,7 @@ def course_leave( request, course_id, username ):
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_add_organizer( request, course_id, username ):
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
@@ -234,11 +236,11 @@ def course_add_organizer( request, course_id, username ):
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_change_status( request, course_id, status ):
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
     course_uri = course_model.course_id2uri(course_id)
-    # TODO check organizer
     if status == 'draft':
         #TODO
         pass
@@ -251,9 +253,8 @@ def course_change_status( request, course_id, status ):
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_change_signup( request, course_id ):
-    # TODO check organizer
-
     form = CohortSignupForm(request.POST)
     if form.is_valid():
         signup = form.cleaned_data['signup']
@@ -268,8 +269,8 @@ def course_change_signup( request, course_id ):
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_change_term( request, course_id, term ):
-    #TODO check organizer
     cohort = course_model.get_course_cohort( course_id )
     if term == 'fixed':
         form = CourseTermForm(request.POST)
@@ -289,8 +290,8 @@ def course_change_term( request, course_id, term ):
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_update_attribute( request, course_id, attribute):
-    # TODO check organizer
     course_uri = course_model.course_id2uri(course_id)
     form = CourseUpdateForm(request.POST)
     if form.is_valid():
@@ -324,6 +325,7 @@ def show_content( request, course_id, content_id):
 
 
 @login_required
+@require_organizer
 def create_content( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
     course = course_model.get_course(course_uri)
@@ -360,12 +362,11 @@ def create_content( request, course_id ):
 
 
 @login_required
+@require_organizer
 def edit_content( request, course_id, content_id ):
     course_uri = course_model.course_id2uri(course_id)
     course = course_model.get_course(course_uri)
     content = content_model.get_content("/uri/content/{0}".format(content_id))
-
-    #TODO Check users permission
 
     if request.method == "POST":
         form = ContentForm(request.POST)
@@ -417,8 +418,8 @@ def preview_content( request ):
 
 
 @login_required
+@require_organizer
 def remove_content( request, course_id, content_id ):
-    #TODO check organizer
     course_uri = course_model.course_id2uri(course_id)
     content_uri = "/uri/content/{0}".format(content_id)
     course_model.remove_course_content(course_uri, content_uri)
@@ -426,8 +427,8 @@ def remove_content( request, course_id, content_id ):
 
 
 @login_required
+@require_organizer
 def move_content_up( request, course_id, content_id ):
-    #TODO check admin
     result = course_model.reorder_course_content(
         "/uri/content/{0}".format(content_id), "UP"
     )
@@ -437,8 +438,8 @@ def move_content_up( request, course_id, content_id ):
 
 
 @login_required
+@require_organizer
 def move_content_down( request, course_id, content_id ):
-    #TODO check admin
     result = course_model.reorder_course_content(
         "/uri/content/{0}".format(content_id), "DOWN"
     )
