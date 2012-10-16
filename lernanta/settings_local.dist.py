@@ -156,7 +156,7 @@ PAGINATION_DEFAULT_ITEMS_PER_PAGE = 20
 # Used for open badges integration.
 MOZBADGES = {
     # location of badge hub. Currently this is the only public one
-    'hub': 'http://beta.openbadges.org',
+    'hub': 'https://beta.openbadges.org',
 
     # method for getting badges for a user. Called with user object.
     'badge_getter': 'badges.models.get_awarded_badges',
