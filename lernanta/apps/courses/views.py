@@ -31,6 +31,29 @@ from replies import models as comment_model
 
 log = logging.getLogger(__name__)
 
+
+def _populate_course_context( request, course_id, context ):
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
+    context['course'] = course
+    context['course_url'] = request.get_full_path()
+    if 'image_uri' in course:
+        context['course']['image'] = media_model.get_image(course['image_uri'])
+    cohort = course_model.get_course_cohort(course_uri)
+    context['cohort'] = cohort
+    user_uri = "/uri/user/{0}".format(request.user.username)
+    context['organizer'] = course_model.is_cohort_organizer(
+        user_uri, cohort['uri']
+    )
+    context['organizer'] |= request.user.is_superuser
+    if course_model.user_in_cohort(user_uri, cohort['uri']):
+        context['show_leave_course'] = True
+        context['learner'] = True
+    elif cohort['signup'] == "OPEN":
+        context['show_signup'] = True
+
+    return context
+
 @login_required
 def create_course( request ):
     if request.method == "POST":
@@ -90,40 +113,28 @@ def show_course( request, course_id, slug=None ):
     if slug != course['slug']:
         return course_slug_redirect( request, course_id)
 
-    context = { 'course': course }
-    context['course_url'] = request.get_full_path()
+    context = { }
+    context = _populate_course_context(request, course_id, context)
 
-    if 'image_uri' in course:
-        context['course']['image'] = media_model.get_image(course['image_uri'])
-
-    cohort = course_model.get_course_cohort(course_uri)
-    context['cohort'] = cohort
-    user_uri = "/uri/user/{0}".format(request.user.username)
-    context['organizer'] = course_model.is_cohort_organizer(
-        user_uri, cohort['uri']
-    )
-    context['organizer'] |= request.user.is_superuser
     if context['organizer']:
         context['update_form'] = CourseUpdateForm(course)
         context['image_form'] = CourseImageForm()
-        if cohort['term'] == 'FIXED':
+        if context['cohort']['term'] == 'FIXED':
             context['term_form'] = CourseTermForm(cohort)
         else:
             context['term_form'] = CourseTermForm()
-        context['signup_form'] = CohortSignupForm(initial={'signup':cohort['signup']})
+        context['signup_form'] = CohortSignupForm(
+            initial={'signup':context['cohort']['signup']}
+        )
+
     context['about'] = content_model.get_content(course['about_uri'])
     #NOTE: maybe move this to a template tag like embed?
     context['about']['content'] = markdown.markdown(
         context['about']['content'], ['tables']
     )
-    context['comments'] = course_model.get_cohort_comments(
-        cohort['uri'], course['about_uri']
-    )
-    if course_model.user_in_cohort(user_uri, cohort['uri']):
-        context['show_leave_course'] = True
-        context['learner'] = True
-    elif cohort['signup'] == "OPEN":
-        context['show_signup'] = True
+    #context['comments'] = course_model.get_cohort_comments(
+    #    cohort['uri'], course['about_uri']
+    #)
     return render_to_response(
         'courses/course.html',
         context,
@@ -294,23 +305,15 @@ def show_content( request, course_id, content_id):
     content_uri = '/uri/content/{0}'.format(content_id)
     user_uri = "/uri/user/{0}".format(request.user.username)
     content = content_model.get_content(content_uri)
-    content['rows'] = content['content'].count('\n')
-    course = course_model.get_course('/uri/course/{0}/'.format(course_id))
-    cohort = course_model.get_course_cohort('/uri/course/{0}/'.format(course_id))
     context = { 
         'content': content, 
-        'course': course,
     }
-    if 'image_uri' in course:
-        context['course']['image'] = media_model.get_image(course['image_uri'])
-    
+    context = _populate_course_context(request, course_id, context)
+    #TODO: move to template tag
     context['content']['content'] = markdown.markdown(
         context['content']['content'], ['tables']
     )
-    context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
-    context['organizer'] = course_model.is_cohort_organizer(
-        user_uri, cohort['uri']
-    )
+    #context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
     context['can_edit'] = context['organizer']
     context['form'] = ContentForm(content)
     return render_to_response(
@@ -346,7 +349,8 @@ def create_content( request, course_id ):
     else:
         form = ContentForm()
 
-    context = { 'form': form, 'course': course }
+    context = { 'form': form }
+    context = _populate_course_context(request, course_id, context)
     if request.GET.get('next_url', None):
         context['next_url'] = request.GET.get('next_url', None)
 
@@ -388,9 +392,9 @@ def edit_content( request, course_id, content_id ):
 
     context = {
         'form': form,
-        'course': course,
         'content': content,
     }
+    context = _populate_course_context(request, course_id, context)
     if request.GET.get('next_url', None):
         context['next_url'] = request.GET.get('next_url', None)
     return render_to_response('courses/edit_content.html', 
