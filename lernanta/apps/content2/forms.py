@@ -2,7 +2,7 @@ from django import forms
 from content2 import utils
 
 class ContentForm(forms.Form):
-    title = forms.CharField()
+    title = forms.CharField(max_length=80)
     content = forms.CharField(widget=forms.Textarea, required=False)
 
     def clean_content(self):
