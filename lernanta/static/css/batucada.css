@@ -549,55 +549,55 @@ input[type=submit]:active,
  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; 
 }
 
-.project-kind-challenge .bottom-sidebar .badge a {
+.project-kind-challenge .bottom-sidebar .badge-panel a {
 color: #222;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-top img.badge-graphic {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top img.badge-graphic {
 float: left;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-top .badge-awarded {
-float: left;
-width: 80px;
-margin-top: 10px;
-}
-
-.project-kind-challenge .bottom-sidebar .badge .badge-top .badge-awarded .badge-awarded-header {
-font-size: 14px;
-margin-left: 20px;
-}
-
-.project-kind-challenge .bottom-sidebar .badge .badge-top .badge-awarded .badge-awarded-number {
-font-size: 36px;
-margin-left: 25px;
-}
-
-.project-kind-challenge .bottom-sidebar .badge .badge-top .badge-pending {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top .badge-awarded {
 float: left;
 width: 80px;
 margin-top: 10px;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-top .badge-pending .badge-pending-header {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top .badge-awarded .badge-awarded-header {
 font-size: 14px;
 margin-left: 20px;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-top .badge-pending .badge-pending-number {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top .badge-awarded .badge-awarded-number {
 font-size: 36px;
 margin-left: 25px;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-top img {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top .badge-pending {
+float: left;
+width: 80px;
+margin-top: 10px;
+}
+
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top .badge-pending .badge-pending-header {
+font-size: 14px;
+margin-left: 20px;
+}
+
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top .badge-pending .badge-pending-number {
+font-size: 36px;
+margin-left: 25px;
+}
+
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-top img {
 margin-bottom: 20px;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-bottom {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-bottom {
 clear: both;
 }
 
-.project-kind-challenge .bottom-sidebar .badge .badge-bottom a {
+.project-kind-challenge .bottom-sidebar .badge-panel .badge-bottom a {
 background: #e6e2b9;
 padding: 2px 3px 3px 30px;
 -webkit-border-radius: 10px;
@@ -731,206 +731,6 @@ form .small {
  
 /* header */ 
  
-header {}
-  #masthead {
-    height: 80px;
-    background: #ffffff;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-    #masthead a:hover {
-      text-decoration: none;
-    }
-
-#main-nav {
-    font-size: 20px;
-    position: absolute;
-    margin-top: 18px;
-    height: 24px;
-    padding: 0 3px 3px 179px;
-}
-
-#main-nav li {
-    border-right: 1px solid #eee;
-    padding: 0 8px 0 0;
-}
-
-#main-nav li:last-child {
-    border: none;
-    padding: 0 0 6px 4px;
-}
-
-#user-nav {
-    height: 48px;
-    z-index: 1000;
-    float: right;
-    min-width: 256px;
-    margin-top: -10px;
-}
-
-
-#user-nav a {
-    color: #777;
-    font-size: 14px;
-    display: block;
-    padding: 12px 12px;
-}
-
-#main-nav a {
-    color: #555;
-    font-size: 20px;
-    display: block;
-    padding: 10px 12px;
-}
-
-#user-nav a.sub-level, #main-nav a.sub-level {
-    color: #fff;
-    font-size: 14px;
-    display: block;
-    padding: 5px 12px 10px 12px;
-}
-
-#main-nav a.top-level {
-    display: block;
-    height: 24px;
-    padding: 10px;
-    margin-top: 0;
-}
-
-#user-nav a.top-level {
-    height: 51px;
-    padding: 33px 10px 2px 10px;
-    margin: 0;
-}
-
-#user-nav a:hover, #main-nav a:hover {
-    color: #2184ca;
-}
-
-.no-rgba #user-nav .menu a:hover, .no-rgba #main-nav .menu a:hover {
-    background: url("/static/images/user-nav.bg.png");
-    color: #fff;
-}
-
-#user-nav a.login {
-    font-weight: bold;
-    color: #2184ca;
-}
-
-#user-nav a.login:hover {
-    font-weight: bold;
-    color: #000;
-}
-
-#user-name {
-    padding-left: 5px;
-    float: right;
-}
-
-#user-nav ul, #main-nav ul {
-        list-style: none;
-}
-
-#user-nav > ul > li {
-    float: right;
-    margin-left: 7px;
-    margin-top: 7px;
-    padding: 0;
-}
-
-#main-nav > ul > li {
-    float: left;
-    padding-left: 7px;
-    margin-top: 0;
-}
-
-#user-nav .separator, #main-nav .separator {
-    width: 2px;
-    margin: 0 5px 0 3px;
-    background: url("/static/images/separator.bg.png") no-repeat left center;
-    height: 37px;
-}
-
-#user {
-    min-width: 120px;
-    z-index: 1000;
-    display: block;
-}
-
-#user:hover {
-    background: #000;
-    height: 290px;
-    z-index: 9999;
-    -webkit-border-bottom-right-radius: 7px;
-    -webkit-border-bottom-left-radius: 7px;
-    -moz-border-radius-bottomright: 7px;
-    -moz-border-radius-bottomleft: 7px;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
-    }
-
-.no-cssgradients .menu ul {
-    background: #666;
-}
-
-.no-boxshadow.no-borderradius #inbox-count {
-    color: #fff;
-    background: #d00;
-}
-
-#inbox.open a {
-    color: #fff;
-}
-
-#inbox-messages {
-    padding-bottom: 7px;
-    max-width: 300px;
-    background: #28c0b7;
-}
-
-#view-all a {
-    border-top: 0 none;
-    background: #0da69d;
-    border-bottom: 1px solid #20699d;
-    text-align: center;
-    }
-
-#view-all a:hover {
-    background: #0eb0a7;
-}
-
-#cse-search-form {
-    margin-top: -10px;
-    margin-right: 300px;
-    width: 161px;
-    float: right;
-}
-
-#cse-search-form input {
-    background: #ccc;
-    border: 1px solid #aaa;
-    border-radius: 20px;
-    color: #5A6579;
-    height: 22px;
-    width: 161px;
-    padding: 0 17px;
-    float: right;
-}
-
-#cse-search-form .gsc-search-button, #cse-search-form .gsc-clear-button {
-    display: none;
-    }
-
-#cse .gsc-search-box {
-    display: none;
-}
-
-.gsc-control-cse {
-    border-radius: 10px;
-    border: solid 1px #EEE;
-    width: 960px;
-}
-
   #breadcrumbs {
     height: 44px;
     width: 990px;
@@ -3891,36 +3691,6 @@ div.voting div.score {
 }
 #attachments td {
     padding-right: 1em;
-}
-/*
- * Header
-*/
-
-
-#logo {
-    background-position: 13px 17px;
-    width: 165px; 
-    background-image: url("/static/images/logo.png");
-    height: 70px;
-    margin-top: 2px;
-    margin-right: 20px;
-    position: absolute;
-    z-index: 2;
-}
-
-#footer-schools-wrapper {
-  margin-top: 40px;
-  background: #fff;
-  border-top: 1px solid #ccc;
-}
-
-#footer-schools-wrapper h5 {
-  color: #ccc;
-  width: 100%;
-  display: block;
-  font-size: 16px;
-  font-weight: normal;
-  margin: 15px 0 15px 0;
 }
 
 .school-small-icon {
