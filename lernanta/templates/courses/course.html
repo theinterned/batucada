@@ -162,12 +162,7 @@
 
             <hr/>
 
-            <p>
-              <a data-toggle="collapse" data-target="#image-edit">
-                {% trans 'Change image' %}
-              </a>
-            </p>
-            <div id="image-edit" class="collapse">
+            <div id="image-edit">
               <form action="{% locale_url courses_image course_id=course.id %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p>{{image_form.image}}</p>
