@@ -1,6 +1,0 @@
-{% load l10n_tags %}
-<a href="{% locale_url show_project_reviews slug=project.slug %}">{{ project }}</a>
-<a class="button" href="{% locale_url review_project slug=project.slug %}">{{ _('Review') }}</a>
-<br>
-<b>{{ _('Feedback Comments:') }}</b> {{ project.reviews.count }}
-

@@ -1,6 +1,0 @@
-{% load l10n_tags %}
-{{ user }} {{ _('has reported the following content as objectionable:') }}
-
-{{ url }}
-
-(model: {{ model }}, app_label: {{ app_label }}, pk: {{ pk }})
