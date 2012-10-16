@@ -270,6 +270,9 @@ class UserProfile(ModelBase):
         algo, salt, hsh = self.password.split('$')
         return hsh == get_hexdigest(algo, salt, raw_password)
 
+    def can_post(self):
+        return len(self.confirmation_code) == 0 and self.deleted == False
+
 
 def create_profile(user, username=None):
     """Make a UserProfile for this django.contrib.auth.models.User."""
@@ -287,6 +290,16 @@ def create_profile(user, username=None):
     profile.email = user.email
     profile.save()
     return profile
+
+
+def delete_spammer(spammer):
+    spammer.user.set_unusable_password()
+    spammer.deleted = True
+    spammer.user.save()
+    spammer.save()
+    for pc in spammer.comments.all():
+        pc.deleted = True
+        pc.save()
 
 
 ###########
