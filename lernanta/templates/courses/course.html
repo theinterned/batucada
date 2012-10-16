@@ -149,7 +149,7 @@
         {% if organizer %}
           <div class="tab-pane" id="settings-tab-pane">
             <div id="hashtag-edit">
-              <form class="form-inline" action="{% locale_url courses_update_attribute course_id=course.id attribute='hashtag' %}" method="POST">
+              <form action="{% locale_url courses_update_attribute course_id=course.id attribute='hashtag' %}" method="POST">
                 {% csrf_token %}
                 
                 <p>
@@ -171,10 +171,10 @@
             </div>
          
             <hr>
-            <h2>{% trans "Description" %}</h2>
             <div>
               <form action="{% locale_url courses_update_attribute course_id=course.id attribute='description' %}" method="POST">
                 {% csrf_token %}
+                <label for="id_description">{% trans "Description" %}</label>
                 {{ update_form.description }}
                 <p><button type="submit">{% trans "Update description" %}</button></p>
               </form>
