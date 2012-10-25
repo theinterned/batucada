@@ -68,10 +68,10 @@
               {% endif %}
             </td>  -->
             <td class="actions">
-              <form class="form-horizontal" action="{% locale_url users_profile_edit_links_edit link_id=link.id %}" method="get">
+              <form style="display:inline;" action="{% locale_url users_profile_edit_links_edit link_id=link.id %}" method="get">
                 <button class="btn btn-olive" type="submit" value="{{ _('Edit') }}">{{ _('Edit') }}</button>
               </form>
-              <form class="form-horizontal" action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
+              <form style="display:inline;" action="{% locale_url users_profile_edit_links_delete link=link.id %}" method="post">
                 {% csrf_token %}
                 <button class="btn btn-blood-orange" type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
               </form>
