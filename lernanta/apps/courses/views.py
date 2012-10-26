@@ -186,8 +186,6 @@ def course_people( request, course_id ):
         context_instance=RequestContext(request)
     )
 
-   
-
 
 @login_required
 @require_organizer
@@ -217,7 +215,6 @@ def course_settings( request, course_id ):
         context_instance=RequestContext(request)
     )
 
-    
 
 @login_required
 @require_http_methods(['POST'])
@@ -235,7 +232,8 @@ def course_image( request, course_id ):
         )
     else:
         messages.error(request, _("Could not upload image"))
-    return course_slug_redirect( request, course_id )
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -255,19 +253,20 @@ def course_add_user( request, course_id ):
     is_organizer = course_model.is_cohort_organizer(
         admin_uri, cohort['uri']
     )
+    redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
     username = request.POST.get('username', None)
     if not UserProfile.objects.filter(username=username).exists():
         messages.error(request, _("User doesn not exist."))
-        return course_slug_redirect(request, course_id)
+        return http.HttpResponseRedirect(redirect_url)
     if not is_organizer and not request.user.is_superuser:
         messages.error(request, _("Only organizer are allowed to add new users."))
-        return course_slug_redirect(request, course_id)
+        return http.HttpResponseRedirect(redirect_url)
     if not username:
         messages.error(request, _("Please select a user"))
-        return course_slug_redirect(request, course_id)
+        return http.HttpResponseRedirect(redirect_url)
     user_uri = "/uri/user/{0}".format(username)
     course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
-    return course_slug_redirect(request, course_id)
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -307,7 +306,8 @@ def course_add_organizer( request, course_id, username ):
     course_model.add_user_to_cohort(cohort['uri'], new_organizer_uri, "ORGANIZER")
 
     #TODO
-    return course_slug_redirect( request, course_id)
+    redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -324,7 +324,8 @@ def course_change_status( request, course_id, status ):
         course = course_model.publish_course(course_uri)
     elif status == 'archive':
         course = course_model.archive_course(course_uri)
-    return course_slug_redirect( request, course_id )
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -340,7 +341,8 @@ def course_change_signup( request, course_id ):
             messages.error( request, _("Could not change cohort signup"))
     else:
         request.messages.error(request, _("Invalid choice for signup"))
-    return course_slug_redirect(request, course_id)
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -361,7 +363,8 @@ def course_change_term( request, course_id, term ):
             messages.error( request, _("Could not update fixed term dates"))
     elif term == 'rolling':
         cohort = course_model.update_cohort(cohort['uri'], term=term.upper())
-    return course_slug_redirect(request, course_id)
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -375,7 +378,8 @@ def course_update_attribute( request, course_id, attribute):
         course_model.update_course( course_uri, **kwargs )
     else:
         messages.error(request, _("Could not update {0}.".format(attribute)))
-    return course_slug_redirect( request, course_id )
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 def show_content( request, course_id, content_id):
@@ -500,7 +504,8 @@ def remove_content( request, course_id, content_id ):
     course_uri = course_model.course_id2uri(course_id)
     content_uri = "/uri/content/{0}".format(content_id)
     course_model.remove_course_content(course_uri, content_uri)
-    return course_slug_redirect(request, course_id)
+    redirect_url = reverse('courses_admin_content', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -511,7 +516,8 @@ def move_content_up( request, course_id, content_id ):
     )
     if not result:
         messages.error(request, _("Could not move content up!"))
-    return course_slug_redirect(request, course_id)
+    redirect_url = reverse('courses_admin_content', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
@@ -522,7 +528,8 @@ def move_content_down( request, course_id, content_id ):
     )
     if not result:
         messages.error(request, _("Could not move content down!"))
-    return course_slug_redirect( request, course_id )
+    redirect_url = reverse('courses_admin_content', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required

@@ -29,7 +29,7 @@
     </table>
 
     {% if organizer %}
-      <a href="{% locale_url courses_create_content course_id=course.id %}?next_url={{ course_url }}">{% trans "Add more content" %}</a>
+      <a class="btn" href="{% locale_url courses_create_content course_id=course.id %}?next_url={{ course_url }}">{% trans "Add more content" %}</a>
     {% endif %}
   {% else %}
     {% if organizer %}
