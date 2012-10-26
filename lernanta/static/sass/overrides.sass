@@ -287,6 +287,7 @@ footer
     background-color: $white
     border-top: 1px solid #ccc
     border-bottom: 1px solid #ccc
+    margin-top: 15px
 
 body
   font-family: $secondary-font, sans-serif
@@ -351,18 +352,21 @@ form
 
 input
   &[type="text"], &[type="password"], &[type="datetime"], &[type="datetime-local"], &[type="date"], &[type="month"], &[type="time"], &[type="week"], &[type="number"], &[type="email"], &[type="url"], &[type="search"], &[type="tel"], &[type="color"]
-    background-color: $steel
+    background-color: $cloud
     border: none
-    @include border-radius(none)
-    @include border-radius(1px)
-    @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
+    /* @include border-radius(none)
+    @include border-radius(3px)
+    /* @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
     color: $slate
-    &:focus
-      background-color: $cloud
-      font-family: "sense"
-      +input-placeholder($slate)
-    +input-placeholder($white)
+    /* +input-placeholder($white)
     font-family: "arvo"
+
+stuff
+  &:focus
+    background-color: $cloud
+    font-family: "sense"
+    +input-placeholder($slate)
+
 
 input, textarea
   width: 230px
@@ -582,14 +586,14 @@ input, textarea
       @include link-colors($slate, $cyan, $slate, $slate, $slate)
     &.dropdown
       > a
-        @include background($slate)
+        @include background($steel)
         color: $white
         @include adjust-font-size-to($baseFontSize)
         @include border-radius(5px)
-        @include custom-box-shadow-2
-        border: 1px solid $black
+        /* @include custom-box-shadow-2
+        /* border: 1px solid $black
         &:hover
-          @include background(darken($steel, 20%))
+          @include background(darken($steel, 10%))
   .dropdown-menu
     min-width: 95%
     max-width: 95%
@@ -632,11 +636,11 @@ input, textarea
   
 .nav-list > .active > a
   @include border-radius(5px)
-  @include custom-box-shadow-1
+  /* @include custom-box-shadow-1
   position: relative
   img /* used for close tag 'x' image */
     position: absolute
-    top: 7px
+    top: 8px
     right: 10px
 
 .nav-list > .active > a:hover
@@ -1181,6 +1185,7 @@ input, textarea
   @include square-corners
   @include background($snow)
   padding: pem(10px)
+  border-bottom: 2px solid $silver
 
 .well-large
   padding: 0px
@@ -1332,14 +1337,21 @@ input, textarea
 #splash .breadcrumb
   display: none
 
+button
+  @extend .btn
+
 .modal
-  max-height: pem(560px)
   width: pem(560px)
-  padding-top: 10px
-  padding-left: 10px
+  padding-top: 15px
+  padding-left: 15px
   padding-right: 25px
+  padding-bottom: 20px
   overflow-x: visible
   overflow-y: auto
+  margin: 0px
+  left: 25%
+  display: block
+  position: relative
   h1
     padding-bottom: 10px
 
@@ -1707,8 +1719,14 @@ a.show-on-hover
           @include background($steel)
           padding: 0px
 
+.alert p
+  margin-top: 0px
 
+.tab-content
+  padding-bottom: 15px
 
+.connect-links a img
+  margin-left: 7px
 
 
 
@@ -1889,7 +1907,21 @@ a.show-on-hover
   background: url("/static/images/report.icon.png") 0 1px no-repeat
   padding-left: 15px
 
+.message-container
+  border: 1px solid $silver
+  @include border-radius(3px)
+  padding: 10px
+  margin-bottom: 20px
+
+.form-full-width
+  input, textarea
+    width: 100%
+
 #member_links ul
+  list-style: none
+  margin-left: 0px
+
+.no-list-style
   list-style: none
   margin-left: 0px
 	
@@ -1905,3 +1937,32 @@ a.show-on-hover
 .profile-courses img
   margin: 5px
   /* border: 1px solid $slate
+
+.tags li
+  display: inline-block
+  float: none
+  margin: 10px 0px 0px 0px
+
+.tags li a
+  display: block
+  background: #eee
+  color: #919191
+  font-size: 11px
+  font-weight: normal	
+  line-height: 20px
+  height: 20px      
+  padding: 1px 6px
+  margin-bottom: 5px		
+  border-radius: 6px
+  -moz-border-radius: 6px
+  -o-border-radius: 6px
+  -webkit-border-radius: 6px
+  text-shadow: #fff 1px 1px 0px
+  -moz-text-shadow: #fff 1px 1px 0px
+  -webkit-text-shadow: #fff 1px 1px 0px
+  box-shadow: #fff 1px 1px 2px
+  -webkit-box-shadow: #fff 1px 1px 2px
+  -moz-box-shadow: #fff 1px 1px 2px
+  border: 1px solid #c6c6c6		
+  behavior: url("/static/css/PIE.htc")
+

@@ -735,7 +735,7 @@ form .small {
     height: 44px;
     width: 990px;
     margin: auto auto;
-    background-color: #fff;
+    /* background-color: #fff; */
     font-size: 11px;
     /*line-height: 31px;*/
     line-height: 22px;

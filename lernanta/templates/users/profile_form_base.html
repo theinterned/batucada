@@ -55,7 +55,7 @@
           {{ _('By creating an account on') }} {{ domain }}{{ _(', you accept our') }} <a href="{% locale_url static_page_show 'privacy' %}">{{ _('privacy guidelines') }}</a> , <a href="{% locale_url static_page_show 'license' %}">{{ _('license provisions') }}</a> {{ _('and') }} <a href="{% locale_url static_page_show 'terms-of-use' %}">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
         </p>
         <p class="submit">
-          <button type="submit">{% block button_label %}{% endblock %}</button>
+          <button class="btn-olive" type="submit">{% block button_label %}{% endblock %}</button>
           {% block openid_link %}{% endblock %}
         </p>
       </form>

@@ -10,6 +10,12 @@
 
 <fieldset id="edit_account_email" class="edit account email tabpane">
   <h2>{{ _('Update Email') }}</h2>
+        {% if profile.confirmation_code and not form.is_bound %}
+          <div class="alert alert-warn"
+            <li>{{ _('Please confirm your email address') }}</li>
+          </div>
+        {% endif %}
+
   <form class="form-horizontal" action="{% locale_url preferences_email %}" method="post">
     {% csrf_token %}
     <div class="control-group field{% if form.email.errors %} error{% endif %}">
@@ -17,11 +23,6 @@
       <div class="controls">
         {{ form.email }}
         {{ form.email.errors }}
-        {% if profile.confirmation_code and not form.is_bound %}
-          <ul class="errorlist">
-            <li>{{ _('Please confirm your email address') }}</li>
-          </ul>
-        {% endif %}
       </div>
     </div>
     <div class="control-group field{% if form.email_confirm.errors %} error{% endif %}">
