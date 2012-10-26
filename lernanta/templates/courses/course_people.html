@@ -1,0 +1,31 @@
+{% extends "courses/course_base.html" %}
+{% load l10n_tags %}
+{% load i18n %}
+{% load learn_tags %}
+{% load embed %}
+
+{% block tab-pane-content %}
+  <div id="learner-list" class="user-list">
+    <h3>{% trans "Learners" %}</h3>
+    <ul class="thumbnails">
+      {% for user in cohort.learners %}
+        {% include "courses/course_user_snip.html" %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="learner-list" class="user-list">
+    <h3>{% trans "Organizers" %}</h3>
+    <ul class="thumbnails">
+    {% for user in cohort.organizers %}
+      {% include "courses/course_user_snip.html" %}           
+    {% endfor %}
+    </ul>
+  </div>
+  <p>
+    <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
+      {% csrf_token %}
+      <input type="text" name="username" />
+      <button type="submit">{% trans "Add user" %}</button>
+    </form>
+  </p>
+{% endblock %}

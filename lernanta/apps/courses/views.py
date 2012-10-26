@@ -116,32 +116,108 @@ def show_course( request, course_id, slug=None ):
 
     context = { }
     context = _populate_course_context(request, course_id, context)
+    context['about_active'] = True
 
     if context['organizer']:
         context['update_form'] = CourseUpdateForm(course)
-        context['image_form'] = CourseImageForm()
-        if context['cohort']['term'] == 'FIXED':
-            context['term_form'] = CourseTermForm(context['cohort'])
-        else:
-            context['term_form'] = CourseTermForm()
-        context['signup_form'] = CohortSignupForm(
-            initial={'signup':context['cohort']['signup']}
-        )
 
     context['about'] = content_model.get_content(course['about_uri'])
     #NOTE: maybe move this to a template tag like embed?
     context['about']['content'] = markdown.markdown(
         context['about']['content'], ['tables']
     )
-    #context['comments'] = course_model.get_cohort_comments(
-    #    cohort['uri'], course['about_uri']
-    #)
+
     return render_to_response(
         'courses/course.html',
         context,
         context_instance=RequestContext(request)
     )
 
+
+@login_required
+@require_organizer
+def course_admin_content( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
+    if course == None:
+        raise http.Http404
+ 
+    context = { }
+    context = _populate_course_context(request, course_id, context)
+    context['content_active'] = True
+
+    return render_to_response(
+        'courses/course_admin_content.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+
+def course_discussion( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
+    if course == None:
+        raise http.Http404
+ 
+    context = { }
+    context = _populate_course_context(request, course_id, context)
+    context['discussion_active'] = True
+
+    return render_to_response(
+        'courses/course_discussion.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+
+def course_people( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
+    if course == None:
+        raise http.Http404
+ 
+    context = { }
+    context = _populate_course_context(request, course_id, context)
+    context['people_active'] = True
+
+    return render_to_response(
+        'courses/course_people.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+   
+
+
+@login_required
+@require_organizer
+def course_settings( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    course = course_model.get_course(course_uri)
+    if course == None:
+        raise http.Http404
+ 
+    context = { }
+    context = _populate_course_context(request, course_id, context)
+
+    context['update_form'] = CourseUpdateForm(course)
+    context['image_form'] = CourseImageForm()
+    if context['cohort']['term'] == 'FIXED':
+        context['term_form'] = CourseTermForm(context['cohort'])
+    else:
+        context['term_form'] = CourseTermForm()
+    context['signup_form'] = CohortSignupForm(
+        initial={'signup':context['cohort']['signup']}
+    )
+    context['settings_active'] = True
+
+    return render_to_response(
+        'courses/course_settings.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+    
 
 @login_required
 @require_http_methods(['POST'])
@@ -310,6 +386,7 @@ def show_content( request, course_id, content_id):
         'content': content, 
     }
     context = _populate_course_context(request, course_id, context)
+    context['content_active'] = True
     #TODO: move to template tag
     context['content']['content'] = markdown.markdown(
         context['content']['content'], ['tables']
