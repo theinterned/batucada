@@ -5,10 +5,20 @@
 {% load embed %}
 
 {% block tab-pane-content %}
+  <div>
+    <form action="{% locale_url courses_update_attribute course_id=course.id attribute='title' %}" method="POST">
+      {% csrf_token %}
+      <p>
+        <label for="id_title">{% trans "Course Title" %}</label>
+        {{ update_form.title }}
+      </p>
+      <button type="submit">{% trans "Save" %}</button>
+    </form>
+  </div>
+  <hr/>
   <div id="hashtag-edit">
     <form action="{% locale_url courses_update_attribute course_id=course.id attribute='hashtag' %}" method="POST">
       {% csrf_token %}
-      
       <p>
         <label for="id_hashtag">{% trans "Hashtag" %}</label>
         {{ update_form.hashtag }}
