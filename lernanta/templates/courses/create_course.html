@@ -24,15 +24,15 @@
       <form action="" method="POST">
         {% csrf_token %}
         <p>
-          <label for="id_title">{% trans "Title:" %}</label>
+          <label for="id_title">{% trans "Course Title:" %}</label>
           {{form.title.errors}}
-          <input class="span6" type="text" name="title" id="id_title" placeholder="{% trans 'Enter the title here ...' %}" value="{{form.title.value|default_if_none:""}}"/>
+          <input class="span6" type="text" name="title" id="id_title" placeholder="{% trans "&quot;Flash 911&quot;, '3D Printing Ninja', 'Get CC Savvy'" %}" value="{{form.title.value|default_if_none:""}}"/>
           <span class="help-inline"></span>
         </p>
         <p>
           <label for="id_hashtag">{% trans "Hashtag:"%} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "Specify a short hashtag of up to 20 characters that should be used when sending out notifications and tweets about the course."%}">?</a></label> 
           {{form.hashtag.errors}}
-          <input class="span6" type="text" name="hashtag" id="id_hashtag" placeholder="{% trans 'Ex. webcraft101' %}" value="{{form.hashtag.value|default_if_none:""}}"/>
+          <input class="span6" type="text" name="hashtag" id="id_hashtag" placeholder="{% trans "#flash911 #3dprintninja #ccsavvy" %}" value="{{form.hashtag.value|default_if_none:""}}"/>
         </p>
         <p>
           <label for="id_description">{% trans "Description:" %} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "This description is used in places where your course will be listed."%}">?</a></label> 
@@ -48,8 +48,12 @@
     </div>
     <div class="span3">
       {% blocktrans %}
-        <h2>Creating a new course!</h2>
-        <p>Creating a new course is really easy with P2PU. Once you've filled in this form, you will be able to create content for your course, update and finetune all the settings!</p>
+        <h2>Ready to create a course? Let's get cracking.</h2>
+        <p>Getting a course up off the ground is super-easy at P2PU.</p>
+        <p>First, give your course a title--we recommend something zippy, snappy and attention-grabby.</p>
+        <p>Next, create a "hashtag" or handle for your course.</p>
+        <p>Give a few more details in the "description" field, hit the button and voilà! You've created a P2PU course!</p>
+        <p>Need further guidance on how to make a stellar experience? Check out the <a href="https://p2pu.org/en/groups/make-a-course/">"Create a Course"</a> materials!</p>
         <p>Like anything in life, it requires a bit of planning. We have some resources that you may find helpfull!</p>
       {% endblocktrans %}
     </div>
