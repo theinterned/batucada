@@ -1,5 +1,4 @@
 import logging
-import markdown
 
 from django import http
 from django.shortcuts import render_to_response, get_object_or_404
@@ -122,10 +121,6 @@ def show_course( request, course_id, slug=None ):
         context['update_form'] = CourseUpdateForm(course)
 
     context['about'] = content_model.get_content(course['about_uri'])
-    #NOTE: maybe move this to a template tag like embed?
-    context['about']['content'] = markdown.markdown(
-        context['about']['content'], ['tables']
-    )
 
     return render_to_response(
         'courses/course.html',
@@ -391,10 +386,6 @@ def show_content( request, course_id, content_id):
     }
     context = _populate_course_context(request, course_id, context)
     context['content_active'] = True
-    #TODO: move to template tag
-    context['content']['content'] = markdown.markdown(
-        context['content']['content'], ['tables']
-    )
     #context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
     context['can_edit'] = context['organizer']
     context['form'] = ContentForm(content)
@@ -490,9 +481,6 @@ def preview_content( request ):
     content = request.POST.get('content')
     from content2 import utils
     content = utils.clean_user_content(content)
-    content = markdown.markdown(content, ['tables'])
-    # import bleach
-    # content = bleach.linkify(content)
     content = render_to_string("courses/preview_content_snip.html", 
         {'content':content })
     return http.HttpResponse(content, mimetype="application/json")

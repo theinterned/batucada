@@ -1,1 +1,3 @@
-{% load embed %}{{content|embed|safe}}
+{% load embed %}
+{% load content2_tags %}
+{{content|convert_content|embed|safe}}

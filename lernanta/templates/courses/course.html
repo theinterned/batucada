@@ -3,13 +3,14 @@
 {% load i18n %}
 {% load learn_tags %}
 {% load embed %}
+{% load content2_tags %}
 
 {% block tab-pane-content %}
   {% if about.content|length == 0 %}
     <p class="text-info">{% blocktrans %}You can add some information to this tab by editing this page!</a>{% endblocktrans %}
     </p>
   {% else %}
-    <div>{{about.content|embed|safe}}</div>
+    <div>{{about.content|convert_content|embed|safe}}</div>
   {% endif %}
   <p>
   {% if organizer %}

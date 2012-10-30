@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load l10n_tags %}
 {% load embed %}
+{% load content2_tags %}
 
 {% block title %}{{course.title}} | {{content.title}}{% endblock %}
 {% block bodyclasses %}course-content{% endblock%}
@@ -16,7 +17,7 @@
 
 {% block tab-pane-content %}
   <h2>{{ content.title }}</h2>
-  <div>{{content.content|embed|safe}}</div>
+  <div>{{content.content|convert_content|embed|safe}}</div>
   {% if can_edit %}
     <p>
       <a class="btn" href="{% locale_url courses_content_edit course_id=course.id content_id=content.id %}">
