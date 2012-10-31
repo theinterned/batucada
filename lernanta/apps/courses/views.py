@@ -236,25 +236,23 @@ def course_signup( request, course_id ):
     #NOTE: consider using cohort_id in URL to avoid cohort lookup
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
-    course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
+    if cohort['signup'] == "OPEN":
+        course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
+        messages.success(request, _("You are now signed up for this course."))
+    else:
+        messages.error(request, _("This course isn't open for signup."))
     return course_slug_redirect( request, course_id )
 
 
 @login_required
 @require_http_methods(['POST'])
+@require_organizer
 def course_add_user( request, course_id ):
     cohort = course_model.get_course_cohort( course_id )
-    admin_uri = "/uri/user/{0}".format(request.user.username)
-    is_organizer = course_model.is_cohort_organizer(
-        admin_uri, cohort['uri']
-    )
     redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
     username = request.POST.get('username', None)
     if not UserProfile.objects.filter(username=username).exists():
         messages.error(request, _("User doesn not exist."))
-        return http.HttpResponseRedirect(redirect_url)
-    if not is_organizer and not request.user.is_superuser:
-        messages.error(request, _("Only organizer are allowed to add new users."))
         return http.HttpResponseRedirect(redirect_url)
     if not username:
         messages.error(request, _("Please select a user"))
