@@ -12,6 +12,14 @@ import logging
 log = logging.getLogger(__name__)
 
 
+class ResourceNotFoundException(Exception):
+    pass
+
+
+class DataIntegrityException(Exception):
+    pass
+
+
 def course_uri2id(course_uri):
     return course_uri.strip('/').split('/')[-1]
 
@@ -23,20 +31,15 @@ def course_id2uri(course_id):
 def _get_course_db(course_uri):
     course_id = course_uri2id(course_uri)
     try:
-        return db.Course.objects.get(id=course_id)
+        course_db = db.Course.objects.get(id=course_id)
     except:
-        return None
+        return ResourceNotFoundException
+    return course_db
 
 
 def get_course(course_uri):
     course_id = course_uri2id(course_uri)
-    course_db = None
-    try:
-        course_db = db.Course.objects.get(id=course_id)
-    except:
-        # TODO
-        return None
-
+    course_db = db.Course.objects.get(id=course_id)
     course = {
         "id": course_db.id,
         "uri": "/uri/course/{0}".format(course_db.id),
@@ -57,7 +60,7 @@ def get_course(course_uri):
         course["about_uri"] = content[0]['uri']
     else:
         log.error("missing about content")
-        return None
+        raise DataIntegrityException
 
     course["content"] = content[1:]
     return course
@@ -75,7 +78,10 @@ def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, dra
         filters['language'] = language
     if organizer_uri:
         filters['organizer_uri'] = organizer_uri
-    #TODO draft and archived
+    if draft != None:
+        filters['draft'] = draft
+    if archived != None:
+        filters['archived'] = archived
     results = results.filter(**filters)
     return [ get_course(course_id2uri(course_db.id)) for course_db in results ]
 
@@ -106,8 +112,6 @@ def create_course(title, hashtag, description, language, organizer_uri):
 def update_course(course_uri, title=None, hashtag=None, description=None, language=None, image_uri=None):
     # TODO
     course_db = _get_course_db(course_uri)
-    if not course_db:
-        return None
     if title:
         course_db.title = title
     if hashtag:
@@ -127,8 +131,6 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
 
 def publish_course(course_uri):
     course_db = _get_course_db(course_uri)
-    if not course_db:
-        return None
     course_db.draft = False
     course_db.archived = False
     try:
@@ -141,8 +143,6 @@ def publish_course(course_uri):
 
 def archive_course(course_uri):
     course_db = _get_course_db(course_uri)
-    if not course_db:
-        return None
     course_db.archived = True
     try:
         course_db.save()
@@ -154,12 +154,7 @@ def archive_course(course_uri):
 def get_course_content(course_uri):
     content = []
     course_id = course_uri2id(course_uri)
-    course_db = None
-    try:
-        course_db = db.Course.objects.get(id=course_id)
-    except:
-        # TODO
-        return None
+    course_db = _get_course_db(course_uri)
     for course_content_db in course_db.content.order_by('index'):
         content_data = content_model.get_content(course_content_db.content_uri)
         content += [{
@@ -168,17 +163,12 @@ def get_course_content(course_uri):
             "title": content_data["title"],
             "index": course_content_db.index,
         }]
-
     return content
 
 
 def add_course_content(course_uri, content_uri):
     course_id = course_uri2id(course_uri)
-    course_db = None
-    try:
-        course_db = db.Course.objects.get(id=course_id)
-    except:
-        return None
+    course_db = _get_course_db(course_uri)
     next_index = 0
     try:
         next_index = db.CourseContent.objects.filter(course = course_db).order_by('-index')[0].index + 1
@@ -195,12 +185,7 @@ def add_course_content(course_uri, content_uri):
 
 def remove_course_content(course_uri, content_uri):
     course_id = course_uri2id(course_uri)
-    course_db = None
-    try:
-        course_db = db.Course.objects.get(id=course_id)
-    except:
-        log.error("Could not find course")
-        return None
+    course_db = _get_course_db(course_uri)
     course_content_db = course_db.content.get(content_uri=content_uri)
     course_content_db.delete()
     for content in course_db.content.filter(index__gt=course_content_db.index):
@@ -212,34 +197,30 @@ def reorder_course_content(content_uri, direction):
     course_content_db = None
     try:
         course_content_db = db.CourseContent.objects.get(content_uri=content_uri)
-    except Exception, e:
-        # TODO
-        return None
+    except:
+        raise ResourceNotFoundException
     new_index = course_content_db.index + 1
     if direction == "UP":
         new_index = course_content_db.index - 1
-
     if new_index < 1:
-        return None
+        return
 
     try:
         swap_course_content_db = db.CourseContent.objects.get(
             course=course_content_db.course, index=new_index
         )
     except:
-        return None
+        #TODO
+        raise Exception("Internal error")
 
     swap_course_content_db.index = course_content_db.index
     course_content_db.index = new_index
     swap_course_content_db.save()
     course_content_db.save()
-    return True
 
 
 def create_course_cohort(course_uri, organizer_uri):
     course_db = _get_course_db(course_uri)
-    if not course_db:
-        return None
 
     if course_db.cohort_set.count() != 0:
         return None
@@ -250,20 +231,25 @@ def create_course_cohort(course_uri, organizer_uri):
         signup=db.Cohort.CLOSED
     )
     cohort_db.save()
-    cohort = get_course_cohort(course_uri)
-    if not cohort:
+    try:
+        cohort = get_course_cohort(course_uri)
+    except:
         log.error("Could not create new cohort!")
-        return None
+        #TODO raise appropriate exception
+        raise
     add_user_to_cohort(cohort["uri"], organizer_uri, db.CohortSignup.ORGANIZER)
     return get_course_cohort(course_uri)
 
 
+def get_course_cohort_uri( course_uri ):
+    course_db = _get_course_db(course_uri)
+    return "/uri/cohort/{0}".format(course_db.cohort_set.all().values('id')[0]['id'])
+ 
+
 def get_course_cohort(course_uri):
     course_db = _get_course_db(course_uri)
-    if not course_db:
-        return None
     if course_db.cohort_set.count() != 1:
-        return None
+        raise DataIntegrityException
     return get_cohort(
         "/uri/cohort/{0}".format(course_db.cohort_set.all()[0].id))
 
@@ -271,15 +257,14 @@ def get_course_cohort(course_uri):
 def _get_cohort_db(cohort_uri):
     cohort_id = cohort_uri.strip('/').split('/')[-1]
     try:
-        return db.Cohort.objects.get(id=cohort_id)
+        cohort_db = db.Cohort.objects.get(id=cohort_id)
     except:
-        return None
+        raise ResourceNotFoundException
+    return cohort_db
 
 
 def get_cohort(cohort_uri):
     cohort_db = _get_cohort_db(cohort_uri)
-    if not cohort_db:
-        return None
 
     cohort_data = {
         "uri": "/uri/cohort/{0}".format(cohort_db.id),
@@ -308,13 +293,16 @@ def get_cohort(cohort_uri):
             "username": username, "uri": signup.user_uri, "role": signup.role
         }]
 
-    return cohort_data
+    return cohort_data  
+
+
+def get_cohort_size( uri ):
+    cohort_db = _get_cohort_db(uri)
+    return cohort_db.signup_set.filter(leave_date__isnull=True).count()
 
 
 def update_cohort( uri, term=None, signup=None, start_date=None, end_date=None ):
     cohort_db = _get_cohort_db(uri)
-    if not cohort_db:
-        return None
 
     if term:
         cohort_db.term = term
@@ -333,16 +321,12 @@ def update_cohort( uri, term=None, signup=None, start_date=None, end_date=None )
 
 def user_in_cohort(user_uri, cohort_uri):
     cohort_db = _get_cohort_db(cohort_uri)
-    if not cohort_db:
-        return False
     return cohort_db.signup_set.filter(
         user_uri=user_uri, leave_date__isnull=True).exists()
 
 
 def is_cohort_organizer(user_uri, cohort_uri):
     cohort_db = _get_cohort_db(cohort_uri)
-    if not cohort_db:
-        return False
     return cohort_db.signup_set.filter(
         user_uri=user_uri, leave_date__isnull=True,
         role=db.CohortSignup.ORGANIZER).exists()
