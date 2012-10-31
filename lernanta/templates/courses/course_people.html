@@ -21,11 +21,13 @@
     {% endfor %}
     </ul>
   </div>
-  <p>
-    <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
-      {% csrf_token %}
-      <p><input type="text" name="username" autocomplete="off"/></p>
-      <button type="submit">{% trans "Add user" %}</button>
-    </form>
-  </p>
+  {% if organizer %}
+    <p>
+      <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
+        {% csrf_token %}
+        <p><input type="text" name="username" autocomplete="off"/></p>
+        <button type="submit">{% trans "Add user" %}</button>
+      </form>
+    </p>
+  {% endif %}
 {% endblock %}
