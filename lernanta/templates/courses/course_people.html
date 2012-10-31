@@ -24,7 +24,7 @@
   <p>
     <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
       {% csrf_token %}
-      <input type="text" name="username" />
+      <p><input type="text" name="username" autocomplete="off"/></p>
       <button type="submit">{% trans "Add user" %}</button>
     </form>
   </p>
