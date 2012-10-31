@@ -152,6 +152,7 @@ def delete(request):
         profile.save()
         profile.user.save()
         # logout the user.
+        #NOTE: performance hit with large session table
         for s in Session.objects.all():
             if s.get_decoded().get('_auth_user_id') == profile.user.id:
                 s.delete()

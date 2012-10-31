@@ -5,6 +5,7 @@ from django.db.models import Count, Q
 from tags.models import GeneralTaggedItem
 from projects.models import Project
 from signups.models import Signup
+import courses.models as course_model
 
 import datetime
 
@@ -26,7 +27,7 @@ def search(keyword, limit = 10):
     return list(set(results))[:limit]
 
 
-def get_listed_courses():
+def _get_listed_courses_old():
     """ return all the projects that should be listed """
     listed = Project.objects.filter(
         not_listed=False,
@@ -37,13 +38,23 @@ def get_listed_courses():
     listed = listed.filter(Q(category=Project.CHALLENGE)
         | Q(sign_up__status=Signup.MODERATED)
         | Q(sign_up__status=Signup.NON_MODERATED))
+    return listed.order_by('-created_on')
+
+
+def get_listed_courses():
+    """ return all the projects that should be listed """
+    listed = course_model.get_courses(draft=False, archived=False)
+    for course in listed:
+        cohort_uri = course_model.get_course_cohort_uri(course['uri'])
+        course['cohort_size'] = course_model.get_cohort_size(cohort_uri)
+    listed += _get_listed_courses_old()
     return listed
 
 
 def get_popular_tags(max_count=10):
     """ return a list of popular tags """
     ct = ContentType.objects.get_for_model(Project)
-    listed = list(get_listed_courses().values_list('id', flat=True))
+    listed = list(_get_listed_courses_old().values_list('id', flat=True))
     return GeneralTaggedItem.objects.filter(
         content_type=ct, object_id__in=listed).values(
         'tag__name').annotate(tagged_count=Count('object_id')).order_by(
@@ -72,6 +83,7 @@ def get_weighted_tags(min_count=2, min_weight=1.0, max_weight=7.0):
 
 def get_tags_for_courses(courses, exclude=[], max_tags=6):
     ct = ContentType.objects.get_for_model(Project)
+    return [] #TODO
     course_ids = courses.values('id')
     tags = GeneralTaggedItem.objects.filter(
         content_type=ct, object_id__in=course_ids).values(
@@ -104,8 +116,11 @@ def get_courses_by_list(list_name, projects=None):
         if projects != None, only the courses in projects and the list
         will be returned.
     """
-    if not projects:
-        projects = Project.objects
+    #TODO
+    #if not projects:
+    #    projects = Project.objects
+    return get_listed_courses()
+
 
     if list_name == 'showcase':
         projects = projects.filter(featured=True)

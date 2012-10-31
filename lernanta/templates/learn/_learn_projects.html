@@ -11,8 +11,15 @@
       <ul class="thumbnails">
   {% endif %}
   
-        <!-- add the current project to the row -->
-        <li class="span4">{% include "projects/_project_card.html" %}</li>
+  <!-- add the current project to the row -->
+  <li class="span4">
+    {% if project.uri %}
+      {% include "courses/_course_card.html" %}
+    {% else %}
+      {% include "projects/_project_card.html" %}
+    {% endif %}
+  </li>
+
 
   <!-- if this was the 3rd project in the row, end the row -->			
   {% if forloop.counter|divisibleby:"3" %}

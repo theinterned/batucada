@@ -17,11 +17,6 @@
 	<a href="{% if learn_school %}{% locale_url learn_schools school_slug=learn_school.slug %}{% else %}{% learn_default %}{% endif %}">{{ _('Learn') }}</a>
   </li>
 {% endblock %}
-{% block breadcrumbs_actions %}
-  {% if user.is_authenticated %}
-    <a id="create-project" class="btn btn-apricot" href="{% locale_url projects_create %}">{{ _('Create') }}</a>
-  {% endif %}
-{% endblock %}
 
 {% block body %}
 
@@ -43,7 +38,7 @@
 		<div class="well well-large">
 		  <div class="vertical-center">
 		    <h2>{{ _('Didn\'t find yours? How about creating one?') }} &nbsp; &nbsp;</h2>
-		    <a class="btn btn-large btn-olive" href="/en/groups/create">{{ _('Create a Course') }}</a>
+		    <a class="btn btn-large btn-olive" href="{% locale_url courses_create %}">{{ _('Create a Course') }}</a>
 		  </div>
 		</div> 
       </div>

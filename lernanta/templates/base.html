@@ -32,16 +32,6 @@
   <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
   <script src="{{ STATIC_URL }}js/trunk8.js"></script>
   
-  <!-- Added to turn on DJWT -->
-  <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/toolbar.min.css"> -->
-  <!-- <script src="{{ STATIC_URL }}js/toolbar.min.js"></script> -->
-  
-  <!--link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/batucada.css?v=1">
-  <link rel="stylesheet" href="{{ STATIC_URL }}{{ _('css/style-en.css') }}?v=1">
-  <link rel="stylesheet" href="{{ STATIC_URL }}js/libs/prettify/prettify.css"-->
-
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.fancybox-1.3.4.css" media="screen" />
   <link rel="stylesheet" href="{{ STATIC_URL }}js/libs/jquery.ui.spinner/ui.spinner.css">
   {% block css %}{% endblock %}
@@ -64,7 +54,7 @@
             </li>
             <li class="divider-vertical"></li>
             <li>
-              <a class="make-blue" href="/en/groups/create">{{ _('Create') }}</a>
+              <a class="make-blue" href="{% locale_url courses_create %}">{{ _('Create') }}</a>
               <div class="navbar-custom-header-text">{{ _('a Course') }}</div>
             </li>
           </ul>
