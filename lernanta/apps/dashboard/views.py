@@ -62,15 +62,7 @@ def dashboard(request):
     """Personalized dashboard for authenticated users."""
     try:
         profile = request.user.get_profile()
-        current_projects = profile.get_current_projects(only_public=False)
-        users_following = profile.following()
-        users_followers = profile.followers()
-        interests = profile.tags.filter(category='interest').exclude(
-            slug='').order_by('name')
-        desired_topics = profile.tags.exclude(slug='').filter(
-            category='desired_topic').order_by('name')
-        links = Link.objects.filter(user=profile,
-            project__isnull=True).order_by('index')
+        return HttpResponseRedirect(reverse("users_profile_view", kwargs={"username": request.user.username}))
     except UserProfile.DoesNotExist:
         user = request.user
         username = ''
