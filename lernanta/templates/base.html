@@ -84,9 +84,9 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   {% if user.get_profile %}
-				          	<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="30px" alt="{{ user.get_profile }}" />
+				          	<img id="user-picture" src="{{ user.get_profile.image_or_default }}" height="30px" alt="" />
                   {% else %}           
-                    <img id="user-picture" src="{{ STATIC_URL }}images/john-icon.png" height="30px" alt="{{ user.get_profile }}" />
+                    <img id="user-picture" src="{{ STATIC_URL }}images/john-icon.png" height="30px" alt="" />
 
                   {% endif %}
                   <span class="add-standard-left-padding">{{ user.username }}</span>
