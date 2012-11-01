@@ -30,7 +30,9 @@
           </label>
         </div>        
         <p class="submit">
-          <button id="login-submit-button" class="btn" type="submit" tabindex="4">{{ _('Sign In') }}</button>
+          <button id="login-submit-button" class="btn btn-olive" type="submit" tabindex="4">{{ _('Sign In') }}</button>
+          <a class="btn" href="{% locale_url splash %}" tabindex="5">{{ _('Cancel')}}</a>        
+
           {{ _('or use') }}
           <a class="openid" href="{% locale_url users_login_openid %}" tabindex="5">{{ _('OpenID')}}</a>
         </p>
