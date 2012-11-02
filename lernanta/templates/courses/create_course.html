@@ -32,7 +32,12 @@
         <p>
           <label for="id_hashtag">{% trans "Hashtag:"%} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "Specify a short hashtag of up to 20 characters that should be used when sending out notifications and tweets about the course."%}">?</a></label> 
           {{form.hashtag.errors}}
-          <input class="span6" type="text" name="hashtag" id="id_hashtag" placeholder="{% trans "#flash911 #3dprintninja #ccsavvy" %}" value="{{form.hashtag.value|default_if_none:""}}"/>
+
+          <div class="input-prepend" class="span6">
+            <span class="add-on">#</span>
+            <input type="text" name="hashtag" id="id_hashtag" placeholder="{% trans "flash911, printninja, ccsavvy" %}" value="{{form.hashtag.value|default_if_none:""}}"/>
+          </div>
+
         </p>
         <p>
           <label for="id_description">{% trans "Description:" %} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "This description is used in places where your course will be listed."%}">?</a></label> 

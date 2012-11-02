@@ -47,7 +47,8 @@ def _populate_course_context( request, course_id, context ):
     )
     context['organizer'] |= request.user.is_superuser
     if course_model.user_in_cohort(user_uri, cohort['uri']):
-        context['show_leave_course'] = True
+        if not context['organizer']:
+            context['show_leave_course'] = True
         context['learner'] = True
     elif cohort['signup'] == "OPEN":
         context['show_signup'] = True
@@ -95,8 +96,9 @@ def import_project( request, project_slug ):
 
 def course_slug_redirect( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
-    if course == None:
+    try:
+        course = course_model.get_course(course_uri)
+    except:
         raise http.Http404
 
     redirect_url = reverse('courses_show', 

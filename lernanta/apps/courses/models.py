@@ -33,13 +33,12 @@ def _get_course_db(course_uri):
     try:
         course_db = db.Course.objects.get(id=course_id)
     except:
-        return ResourceNotFoundException
+        raise ResourceNotFoundException
     return course_db
 
 
 def get_course(course_uri):
-    course_id = course_uri2id(course_uri)
-    course_db = db.Course.objects.get(id=course_id)
+    course_db = _get_course_db(course_uri)
     course = {
         "id": course_db.id,
         "uri": "/uri/course/{0}".format(course_db.id),

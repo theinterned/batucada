@@ -9,12 +9,18 @@ class CourseCreationForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea)
     language = forms.ChoiceField(choices=settings.LANGUAGES)
 
+    def clean_hashtag(self):
+        return self.cleaned_data['hashtag'].strip('#')
+
 
 class CourseUpdateForm(forms.Form):
     title = forms.CharField(required=False)
     hashtag = forms.CharField(required=False, max_length=20)
     description = forms.CharField(widget=forms.Textarea, required=False)
     language = forms.ChoiceField(choices=settings.LANGUAGES, required=False)
+
+    def clean_hashtag(self):
+        return self.cleaned_data['hashtag'].strip('#')
 
 
 class CourseImageForm(forms.Form):
