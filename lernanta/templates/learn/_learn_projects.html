@@ -4,8 +4,6 @@
 <!-- The enumeration below is designed to insert a new row after every 3rd project: -->
 
 {% for project in pagination_current_page.object_list %}
-  
-  <!-- if this is the first time through the loop, create the first row -->
   {% if forloop.first %}
     <div class="row-fluid">
       <ul class="thumbnails">
@@ -25,13 +23,10 @@
   {% if forloop.counter|divisibleby:"3" %}
       </ul>
     </div>    
-    <!-- as long as this is not the last project in the list, create a new row -->
     {% if not forloop.last %}
       <div class="row-fluid">
         <ul class="thumbnails">
     {% endif %}
-    
-  <!-- if this is the last project in the list, end the row if it hasn't been ended yet -->
   {% else %}{% if forloop.last %}
       </ul>
     </div>

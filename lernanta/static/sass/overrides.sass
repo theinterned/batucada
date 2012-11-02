@@ -24,6 +24,7 @@ $apricot: #ff7300 /* highlighted-2 header text */
 $clemintine: #ffbc1a /* navbar-link-h1-right hover */
 $pumpkin: #f1b106 /* user dropdown */
 $dark-slate: #5b6b73 /* navbar dropdown menu links (and background) and bold text in large wells (e.g. on the bottom of the Find [FKA Learn] Page) */
+$link-color-on-white: darken($cyan, 8%)
 
 
 /* Background Colors */
@@ -451,7 +452,7 @@ input, textarea
     margin-bottom: 0
     color: $steel
     font-family: $altFontFamily
-    @include add-all-sides-text-shadow($steel, $snow)
+    /* @include add-all-sides-text-shadow($steel, $snow)
   .navbar-custom-header-link
     color: $slate
     &:hover
@@ -477,7 +478,7 @@ input, textarea
         @include adjust-leading-to($base-no-leader-line-height)
         color: $slate
         text-decoration: none
-        @include add-all-sides-text-shadow($slate, $snow)
+        /* @include add-all-sides-text-shadow($slate, $snow)
         @include margin-leader($base-no-leader-line-height * (6px / $base-font-size)) 
         &.make-blue
           @include link-colors($linkColor, $linkColorHover, $linkColorHover, $linkColor, $linkColorHover)
@@ -502,7 +503,7 @@ input, textarea
       color: $cyan
       text-decoration: none
       background-color: $snow
-      @include add-all-sides-text-shadow($slate, $snow)
+      /* @include add-all-sides-text-shadow($slate, $snow)
       &:hover
         color: $cyan
         text-decoration: none
@@ -736,7 +737,7 @@ input, textarea
       padding-left: 10px
       width: 220px
       color: $white
-      @include add-all-sides-text-shadow($white, $steel)
+      /* @include add-all-sides-text-shadow($white, $steel)
       @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
       background-color: $steel
       @include glowing-shadow($steel)
@@ -1088,7 +1089,7 @@ input, textarea
           @include background($steel)
           padding: 0px
 
-#learn, #splash
+#learn, #splash, #schools-featured, #schools-challenges
   .thumbnail
     width: pem(220px) /* was 220px */
         
@@ -1181,11 +1182,23 @@ input, textarea
   position: relative
   left: pem(208)
   top: pem(-29)
+
 .well
+  @extend .white-background
   @include square-corners
   @include background($snow)
   padding: pem(10px)
   border-bottom: 2px solid $silver
+
+.white-background
+  background-color: $white
+  a:not(.btn)
+    color: $link-color-on-white
+
+.school-logo
+  display: block
+  margin: auto
+
 
 .well-large
   padding: 0px
@@ -1337,6 +1350,9 @@ input, textarea
 #splash .breadcrumb
   display: none
 
+.btn
+  border-style: none
+
 button
   @extend .btn
 
@@ -1372,7 +1388,7 @@ button
       font-weight: normal
       margin: 15px 0 15px 0
     .school-small-icon
-      width: 200px
+      width: 220px
       @include inline-block
       text-align: center
       margin-bottom: 10px 
@@ -1425,20 +1441,6 @@ button
 [class*="span"] .remove-left-margin
   margin-left: -25px
 
-.row-fluid ul.thumbnails [class*="span"] .thumbnail
-  float: none
-  margin-left: auto
-  margin-right: auto
-
-.row-fluid ul.thumbnails [class*="span"]:last-child .thumbnail
-  float: right
-
-.row-fluid ul.thumbnails [class*="span"]:first-child .thumbnail
-  float: left
-
-.row-fluid ul.thumbnails [class*="span"]
-  margin-left: auto
-  margin-right: auto
 
 .vertical-center
   @include inline-block
@@ -1572,8 +1574,8 @@ a.show-on-hover
 
 
 
-
-.thumbnail#large
+#school_home .thumbnail-large,
+.thumbnail-large
   h1
     @include adjust-font-size-to(20px)
     @include adjust-leading-to($base-no-leader-line-height)
@@ -1589,6 +1591,7 @@ a.show-on-hover
   @include background($snow)
   @include square-corners
   padding: 0px
+  margin-top: pem(10px)
   margin-bottom: pem(40px)
   .caption
     padding: 0px pem(8px)
@@ -1664,7 +1667,7 @@ a.show-on-hover
   @include square-corners
   padding: 0px
   .caption
-    padding: 0px pem(9px)
+    padding: pem(9px)
     a
       @include inline-block
     h3
@@ -1686,7 +1689,7 @@ a.show-on-hover
           @include inline-block
           height: auto
   img
-    padding-top: pem(5px)
+    padding-top: 0px
     @include inline-block
   .well-large
     height: pem(57px)
@@ -1729,7 +1732,9 @@ a.show-on-hover
   margin-left: 7px
 
 
-
+.richtext_section
+  ul
+    padding-top: 10px
 
 
 
@@ -1965,4 +1970,91 @@ a.show-on-hover
   -moz-box-shadow: #fff 1px 1px 2px
   border: 1px solid #c6c6c6		
   behavior: url("/static/css/PIE.htc")
+
+
+.challenge-set-preview
+  display: none
+
+.challenge-set-modal-data
+  padding: 20px
+  width: 715px
+
+.challenge-set-modal-data h2
+  font-size: 24px
+  font-weight: medium
+  padding-bottom: 10px
+  color: #222
+
+.challenge-set-modal-data p
+  font-size: 15px
+
+.challenge-set-modal-data
+  list-style: none
+  padding: 0
+  margin: 0
+
+.challenge-set-modal-data ul li
+  display: inline-block
+  padding: 17px
+
+.challenge-set-modal-data a
+  font-size: 15px
+  font-style: italic
+  margin-top: 10px
+
+.challenge-set-modal-data ul
+  margin: 0
+  list-style: none
+
+.challenge-set-modal-data li
+  display: inline-block
+  padding-bottom: 2em
+  text-align: center
+  vertical-align: top
+  width: 150px
+
+.challenge-set-modal-data li
+  margin-right: 25px
+  margin-left: 25px
+
+.challenge-set-modal-data .project-name
+  display: block
+  padding: 5px
+
+.detailed-info
+  border: 1px solid #ccc
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px
+  -ms-border-radius: 5px
+  -o-border-radius: 5px
+  border-radius: 5px
+  background-color: $snow
+  padding-top: 5px
+  padding-bottom: 7px
+  float: left
+  width: 100%
+  ul
+    list-style: none
+    float: left
+    margin: 6px 0 0 10px
+    font-size: 14px
+  ul li
+    display: inline-block
+    margin: 0 80px 0 0
+    padding: 0
+  ul li:last-child
+    margin: 0
+  a
+    margin-left: 8px
+    margin-right: 8px
+
+#school_home .challenge-set-modal-data h2
+  margin: 0px
+  padding-bottom: 0px
+
+.challenge-set-button
+  text-align: center
+  /* a
+  /*   display: block
+  /*   margin: auto
 

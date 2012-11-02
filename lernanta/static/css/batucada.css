@@ -3965,13 +3965,13 @@ div.voting div.score {
     padding-right: 40px;
 }
 
-#submissions-list ul li div.badge {
+#submissions-list ul li div.p2pu-badge {
     width: 100px;
     text-align: center;
     padding-right: 40px;
 }
 
-#submissions-list ul li div.submission p, #submissions-list ul li div.badge p, #submissions-list ul li div.action p  {
+#submissions-list ul li div.submission p, #submissions-list ul li div.p2pu-badge p, #submissions-list ul li div.action p  {
     margin: 0;
 }
 

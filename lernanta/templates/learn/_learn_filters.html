@@ -13,15 +13,15 @@
   <li class="{% if learn_community %}active{% endif %}">
     <a class="filter" href="{% locale_url learn_featured feature='community' %}">{{ _('Community Picks') }}</a>
   </li>
-  <li class="divider"></li>
+  <!-- <li class="divider"></li> -->
   <li class="{% if learn_showcase %}active{% endif %}">
     <a class="filter" href="{% locale_url learn_featured feature='showcase' %}">{{ _('Staff Favorites') }}</a>
   </li>
-  <li class="divider"></li>
+  <!-- <li class="divider"></li> -->
   <li class="{% if learn_fresh %}active{% endif %}">
     <a class="filter" href="{% locale_url learn_featured feature='fresh' %}">{{ _('Fresh Additions') }}</a>
   </li>
-  <li class="divider"></li>
+  <!-- <li class="divider"></li> -->
   <li class="nav-header">
     <i class="icon-book icon-large"></i>{{ _('Schools') }}
   </li>
@@ -30,7 +30,7 @@
     <li class="{% if learn_school.id == school.id %}active{% endif %}">
       <a class="filter" href="{% locale_url learn_schools school_slug=school.slug %}">{{ school.short_name|title }}</a>
     </li>
-    <li class="divider"></li>
+    <!-- <li class="divider"></li> -->
   {% endfor %}
   <li class="nav-header">
     <i class="icon-tags icon-large"></i>{{ _('Tags') }}
@@ -49,7 +49,7 @@
       <li class="{% if learn_tag == tag.tag__name %}active{% endif %}">
         <a class="filter" href="./?filter_tags={% filter_add_tag filter_tags tag.tag__name %}">{{ tag.tag__name }} ({{ tag.tagged_count }})</a>
       </li>
-      <li class="divider"></li>
+      <!-- <li class="divider"></li> -->
     {% endif %}
   {% endfor %}
   <li class="dropdown">
