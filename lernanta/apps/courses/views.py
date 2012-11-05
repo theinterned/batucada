@@ -32,9 +32,17 @@ from replies import models as comment_model
 log = logging.getLogger(__name__)
 
 
+def _get_course_or_404( course_uri ):
+    try:
+        course = course_model.get_course(course_uri)
+    except:
+        raise http.Http404
+    return course
+
+
 def _populate_course_context( request, course_id, context ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
+    course = _get_course_or_404(course_uri)
     context['course'] = course
     context['course_url'] = request.get_full_path()
     if 'image_uri' in course:
@@ -96,11 +104,7 @@ def import_project( request, project_slug ):
 
 def course_slug_redirect( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    try:
-        course = course_model.get_course(course_uri)
-    except:
-        raise http.Http404
-
+    course = _get_course_or_404(course_uri)
     redirect_url = reverse('courses_show', 
         kwargs={'course_id': course_id, 'slug': course['slug']})
     return http.HttpResponseRedirect(redirect_url)
@@ -108,10 +112,8 @@ def course_slug_redirect( request, course_id ):
 
 def show_course( request, course_id, slug=None ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
-    if course == None:
-        raise http.Http404
- 
+    course = _get_course_or_404(course_uri)
+    
     if slug != course['slug']:
         return course_slug_redirect( request, course_id)
 
@@ -135,9 +137,7 @@ def show_course( request, course_id, slug=None ):
 @require_organizer
 def course_admin_content( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
-    if course == None:
-        raise http.Http404
+    course = _get_course_or_404(course_uri)
  
     context = { }
     context = _populate_course_context(request, course_id, context)
@@ -152,9 +152,7 @@ def course_admin_content( request, course_id ):
 
 def course_discussion( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
-    if course == None:
-        raise http.Http404
+    course = _get_course_or_404(course_uri)
  
     context = { }
     context = _populate_course_context(request, course_id, context)
@@ -169,9 +167,7 @@ def course_discussion( request, course_id ):
 
 def course_people( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
-    if course == None:
-        raise http.Http404
+    course = _get_course_or_404(course_uri)
  
     context = { }
     context = _populate_course_context(request, course_id, context)
@@ -188,9 +184,7 @@ def course_people( request, course_id ):
 @require_organizer
 def course_settings( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
-    if course == None:
-        raise http.Http404
+    course = _get_course_or_404(course_uri)
  
     context = { }
     context = _populate_course_context(request, course_id, context)
@@ -400,7 +394,7 @@ def show_content( request, course_id, content_id):
 @require_organizer
 def create_content( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
+    course = _get_course_or_404(course_uri)
     if request.method == "POST":
         form = ContentForm(request.POST)
         if form.is_valid():
@@ -437,7 +431,7 @@ def create_content( request, course_id ):
 @require_organizer
 def edit_content( request, course_id, content_id ):
     course_uri = course_model.course_id2uri(course_id)
-    course = course_model.get_course(course_uri)
+    course = _get_course_or_404(course_uri)
     content = content_model.get_content("/uri/content/{0}".format(content_id))
 
     if request.method == "POST":
