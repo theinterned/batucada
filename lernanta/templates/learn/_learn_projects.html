@@ -1,0 +1,23 @@
+{% load l10n_tags %}
+{% load i18n %}
+
+<!-- The enumeration below is designed to insert a new row after every 3rd project: -->
+
+{% for project in pagination_current_page.object_list %}
+  {% if forloop.first %}
+    <div class="row-fluid">
+      <ul class="thumbnails">
+  {% endif %}
+        <li class="span4">{% include "projects/_project_card.html" %}</li>
+  {% if forloop.counter|divisibleby:"3" %}
+      </ul>
+    </div>    
+    {% if not forloop.last %}
+      <div class="row-fluid">
+        <ul class="thumbnails">
+    {% endif %}
+  {% else %}{% if forloop.last %}
+      </ul>
+    </div>
+  {% endif %}{% endif %}
+{% endfor %}

@@ -1,2 +1,0 @@
-{% load l10n_tags %}
-{{ _("Make someone's day. Review a badge for ") }} {{ submission.badge }}!

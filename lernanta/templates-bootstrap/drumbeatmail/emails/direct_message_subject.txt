@@ -1,2 +1,0 @@
-{% load l10n_tags %}
-{{ _('New Message from') }} {{ sender }}

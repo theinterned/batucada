@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% load l10n_tags %}
 {% load project_tags %}
+{% load learn_tags %}
 
 {% block description %}{{ project.name }}: {{ project.short_description }}{% endblock %}
 {% block title %}{{ project.name }} | {% block project_title %}{% endblock %}{% endblock %}
 {% block bodyclasses %}project-kind-{{ project.category|slugify }}{% endblock%}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/batucada.css?v=1">
+{% endblock %}
 
 {% block links %}
 {% if project %}

@@ -1,8 +1,0 @@
-{% extends "projects/project_edit_links_base.html" %}
-{% load l10n_tags %}
-
-
-{% block form_hint %}{{ _('Edit links to websites associated with this ') }} {{ project.kind|lower }} {{ _(' such as a blog, homepage, twitter profile, github repository etc.') }}{% endblock %}
-{% block form_url %}{% locale_url projects_edit_links_edit slug=project.slug link=link.id%}{% endblock %}
-{% block button_text %}{{ _('Update') }}{% endblock %}
-

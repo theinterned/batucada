@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load learn_tags %}
+{% block title %}{{ _('Learn | Tags') }}{% endblock %}
+{% block bodyid %}learn-tags{% endblock %}
+
+{% block breadcrumbs %}
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% learn_default %}">{{ _('Learn') }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% locale_url learn_tags %}">{{ _('Tags') }}</a>
+{% endblock %}
+
+{% block body %}
+  <h1>Tag Cloud</h1>
+  <div id="main" class="well">
+    {% for tag in tags %}
+      <a class="btn" style="margin-top:10px;" href="{% locale_url learn_all %}?filter_tags={{ tag.tag__name }}">
+          <font size={{tag.weight|floatformat:0|add:3}}>{{tag.tag__name}}</font>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

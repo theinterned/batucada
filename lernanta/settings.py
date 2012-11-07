@@ -55,9 +55,8 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-SUPPORTED_NONLOCALES = (
-    'media', 'static', '.well-known', 'pubsub', 'broadcasts', 'ajax'
-)
+SUPPORTED_NONLOCALES = ('media', 'static', '.well-known', 'pubsub', 'broadcasts',
+'ajax', 'api',)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -104,6 +103,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 MIDDLEWARE_CLASSES = (
     'drumbeat.middleware.NotFoundMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    #'api.middleware.APISubdomainMiddleware',
     'l10n.middleware.LocaleURLRewriter',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -116,13 +116,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
     'tracker.middleware.PageViewTrackerMiddleware',
-    'waffle.middleware.WaffleMiddleware',
 )
 
 ROOT_URLCONF = 'lernanta.urls'
 
 TEMPLATE_DIRS = (
-    path('templates-bootstrap'),
+    path('templates'),
 )
 
 # Use the fully qualified name for our apps so django_nose does not
@@ -136,7 +135,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.redirects',
     'django.contrib.staticfiles',
-    'south',
+    #'south',
     'robots',
     'wellknown',
     'lernanta.apps.pagination',
@@ -166,6 +165,7 @@ INSTALLED_APPS = (
     'lernanta.apps.news',
     'lernanta.apps.pages',
     'lernanta.apps.projects',
+    'lernanta.apps.learn',
     'lernanta.apps.badges',
     'lernanta.apps.drumbeat',
     'django_obi',
@@ -173,7 +173,8 @@ INSTALLED_APPS = (
     'lernanta.apps.tracker',
     'lernanta.apps.reviews',
     'lernanta.apps.notifications',
-    'waffle',
+    'lernanta.apps.api',
+    'tastypie',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -218,10 +219,18 @@ CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 CACHE_PREFIX = 'lernanta'
 CACHE_COUNT_TIMEOUT = 60
 
-# Email goes to the console by default.  s/console/smtp/ for regular delivery
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email goes to a file by default.  s/filebased/smtp/ for regular delivery
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = path('mailbox') # change this to a proper location
+
 DEFAULT_FROM_EMAIL = 'admin@p2pu.org'
 REPLY_EMAIL_DOMAIN = 'reply.p2pu.org'
+
+# Quickest allowable response time in seconds
+MIN_EMAIL_RESPONSE_TIME = 30
+
+AUTO_REPLY_KEYWORDS = ['auto-reply', 'auto reply', 'auto-response',
+    'auto response']
 
 CELERY_RESULT_BACKEND = "amqp"
 
@@ -308,4 +317,6 @@ TRACKING_PREFIXES = [
     r'^/\w{2}/schools/[\w-]+/$',
 ]
 
-BOT_NAMES = []
+BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
+    'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
+    'Speedy Spider', 'DotBot', 'Sogou']
