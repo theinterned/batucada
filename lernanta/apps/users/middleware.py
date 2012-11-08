@@ -12,8 +12,8 @@ class ProfileExistMiddleware(object):
         if not request.user.is_authenticated():
             return
         try:
-            request.user.get_profile()
-            if profile.deleted = True:
+            profile = request.user.get_profile()
+            if profile.deleted == True:
                 logout(request)
                 return HttpResponseRedirect(reverse('splash'))
         except UserProfile.DoesNotExist:
