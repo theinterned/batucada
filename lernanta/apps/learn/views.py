@@ -79,7 +79,7 @@ def learn(request, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'learn_url': reverse('learn_all'),
+        'load_more_url': reverse('learn_all'),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
     if form.is_valid():
@@ -111,7 +111,7 @@ def schools(request, school_slug, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'learn_url': reverse('learn_all'),
+        'load_more_url': reverse('learn_schools', kwargs={"school_slug": school_slug}),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
         'learn_school': school,
     }
@@ -141,7 +141,7 @@ def featured(request, feature, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'learn_url': reverse('learn_all'),
+        'load_more_url': reverse('learn_featured', kwargs={"feature": feature}),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
 
