@@ -134,3 +134,19 @@ def get_courses_by_list(list_name, projects=None):
         projects = projects.filter(id__in=last_updated_ids)
 
     return projects
+
+
+# new course index API functions ->
+def register_course(course_url, course_title, course_description, course_data_url):
+    pass
+
+
+def update_course(course_url, course_title, course_description, course_data_url):
+    pass
+
+
+def remove_course(course_url, reason):
+    pass
+
+
+#TODO tags and lists

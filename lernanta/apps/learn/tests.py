@@ -50,4 +50,12 @@ class ProjectTests(TestCase):
         self.assertFalse(not_listed_project in listed_projects)
         self.assertFalse(under_dev_project in listed_projects)
         self.assertFalse(test_project in listed_projects)
+
+    def test_register_course(self):
+        #TODO
+        pass
+
+    def test_update_course_info(self):
+        #TODO
+        pass
  
