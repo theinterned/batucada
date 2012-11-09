@@ -46,17 +46,26 @@ def get_weighted_tags(min_count=2, min_weight=1.0, max_weight=7.0):
 
 
 def get_tags_for_courses(courses, exclude=[], max_tags=6):
-    return []
+    tags = db.CourseTags.objects.filter(course__url__in=[c.url for c in courses])
+    tags = tags.exclude(tag__in=exclude)
+    tags = tags.values('tag')
+    tags = tags.annotate(tagged_count=Count('course'))
+    tags = tags.order_by('-tagged_count')[:max_tags]
+    return tags
 
 
 def get_courses_by_tag(tag_name, courses=None):
-    return db.CourseTags.objects.filter(tag=tag_name).values_list(course, flat=True)
+    course_ids = db.CourseTags.objects.filter(
+        tag=tag_name
+    ).values_list('course', flat=True)
+    return db.Course.objects.filter(
+        id__in=course_ids, url__in=[c.url for c in courses])
 
 
 def get_courses_by_tags(tag_list, courses=None):
     "this will return courses that have all the tags in tag_list"
     if not courses:
-        courses = Courses.objects
+        courses = get_listed_courses()
     for tag in tag_list:
         courses = get_courses_by_tag(tag, courses)
     return courses
