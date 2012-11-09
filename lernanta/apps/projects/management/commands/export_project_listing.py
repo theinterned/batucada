@@ -3,7 +3,11 @@ from django.db.models import Q
 
 from projects.models import Project
 from signups.models import Signup
-from learn.models import add_course_listing, update_course_listing
+from learn.models import add_course_listing
+from learn.models import update_course_listing
+from learn.models import create_list
+from learn.models import add_course_to_list
+
 
 class Command(BaseCommand):
     args = '<poll_id poll_id ...>'
@@ -39,4 +43,16 @@ class Command(BaseCommand):
                 add_course_listing(**args)
             except:
                 update_course_listing(**args)
+
+        # create lists
+        create_list('community', "Community Picks", "")
+        create_list('showcase', "Showcased", "")
+
+        for project in listed.filter(community_featured=True):
+            course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
+            add_course_to_list(course_url, 'community')
+
+        for project in listed.filter(featured=True):
+            course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
+            add_course_to_list(course_url, 'showcase')
 

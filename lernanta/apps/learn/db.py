@@ -3,7 +3,7 @@ from django.db import models
 class Course(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    url = models.URLField()
+    url = models.URLField() #TODO <- this should be unique
     data_url = models.URLField()
     thumbnail_url = models.URLField()
     language = models.CharField(max_length=10)
@@ -13,13 +13,14 @@ class Course(models.Model):
     date_removed = models.DateTimeField(null=True)
 
 
-class Lists(models.Model):
+class List(models.Model):
+    name = models.CharField(max_length=32, unique=True)
     title = models.CharField(max_length=255)
     url = models.URLField()
 
 
-class CourseListAssignment(models.Model):
-    course_list = models.ForeignKey(Lists)
+class CourseListEntry(models.Model):
+    course_list = models.ForeignKey(List)
     course = models.ForeignKey(Course)
 
 

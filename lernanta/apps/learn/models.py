@@ -58,8 +58,10 @@ def get_courses_by_tag(tag_name, courses=None):
     course_ids = db.CourseTags.objects.filter(
         tag=tag_name
     ).values_list('course', flat=True)
-    return db.Course.objects.filter(
-        id__in=course_ids, url__in=[c.url for c in courses])
+    ret = db.Course.objects.filter(id__in=course_ids)
+    if courses:
+        ret.filter(url__in=[c.url for c in courses])
+    return ret
 
 
 def get_courses_by_tags(tag_list, courses=None):
@@ -76,7 +78,14 @@ def get_courses_by_list(list_name, courses=None):
         if courses != None, only the courses in courses and the list
         will be returned.
     """
-    return []
+    course_ids = db.CourseListEntry.objects.filter(
+        course_list__name = list_name
+    ).values_list('course', flat=True)
+    ret = db.Course.objects.filter(id__in=course_ids)
+    if courses:
+        ret.filter(url__in=[c.url for c in courses])
+    return ret
+
 
 # new course index API functions ->
 def add_course_listing(course_url, title, description, data_url, language, thumbnail_url, tags):
@@ -123,4 +132,32 @@ def remove_course_listing(course_url, reason):
     course_listing_db.save()
 
 
-#TODO lists
+def create_list(name, title, url):
+    if db.List.objects.filter(name=name).exists():
+        raise Exception("A list with that name already exists")
+
+    course_list = db.List(
+        name = name,
+        title = title,
+        url = url
+    )
+    course_list.save()
+
+
+def add_course_to_list(course_url, list_name):
+    try:
+        course_list = db.List.objects.get(name=list_name)
+    except:
+        raise Exception("List doesn't exist")
+
+    try:
+        course = db.Course.objects.get(url=course_url)
+    except:
+        raise Exception("Course at given URL doesn't exist")
+
+    entry = db.CourseListEntry(
+        course_list = course_list,
+        course = course
+    )
+    entry.save()
+
