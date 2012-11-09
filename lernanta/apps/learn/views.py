@@ -68,7 +68,7 @@ def _filter_and_return(request, context, projects, max_count):
 
 
 def learn(request, max_count=24):
-    projects = get_listed_courses().order_by('-created_on')
+    projects = get_listed_courses()
     get_params = request.GET.copy()
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
@@ -99,8 +99,7 @@ def learn(request, max_count=24):
 
 def schools(request, school_slug, max_count=24):
     school = get_object_or_404(School, slug=school_slug)
-    projects = get_listed_courses().order_by('-created_on')
-
+    projects = get_listed_courses()
     get_params = request.GET.copy()
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
@@ -128,7 +127,7 @@ def schools(request, school_slug, max_count=24):
 
    
 def featured(request, feature, max_count=24):
-    projects = get_listed_courses().order_by('-created_on')
+    projects = get_listed_courses()
     get_params = request.GET.copy()
 
     if not 'language' in get_params:

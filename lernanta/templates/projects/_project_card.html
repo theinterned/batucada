@@ -1,16 +1,16 @@
 {% load l10n_tags %}
 <article class="project card {% if project.accepted_school %}background-{{ project.accepted_school.slug }}{% endif%}">
   <figure>
-    <a href="{{ project.get_absolute_url }}">
-      {% if project.image %}
-      <img src="{{ MEDIA_URL }}{{ project.image }}" width="203" height="125" alt="{{ project.name }}"/>
+    <a href="{{ project.url }}">
+      {% if project.thumbnail_url %}
+      <img src="{{ project.thumbnail_url }}" width="203" height="125" alt="{{ project.name }}"/>
       {% else %}
       <img src="{{ STATIC_URL}}images/project-missing.png" width="203" height="125" alt="{{ project.name }}"/>
       {% endif %}
     </a>
   </figure>
   <div class="info">
-    <h1><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h1>
+    <h1><a href="{{ project.url }}">{{ project.title }}</a></h1>
     <!-- 
      ! TODO: set a character maximum for project.description that works
      ! with this layout. See also /static/css/batucada.css line ~485
