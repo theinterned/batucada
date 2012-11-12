@@ -9,13 +9,9 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
-from django.db.models import Q, Count, Max
-from django.contrib.contenttypes.models import ContentType
 
-# from links.tasks import UnsubscribeFromFeed
 from pagination.views import get_pagination_context
 
-from projects.models import Project
 from learn import forms as project_forms
 from learn.models import get_listed_courses
 from learn.models import get_popular_tags
@@ -25,9 +21,7 @@ from learn.models import get_courses_by_tags
 from learn.models import get_courses_by_list
 from learn.models import get_tags_for_courses
 from l10n.urlresolvers import reverse
-from relationships.models import Relationship
 from schools.models import School
-from activity.models import Activity, RemoteObject
 from reviews.models import Review
 
 log = logging.getLogger(__name__)
