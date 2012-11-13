@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 from celery.task import Task
 
@@ -10,7 +11,7 @@ class UpdateCourseTask(Task):
 
     def run(self, course_url, **kwargs):
         listing = db.Courses.get(url=course_url)
-        listing.date_checked = datetime.now()
+        listing.date_checked = datetime.datetime.utcnow()
         listing.save()
 
         results = None

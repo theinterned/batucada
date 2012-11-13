@@ -109,7 +109,8 @@ def schools(request, school_slug, max_count=24):
         'learn_school': school,
     }
 
-    projects = projects.filter(school=school)
+    #projects = projects.filter(school=school)
+    projects = get_courses_by_list(school_slug, projects)
 
     if form.is_valid():
         language = form.cleaned_data['language']
@@ -155,3 +156,10 @@ def learn_tags(request):
     return render_to_response('learn/learn_tags.html', {'tags': tags},
         context_instance=RequestContext(request))
 
+
+def add_course(request):
+    pass
+
+
+def update_course(request):
+    pass

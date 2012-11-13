@@ -12,4 +12,10 @@ urlpatterns = patterns('',
 
     url(r'^tags/$', 'learn.views.learn_tags',
         name='learn_tags'),
+
+    url(r'api/add_course/$', 'learn.views.add_course',
+        name='learn_add_course'),
+
+    url(r'api/update_course/$', 'learn.views.update_course',
+        name='learn_update_course'),
 )

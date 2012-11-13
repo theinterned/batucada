@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Count, Q
@@ -6,8 +8,6 @@ from tags.models import GeneralTaggedItem
 from projects.models import Project
 from signups.models import Signup
 from learn import db
-
-import datetime
 
 
 def _get_listed_courses():
@@ -128,7 +128,7 @@ def update_course_listing(course_url, title=None, description=None, data_url=Non
 
 def remove_course_listing(course_url, reason):
     course_listing_db = db.Course.objects.get(url=course_url)
-    course_listing_db.date_removed = datetime.now()
+    course_listing_db.date_removed = datetime.datetime.utcnow()
     course_listing_db.save()
 
 
@@ -154,6 +154,9 @@ def add_course_to_list(course_url, list_name):
         course = db.Course.objects.get(url=course_url)
     except:
         raise Exception("Course at given URL doesn't exist")
+
+    if db.CourseListEntry.objects.filter(course_list=course_list, course=course).exists():
+        raise Exception("Course already in list")
 
     entry = db.CourseListEntry(
         course_list = course_list,

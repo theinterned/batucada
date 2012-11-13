@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
 
 from projects.models import Project
+from schools.models import School
 from signups.models import Signup
 from learn.models import add_course_listing
 from learn.models import update_course_listing
@@ -22,11 +23,23 @@ class Command(BaseCommand):
             test=False
         )
 
+        # create lists for schools
+        for school in School.objects.all():
+            try:
+                create_list(
+                    school.slug, school.name, 
+                    "http://p2pu.org/en/schools/{0}".format(school.slug)
+                )
+            except:
+                pass
+
         listed = listed.filter(
             Q(category=Project.CHALLENGE)
             | Q(sign_up__status=Signup.MODERATED)
             | Q(sign_up__status=Signup.NON_MODERATED)
         )
+
+        listed = listed.order_by('-created_on')
 
         for project in listed:
             project_tags = project.tags.all().values_list('name', flat=True)
@@ -44,9 +57,22 @@ class Command(BaseCommand):
             except:
                 update_course_listing(**args)
 
+            if project.school:
+                try:
+                    add_course_to_list(args['course_url'], project.school.slug)
+                except:
+                    pass
+
         # create lists
-        create_list('community', "Community Picks", "")
-        create_list('showcase', "Showcased", "")
+        try:
+            create_list('community', "Community Picks", "")
+        except:
+            pass
+
+        try:
+            create_list('showcase', "Showcased", "")
+        except:
+            pass
 
         for project in listed.filter(community_featured=True):
             course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)

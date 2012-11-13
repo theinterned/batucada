@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+
 
 class Course(models.Model):
     title = models.CharField(max_length=255)
@@ -8,7 +11,7 @@ class Course(models.Model):
     thumbnail_url = models.URLField()
     language = models.CharField(max_length=10)
     verified = models.BooleanField(default=False)
-    date_added = models.DateTimeField(null=True)
+    date_added = models.DateTimeField(auto_now_add=True, default=datetime.datetime.utcnow)
     date_checked = models.DateTimeField(null=True)
     date_removed = models.DateTimeField(null=True)
 
