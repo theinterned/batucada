@@ -21,6 +21,9 @@ from activity.schema import verbs
 from relationships.models import Relationship
 from signups.models import SignupAnswer
 from tracker.models import get_google_tracking_context
+from learn.models import add_course_to_list
+from learn.models import remove_course_from_list
+from learn.models import get_courses_by_list
 
 from schools.decorators import school_organizer_required
 from schools.models import School, ProjectSet
@@ -383,53 +386,42 @@ def edit_featured_delete(request, slug, project_slug):
 def edit_membership(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
-        form = school_forms.SchoolAddCourseForm(school, request.POST)
+        form = school_forms.SchoolAddCourseForm(request.POST)
         if form.is_valid():
-            project = form.cleaned_data['project']
-            project.school = school
-            project.save()
-            messages.success(request,
-                _('The %s was added to this school.') % project.kind.lower())
-            return http.HttpResponseRedirect(reverse('schools_edit_membership',
-                kwargs=dict(slug=school.slug)))
+            course_url = form.cleaned_data['course_url']
+            try:
+                add_course_to_list(course_url, slug)
+                messages.success(request,
+                    _('The course was added to this school.'))
+                return http.HttpResponseRedirect(reverse('schools_edit_membership',
+                    kwargs=dict(slug=school.slug)))
+            except Exception as e:   
+                messages.error(request, e.message)
         else:
             messages.error(request,
                 _("There was an error adding %s to this school.") % slug)
     else:
-        form = school_forms.SchoolAddCourseForm(school)
+        form = school_forms.SchoolAddCourseForm()
     return render_to_response('schools/school_edit_membership.html', {
         'school': school,
         'form': form,
-        'projects': school.projects.all(),
+        'courses': get_courses_by_list(slug),
         'membership_tab': True,
     }, context_instance=RequestContext(request))
 
 
 @login_required
 @school_organizer_required
-def matching_non_member(request, slug):
+def edit_membership_delete(request, slug):
     school = get_object_or_404(School, slug=slug)
-    if len(request.GET['term']) == 0:
-        raise http.Http404
-
-    matching_projects = Project.objects.filter(deleted=False,
-        slug__icontains=request.GET['term']).exclude(
-        id__in=school.projects.all().values('id'))
-    json = simplejson.dumps([project.slug for project in matching_projects])
-
-    return http.HttpResponse(json, mimetype="application/json")
-
-
-@login_required
-@school_organizer_required
-def edit_membership_delete(request, slug, project_slug):
-    school = get_object_or_404(School, slug=slug)
-    project = get_object_or_404(Project, slug=project_slug, school__slug=slug)
     if request.method == 'POST':
-        project.school = None
-        project.save()
-        messages.success(request, _(
-            "The %s is no longer part of this school.") % project.kind.lower())
+        course_url = request.POST.get('course_url')
+        try:
+            remove_course_from_list(course_url, slug)
+            messages.success(request, _(
+                "The course is no longer part of this school."))
+        except:
+            messages.error(request, _("Could not remove course from school"))
     return http.HttpResponseRedirect(reverse('schools_edit_membership',
         kwargs={'slug': school.slug}))
 

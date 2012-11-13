@@ -126,7 +126,11 @@ def update_course_listing(course_url, title=None, description=None, data_url=Non
                 course_tag.save()
 
 
-def remove_course_listing(course_url, reason):
+def search_course_title(keyword):
+    return db.Course.objects.filter(title__istartswith=keyword)
+
+
+def remove_course_listing(course_url):
     course_listing_db = db.Course.objects.get(url=course_url)
     course_listing_db.date_removed = datetime.datetime.utcnow()
     course_listing_db.save()
@@ -163,4 +167,23 @@ def add_course_to_list(course_url, list_name):
         course = course
     )
     entry.save()
+
+
+def remove_course_from_list(course_url, list_name):
+    try:
+        course_list = db.List.objects.get(name=list_name)
+    except:
+        raise Exception("List doesn't exist")
+
+    try:
+        course = db.Course.objects.get(url=course_url)
+    except:
+        raise Exception("Course not in index")
+
+    entry = db.CourseListEntry.objects.filter(course_list=course_list, course=course)
+
+    if not entry.exists():
+        raise Exception("Course not in list")
+
+    entry.delete()
 

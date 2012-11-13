@@ -20,6 +20,7 @@ from learn.models import get_courses_by_tag
 from learn.models import get_courses_by_tags
 from learn.models import get_courses_by_list
 from learn.models import get_tags_for_courses
+from learn.models import search_course_title
 from l10n.urlresolvers import reverse
 from schools.models import School
 from reviews.models import Review
@@ -155,6 +156,19 @@ def learn_tags(request):
     tags = get_weighted_tags()
     return render_to_response('learn/learn_tags.html', {'tags': tags},
         context_instance=RequestContext(request))
+
+
+def auto_complete_lookup(request):
+    term = request.GET.get('term', None)
+    course_list = []
+
+    if term:
+        course_list = search_course_title(term)
+
+    json = simplejson.dumps(
+        [{"label": course.title, "url": course.url} for course in course_list]
+    )
+    return http.HttpResponse(json, mimetype="application/json")
 
 
 def add_course(request):
