@@ -128,11 +128,11 @@ class SchoolAddFeaturedForm(forms.Form):
         return project
 
 
-class SchoolAddProjectForm(forms.Form):
+class SchoolAddCourseForm(forms.Form):
     project = forms.CharField()
 
     def __init__(self, school, *args, **kwargs):
-        super(SchoolAddProjectForm, self).__init__(*args, **kwargs)
+        super(SchoolAddCourseForm, self).__init__(*args, **kwargs)
         self.school = school
 
     def clean_project(self):

@@ -383,7 +383,7 @@ def edit_featured_delete(request, slug, project_slug):
 def edit_membership(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
-        form = school_forms.SchoolAddProjectForm(school, request.POST)
+        form = school_forms.SchoolAddCourseForm(school, request.POST)
         if form.is_valid():
             project = form.cleaned_data['project']
             project.school = school
@@ -396,7 +396,7 @@ def edit_membership(request, slug):
             messages.error(request,
                 _("There was an error adding %s to this school.") % slug)
     else:
-        form = school_forms.SchoolAddProjectForm(school)
+        form = school_forms.SchoolAddCourseForm(school)
     return render_to_response('schools/school_edit_membership.html', {
         'school': school,
         'form': form,
