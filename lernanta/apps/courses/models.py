@@ -7,6 +7,7 @@ from drumbeat.utils import slugify
 from courses import db
 from content2 import models as content_model
 from replies import models as comment_model
+from learn import models as learn_model
 
 import logging
 log = logging.getLogger(__name__)
@@ -93,11 +94,7 @@ def create_course(title, hashtag, description, language, organizer_uri):
         language=language
     )
 
-    try:
-        course_db.save()
-    except:
-        log.error("could not save Course to database!")
-        return None
+    course_db.save()
 
     about = content_model.create_content(
        **{"title": _("About"), "content": "", "author_uri": organizer_uri}
@@ -121,10 +118,9 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
         course_db.language = language
     if image_uri:
         course_db.image_uri = image_uri
-    try:
-        course_db.save()
-    except:
-        log.error("could not save Course to database!")
+    
+    course_db.save()
+
     return get_course(course_uri)
 
 
@@ -132,23 +128,48 @@ def publish_course(course_uri):
     course_db = _get_course_db(course_uri)
     course_db.draft = False
     course_db.archived = False
-    try:
-        course_db.save()
-    except:
-        log.error("could not save Course to database!")
+    course_db.save()
+
+    course = get_course(course_uri)
+    
+    learn_model.add_course_listing(
+        course_url="/courses/{0}/{1}".format(course["id"], course["slug"]),
+        title=course['title'],
+        description=course['description'],
+        data_url="",
+        language=course['language'],
+        thumbnail_url="",
+        tags=[]
+    )
+
     # TODO: Notify interested people in new course
-    return get_course(course_uri)
+    return course
 
 
 def archive_course(course_uri):
     course_db = _get_course_db(course_uri)
     course_db.archived = True
-    try:
-        course_db.save()
-    except:
-        log.error("Could not save course db object!")
-    return get_course(course_uri)
+    course_db.save()
 
+    course = get_course(course_uri)
+    learn_model.remove_course_listing(
+        course_url="/courses/{0}/{1}".format(course["id"], course["slug"]),
+    )
+
+    return course
+
+def unpublish_course(course_uri):
+    course_db = _get_course_db(course_uri)
+    course_db.archived = False
+    course_db.draft = True
+    course_db.save()
+
+    course = get_course(course_uri)
+    learn_model.remove_course_listing(
+        course_url="/courses/{0}/{1}".format(course["id"], course["slug"]),
+    )
+
+    return course
 
 def get_course_content(course_uri):
     content = []
@@ -311,10 +332,7 @@ def update_cohort( uri, term=None, signup=None, start_date=None, end_date=None )
         cohort_db.start_date = start_date
     if end_date:
         cohort_db.end_date = end_date
-    try:
-        cohort_db.save()
-    except:
-        return None
+    cohort_db.save()
     return get_cohort(uri)
 
 
@@ -340,11 +358,8 @@ def add_user_to_cohort(cohort_uri, user_uri, role):
         user_uri=user_uri,
         role=role
     )
-    try:
-        signup_db.save()
-    except Exception, e:
-        log.error(e)
-        return None
+
+    signup_db.save()
     
     signup = {
         "cohort_uri": cohort_uri,
@@ -385,10 +400,7 @@ def add_comment_to_cohort(comment_uri, cohort_uri, reference_uri):
         reference_uri=reference_uri
     )
 
-    try:
-        cohort_comment_db.save()
-    except:
-        return None
+    cohort_comment_db.save()
 
     #TODO update the reference for the comment to point to this cohort comment
     #NOTE maybe eliminate this psuedo resource by using a combined URI cohort+ref

@@ -49,7 +49,7 @@ class Command(BaseCommand):
             | Q(sign_up__status=Signup.NON_MODERATED)
         )
 
-        listed = listed.order_by('-created_on')
+        listed = listed.order_by('created_on')
 
         for project in listed:
             project_tags = project.tags.all().values_list('name', flat=True)

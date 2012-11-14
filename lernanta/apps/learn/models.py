@@ -12,8 +12,8 @@ from learn import db
 
 def _get_listed_courses():
     listed = db.Course.objects.filter(
-        date_removed__isnull=True, 
-        verified=True
+        date_removed__isnull=True
+        #TODO ,verified=True
     ).order_by("-date_added")
     return listed
 
@@ -42,6 +42,7 @@ def get_popular_tags(max_count=10):
 
 
 def get_weighted_tags(min_count=2, min_weight=1.0, max_weight=7.0):
+    #TODO
     return []
 
 
@@ -58,7 +59,7 @@ def get_courses_by_tag(tag_name, courses=None):
     course_ids = db.CourseTags.objects.filter(
         tag=tag_name
     ).values_list('course', flat=True)
-    ret = db.Course.objects.filter(id__in=course_ids)
+    ret = _get_listed_courses().filter(id__in=course_ids)
     if courses:
         ret.filter(url__in=[c.url for c in courses])
     return ret
@@ -81,7 +82,7 @@ def get_courses_by_list(list_name, courses=None):
     course_ids = db.CourseListEntry.objects.filter(
         course_list__name = list_name
     ).values_list('course', flat=True)
-    ret = db.Course.objects.filter(id__in=course_ids)
+    ret = _get_listed_courses().filter(id__in=course_ids)
     if courses:
         ret.filter(url__in=[c.url for c in courses])
     return ret
@@ -89,7 +90,7 @@ def get_courses_by_list(list_name, courses=None):
 
 # new course index API functions ->
 def add_course_listing(course_url, title, description, data_url, language, thumbnail_url, tags):
-    if db.Course.objects.filter(url=course_url).exists():
+    if _get_listed_courses().filter(url=course_url).exists():
         raise Exception("A course with that URL already exist. Try update?")
     course_listing_db = db.Course(
         title=title,
@@ -105,7 +106,7 @@ def add_course_listing(course_url, title, description, data_url, language, thumb
 
 
 def update_course_listing(course_url, title=None, description=None, data_url=None, language=None, thumbnail_url=None, tags=None):
-    listing= db.Course.objects.get(url=course_url)
+    listing = _get_listed_courses().get(url=course_url)
     if title:
         listing.title = title
     if description:
@@ -127,11 +128,11 @@ def update_course_listing(course_url, title=None, description=None, data_url=Non
 
 
 def search_course_title(keyword):
-    return db.Course.objects.filter(title__istartswith=keyword)
+    return _get_listed_courses().filter(title__istartswith=keyword)
 
 
 def remove_course_listing(course_url):
-    course_listing_db = db.Course.objects.get(url=course_url)
+    course_listing_db = _get_listed_courses().get(url=course_url)
     course_listing_db.date_removed = datetime.datetime.utcnow()
     course_listing_db.save()
 
@@ -155,7 +156,7 @@ def add_course_to_list(course_url, list_name):
         raise Exception("List doesn't exist")
 
     try:
-        course = db.Course.objects.get(url=course_url)
+        course = _get_listed_courses().get(url=course_url)
     except:
         raise Exception("Course at given URL doesn't exist")
 

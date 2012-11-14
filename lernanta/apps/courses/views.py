@@ -307,8 +307,7 @@ def course_change_status( request, course_id, status ):
     user_uri = "/uri/user/{0}".format(request.user.username)
     course_uri = course_model.course_id2uri(course_id)
     if status == 'draft':
-        #TODO
-        pass
+        course = course_model.unpublish_course(course_uri)
     elif status == 'publish':
         course = course_model.publish_course(course_uri)
     elif status == 'archive':
