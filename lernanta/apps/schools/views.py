@@ -33,8 +33,9 @@ from schools import forms as school_forms
 def home(request, slug):
     school = get_object_or_404(School, slug=slug)
     user = request.user
-    featured = school.featured.filter(not_listed=False,
-        archived=False, deleted=False)
+    #featured = school.featured.filter(not_listed=False,
+    #    archived=False, deleted=False)
+    featured = get_courses_by_list("{0}_featured".format(slug))
     featured_project_sets = school.project_sets.filter(
         featured=True)
     if user.is_authenticated():
@@ -329,53 +330,43 @@ def matching_non_organizers(request, slug):
 def edit_featured(request, slug):
     school = get_object_or_404(School, slug=slug)
     if request.method == 'POST':
-        form = school_forms.SchoolAddFeaturedForm(school, request.POST)
+        form = school_forms.SchoolAddCourseForm(request.POST)
         if form.is_valid():
-            project = form.cleaned_data['project']
-            school.featured.add(project)
-            school.save()
-            msg = _('The %s is now featured for this school.')
-            messages.success(request, msg % project.kind.lower())
-            return http.HttpResponseRedirect(reverse(
-                'schools_edit_featured', kwargs=dict(slug=school.slug)))
-        else:
-            msg = _("There was an error marking %s as featured.")
-            messages.error(request, msg % slug)
+            course_url = form.cleaned_data['course_url']
+            try:
+                add_course_to_list(course_url, '{0}_featured'.format(slug))
+                msg = _('The course is now featured for this school.')
+                messages.success(request, msg)
+                return http.HttpResponseRedirect(reverse(
+                    'schools_edit_featured', kwargs=dict(slug=school.slug)))
+            except:
+                pass
+        msg = _("There was an error marking the course as featured.")
+        messages.error(request, msg)
     else:
-        form = school_forms.SchoolAddFeaturedForm(school)
+        form = school_forms.SchoolAddCourseForm()
+
+    featured = get_courses_by_list("{0}_featured".format(slug))
     return render_to_response('schools/school_edit_featured.html', {
         'school': school,
         'form': form,
-        'featured': school.featured.all(),
+        'featured': featured,
         'featured_tab': True,
     }, context_instance=RequestContext(request))
 
 
 @login_required
 @school_organizer_required
-def matching_non_featured(request, slug):
+def edit_featured_delete(request, slug):
     school = get_object_or_404(School, slug=slug)
-    if len(request.GET['term']) == 0:
-        raise http.Http404
-
-    school_projects = Project.objects.filter(school=school)
-    non_featured = school_projects.exclude(id__in=school.featured.values('id'))
-    matching_projects = non_featured.filter(
-        slug__icontains=request.GET['term'])
-    json = simplejson.dumps([project.slug for project in matching_projects])
-
-    return http.HttpResponse(json, mimetype="application/json")
-
-
-@login_required
-@school_organizer_required
-def edit_featured_delete(request, slug, project_slug):
-    school = get_object_or_404(School, slug=slug)
-    project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
-        school.featured.remove(project)
-        msg = _("The %s stopped being featured for this school.")
-        messages.success(request, msg % project.kind.lower())
+        course_url = request.POST.get('course_url')
+        try:
+            remove_course_from_list(course_url, '{0}_featured'.format(slug))
+            msg = _("The course stopped being featured for this school.")
+            messages.success(request, msg)
+        except:
+            messages.error(request, _('Could not remove course from featured list'))
     return http.HttpResponseRedirect(reverse('schools_edit_featured', kwargs={
         'slug': school.slug,
     }))

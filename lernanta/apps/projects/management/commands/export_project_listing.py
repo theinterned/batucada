@@ -33,6 +33,16 @@ class Command(BaseCommand):
             except:
                 pass
 
+            try:
+                create_list(
+                    "{0}_featured".format(school.slug),
+                    "{0} featured".format(school.name),
+                    "http://p2pu.org/en/schools/{0}".format(school.slug)
+                )
+            except:
+                pass
+
+
         listed = listed.filter(
             Q(category=Project.CHALLENGE)
             | Q(sign_up__status=Signup.MODERATED)
@@ -76,9 +86,24 @@ class Command(BaseCommand):
 
         for project in listed.filter(community_featured=True):
             course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
-            add_course_to_list(course_url, 'community')
+            try:
+                add_course_to_list(course_url, 'community')
+            except:
+                pass
 
         for project in listed.filter(featured=True):
             course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
-            add_course_to_list(course_url, 'showcase')
+            try:
+                add_course_to_list(course_url, 'showcase')
+            except:
+                pass
+
+        for school in School.objects.all():
+            for project in school.featured.all():
+                course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
+                list_name = "{0}_featured".format(school.slug)
+                try:
+                    add_course_to_list(course_url, list_name)
+                except:
+                    pass
 

@@ -103,31 +103,6 @@ class ProjectAddOrganizerForm(forms.Form):
         return user
 
 
-class SchoolAddFeaturedForm(forms.Form):
-    project = forms.CharField()
-
-    def __init__(self, school, *args, **kwargs):
-        super(SchoolAddFeaturedForm, self).__init__(*args, **kwargs)
-        self.school = school
-
-    def clean_project(self):
-        slug = self.cleaned_data['project']
-        msg = _('There is no study group, course, ... with short name: %s.')
-        try:
-            project = Project.objects.get(slug=slug)
-        except Project.DoesNotExist:
-            raise forms.ValidationError(msg % slug)
-        if project.school != self.school:
-            msg = _('The %(slug)s %(kind)s is not part of this school.')
-            raise forms.ValidationError(msg % {'slug': slug,
-                'kind': project.kind.lower()})
-        if self.school.featured.filter(slug=slug).exists():
-            msg = _('The %(slug)s %(kind)s is already featured.')
-            raise forms.ValidationError(msg % {'slug': slug,
-                'kind': project.kind.lower()})
-        return project
-
-
 class SchoolAddCourseForm(forms.Form):
     course_url = forms.CharField()
 
