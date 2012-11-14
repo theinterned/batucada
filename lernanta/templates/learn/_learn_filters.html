@@ -46,8 +46,8 @@
   {% endfor %}
   {% for tag in popular_tags %}
     {% if forloop.counter <= 4 %}
-      <li class="{% if learn_tag == tag.tag__name %}active{% endif %}">
-        <a class="filter" href="./?filter_tags={% filter_add_tag filter_tags tag.tag__name %}">{{ tag.tag__name }} ({{ tag.tagged_count }})</a>
+      <li class="{% if learn_tag == tag.tag %}active{% endif %}">
+        <a class="filter" href="./?filter_tags={% filter_add_tag filter_tags tag.tag %}">{{ tag.tag }} ({{ tag.tagged_count }})</a>
       </li>
       <!-- <li class="divider"></li> -->
     {% endif %}
@@ -61,7 +61,7 @@
       {% for tag in popular_tags %}
         {% if forloop.counter > 4 %}
           <li>
-            <a class="filter" href="./?filter_tags={% filter_add_tag filter_tags tag.tag__name %}">{{ tag.tag__name }} ({{ tag.tagged_count }})</a>
+            <a class="filter" href="./?filter_tags={% filter_add_tag filter_tags tag.tag %}">{{ tag.tag }} ({{ tag.tagged_count }})</a>
           </li>
         {% endif %}
       {% endfor %} 
