@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
+from django.utils import simplejson as json
 from django.views.decorators.http import require_http_methods
 
 from l10n.urlresolvers import reverse
@@ -132,6 +133,17 @@ def show_course( request, course_id, slug=None ):
         context_instance=RequestContext(request)
     )
 
+
+def course_learn_api_data( request, course_id ):
+    """ return data required by the learn API """
+    course_uri = course_model.course_id2uri(course_id)
+    try:
+        course_data = course_model.get_course_learn_api_data(course_uri)
+    except:
+        raise http.Http404
+
+    return http.HttpResponse(json.dumps(course_data), mimetype="application/json")
+ 
 
 @login_required
 @require_organizer

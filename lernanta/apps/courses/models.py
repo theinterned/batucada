@@ -3,6 +3,8 @@ import datetime
 
 from django.utils.translation import ugettext as _
 
+from l10n.urlresolvers import reverse
+
 from drumbeat.utils import slugify
 from courses import db
 from content2 import models as content_model
@@ -124,24 +126,35 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
     return get_course(course_uri)
 
 
+def get_course_learn_api_data(course_uri):
+    course = get_course(course_uri)
+
+    course_url = reverse('courses_show', 
+        kwargs={'course_id': course["id"], 'slug': course["slug"]}
+    )
+    data_url = reverse('courses_learn_api_data', kwargs={'course_id': course["id"]})
+
+    learn_api_data = {
+        "course_url": course_url,
+        "title": course['title'],
+        "description": course['description'],
+        "data_url": data_url,
+        "language": course['language'],
+        "thumbnail_url": "",
+        "tags": []
+    }
+    return learn_api_data
+
+
 def publish_course(course_uri):
     course_db = _get_course_db(course_uri)
     course_db.draft = False
     course_db.archived = False
     course_db.save()
 
-    course = get_course(course_uri)
+    learn_model.add_course_listing(**get_course_learn_api_data(course_uri))
     
-    learn_model.add_course_listing(
-        course_url="/courses/{0}/{1}".format(course["id"], course["slug"]),
-        title=course['title'],
-        description=course['description'],
-        data_url="",
-        language=course['language'],
-        thumbnail_url="",
-        tags=[]
-    )
-
+    course = get_course(course_uri)
     # TODO: Notify interested people in new course
     return course
 

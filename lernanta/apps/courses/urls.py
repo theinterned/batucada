@@ -12,6 +12,10 @@ urlpatterns = patterns('',
         'courses.views.course_slug_redirect',
         name='courses_slug_redirect'),
 
+    url(r'^(?P<course_id>[\d]+)/learn_api_data/$', 
+        'courses.views.course_learn_api_data',
+        name='courses_learn_api_data'),
+
     url(r'^(?P<course_id>[\d]+)/admin_content/$', 
         'courses.views.course_admin_content',
         name='courses_admin_content'),
