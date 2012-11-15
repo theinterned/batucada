@@ -122,6 +122,11 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
         course_db.image_uri = image_uri
     
     course_db.save()
+    if course_db.archived == False and course_db.draft == False:
+        try:
+            learn_model.update_course_listing(**get_course_learn_api_data(course_uri))
+        except:
+            pass
 
     return get_course(course_uri)
 
@@ -129,8 +134,9 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
 def get_course_learn_api_data(course_uri):
     course = get_course(course_uri)
 
-    course_url = reverse('courses_show', 
-        kwargs={'course_id': course["id"], 'slug': course["slug"]}
+    course_url = reverse(
+        'courses_slug_redirect', 
+        kwargs={'course_id': course["id"]}
     )
     data_url = reverse('courses_learn_api_data', kwargs={'course_id': course["id"]})
 
