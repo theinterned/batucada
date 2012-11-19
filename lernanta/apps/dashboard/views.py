@@ -20,22 +20,21 @@ from activity.views import filter_activities
 from pagination.views import get_pagination_context
 from tracker import models as tracker_models
 from links.models import Link
+from learn.models import get_courses_by_list
 
 
 def splash(request):
     """Splash page we show to users who are not authenticated."""
-    project_ids = Project.objects.filter(
-        featured=True).values_list('id', flat=True)
-    featured_count = min(4,len(project_ids))
-    project_ids = random.sample(project_ids, featured_count)
-    projects = Project.objects.filter(id__in=project_ids)
+    courses = get_courses_by_list("showcase")
+    featured_count = min(4,len(courses))
+    courses = random.sample(courses, featured_count)
     activities = Activity.objects.public()
     feed_entries = FeedEntry.objects.filter(
         page='splash').order_by('-created_on')[0:4]
     feed_url = settings.FEED_URLS['splash']
     context = {
         'activities': activities,
-        'featured_projects': projects,
+        'featured_projects': courses,
         'feed_entries': feed_entries,
         'feed_url': feed_url,
         'domain': Site.objects.get_current().domain,
