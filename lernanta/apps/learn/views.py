@@ -16,7 +16,6 @@ from learn import forms as project_forms
 from learn.models import get_listed_courses
 from learn.models import get_popular_tags
 from learn.models import get_weighted_tags
-from learn.models import get_courses_by_tag
 from learn.models import get_courses_by_tags
 from learn.models import get_courses_by_list
 from learn.models import get_tags_for_courses

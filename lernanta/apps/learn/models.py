@@ -56,18 +56,20 @@ def get_tags_for_courses(courses, exclude=[], max_tags=6):
 
 
 def get_courses_by_tag(tag_name, courses=None):
+    if courses == None:
+        courses=get_listed_courses()
+
     course_ids = db.CourseTags.objects.filter(
-        tag=tag_name
+        tag=tag_name, 
+        course__url__in=[c.url for c in courses]
     ).values_list('course', flat=True)
     ret = _get_listed_courses().filter(id__in=course_ids)
-    if courses:
-        ret.filter(url__in=[c.url for c in courses])
     return ret
 
 
 def get_courses_by_tags(tag_list, courses=None):
     "this will return courses that have all the tags in tag_list"
-    if not courses:
+    if courses == None:
         courses = get_listed_courses()
     for tag in tag_list:
         courses = get_courses_by_tag(tag, courses)
