@@ -23,7 +23,7 @@
     {% if current_projects.organizing or current_projects.participating or current_projects.following or past_projects or past_drupal_courses %}
     <div class="row-fluid">
     <div class="profile-courses">
-      <h3>{{ _('Latest Courses') }} <a class="show-all-courses">{{ _('View All') }}</a></h3>
+      <h2>{{ _('Latest Courses') }} <small><a class="show-all-courses">{{ _('View All') }}</a></small></h2>
       <ul>
         {% for project in current_projects.organizing %}
           {% include "users/_project_image.html"%}
@@ -56,10 +56,10 @@
     {% if badges or pilot_badges %}
     <div class="row-fluid">
     <div class="profile-badges">
-      <h3>
+      <h2>
         {{ _('Latest Badges') }}
         <a href="{% locale_url users_badges_manage %}" title="{{ _('Share your badges') }}"><i class="icon-share icon-large"></i></a>
-        <a class="show-all-badges">{{ _('View All') }}</a></h3>
+        <small><a class="show-all-badges">{{ _('View All') }}</a></small></h2>
       <ul>
         {% for badge in badges %}
           <li>
@@ -75,7 +75,7 @@
     <div class="row-fluid">
     <div class="profile-interests">
       {% if skills %}
-      <h3>{{ _('My Skills') }}</h3>
+      <h2>{{ _('My Skills') }}</h2>
       <ul class="tags skills">
         {% for skill in skills %}
           <li>
@@ -87,7 +87,7 @@
       </ul>
       {% endif %}
       {% if interests %}
-      <h3>{{ _('My Interests') }}</h3>
+      <h2>{{ _('My Interests') }}</h2>
       <ul class="tags interests">
         {% for interest in interests %}
           <li>
@@ -99,7 +99,7 @@
       </ul>
       {% endif %}
       {% if desired_topics %}
-      <h3>{{ _('What I want to learn more about') }}</h3>
+      <h2>{{ _('What I want to learn more about') }}</h2>
       <ul class="tags interests">
         {% for topic in desired_topics %}
           <li>
