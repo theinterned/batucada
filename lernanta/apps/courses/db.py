@@ -21,6 +21,11 @@ class CourseContent(ModelBase):
     index = models.PositiveIntegerField()
 
 
+class CourseTags(ModelBase):
+    course = models.ForeignKey(Course, related_name='tags')
+    tag = models.CharField(max_length=64)
+
+
 class Cohort(ModelBase):
 
     OPEN = "OPEN"
