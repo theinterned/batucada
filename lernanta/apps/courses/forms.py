@@ -32,6 +32,10 @@ class CourseTermForm(forms.Form):
     end_date = forms.DateField()
 
 
+class CourseTagsForm(forms.Form):
+    tags = forms.CharField(max_length=256)
+
+
 SIGNUP_CHOICES = [
     ("OPEN", _("Open"),), 
     ("MODERATED", _("Moderated"),),

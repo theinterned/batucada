@@ -20,6 +20,7 @@ from courses.forms import CourseUpdateForm
 from courses.forms import CourseTermForm
 from courses.forms import CourseImageForm
 from courses.forms import CohortSignupForm
+from courses.forms import CourseTagsForm
 from courses.decorators import require_organizer
 
 from content2 import models as content_model
@@ -203,6 +204,8 @@ def course_settings( request, course_id ):
 
     context['update_form'] = CourseUpdateForm(course)
     context['image_form'] = CourseImageForm()
+    tags = ", ".join(course_model.get_course_tags(course_uri))
+    context['tags_form'] = CourseTagsForm({'tags': tags})
     if context['cohort']['term'] == 'FIXED':
         context['term_form'] = CourseTermForm(context['cohort'])
     else:
@@ -378,6 +381,22 @@ def course_update_attribute( request, course_id, attribute):
         course_model.update_course( course_uri, **kwargs )
     else:
         messages.error(request, _("Could not update {0}.".format(attribute)))
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
+
+
+@login_required
+@require_http_methods(['POST'])
+@require_organizer
+def course_update_tags( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    form = CourseTagsForm(request.POST)
+    if form.is_valid():
+        tags = [tag.strip() for tag in form.cleaned_data['tags'].split(',')]
+        course_model.remove_course_tags(
+            course_uri, course_model.get_course_tags(course_uri)
+        )
+        course_model.add_course_tags(course_uri, tags)
     redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
     return http.HttpResponseRedirect(redirect_url)
 

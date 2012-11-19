@@ -120,15 +120,20 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
         course_db.language = language
     if image_uri:
         course_db.image_uri = image_uri
-    course_db.save()
 
+    course_db.save()
+    update_course_learn_api(course_uri)
+
+    return get_course(course_uri)
+
+
+def update_course_learn_api(course_uri):
+    course_db = _get_course_db(course_uri)
     if course_db.archived == False and course_db.draft == False:
         try:
             learn_model.update_course_listing(**get_course_learn_api_data(course_uri))
         except:
             pass
-
-    return get_course(course_uri)
 
 
 def get_course_learn_api_data(course_uri):
@@ -271,6 +276,7 @@ def add_course_tags(course_uri, tags):
         if not db.CourseTags.objects.filter(course=course_db, tag=tag).exists():
             tag_db = db.CourseTags(course=course_db, tag=tag)
             tag_db.save()
+    update_course_learn_api(course_uri)
 
 
 def remove_course_tags(course_uri, tags):
@@ -278,6 +284,7 @@ def remove_course_tags(course_uri, tags):
 
     for tag_db in db.CourseTags.objects.filter(course=course_db, tag__in=tags):
         tag_db.delete()
+    update_course_learn_api(course_uri)
 
 
 def create_course_cohort(course_uri, organizer_uri):

@@ -125,6 +125,15 @@
     </div>
   </div>
   <hr/>
+  <div>
+    <form action="{% locale_url courses_update_tags course_id=course.id %}" method="POST">
+        {% csrf_token %}
+        <label for="id_tags">{% trans "Tags" %}</label>
+        {{ tags_form.tags }}
+        <p><button type="submit">{% trans "Save" %}</button></p>
+    </form>
+  </div>
+  <hr/>
   <div id="course-language">
     <div id="language-edit">
       <form action="{% locale_url courses_update_attribute course_id=course.id attribute='language' %}" method="POST">

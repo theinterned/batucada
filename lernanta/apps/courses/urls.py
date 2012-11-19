@@ -60,6 +60,10 @@ urlpatterns = patterns('',
         'courses.views.course_update_attribute',
         name='courses_update_attribute'),
 
+    url(r'^(?P<course_id>[\d]+)/update_tags/$',
+        'courses.views.course_update_tags',
+        name='courses_update_tags'),
+
     url(r'^(?P<course_id>[\d]+)/(?P<slug>[\w-]+)/$',
         'courses.views.show_course',
         name='courses_show'),
