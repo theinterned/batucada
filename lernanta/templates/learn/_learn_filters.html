@@ -11,15 +11,15 @@
   </li>
   <li class="divider"></li>
   <li class="{% if learn_community %}active{% endif %}">
-    <a class="filter" href="{% locale_url learn_featured feature='community' %}">{{ _('Community Picks') }}</a>
+    <a class="filter" href="{% locale_url learn_list list_name='community' %}">{{ _('Community Picks') }}</a>
   </li>
   <!-- <li class="divider"></li> -->
   <li class="{% if learn_showcase %}active{% endif %}">
-    <a class="filter" href="{% locale_url learn_featured feature='showcase' %}">{{ _('Staff Favorites') }}</a>
+    <a class="filter" href="{% locale_url learn_list list_name='showcase' %}">{{ _('Staff Favorites') }}</a>
   </li>
   <!-- <li class="divider"></li> -->
   <li class="{% if learn_fresh %}active{% endif %}">
-    <a class="filter" href="{% locale_url learn_featured feature='fresh' %}">{{ _('Fresh Additions') }}</a>
+    <a class="filter" href="{% locale_url learn_list list_name='fresh' %}">{{ _('Fresh Additions') }}</a>
   </li>
   <!-- <li class="divider"></li> -->
   <li class="nav-header">

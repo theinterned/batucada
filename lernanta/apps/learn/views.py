@@ -121,7 +121,7 @@ def schools(request, school_slug, max_count=24):
     return _filter_and_return(request, context, projects, max_count)
 
    
-def featured(request, feature, max_count=24):
+def list(request, list_name, max_count=24):
     projects = get_listed_courses()
     get_params = request.GET.copy()
 
@@ -135,12 +135,12 @@ def featured(request, feature, max_count=24):
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
         'form': form,
-        'load_more_url': reverse('learn_featured', kwargs={"feature": feature}),
+        'load_more_url': reverse('learn_list', kwargs={"list_name": list_name}),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
 
-    projects = get_courses_by_list(feature, projects)
-    context['learn_{0}'.format(feature)] = True
+    projects = get_courses_by_list(list_name, projects)
+    context['learn_{0}'.format(list_name)] = True
 
     if form.is_valid():
         language = form.cleaned_data['language']
