@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 
 from pagination.views import get_pagination_context
 
-from learn import forms as project_forms
+from learn.forms import CourseFilterForm
 from learn.models import get_listed_courses
 from learn.models import get_popular_tags
 from learn.models import get_weighted_tags
@@ -67,7 +67,7 @@ def learn(request, max_count=24):
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
         get_params['language'] = language
-    form = project_forms.ProjectsFilterForm(get_params)
+    form = CourseFilterForm(get_params)
  
     context = {
         'schools': School.objects.all(),
@@ -98,7 +98,7 @@ def schools(request, school_slug, max_count=24):
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
         get_params['language'] = language
-    form = project_forms.ProjectsFilterForm(get_params)
+    form = CourseFilterForm(get_params)
 
     context = {
         'schools': School.objects.all(),
@@ -129,7 +129,7 @@ def list(request, list_name, max_count=24):
         language = request.session.get('search_language') or 'all'
         get_params['language'] = language
 
-    form = project_forms.ProjectsFilterForm(get_params)
+    form = CourseFilterForm(get_params)
 
     context = {
         'schools': School.objects.all(),
