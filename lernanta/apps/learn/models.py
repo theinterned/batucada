@@ -14,7 +14,7 @@ def _get_listed_courses():
     listed = db.Course.objects.filter(
         date_removed__isnull=True
         #TODO ,verified=True
-    ).order_by("-date_added")
+    )
     return listed
 
 
@@ -28,7 +28,7 @@ def get_active_languages():
 
 def get_listed_courses():
     """ return all the projects that should be listed """
-    listed = _get_listed_courses()
+    listed = _get_listed_courses().order_by("-date_added")
     #TODO convert to JSON?
     return listed
 
@@ -63,7 +63,7 @@ def get_courses_by_tag(tag_name, courses=None):
         tag=tag_name, 
         course__url__in=[c.url for c in courses]
     ).values_list('course', flat=True)
-    ret = _get_listed_courses().filter(id__in=course_ids)
+    ret = _get_listed_courses().order_by("-date_added").filter(id__in=course_ids)
     return ret
 
 
@@ -84,7 +84,7 @@ def get_courses_by_list(list_name, courses=None):
     course_ids = db.CourseListEntry.objects.filter(
         course_list__name = list_name
     ).values_list('course', flat=True)
-    ret = _get_listed_courses().filter(id__in=course_ids)
+    ret = _get_listed_courses().order_by("-date_added").filter(id__in=course_ids)
     if courses:
         ret.filter(url__in=[c.url for c in courses])
     return ret
@@ -130,7 +130,7 @@ def update_course_listing(course_url, title=None, description=None, data_url=Non
 
 
 def search_course_title(keyword):
-    return _get_listed_courses().filter(title__istartswith=keyword)
+    return _get_listed_courses().order_by("-date_added").filter(title__istartswith=keyword)
 
 
 def remove_course_listing(course_url):
