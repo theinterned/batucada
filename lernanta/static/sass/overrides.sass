@@ -11,6 +11,7 @@
 
 $primary-font: "arvo", helvetica, sans-serif
 $secondary-font: "sense", helvetica, sans-serif
+$secondary-font-light: "sense-light", helvetica, sans-serif
 
 /* Text-Header-Link Colors */
 $cyan: #05c6b4 /* highlighted header text, and, hovered link text */
@@ -322,6 +323,8 @@ h1
 h2
   font-family: $primary-font
   font-size: pem(18px)
+  small
+    font-size: pem(12px)
 
 h3
   font-family: $secondary-font
@@ -360,7 +363,35 @@ input
     /* @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
     color: $slate
     /* +input-placeholder($white)
-    font-family: "arvo"
+    font-family: $secondary-font
+
+select
+  font-family: $secondary-font
+
+#breadcrumbs-actions
+  a, .btn
+    margin-right: 0px
+
+#learn #breadcrumbs-actions
+  a, .btn
+    margin-right: 53px
+
+.course-create input
+  &[type="text"], &[type="password"], &[type="datetime"], &[type="datetime-local"], &[type="date"], &[type="month"], &[type="time"], &[type="week"], &[type="number"], &[type="email"], &[type="url"], &[type="search"], &[type="tel"], &[type="color"]
+    background-color: $white
+    border: none
+    /* @include border-radius(none)
+    @include border-radius(3px)
+    /* @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
+    color: $slate
+    /* +input-placeholder($white)
+    font-family: $secondary-font
+
+.course-landing
+  .nav-header
+    padding-left: 10px
+  .nav-list li a
+    padding-left: 10px
 
 stuff
   &:focus
@@ -1185,7 +1216,8 @@ input, textarea
 
 .well
   @extend .white-background
-  @include square-corners
+  /* @include square-corners
+  @include border-radius(5px)
   @include background($snow)
   padding: pem(10px)
   border-bottom: 2px solid $silver
@@ -1194,6 +1226,8 @@ input, textarea
   background-color: $white
   a:not(.btn)
     color: $link-color-on-white
+  .tags li a
+    color: $slate
 
 .school-logo
   display: block
@@ -1202,7 +1236,8 @@ input, textarea
 
 .well-large
   padding: 0px
-  @include square-corners
+  /* @include square-corners
+  @include border-radius(5px)
   @include background($snow)
   border: 0px
   border-bottom: 1px solid $zinc2
@@ -1310,6 +1345,10 @@ input, textarea
   color: rgba(255,255,255,.75)
 // Set the backgrounds
 // -------------------------
+.btn
+  @include buttonBackground($cloud, darken($cloud, 10%))
+  border: 0px
+  border-bottom: 2px solid $slate
 .btn-apricot
   @include buttonBackground($apricot, darken($apricot, 10%))
   border: 0px
@@ -1346,6 +1385,9 @@ input, textarea
       margin-right: 3px
       @media (min-width: 1200px)
         margin-right: pem(55px)
+
+.btn-group .btn
+  font-family: $secondary-font-light
 
 #splash .breadcrumb
   display: none
@@ -1951,7 +1993,8 @@ a.show-on-hover
 .tags li a
   display: block
   background: #eee
-  color: #919191
+  /* color: #919191
+  color: $slate
   font-size: 11px
   font-weight: normal	
   line-height: 20px

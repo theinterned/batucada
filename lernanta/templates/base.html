@@ -90,8 +90,8 @@
                   <li><a href="{% locale_url drumbeatmail_inbox %}" class="sub-level">{{ _('Inbox') }} {% if messages_inbox_count > 0 %}<span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>{% endif %}</a></li>
                   <li><a href="{% locale_url users_logout %}" class="sub-level">{{ _('Logout') }}</a></li>
                 </ul>
-                <a href="{% locale_url drumbeatmail_inbox %}" class="inbox-link-icon">
-				  <i class="icon-flag"></i>
+                <!-- <a href="{% locale_url drumbeatmail_inbox %}" class="inbox-link-icon"> -->
+				  <!-- <i class="icon-flag"></i> -->
 				  {% if messages_inbox_count > 0 %}
                     <span id="inbox-count" class="new-messages">{{ messages_inbox_count }}</span>
                   {% endif %}
