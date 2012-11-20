@@ -48,7 +48,7 @@ def get_awarded_badges(user):
 
 
 class Badge(ModelBase):
-    """Representation of a Badge"""
+    """ Representation of a Badge """
     name = models.CharField(max_length=225, blank=False)
     slug = models.SlugField(unique=True, max_length=110)
     description = models.CharField(max_length=225, blank=False)
