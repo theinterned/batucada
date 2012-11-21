@@ -10,6 +10,7 @@ from courses import db
 from content2 import models as content_model
 from replies import models as comment_model
 from learn import models as learn_model
+from media import models as media_model
 
 import logging
 log = logging.getLogger(__name__)
@@ -133,7 +134,7 @@ def update_course_learn_api(course_uri):
         try:
             learn_model.update_course_listing(**get_course_learn_api_data(course_uri))
         except:
-            pass
+            log.error("Could not update learn index information!")
 
 
 def get_course_learn_api_data(course_uri):
@@ -154,6 +155,10 @@ def get_course_learn_api_data(course_uri):
         "thumbnail_url": "",
         "tags": get_course_tags(course_uri)
     }
+
+    if 'image_uri' in course:
+        learn_api_data["thumbnail_url"] = media_model.get_image(course['image_uri'])['url']
+
     return learn_api_data
 
 
