@@ -598,49 +598,50 @@ input, textarea
   color: $slate
   text-decoration: none
   
-.dropdown-menu
-  @include background($dark-slate)
-  margin-top: 0px
-  min-width: 97px
-  @include square-corners
-  li
-    a
-      @include link-colors(#e6f9ff)
-      @include adjust-font-size-to(12px)
-
-.nav-list
-  .divider
-    margin: 5px 1px
-  font-family: $primary-font
-  @include adjust-font-size-to($baseFontSize-subtext)
-  li
-    a
-      @include link-colors($slate, $cyan, $slate, $slate, $slate)
-    &.dropdown
-      > a
-        @include background($steel)
-        color: $white
-        @include adjust-font-size-to($baseFontSize)
-        @include border-radius(5px)
-        /* @include custom-box-shadow-2
-        /* border: 1px solid $black
-        &:hover
-          @include background(darken($steel, 10%))
+header
   .dropdown-menu
-    min-width: 95%
-    max-width: 95%
-    margin-left: 6px
-    @include background($fog)
+    @include background($dark-slate)
+    margin-top: 0px
+    min-width: 97px
+    @include square-corners
     li
       a
-        @include link-colors($slate)
-        @include adjust-font-size-to($baseFontSize)
-  .nav-header
-    @include adjust-font-size-to($baseFontSize-h1-header)
-    .icon-large
-      vertical-align: baseline
-      margin-right: 8px
-      margin-left: 8px
+        @include link-colors(#e6f9ff)
+        @include adjust-font-size-to(12px)
+
+  .nav-list
+    .divider
+      margin: 5px 1px
+    font-family: $primary-font
+    @include adjust-font-size-to($baseFontSize-subtext)
+    li
+      a
+        @include link-colors($slate, $cyan, $slate, $slate, $slate)
+      &.dropdown
+        > a
+          @include background($steel)
+          color: $white
+          @include adjust-font-size-to($baseFontSize)
+          @include border-radius(5px)
+          /* @include custom-box-shadow-2
+          /* border: 1px solid $black
+          &:hover
+            @include background(darken($steel, 10%))
+    .dropdown-menu
+      min-width: 95%
+      max-width: 95%
+      margin-left: 6px
+      @include background($fog)
+      li
+        a
+          @include link-colors($slate)
+          @include adjust-font-size-to($baseFontSize)
+    .nav-header
+      @include adjust-font-size-to($baseFontSize-h1-header)
+      .icon-large
+        vertical-align: baseline
+        margin-right: 8px
+        margin-left: 8px
 
 .nav .nav-header 
   padding: 30px 0px 0px 0px
@@ -1545,12 +1546,6 @@ button
   
 .nav-tabs
   margin-bottom: 0px
-  a
-    @include background($cloud)
-    &:hover
-      @include background($snow)
-  li > a:hover
-    @include background($snow)
 
 .add-top-bottom-margins
   margin-top: pem(40px)
