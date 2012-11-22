@@ -8,6 +8,8 @@
     color: $color
   &::-webkit-input-placeholder
     color: $color
+  &:-ms-input-placeholder
+    color: $color
 
 $primary-font: "arvo", helvetica, sans-serif
 $secondary-font: "sense", helvetica, sans-serif
@@ -362,7 +364,7 @@ input
     @include border-radius(3px)
     /* @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
     color: $slate
-    /* +input-placeholder($white)
+    +input-placeholder($silver)
     font-family: $secondary-font
 
 select
@@ -384,8 +386,11 @@ select
     @include border-radius(3px)
     /* @include inset-1px-box-shadow-on-one-side($dark-pewter, top)
     color: $slate
-    /* +input-placeholder($white)
+    +input-placeholder($silver)
     font-family: $secondary-font
+  
+.course-create textarea
+  +input-placeholder($silver)
 
 .course-landing
   .nav-header
