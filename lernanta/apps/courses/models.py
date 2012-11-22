@@ -89,6 +89,22 @@ def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, dra
     return [ get_course(course_id2uri(course_db.id)) for course_db in results ]
 
 
+def get_user_courses(user_uri):
+    signups = db.CohortSignup.objects.filter(user_uri=user_uri, leave_date__isnull=True)
+    courses = []
+    for signup in signups:
+        course = get_course(course_id2uri(signup.cohort.course.id)) 
+        course_data = {
+            "title": course['title'],
+            "user_role": signup.role,
+            "url": reverse("courses_show", kwargs={"course_id": course["id"], "slug": course["slug"]}),
+        }
+        if "image_uri" in course:
+            course_data["image_url"] = media_model.get_image(course['image_uri'])['url']
+        courses += [course_data]
+    return courses
+
+
 def create_course(title, hashtag, description, language, organizer_uri):
     course_db = db.Course(
         title=title,

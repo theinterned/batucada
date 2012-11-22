@@ -36,8 +36,8 @@
         {% endfor %}
         {% for project in past_projects %}
           <li>
-            <a href="{{ project.url }}" title="{{ project.name }} {% if project.organizer %}(organizer){% else%}(participant){% endif %}">
-              <img src="{{ project.image_url }}" width="150" height="93" alt="{{ project.name }}"/>
+            <a href="{{ project.url }}" title="{{ project.title }} {% if project.organizer %}(organizer){% else%}(participant){% endif %}">
+              <img src="{{ project.image_url }}" width="150" height="93" alt="{{ project.title }}"/>
             </a>
           </li>
           {% endfor %}
