@@ -4,14 +4,14 @@
 <form action="" method="POST">
   {% csrf_token %}
   <input type="hidden" name="next_url" value="{{next_url}}"/>
-  <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Save' %}"/>
+  <input class="pull-right btn" type="submit" value="{% trans 'Save' %}"/>
   {% if next_url %}
-    <a class="pull-right btn btn-danger" href="{{ next_url }}">{% trans 'Cancel' %}</a>
+    <a class="pull-right btn" href="{{ next_url }}">{% trans 'Cancel' %}</a>
   {% else %}
     {% if content %}
-      <a class="pull-right btn btn-danger" href="{% locale_url courses_content_show course_id=course.id content_id=content.id %}">{% trans 'Cancel' %}</a>
+      <a class="pull-right btn" href="{% locale_url courses_content_show course_id=course.id content_id=content.id %}">{% trans 'Cancel' %}</a>
     {% else %}
-      <a class="pull-right btn btn-danger" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Cancel' %}</a>
+      <a class="pull-right btn" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Cancel' %}</a>
     {% endif %}
   {% endif %}
   <div class="tabbable">
@@ -42,11 +42,11 @@
       </div>
     </div>
   </div>
-  <input class="pull-right btn btn-primary" type="submit" value="{% trans 'Save' %}"/>
+  <input class="pull-right btn" type="submit" value="{% trans 'Save' %}"/>
   {% if next_url %}
-    <a class="pull-right btn btn-danger" href="{{ next_url }}">{% trans 'Cancel' %}</a>
+    <a class="pull-right btn" href="{{ next_url }}">{% trans 'Cancel' %}</a>
   {% else %}
-    <a class="pull-right btn btn-danger" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Cancel' %}</a>
+    <a class="pull-right btn" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans 'Cancel' %}</a>
   {% endif %}
 
 </form>
