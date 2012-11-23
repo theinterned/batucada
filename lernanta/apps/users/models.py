@@ -199,7 +199,7 @@ class UserProfile(ModelBase):
         from courses.models import get_user_courses
         courses = get_user_courses("/uri/user/{0}".format(self.username))
         for course in courses:
-            if course["user_role"] == "ORGANIZING":
+            if course["user_role"] == "ORGANIZER":
                 course["user_role"] = _('(organizing)')
                 projects_organizing.append(course)
             else:
