@@ -49,6 +49,8 @@ def _populate_course_context( request, course_id, context ):
     context['course_url'] = request.get_full_path()
     if 'image_uri' in course:
         context['course']['image'] = media_model.get_image(course['image_uri'])
+
+    #NOTE if performance becomes a problem dont fetch cohort
     cohort = course_model.get_course_cohort(course_uri)
     context['cohort'] = cohort
     user_uri = "/uri/user/{0}".format(request.user.username)
@@ -211,7 +213,7 @@ def course_settings( request, course_id ):
     else:
         context['term_form'] = CourseTermForm()
     context['signup_form'] = CohortSignupForm(
-        initial={'signup':context['cohort']['signup']}
+        initial={'signup': context['cohort']['signup']}
     )
     context['settings_active'] = True
 
@@ -259,36 +261,43 @@ def course_signup( request, course_id ):
 @require_http_methods(['POST'])
 @require_organizer
 def course_add_user( request, course_id ):
-    cohort = course_model.get_course_cohort( course_id )
+    cohort_uri = course_model.get_course_cohort_uri(course_id)
     redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
     username = request.POST.get('username', None)
+
     if not UserProfile.objects.filter(username=username).exists():
         messages.error(request, _("User doesn not exist."))
         return http.HttpResponseRedirect(redirect_url)
+
     if not username:
         messages.error(request, _("Please select a user"))
         return http.HttpResponseRedirect(redirect_url)
+
     user_uri = "/uri/user/{0}".format(username)
-    course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
+    course_model.add_user_to_cohort(cohort_uri, user_uri, "LEARNER")
     return http.HttpResponseRedirect(redirect_url)
 
 
 @login_required
 def course_leave( request, course_id, username ):
-    cohort = course_model.get_course_cohort( course_id )
+    cohort_uri = course_model.get_course_cohort_uri(course_id)
     user_uri = "/uri/user/{0}".format(request.user.username)
     is_organizer = course_model.is_cohort_organizer(
-        user_uri, cohort['uri']
+        user_uri, cohort_uri
     )
     removed = False
     error_message = _("Could not remove user")
     if username == request.user.username or is_organizer:
         removed, error_message = course_model.remove_user_from_cohort(
-            cohort['uri'], "/uri/user/{0}".format(username)
+            cohort_uri, "/uri/user/{0}".format(username)
         )
 
     if not removed:
         messages.error(request, error_message)
+
+    if is_organizer:
+        redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
+        return http.HttpResponseRedirect(redirect_url)
 
     return course_slug_redirect( request, course_id)
 
@@ -297,17 +306,17 @@ def course_leave( request, course_id, username ):
 @require_http_methods(['POST'])
 @require_organizer
 def course_add_organizer( request, course_id, username ):
-    cohort = course_model.get_course_cohort( course_id )
+    cohort_uri = course_model.get_course_cohort_uri(course_id)
     user_uri = "/uri/user/{0}".format(request.user.username)
     is_organizer = course_model.is_cohort_organizer(
-        user_uri, cohort['uri']
+        user_uri, cohort_uri
     )
     if not is_organizer and not request.user.is_superuser:
         messages.error( request, _("Only other organizers can add a new organizer") )
         return course_slug_redirect( request, course_id)
     new_organizer_uri = "/uri/user/{0}".format(username)
-    course_model.remove_user_from_cohort(cohort['uri'], new_organizer_uri)
-    course_model.add_user_to_cohort(cohort['uri'], new_organizer_uri, "ORGANIZER")
+    course_model.remove_user_from_cohort(cohort_uri, new_organizer_uri)
+    course_model.add_user_to_cohort(cohort_uri, new_organizer_uri, "ORGANIZER")
 
     #TODO
     redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
@@ -318,7 +327,6 @@ def course_add_organizer( request, course_id, username ):
 @require_http_methods(['POST'])
 @require_organizer
 def course_change_status( request, course_id, status ):
-    cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
     course_uri = course_model.course_id2uri(course_id)
     if status == 'draft':
@@ -338,8 +346,8 @@ def course_change_signup( request, course_id ):
     form = CohortSignupForm(request.POST)
     if form.is_valid():
         signup = form.cleaned_data['signup']
-        cohort = course_model.get_course_cohort( course_id )
-        cohort = course_model.update_cohort(cohort['uri'], signup=signup.upper())
+        cohort_uri = course_model.get_course_cohort_uri(course_id)
+        cohort = course_model.update_cohort(cohort_uri, signup=signup.upper())
         if not cohort:
             messages.error( request, _("Could not change cohort signup"))
     else:
@@ -352,12 +360,12 @@ def course_change_signup( request, course_id ):
 @require_http_methods(['POST'])
 @require_organizer
 def course_change_term( request, course_id, term ):
-    cohort = course_model.get_course_cohort( course_id )
+    cohort_uri = course_model.get_course_cohort_uri( course_id )
     if term == 'fixed':
         form = CourseTermForm(request.POST)
         if form.is_valid():
-            cohort = course_model.update_cohort(
-                cohort['uri'],
+            course_model.update_cohort(
+                cohort_uri,
                 term=term.upper(),
                 start_date=form.cleaned_data['start_date'],
                 end_date=form.cleaned_data['end_date']
@@ -365,7 +373,7 @@ def course_change_term( request, course_id, term ):
         else:
             messages.error( request, _("Could not update fixed term dates"))
     elif term == 'rolling':
-        cohort = course_model.update_cohort(cohort['uri'], term=term.upper())
+        course_model.update_cohort(cohort_uri, term=term.upper())
     redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
     return http.HttpResponseRedirect(redirect_url)
 

@@ -330,17 +330,15 @@ def create_course_cohort(course_uri, organizer_uri):
     return get_course_cohort(course_uri)
 
 
-def get_course_cohort_uri( course_uri ):
+def get_course_cohort_uri(course_uri):
     course_db = _get_course_db(course_uri)
+    if course_db.cohort_set.count() != 1:
+        raise DataIntegrityException
     return "/uri/cohort/{0}".format(course_db.cohort_set.all().values('id')[0]['id'])
  
 
 def get_course_cohort(course_uri):
-    course_db = _get_course_db(course_uri)
-    if course_db.cohort_set.count() != 1:
-        raise DataIntegrityException
-    return get_cohort(
-        "/uri/cohort/{0}".format(course_db.cohort_set.all()[0].id))
+    return get_cohort(get_course_cohort_uri(course_uri))
 
 
 def _get_cohort_db(cohort_uri):
