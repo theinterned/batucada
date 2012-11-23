@@ -366,19 +366,17 @@ def get_cohort(cohort_uri):
         cohort_data["start_date"] = cohort_db.start_date.date()
         cohort_data["end_date"] = cohort_db.end_date.date()
 
-    cohort_data["users"] = []
+    cohort_data["users"] = {}
     cohort_data["organizers"] = []
     for signup in cohort_db.signup_set.filter(leave_date__isnull=True):
         username = signup.user_uri.strip('/').split('/')[-1]
-        cohort_data["users"] += [{
+        cohort_data["users"][username] = {
             "username": username, "uri": signup.user_uri, "role": signup.role
-        }]
+        }
         key = "{0}s".format(signup.role.lower())
         if not key in cohort_data:
             cohort_data[key] = []
-        cohort_data[key] += [{
-            "username": username, "uri": signup.user_uri, "role": signup.role
-        }]
+        cohort_data[key] += [username]
 
     return cohort_data  
 

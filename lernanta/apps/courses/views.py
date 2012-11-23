@@ -186,6 +186,11 @@ def course_people( request, course_id ):
  
     context = { }
     context = _populate_course_context(request, course_id, context)
+
+    from users.models import get_user_profile_image_url
+    for user in context['cohort']['users'].values():
+        user['profile_image_url'] = get_user_profile_image_url(user['uri'])
+
     context['people_active'] = True
 
     return render_to_response(

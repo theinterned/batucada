@@ -322,6 +322,13 @@ def delete_spammer(spammer):
         pc.save()
 
 
+def get_user_profile_image_url( user_uri ):
+    """ user_uri should look like /uri/user/username """
+    username = user_uri.strip('/').split('/')[-1]
+    user = UserProfile.objects.get(username=username)
+    return user.image_or_default()
+
+
 ###########
 # Signals #
 ###########

@@ -8,16 +8,20 @@
   <div id="learner-list" class="user-list">
     <h3>{% trans "Learners" %}</h3>
     <ul class="thumbnails">
-      {% for user in cohort.learners %}
-        {% include "courses/course_user_snip.html" %}
+      {% for user in cohort.users.values %}
+        {% if user.role == "LEARNER" %}
+          {% include "courses/course_user_snip.html" %}
+        {% endif %}
       {% endfor %}
     </ul>
   </div>
   <div id="learner-list" class="user-list">
     <h3>{% trans "Organizers" %}</h3>
     <ul class="thumbnails">
-    {% for user in cohort.organizers %}
-      {% include "courses/course_user_snip.html" %}           
+    {% for user in cohort.users.values %}
+      {% if user.role == "ORGANIZER" %}
+        {% include "courses/course_user_snip.html" %}
+      {% endif %}
     {% endfor %}
     </ul>
   </div>
