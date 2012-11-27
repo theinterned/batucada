@@ -42,6 +42,12 @@ class Command(BaseCommand):
             except:
                 pass
 
+        # create lists for listed courses
+        try:
+            create_list("listed", "Listed courses", "")
+        except:
+            pass
+
 
         listed = listed.filter(
             Q(category=Project.CHALLENGE)
@@ -66,6 +72,11 @@ class Command(BaseCommand):
                 add_course_listing(**args)
             except:
                 update_course_listing(**args)
+
+            try:
+                add_course_to_list(args["course_url"], "listed")
+            except:
+                pass
 
             if project.school:
                 try:

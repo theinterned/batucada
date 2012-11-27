@@ -121,6 +121,11 @@ def create_course(title, hashtag, description, language, organizer_uri):
     add_course_content("/uri/course/{0}".format(course_db.id), about['uri'])
     create_course_cohort("/uri/course/{0}".format(course_db.id), organizer_uri)
     course = get_course("/uri/course/{0}".format(course_db.id))
+
+    learn_api_data = get_course_learn_api_data(course['uri'])
+    learn_model.add_course_listing(**learn_api_data)
+    learn_model.add_course_to_list(learn_api_data['course_url'], "drafts")
+
     return course
 
 
@@ -157,7 +162,7 @@ def get_course_learn_api_data(course_uri):
     course = get_course(course_uri)
 
     course_url = reverse(
-        'courses_slug_redirect', 
+        'courses_slug_redirect',
         kwargs={'course_id': course["id"]}
     )
     data_url = reverse('courses_learn_api_data', kwargs={'course_id': course["id"]})
@@ -184,9 +189,21 @@ def publish_course(course_uri):
     course_db.archived = False
     course_db.save()
 
-    learn_model.add_course_listing(**get_course_learn_api_data(course_uri))
-    
     course = get_course(course_uri)
+    course_url = reverse(
+        'courses_slug_redirect',
+        kwargs={'course_id': course["id"]}
+    )
+    try:
+        learn_model.remove_course_from_list(course_url, "drafts")
+    except:
+        try: 
+            learn_model.remove_course_from_list(course_url, "archived")
+        except:
+            pass
+
+    learn_model.add_course_to_list(course_url, "listed")
+
     # TODO: Notify interested people in new course
     return course
 
@@ -197,9 +214,13 @@ def archive_course(course_uri):
     course_db.save()
 
     course = get_course(course_uri)
-    learn_model.remove_course_listing(
-        course_url="/courses/{0}/{1}".format(course["id"], course["slug"]),
+    course_url = reverse(
+        'courses_slug_redirect',
+        kwargs={'course_id': course["id"]}
     )
+    learn_model.remove_course_from_list(course_url, "listed")
+    learn_model.add_course_to_list(course_url, "archived")
+
 
     return course
 
@@ -210,9 +231,12 @@ def unpublish_course(course_uri):
     course_db.save()
 
     course = get_course(course_uri)
-    learn_model.remove_course_listing(
-        course_url="/courses/{0}/{1}".format(course["id"], course["slug"]),
+    course_url = reverse(
+        'courses_slug_redirect',
+        kwargs={'course_id': course["id"]}
     )
+    learn_model.remove_course_from_list(course_url, "listed")
+    learn_model.add_course_to_list(course_url, "drafts")
 
     return course
 

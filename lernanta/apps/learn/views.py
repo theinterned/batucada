@@ -62,7 +62,7 @@ def _filter_and_return(request, context, projects, max_count):
 
 
 def learn(request, max_count=24):
-    projects = get_listed_courses()
+    projects = get_courses_by_list('listed')
     get_params = request.GET.copy()
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
@@ -171,7 +171,8 @@ def auto_complete_lookup(request):
 
 
 def add_course(request):
-    pass
+    return render_to_response('learn/add_course.html', {}, 
+        context_instance=RequestContext(request))
 
 
 def update_course(request):
