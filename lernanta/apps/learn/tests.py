@@ -13,6 +13,7 @@ from learn.models import get_courses_by_list
 from learn.models import get_courses_by_tags
 from learn.models import get_tags_for_courses
 from learn.models import get_active_languages
+from learn.models import get_courses_by_language
 
 from test_utils import TestCase
 
@@ -151,5 +152,6 @@ class ProjectTests(TestCase):
         languages = get_active_languages()
         self.assertTrue(len(languages) == 3)
 
-        #TODO get_courses_by_language()
+        spanish_courses = get_courses_by_language("es")
+        self.assertTrue(len(spanish_courses) == 2)
 

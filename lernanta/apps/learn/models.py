@@ -18,6 +18,13 @@ def _get_listed_courses():
     return listed
 
 
+def get_listed_courses():
+    """ return all the projects that should be listed """
+    listed = _get_listed_courses().order_by("-date_added")
+    #TODO convert to JSON?
+    return listed
+
+
 def get_active_languages():
     """ Return a list of the active language currently in use """
     language_list = _get_listed_courses().values_list('language').distinct('language')
@@ -26,11 +33,14 @@ def get_active_languages():
     return languages
 
 
-def get_listed_courses():
-    """ return all the projects that should be listed """
-    listed = _get_listed_courses().order_by("-date_added")
-    #TODO convert to JSON?
-    return listed
+def get_courses_by_language(language, courses=None):
+    if language == "all":
+        return courses
+
+    lang_courses = db.Course.objects.filter(language__startswith=language)
+    if not courses == None:
+        lang_courses = lang_courses.filter(url__in=[c.url for c in courses])
+    return lang_courses
 
 
 def get_popular_tags(max_count=10):

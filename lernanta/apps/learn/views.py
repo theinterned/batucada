@@ -18,6 +18,7 @@ from learn.models import get_popular_tags
 from learn.models import get_weighted_tags
 from learn.models import get_courses_by_tags
 from learn.models import get_courses_by_list
+from learn.models import get_courses_by_language
 from learn.models import get_tags_for_courses
 from learn.models import search_course_title
 from l10n.urlresolvers import reverse
@@ -33,10 +34,13 @@ def _filter_and_return(request, context, projects, max_count):
     if tag_string:
         filter_tags = tag_string.split('|')
     context['filter_tags'] = filter_tags
-
+    
     if filter_tags:
         projects = get_courses_by_tags(filter_tags, projects)
-        
+
+    language = request.session['search_language']
+    projects = get_courses_by_language(language, projects)
+
     context['popular_tags'] = get_tags_for_courses(projects, filter_tags)
     context['projects'] = projects
     context.update(get_pagination_context(request, projects, max_count))
@@ -61,14 +65,25 @@ def _filter_and_return(request, context, projects, max_count):
         context_instance=RequestContext(request))
 
 
-def learn(request, max_count=24):
-    projects = get_courses_by_list('listed')
+def _language_prefs(request):
     get_params = request.GET.copy()
     if not 'language' in get_params:
         language = request.session.get('search_language') or 'all'
         get_params['language'] = language
     form = CourseFilterForm(get_params)
- 
+
+    if form.is_valid():
+        language = form.cleaned_data['language']
+        request.session['search_language'] = language
+
+    return form
+
+
+def learn(request, max_count=24):
+    projects = get_courses_by_list('listed')
+    
+    form = _language_prefs(request)
+
     context = {
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
@@ -76,17 +91,6 @@ def learn(request, max_count=24):
         'load_more_url': reverse('learn_all'),
         'infinite_scroll': request.GET.get('infinite_scroll', False),
     }
-    if form.is_valid():
-        language = form.cleaned_data['language']
-        request.session['search_language'] = language
-        if language != 'all':
-            projects = projects.filter(language__startswith=language)
-
-        reviewed = form.cleaned_data['reviewed']
-        if reviewed:
-            accepted_reviews = Review.objects.filter(
-                accepted=True).values('project_id')
-            projects = projects.filter(id__in=accepted_reviews)
 
     return _filter_and_return(request, context, projects, max_count)
 
@@ -94,12 +98,9 @@ def learn(request, max_count=24):
 def schools(request, school_slug, max_count=24):
     school = get_object_or_404(School, slug=school_slug)
     projects = get_listed_courses()
-    get_params = request.GET.copy()
-    if not 'language' in get_params:
-        language = request.session.get('search_language') or 'all'
-        get_params['language'] = language
-    form = CourseFilterForm(get_params)
 
+    form = _language_prefs(request)
+     
     context = {
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
@@ -111,13 +112,7 @@ def schools(request, school_slug, max_count=24):
 
     #projects = projects.filter(school=school)
     projects = get_courses_by_list(school_slug, projects)
-
-    if form.is_valid():
-        language = form.cleaned_data['language']
-        request.session['search_language'] = language
-        if language != 'all':
-            projects = projects.filter(language__startswith=language)
-    
+  
     return _filter_and_return(request, context, projects, max_count)
 
    
@@ -125,12 +120,8 @@ def list(request, list_name, max_count=24):
     projects = get_listed_courses()
     get_params = request.GET.copy()
 
-    if not 'language' in get_params:
-        language = request.session.get('search_language') or 'all'
-        get_params['language'] = language
-
-    form = CourseFilterForm(get_params)
-
+    form = _language_prefs(request)
+ 
     context = {
         'schools': School.objects.all(),
         'popular_tags': get_popular_tags(),
@@ -142,12 +133,6 @@ def list(request, list_name, max_count=24):
     projects = get_courses_by_list(list_name, projects)
     context['learn_{0}'.format(list_name)] = True
 
-    if form.is_valid():
-        language = form.cleaned_data['language']
-        request.session['search_language'] = language
-        if language != 'all':
-            projects = projects.filter(language__startswith=language)
-    
     return _filter_and_return(request, context, projects, max_count)
 
     
