@@ -5,7 +5,7 @@ from django.db import models
 
 class Course(models.Model):
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=1000)
     url = models.URLField() #TODO <- this should be unique
     data_url = models.URLField()
     thumbnail_url = models.URLField()
@@ -17,7 +17,7 @@ class Course(models.Model):
 
 
 class List(models.Model):
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=255, unique=True)
     title = models.CharField(max_length=255)
     url = models.URLField()
 
