@@ -19,7 +19,6 @@ class Command(BaseCommand):
             not_listed=False,
             deleted=False,
             archived=False,
-            under_development=False,
             test=False
         )
 
@@ -42,9 +41,15 @@ class Command(BaseCommand):
             except:
                 pass
 
-        # create lists for listed courses
+        # create list for listed courses
         try:
             create_list("listed", "Listed courses", "")
+        except:
+            pass
+
+        # create list for draft courses
+        try:
+            create_list("drafts", "Draft courses", "")
         except:
             pass
 
@@ -60,10 +65,10 @@ class Command(BaseCommand):
         for project in listed:
             project_tags = project.tags.all().values_list('name', flat=True)
             args = dict(
-                course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug),
+                course_url = "/en/groups/{0}/".format(project.slug),
                 title = project.name,
                 description = project.short_description,
-                data_url = "https://p2pu.org/en/groups/{0}/data".format(project.slug),
+                data_url = "/en/groups/{0}/data".format(project.slug),
                 language = project.language,
                 thumbnail_url = "http://p2pu.org{0}".format(project.get_image_url()),
                 tags = project_tags
@@ -73,10 +78,16 @@ class Command(BaseCommand):
             except:
                 update_course_listing(**args)
 
-            try:
-                add_course_to_list(args["course_url"], "listed")
-            except:
-                pass
+            if project.under_development == True:
+                try:
+                    add_course_to_list(args["course_url"], "drafts")
+                except:
+                    pass
+            else:
+                try:
+                    add_course_to_list(args["course_url"], "listed")
+                except:
+                    pass
 
             if project.school:
                 try:
