@@ -107,22 +107,19 @@ class Command(BaseCommand):
             pass
 
         for project in listed.filter(community_featured=True):
-            course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
+            course_url = "/en/groups/{0}/".format(project.slug)
             try:
                 add_course_to_list(course_url, 'community')
             except:
                 pass
 
         for project in listed.filter(featured=True):
-            course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
-            try:
-                add_course_to_list(course_url, 'showcase')
-            except:
-                pass
+            course_url = "/en/groups/{0}/".format(project.slug)
+            add_course_to_list(course_url, 'showcase')
 
         for school in School.objects.all():
             for project in school.featured.all():
-                course_url = "http://p2pu.org/en/groups/{0}/".format(project.slug)
+                course_url = "/en/groups/{0}/".format(project.slug)
                 list_name = "{0}_featured".format(school.slug)
                 try:
                     add_course_to_list(course_url, list_name)
