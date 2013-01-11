@@ -2,7 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Count, Q
+from django.db.models import Count
 
 from tags.models import GeneralTaggedItem
 from projects.models import Project
@@ -37,7 +37,7 @@ def get_courses_by_language(language, courses=None):
     if language == "all":
         return courses
 
-    lang_courses = db.Course.objects.filter(language__startswith=language)
+    lang_courses = _get_listed_courses().order_by('-date_added').filter(language__startswith=language)
     if not courses == None:
         lang_courses = lang_courses.filter(url__in=[c.url for c in courses])
     return lang_courses
@@ -51,9 +51,16 @@ def get_popular_tags(max_count=10):
         '-tagged_count')[:max_count]
 
 
-def get_weighted_tags(min_count=2, min_weight=1.0, max_weight=7.0):
-    #TODO
-    return []
+def get_weighted_tags(min_count=2, min_weight=10, max_weight=26):
+    listed = _get_listed_courses()
+    tags = db.CourseTags.objects.filter(course__in=listed).values(
+        'tag').annotate(count=Count('course'))
+    minf = lambda x, y: x if x['count']<y['count'] else y
+    maxf = lambda x, y: x if x['count']>y['count'] else y
+    minv = reduce(minf, tags)['count']
+    maxv = reduce(maxf, tags)['count']
+    weighted_tags = [{'tag': tag['tag'], 'weight': min_weight+(max_weight-min_weight)*(tag['count']-minv)/(maxv - minv), 'count': tag['count']} for tag in tags]
+    return weighted_tags
 
 
 def get_tags_for_courses(courses, exclude=[], max_tags=6):
