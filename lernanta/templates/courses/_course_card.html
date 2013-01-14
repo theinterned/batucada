@@ -9,10 +9,6 @@
   </a>
   <div class="caption">
     <h3><a href="{% locale_url courses_show course_id=project.id slug=project.slug %}">{{ project.title }}</a></h3>
-    <!-- 
-     ! TODO: set a character maximum for project.description that works
-     ! with this layout. See also /static/css/batucada.css line ~485
-     -->  
     <p><span class="truncate-to-3-lines">{{ project.description }}</span></p>
   </div>
   <div class="well well-large">
