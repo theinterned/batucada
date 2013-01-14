@@ -151,11 +151,10 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
 
 def update_course_learn_api(course_uri):
     course_db = _get_course_db(course_uri)
-    if course_db.archived == False and course_db.draft == False:
-        try:
-            learn_model.update_course_listing(**get_course_learn_api_data(course_uri))
-        except:
-            log.error("Could not update learn index information!")
+    try:
+        learn_model.update_course_listing(**get_course_learn_api_data(course_uri))
+    except:
+        log.error("Could not update learn index information!")
 
 
 def get_course_learn_api_data(course_uri):
