@@ -10,6 +10,9 @@ urlpatterns = patterns('',
     url(r'^list/(?P<list_name>[\w-]+)/$', 'learn.views.list',
         name='learn_list'),
 
+    url(r'^fresh/$', 'learn.views.fresh',
+        name='learn_fresh'),
+
     url(r'^tags/$', 'learn.views.learn_tags',
         name='learn_tags'),
 

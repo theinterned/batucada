@@ -115,6 +115,15 @@ def schools(request, school_slug, max_count=24):
   
     return _filter_and_return(request, context, projects, max_count)
 
+
+def fresh(request, max_count=24):
+    context = {
+        "learn_fresh": True,
+        'schools': School.objects.all()
+    }
+    projects = get_listed_courses()[:24]
+    return _filter_and_return(request, context, projects, max_count)
+
    
 def list(request, list_name, max_count=24):
     projects = get_listed_courses()
