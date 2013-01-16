@@ -11,6 +11,9 @@ from content2 import models as content_model
 from replies import models as comment_model
 from learn import models as learn_model
 from media import models as media_model
+from notifications import models as notification_model
+
+from users.models import UserProfile #NOTE: don't like this dep
 
 import logging
 log = logging.getLogger(__name__)
@@ -219,9 +222,8 @@ def archive_course(course_uri):
     )
     learn_model.remove_course_from_list(course_url, "listed")
     learn_model.add_course_to_list(course_url, "archived")
-
-
     return course
+
 
 def unpublish_course(course_uri):
     course_db = _get_course_db(course_uri)
@@ -238,6 +240,7 @@ def unpublish_course(course_uri):
     learn_model.add_course_to_list(course_url, "drafts")
 
     return course
+
 
 def get_course_content(course_uri):
     content = []
@@ -378,12 +381,13 @@ def get_cohort(cohort_uri):
 
     cohort_data = {
         "uri": "/uri/cohort/{0}".format(cohort_db.id),
-        "course_uri": "/uri/course/{0}".format(cohort_db.course.id),
+        "course_uri": "/uri/course/{0}".format(cohort_db.course_id),
         "term": cohort_db.term,
         "signup": cohort_db.signup,
     }
     #NOTE: fetching course + cohort twice when using get_course_cohort
     #NOTE-Q: does cohort.course.id fetch the course data?
+    #NOTE-A: Yes, cohort.course_id doesn't
 
     if cohort_db.term != db.Cohort.ROLLING:
         cohort_data["start_date"] = cohort_db.start_date.date()
@@ -437,17 +441,34 @@ def is_cohort_organizer(user_uri, cohort_uri):
         role=db.CohortSignup.ORGANIZER).exists()
 
 
-def add_user_to_cohort(cohort_uri, user_uri, role):
+def add_user_to_cohort(cohort_uri, user_uri, role, notify_organizers=False):
     cohort_db = _get_cohort_db(cohort_uri)
+
+    username = user_uri.strip('/').split('/')[-1]
+    if not UserProfile.objects.filter(username=username).exists():
+        raise ResourceNotFoundException('User does not exist')
+
     if db.CohortSignup.objects.filter(cohort=cohort_db, user_uri=user_uri, leave_date__isnull=True).exists():
         return None
+
     signup_db = db.CohortSignup(
         cohort=cohort_db,
         user_uri=user_uri,
         role=role
     )
-
     signup_db.save()
+
+    if notify_organizers:
+        cohort = get_cohort(cohort_uri)
+        course = get_course(cohort['course_uri'])
+        organizers = UserProfile.objects.filter(username__in=cohort['organizers'])
+        context = {
+            'course': course,
+            'new_user': username
+        }
+        subject_template = 'courses/emails/course_join_subject.txt'
+        body_template = 'courses/emails/course_join.txt'
+        notification_model.send_notifications(organizers, subject_template, body_template, context)
     
     signup = {
         "cohort_uri": cohort_uri,

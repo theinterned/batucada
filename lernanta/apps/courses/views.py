@@ -10,7 +10,6 @@ from django.utils import simplejson as json
 from django.views.decorators.http import require_http_methods
 
 from l10n.urlresolvers import reverse
-from users.models import UserProfile
 from users.decorators import login_required
 from drumbeat import messages
 
@@ -255,7 +254,7 @@ def course_signup( request, course_id ):
     cohort = course_model.get_course_cohort( course_id )
     user_uri = "/uri/user/{0}".format(request.user.username)
     if cohort['signup'] == "OPEN":
-        course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER")
+        course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER", True)
         messages.success(request, _("You are now signed up for this course."))
     else:
         messages.error(request, _("This course isn't open for signup."))
@@ -270,16 +269,17 @@ def course_add_user( request, course_id ):
     redirect_url = reverse('courses_people', kwargs={'course_id': course_id})
     username = request.POST.get('username', None)
 
-    if not UserProfile.objects.filter(username=username).exists():
-        messages.error(request, _("User doesn not exist."))
-        return http.HttpResponseRedirect(redirect_url)
-
     if not username:
-        messages.error(request, _("Please select a user"))
+        messages.error(request, _("Please select a user to add."))
         return http.HttpResponseRedirect(redirect_url)
 
     user_uri = "/uri/user/{0}".format(username)
-    course_model.add_user_to_cohort(cohort_uri, user_uri, "LEARNER")
+    try:
+        course_model.add_user_to_cohort(cohort_uri, user_uri, "LEARNER")
+        messages.success(request, _("User added."))
+    except course_model.ResourceNotFoundException as e:
+        messages.error(request, _("User does not exist."))
+
     return http.HttpResponseRedirect(redirect_url)
 
 
@@ -410,6 +410,8 @@ def course_update_tags( request, course_id ):
             course_uri, course_model.get_course_tags(course_uri)
         )
         course_model.add_course_tags(course_uri, tags)
+        messages.success( request, _("Course tags successfully updated") )
+
     redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
     return http.HttpResponseRedirect(redirect_url)
 
