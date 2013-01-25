@@ -53,6 +53,7 @@ def home(request, slug):
     return render_to_response('schools/home.html', context,
         context_instance=RequestContext(request))
 
+
 def projectset(request, slug, set_slug):
     projectset = get_object_or_404(ProjectSet, slug=set_slug,
         school__slug=slug)
@@ -60,6 +61,7 @@ def projectset(request, slug, set_slug):
     context.update(get_google_tracking_context(projectset))
     return render_to_response('schools/projectset_home.html',
         context, context_instance=RequestContext(request))
+
 
 def school_css(request, slug):
     school = get_object_or_404(School, slug=slug)
