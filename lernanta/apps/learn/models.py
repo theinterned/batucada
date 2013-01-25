@@ -1,12 +1,8 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.db.models import Count
 
-from tags.models import GeneralTaggedItem
-from projects.models import Project
-from signups.models import Signup
 from learn import db
 
 
@@ -206,4 +202,21 @@ def remove_course_from_list(course_url, list_name):
         raise Exception("Course not in list")
 
     entry.delete()
+
+
+def get_lists_for_course(course_url):
+    """ return all the lists that a course is in """
+    try:
+        course = _get_listed_courses().get(url=course_url)
+    except:
+        raise Exception("Course at given URL doesn't exist")
+
+    return [
+        {
+            'name': l.course_list.name,
+            'url': l.course_list.url,
+            'title': l.course_list.title
+        }
+        for l in course.courselistentry_set.all()
+    ]
 
