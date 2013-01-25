@@ -52,7 +52,7 @@ def get_course(course_uri):
         "title": course_db.title,
         "hashtag": course_db.short_title,
         "slug": slugify(course_db.title),
-        "description": course_db.plug,
+        "description": course_db.description,
         "language": course_db.language,
     }
     course["draft"] = course_db.draft
@@ -112,8 +112,9 @@ def create_course(title, hashtag, description, language, organizer_uri):
     course_db = db.Course(
         title=title,
         short_title=hashtag,
-        plug=description,
-        language=language
+        description=description,
+        language=language,
+        creator_uri=organizer_uri
     )
 
     course_db.save()
@@ -129,6 +130,7 @@ def create_course(title, hashtag, description, language, organizer_uri):
     learn_model.add_course_listing(**learn_api_data)
     learn_model.add_course_to_list(learn_api_data['course_url'], "drafts")
 
+    # TODO notify admins
     return course
 
 
@@ -140,7 +142,7 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
     if hashtag:
         course_db.short_title = hashtag
     if description:
-        course_db.plug = description
+        course_db.description = description
     if language:
         course_db.language = language
     if image_uri:
@@ -240,6 +242,10 @@ def unpublish_course(course_uri):
     learn_model.add_course_to_list(course_url, "drafts")
 
     return course
+
+
+def mark_course_as_spam(course_uri):
+    pass
 
 
 def get_course_content(course_uri):
