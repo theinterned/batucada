@@ -4,55 +4,6 @@
 	http://0.0.0.0:8000/static/css/batucada.css?v=1
 */
 
-@font-face{
-        font-family: 'WebSymbolsRegular';
-        src: url('/static/fonts/websymbols-regular-webfont.eot');
-        src: url('/static/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
-             url('/static/fonts/websymbols-regular-webfont.woff') format('woff'),
-             url('/static/fonts/websymbols-regular-webfont.ttf') format('truetype'),
-             url('/static/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
-        }
-
-html {
-  height: 100%;
-}
-body {
-  font-family: "Helvetica", Arial, Verdana, san-serif;
-  color: #5a6579;
-  background: url('../images/bg.grey.png');
-  min-height: 101%;
-}
-
-input {
-  font-family: "Helvetica", Arial, Verdana, san-serif;
-}
-
-a, a:active, a:visited {
-    text-shadow: none;
-}
-
-.container {
-  width: 1000px;
-  height: 100%;
-  margin: auto;
-  zoom: 1;
-}
-.container:before, .container:after{
-	content: "\0020"; display: block; height: 0; visibility: hidden;
-}
-.container:after{
-	clear: both;
-}
-h1, h2, h3, h4, h5, h6{
-  text-shadow:  1px 1px #fff;
-}
-h1 {
-  font-size: 24px;
-}
-p {
-	line-height: 1.4;
-	margin-bottom: 1.4em;
-}
 a.openid {
 	background: url(/static/images/openid-22x25.png) 0 0 no-repeat;	padding-left: 27px;
 	}
@@ -283,7 +234,6 @@ input[type=submit]:active,
 }
 
 .project-kind-challenge #sidebar .duration-time .left {
-  font-family: 'WebSymbolsRegular';
   font-size: 34px;
   float: left;
   line-height: 32px;
@@ -731,53 +681,18 @@ form .small {
  
 /* header */ 
  
-  #breadcrumbs {
-    height: 44px;
-    width: 990px;
-    margin: auto auto;
-    /* background-color: #fff; */
-    font-size: 11px;
-    /*line-height: 31px;*/
-    line-height: 22px;
-    padding-left:10px;
-    border-radius: 10px;
-    border: solid 1px #EEE;     
-  }
-
     #project_landing #breadcrumbs, #page #breadcrumbs, #edit_page #breadcrumbs, #comment #breadcrumbs, #delete_page #breadcrumbs, 
     #delete_restore_comment #breadcrumbs, #project_edit #breadcrumbs, #create_page #breadcrumbs, #signup #breadcrumbs, 
     #project_user_list #breadcrumbs {
         height: 6em;    
     }
     
-    #breadcrumbs .container {
-        padding: 13px 3px;
-    }
     
-    #breadcrumbs nav .arrow {
-        color: #7f7f7f;
-        display: inline;
-        background: url("/static/images/arrow.png") no-repeat left center;
-        margin: 0 5px;
-    }
-
-    #breadcrumbs #breadcrumbs-actions {
-        float: right;
-        position: relative;
-        top: -47px;
-        margin-right: 10px;
-    }
-    
-    #user_profile #breadcrumbs #breadcrumbs-actions, #learn #breadcrumbs #breadcrumbs-actions,
     #school_home #breadcrumbs #breadcrumbs-actions, #inbox #breadcrumbs #breadcrumbs-actions {
         top: -25px;
     }
     
-    #breadcrumbs #breadcrumbs-actions .button {
-      float: left;
-      margin-right: 15px;
-    }
-    
+   
     #project_landing #breadcrumbs #breadcrumbs-actions {
       top: -44px;
       margin-right: 35px;
@@ -956,16 +871,7 @@ form .small {
 		  line-height: 1.5;
 		  margin-left: 0;
         }
-        /*
-        Conflicts with arrows for now
-        
-          #project-links li a,
-          #member_links li a{
-			background: url("/static/images/link-indicator.png") 0 0 no-repeat;
-			padding-left: 20px;
-          }
-        */
-      
+     
       #project-lead {
         border-bottom: 1px solid #cfd1d2;
         padding-bottom: 15px;
@@ -1026,7 +932,6 @@ form .small {
 			margin-bottom: 18px;
 			font-size: 16px;
 			line-height: 18px;
-			font-family: Georgia, 'Times New Roman', Times, serif;
 			font-style: italic;
 			text-align: center;
 		}		
@@ -1104,7 +1009,6 @@ form .small {
 	.card-list section > h1{
 		text-align: center;
 		margin-top: -0.65em;
-		font-family: Georgia, "Times New Roman", Times, serif;
 		font-style: italic;
 	}
 	.card-list section h1 span{
@@ -2420,7 +2324,6 @@ body#signup .modal button[type=submit] {
 .signin.openid .or {
 	text-align: center;
 	color: #979fa1;
-	font-family: Georgia, "Times New Roman", Times, serif;
 	font-style: italic;
 	border-bottom: 1px solid #C9D3D5;
 	}		
@@ -2611,7 +2514,6 @@ div.warning h2 {
 }
 
 .messages .closeNotification {
-    font-family: 'WebSymbolsRegular';
     width: 10px;
     height: 10px;
     float: right;
@@ -4243,7 +4145,6 @@ div.voting div.score {
 }
 
 .pages-get-involved #main h1 {
-  font-family: helvetica, tahoma, Sans-serif;
   padding: 0;
   margin: 40px 0 25px 45px;
   line-height: 0;
@@ -4256,7 +4157,6 @@ div.voting div.score {
 }
 
 .pages-get-involved #main p {
-  font-family: helvetica, tahoma, Sans-serif;
   font-size: 13px;
   line-height: 25px;
   color: #666666;
@@ -4301,7 +4201,6 @@ div.voting div.score {
 }
 
 .pages-get-involved #main #contribute-navbar ul li.contribute-nav a {
-    font-family: Helvetica, tahoma, Sans-serif;
     font-weight: 100;
     position: relative;
     display: block;
@@ -4360,7 +4259,6 @@ div.voting div.score {
 }
 
 .pages-get-involved #main #contribute-slider h2.contribute-header {
-    font-family: Helvetica, tahoma, Sans-serif;
     font-size: 22px;
     font-weight: normal;
     line-height: 5px;
