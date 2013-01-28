@@ -73,6 +73,14 @@
       {% endif %}
     </div>
 
+    <div>
+      <form action="{% locale_url report_abuse %}" method="post">
+        {% csrf_token %}
+        <input id="id_url" name="url" type="hidden" value="{{request.get_full_path}}"/>
+        <button type="submit">Report abuse</button>
+      </form>
+    </div>
+
     <!--div id="course-description">
       <h2>{% trans "Description" %}</h2>
       <p>{{ course.description }}</p>
