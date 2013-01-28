@@ -18,6 +18,7 @@
     <div>
       <ul class="nav nav-list">
         <li class="nav-header">{% trans "Navigation"%}</li>
+        <li class="divider"></li>
         <li {% if not content%}class="active"{% endif %}>
           <a href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans "Course home" %}</a>
         </li>
