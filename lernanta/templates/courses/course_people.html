@@ -25,7 +25,7 @@
     {% endfor %}
     </ul>
   </div>
-  {% if organizer %}
+  {% if can_edit %}
     <p>
       <form action="{% locale_url courses_add_user course_id=course.id %}" method="POST">
         {% csrf_token %}

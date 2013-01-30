@@ -7,7 +7,7 @@
 
 {% block tab-pane-content %}
   {% if about.content|length == 0 %}
-    {% if organizer %}
+    {% if can_edit %}
       <div class="alert alert-info">
         <p class="text-info">{% blocktrans %}You can add some information here by editing this page!</a>{% endblocktrans %}
         </p>
@@ -17,7 +17,7 @@
     <div>{{about.content|convert_content|embed|safe}}</div>
   {% endif %}
   <p>
-  {% if organizer %}
+  {% if can_edit %}
     <p>
       <a class="btn" href="{% locale_url courses_content_edit course_id=course.id content_id=about.id %}?next_url={{course_url}}"><i class="icon-edit"></i> {% trans "edit" %}</a>
     </p>

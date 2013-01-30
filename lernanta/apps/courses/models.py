@@ -55,8 +55,6 @@ def get_course(course_uri):
         "description": course_db.description,
         "language": course_db.language,
     }
-    course["draft"] = course_db.draft
-    course["archived"] = course_db.archived
 
     course["status"] = 'published'
     if course_db.archived:
@@ -99,6 +97,7 @@ def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, dra
 
 
 def get_user_courses(user_uri):
+    """ return courses organized or participated in by an user """
     signups = db.CohortSignup.objects.filter(user_uri=user_uri, leave_date__isnull=True)
     courses = []
     for signup in signups:
@@ -161,6 +160,7 @@ def update_course(course_uri, title=None, hashtag=None, description=None, langua
 
 
 def update_course_learn_api(course_uri):
+    """ send updated course info to the learn API to update course listing """
     course_db = _get_course_db(course_uri)
     try:
         learn_model.update_course_listing(**get_course_learn_api_data(course_uri))
@@ -169,6 +169,7 @@ def update_course_learn_api(course_uri):
 
 
 def get_course_learn_api_data(course_uri):
+    """ return data used by the learn API to list courses """
     course = get_course(course_uri)
 
     course_url = reverse(
@@ -194,6 +195,7 @@ def get_course_learn_api_data(course_uri):
 
 
 def publish_course(course_uri):
+    """ publish the course - also add course to the 'listed' list in the learn index """
     course_db = _get_course_db(course_uri)
     course_db.draft = False
     course_db.archived = False
@@ -219,6 +221,7 @@ def publish_course(course_uri):
 
 
 def archive_course(course_uri):
+    """ mark a course as archived - this will also disable editing of the course """
     course_db = _get_course_db(course_uri)
     course_db.archived = True
     course_db.save()
@@ -529,6 +532,8 @@ def remove_user_from_cohort(cohort_uri, user_uri):
 
 
 def add_comment_to_cohort(comment_uri, cohort_uri, reference_uri):
+    #NOTE this is not being used = not tested ~ not working
+    raise Exception
     #NOTE maybe create comment and update comment reference to simplify use?
     cohort_db = _get_cohort_db(cohort_uri)
     cohort_comment_db = db.CohortComment(
@@ -546,6 +551,8 @@ def add_comment_to_cohort(comment_uri, cohort_uri, reference_uri):
 
 
 def get_cohort_comments(cohort_uri, reference_uri):
+    #NOTE this is not being used = not tested ~ not working
+    raise Exception
     cohort_db = _get_cohort_db(cohort_uri)
     cohort_comments = []
     for cohort_comment in cohort_db.comment_set.filter(reference_uri=reference_uri):

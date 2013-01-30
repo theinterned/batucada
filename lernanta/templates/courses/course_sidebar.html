@@ -9,7 +9,7 @@
         {% else %}
              <img id="id-course-image" src="{{ STATIC_URL}}images/project-missing.png" alt="course image"/>
         {% endif %}
-        {% if course.draft %}
+        {% if course.status == 'draft' %}
           <img id="id-course-image-overlay" src="{{ STATIC_URL }}images/course-draft.png" alt="draft course"/>
         {% endif %}
       </a>

@@ -47,7 +47,7 @@
                 <a href="{% locale_url courses_content_show course_id=course.id, content_id=task.id %}">{{ task.title }}</a>
               </li>
             {% endfor %}
-            {% if organizer %}
+            {% if can_edit %}
               <li class="divider"></li>
               <li>
                 <a href="{% locale_url courses_admin_content course_id=course.id %}">{% trans "Organize and add content" %}</a>

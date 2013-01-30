@@ -23,6 +23,7 @@ class CourseContent(ModelBase):
 
 
 class CourseTags(ModelBase):
+
     course = models.ForeignKey(Course, related_name='tags')
     tag = models.CharField(max_length=64)
 

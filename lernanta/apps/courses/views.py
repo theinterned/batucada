@@ -58,6 +58,7 @@ def _populate_course_context( request, course_id, context ):
         user_uri, cohort['uri']
     )
     context['organizer'] |= request.user.is_superuser
+    context['can_edit'] = context['organizer'] and not course['status'] == 'archived'
     if course_model.user_in_cohort(user_uri, cohort['uri']):
         if not context['organizer']:
             context['show_leave_course'] = True
@@ -433,7 +434,6 @@ def show_content( request, course_id, content_id):
     context = _populate_course_context(request, course_id, context)
     context['content_active'] = True
     #context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
-    context['can_edit'] = context['organizer']
     context['form'] = ContentForm(content)
     return render_to_response(
         'courses/content.html', 
