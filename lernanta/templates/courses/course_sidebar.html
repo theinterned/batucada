@@ -20,7 +20,7 @@
         <li class="nav-header">{% trans "Navigation"%}</li>
         <li class="divider"></li>
         <li {% if not content%}class="active"{% endif %}>
-          <a href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans "Course home" %}</a>
+          <a href="{% locale_url courses_show course_id=course.id slug=course.slug %}">{% trans "About" %}</a>
         </li>
         <li class="divider"></li>
         {% for task in course.content %}
