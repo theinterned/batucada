@@ -44,7 +44,7 @@ urlpatterns = patterns('',
         'courses.views.course_add_user',
         name='courses_add_user'),
 
-    url(r'^(?P<course_id>[\d]+)/change_status/(?P<status>draft|publish|archive)/$',
+    url(r'^(?P<course_id>[\d]+)/change_status/$',
         'courses.views.course_change_status',
         name='courses_change_status'),
 

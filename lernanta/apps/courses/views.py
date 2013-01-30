@@ -18,6 +18,7 @@ from courses.forms import CourseCreationForm
 from courses.forms import CourseUpdateForm
 from courses.forms import CourseTermForm
 from courses.forms import CourseImageForm
+from courses.forms import CourseStatusForm
 from courses.forms import CohortSignupForm
 from courses.forms import CourseTagsForm
 from courses.decorators import require_organizer
@@ -210,6 +211,7 @@ def course_settings( request, course_id ):
 
     context['update_form'] = CourseUpdateForm(course)
     context['image_form'] = CourseImageForm()
+    context['status_form'] = CourseStatusForm(course)
     tags = ", ".join(course_model.get_course_tags(course_uri))
     context['tags_form'] = CourseTagsForm({'tags': tags})
     if context['cohort']['term'] == 'FIXED':
@@ -331,15 +333,20 @@ def course_add_organizer( request, course_id, username ):
 @login_required
 @require_http_methods(['POST'])
 @require_organizer
-def course_change_status( request, course_id, status ):
+def course_change_status( request, course_id ):
     user_uri = "/uri/user/{0}".format(request.user.username)
     course_uri = course_model.course_id2uri(course_id)
-    if status == 'draft':
-        course = course_model.unpublish_course(course_uri)
-    elif status == 'publish':
-        course = course_model.publish_course(course_uri)
-    elif status == 'archive':
-        course = course_model.archive_course(course_uri)
+    form = CourseStatusForm(request.POST)
+    if form.is_valid():
+        status = form.cleaned_data['status']
+        if status == 'draft':
+            course = course_model.unpublish_course(course_uri)
+        elif status == 'published':
+            course = course_model.publish_course(course_uri)
+        elif status == 'archived':
+            course = course_model.archive_course(course_uri)
+        messages.success(request, _('Course status updated.'))
+
     redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
     return http.HttpResponseRedirect(redirect_url)
 

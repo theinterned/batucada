@@ -35,6 +35,15 @@ class CourseTermForm(forms.Form):
 class CourseTagsForm(forms.Form):
     tags = forms.CharField(max_length=256)
 
+class CourseStatusForm(forms.Form):
+    STATUS_CHOICES = [
+        ('draft', _('Draft'), ),
+        ('published', _('Published'), ),
+        ('archived', _('Archived'), ),
+    ]
+
+    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=RadioSelect)
+
 
 SIGNUP_CHOICES = [
     ("OPEN", _("Open"),), 

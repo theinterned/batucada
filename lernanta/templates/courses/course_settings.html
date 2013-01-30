@@ -48,31 +48,12 @@
   </div>
   <hr/>
   <div>
-    {% if course.draft %} 
-      <p>{% trans "This course is still a draft" %}</p>
-      <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
-        {% csrf_token %}
-        <p><button type="submit">{% trans "Publish" %}</button></p>
-      </form>
-    {% endif %}
-    {% if not course.draft and not course.archived %}
-      <p>{% trans "Published" %}</p>
-      <form action="{% locale_url courses_change_status course_id=course.id status='draft' %}" method="POST">
-        {% csrf_token %}
-        <p><button type="submit">{% trans "Switch back to draft" %}</button></p>
-      </form>
-      <form action="{% locale_url courses_change_status course_id=course.id status='archive' %}" method="POST">
-        {% csrf_token %}
-        <p><button type="submit">{% trans "Archive" %}</button></p>
-      </form>
-    {% endif %}
-    {% if course.archived %}
-      <p>{% trans "Archived" %}</p>
-      <form action="{% locale_url courses_change_status course_id=course.id status='publish' %}" method="POST">
-          {% csrf_token %}
-          <p><button type="submit">{% trans "Resurrect" %}</button></p>
-      </form>
-    {% endif %}
+    <form action="{% locale_url courses_change_status course_id=course.id %}" method="POST">
+      {% csrf_token %}
+      <p><label for="id_status">{% trans "Course status" %}</label></p>
+      {{ status_form.status }}
+      <p><button type="submit">{% trans "Save" %}</button></p>
+    </form>
   </div>
   <hr/>
   <div id="course-term">
