@@ -2445,3 +2445,7 @@ a.show-on-hover {
 #schools-challenges .thumbnail .caption{
   height: 99px;
 }
+
+body *{
+  @include text-shadow(none);
+}
