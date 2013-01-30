@@ -6725,8 +6725,20 @@ a.label:hover, a.badge:hover {
 
 /* line 1, ../../../sass/p2pu-css-framework/p2pu/p2pu-override-classes.scss */
 .well {
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-  border-radius: 0px;
   border-bottom: 2px solid #cccccc;
+}
+
+/* line 5, ../../../sass/p2pu-css-framework/p2pu/p2pu-override-classes.scss */
+.alert a {
+  border-bottom: 1px dashed;
+}
+
+/* line 9, ../../../sass/p2pu-css-framework/p2pu/p2pu-override-classes.scss */
+.alert-info a {
+  color: #11FF11;
+}
+
+/* line 13, ../../../sass/p2pu-css-framework/p2pu/p2pu-override-classes.scss */
+label {
+  font-family: "arvo", Helvetica, sans-serif;
 }

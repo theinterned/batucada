@@ -7,8 +7,10 @@
 
 {% block tab-pane-content %}
   {% if about.content|length == 0 %}
+    <div class="alert alert-info">
     <p class="text-info">{% blocktrans %}You can add some information to this tab by editing this page!</a>{% endblocktrans %}
     </p>
+    </div>
   {% else %}
     <div>{{about.content|convert_content|embed|safe}}</div>
   {% endif %}
