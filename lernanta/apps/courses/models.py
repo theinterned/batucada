@@ -23,6 +23,10 @@ class ResourceNotFoundException(Exception):
     pass
 
 
+class ResourceDeletedException(Exception):
+    pass
+
+
 class DataIntegrityException(Exception):
     pass
 
@@ -39,6 +43,8 @@ def _get_course_db(course_uri):
     course_id = course_uri2id(course_uri)
     try:
         course_db = db.Course.objects.get(id=course_id)
+        if course_db.deleted:
+            raise ResourceDeletedException
     except:
         raise ResourceNotFoundException
     return course_db
@@ -79,7 +85,7 @@ def get_course(course_uri):
 def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, draft=None, archived=None):
     results = db.Course.objects
     #NOTE: could also take **kwargs and do results.filter(**kwargs)
-    filters = {}
+    filters = { 'deleted': False }
     if title:
         filters['title'] = title
     if hashtag:
@@ -270,7 +276,8 @@ def unpublish_course(course_uri):
 
 
 def mark_course_as_spam(course_uri):
-    pass
+    course_db = _get_course_db(course_uri)
+    course_db.deleted = True
 
 
 def get_course_content(course_uri):

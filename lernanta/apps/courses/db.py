@@ -12,6 +12,7 @@ class Course(ModelBase):
     creation_date = models.DateTimeField(auto_now_add=True)
     draft = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
     creator_uri = models.CharField(max_length=256)
 
 
