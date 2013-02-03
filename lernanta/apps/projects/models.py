@@ -371,17 +371,45 @@ class Project(ModelBase):
                 badge.award_to(user)
 
     def completed_tasks_users(self):
+        custom_query = """
+SELECT
+    `relationships_relationship`.`id`,
+    `relationships_relationship`.`source_id`,
+    `relationships_relationship`.`target_user_id`,
+    `relationships_relationship`.`target_project_id`,
+    `relationships_relationship`.`created_on`,
+    `relationships_relationship`.`deleted`
+FROM
+    `relationships_relationship`
+INNER JOIN
+    `users_userprofile` ON (`relationships_relationship`.`source_id` = `users_userprofile`.`id`)
+INNER JOIN
+    `projects_perusertaskcompletion` ON  (`relationships_relationship`.`source_id` = `projects_perusertaskcompletion`.`user_id`)
+INNER JOIN
+    `content_page` U1 ON (`projects_perusertaskcompletion`.`page_id` = U1.`id`)
+WHERE
+    `projects_perusertaskcompletion`.`unchecked_on` IS NULL
+    AND U1.`project_id` = {project_id}
+    AND U1.`deleted` = False
+    AND `users_userprofile`.`deleted` = False
+    AND `relationships_relationship`.`target_project_id` = {project_id}
+GROUP BY
+    `projects_perusertaskcompletion`.`user_id`, `projects_perusertaskcompletion`.`user_id`
+HAVING
+    COUNT(`projects_perusertaskcompletion`.`page_id`) = {task_count}
+LIMIT 56;"""
         total_count = self.pages.filter(listed=True,
             deleted=False).count()
-        completed_stats = PerUserTaskCompletion.objects.filter(
-            page__project=self, page__deleted=False,
-            unchecked_on__isnull=True).values(
-            'user').annotate(completed_count=Count('page')).filter(
-            completed_count=total_count)
-        usernames = completed_stats.values_list(
-            'user', flat=True)
-        return Relationship.objects.filter(source__in=usernames,
-            target_project=self, source__deleted=False)
+        #completed_stats = PerUserTaskCompletion.objects.filter(
+        #    page__project=self, page__deleted=False,
+        #    unchecked_on__isnull=True).values(
+        #    'user').annotate(completed_count=Count('page')).filter(
+        #    completed_count=total_count)
+        #usernames = completed_stats.values_list(
+        #    'user', flat=True)
+        #return Relationship.objects.filter(source__in=usernames,
+        #    target_project=self, source__deleted=False)
+        return Relationship.objects.raw(custom_query.format(project_id=self.id, task_count=total_count))
 
     def get_badges(self):
         from badges.models import Badge
