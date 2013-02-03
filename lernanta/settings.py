@@ -321,4 +321,5 @@ TRACKING_PREFIXES = [
 
 BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
     'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
-    'Speedy Spider', 'DotBot', 'Sogou']
+    'Speedy Spider', 'DotBot', 'Sogou', 'YoudaoBot',
+    'YandexBot', 'rogerbot']

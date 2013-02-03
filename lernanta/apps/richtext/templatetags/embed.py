@@ -44,6 +44,7 @@ def replace(match):
                 client = Embedly(embedly_key)
                 obj = client.oembed(url, maxwidth=460)
                 extra_data = obj.dict
+                #TODO: remove any non python dictionaries in extra_data
                 if 'dominant_colors' in extra_data:
                     del extra_data['dominant_colors']
                 embedded_url = EmbeddedUrl(original_url=obj.original_url,

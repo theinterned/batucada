@@ -8,7 +8,7 @@ from projects.models import Project, Participation
 class ProjectAdmin(admin.ModelAdmin):
     actions = [export_as_csv]
     date_hierarchy = 'created_on'
-    list_display = ('id', 'name', 'clone_of', 'language', 'created_on')
+    list_display = ('id', 'name', 'slug', 'clone_of', 'language', 'created_on')
     list_filter = ('school', 'featured', 'under_development', 'not_listed',
         'archived', 'deleted', 'test')
     search_fields = ('id', 'name', 'slug', 'school__name',

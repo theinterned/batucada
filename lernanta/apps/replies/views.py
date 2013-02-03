@@ -44,7 +44,7 @@ def reply_comment(request, comment_id):
         reply_to=reply_to)
     can_reply = can_reply and request.user.get_profile().can_post()
     if not can_reply:
-        messages.error(request, _('You can not reply to this comment.'))
+        messages.error(request, _('You can not reply to this comment. Please ensure that you have confirmed your email address.'))
         return http.HttpResponseRedirect(reply_to.get_absolute_url())
     user = request.user.get_profile()
     comment = None
