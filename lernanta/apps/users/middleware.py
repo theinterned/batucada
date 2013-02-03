@@ -1,9 +1,14 @@
+import datetime
+import logging
+
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth import logout
 
 from users.models import UserProfile
 from l10n.urlresolvers import reverse
+
+log = logging.getLogger(__name__)
 
 
 class ProfileExistMiddleware(object):
@@ -28,3 +33,17 @@ class ProfileExistMiddleware(object):
                 if request.path.startswith(prefix):
                     return None
             return HttpResponseRedirect(dashboard_url)
+
+
+class UserActivityMiddleware:
+    def process_request(self, request):
+        if request.user.is_authenticated():
+            now = datetime.datetime.now()
+            profile = request.user.get_profile()
+            try:
+                profile.last_active = now
+                profile.save()
+            except Exception, error:
+                msg = 'An error occurred saving user record: %s'
+                log.error(msg % error)
+
