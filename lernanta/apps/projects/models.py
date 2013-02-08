@@ -266,7 +266,7 @@ class Project(ModelBase):
         course_url = reverse('projects_show', kwargs={'slug': self.slug})
         course_lists = learn_model.get_lists_for_course(course_url)
         list_names = [ l['name'] for l in course_lists ]
-        if self.not_listed:
+        if self.not_listed or self.test:
             for list_name in list_names:
                 learn_model.remove_course_from_list(course_url, list_name)
         else:
