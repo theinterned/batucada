@@ -271,9 +271,9 @@ class Project(ModelBase):
                 learn_model.remove_course_from_list(course_url, list_name)
         else:
             desired_list = 'drafts'
-            if self.under_development == False and self.archived == False:
+            if not (self.under_development or self.archived):
                 desired_list = 'listed'
-            elif self.archived == True:
+            elif self.archived:
                 desired_list = 'archived'
             possible_lists = ['drafts', 'listed', 'archived']
             possible_lists.remove(desired_list)
