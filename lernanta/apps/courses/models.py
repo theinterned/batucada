@@ -104,7 +104,7 @@ def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, dra
 
 def get_user_courses(user_uri):
     """ return courses organized or participated in by an user """
-    signups = db.CohortSignup.objects.filter(user_uri=user_uri, leave_date__isnull=True)
+    signups = db.CohortSignup.objects.filter(user_uri=user_uri, leave_date__isnull=True, cohort__course__archived=False)
     courses = []
     for signup in signups:
         course = get_course(course_id2uri(signup.cohort.course.id)) 
@@ -204,7 +204,7 @@ def publish_course(course_uri):
     """ publish the course - also add course to the 'listed' list in the learn index """
 
     course_db = _get_course_db(course_uri)
-    if course_db.draft == False and course_db.archived == False:
+    if not (course_db.draft or course_db.archived):
         return get_course(course_uri)
 
     course_db.draft = False
@@ -233,7 +233,7 @@ def publish_course(course_uri):
 def archive_course(course_uri):
     """ mark a course as archived - this will also disable editing of the course """
     course_db = _get_course_db(course_uri)
-    if course_db.archived == True:
+    if course_db.archived:
         return get_course(course_uri)
 
     course_db.archived = True
@@ -260,7 +260,7 @@ def archive_course(course_uri):
 def unpublish_course(course_uri):
     course_db = _get_course_db(course_uri)
 
-    if course_db.draft == True and course_db.archived == False:
+    if course_db.draft and not course_db.archived:
         return get_course(course_uri)
 
     course_db.archived = False
