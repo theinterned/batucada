@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     (r'notifications/',  include('notifications.urls')),
     (r'api/',            include('api.urls')),
     (r'',                include('users.urls')),
+    (r'^oauth/',         include('oauth.urls')),
 )
 
 # for serving media when running a local dev server with DEBUG=True
