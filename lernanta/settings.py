@@ -178,7 +178,7 @@ INSTALLED_APPS = (
     'tastypie',
     'lernanta.apps.media',
     'oauth2app',
-    'oauth',
+    'oauthprovider',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

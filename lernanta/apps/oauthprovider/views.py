@@ -23,7 +23,7 @@ def test(request):
 
 @login_required
 def missing_redirect_uri(request):
-    return render_to_response('oauth2/missing_redirect_uri.html', {},
+    return render_to_response('oauthprovider/missing_redirect_uri.html', {},
                               context_instance=RequestContext(request))
 
 @login_required
@@ -38,7 +38,7 @@ def authorize(request):
         return authorizer.error_redirect()
 
     if request.method == 'GET':
-        return render_to_response('oauth/authorize.html', {
+        return render_to_response('oauthprovider/authorize.html', {
             'form': AuthorizeForm(),
             'form_action': '%s?%s' % (reverse('oauth_authorize'), authorizer.query_string)
         }, context_instance=RequestContext(request))
