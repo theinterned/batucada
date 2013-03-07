@@ -806,9 +806,8 @@ function submitLearnFilterLinks(e) {
             updateLearnFilters(data);
             reloadLearnProjectList(data);
             enableLearn();
-            updateBrowserUrl(url);
         });
-        //updateBrowserUrl(url);
+        updateBrowserUrl(url);
     }
     return false;
 }
