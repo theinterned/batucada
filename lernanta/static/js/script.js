@@ -738,7 +738,7 @@ function updateLearnHeader(data) {
 }
 
 function bindLearnFilters() {
-    $('#learn #sidebar a.filter').click(submitLearnFilterLinks);
+    //$('#learn #sidebar a.filter').click(submitLearnFilterLinks);
     $('#learn #sidebar form#learn-projects-filter select').change(submitLearnFilterFormField);
     $('#learn #sidebar form#learn-projects-filter input').click(submitLearnFilterFormField);
     $('#learn #sidebar form#learn-projects-filter').submit(submitLearnFilterForm);
@@ -806,8 +806,9 @@ function submitLearnFilterLinks(e) {
             updateLearnFilters(data);
             reloadLearnProjectList(data);
             enableLearn();
+            updateBrowserUrl(url);
         });
-        updateBrowserUrl(url);
+        //updateBrowserUrl(url);
     }
     return false;
 }
