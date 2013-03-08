@@ -818,7 +818,6 @@ function submitLearnFilterForm (e) {
     var form_data = $form.serialize();
     disableLearn();
     $.get(url, form_data, function(data) {
-        console.log(data);
         updateLearnHeader(data);
         updateLearnFilters(data);
         reloadLearnProjectList(data);
