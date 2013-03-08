@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'^token/?$', 'oauth2app.token.handler',
         name='oauth_token_handler'),
 
-    url(r'^test/$', 'oauthprovider.views.test',
+    url(r'^whoami/$', 'oauthprovider.views.whoami',
         name='oauth_test'),
 )

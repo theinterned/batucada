@@ -12,14 +12,17 @@ from oauth2app.authenticate import JSONAuthenticator, AuthenticationException
 class AuthorizeForm(forms.Form):
     pass
 
-def test(request):
+
+def whoami(request):
     """Test authentication"""
     authenticator = JSONAuthenticator()
     try:
         authenticator.validate(request)
     except AuthenticationException:
         return authenticator.error_response()
-    return authenticator.response({"secret": "information"})
+
+    return authenticator.response({"user": authenticator.access_token.user.username})
+
 
 @login_required
 def missing_redirect_uri(request):
@@ -45,10 +48,8 @@ def authorize(request):
     elif request.method == 'POST':
         form = AuthorizeForm(request.POST)
         if form.is_valid():
-            print request.POST.get('connect')
             if request.POST.get('connect') == "on":
                 return authorizer.grant_redirect()
             else:
                 return authorizer.error_redirect()
-
-    return HttpResponseRedirect('/')
+    return authorizer.error_redirect()
