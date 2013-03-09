@@ -1,6 +1,8 @@
 from django.conf import settings
 
-from tasks import TranslateAndSendNotifications, PostNotificationResponse
+from tasks import TranslateAndSendNotifications
+from tasks import PostNotificationResponse
+from tasks import SendNotifications
 from tracker import statsd
 from notifications.db import ResponseToken
 
@@ -8,6 +10,19 @@ import datetime
 import logging
 
 log = logging.getLogger(__name__)
+
+
+def _prepare_from_address(sender=None, token=None):
+    from_name = "P2PU Notifications"
+    if sender:
+        from_name = sender
+
+    from_email = "{0} <{1}>".format(from_name, settings.DEFAULT_FROM_EMAIL)
+    if token:
+        from_email = "{0} <reply+{1}@{2}>".format(from_name, token.response_token,
+            settings.REPLY_EMAIL_DOMAIN)
+
+    return from_email
 
 
 def send_notifications_i18n(user_profiles, subject_template, body_template,
@@ -23,43 +38,40 @@ def send_notifications_i18n(user_profiles, subject_template, body_template,
         cannot be responded to
     sender - the name to be used in the from address: sender <reply+token@domain>
     """
-    token_text = None
+    token = None
     if (response_callback):
-        token = ResponseToken()
-        token.response_callback = response_callback
+        token = ResponseToken(response_callback=response_callback)
         token.save()
-        token_text = token.response_token
         
+    from_email = _prepare_from_address(sender, token)
+
     args = (user_profiles, subject_template, body_template, template_context,
-        token_text, sender)
+        from_email)
 
     log.debug("notifications.send_notifications_i18n: {0}".format(args))
     TranslateAndSendNotifications.apply_async(args)
 
 
-def send_notification(user_profiles, subject, text_body, html_body=None,
+def send_notifications(user_profiles, subject, text_body, html_body=None,
         response_callback=None, sender=None):
     """Asynchronously send email notifications to users
-    
-    user_profiles - the users to send the notification to
     html_body - optional html body for the notification
     response_callback - url called when a user responds to a notification
         If response_callback is None, it is assumed that the notification
         cannot be responded to
     sender - the name to be used in the from address: sender <reply+token@domain>
     """
-    token_text = None
-    if (response_callback):
-        token = ResponseToken()
-        token.response_callback = response_callback
-        token.save()
-        token_text = token.response_token
-        
-    args = (user_profiles, subject_template, body_template, template_context,
-        token_text, sender)
 
-    log.debug("notifications.send_notifications_i18n: {0}".format(args))
-    TranslateAndSendNotifications.apply_async(args)
+    token = None
+    if (response_callback):
+        token = ResponseToken(response_callback=response_callback)
+        token.save()
+  
+    from_email = _prepare_from_address(sender, token)      
+    args = (user_profiles, subject, text_body, html_body, from_email)
+
+    log.debug(u"notifications.send_notifications: {0}".format(args))
+    SendNotifications.apply_async(args)
 
 
 def _auto_response_filter(token, text):

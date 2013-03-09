@@ -3,7 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
 
-from notifications.models import post_notification_response, send_notifications_i18n
+from notifications.models import send_notifications_i18n
+from notifications.models import send_notifications
+from notifications.models import post_notification_response
 from notifications.db import ResponseToken
 from users.models import UserProfile
 from tracker import statsd
@@ -104,14 +106,7 @@ def notifications_create(request):
         log.error("username {0} does not exist")
 
     if user and subject and text:
-        subject_template = 'notifications/emails/api_notification_subject.txt'
-        body_template = 'notifications/emails/api_notification.txt'
-        context = {
-            'subject': subject,
-            'text': text
-        }
-        send_notifications_i18n([user], subject_template, body_template, context,
-            callback_url, sender)
+        send_notifications([user], subject, text, html, callback_url, sender)
         statsd.Statsd.increment('api-notifications')
         return http.HttpResponse(status=200)
 

@@ -10,6 +10,7 @@ from content.models import Page
 from notifications.models import ResponseToken
 from notifications.models import post_notification_response
 from notifications.models import send_notifications_i18n
+from notifications.models import send_notifications
 
 from test_utils import TestCase
 from mock import patch
@@ -59,7 +60,7 @@ class NotificationsTests(TestCase):
         self.comment.content = "blah blah"
         self.comment.save()
 
-    def test_send_notification(self):
+    def test_send_notification_i18n(self):
         """ Test non replyable notification """
 
         #TODO use templates and context that doesn't rely on another app!
@@ -71,6 +72,17 @@ class NotificationsTests(TestCase):
         }
         message_count = len(mail.outbox)
         send_notifications_i18n([self.user], subject_template, body_template, context)
+        self.assertEqual(ResponseToken.objects.count(), 0)
+        self.assertEqual(len(mail.outbox), message_count + 1)
+
+
+    def test_send_notification(self):
+
+        subject = 'Notification subject'
+        text = 'Notifications body.\n\nSome random text.'
+        html = '<html></html>'
+        message_count = len(mail.outbox)
+        send_notifications([self.user], subject, text, html)
         self.assertEqual(ResponseToken.objects.count(), 0)
         self.assertEqual(len(mail.outbox), message_count + 1)
 
@@ -172,8 +184,8 @@ class NotificationsTests(TestCase):
             'subject': 'notification',
             'text': 'Some notification text.\nAnd some more',
             'html': '<html><head></head><body></body></html>',
-            'callback_url': 'http://mentor.p2pu.org/message/43234',
-            'from': self.user.username,
+            'callback': 'http://mentor.p2pu.org/message/43234',
+            'sender': self.user.username,
         }
 
         json_data = json.dumps(notification_data)
@@ -183,7 +195,6 @@ class NotificationsTests(TestCase):
             "text/json"
         )
         self.assertEqual(response.status_code, 200)
-        
         self.assertEqual(len(mail.outbox), 1)
 
 
