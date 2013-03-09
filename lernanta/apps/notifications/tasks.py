@@ -8,9 +8,9 @@ from celery.task import Task
 
 from l10n.models import localize_email
 
-class SendNotifications(Task):
+class TranslateAndSendNotifications(Task):
     """Send email notification to the users specified by ``profiles``."""
-    name = 'notifications.tasks.SendNotifications'
+    name = 'notifications.tasks.TranslateAndSendNotifications'
 
     def run(self, profiles, subject_template, body_template, context, reply_token=None, sender=None, **kwargs):
         log = self.get_logger(**kwargs)
