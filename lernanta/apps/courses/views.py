@@ -55,7 +55,7 @@ def _populate_course_context( request, course_id, context ):
     #NOTE if performance becomes a problem dont fetch cohort
     cohort = course_model.get_course_cohort(course_uri)
     context['cohort'] = cohort
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     context['organizer'] = course_model.is_cohort_organizer(
         user_uri, cohort['uri']
     )
@@ -86,7 +86,7 @@ def create_course( request ):
         form = CourseCreationForm(request.POST)
         if form.is_valid():
             user = request.user.get_profile()
-            user_uri = "/uri/user/{0}".format(user.username)
+            user_uri = u"/uri/user/{0}".format(user.username)
             course = {
                 'title': form.cleaned_data.get('title'),
                 'hashtag': form.cleaned_data.get('hashtag'),
@@ -114,7 +114,7 @@ def import_project( request, project_slug ):
     from courses import utils
     course = utils.import_project(project, project.name[:3])
     cohort = course_model.get_course_cohort(course['uri'])
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     course_model.add_user_to_cohort(cohort['uri'], user_uri, "ORGANIZER")
     return course_slug_redirect(request, course['id'])
 
@@ -248,7 +248,7 @@ def course_settings( request, course_id ):
 @require_organizer
 def course_image( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     image_form = CourseImageForm(request.POST, request.FILES)
     if image_form.is_valid():
         image_file = request.FILES['image']
@@ -267,7 +267,7 @@ def course_image( request, course_id ):
 def course_signup( request, course_id ):
     #NOTE: consider using cohort_id in URL to avoid cohort lookup
     cohort = course_model.get_course_cohort( course_id )
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     if cohort['signup'] == "OPEN":
         course_model.add_user_to_cohort(cohort['uri'], user_uri, "LEARNER", True)
         messages.success(request, _("You are now signed up for this course."))
@@ -288,7 +288,7 @@ def course_add_user( request, course_id ):
         messages.error(request, _("Please select a user to add."))
         return http.HttpResponseRedirect(redirect_url)
 
-    user_uri = "/uri/user/{0}".format(username)
+    user_uri = u"/uri/user/{0}".format(username)
     try:
         course_model.add_user_to_cohort(cohort_uri, user_uri, "LEARNER")
         messages.success(request, _("User added."))
@@ -301,7 +301,7 @@ def course_add_user( request, course_id ):
 @login_required
 def course_leave( request, course_id, username ):
     cohort_uri = course_model.get_course_cohort_uri(course_id)
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     is_organizer = course_model.is_cohort_organizer(
         user_uri, cohort_uri
     )
@@ -309,7 +309,7 @@ def course_leave( request, course_id, username ):
     error_message = _("Could not remove user")
     if username == request.user.username or is_organizer:
         removed, error_message = course_model.remove_user_from_cohort(
-            cohort_uri, "/uri/user/{0}".format(username)
+            cohort_uri, u"/uri/user/{0}".format(username)
         )
 
     if not removed:
@@ -327,14 +327,14 @@ def course_leave( request, course_id, username ):
 @require_organizer
 def course_add_organizer( request, course_id, username ):
     cohort_uri = course_model.get_course_cohort_uri(course_id)
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     is_organizer = course_model.is_cohort_organizer(
         user_uri, cohort_uri
     )
     if not is_organizer and not request.user.is_superuser:
         messages.error( request, _("Only other organizers can add a new organizer") )
         return course_slug_redirect( request, course_id)
-    new_organizer_uri = "/uri/user/{0}".format(username)
+    new_organizer_uri = u"/uri/user/{0}".format(username)
     course_model.remove_user_from_cohort(cohort_uri, new_organizer_uri)
     course_model.add_user_to_cohort(cohort_uri, new_organizer_uri, "ORGANIZER")
 
@@ -347,7 +347,7 @@ def course_add_organizer( request, course_id, username ):
 @require_http_methods(['POST'])
 @require_organizer
 def course_change_status( request, course_id ):
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     course_uri = course_model.course_id2uri(course_id)
     form = CourseStatusForm(request.POST)
     if form.is_valid():
@@ -437,8 +437,8 @@ def course_update_tags( request, course_id ):
 
 
 def show_content( request, course_id, content_id):
-    content_uri = '/uri/content/{0}'.format(content_id)
-    user_uri = "/uri/user/{0}".format(request.user.username)
+    content_uri = u'/uri/content/{0}'.format(content_id)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
     context = _populate_course_context(request, course_id, {})
 
     if not any( c['uri'] == content_uri for c in context['course']['content']):
@@ -465,7 +465,7 @@ def create_content( request, course_id ):
         form = ContentForm(request.POST)
         if form.is_valid():
             user = request.user.get_profile()
-            user_uri = "/uri/user/{0}".format(user.username)
+            user_uri = u"/uri/user/{0}".format(user.username)
             content_data = {
                 'title': form.cleaned_data.get('title'),
                 'content': form.cleaned_data.get('content'),
@@ -508,7 +508,7 @@ def edit_content( request, course_id, content_id ):
                 'content': form.cleaned_data.get('content'),
             }
             user = request.user.get_profile()
-            user_uri = "/uri/user/{0}".format(user.username)
+            user_uri = u"/uri/user/{0}".format(user.username)
             content = content_model.update_content(
                 content['uri'], content_data['title'], 
                 content_data['content'], user_uri
@@ -586,7 +586,7 @@ def post_content_comment( request, course_id, content_id):
     #TODO use form with field that sanitizes the input!
     comment_content = request.POST.get('comment')
     user = request.user.get_profile()
-    user_uri = "/uri/user/{0}".format(user.username)
+    user_uri = u"/uri/user/{0}".format(user.username)
     comment = comment_model.create_comment(comment_content, user_uri)
 
     reference_uri = "/uri/content/{0}".format(content_id)
@@ -611,7 +611,7 @@ def post_comment_reply( request, course_id, content_id, comment_id):
     #TODO use form with field that sanitizes the input!
     comment_content = request.POST.get('comment')
     user = request.user.get_profile()
-    user_uri = "/uri/user/{0}".format(user.username)
+    user_uri = u"/uri/user/{0}".format(user.username)
     comment_uri = "/uri/comment/{0}".format(comment_id)
     reply = comment_model.reply_to_comment(
         comment_uri, comment_content, user_uri
