@@ -60,6 +60,8 @@ def get_course(course_uri):
         "slug": slugify(course_db.title),
         "description": course_db.description,
         "language": course_db.language,
+        "date_created": course_db.creation_date,
+        "author_uri": course_db.creator_uri
     }
 
     course["status"] = 'published'

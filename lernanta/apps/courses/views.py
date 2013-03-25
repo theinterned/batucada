@@ -40,6 +40,7 @@ def _get_course_or_404( course_uri ):
     try:
         course = course_model.get_course(course_uri)
     except:
+        # TODO: this masks all exceptions that may happen in get_course!
         raise http.Http404
     return course
 
@@ -47,6 +48,7 @@ def _get_course_or_404( course_uri ):
 def _populate_course_context( request, course_id, context ):
     course_uri = course_model.course_id2uri(course_id)
     course = _get_course_or_404(course_uri)
+    course['author'] = course['author_uri'].strip('/').split('/')[-1]
     context['course'] = course
     context['course_url'] = request.get_full_path()
     if 'image_uri' in course:
