@@ -33,6 +33,7 @@ from replies import models as comment_model
 
 from lrmi import models as lrmi_model
 from lrmi.forms import LrmiForm
+from lrmi.forms import EducationalAlignmentForm
 
 log = logging.getLogger(__name__)
 
@@ -83,6 +84,9 @@ def _populate_course_context( request, course_id, context ):
 
 
     context['meta_data'] = lrmi_model.get_tags(course_uri)
+    if 'educational_alignment' in context['meta_data']:
+        context['educational_alignment'] = json.loads(context['meta_data']['educational_alignment'])
+        del context['meta_data']['educational_alignment']
 
     return context
 
@@ -240,8 +244,14 @@ def course_settings( request, course_id ):
     context['signup_form'] = CohortSignupForm(
         initial={'signup': context['cohort']['signup']}
     )
-    meta_data = lrmi_model.get_tags(course_uri)
-    context['metadata_form'] = LrmiForm(meta_data)
+
+    context['metadata_form'] = LrmiForm(context['meta_data'])
+    if 'educational_alignment' in context:
+        context['educational_alignment_form'] = EducationalAlignmentForm(
+            context['educational_alignment']
+        )
+    else:
+        context['educational_alignment_form'] = EducationalAlignmentForm()
 
     context['settings_active'] = True
 
@@ -454,6 +464,16 @@ def course_update_metadata( request, course_id ):
     if form.is_valid():
         for key, value in form.cleaned_data.items():
             lrmi_model.save_tag(course_uri, key, value)
+
+    ea_form = EducationalAlignmentForm(request.POST)
+    if ea_form.is_valid():
+        lrmi_model.save_tag(
+            course_uri,
+            'educational_alignment',
+            json.dumps(ea_form.cleaned_data)
+        )
+    else:
+        lrmi_model.save_tag(course_uri, 'educational_alignment', '')
     
     redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
     return http.HttpResponseRedirect(redirect_url)
