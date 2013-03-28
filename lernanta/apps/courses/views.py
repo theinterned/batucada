@@ -28,10 +28,11 @@ from content2.forms import ContentForm
 from content2 import utils
 
 from learn import models as learn_model
-
 from media import models as media_model
-
 from replies import models as comment_model
+
+from lrmi import models as lrmi_model
+from lrmi.forms import LrmiForm
 
 log = logging.getLogger(__name__)
 
@@ -79,6 +80,9 @@ def _populate_course_context( request, course_id, context ):
         context['lists'] = filter(f, course_lists)
     except:
         log.error("Could not get lists for course!")
+
+
+    context['meta_data'] = lrmi_model.get_tags(course_uri)
 
     return context
 
@@ -236,6 +240,9 @@ def course_settings( request, course_id ):
     context['signup_form'] = CohortSignupForm(
         initial={'signup': context['cohort']['signup']}
     )
+    meta_data = lrmi_model.get_tags(course_uri)
+    context['metadata_form'] = LrmiForm(meta_data)
+
     context['settings_active'] = True
 
     return render_to_response(
@@ -434,6 +441,20 @@ def course_update_tags( request, course_id ):
         course_model.add_course_tags(course_uri, tags)
         messages.success( request, _("Course tags successfully updated") )
 
+    redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
+    return http.HttpResponseRedirect(redirect_url)
+
+
+@login_required
+@require_http_methods(['POST'])
+@require_organizer
+def course_update_metadata( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    form = LrmiForm(request.POST)
+    if form.is_valid():
+        for key, value in form.cleaned_data.items():
+            lrmi_model.save_tag(course_uri, key, value)
+    
     redirect_url = reverse('courses_settings', kwargs={'course_id': course_id})
     return http.HttpResponseRedirect(redirect_url)
 

@@ -43,6 +43,10 @@
 
     <meta itemprop="useRightsUrl" content="http://creativecommons.org/licenses/by-sa/3.0/">
     <meta itemprop="learningResourceType" content="Course">
+
+    {% for metaitem in meta_data.items %}
+      <meta itemprop="{{metaitem.0}}" content="{{metaitem.1}}">
+    {% endfor %}
     
     <div class="tabbable">
       <ul class="nav nav-tabs">
