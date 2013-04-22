@@ -87,6 +87,9 @@
           <li {% if settings_active %}class="active"{% endif %}>
             <a href="{% locale_url courses_settings course_id=course.id %}">{% trans 'Settings' %}</a>
           </li>
+          <li {% if send_notification_active %}class="active"{% endif %}>
+            <a href="{% locale_url courses_send_notification course_id=course.id %}">{% trans 'Send notification' %}</a>
+          </li>
         {% endif %}
       </ul>
       <div class="tab-content">

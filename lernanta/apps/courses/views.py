@@ -479,6 +479,22 @@ def course_update_metadata( request, course_id ):
     return http.HttpResponseRedirect(redirect_url)
 
 
+@login_required
+@require_organizer
+def course_send_notification( request, course_id ):
+    context = _populate_course_context(request, course_id, {})
+    context['send_notification_active'] = True
+
+    if request.method == "POST":
+        pass
+
+    return render_to_response(
+        'courses/course_notification.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+
 def show_content( request, course_id, content_id):
     content_uri = u'/uri/content/{0}'.format(content_id)
     user_uri = u"/uri/user/{0}".format(request.user.username)
