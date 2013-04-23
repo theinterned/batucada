@@ -485,8 +485,13 @@ def course_send_notification( request, course_id ):
     context = _populate_course_context(request, course_id, {})
     context['send_notification_active'] = True
 
-    if request.method == "POST":
-        pass
+    if request.method == "POST" and len(request.POST.get('notification', '')) > 0:
+        text = request.POST.get('notification')
+        course_model.send_course_notification(
+            context['course']['uri'],
+            text
+        )
+        messages.success(request, _('The notification has been sent!'))
 
     return render_to_response(
         'courses/course_notification.html',
