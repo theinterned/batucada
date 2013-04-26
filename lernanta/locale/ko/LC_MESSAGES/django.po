@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-18 13:01+0200\n"
+"POT-Creation-Date: 2013-04-26 15:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Soohyun Pae <soohyun@creativecommons.org>\n"
 "Language-Team: CC Korea <creative@cckorea.org>\n"
@@ -337,7 +337,7 @@ msgstr "개정됨"
 msgid "Closed"
 msgstr "닫힘"
 
-#: apps/courses/models.py:136 templates/_footer.html:74 templates/base.html:85
+#: apps/courses/models.py:136 templates/_footer.html:78 templates/base.html:85
 #: templates/base.html.py:117 templates/courses/course_base.html:61
 #: templates/courses/course_sidebar.html:34
 msgid "About"
@@ -407,11 +407,16 @@ msgstr "{0} 을 업데이트할 수 없습니다."
 msgid "Course tags successfully updated"
 msgstr "코스 태그 업데이트에 성공하였습니다"
 
-#: apps/courses/views.py:609
+#: apps/courses/views.py:494
+#, fuzzy
+msgid "The announcement has been sent!"
+msgstr "%s 아이디가 저장되었습니다."
+
+#: apps/courses/views.py:632
 msgid "Could not move content up!"
 msgstr "컨텐츠 위치를 올릴 수 없습니다!"
 
-#: apps/courses/views.py:621
+#: apps/courses/views.py:644
 msgid "Could not move content down!"
 msgstr "컨텐츠 위치를 내릴 수 없습니다!"
 
@@ -1360,39 +1365,39 @@ msgstr "도와주시는 분들 요약 보기"
 msgid "View all of our supporters"
 msgstr "도와주시는 분들 전체 보기"
 
-#: templates/_footer.html:62
+#: templates/_footer.html:66
 msgid "(more)"
 msgstr "(더보기)"
 
-#: templates/_footer.html:73 templates/base.html:87 templates/base.html.py:119
+#: templates/_footer.html:77 templates/base.html:87 templates/base.html.py:119
 msgid "Help"
 msgstr "도움말"
 
-#: templates/_footer.html:75
+#: templates/_footer.html:79 templates/courses/course_base.html:91
 msgid "Announcements"
 msgstr "알림"
 
-#: templates/_footer.html:76
+#: templates/_footer.html:80
 msgid "Wiki"
 msgstr "위키"
 
-#: templates/_footer.html:77
+#: templates/_footer.html:81
 msgid "Found a Bug?"
 msgstr "버그 리포트"
 
-#: templates/_footer.html:80
+#: templates/_footer.html:84
 msgid "Creative Commons"
 msgstr "크리에이티브 커먼즈"
 
-#: templates/_footer.html:81
+#: templates/_footer.html:85
 msgid "Share-Alike"
 msgstr "동일조건변경허락"
 
-#: templates/_footer.html:82
+#: templates/_footer.html:86
 msgid "Privacy Guidelines"
 msgstr "프라이버시 가이드라인"
 
-#: templates/_footer.html:83
+#: templates/_footer.html:87
 msgid "Terms of Use"
 msgstr "이용약관"
 
@@ -2283,6 +2288,35 @@ msgstr "콘텐츠 추가"
 msgid "This course doesn't have any content yet. "
 msgstr "이 코스는 아직 콘텐츠가 없습니다."
 
+#: templates/courses/course_announcement.html:10
+msgid ""
+"Users can opt-out of course announcements and not all users will receive "
+"this message. Consider adding the relevant information to the course as "
+"content or on the about page"
+msgstr ""
+
+#: templates/courses/course_announcement.html:15
+#, fuzzy
+msgid "Subject: "
+msgstr "제목"
+
+#: templates/courses/course_announcement.html:15
+#, python-format
+msgid "P2PU Course Announcement #%(hashtag)s"
+msgstr ""
+
+#: templates/courses/course_announcement.html:16
+#, fuzzy
+msgid "Announcement text:"
+msgstr "알림"
+
+#: templates/courses/course_announcement.html:18
+#: templates/drumbeatmail/base.html:42 templates/messages/compose.html:8
+#: templates/projects/contact_organizers.html:36
+#: templates/users/forgot_password.html:18
+msgid "Send"
+msgstr "보내기"
+
 #: templates/courses/course_base.html:74
 msgid "Organize and add content"
 msgstr "콘텐츠 관리 및 추가"
@@ -2887,12 +2921,6 @@ msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
 "will."
 msgstr "봇이시군요! 저희가 대신 기능을 꺼드렸습니다. 스팸은여기서 해주세요."
-
-#: templates/drumbeatmail/base.html:42 templates/messages/compose.html:8
-#: templates/projects/contact_organizers.html:36
-#: templates/users/forgot_password.html:18
-msgid "Send"
-msgstr "보내기"
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
@@ -4008,8 +4036,8 @@ msgid ""
 "Optionally, provide the period of time in which you expect the %(kind)s to "
 "be active. These dates are optional and will be displayed on the home page."
 msgstr ""
-"(선택사항)%(kind)s(이)가 활성화일 기간을 입력하세요. 이 날짜는 홈페이지에 표시"
-"될 거예요."
+"(선택사항)%(kind)s(이)가 활성화일 기간을 입력하세요. 이 날짜는 홈페이지에 표"
+"시될 거예요."
 
 #: templates/projects/project_edit_status.html:54
 msgid "Active from"
@@ -4823,8 +4851,8 @@ msgid ""
 "This set of signup questions is particular to this %(kind)s. The answers to "
 "these questions will be visible to all participants once you get accepted."
 msgstr ""
-"%(kind)s. 로그인 질문 묶음은 P2PU의 모든 스터디 그룹, 강좌에 적용됩니다.이 질문들은 사"
-"용자가 승인되면 공개됩니다."
+"%(kind)s. 로그인 질문 묶음은 P2PU의 모든 스터디 그룹, 강좌에 적용됩니다.이 질"
+"문들은 사용자가 승인되면 공개됩니다."
 
 #: templates/signups/base.html:4 templates/signups/base.html.py:10
 #: templates/signups/sign_up.html:19
@@ -5604,8 +5632,8 @@ msgstr "새 사용자들"
 #~ "Cheerio\n"
 #~ "The P2PU team"
 #~ msgstr ""
-#~ "여기서 그들의 의견을 확인할 수 있습니다: https://%(domain)s"
-#~ "%(review_url)s\n"
+#~ "여기서 그들의 의견을 확인할 수 있습니다: https://%(domain)s%(review_url)"
+#~ "s\n"
 #~ "\n"
 #~ "Cheerio\n"
 #~ "The P2PU team"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-19 09:39+0200\n"
+"POT-Creation-Date: 2013-04-26 15:25+0200\n"
 "PO-Revision-Date: 2012-02-27 11:34+0800\n"
 "Last-Translator: 谢昱 <emiliaxie@qq.com>\n"
 "Language-Team: LANGUAGE &lt;LL@li.org&gt;\n"
@@ -336,88 +336,93 @@ msgstr "限制注册"
 msgid "Closed"
 msgstr "注册已关闭"
 
-#: apps/courses/models.py:134 templates/_footer.html:74 templates/base.html:85
-#: templates/base.html.py:117 templates/courses/course_base.html:40
+#: apps/courses/models.py:136 templates/_footer.html:78 templates/base.html:85
+#: templates/base.html.py:117 templates/courses/course_base.html:61
 #: templates/courses/course_sidebar.html:34
 #, fuzzy
 msgid "About"
 msgstr "关于我"
 
-#: apps/courses/models.py:539
+#: apps/courses/models.py:541
 msgid "No such user in cohort"
 msgstr ""
 
-#: apps/courses/models.py:547
+#: apps/courses/models.py:549
 #, fuzzy
 msgid "Cannot remove last organizer"
 msgstr "你无法删除此答案。"
 
-#: apps/courses/views.py:261
+#: apps/courses/views.py:280
 msgid "Could not upload image"
 msgstr ""
 
-#: apps/courses/views.py:273
+#: apps/courses/views.py:292
 #, fuzzy
 msgid "You are now signed up for this course."
 msgstr "你已经参与这个%s。"
 
-#: apps/courses/views.py:275
+#: apps/courses/views.py:294
 msgid "This course isn't open for signup."
 msgstr ""
 
-#: apps/courses/views.py:288
+#: apps/courses/views.py:307
 #, fuzzy
 msgid "Please select a user to add."
 msgstr "请选择另一个用户名。"
 
-#: apps/courses/views.py:294
+#: apps/courses/views.py:313
 #, fuzzy
 msgid "User added."
 msgstr "添加下一步。"
 
-#: apps/courses/views.py:296
+#: apps/courses/views.py:315
 msgid "User does not exist."
 msgstr ""
 
-#: apps/courses/views.py:309
+#: apps/courses/views.py:328
 msgid "Could not remove user"
 msgstr ""
 
-#: apps/courses/views.py:335
+#: apps/courses/views.py:354
 msgid "Only other organizers can add a new organizer"
 msgstr ""
 
-#: apps/courses/views.py:361
+#: apps/courses/views.py:380
 #, fuzzy
 msgid "Course status updated."
 msgstr "%s 更新"
 
-#: apps/courses/views.py:377
+#: apps/courses/views.py:396
 msgid "Could not change cohort signup"
 msgstr ""
 
-#: apps/courses/views.py:379
+#: apps/courses/views.py:398
 msgid "Invalid choice for signup"
 msgstr ""
 
-#: apps/courses/views.py:399
+#: apps/courses/views.py:418
 msgid "Could not update fixed term dates"
 msgstr ""
 
-#: apps/courses/views.py:416
+#: apps/courses/views.py:435
 msgid "Could not update {0}."
 msgstr ""
 
-#: apps/courses/views.py:433
+#: apps/courses/views.py:452
 #, fuzzy
 msgid "Course tags successfully updated"
 msgstr "信息发出成功。"
 
-#: apps/courses/views.py:566
+#: apps/courses/views.py:494
+#, fuzzy
+msgid "The announcement has been sent!"
+msgstr "身份%s已保存。"
+
+#: apps/courses/views.py:632
 msgid "Could not move content up!"
 msgstr ""
 
-#: apps/courses/views.py:578
+#: apps/courses/views.py:644
 msgid "Could not move content down!"
 msgstr ""
 
@@ -458,6 +463,28 @@ msgstr "信息发送有误，请重试。"
 #: apps/links/views.py:27 apps/links/views.py:53
 msgid "You can not change links order."
 msgstr "你不能更改链接顺序。"
+
+#: apps/lrmi/forms.py:31
+#, fuzzy
+msgid "Alignment Type"
+msgstr "评估种类"
+
+#: apps/lrmi/forms.py:33
+msgid "Educational Framework"
+msgstr ""
+
+#: apps/lrmi/forms.py:35
+#, fuzzy
+msgid "Target Description"
+msgstr "简略描述"
+
+#: apps/lrmi/forms.py:37
+msgid "Target Name"
+msgstr ""
+
+#: apps/lrmi/forms.py:39
+msgid "Target URL"
+msgstr ""
 
 #: apps/preferences/forms.py:23
 msgid "That email address is register under a different username."
@@ -1337,40 +1364,40 @@ msgstr "赞助者"
 msgid "View all of our supporters"
 msgstr "浏览我们的赞助者"
 
-#: templates/_footer.html:62
+#: templates/_footer.html:66
 msgid "(more)"
 msgstr "（更多）"
 
-#: templates/_footer.html:73 templates/base.html:87 templates/base.html.py:119
+#: templates/_footer.html:77 templates/base.html:87 templates/base.html.py:119
 msgid "Help"
 msgstr "帮助"
 
-#: templates/_footer.html:75
+#: templates/_footer.html:79 templates/courses/course_base.html:91
 msgid "Announcements"
 msgstr "注意事项"
 
-#: templates/_footer.html:76
+#: templates/_footer.html:80
 msgid "Wiki"
 msgstr "维基"
 
-#: templates/_footer.html:77
+#: templates/_footer.html:81
 msgid "Found a Bug?"
 msgstr "找到漏洞？"
 
-#: templates/_footer.html:80
+#: templates/_footer.html:84
 #, fuzzy
 msgid "Creative Commons"
 msgstr "只是共享创用分享相似"
 
-#: templates/_footer.html:81
+#: templates/_footer.html:85
 msgid "Share-Alike"
 msgstr ""
 
-#: templates/_footer.html:82
+#: templates/_footer.html:86
 msgid "Privacy Guidelines"
 msgstr "私人指导"
 
-#: templates/_footer.html:83
+#: templates/_footer.html:87
 msgid "Terms of Use"
 msgstr "使用条款"
 
@@ -1479,7 +1506,7 @@ msgstr "举报"
 #: templates/replies/_comment_threads.html:86
 #: templates/replies/_comment_threads.html:127
 #: templates/replies/delete_restore_comment.html:38
-#: templates/schools/school_edit_featured.html:40
+#: templates/schools/school_edit_featured.html:43
 #: templates/schools/school_edit_membership.html:37
 #: templates/signups/delete_restore_answer.html:35
 #: templates/signups/sign_up.html:63
@@ -1532,7 +1559,7 @@ msgstr "活动"
 msgid "Learn"
 msgstr "学习"
 
-#: templates/activity/base.html:22 templates/courses/course_base.html:63
+#: templates/activity/base.html:22 templates/courses/course_base.html:84
 #: templates/projects/_user_list.html:8
 #: templates/projects/project_user_list.html:7
 #: templates/projects/project_user_list.html:12
@@ -1573,7 +1600,7 @@ msgstr "你希望删除此活动吗？"
 #: templates/dashboard/dashboard.html:75
 #: templates/drumbeat/abuse_reason.html:26
 #: templates/drumbeat/report_abuse.html:16 templates/drumbeatmail/base.html:41
-#: templates/projects/_wall.html:21
+#: templates/oauthprovider/authorize.html:15 templates/projects/_wall.html:21
 #: templates/projects/contact_organizers.html:34
 #: templates/projects/project_clone.html:73
 #: templates/projects/project_create_overview.html:155
@@ -1842,7 +1869,7 @@ msgstr "编辑徽章"
 #: templates/projects/project_edit_next_steps.html:25
 #: templates/projects/project_edit_participants.html:36
 #: templates/projects/project_edit_summary.html:25
-#: templates/schools/school_edit_featured.html:28
+#: templates/schools/school_edit_featured.html:31
 #: templates/schools/school_edit_membership.html:25
 #: templates/schools/school_edit_organizers.html:27
 #: templates/schools/school_edit_summary.html:10
@@ -2061,42 +2088,6 @@ msgstr ""
 "\"_blank\"&gt;%(obi_url)s&lt;/a&gt;. Be sure to log in using the email &lt;"
 "strong&gt;%(email)s&lt;/strong&gt;."
 
-#: templates/badges/emails/new_submission.txt:2
-msgid "Howdy!"
-msgstr ""
-
-#: templates/badges/emails/new_submission.txt:4
-msgid "Someone has just submitted work for the"
-msgstr ""
-
-#: templates/badges/emails/new_submission.txt:4
-msgid "Go ahead and take a look at their work here:"
-msgstr ""
-
-#: templates/badges/emails/new_submission.txt:4
-msgid "They will love you!"
-msgstr ""
-
-#: templates/badges/emails/new_submission.txt:6
-#: templates/statuses/emails/wall_updated.txt:17
-msgid "Go get 'em,"
-msgstr ""
-
-#: templates/badges/emails/new_submission.txt:8
-msgid "The P2PU team"
-msgstr ""
-
-#: templates/badges/emails/new_submission.txt:10
-#: templates/content/emails/content_update.txt:14
-#: templates/replies/emails/post_comment.txt:15
-#: templates/statuses/emails/wall_updated.txt:23
-msgid "Manage how often you get these delightful messages at:"
-msgstr ""
-
-#: templates/badges/emails/new_submission_subject.txt:2
-msgid "Make someone's day. Review a badge for "
-msgstr ""
-
 #: templates/content/_post_link_comment.html:2
 #, fuzzy
 msgid "This is a link to my work:"
@@ -2286,53 +2277,12 @@ msgstr "黏贴评论"
 msgid "Task Discussion"
 msgstr "任务讨论"
 
-#: templates/content/emails/content_update.txt:2
-#, fuzzy
-msgid " was updated."
-msgstr "%s 更新"
-
-#: templates/content/emails/content_update.txt:4
-#, fuzzy
-msgid " contributed with a new task: "
-msgstr "你无法创建新任务！"
-
-#: templates/content/emails/content_update.txt:4
-#: templates/content/emails/content_update_subject.txt:2
-#: templates/replies/emails/post_comment_subject.txt:2
-#: templates/signups/emails/new_signup_answer.txt:2
-msgid "."
-msgstr ""
-
-#: templates/content/emails/content_update.txt:9
-msgid "Check out their update and respond at:"
-msgstr ""
-
-#: templates/content/emails/content_update.txt:11
-msgid "Booyah,"
-msgstr ""
-
-#: templates/content/emails/content_update.txt:12
-#: templates/drumbeatmail/emails/direct_message.txt:9
-#: templates/relationships/emails/new_follower.txt:12
-#: templates/replies/emails/post_comment.txt:13
-#: templates/signups/emails/new_signup_answer.txt:22
-#: templates/statuses/emails/wall_updated.txt:18
-#: templates/users/emails/forgot_password.txt:11
-#: templates/users/emails/registration_confirm.txt:13
-msgid "The P2PU Team"
-msgstr ""
-
-#: templates/content/emails/content_update_subject.txt:2
-#, fuzzy
-msgid " made a new task for "
-msgstr "你无法创建新任务！"
-
 #: templates/courses/content.html:25 templates/courses/course.html:22
 msgid "edit"
 msgstr ""
 
 #: templates/courses/content_form_snip.html:22
-#: templates/courses/course_base.html:43
+#: templates/courses/course_base.html:64
 msgid "Content"
 msgstr ""
 
@@ -2359,17 +2309,46 @@ msgstr ""
 msgid "This course doesn't have any content yet. "
 msgstr ""
 
-#: templates/courses/course_base.html:53
+#: templates/courses/course_announcement.html:10
+msgid ""
+"Users can opt-out of course announcements and not all users will receive "
+"this message. Consider adding the relevant information to the course as "
+"content or on the about page"
+msgstr ""
+
+#: templates/courses/course_announcement.html:15
+#, fuzzy
+msgid "Subject: "
+msgstr "科目"
+
+#: templates/courses/course_announcement.html:15
+#, python-format
+msgid "P2PU Course Announcement #%(hashtag)s"
+msgstr ""
+
+#: templates/courses/course_announcement.html:16
+#, fuzzy
+msgid "Announcement text:"
+msgstr "注意事项"
+
+#: templates/courses/course_announcement.html:18
+#: templates/drumbeatmail/base.html:42 templates/messages/compose.html:8
+#: templates/projects/contact_organizers.html:36
+#: templates/users/forgot_password.html:18
+msgid "Send"
+msgstr "发送"
+
+#: templates/courses/course_base.html:74
 #, fuzzy
 msgid "Organize and add content"
 msgstr "已增加组织者！"
 
-#: templates/courses/course_base.html:60
+#: templates/courses/course_base.html:81
 #, fuzzy
 msgid "Discussion"
 msgstr "任务讨论"
 
-#: templates/courses/course_base.html:67
+#: templates/courses/course_base.html:88
 #, fuzzy
 msgid "Settings"
 msgstr "我的设置"
@@ -2432,7 +2411,7 @@ msgid "Course status"
 msgstr ""
 
 #: templates/courses/course_settings.html:23
-#: templates/schools/school_edit_featured.html:15
+#: templates/schools/school_edit_featured.html:17
 msgid "Course Title"
 msgstr ""
 
@@ -2518,9 +2497,60 @@ msgstr ""
 msgid "Update language"
 msgstr "语言"
 
-#: templates/courses/course_sidebar.html:20
-msgid "Featured in"
+#: templates/courses/course_settings.html:141
+#, fuzzy
+msgid "Meta data"
+msgstr "更新公告"
+
+#: templates/courses/course_settings.html:142
+msgid ""
+"For more information about the supported meta data, see <a href=\"http://www."
+"lrmi.net/the-specification\">lrmi.net</a>"
 msgstr ""
+
+#: templates/courses/course_settings.html:147
+#, fuzzy
+msgid "About (subject)"
+msgstr "关于我"
+
+#: templates/courses/course_settings.html:151
+msgid ""
+"Time Required (In <a href=\"http://en.wikipedia.org/wiki/ISO_8601#Durations"
+"\">ISO 8601</a> duration format)"
+msgstr ""
+
+#: templates/courses/course_settings.html:155
+msgid "Typical Age Range"
+msgstr ""
+
+#: templates/courses/course_settings.html:159
+msgid "Is Based on URL"
+msgstr ""
+
+#: templates/courses/course_settings.html:163
+msgid "Educational Role (target audience)"
+msgstr ""
+
+#: templates/courses/course_settings.html:167
+msgid "Educational Use"
+msgstr ""
+
+#: templates/courses/course_settings.html:171
+msgid "Interactivity Type"
+msgstr ""
+
+#: templates/courses/course_settings.html:176
+msgid "Educational Alignment"
+msgstr ""
+
+#: templates/courses/course_settings.html:184
+msgid "Save metadata"
+msgstr ""
+
+#: templates/courses/course_sidebar.html:20
+#, fuzzy
+msgid "Featured in:"
+msgstr "创建任务"
 
 #: templates/courses/course_sidebar.html:31
 #, fuzzy
@@ -2628,26 +2658,6 @@ msgstr ""
 msgid "Create my course!"
 msgstr "创建任务"
 
-#: templates/courses/emails/course_join.txt:4
-msgid "Howdy course organizer!"
-msgstr ""
-
-#: templates/courses/emails/course_join.txt:6
-#, python-format
-msgid "%(new_user)s signed up for %(course_title)s!"
-msgstr ""
-
-#: templates/courses/emails/course_join.txt:8
-msgid ""
-"Regards\n"
-"The P2PU team"
-msgstr ""
-
-#: templates/courses/emails/course_join_subject.txt:3
-#, python-format
-msgid "[%(course_hash)s] %(username)s has signed up for %(course_title)s!"
-msgstr ""
-
 #: templates/dashboard/_join_p2pu.html:9
 #, fuzzy
 msgid "Join the Community"
@@ -2681,7 +2691,6 @@ msgid "Activity from your dashboard"
 msgstr "来自仪表盘的活动"
 
 #: templates/dashboard/dashboard.html:32
-#: templates/users/emails/registration_confirm.txt:3
 msgid "Welcome to P2PU!"
 msgstr "欢迎来到P2PU"
 
@@ -2736,9 +2745,7 @@ msgid "Create Profile"
 msgstr "创建文档"
 
 #: templates/dashboard/sidebar.html:25
-#: templates/relationships/emails/new_follower.txt:6
 #: templates/signups/answer_sign_up.html:32 templates/signups/sign_up.html:80
-#: templates/signups/emails/new_signup_answer.txt:6
 msgid "Location:"
 msgstr ""
 
@@ -2912,20 +2919,6 @@ msgstr ""
 msgid "We have received your report and will investigate further."
 msgstr ""
 
-#: templates/drumbeat/emails/abuse_report.txt:3
-#, python-format
-msgid "%(user)s has reported %(url)s as %(reason)s.'"
-msgstr ""
-
-#: templates/drumbeat/emails/abuse_report.txt:4
-#, python-format
-msgid "More info: %(other)s"
-msgstr ""
-
-#: templates/drumbeat/emails/abuse_report_subject.txt:2
-msgid "Abuse Report"
-msgstr ""
-
 #: templates/drumbeatmail/base.html:13
 msgid "To"
 msgstr ""
@@ -2942,12 +2935,6 @@ msgid ""
 "Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at "
 "will."
 msgstr ""
-
-#: templates/drumbeatmail/base.html:42 templates/messages/compose.html:8
-#: templates/projects/contact_organizers.html:36
-#: templates/users/forgot_password.html:18
-msgid "Send"
-msgstr "发送"
 
 #: templates/drumbeatmail/compose.html:4
 msgid "Compose Message"
@@ -2975,31 +2962,6 @@ msgstr ""
 
 #: templates/drumbeatmail/inbox.html:122
 msgid "Sent"
-msgstr ""
-
-#: templates/drumbeatmail/emails/direct_message.txt:2
-msgid "You have received a new direct message from"
-msgstr ""
-
-#: templates/drumbeatmail/emails/direct_message.txt:6
-#, fuzzy
-msgid "Reply:"
-msgstr "重来"
-
-#: templates/drumbeatmail/emails/direct_message.txt:8
-#: templates/relationships/emails/new_follower.txt:11
-#: templates/replies/emails/post_comment.txt:12
-#: templates/signups/emails/new_signup_answer.txt:21
-msgid "Sincerely,"
-msgstr ""
-
-#: templates/drumbeatmail/emails/direct_message.txt:11
-#: templates/relationships/emails/new_follower.txt:14
-msgid "Manage your subscriptions:"
-msgstr ""
-
-#: templates/drumbeatmail/emails/direct_message_subject.txt:2
-msgid "New Message from"
 msgstr ""
 
 #: templates/learn/_course_card.html:20
@@ -3087,12 +3049,12 @@ msgstr ""
 msgid "Featured - Fresh Additions"
 msgstr ""
 
-#: templates/learn/_learn_header.html:12
+#: templates/learn/_learn_header.html:14
 #, fuzzy
 msgid "Tags - "
 msgstr "标签"
 
-#: templates/learn/_learn_header.html:14
+#: templates/learn/_learn_header.html:16
 msgid "All"
 msgstr ""
 
@@ -3133,7 +3095,7 @@ msgstr ""
 #: templates/projects/project_edit_links.html:7
 #: templates/projects/project_edit_next_steps.html:17
 #: templates/projects/project_edit_participants.html:28
-#: templates/schools/school_edit_featured.html:20
+#: templates/schools/school_edit_featured.html:22
 #: templates/schools/school_edit_membership.html:17
 #: templates/schools/school_edit_organizers.html:19
 #: templates/users/profile_edit_links.html:41
@@ -3187,28 +3149,17 @@ msgstr "N j, Y, P"
 msgid "delete"
 msgstr ""
 
-#: templates/notifications/emails/response_bounce.txt:1
-msgid ""
-"We love your enthusiasm for learning & for P2PU. Keep it up!\n"
-"\n"
-"But sometimes speedy responses are a sign that someone has an auto-responder "
-"on. And you wouldn't a gazillion of those in your inbox :)\n"
-"\n"
-"Sorry - we're going to ask you to send your message again. Just in case."
+#: templates/oauthprovider/authorize.html:5
+msgid "Authorize"
 msgstr ""
 
-#: templates/notifications/emails/response_bounce.txt:7
-msgid "This was the message that we received:"
+#: templates/oauthprovider/authorize.html:10
+#, python-format
+msgid "We're going to connect you with %(client_description)s. Ok with you?"
 msgstr ""
 
-#: templates/notifications/emails/response_bounce.txt:10
-msgid ""
-"Cheerio,\n"
-"P2PU team"
-msgstr ""
-
-#: templates/notifications/emails/response_bounce_subject.txt:1
-msgid "P2PU calling. Are we getting your machine?"
+#: templates/oauthprovider/authorize.html:14
+msgid "Yes"
 msgstr ""
 
 #: templates/pages/get_involved_page.html:14
@@ -3898,7 +3849,7 @@ msgstr ""
 #: templates/projects/project_edit_links.html:17
 #: templates/projects/project_edit_next_steps.html:27
 #: templates/projects/project_edit_participants.html:39
-#: templates/schools/school_edit_featured.html:29
+#: templates/schools/school_edit_featured.html:32
 #: templates/schools/school_edit_membership.html:26
 #: templates/users/profile_edit_links.html:53
 #: templates/users/profile_edit_openids.html:26
@@ -4244,94 +4195,6 @@ msgstr[1] ""
 msgid "Go"
 msgstr "继续"
 
-#: templates/projects/emails/admin_project_created_subject.txt:2
-msgid "New "
-msgstr ""
-
-#: templates/projects/emails/contact_organizer.txt:4
-msgid "Howdy Organizer. Someone's contacted you."
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:4
-#, python-format
-msgid " We're excited to see you've created %(project_name|safe)s. "
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:6
-msgid "We\\'re here to help you design, promote and run a stellar course."
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:8
-msgid ""
-"Check out these ways to connect with the community, get feedback and promote "
-"the heck out it."
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:10
-msgid ""
-"1. We have a help desk where you can bring all your questions to our staff:"
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:11
-msgid "2. We have a group just for course designers on the site:"
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:12
-msgid ""
-"3. We have a totally sweet P2PU community mailing list where you can pitch "
-"your course:"
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:13
-msgid ""
-"4. To give you course more marketing TLC, get it featured in the showcase. "
-"Send us a note at help@p2pu.org."
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:15
-msgid "When your course is ready, uncheck \\"
-msgstr ""
-
-#: templates/projects/emails/project_created.txt:18
-msgid "Yay! The learnings!"
-msgstr ""
-
-#: templates/projects/emails/project_created_subject.txt:3
-#, python-format
-msgid " Take %(project_name)s to the next level."
-msgstr ""
-
-#: templates/relationships/emails/new_follower.txt:2
-#, fuzzy
-msgid "is now following "
-msgstr "如下开始"
-
-#: templates/relationships/emails/new_follower.txt:2
-#: templates/relationships/emails/new_follower_subject.txt:1
-msgid "you"
-msgstr ""
-
-#: templates/relationships/emails/new_follower.txt:2
-#: templates/relationships/emails/new_follower_subject.txt:1
-#, fuzzy
-msgid "on P2PU!"
-msgstr "关于P2PU"
-
-#: templates/relationships/emails/new_follower.txt:4
-#: templates/signups/answer_sign_up.html:31 templates/signups/sign_up.html:79
-#: templates/signups/emails/new_signup_answer.txt:4
-msgid "Bio:"
-msgstr ""
-
-#: templates/relationships/emails/new_follower.txt:8
-msgid "You can see their profile here:"
-msgstr ""
-
-#: templates/relationships/emails/new_follower_subject.txt:1
-#, fuzzy
-msgid "is following "
-msgstr "（跟随）"
-
 #: templates/replies/_comment_threads.html:43
 #: templates/replies/_comment_threads.html:101
 #: templates/replies/comment_page.html:39
@@ -4387,29 +4250,6 @@ msgstr ""
 
 #: templates/replies/delete_restore_comment.html:29
 msgid "Are you sure you want to delete this comment?"
-msgstr ""
-
-#: templates/replies/emails/post_comment.txt:6
-#, fuzzy, python-format
-msgid "This comment was posted at %(scope)s."
-msgstr "该评论已被删除。"
-
-#: templates/replies/emails/post_comment.txt:8
-#, fuzzy
-msgid "You can view this comment online at:"
-msgstr "无法编辑此评论。"
-
-#: templates/replies/emails/post_comment.txt:10
-msgid "To reply to this comment by email, simply type your reply at the top!"
-msgstr ""
-
-#: templates/replies/emails/post_comment_subject.txt:2
-#, fuzzy
-msgid " posted a new comment at "
-msgstr "无法在此发布发布评论。%s"
-
-#: templates/replies/emails/post_comment_subject.txt:2
-msgid " in "
 msgstr ""
 
 #: templates/reviews/_project_review_action.html:3
@@ -4474,29 +4314,6 @@ msgstr ""
 #, fuzzy
 msgid "Post New Review"
 msgstr "请检阅"
-
-#: templates/reviews/emails/review_submitted.txt:1
-#, python-format
-msgid ""
-"Hi there!\n"
-"\n"
-"%(reviewer)s had a look at %(course)s and here is what they had to say:"
-msgstr ""
-
-#: templates/reviews/emails/review_submitted.txt:7
-#, python-format
-msgid ""
-"You can also have a look at their feedback here: https://%(domain)s"
-"%(review_url)s\n"
-"\n"
-"Cheerio\n"
-"The P2PU team"
-msgstr ""
-
-#: templates/reviews/emails/review_submitted_subject.txt:3
-#, python-format
-msgid "%(user)s had a look at %(course_name)s!"
-msgstr ""
 
 #: templates/richtext/_external_link.html:2
 #, fuzzy
@@ -4634,7 +4451,7 @@ msgstr ""
 
 #: templates/schools/school_edit_featured.html:9
 #, fuzzy
-msgid "View, add and remove featured courses to this school."
+msgid "View, add and remove courses featured by this school."
 msgstr "%s设立为学校特色项目。"
 
 #: templates/schools/school_edit_groups_icon.html:12
@@ -4672,8 +4489,9 @@ msgstr ""
 "57x57 像素"
 
 #: templates/schools/school_edit_membership.html:8
-msgid "View, add and remove study groups, courses, ... to this school."
-msgstr ""
+#, fuzzy
+msgid "View, add and remove courses to this school."
+msgstr "%s设立为学校特色项目。"
 
 #: templates/schools/school_edit_membership.html:13
 msgid "Course title"
@@ -4923,18 +4741,19 @@ msgstr ""
 msgid "Edit answer"
 msgstr ""
 
+#: templates/signups/answer_sign_up.html:31 templates/signups/sign_up.html:79
+msgid "Bio:"
+msgstr ""
+
 #: templates/signups/answer_sign_up.html:33 templates/signups/sign_up.html:81
-#: templates/signups/emails/new_signup_answer.txt:8
 msgid "Standard Set Answer:"
 msgstr ""
 
 #: templates/signups/answer_sign_up.html:36 templates/signups/sign_up.html:84
-#: templates/signups/emails/new_signup_answer.txt:11
 msgid "Public Set Answer:"
 msgstr ""
 
 #: templates/signups/answer_sign_up.html:40 templates/signups/sign_up.html:89
-#: templates/signups/emails/new_signup_answer.txt:15
 msgid "Between Participants Set Answer:"
 msgstr ""
 
@@ -5067,54 +4886,6 @@ msgstr "你希望获得什么？"
 #, python-format
 msgid "Are you interested in helping with the %(kind)s organization?"
 msgstr "你是否有兴趣帮助这些 %(kind)s 组织？"
-
-#: templates/signups/emails/new_signup_answer.txt:2
-#, fuzzy
-msgid " submitted a new answer at the sign-up page of "
-msgstr "你已经在注册问题中附上答案。"
-
-#: templates/signups/emails/new_signup_answer.txt:19
-msgid "See answer at:"
-msgstr ""
-
-#: templates/signups/emails/new_signup_answer_subject.txt:2
-#, fuzzy
-msgid " submitted a new answer at the sign-up page."
-msgstr "你已经在注册问题中附上答案。"
-
-#: templates/statuses/emails/wall_updated.txt:3
-#, fuzzy
-msgid " update."
-msgstr "更新"
-
-#: templates/statuses/emails/wall_updated.txt:6
-#, python-format
-msgid " Update from the flight deck: %(username)s posted an urgent message:"
-msgstr ""
-
-#: templates/statuses/emails/wall_updated.txt:8
-#, python-format
-msgid " Update from the flight deck: %(username)s made an update:"
-msgstr ""
-
-#: templates/statuses/emails/wall_updated.txt:13
-msgid "See what they said at:"
-msgstr ""
-
-#: templates/statuses/emails/wall_updated.txt:15
-msgid ""
-"You can reply to this comment by email! Just type your reply at the top."
-msgstr ""
-
-#: templates/statuses/emails/wall_updated.txt:21
-msgid ""
-"This message was marked as important by an organizer. Participants can not "
-"turn off notifications for important updates."
-msgstr ""
-
-#: templates/statuses/emails/wall_updated_subject.txt:2
-msgid " made a comment in your course."
-msgstr ""
 
 #: templates/tracker/scoreboard.html:4 templates/tracker/scoreboard.html:16
 #: templates/tracker/scoreboard.html:21
@@ -5319,7 +5090,6 @@ msgstr "这不是正确的链接"
 
 #: templates/users/forgot_password_done.html:3
 #: templates/users/forgot_password_done.html:8
-#: templates/users/emails/forgot_password.txt:2
 msgid "Password Reset"
 msgstr "重设密码"
 
@@ -5597,44 +5367,61 @@ msgstr "本周活跃"
 msgid "New People"
 msgstr "新人"
 
-#: templates/users/emails/forgot_password.txt:4
-msgid "We're here to help reset your password."
-msgstr ""
-
-#: templates/users/emails/forgot_password.txt:4
-msgid ""
-"To get a new password, go ahead and click on the link below, or paste it "
-"into your browser:"
-msgstr ""
-
-#: templates/users/emails/forgot_password.txt:8
-msgid "If you didn't request a new password, no worries. You're all set."
-msgstr ""
-
-#: templates/users/emails/forgot_password.txt:10
 #, fuzzy
-msgid "Happy learning."
-msgstr "正在学习"
+#~ msgid " was updated."
+#~ msgstr "%s 更新"
 
-#: templates/users/emails/registration_confirm.txt:6
-msgid "We're so happy you're here. Confirm your email below to get started:"
-msgstr ""
+#, fuzzy
+#~ msgid " contributed with a new task: "
+#~ msgstr "你无法创建新任务！"
 
-#: templates/users/emails/registration_confirm.txt:10
-msgid "Go forth and learn stuff!"
-msgstr ""
+#, fuzzy
+#~ msgid " made a new task for "
+#~ msgstr "你无法创建新任务！"
 
-#: templates/users/emails/registration_confirm.txt:12
-msgid "Cheerio,"
-msgstr ""
+#, fuzzy
+#~ msgid "Reply:"
+#~ msgstr "重来"
 
-#: templates/users/emails/registration_confirm_subject.txt:2
-msgid "Ready to get learning?!"
-msgstr ""
+#, fuzzy
+#~ msgid "is now following "
+#~ msgstr "如下开始"
 
-#: templates/users/emails/registration_confirm_subject.txt:2
-msgid "Greetings from P2PU. Your email address was changed."
-msgstr ""
+#, fuzzy
+#~ msgid "on P2PU!"
+#~ msgstr "关于P2PU"
+
+#, fuzzy
+#~ msgid "is following "
+#~ msgstr "（跟随）"
+
+#, fuzzy
+#~ msgid "This comment was posted at %(scope)s."
+#~ msgstr "该评论已被删除。"
+
+#, fuzzy
+#~ msgid "You can view this comment online at:"
+#~ msgstr "无法编辑此评论。"
+
+#, fuzzy
+#~ msgid " posted a new comment at "
+#~ msgstr "无法在此发布发布评论。%s"
+
+#, fuzzy
+#~ msgid " submitted a new answer at the sign-up page of "
+#~ msgstr "你已经在注册问题中附上答案。"
+
+#, fuzzy
+#~ msgid " submitted a new answer at the sign-up page."
+#~ msgstr "你已经在注册问题中附上答案。"
+
+#, fuzzy
+#~ msgid " update."
+#~ msgstr "更新"
+
+#, fuzzy
+#~ msgid "Happy learning."
+#~ msgstr "正在学习"
 
 #~ msgid "You are the only organizer of %s active "
 #~ msgstr "你是%s的为一个积极的组织者 "
@@ -5912,9 +5699,6 @@ msgstr ""
 
 #~ msgid "Awarded To"
 #~ msgstr "给  的授奖"
-
-#~ msgid "Assessment type"
-#~ msgstr "评估种类"
 
 #~ msgid "Depending on the type, more options will show."
 #~ msgstr "根据种类，有不同的选项"
