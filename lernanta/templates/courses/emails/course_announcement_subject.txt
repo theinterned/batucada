@@ -1,3 +1,3 @@
 {% load i18n %}
 {% load l10n_tags %}
-{{course.hash}} - {% trans 'Course announcement' %}
+{% blocktrans with hashtag=course.hashtag %}P2PU Course Announcement #{{ hashtag }}{% endblocktrans %}

@@ -553,7 +553,7 @@ def remove_user_from_cohort(cohort_uri, user_uri):
     return True, None
 
 
-def send_course_notification(course_uri, notification_text):
+def send_course_announcement(course_uri, announcement_text):
     course = get_course(course_uri)
     cohort = get_course_cohort(course_uri)
     users = UserProfile.objects.filter(username__in=cohort['users'].keys())
@@ -561,7 +561,7 @@ def send_course_notification(course_uri, notification_text):
         users,
         'courses/emails/course_announcement_subject.txt',
         'courses/emails/course_announcement.txt',
-        { 'course': course, 'notification_text': notification_text }
+        { 'course': course, 'announcement_text': announcement_text }
     )
 
 

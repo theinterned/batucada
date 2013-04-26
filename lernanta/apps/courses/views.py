@@ -481,20 +481,22 @@ def course_update_metadata( request, course_id ):
 
 @login_required
 @require_organizer
-def course_send_notification( request, course_id ):
+def course_announcement( request, course_id ):
     context = _populate_course_context(request, course_id, {})
-    context['send_notification_active'] = True
+    context['announcement_active'] = True
 
-    if request.method == "POST" and len(request.POST.get('notification', '')) > 0:
-        text = request.POST.get('notification')
-        course_model.send_course_notification(
+    if request.method == "POST" and len(request.POST.get('announcement_text', '')) > 0:
+        text = request.POST.get('announcement_text')
+        course_model.send_course_announcement(
             context['course']['uri'],
             text
         )
-        messages.success(request, _('The notification has been sent!'))
+        messages.success(request, _('The announcement has been sent!'))
+        redirect_url = reverse('courses_show', kwargs={'course_id': course_id, 'slug': context['course']['slug']})
+        return http.HttpResponseRedirect(redirect_url)
 
     return render_to_response(
-        'courses/course_notification.html',
+        'courses/course_announcement.html',
         context,
         context_instance=RequestContext(request)
     )

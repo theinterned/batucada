@@ -114,7 +114,7 @@ class CourseTests(TestCase):
     def test_make_organizer(self):
         pass
 
-    def test_send_course_notification(self):
+    def test_send_course_announcement(self):
         course = course_model.create_course(
             **{
                 "title": "A test course",
@@ -125,6 +125,6 @@ class CourseTests(TestCase):
             }
         )
         with patch('notifications.models.send_notifications_i18n') as send_notification:
-            course_model.send_course_notification(course['uri'], 'Notification text')
+            course_model.send_course_announcement(course['uri'], 'Notification text')
             self.assertTrue(send_notification.called)
             #TODO test parameters sent to send_notification
