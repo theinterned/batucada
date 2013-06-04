@@ -108,7 +108,9 @@ def follow_handler(sender, **kwargs):
         'project': rel.target_project,
         'domain': Site.objects.get_current().domain
     }
-    send_notifications_i18n(recipients, subject_template, body_template, context)
+    send_notifications_i18n(recipients, subject_template, body_template,
+        context, notification_category='new-follower'
+    )
 
 post_save.connect(follow_handler, sender=Relationship,
     dispatch_uid='relationships_follow_handler')

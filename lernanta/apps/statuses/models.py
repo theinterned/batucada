@@ -79,8 +79,11 @@ class Status(ModelBase):
             })
         callback_url = reverse('page_comment_callback', kwargs=kwargs)
     
-        send_notifications_i18n( profiles, subject_template, body_template, context,
-            callback_url, self.author.username )
+        send_notifications_i18n(
+            profiles, subject_template, body_template, context,
+            callback_url, self.author.username,
+            notification_category=u'reply.project-{0}'.format(self.project.slug)
+        )
 
     @staticmethod
     def filter_activities(activities):

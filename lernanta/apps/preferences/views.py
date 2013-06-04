@@ -12,6 +12,9 @@ from drumbeat import messages
 from users.decorators import login_required, secure_required
 from preferences import forms
 from preferences.models import AccountPreferences
+from preferences.models import get_notification_categories
+from preferences.models import get_user_unsubscribes
+from preferences.models import set_notification_subscription
 
 log = logging.getLogger(__name__)
 
@@ -60,6 +63,45 @@ def settings(request):
     for preference in preferences:
         context[preference.key] = preference.value
     return render_to_response('users/settings_notifications.html', context,
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def notifications(request):
+    profile = request.user.get_profile()
+    unsubscribes = get_user_unsubscribes(profile)
+
+    subscriptions = []
+    if request.user.is_superuser:
+        subscriptions += [ ('Admin notifications', get_notification_categories()[1:3]) ]
+
+    subscriptions += [ ('Notifications about', get_notification_categories()[3:]) ]
+
+    user_courses = profile.get_current_projects()
+    all_courses = user_courses['organizing'] + user_courses['participating'] + user_courses['following']
+    raise Exception()
+    sources = []
+    for course in all_courses:
+        sources += [{'category': str(course['id']), 'description': '{0}'.format(course['title'])} ]
+
+    subscriptions += [(_('Notifations from'), sources)]
+
+    if request.method == 'POST':
+        for category in request.POST.keys():
+            set_notification_subscription(profile, category, True)
+        all_categories = get_notification_categories()[1:] + sources
+        for category in [c['category'] for c in all_categories if c['category'] not in request.POST.keys()]:
+            set_notification_subscription(profile, category, False)
+        raise Exception()
+
+    context = {
+        'domain': Site.objects.get_current().domain,
+        'notifications_tab': True,
+        'subscriptions': subscriptions,
+        'unsubscribes': unsubscribes
+    }
+
+    return render_to_response('preferences/notifications.html', context,
                               context_instance=RequestContext(request))
 
 

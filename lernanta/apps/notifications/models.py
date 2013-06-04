@@ -26,7 +26,7 @@ def _prepare_from_address(sender=None, token=None):
 
 
 def send_notifications_i18n(user_profiles, subject_template, body_template,
-        template_context, response_callback=None, sender=None):
+        template_context, response_callback=None, sender=None, notification_category=None):
     """Asynchronously send internationalized email notifications to users
     
     user_profiles - the users to send the notification to
@@ -48,12 +48,12 @@ def send_notifications_i18n(user_profiles, subject_template, body_template,
     args = (user_profiles, subject_template, body_template, template_context,
         from_email)
 
-    log.debug("notifications.send_notifications_i18n: {0}".format(args))
+    log.debug(u"notifications.send_notifications_i18n: {0}".format(args))
     TranslateAndSendNotifications.apply_async(args)
 
 
 def send_notifications(user_profiles, subject, text_body, html_body=None,
-        response_callback=None, sender=None):
+        response_callback=None, sender=None, notification_category=None):
     """Asynchronously send email notifications to users
     html_body - optional html body for the notification
     response_callback - url called when a user responds to a notification
@@ -102,3 +102,11 @@ def post_notification_response(token, user, text):
 
     args = (token, user, text,)
     PostNotificationResponse.apply_async(args)
+
+
+def filter_user_notification(profile, notification_category):
+    """ return False if the user is unsubsbrided from the notification 
+        category. True otherwise """
+
+    # TODO check if the user unsubscribed from the notification_category
+    return True

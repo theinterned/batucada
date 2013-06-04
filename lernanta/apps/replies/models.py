@@ -103,8 +103,10 @@ class PageComment(ModelBase):
             if self.author != profile:
                 profiles.append(profile)
         reply_url = reverse('email_reply', args=[self.id])
+        # TODO lookup project and add to notification category
         send_notifications_i18n(profiles, subject_template, body_template, context,
-            reply_url, self.author.username
+            reply_url, self.author.username,
+            notification_category='reply'
         )
 
 

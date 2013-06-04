@@ -32,6 +32,8 @@ def send_abuse_report(url, reason, other, user):
             'reason': reason,
             'other': other
         }
-        send_notifications_i18n([profile], subject_template, body_template, context)
+        send_notifications_i18n([profile], subject_template, body_template,
+            context, notification_category='abuse-report'
+        )
     except:
         log.debug("Error sending abuse report!")

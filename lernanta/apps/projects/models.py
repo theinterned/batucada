@@ -350,7 +350,9 @@ class Project(ModelBase):
             'domain': Site.objects.get_current().domain,
         }
         profiles = [recipient.user for recipient in self.organizers()]
-        send_notifications_i18n(profiles, subject_template, body_template, context)
+        send_notifications_i18n(profiles, subject_template, body_template,
+            context, notification_category='course-created'
+        )
         if not self.test:
             admin_subject = render_to_string(
                 "projects/emails/admin_project_created_subject.txt",

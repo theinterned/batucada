@@ -34,7 +34,9 @@ def message_sent_handler(sender, **kwargs):
         'domain': Site.objects.get_current().domain,
         'reply_url': reply_url,
     }
-    send_notifications_i18n([recipient], subject_template, body_template, context)
+    send_notifications_i18n([recipient], subject_template, body_template, context,
+        notification_category='direct-message'
+    )
 
 post_save.connect(message_sent_handler, sender=Message,
     dispatch_uid='drumbeatmail_message_sent_handler')
