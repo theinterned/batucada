@@ -35,14 +35,10 @@ NOTIFICATION_CATEGORIES = [
     {'category': 'reply', 'description': _('Reply to comment or status update') },
 ]
 
-class NotificationCategory(ModelBase):
-    category = models.CharField(max_length=128)
-    description = models.CharField(max_length=128, blank=True, null=True)
-
 
 class NotificationSubscription(ModelBase):
     user = models.ForeignKey('users.UserProfile')
-    category = models.ForeignKey(NotificationCategory, blank=True, null=True)
+    category = models.CharField(max_length=128, blank=True, null=True)
     subcategory = models.CharField(max_length=128, blank=True, null=True)
 
 
@@ -73,9 +69,10 @@ def get_notification_subscription(profile, notification_category):
     if len(notification_category) == 0:
         return False
 
-    category = NotificationCategory.objects.get(
-        category=categories[0]
-    )
+    category = categories[0]
+
+    if not category in [c['category'] for c in NOTIFICATION_CATEGORIES]:
+        raise Exception('Unknown category')
 
     # check if user unsubscribed from the general category
     subscriptions = NotificationSubscription.objects.filter(
@@ -84,19 +81,20 @@ def get_notification_subscription(profile, notification_category):
     if subscriptions.exists():
         return False
 
-    # check if user unsubscribed from the specific category
-    subscriptions = NotificationSubscription.objects.filter(
-        category=category, user=profile, subcategory=categories[1]
-    )
-    if subscriptions.exists():
-        return False
+    if len(categories) == 2:
+        # check if user unsubscribed from the specific category
+        subscriptions = NotificationSubscription.objects.filter(
+            category=category, user=profile, subcategory=categories[1]
+        )
+        if subscriptions.exists():
+            return False
 
-    # check if user is unsubscribed from the subcategory
-    subscriptions = NotificationSubscription.objects.filter(
-        category=None, user=profile, subcategory=categories[1]
-    )
-    if subscriptions.exists():
-        return False
+        # check if user is unsubscribed from the subcategory
+        subscriptions = NotificationSubscription.objects.filter(
+            category=None, user=profile, subcategory=categories[1]
+        )
+        if subscriptions.exists():
+            return False
 
     return True
 
@@ -106,19 +104,17 @@ def set_notification_subscription(profile, notification_category, subscribed):
     if len(notification_category) == 0:
         raise Exception('Cannot unsubscribe from a blank category')
 
-    # TODO prevent unsubscribing from account category!
-    
     categories = notification_category.split('.')
 
     category = None
     subcategory = None
     if len(categories) == 1:
-        if NotificationCategory.objects.filter(category=categories[0]).exists():
-            category = NotificationCategory.objects.get(category=categories[0])
+        if categories[0] in [c['category'] for c in NOTIFICATION_CATEGORIES]:
+            category = categories[0]
         else:
             subcategory = categories[0]
     else:
-        category = NotificationCategory.objects.get(category=categories[0])
+        category = categories[0]
         subcategory = categories[1]
         
     subscription = NotificationSubscription.objects.filter(
@@ -130,7 +126,7 @@ def set_notification_subscription(profile, notification_category, subscribed):
     if subscription.exists() and subscribed:
         subscription.delete()
 
-    elif not subscription.exists() and not subscribed:
+    elif not subscription.exists() and not subscribed and category != 'account':
         subscription = NotificationSubscription(
             user=profile,
             category=category,
@@ -144,7 +140,7 @@ def get_user_unsubscribes(profile):
     unsubscribes = []
     for subscription in NotificationSubscription.objects.filter(user=profile):
         if subscription.category and subscription.subcategory:
-            unsubscribes.append('.'.join([subscription.category.category, subscription.subcategory]))
+            unsubscribes.append('.'.join([subscription.category, subscription.subcategory]))
         elif subscription.category:
             unsubscribes.append(subscription.category)
         elif subscription.subcategory:
