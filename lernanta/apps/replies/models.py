@@ -103,10 +103,16 @@ class PageComment(ModelBase):
             if self.author != profile:
                 profiles.append(profile)
         reply_url = reverse('email_reply', args=[self.id])
-        # TODO lookup project and add to notification category
+
+        notification_category='reply'
+        from projects.models import Project
+        ct = ContentType.objects.get_for_model(Project)
+        if self.scope_object and self.scope_content_type == ct:
+            notification_category='reply.project-{0}'.format(self.scope_object.slug)
+
         send_notifications_i18n(profiles, subject_template, body_template, context,
             reply_url, self.author.username,
-            notification_category='reply'
+            notification_category=notification_category
         )
 
 

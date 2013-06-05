@@ -54,17 +54,7 @@ class Status(ModelBase):
         }
         from_organizer = self.project.organizers().filter(
             user=self.author).exists()
-        profiles = []
-        for recipient in recipients:
-            profile = recipient.user
-            if self.important:
-                unsubscribed = False
-            elif from_organizer:
-                unsubscribed = recipient.no_organizers_wall_updates
-            else:
-                unsubscribed = recipient.no_participants_wall_updates
-            if self.author != profile and not unsubscribed:
-                profiles.append(profile)
+        profiles = [recipient.user for recipient in recipients if self.author != recipient.user]
 
         kwargs = {
             'page_app_label':'activity',

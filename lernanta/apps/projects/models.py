@@ -359,6 +359,7 @@ class Project(ModelBase):
                 context).strip()
             admin_body = render_to_string(
                 "projects/emails/admin_project_created.txt", context).strip()
+            # TODO send using notifications and get email addresses from group, not settings
             for admin_email in settings.ADMIN_PROJECT_CREATE_EMAIL:
                 send_mail(admin_subject, admin_body, admin_email,
                     [admin_email], fail_silently=True)

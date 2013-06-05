@@ -45,8 +45,8 @@ class AccountPreferencesTests(TestCase):
         Test user is *not* emailed when they get a new follower when that user
         does *not* want to be emailed when they get a new follower.
         """
-        AccountPreferences(user=self.user_two,
-                           key='no_email_new_follower', value=1).save()
+        set_notification_subscription(self.user_two, 'new-follower', False)
+
         relationship = Relationship(
             source=self.user_one,
             target_user=self.user_two,

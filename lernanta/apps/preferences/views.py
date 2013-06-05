@@ -87,7 +87,7 @@ def notifications(request):
             category = 'course-{0}'.format(course['id'])
         sources += [{'category': category, 'description': '{0}'.format(course['title'])} ]
 
-    subscriptions += [(_('Notifacations from'), sources)]
+    subscriptions += [(_('Notifications from'), sources)]
 
     if request.method == 'POST':
         for category in request.POST.keys():
