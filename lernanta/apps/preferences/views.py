@@ -79,12 +79,15 @@ def notifications(request):
 
     user_courses = profile.get_current_projects()
     all_courses = user_courses['organizing'] + user_courses['participating'] + user_courses['following']
-    raise Exception()
     sources = []
     for course in all_courses:
-        sources += [{'category': str(course['id']), 'description': '{0}'.format(course['title'])} ]
+        if '/groups/' in course['url']:
+            category = u'project-{0}'.format(course['id'])
+        else:
+            category = 'course-{0}'.format(course['id'])
+        sources += [{'category': category, 'description': '{0}'.format(course['title'])} ]
 
-    subscriptions += [(_('Notifations from'), sources)]
+    subscriptions += [(_('Notifacations from'), sources)]
 
     if request.method == 'POST':
         for category in request.POST.keys():
@@ -92,7 +95,6 @@ def notifications(request):
         all_categories = get_notification_categories()[1:] + sources
         for category in [c['category'] for c in all_categories if c['category'] not in request.POST.keys()]:
             set_notification_subscription(profile, category, False)
-        raise Exception()
 
     context = {
         'domain': Site.objects.get_current().domain,
