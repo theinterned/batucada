@@ -3,8 +3,8 @@ from django.conf import settings
 from tasks import TranslateAndSendNotifications
 from tasks import PostNotificationResponse
 from tasks import SendNotifications
-from tracker import statsd
 from notifications.db import ResponseToken
+from preferences.models import get_notification_subscription
 
 import datetime
 import logging
@@ -45,6 +45,9 @@ def send_notifications_i18n(user_profiles, subject_template, body_template,
         
     from_email = _prepare_from_address(sender, token)
 
+    ff = lambda p: filter_user_notification(p, notification_category)
+    user_profiles = filter(ff, user_profiles)
+
     args = (user_profiles, subject_template, body_template, template_context,
         from_email)
 
@@ -67,6 +70,9 @@ def send_notifications(user_profiles, subject, text_body, html_body=None,
         token = ResponseToken(response_callback=response_callback)
         token.save()
   
+    ff = lambda p: filter_user_notification(p, notification_category)
+    user_profiles = filter(ff, user_profiles)
+
     from_email = _prepare_from_address(sender, token)      
     args = (user_profiles, subject, text_body, html_body, from_email)
 
@@ -97,7 +103,6 @@ def post_notification_response(token, user, text):
         context = { 'original_message': text }
         send_notifications_i18n([user], subject_template, body_template, context)
         log.debug('post_notification_response: quick response bounced')
-        statsd.Statsd.increment('auto-replies')
         return
 
     args = (token, user, text,)
@@ -108,5 +113,7 @@ def filter_user_notification(profile, notification_category):
     """ return False if the user is unsubsbrided from the notification 
         category. True otherwise """
 
-    # TODO check if the user unsubscribed from the notification_category
-    return True
+    if profile.deleted:
+        return False
+
+    return get_notification_subscription(profile, notification_category)
