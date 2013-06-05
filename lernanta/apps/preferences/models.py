@@ -30,8 +30,11 @@ NOTIFICATION_CATEGORIES = [
     {'category': 'signup-answer', 'description': _('Course signup answer') }, #TODO deprecated
     {'category': 'content-updated', 'description': _('Content updated') },
 
+    
+    {'category': 'badges', 'description': _('Notification from badges.p2pu.org') },
     {'category': 'badge-submission', 'description': _('Application for a badge submitted')},
     {'category': 'badge-review', 'description': _('Feedback on badge application') },
+    
     {'category': 'reply', 'description': _('Reply to comment or status update') },
 ]
 
