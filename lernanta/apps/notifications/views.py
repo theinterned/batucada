@@ -100,7 +100,7 @@ def notifications_create(request):
     callback_url = notification_json.get('callback')
     sender = notification_json.get('sender')
     # TODO don't default to badge once other app use this API!
-    notification_category = notication_json.get('category', 'badges')
+    notification_category = notification_json.get('category', 'badges')
 
     # find user
     user = None

@@ -26,7 +26,7 @@ def _prepare_from_address(sender=None, token=None):
 
 
 def send_notifications_i18n(user_profiles, subject_template, body_template,
-        template_context, response_callback=None, sender=None, notification_category=None):
+        template_context, response_callback=None, sender=None, notification_category=''):
     """Asynchronously send internationalized email notifications to users
     
     user_profiles - the users to send the notification to
@@ -56,7 +56,7 @@ def send_notifications_i18n(user_profiles, subject_template, body_template,
 
 
 def send_notifications(user_profiles, subject, text_body, html_body=None,
-        response_callback=None, sender=None, notification_category=None):
+        response_callback=None, sender=None, notification_category=''):
     """Asynchronously send email notifications to users
     html_body - optional html body for the notification
     response_callback - url called when a user responds to a notification

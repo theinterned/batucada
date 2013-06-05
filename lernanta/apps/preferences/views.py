@@ -95,6 +95,7 @@ def notifications(request):
         all_categories = get_notification_categories()[1:] + sources
         for category in [c['category'] for c in all_categories if c['category'] not in request.POST.keys()]:
             set_notification_subscription(profile, category, False)
+        return HttpResponseRedirect(reverse('preferences_notifications'))
 
     context = {
         'domain': Site.objects.get_current().domain,
