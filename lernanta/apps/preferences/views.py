@@ -11,61 +11,13 @@ from l10n.urlresolvers import reverse
 from drumbeat import messages
 from users.decorators import login_required, secure_required
 from preferences import forms
-from preferences.models import AccountPreferences
 from preferences.models import get_notification_categories
 from preferences.models import get_user_unsubscribes
 from preferences.models import set_notification_subscription
 
 log = logging.getLogger(__name__)
 
-
-PER_PROJECT_PREFERENCES = (
-    'no_organizers_wall_updates',
-    'no_organizers_content_updates',
-    'no_participants_wall_updates',
-    'no_participants_content_updates',
-)
-
-
 @secure_required
-@login_required
-def settings(request):
-    profile = request.user.get_profile()
-    participations = profile.participations.filter(left_on__isnull=True)
-    if request.method == 'POST':
-        for key in AccountPreferences.preferences:
-            if key in request.POST and request.POST[key] == 'on':
-                AccountPreferences.objects.filter(
-                    user=profile, key=key).delete()
-            else:
-                AccountPreferences.objects.get_or_create(
-                    user=profile, key=key, value=1)
-        for participation in participations:
-            for field in PER_PROJECT_PREFERENCES:
-                key = '%s_%s' % (field, participation.project.slug)
-                if key in request.POST and request.POST[key] == 'on':
-                    setattr(participation, field, False)
-                else:
-                    setattr(participation, field, True)
-            participation.save()
-        messages.success(
-            request,
-            _("Thank you, your settings have been saved."))
-        return HttpResponseRedirect(reverse('preferences_settings'))
-    context = {
-        'domain': Site.objects.get_current().domain,
-        'participations': participations,
-        'profile': profile,
-        'settings_tab': True,
-    }
-    preferences = AccountPreferences.objects.filter(
-        user=request.user.get_profile())
-    for preference in preferences:
-        context[preference.key] = preference.value
-    return render_to_response('users/settings_notifications.html', context,
-                              context_instance=RequestContext(request))
-
-
 @login_required
 def notifications(request):
     profile = request.user.get_profile()

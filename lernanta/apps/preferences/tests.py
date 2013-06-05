@@ -5,7 +5,6 @@ from test_utils import TestCase
 
 from relationships.models import Relationship
 from users.models import UserProfile, create_profile
-from preferences.models import AccountPreferences
 from preferences.models import get_notification_subscription
 from preferences.models import set_notification_subscription
 
