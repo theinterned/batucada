@@ -82,7 +82,7 @@ class Status(ModelBase):
         send_notifications_i18n(
             profiles, subject_template, body_template, context,
             callback_url, self.author.username,
-            notification_category=u'reply.project-{0}'.format(self.project.slug)
+            notification_category=u'course-announcement.project-{0}'.format(self.project.slug)
         )
 
     @staticmethod
