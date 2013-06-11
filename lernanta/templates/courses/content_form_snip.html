@@ -25,9 +25,9 @@
             <textarea id="id_content" name="content" class="span8" rows="20">{{form.content.value|default_if_none:""}}</textarea>
             <p class="help-block">
                 {% blocktrans %}You can use markdown for your content.
-                For some help on using markdown, look
-                <a href="#markdown-cheatsheet" role="button" data-toggle="modal">here</a>
-            {% endblocktrans %}
+                    For some help on using markdown, look
+                    <a href="#markdown-cheatsheet" role="button" data-toggle="modal">here</a>
+                {% endblocktrans %}
             {% include 'learn/markdown_cheatsheet.html' %}
             </p>
           </p>
@@ -41,9 +41,5 @@
     </div>
   </div>
 </form>
-
-
-
-
 
 
