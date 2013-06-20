@@ -29,6 +29,13 @@ class CourseTags(ModelBase):
     tag = models.CharField(max_length=64)
 
 
+class CourseEmbeddedUrl(ModelBase):
+
+    course = models.ForeignKey(Course, related_name='embedded_urls')
+    url = models.URLField(max_length=300)
+    deleted = models.BooleanField(default=False)
+
+
 class Cohort(ModelBase):
 
     OPEN = "OPEN"

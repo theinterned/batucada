@@ -1,7 +1,9 @@
 import simplejson as json
 import datetime
+import requests
 
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from l10n.urlresolvers import reverse
 
@@ -61,7 +63,8 @@ def get_course(course_uri):
         "description": course_db.description,
         "language": course_db.language,
         "date_created": course_db.creation_date,
-        "author_uri": course_db.creator_uri
+        "author_uri": course_db.creator_uri,
+        "embedded_urls": get_course_embedded_urls(course_db.embedded_urls.all()),
     }
 
     course["status"] = 'published'
@@ -82,6 +85,10 @@ def get_course(course_uri):
 
     course["content"] = content[1:]
     return course
+
+
+def get_course_embedded_urls(course):
+    return [embedded_url.url for embedded_url in course]
 
 
 def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, draft=None, archived=None):
@@ -600,4 +607,30 @@ def get_cohort_comments(cohort_uri, reference_uri):
         cohort_comments += [comment]
         #yield comment
     return cohort_comments
+
+
+def request_oembedded_content(urls, user):
+    """ Retrieves oembed json from API endpoint"""
+    endpoint_url = settings.EMBED_API_ENDPOINT
+    badges = []
+
+    for url in urls:
+        params = {
+            'url': url
+        }
+
+        if user:
+            params['username'] = user
+
+        r = requests.get(endpoint_url, params=params)
+        badges.append(r.json)
+    print badges
+    return badges
+
+
+def add_embedded_url(course_uri, url):
+    c = _get_course_db(course_uri)
+    c.embedded_urls.add(db.CourseEmbeddedUrl(url=url))
+    c.save()
+    return c.embedded_urls
 

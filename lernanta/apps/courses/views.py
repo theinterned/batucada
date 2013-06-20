@@ -21,6 +21,7 @@ from courses.forms import CourseImageForm
 from courses.forms import CourseStatusForm
 from courses.forms import CohortSignupForm
 from courses.forms import CourseTagsForm
+from courses.forms import CourseEmbeddedUrlForm
 from courses.decorators import require_organizer
 
 from content2 import models as content_model
@@ -171,7 +172,41 @@ def course_learn_api_data( request, course_id ):
         raise http.Http404
 
     return http.HttpResponse(json.dumps(course_data), mimetype="application/json")
- 
+
+
+def course_show_badges( request, course_id ):
+    context = { }
+    context = _populate_course_context(request, course_id, context)
+    context['badges_active'] = True
+    urls = context['course']['embedded_urls']
+    user = request.user.username
+
+    context['badges'] = course_model.request_oembedded_content(urls, user)
+
+    if request.method == "POST":
+        form = CourseEmbeddedUrlForm(request.POST)
+        if form.is_valid():
+            course_model.add_embedded_url(course_model.course_id2uri(course_id),
+                                          form.cleaned_data['url'])
+    else:
+        form = CourseEmbeddedUrlForm()
+
+    context['form'] = form
+    return render_to_response(
+        'courses/course_badges.html',
+        context,
+        context_instance=RequestContext(request)
+    )
+
+@login_required
+@require_organizer
+def course_remove_badge( request, course_id ):
+    pass
+
+@login_required
+@require_organizer
+def course_add_badge( request, course_id ):
+    pass
 
 @login_required
 @require_organizer

@@ -1,0 +1,37 @@
+{% extends "courses/course_base.html" %}
+{% load l10n_tags %}
+{% load i18n %}
+{% load learn_tags %}
+{% load embed %}
+{% load settings_tags %}
+
+{% block tab-pane-content %}
+    {% if organizer %}
+         <form action="" method="POST">
+        {% csrf_token %}
+         <p>
+          <label for="id_url">{% trans "Badge URL:"%} <a class="form-tip" href="#" rel="tooltip" data-original-title="{% trans "Paste URL from Badge."%}">?</a></label>
+          {{form.url.errors}}
+
+          <input class="span7" type="text" name="url" id="id_url" placeholder="{% trans "Paste URL of the Badge that can be won." %}" value="{{form.url.value|default_if_none:""}}"/>
+          <button type="submit" class="btn btn-olive">{% trans 'Add Badge' %}</button>
+        </p>
+        </form>
+    {% endif %}
+    {% if badges %}
+        <ul class="thumbnails">
+            {% for badge in badges %}
+                <li>
+                    <div class="thumbnail">
+                    {% autoescape off %}{{ badge.html }}{% endautoescape %}
+                    </div>
+                    {% if organizer %}
+                    <div class="remove_badge">
+                        <a href="{% comment %}{% locale_url course_remove_badge badge.id %}{% endcomment %}" class="btn btn-mini btn-danger">{% trans "Remove Badge" %}</a>
+                    </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
