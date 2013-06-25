@@ -69,7 +69,7 @@
       </div>
     {% endif %}
     <hr/>
-    <div id="course-singup">
+    <div id="course-signup">
       {% if show_signup %}
         <form method="post" action="{% locale_url courses_signup course_id=course.id %}">
           {% csrf_token %}
