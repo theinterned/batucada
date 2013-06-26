@@ -619,8 +619,6 @@ def request_oembedded_content(url, user):
     endpoint_url = settings.EMBED_API_ENDPOINT
     params = dict(url=url)
 
-    if user:
-        params['username'] = user
     try:
         r = requests.get(endpoint_url, params=params)
     except (requests.exceptions.RequestException,

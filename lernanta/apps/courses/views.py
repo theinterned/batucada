@@ -179,7 +179,6 @@ def course_learn_api_data( request, course_id ):
 def course_add_badge( request, course_id ):
     context = { }
     context = _populate_course_context(request, course_id, context)
-    # quite ifi
     context['badges_active'] = True
     user = request.user
 
