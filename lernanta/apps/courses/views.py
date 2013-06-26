@@ -174,22 +174,35 @@ def course_learn_api_data( request, course_id ):
     return http.HttpResponse(json.dumps(course_data), mimetype="application/json")
 
 
-def course_show_badges( request, course_id ):
+@login_required
+@require_organizer
+def course_add_badge( request, course_id ):
     context = { }
     context = _populate_course_context(request, course_id, context)
+    # quite ifi
     context['badges_active'] = True
-    urls = context['course']['embedded_urls']
-    user = request.user.username
+    user = request.user
 
-    context['badges'] = course_model.request_oembedded_content(urls, user)
+    form = CourseEmbeddedUrlForm()
 
     if request.method == "POST":
         form = CourseEmbeddedUrlForm(request.POST)
+
         if form.is_valid():
-            course_model.add_embedded_url(course_model.course_id2uri(course_id),
-                                          form.cleaned_data['url'])
-    else:
-        form = CourseEmbeddedUrlForm()
+            content = None
+            user_uri = u"/uri/user/{0}".format(user.username)
+            # add content after getting it from request
+            try:
+                content = course_model.add_content_from_response(
+                    context['course']['uri'],
+                    form.cleaned_data['url'], user, user_uri)
+            except course_model.BadgeNotFoundException:
+                messages.error(request, _('Error! Badge was not found!'))
+            if content:
+                redirect_url = reverse('courses_content_show',
+                                       kwargs={'course_id': course_id,
+                                               'content_id': content['id']})
+                return http.HttpResponseRedirect(redirect_url)
 
     context['form'] = form
     return render_to_response(
@@ -198,15 +211,6 @@ def course_show_badges( request, course_id ):
         context_instance=RequestContext(request)
     )
 
-@login_required
-@require_organizer
-def course_remove_badge( request, course_id ):
-    pass
-
-@login_required
-@require_organizer
-def course_add_badge( request, course_id ):
-    pass
 
 @login_required
 @require_organizer

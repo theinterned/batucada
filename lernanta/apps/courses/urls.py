@@ -37,14 +37,6 @@ urlpatterns = patterns('',
         name='courses_announcement'),
 
     url(r'^(?P<course_id>[\d]+)/badges/$',
-        'courses.views.course_show_badges',
-        name='course_show_badges'),
-
-    url(r'^(?P<course_id>[\d]+)/badges/remove/(?P<badge_id>[\d]+)/$',
-        'courses.views.course_remove_badge',
-        name='course_remove_badge'),
-
-    url(r'^(?P<course_id>[\d]+)/badges/add/$',
         'courses.views.course_add_badge',
         name='course_add_badge'),
 
