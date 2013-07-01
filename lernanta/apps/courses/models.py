@@ -608,10 +608,8 @@ def get_cohort_comments(cohort_uri, reference_uri):
     return cohort_comments
 
 
-def request_oembedded_content(url, user):
+def request_oembedded_content(url):
     """ Retrieves oembed json from API endpoint"""
-    # TODO: write test
-    # TODO: implement url encoding before request is sent
     endpoint_url = settings.EMBED_API_ENDPOINT
     params = dict(url=url)
 
@@ -625,13 +623,9 @@ def request_oembedded_content(url, user):
     return r
 
 
-def add_content_from_response(course_uri, url, user, user_uri):
-    # TODO: write test
-    # get content by requesting
+def add_content_from_response(course_uri, url, user_uri):
     content = None
-    response = request_oembedded_content(
-        url, user)
-    # add content from response
+    response = request_oembedded_content(url)
     if response.status_code == 200:
         content = response.json
         content_data = {

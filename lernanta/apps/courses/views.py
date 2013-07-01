@@ -193,7 +193,7 @@ def course_add_badge( request, course_id ):
             try:
                 content = course_model.add_content_from_response(
                     context['course']['uri'],
-                    form.cleaned_data['url'], user, user_uri)
+                    form.cleaned_data['url'], user_uri)
             except course_model.BadgeNotFoundException:
                 messages.error(request, _('Error! We could not retrieve this Badge'))
             if content:
