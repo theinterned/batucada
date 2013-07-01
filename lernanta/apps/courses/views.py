@@ -190,13 +190,12 @@ def course_add_badge( request, course_id ):
         if form.is_valid():
             content = None
             user_uri = u"/uri/user/{0}".format(user.username)
-            # add content after getting it from request
             try:
                 content = course_model.add_content_from_response(
                     context['course']['uri'],
                     form.cleaned_data['url'], user, user_uri)
             except course_model.BadgeNotFoundException:
-                messages.error(request, _('Error! Badge was not found!'))
+                messages.error(request, _('Error! We could not retrieve this Badge'))
             if content:
                 redirect_url = reverse('courses_content_show',
                                        kwargs={'course_id': course_id,
