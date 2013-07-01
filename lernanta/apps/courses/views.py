@@ -195,6 +195,7 @@ def course_add_badge( request, course_id ):
                     context['course']['uri'],
                     form.cleaned_data['url'], user_uri)
             except course_model.BadgeNotFoundException:
+                form = CourseEmbeddedUrlForm()
                 messages.error(request, _('Error! We could not retrieve this Badge'))
             if content:
                 redirect_url = reverse('courses_content_show',
