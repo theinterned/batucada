@@ -90,10 +90,6 @@ def get_course(course_uri):
     return course
 
 
-def get_course_embedded_urls(course):
-    return [embedded_url.url for embedded_url in course]
-
-
 def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, draft=None, archived=None):
     results = db.Course.objects
     #NOTE: could also take **kwargs and do results.filter(**kwargs)
