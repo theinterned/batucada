@@ -88,6 +88,8 @@ def _populate_course_context( request, course_id, context ):
     except:
         log.error("Could not get lists for course!")
 
+    if 'based_on_uri' in course:
+        course['based_on'] = course_model.get_course(course['based_on_uri'])
 
     context['meta_data'] = lrmi_model.get_tags(course_uri)
     if 'educational_alignment' in context['meta_data']:
@@ -133,6 +135,13 @@ def import_project( request, project_slug ):
     cohort = course_model.get_course_cohort(course['uri'])
     user_uri = u"/uri/user/{0}".format(request.user.username)
     course_model.add_user_to_cohort(cohort['uri'], user_uri, "ORGANIZER")
+    return course_slug_redirect(request, course['id'])
+
+
+def clone_course( request, course_id ):
+    course_uri = course_model.course_id2uri(course_id)
+    user_uri = u"/uri/user/{0}".format(request.user.username)
+    course = course_model.clone_course(course_uri, user_uri)
     return course_slug_redirect(request, course['id'])
 
 

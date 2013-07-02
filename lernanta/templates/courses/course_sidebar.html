@@ -3,7 +3,7 @@
 
 <div id="sidebar">
     <figure class="project_img">
-      <a id="id-course-image-link" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">
+      <a id="id-course-image-link" itemprop="url" href="{% locale_url courses_show course_id=course.id slug=course.slug %}">
         {% if course.image %}
   	         <img id="id-course-image" src="{{ course.image.url }}" alt="course image" itemprop="image" />
         {% else %}
@@ -14,6 +14,10 @@
         {% endif %}
       </a>
     </figure>
+
+    {% if course.based_on %}
+    <div>{% trans 'Based on '%}<a href="{% locale_url courses_show course_id=course.based_on.id slug=course.based_on.slug %}" itemprop="isBasedOnUrl" >{{course.based_on.title}}</a></div>
+    {% endif %}
 
     {% if lists %}
       <div>

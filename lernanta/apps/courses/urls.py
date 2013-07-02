@@ -8,6 +8,10 @@ urlpatterns = patterns('',
         'courses.views.import_project',
         name='courses_import_project'),
 
+    url(r'^(?P<course_id>[\d]+)/clone/$',
+        'courses.views.clone_course',
+        name='courses_clone'),
+
     url(r'^(?P<course_id>[\d]+)/$',
         'courses.views.course_slug_redirect',
         name='courses_slug_redirect'),
