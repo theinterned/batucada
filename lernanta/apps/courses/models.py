@@ -482,7 +482,10 @@ def get_cohort(cohort_uri):
     for signup in cohort_db.signup_set.filter(leave_date__isnull=True):
         username = signup.user_uri.strip('/').split('/')[-1]
         cohort_data["users"][username] = {
-            "username": username, "uri": signup.user_uri, "role": signup.role
+            "username": username,
+            "uri": signup.user_uri,
+            "role": signup.role,
+            "signup_date": signup.signup_date
         }
         key = "{0}s".format(signup.role.lower())
         if not key in cohort_data:

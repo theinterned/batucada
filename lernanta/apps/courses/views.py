@@ -571,12 +571,12 @@ def course_export_emails( request, course_id ):
     response['Content-Disposition'] = 'attachment; '
     response['Content-Disposition'] += 'filename=detailed_report.csv'
     writer = unicodecsv.writer(response)
-    writer.writerow(["username", "email address"])
+    writer.writerow(["username", "email address", "signup date"])
 
     for user in cohort['users'].values():
         username = user['uri'].strip('/').split('/')[-1]
         user['email'] = UserProfile.objects.get(username=username).email
-        writer.writerow([username, user['email']])
+        writer.writerow([username, user['email'], user['signup_date']])
 
     return response
 
