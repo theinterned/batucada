@@ -88,6 +88,13 @@
       {% endif %}
     </div>
 
+    {% if organizer %}
+      <div>
+        <a href="{% locale_url courses_clone course_id=course.id %}" class="btn">{% trans 'Clone course' %}</a>
+      </div>
+      <hr/>
+    {% endif %}
+
     <div>
       <form action="{% locale_url report_abuse %}" method="post">
         {% csrf_token %}

@@ -138,6 +138,7 @@ def import_project( request, project_slug ):
     return course_slug_redirect(request, course['id'])
 
 
+@require_organizer
 def clone_course( request, course_id ):
     course_uri = course_model.course_id2uri(course_id)
     user_uri = u"/uri/user/{0}".format(request.user.username)
