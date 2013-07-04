@@ -25,6 +25,7 @@ from courses.forms import CohortSignupForm
 from courses.forms import CourseTagsForm
 from courses.forms import CourseEmbeddedUrlForm
 from courses.decorators import require_organizer
+from courses.badges_oembed import add_content_from_response
 
 from content2 import models as content_model
 from content2.forms import ContentForm
@@ -205,7 +206,7 @@ def course_add_badge( request, course_id ):
             content = None
             user_uri = u"/uri/user/{0}".format(user.username)
             try:
-                content = course_model.add_content_from_response(
+                content = add_content_from_response(
                     context['course']['uri'],
                     form.cleaned_data['url'], user_uri)
             except course_model.BadgeNotFoundException:

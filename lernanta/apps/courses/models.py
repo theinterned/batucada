@@ -1,9 +1,7 @@
 import simplejson as json
 import datetime
-import requests
 
 from django.utils.translation import ugettext as _
-from django.conf import settings
 
 from l10n.urlresolvers import reverse
 
@@ -633,35 +631,3 @@ def get_cohort_comments(cohort_uri, reference_uri):
         cohort_comments += [comment]
         #yield comment
     return cohort_comments
-
-
-def request_oembedded_content(url):
-    """ Retrieves oembed json from API endpoint"""
-    endpoint_url = settings.BADGES_OEMBED_URL
-    params = dict(url=url)
-
-    try:
-        r = requests.get(endpoint_url, params=params)
-    except (requests.exceptions.RequestException,
-            requests.exceptions.ConnectionError,
-            requests.exceptions.HTTPError) as e:
-        return e
-    return r
-
-
-def add_content_from_response(course_uri, url, user_uri):
-    content = None
-    response = request_oembedded_content(url)
-    if response.status_code == 200:
-        content = response.json
-        content_data = {
-            'title': content['title'],
-            'content': content['html'],
-            'author_uri': user_uri,
-        }
-        content = content_model.create_content(**content_data)
-        add_course_content(course_uri,
-                           content['uri'])
-    else:
-        raise BadgeNotFoundException
-    return content
