@@ -637,7 +637,7 @@ def get_cohort_comments(cohort_uri, reference_uri):
 
 def request_oembedded_content(url):
     """ Retrieves oembed json from API endpoint"""
-    endpoint_url = settings.EMBED_API_ENDPOINT
+    endpoint_url = settings.BADGES_OEMBED_URL
     params = dict(url=url)
 
     try:
@@ -645,7 +645,6 @@ def request_oembedded_content(url):
     except (requests.exceptions.RequestException,
             requests.exceptions.ConnectionError,
             requests.exceptions.HTTPError) as e:
-        repr(e)
         return e
     return r
 

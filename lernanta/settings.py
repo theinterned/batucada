@@ -331,4 +331,4 @@ BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
 ##################################################################
 # Badges integration settings
 #################################################################
-EMBED_API_ENDPOINT = "http://badges.p2pu.org/services/oembed"
+BADGES_OEMBED_URL = "http://badges.p2pu.org/services/oembed"
