@@ -1,7 +1,8 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.views import password_reset
-from users.decorators import anonymous_only
+from django.views.generic.base import RedirectView
 
+from users.decorators import anonymous_only
 from users import forms
 
 urlpatterns = patterns('',
@@ -98,6 +99,7 @@ urlpatterns = patterns('',
   url(r'^profile/edit/links/delete/(?P<link>[\d]+)/$',
       'users.views.profile_edit_links_delete',
       name='users_profile_edit_links_delete'),
+  url(r'^profile/edit/settings/$', RedirectView.as_view(url='/profile/edit/notifications/')),
   url(r'^profile/edit/notifications/$', 'preferences.views.notifications',
       name='preferences_notifications'),
   url(r'^profile/edit/email/$', 'preferences.views.email',
