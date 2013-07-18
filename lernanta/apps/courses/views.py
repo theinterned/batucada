@@ -600,7 +600,10 @@ def show_content( request, course_id, content_id):
     content = content_model.get_content(content_uri)
     context['content'] = content
     context['content_active'] = True
-    #context['comments'] = course_model.get_cohort_comments(cohort['uri'], content['uri'])
+    context['disqus_public_key'] = settings.DISQUS_PUBLIC_KEY
+    if request.user.is_authenticated():
+        context['disqus_sso'] = get_disqus_sso(request.user)
+
     context['form'] = ContentForm(content)
     return render_to_response(
         'courses/content.html', 
