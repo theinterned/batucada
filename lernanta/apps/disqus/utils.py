@@ -5,13 +5,27 @@ import simplejson
 import time
 
 from django.conf import settings
+from django.contrib.sites.models import Site
  
+from l10n.urlresolvers import reverse
+
+
 def get_disqus_sso(user):
     # create a JSON packet of our data attributes
+    user_relative_url = reverse(
+        'users_profile_view', 
+        kwargs={'username': user.username}
+    )
+    user_url = ''.join([
+        'https://',
+        Site.objects.get_current().domain,
+        user_relative_url
+    ])
     data = simplejson.dumps({
-      'id': user.username,
-      'username': user.username,
-      'email': user.email,
+        'id': user.username,
+        'username': user.username,
+        'email': user.email,
+        'url': user_url
     })
     # encode the data to base64
     message = base64.b64encode(data)
