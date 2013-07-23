@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'lernanta.apps.chat',
     'lernanta.apps.l10n',
     'lernanta.apps.dashboard',
+    'lernanta.apps.homepage',
     'lernanta.apps.relationships',
     'lernanta.apps.activity',
     'lernanta.apps.statuses',
