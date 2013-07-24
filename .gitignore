@@ -7,6 +7,9 @@ lernanta/media/images/projects/
 lernanta/media/images/challenges/
 lernanta/media/videos/projects/
 lernanta/media/images/badges/
+lernanta/media/uploads
+lernanta/media/js/
+lernanta/media/images/
 settings_local.py
 sample_data.py
 sql/

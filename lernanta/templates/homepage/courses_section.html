@@ -1,0 +1,100 @@
+<section>
+    <span id="courses" class="top-offset-span">&nbsp;</span>
+
+    <div class="container">
+        <div class="section-title-wrap">
+            <h1 class="section-title">Courses</h1>
+            <a href="#top-page" class="pull-right back-to-top-link">To the top <i class="icon-arrow-up"> </i></a>
+        </div>
+        <div class="billboard">
+
+            <div class="featured-items-wrap courses">
+                <div class="section-caption span3">
+                    <h4>Check out our featured courses</h4>
+
+                    <p>
+                        We offer courses for you to learn about how to make your own course, create a badge or
+                        dig in trough our code base and make improvements.
+                    </p>
+
+                    <div class="controls">
+                        <a class="p2pu-btn-apricot" href="{% url learn_all %}">Find a course <i
+                                class="icon-chevron-sign-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <ul class="featured-items-list pull-right">
+                    {% for course in courses %}
+                        <li class="featured-items-item span3">
+                            <div class="featured-items-item-wrap">
+                                <img class="featured-items-img"
+                                     src="{{ course.thumbnail_url }}">
+
+                                <div class="featured-items-item-caption">
+                                    <h4>{{ course.title }}</h4>
+
+                                    <p>{{ course.description }}</p>
+                                </div>
+                                <div class="featured-items-item-controls">
+                                    <a href="{{ course.url }}"
+                                       class="p2pu-btn-cyan p2pu-btn-mini">Learn</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                <!--
+                    <li class="featured-items-item span3">
+                        <div class="featured-items-item-wrap">
+                            <img class="featured-items-img"
+                                 src="https://p2pu.org/media/images/projects/2/86d8d6b8088b7fbe7eda52089830de09_2.jpg">
+
+                            <div class="featured-items-item-caption">
+                                <h4>P2PU Badge Maker</h4>
+
+                                <p>A step by step guide on how to make a badge to associate to a P2PU challenge.</p>
+                            </div>
+                            <div class="featured-items-item-controls">
+                                <a href="https://p2pu.org/en/groups/how-do-i-make-a-badge/"
+                                   class="p2pu-btn-cyan p2pu-btn-mini">Learn</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="featured-items-item span3">
+                        <div class="featured-items-item-wrap">
+                            <img class="featured-items-img"
+                                 src="https://p2pu.org/media/uploads/images/P2PU-LOGO-CMYK-Trans4_1.jpg">
+
+                            <div class="featured-items-item-caption">
+                                <h4>How do I make a P2PU Course?</h4>
+
+                                <p>Start here for help, advice and examples..</p>
+                            </div>
+                            <div class="featured-items-item-controls">
+                                <a href="https://p2pu.org/en/courses/445/how-do-i-make-a-p2pu-course/"
+                                   class="p2pu-btn-cyan p2pu-btn-mini">Learn</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="featured-items-item span3">
+                        <div class="featured-items-item-wrap">
+                            <img class="featured-items-img"
+                                 src="https://p2pu.org/media/images/projects/1/baec6461b0d69dde1b861aefbe375d8a_1.png">
+
+                            <div class="featured-items-item-caption">
+                                <h4>Contributing to Lernanta</h4>
+
+                                <p>Learn how to hack the P2PU code..</p>
+                            </div>
+                            <div class="featured-items-item-controls">
+                                <a href="https://p2pu.org/en/groups/introduction-to-contributing-to-lernata/"
+                                   class="p2pu-btn-cyan p2pu-btn-mini">Learn</a>
+                            </div>
+                        </div>
+                    </li>
+                    -->
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
