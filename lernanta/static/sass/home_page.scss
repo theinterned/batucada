@@ -99,40 +99,7 @@ h1, h2,h3, h4, h5{
   color: $cyan;
 }
 
-.navbar {
-  .brand {
-    display: block;
-    width: 80px;
-    height: 24px;
-    background: url('../img/logo-p2pu-menu.png') no-repeat;
-    padding: 0;
-    margin: 17px 0;
-    text-indent: -9999px;
-    overflow: hidden;
-  }
-
-  .nav{
-    margin: 9px 10px 0 20px;
-    font-family: 'Arvo', sans-serif;
-    li{
-      a{
-        text-shadow: none !important;
-        font-size: 1.1em;
-
-        &:hover, &:focus{
-          color: #777;
-          background-color: transparent;
-        }
-
-        &.p2pu-tab{
-          font-size: 1.6em;
-          border-left: 1px solid $silver;
-        }
-      }
-    }
-  }
-}
-
+/*******P2PU Panel*******/
 .p2pu-panel-wrap {
   background-color: $white;
   display: none;
@@ -204,13 +171,52 @@ h1, h2,h3, h4, h5{
   background: $clemintine;
 }
 
-/********/
+/********* Navigation bar ****************/
+.p2pu-navbar {
+  height: 58px;
+  background: $white;
+  background-color: $white;
+  border: none;
+  border-bottom: 2px solid $snow;
+  .brand {
+    display: block;
+    width: 80px;
+    height: 24px;
+    background: url('/static/images/homepage/logo-p2pu-menu.png') no-repeat;
+    padding: 0;
+    margin: 17px 0;
+    text-indent: -9999px;
+    overflow: hidden;
+  }
+  .top-menu{
+    margin: 9px 10px 0 20px;
+    font-family: 'Arvo', sans-serif;
+    li{
+      a{
+        text-shadow: none !important;
+        font-size: 1.1em;
+
+        &:hover, &:focus{
+          color: #777;
+          background-color: transparent;
+        }
+
+        &.p2pu-tab{
+          font-size: 1.6em;
+          border-left: 1px solid $silver;
+        }
+      }
+    }
+  }
+}
+
+/**************Jumbotron**************/
 .jumbotron {
   padding-top: 65px;
   margin-bottom: 50px;
   text-align: center;
   position: relative;
-  background-image: url('../img/photo-learn_one.jpg');
+  background-image: url('/static/images/homepage/jumbotron/photo-learn_one.jpg');
   background-size: cover;
   background-position: 50% 40%;
   text-align: center;
@@ -255,6 +261,7 @@ h1, h2,h3, h4, h5{
   font-weight: bold;
   color: $white;
 }
+/*******Main Menu *******/
 .actions {
   @extend .clearfix;
   margin: 0 0 10px 0;
@@ -269,30 +276,69 @@ h1, h2,h3, h4, h5{
       display: block;
       &:hover {
         text-decoration: none;
+        .actions-icons{
+          -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+          -moz-transform: scale(1.05);
+        }
         h2 {
           color: $apricot;
         }
       }
+      &[href="#courses"]{
+        .actions-icons{
+          background: url('/static/images/homepage/icons_sprite.png') 0px 5px no-repeat;
+        }
+      }
+      &[href="#badges"]{
+        .actions-icons{
+          background: url('/static/images/homepage/icons_sprite.png') -100px 5px no-repeat;
+        }
+      }
+      &[href="#schools"]{
+        .actions-icons{
+          background: url('/static/images/homepage/icons_sprite.png') -200px 5px no-repeat;
+        }
+      }
+      &[href="#moocs"]{
+        .actions-icons{
+          background: url('/static/images/homepage/icons_sprite.png') -300px 5px no-repeat;
+        }
+      }
+      &[href="#blog"]{
+        .actions-icons{
+          background: url('/static/images/homepage/icons_sprite.png') -400px 5px no-repeat;
+        }
+      }
+      &[href="#community"]{
+        .actions-icons{
+          background: url('/static/images/homepage/icons_sprite.png') -500px 5px no-repeat;
+        }
+      }
+      .actions-icons{
+        float: left;
+        margin-right: 20px;
+        height: 90px;
+        width: 90px;
+      }
     }
-    img {
-      float: left;
-      margin-right: 20px;
-    }
+
     p {
       overflow: hidden;
     }
+
   }
 }
 section{
   border-top: 1px solid #d8dbde;
   box-shadow: inset 0 5px 5px -3px rgba(0,0,0,0.1);
   background: $cloud;
-  background: url('../img/bgtexture.png'),-moz-linear-gradient(top, $cloud 0%, $white 100%);
-  background: url('../img/bgtexture.png'),-webkit-gradient(linear, left top, left bottom, color-stop(0%,$cloud), color-stop(100%,$white));
-  background: url('../img/bgtexture.png'),-webkit-linear-gradient(top, $cloud 0%,$white 100%);
-  background: url('../img/bgtexture.png'),-o-linear-gradient(top, $cloud 0%,$white 100%);
-  background: url('../img/bgtexture.png'),-ms-linear-gradient(top, $cloud 0%,$white 100%);
-  background: url('../img/bgtexture.png'),linear-gradient(to bottom, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-moz-linear-gradient(top, $cloud 0%, $white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-webkit-gradient(linear, left top, left bottom, color-stop(0%,$cloud), color-stop(100%,$white));
+  background: url('/static/images/homepage/bgtexture.png'),-webkit-linear-gradient(top, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-o-linear-gradient(top, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-ms-linear-gradient(top, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),linear-gradient(to bottom, $cloud 0%,$white 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$cloud', endColorstr='$white',GradientType=0 );
 }
 .section-title-wrap{

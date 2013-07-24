@@ -1,0 +1,24 @@
+<h2>Blog</h2>
+<h4>Get the latest news and updates.</h4>
+<hr>
+<ul class="unstyled blog-list">
+    {% for entry in feed_entries %}
+        <li class="span6">
+        <!--
+        <img src="http://info.p2pu.org/wp-content/uploads/2013/06/P2PU-150x150.jpg" alt=""/>
+        -->
+        <div class="overflow-hidden">
+            <h4>
+                <a href="{{ entry.link }}">
+                    {{ entry.title }} <i class="icon-chevron-right"></i>
+                </a>
+            </h4>
+
+            <div class="caption">
+                {{ entry.body|truncatewords:30 }}
+            </div>
+        </div>
+        <hr>
+    </li>
+    {% endfor %}
+</ul>
