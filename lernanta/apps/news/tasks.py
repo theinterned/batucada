@@ -79,8 +79,8 @@ def parse_feed(feed_url, page):
         if not body:
             log.warn("Parsing feed failed - no body found")
             continue
-        cleaned_body = smart_str(bleach.clean(body, tags=(), strip=True,
-            strip_comments=True))
+        cleaned_body = smart_str(bleach.clean(body, tags=('img',), attributes={'img': ['src', 'alt'], },
+                                              strip=True, strip_comments=True))
         try:
             checksum = hashlib.md5(cleaned_body).hexdigest()
             exists = FeedEntry.objects.filter(checksum=checksum)

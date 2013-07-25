@@ -15,7 +15,7 @@
             </h4>
 
             <div class="caption">
-                {{ entry.body|truncatewords:30 }}
+                {{ entry.body|truncatewords:30|safe }}
             </div>
         </div>
         <hr>
