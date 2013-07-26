@@ -8,17 +8,24 @@ from learn.models import get_courses_by_list
 
 from processors import get_schools
 from processors import get_feed
+from processors import get_featured_badges
+
+
+def _pick_n(sequence, n):
+    if sequence:
+        sequence = random.sample(sequence, min(n,len(sequence)))
+    return sequence
 
 
 def home(request):
     feed_entries = get_feed()
-    courses = get_courses_by_list("showcase")
-    featured_count = min(4,len(courses))
-    courses = random.sample(courses, featured_count)
+    courses = _pick_n(get_courses_by_list("showcase"), 3)
+    badges = _pick_n(get_featured_badges(), 4)
     schools = get_schools()
 
     return render_to_response('homepage/home.html', {
         'feed_entries':  feed_entries,
         'courses': courses,
+        'badges': badges,
         'schools': schools,
     }, context_instance=RequestContext(request))
