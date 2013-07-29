@@ -333,3 +333,4 @@ BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
 # Badges integration settings
 #################################################################
 BADGES_OEMBED_URL = "http://badges.p2pu.org/services/oembed"
+FEATURED_BADGES_FEED_URL = "http://badges.p2pu.org/en/badge/featured_feed/"
