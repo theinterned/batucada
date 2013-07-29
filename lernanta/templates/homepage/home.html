@@ -48,7 +48,6 @@
 <!-- Courses Section -->
 {% include 'homepage/courses_section.html' %}
 <!-- Badges Section -->
-{% comment %}
 <section>
     <span id="badges" class="top-offset-span">&nbsp;</span>
 
@@ -62,77 +61,22 @@
 
             <div class="featured-items-wrap badges">
                 <ul class="featured-items-list">
+                  {% for badge in badges %}
                     <li class="featured-items-item span3">
                         <div class="featured-items-item-wrap">
                             <img class="featured-items-img"
-                                 src="http://badges.p2pu.org/media/images/a_look_at_openvideo_400_397880a4-24d1-4279-bf30-7e62229534d6.png">
-
+                                 src="{{ badge.image_url }}">
                             <div class="featured-items-item-caption">
-                                <h4>A Look at Open Video</h4>
-
-                                <p>Completing the tasks outlined in "A Look at Open Video".
-                                    The main criteria is to create a "data-mosh" with Free Software tools.</p>
+                                <h4>{{ badge.title }}</h4>
+                                <p>{{ badge.description }}</p>
                             </div>
                             <div class="featured-items-item-controls">
-                                <a href="http://badges.p2pu.org/en/project/create/8/"
-                                   class="p2pu-btn-cyan p2pu-btn-mini">Submit a project</a>
+                                <a href="{{ badge.url }}"
+                                   class="p2pu-btn-cyan p2pu-btn-mini">{% trans 'Submit a project' %}</a>
                             </div>
                         </div>
                     </li>
-                    <li class="featured-items-item span3">
-                        <div class="featured-items-item-wrap">
-                            <img class="featured-items-img"
-                                 src="http://badges.p2pu.org/media/images/Pythagoras_14f45155-45d8-4f40-ba5c-66c7761b15a2.png">
-
-                            <div class="featured-items-item-caption">
-                                <h4> Proofs of the Pythagorean Theorem </h4>
-
-                                <p>Show peers three different ways to prove the validity of Pythagoras' Theorem,
-                                    and able to use the theorem in larger projects.</p>
-                            </div>
-                            <div class="featured-items-item-controls">
-                                <a href="http://badges.p2pu.org/en/project/create/27/"
-                                   class="p2pu-btn-cyan p2pu-btn-mini">Submit a project</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="featured-items-item span3">
-                        <div class="featured-items-item-wrap">
-                            <img class="featured-items-img"
-                                 src="http://badges.p2pu.org/media/images/WikiSOO_Burba_5c05d506-4203-4eda-a2c8-9aab45345ef9.png">
-
-                            <div class="featured-items-item-caption">
-                                <h4> WikiSOO Burba Badge </h4>
-
-                                <p>Certificate of successful completion of P2PU School of Open
-                                    "Writing Wikipedia Articles" course (with related tasks)
-                                </p>
-                            </div>
-                            <div class="featured-items-item-controls">
-                                <a href="http://badges.p2pu.org/en/project/create/22/"
-                                   class="p2pu-btn-cyan p2pu-btn-mini">Submit a project</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="featured-items-item span3">
-                        <div class="featured-items-item-wrap">
-                            <img class="featured-items-img"
-                                 src="http://badges.p2pu.org/media/images/facilitation_af019215-ee75-4cf1-ad03-e52840e7d480.png">
-
-                            <div class="featured-items-item-caption">
-                                <h4>Facilitation: Mission Complete</h4>
-
-                                <p>
-                                    Data Agents must be able to pull together great minds & draw out the best ideas.
-                                    This Badge is for stellar Facilitation.
-                                </p>
-                            </div>
-                            <div class="featured-items-item-controls">
-                                <a href="http://badges.p2pu.org/en/project/create/36/"
-                                   class="p2pu-btn-cyan p2pu-btn-mini">Submit a project</a>
-                            </div>
-                        </div>
-                    </li>
+                  {% endfor %}
                 </ul>
             </div>
             <div class="controls">
@@ -143,7 +87,6 @@
         </div>
     </div>
 </section>
-{% endcomment %}
 <!-- Schools Section -->
 {% include 'homepage/schools_section.html' %}
 <!-- Moocs Section -->

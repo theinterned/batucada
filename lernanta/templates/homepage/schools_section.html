@@ -9,33 +9,6 @@
         <div class="billboard">
             <div class="featured-items-wrap schools">
                 <ul class="featured-items-list pull-right">
-                    {% comment %}
-                    {% for school in schools %}
-                        <li class="featured-items-item span4">
-                            <div class="featured-items-item-wrap">
-                                {% if school.groups_icon %}
-                                    <img class="featured-items-img"
-                                         src="{{MEDIA_URL}}{{ school.groups_icon }}"
-                                         alt="{{ school.name }}"/>
-                                {% else %}
-                                    <img src="{{STATIC_URL}}images/school-small-missing.png"
-                                         alt="{{ footer_school.name }}"/>
-                                {% endif %}
-
-                                <div class="featured-items-item-caption">
-                                    <h4>{{ school.name }}</h4>
-
-                                    <p>{{ school.description|safe|truncatewords_html:20 }}</p>
-
-                                </div>
-                                <div class="featured-items-item-controls">
-                                    <a href="{{ school.get_absolute_url }}" title="{{ school.name }}"
-                                       class="p2pu-btn-clemintine">Go to school</a>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                    {% endcomment %}
                     <li class="featured-items-item span8">
                         <div class="featured-items-item-wrap">
                             <img class="featured-items-img"
@@ -45,12 +18,10 @@
                                 <h4>School of Open</h4>
 
                                 <p>
-                                    Universal access to and participation in research, education, and culture is made
-                                    possible by openness, but not enough people know what it means or how to take
-                                    advantage of it.
-                                    We hear about Open Source Software, Open Educational Resources, and Open Access…
-                                    But what are these movements, who are their communities, and how do they work?
-                                    Most importantly—how can they help me?
+                                    The School of Open offers courses on the meaning, application,
+                                    and impact of “openness” in the digital age and its benefit to
+                                    creative endeavors, education, research, and beyond.
+                                    It is coordinated by P2PU and Creative Commons.
                                 </p>
                             </div>
                             <div class="featured-items-item-controls">
@@ -63,37 +34,19 @@
                     <li class="featured-items-item span4">
                         <div class="featured-items-item-wrap">
                             <img class="featured-items-img"
-                                 src="https://p2pu.org/media/images/schools/1/e84b64b553a5573b47e90aacf5a81da7.png">
+                                 src="https://p2pu.org/media/images/schools/1/1158ea7f5709376a7cb4a6bae056f49b_1.png">
 
                             <div class="featured-items-item-caption">
-                                <h4>School of Social Innovation</h4>
-
-                                <p>SoSI organizes and supports open courses for changemakers around the world</p>
-                            </div>
-                            <div class="featured-items-item-controls">
-                                <a href="https://p2pu.org/en/schools/school-of-social-innovation/"
-                                   class="p2pu-btn-clemintine">Go to school</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="featured-items-item span4">
-                        <div class="featured-items-item-wrap">
-                            <img class="featured-items-img"
-                                 src="https://p2pu.org/media/images/schools/1/0bcfff4d1ca81d89b4073cf35a3c0a67.png">
-
-                            <div class="featured-items-item-caption">
-                                <h4>School of the Mathematical Future</h4>
+                                <h4>School of Ed</h4>
 
                                 <p>
-                                    School of the Mathematical Future is organized by Natural Math family learning
-                                    network,
-                                    Math 2.0 interest group, and P2PU (Peer to Peer University).
-                                    We are building an open learning environment for mathematics educators working in
-                                    diverse communities and networks. Our classes are open and free.
+                                    The P2PU School of Ed brings the model of open, community-based peer learning to professional
+                                    learning for K-12 teachers. It's about hands-on learning driven by each educator's
+                                    particular needs and classroom situations.
                                 </p>
                             </div>
                             <div class="featured-items-item-controls">
-                                <a href="https://p2pu.org/en/schools/school-of-the-mathematical-future/"
+                                <a href="https://p2pu.org/en/schools/school-of-ed-pilot/"
                                    class="p2pu-btn-clemintine">Go to school</a>
                             </div>
                         </div>
@@ -107,10 +60,10 @@
                                 <h4>School of Webcraft</h4>
 
                                 <p>
-                                    Learning is more fun with friends. Work alongside your peers, get help from mentors,
-                                    or offer your expertise to those in need. Peer-driven study groups and challenges by
-                                    learners just like you are available right now. Anyone can become a mentor to
-                                    provide one-on-one help.
+                                    School of Webcraft is a collaboration between P2PU and Mozilla.
+                                    Take the Webmaking 101 challenge to learn basic HTML and build your
+                                    first webpage from scratch. You can earn badges, that highlight your
+                                    technical and community skills to your friends, colleagues and potential employers.
                                 </p>
                             </div>
                             <div class="featured-items-item-controls">
@@ -119,25 +72,29 @@
                             </div>
                         </div>
                     </li>
-                    <li class="featured-items-item span4">
+                    <li class="featured-items-item span8">
                         <div class="featured-items-item-wrap">
                             <img class="featured-items-img"
-                                 src="https://p2pu.org/media/images/schools/1/1158ea7f5709376a7cb4a6bae056f49b_1.png">
+                                 src="{{ STATIC_URL }}images/SoD-logo.png">
 
                             <div class="featured-items-item-caption">
-                                <h4>School of Ed</h4>
+                                <h4>School of Data</h4>
 
                                 <p>
-                                    The P2PU School of Ed brings the model of open, community-based peer learning to
-                                    professional learning for K-12 teachers.
+                                    School of Data works to empower civil society organizations,
+                                    journalists and citizens with the skills they need to use data
+                                    effectively in their efforts to create more equitable and
+                                    effective societies. It's a collaboration between P2PU and the
+                                    Open Knowledge Foundation.
                                 </p>
                             </div>
                             <div class="featured-items-item-controls">
-                                <a href="https://p2pu.org/en/schools/school-of-ed-pilot/"
+                                <a href="https://p2pu.org/en/schools/school-of-the-mathematical-future/"
                                    class="p2pu-btn-clemintine">Go to school</a>
                             </div>
                         </div>
                     </li>
+
                 </ul>
             </div>
         </div>

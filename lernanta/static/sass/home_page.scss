@@ -27,7 +27,7 @@
 }
 body{
   font-family: $altFontFamily;
-  background-image: url('../img/bgtexture.png');
+  background-image: url('/static/images/bgtexture.png');
 }
 h1, h2,h3, h4, h5{
   font-family: 'Arvo', serif;
@@ -434,7 +434,7 @@ section{
       right: 15px;
     }
     .featured-items-item-wrap{
-      min-height: 250px;
+      min-height: 200px;
     }
   }
   .we-are{
@@ -531,7 +531,7 @@ section{
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  background: #848689 url(../img/timeline-bg.jpg) no-repeat bottom center;
+  background: #848689 url(/static/images/timeline-bg.jpg) no-repeat bottom center;
   position: relative;
   margin-top: 50px;
 }
