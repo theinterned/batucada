@@ -32,7 +32,6 @@ def get_feed():
     return feed_entries
 
 
-
 def get_featured_badges():
     badges = cache.get('featured_badges')
     if badges is None:
