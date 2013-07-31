@@ -20,7 +20,7 @@ def _pick_n(sequence, n):
 def home(request):
     feed_entries = get_feed()    
     courses = _pick_n(get_courses_by_list("showcase"), 3)
-    badges = _pick_n(get_featured_badges(), 4)
+    badges = _pick_n(get_featured_badges(), 3)
     schools = get_schools()
 
     return render_to_response('homepage/home.html', {

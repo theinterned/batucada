@@ -419,6 +419,13 @@ section{
     }
   }
   .badges{
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
+    }
     .featured-items-img{
       width: auto;
       height: auto;
@@ -512,10 +519,12 @@ section{
     }
   }
   .moocs{
-    .icon-cogs{
-      font-size: 20em;
-      float: left;
-      margin-right: 20px;
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
     }
   }
   .description{
