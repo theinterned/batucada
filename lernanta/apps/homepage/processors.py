@@ -51,12 +51,10 @@ def get_blog_feed():
                                                              strip_comments=True))
                 parsed['description'] = cleaned_description
                 feeds_arr.append(parsed)
-            #cache.set('blog_feeds', json.dumps(feeds), 60*60)
-            return json.dumps(feeds_arr)
+            feeds = feeds_arr
+            #cache.set('blog_feeds', feeds_arr, 60*60)
         except Exception:
             log.error('Could not fetch list of blog feeds')
-    else:
-        feeds = json.loads(feeds)
     return feeds
 
 
