@@ -488,6 +488,7 @@ section{
   .blog-list{
     margin-left: -30px;
     li{
+      height: 200px;
       img{
         @extend .img-polaroid;
         width: 100px;
@@ -498,7 +499,6 @@ section{
       }
       h4{
         color: $cyan;
-        height: 45px;
       }
       a{
         font-weight: bold;
@@ -514,7 +514,7 @@ section{
         margin-left: 50px;
       }
       .caption{
-        height: 90px;
+        height: 120px;
       }
     }
   }
