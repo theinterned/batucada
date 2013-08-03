@@ -12,7 +12,6 @@ lernanta/media/js/
 lernanta/media/images/
 settings_local.py
 sample_data.py
-sql/
 celery-schedule
 lernanta.log*
 .project
