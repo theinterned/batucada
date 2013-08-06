@@ -11,9 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/home_page.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}sass/home_page.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}sass/homepage-responsive.css">
 
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Arvo:regular,italic,bold,bolditalic" rel="stylesheet"
@@ -38,9 +39,9 @@
 
 <div class="billboard top">
     {% include 'homepage/blog_feed.html' %}
-    {% comment %}
+
     {% include 'homepage/community_section.html' %}
-    {% endcomment %}
+
 </div>
 </div>
 <!-- /container -->
@@ -48,105 +49,13 @@
 <!-- Courses Section -->
 {% include 'homepage/courses_section.html' %}
 <!-- Badges Section -->
-<section>
-    <span id="badges" class="top-offset-span">&nbsp;</span>
-
-    <div class="container">
-        <div class="section-title-wrap">
-            <h1 class="section-title">Badges</h1>
-            <a href="#top-page" class="pull-right back-to-top-link">To the top <i class="icon-arrow-up"> </i></a>
-        </div>
-        <div class="billboard">
-            <h4>Get feedback for a project you love.</h4>
-
-            <div class="featured-items-wrap badges">
-                <ul class="featured-items-list">
-                  {% for badge in badges %}
-                    <li class="featured-items-item span3">
-                        <div class="featured-items-item-wrap">
-                            <img class="featured-items-img"
-                                 src="{{ badge.image_url }}">
-                            <div class="featured-items-item-caption">
-                                <h4>{{ badge.title }}</h4>
-                                <p>{{ badge.description }}</p>
-                            </div>
-                            <div class="featured-items-item-controls">
-                                <a href="{{ badge.url }}"
-                                   class="p2pu-btn-cyan p2pu-btn-mini">{% trans 'Submit a project' %}</a>
-                            </div>
-                        </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-            </div>
-            <div class="controls">
-                <a class="p2pu-btn-olive" href="https://badges.p2pu.org">Get your Badges <i
-                        class="icon-chevron-sign-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+{% include 'homepage/badges_section.html' %}
 <!-- Schools Section -->
 {% include 'homepage/schools_section.html' %}
 <!-- Moocs Section -->
-{% comment %}
-<section>
-    <span id="moocs" class="top-offset-span">&nbsp;</span>
+{% include 'homepage/mooc_section.html' %}
 
 
-    <div class="container">
-        <div class="section-title-wrap">
-            <h1 class="section-title">MOOCs</h1>
-            <a href="#top-page" class="pull-right back-to-top-link">To the top <i class="icon-arrow-up"> </i></a>
-        </div>
-        <div class="billboard">
-            <div class="moocs">
-                <i class="icon-cogs"></i>
-
-                <div class="description">
-                    <h2>A Gentle Introduction to Python</h2>
-
-                    <p>
-                    <h4>Free & Open.</h4>
-                    A Gentle Introduction to Python is 100% free, just like all OpenCourseWare. Anyone can join, and
-                    you're
-                    welcome to share your work.
-                    </p>
-                    <p>
-                    <h4>Learning Powerhouse.</h4>
-                    Pick up Python from leading innovators in online learning. MIT's chops. Codecademy's exercises.
-                    OpenStudy's
-                    study groups. P2PU's community. Need we say more?
-                    </p>
-                    <p>
-                    <h4>Weekly Lessons.</h4>
-                    Make friends with some smarties, and start programming from Week 1. Open for signup now, course
-                    starts June
-                    2013.
-                    </p>
-                    <hr>
-                    <p>
-                    <h4> Next Class begins June 2013</h4>
-                    but you can sign up now
-                    </p>
-                    <div class="form-search">
-                        <div class="input-append">
-                            <input type="text" class="span2 search-query" placeholder="you@dot.com">
-                            <button type="submit" class="btn">Go</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="controls">
-                    <a class="p2pu-btn-silver" href="http://mechanicalmooc.org/">Find out more <i
-                            class="icon-chevron-sign-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endcomment %}
 <section class="footer">
     <div class="container">
         <hr>

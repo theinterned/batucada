@@ -25,6 +25,7 @@ def parse_entry(entry):
     if not title:
         log.debug("Feed entry has no title element.")
         return None
+    description = getattr(entry, 'description', None)
     content = getattr(entry, 'content', None)
     # some feed entries have a summary but no content
     if not content:
@@ -44,6 +45,7 @@ def parse_entry(entry):
         content = content[0]
     return {
         'title': title,
+        'description': description,
         'content': content,
         'link': link,
         'updated': updated,

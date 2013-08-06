@@ -227,8 +227,8 @@ h1, h2,h3, h4, h5{
   text-shadow: 0 0 12px rgba(0,0,0,0.5),0 0 32px rgba(0,0,0,0.25),0 1px rgba(0,0,0,0.75);
   position: relative;
   .masthead{
-    position: absolute;
-    bottom: 80px;
+    position: relative;
+    bottom: -80px;
   }
   .main-feature{
     color: $white;
@@ -288,31 +288,37 @@ h1, h2,h3, h4, h5{
       &[href="#courses"]{
         .actions-icons{
           background: url('/static/images/homepage/icons_sprite.png') 0px 5px no-repeat;
+          background-size: cover;
         }
       }
       &[href="#badges"]{
         .actions-icons{
           background: url('/static/images/homepage/icons_sprite.png') -100px 5px no-repeat;
+          //background-size: cover
         }
       }
       &[href="#schools"]{
         .actions-icons{
           background: url('/static/images/homepage/icons_sprite.png') -200px 5px no-repeat;
+          //background-size: cover
         }
       }
       &[href="#moocs"]{
         .actions-icons{
           background: url('/static/images/homepage/icons_sprite.png') -300px 5px no-repeat;
+          //background-size: cover
         }
       }
       &[href="#blog"]{
         .actions-icons{
           background: url('/static/images/homepage/icons_sprite.png') -400px 5px no-repeat;
+          //background-size: cover
         }
       }
       &[href="#community"]{
         .actions-icons{
           background: url('/static/images/homepage/icons_sprite.png') -500px 5px no-repeat;
+          //background-size: cover
         }
       }
       .actions-icons{
@@ -413,6 +419,13 @@ section{
     }
   }
   .badges{
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
+    }
     .featured-items-img{
       width: auto;
       height: auto;
@@ -475,17 +488,16 @@ section{
   .blog-list{
     margin-left: -30px;
     li{
+      height: 200px;
       img{
         @extend .img-polaroid;
         width: 100px;
         height: 100px;
         float: left;
         margin-right: 20px;
-        margin-top: 11px;
       }
       h4{
         color: $cyan;
-        height: 45px;
       }
       a{
         font-weight: bold;
@@ -501,15 +513,17 @@ section{
         margin-left: 50px;
       }
       .caption{
-        height: 90px;
+        height: 120px;
       }
     }
   }
   .moocs{
-    .icon-cogs{
-      font-size: 20em;
-      float: left;
-      margin-right: 20px;
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
     }
   }
   .description{
