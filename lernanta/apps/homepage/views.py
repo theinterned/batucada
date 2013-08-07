@@ -19,7 +19,7 @@ def _pick_n(sequence, n):
 @gzip_page
 def home(request):
     feed_entries = get_blog_feed()
-    courses = _pick_n(get_courses_by_list("showcase"), 3)
+    courses = _pick_n(get_courses_by_list("community"), 3)
     badges = _pick_n(get_featured_badges(), 3)
 
     return render_to_response('homepage/home.html', {
