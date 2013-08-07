@@ -16,26 +16,6 @@ from lernanta.apps.news.tasks import parse_entry
 log = logging.getLogger(__name__)
 
 
-def _school_2_dict(school):
-    school = {
-        'name': school.name,
-        'description': school.description,
-        'groups_icon': school.groups_icon,
-    }
-    return school
-
-
-def get_schools():
-    schools = School.objects.all().order_by('id')[:5]
-    return [_school_2_dict(school) for school in schools]
-
-
-def get_feed():
-    feed_entries = FeedEntry.objects.filter(
-        page='splash').order_by('-created_on')
-    return feed_entries
-
-
 def get_blog_feed():
     feeds = cache.get('blog_feeds')
     if feeds is None:
@@ -52,7 +32,7 @@ def get_blog_feed():
                 parsed['description'] = cleaned_description
                 feeds_arr.append(parsed)
             feeds = feeds_arr
-            #cache.set('blog_feeds', feeds_arr, 60*60)
+            cache.set('blog_feeds', feeds_arr, 60*60)
         except Exception:
             log.error('Could not fetch list of blog feeds')
     return feeds

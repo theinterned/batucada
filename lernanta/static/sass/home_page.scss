@@ -450,6 +450,16 @@ section{
       min-height: 200px;
     }
   }
+  .community-members-list{
+    .community-member{
+      width: 80px;
+      height: 80px;
+      margin-right: -5px;
+    }
+  }
+  .community-member-tooltip{
+      display: none;
+    }
   .we-are{
     list-style-type: none;
     margin-left: 0;
@@ -489,6 +499,9 @@ section{
     margin-left: -30px;
     li{
       height: 200px;
+      .blog-feed-wrap{
+        height: 140px;
+      }
       img{
         @extend .img-polaroid;
         width: 100px;
@@ -501,6 +514,9 @@ section{
       }
       a{
         font-weight: bold;
+        width: 80%;
+        display: block;
+        position: relative;
         &:hover{
           text-decoration: none;
           h3{
@@ -510,7 +526,9 @@ section{
         }
       }
       .icon-chevron-right{
-        margin-left: 50px;
+        position: absolute;
+        right: -19%;
+        top: 20%;
       }
       .caption{
         height: 120px;

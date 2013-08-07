@@ -4,20 +4,17 @@
 <ul class="unstyled blog-list">
     {% for entry in feed_entries %}
         <li class="span6">
-        <!--
-        <img src="http://info.p2pu.org/wp-content/uploads/2013/06/P2PU-150x150.jpg" alt=""/>
-        -->
-        <div class="">
-            <h4>
-                <a href="{{ entry.link }}" target="_blank">
-                    {{ entry.title }} <i class="icon-chevron-right"></i>
-                </a>
-            </h4>
+            <div class="blog-feed-wrap">
+                <h4>
+                    <a href="{{ entry.link }}" target="_blank">
+                        {{ entry.title }} <i class="icon-chevron-right"></i>
+                    </a>
+                </h4>
 
-            <div class="caption">
-                {{ entry.description|safe }}
+                <div class="caption">
+                    {{ entry.description|safe }}
+                </div>
             </div>
-        </div>
         <hr>
     </li>
     {% endfor %}
