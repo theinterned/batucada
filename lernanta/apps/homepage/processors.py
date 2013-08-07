@@ -49,4 +49,3 @@ def get_featured_badges():
     else:
         badges = json.loads(badges)
     return badges
-
