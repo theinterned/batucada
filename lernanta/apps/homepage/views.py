@@ -2,7 +2,7 @@ import random
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
+from django.views.decorators.gzip import gzip_page
 
 from learn.models import get_courses_by_list
 
@@ -16,6 +16,7 @@ def _pick_n(sequence, n):
     return sequence
 
 
+@gzip_page
 def home(request):
     feed_entries = get_blog_feed()
     courses = _pick_n(get_courses_by_list("showcase"), 3)
