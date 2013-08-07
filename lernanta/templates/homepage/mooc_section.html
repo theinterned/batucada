@@ -1,5 +1,4 @@
 {% load i18n %}
-{% load l10n_tags %}
 
 <section>
     <span id="moocs" class="top-offset-span">&nbsp;</span>
@@ -22,7 +21,7 @@
                     </p>
 
                     <div class="controls">
-                        <a class="p2pu-btn-silver" href="http://mechanicalmooc.org/">Find out more <i
+                        <a class="p2pu-btn-silver" href="http://mechanicalmooc.org/">{% trans 'Find out more' %} <i
                                 class="icon-chevron-sign-right"></i>
                         </a>
                     </div>
@@ -32,32 +31,24 @@
                     <li class="featured-items-item span8">
                         <div class="featured-items-item-wrap">
                             <div class="featured-items-item-caption">
-                                <h4>A Gentle Introduction to Python</h4>
+                                <h4>{% trans 'A Gentle Introduction to Python' %}</h4>
                                 <img
                                  src="{{ STATIC_URL }}images/mechanicalmooc-banner.jpg">
-                                <h4>Free & Open.</h4>
+                                <h4>{% trans 'Free & Open.' %}</h4>
                                 <p>
-                                    A Gentle Introduction to Python is 100% free, just like all OpenCourseWare.
-                                    Anyone can join, and you're welcome to share your work.
+                                    {% blocktrans %}A Gentle Introduction to Python is 100% free, just like all OpenCourseWare.
+                                    Anyone can join, and you're welcome to share your work.{% endblocktrans %}
                                 </p>
-                                <h4>Learning Powerhouse.</h4>
-                                    Pick up Python from leading innovators in online learning. MIT's chops.
+                                <h4>{% trans 'Learning Powerhouse.' %}</h4>
+                                    {% blocktrans %}Pick up Python from leading innovators in online learning. MIT's chops.
                                     Codecademy's exercises. OpenStudy's study groups. P2PU's community.
-                                    Need we say more?
+                                    Need we say more?{% endblocktrans %}
                                 </p>
                                 <p>
-                                <h4>Weekly Lessons.</h4>
-                                    Make friends with some smarties, and start programming from Week 1.
+                                <h4>{% trans 'Weekly Lessons.' %}</h4>
+                                    {% blocktrans %}Make friends with some smarties, and start programming from Week 1.{% endblocktrans %}
                                 </p>
                             </div>
-                            {% comment %}
-                            <div class="form-search">
-                                <div class="input-append">
-                                    <input type="text" class="span2 search-query" placeholder="you@dot.com">
-                                    <button type="submit" class="btn">Go</button>
-                                </div>
-                            </div>
-                            {% endcomment %}
                         </div>
                     </li>
                 </ul>
