@@ -1,3 +1,6 @@
+{% load i18n %}
+{% load l10n_tags %}
+
 <section>
     <span id="moocs" class="top-offset-span">&nbsp;</span>
 
@@ -5,7 +8,7 @@
     <div class="container">
         <div class="section-title-wrap">
             <h1 class="section-title">MOOCs</h1>
-            <a href="#top-page" class="pull-right back-to-top-link">To the top <i class="icon-arrow-up"> </i></a>
+            <a href="#top-page" class="pull-right back-to-top-link">{% trans "To the top" %} <i class="icon-arrow-up"> </i></a>
         </div>
         <div class="billboard">
             <div class="moocs">
@@ -13,9 +16,9 @@
 
 
                     <p>
-                        We have run MOOCs on Learning Python, Creative Learning (with the MIT Media Lab)
+                        {% blocktrans %}We have run MOOCs on Learning Python, Creative Learning (with the MIT Media Lab)
                         and Data skills. Our MOOCs are big learning communities that run on the web. Lots of
-                        people sign up, and we facilitate collaboration and team work.
+                        people sign up, and we facilitate collaboration and team work.{% endblocktrans %}
                     </p>
 
                     <div class="controls">
@@ -31,7 +34,7 @@
                             <div class="featured-items-item-caption">
                                 <h4>A Gentle Introduction to Python</h4>
                                 <img
-                                 src="http://mechanicalmooc.org/static/img/banner.png">
+                                 src="{{ STATIC_URL }}images/mechanicalmooc-banner.jpg">
                                 <h4>Free & Open.</h4>
                                 <p>
                                     A Gentle Introduction to Python is 100% free, just like all OpenCourseWare.

@@ -1,26 +1,29 @@
+{% load i18n %}
+{% load l10n_tags %}
+{% load learn_tags %}
 <section>
     <span id="courses" class="top-offset-span">&nbsp;</span>
 
     <div class="container">
         <div class="section-title-wrap">
-            <h1 class="section-title">Courses</h1>
-            <a href="#top-page" class="pull-right back-to-top-link">To the top <i class="icon-arrow-up"> </i></a>
+            <h1 class="section-title">{% trans 'Courses' %}</h1>
+            <a href="#top-page" class="pull-right back-to-top-link">{% trans 'To the top' %}<i class="icon-arrow-up"> </i></a>
         </div>
         <div class="billboard">
 
             <div class="featured-items-wrap courses">
                 <div class="section-caption span3">
-                    <h4>Check out our great courses</h4>
+                    <h4>{% trans 'Check out our great courses' %}</h4>
 
                     <p>
-                        P2PU courses are different. They bring together learners who work as peers.
+                        {% blocktrans %}P2PU courses are different. They bring together learners who work as peers.
                         Who take ownership of their own learning. And who help others learn.
                         Our community has run hundreds of courses. Find something you want to learn.
-                        Or create a new course
+                        Or create a new course{% endblocktrans %}
                     </p>
 
                     <div class="controls">
-                        <a class="p2pu-btn-apricot" href="{% url learn_all %}">Find a course <i
+                        <a class="p2pu-btn-apricot" href="{% learn_default %}">{% trans 'Find a course' %}<i
                                 class="icon-chevron-sign-right"></i>
                         </a>
                     </div>
@@ -39,7 +42,7 @@
                                 </div>
                                 <div class="featured-items-item-controls">
                                     <a href="{{ course.url }}"
-                                       class="p2pu-btn-cyan p2pu-btn-mini">Learn</a>
+                                       class="p2pu-btn-cyan p2pu-btn-mini">{% trans 'Learn' %}</a>
                                 </div>
                             </div>
                         </li>

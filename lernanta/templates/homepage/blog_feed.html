@@ -1,5 +1,7 @@
-<h2>Blog</h2>
-<h4>News and Updates from P2PU</h4>
+{% load i18n %}
+
+<h2>{% trans 'Blog' %}</h2>
+<h4>{% trans 'News and Updates from P2PU' %}</h4>
 <hr>
 <ul class="unstyled blog-list">
     {% for entry in feed_entries %}
