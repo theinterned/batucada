@@ -1,5 +1,5 @@
 /* IPhone size */
-@media screen and (min-width:320px) and (max-width:480px){
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
   body{
     padding-left: 0;
     padding-right: 0;
@@ -15,7 +15,11 @@
     .main-feature{
       font-size: 1.2em;
       line-height: 35px;
-      margin-bottom: 60px;
+      margin-bottom: 10px;
+    }
+    .lead{
+      line-height: 30px;
+      font-size: 0.8em;
     }
   }
   .actions{
@@ -23,19 +27,33 @@
       width: auto;
       a{
         .actions-icons{
-          height: 56px;
+          height: 55px;
           width: 55px;
           background-size: cover;
         }
       }
     }
   }
+  .section-title-wrap{
+    .back-to-top-link{
+      margin-top:-23px;
+    }
+  }
   .billboard{
+    .controls{
+      a{
+        margin: inherit;
+        float: none;
+      }
+    }
     .top{
       margin-top: -50px;
     }
     .blog-list{
       margin-left: 0;
+      li .blog-feed-wrap{
+        height: inherit;
+      }
     }
     .schools{
       .featured-items-item-wrap{

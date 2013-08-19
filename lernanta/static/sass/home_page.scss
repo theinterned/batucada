@@ -285,41 +285,17 @@ h1, h2,h3, h4, h5{
           color: $apricot;
         }
       }
-      &[href="#courses"]{
-        .actions-icons{
-          background: url('/static/images/homepage/icons_sprite.png') 0px 5px no-repeat;
-          background-size: cover;
-        }
+      .actions-icons{
+        background: url('/static/images/homepage/icons_sprite.png') 0px 3px no-repeat;
+        background-size: cover;
       }
-      &[href="#badges"]{
-        .actions-icons{
-          background: url('/static/images/homepage/icons_sprite.png') -100px 5px no-repeat;
-          //background-size: cover
-        }
-      }
-      &[href="#schools"]{
-        .actions-icons{
-          background: url('/static/images/homepage/icons_sprite.png') -200px 5px no-repeat;
-          //background-size: cover
-        }
-      }
-      &[href="#moocs"]{
-        .actions-icons{
-          background: url('/static/images/homepage/icons_sprite.png') -300px 5px no-repeat;
-          //background-size: cover
-        }
-      }
-      &[href="#blog"]{
-        .actions-icons{
-          background: url('/static/images/homepage/icons_sprite.png') -400px 5px no-repeat;
-          //background-size: cover
-        }
-      }
-      &[href="#community"]{
-        .actions-icons{
-          background: url('/static/images/homepage/icons_sprite.png') -500px 5px no-repeat;
-          //background-size: cover
-        }
+      $i: 0%;
+      @each $icon in courses, badges, schools , moocs, blog, community{
+        &.icon-#{$icon}
+          .actions-icons{
+            background-position: $i 1px
+          }
+        $i: $i + 20%
       }
       .actions-icons{
         float: left;
@@ -353,9 +329,17 @@ section{
     float: left;
     margin-top: 30px;
   }
-  a{
-    line-height: 44px;
-    margin-top: 5px;
+  .back-to-top-link{
+    background-color: $silver;
+    border-radius: 0 0 10px 10px;
+    width: 60px;
+    text-align: center;
+    line-height: 30px;
+    margin: 0;
+    i{
+      color: $slate;
+      font-size: 1.5em;
+    }
     &:hover{
       text-decoration: none;
     }
@@ -401,8 +385,8 @@ section{
       padding: 10px 10px 40px 10px;
     }
     .featured-items-img{
-      width: 200px;
-      height: 150px;
+      max-width: 200px;
+      max-height: 150px;
     }
     .featured-items-item-controls{
       position: absolute;
@@ -498,7 +482,6 @@ section{
   .blog-list{
     margin-left: -30px;
     li{
-      height: 200px;
       .blog-feed-wrap{
         height: 140px;
       }
@@ -529,9 +512,6 @@ section{
         position: absolute;
         right: -19%;
         top: 20%;
-      }
-      .caption{
-        height: 120px;
       }
     }
   }

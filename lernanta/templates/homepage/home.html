@@ -1,9 +1,9 @@
 {% load i18n %}
 
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js"> <!--<![endif]-->
 <head>
@@ -12,14 +12,18 @@
     <title>P2PU | {% trans 'A University for the Web. Built by an open community' %}</title>
     <meta name="description" content="{% trans 'Learning for everyone, by everyone, about almost anything.' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/home_page.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/homepage-responsive.css">
+    {% if debug %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}sass/home_page.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}sass/homepage-responsive.css">
+    {% else %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/home_page.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/homepage-responsive.css">
+    {% endif %}
     <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
     <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png">
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Arvo:regular,italic,bold,bolditalic" rel="stylesheet"
+    <link href="//fonts.googleapis.com/css?family=Arvo:regular,italic,bold,bolditalic" rel="stylesheet"
           type="text/css">
 
     <script src="{{ STATIC_URL }}js/libs/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -62,7 +66,7 @@
     <div class="container">
         <hr>
         <a href="https://p2pu.org/en/pages/terms-of-use/" target="_blank">
-            <img class="pull-right" src="{{ STATIC_URL }}/images/cc-icons.png" alt="{% trans 'CC logo' %}"/>
+            <img class="pull-right" src="{{ STATIC_URL }}images/cc-icons.png" alt="{% trans 'CC logo' %}"/>
         </a>
     </div>
 </section>
@@ -89,7 +93,7 @@
         });
     });
 </script>
-
+{% if not debug %}
   <!-- Google Analytics -->
   <script type="text/javascript">
 
@@ -170,6 +174,6 @@
       {% endif %}
     {% endfor %}
   {% endif %}
-
+{% endif %}
 </body>
 </html>
