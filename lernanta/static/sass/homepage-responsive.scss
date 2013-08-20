@@ -55,6 +55,11 @@
         height: inherit;
       }
     }
+    .featured-items-wrap{
+      .featured-items-img{
+        width: 100%;
+      }
+    }
     .schools{
       .featured-items-item-wrap{
         img{
@@ -106,9 +111,15 @@ and (orientation : portrait) {
       margin-left: 0;
       li{
         margin-left: 0;
+        width: 100%;
         .blog-feed-wrap{
           height: inherit;
         }
+      }
+    }
+    .featured-items-wrap{
+      .featured-items-img{
+        width: 100%;
       }
     }
   }

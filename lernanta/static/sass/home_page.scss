@@ -27,7 +27,7 @@
 }
 body{
   font-family: $altFontFamily;
-  background-image: url('/static/images/bgtexture.png');
+  background-image: url('/static/images/homepage/bgtexture.png');
 }
 h1, h2,h3, h4, h5{
   font-family: 'Arvo', serif;
@@ -362,11 +362,16 @@ section{
   }
   .controls {
     a {
-
       @extend .pull-right;
       margin: 20px 10px;
+      position: relative;
+      padding-right: 40px;
       i {
-        margin-left: 20px;
+        position: absolute;
+        right: 10px;
+        top: 40%;
+        line-height: 36px;
+        margin-top: -13px;
       }
     }
   }
@@ -383,6 +388,10 @@ section{
       background-color: $snow;
       min-height: 290px;
       padding: 10px 10px 40px 10px;
+    }
+    .featured-items-img-wrap{
+      text-align: center;
+      height: 155px;
     }
     .featured-items-img{
       max-width: 200px;
