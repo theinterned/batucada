@@ -6222,10 +6222,17 @@ section {
 .section-title-wrap .section-title {
   float: left;
   margin-top: 30px; }
-.section-title-wrap a {
-  line-height: 44px;
-  margin-top: 5px; }
-  .section-title-wrap a:hover {
+.section-title-wrap .back-to-top-link {
+  background-color: #cccccc;
+  border-radius: 0 0 10px 10px;
+  width: 60px;
+  text-align: center;
+  line-height: 30px;
+  margin: 0; }
+  .section-title-wrap .back-to-top-link i {
+    color: #515665;
+    font-size: 1.5em; }
+  .section-title-wrap .back-to-top-link:hover {
     text-decoration: none; }
 
 .billboard {
@@ -6251,8 +6258,8 @@ section {
     min-height: 290px;
     padding: 10px 10px 40px 10px; }
   .billboard .featured-items-wrap .featured-items-img {
-    width: 200px;
-    height: 150px; }
+    max-width: 200px;
+    max-height: 150px; }
   .billboard .featured-items-wrap .featured-items-item-controls {
     position: absolute;
     bottom: 15px; }
