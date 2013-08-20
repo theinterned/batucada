@@ -5794,10 +5794,13 @@ label {
     overflow: visible !important; } }
 body {
   font-family: "sense", Helvetica, sans-serif;
-  background-image: url("/static/images/bgtexture.png"); }
+  background-image: url("/static/images/homepage/bgtexture.png"); }
 
 h1, h2, h3, h4, h5 {
   font-family: 'Arvo', serif; }
+
+a:focus {
+  outline: none; }
 
 .overflow-hidden {
   overflow: hidden; }
@@ -6108,6 +6111,8 @@ h1, h2, h3, h4, h5 {
       .p2pu-navbar .top-menu li a.p2pu-tab {
         font-size: 1.6em;
         border-left: 1px solid #cccccc; }
+    .p2pu-navbar .top-menu li .dropdown-menu li a:hover {
+      color: white; }
 
 /**************Jumbotron**************/
 .jumbotron {
@@ -6159,6 +6164,7 @@ h1, h2, h3, h4, h5 {
   margin: 0 0 10px 0;
   background-color: white;
   position: relative;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.1);
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px; }
@@ -6173,9 +6179,9 @@ h1, h2, h3, h4, h5 {
       .actions li a:hover {
         text-decoration: none; }
         .actions li a:hover .actions-icons {
-          -webkit-transform: scale(1.05);
-          transform: scale(1.05);
-          -moz-transform: scale(1.05); }
+          -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+          -moz-transform: scale(1.2); }
         .actions li a:hover h2 {
           color: #ff7300; }
       .actions li a .actions-icons {
@@ -6202,8 +6208,8 @@ h1, h2, h3, h4, h5 {
       .actions li a .actions-icons {
         float: left;
         margin-right: 20px;
-        height: 90px;
-        width: 90px; }
+        height: 60px;
+        width: 60px; }
     .actions li p {
       overflow: hidden; }
 
@@ -6247,9 +6253,15 @@ section {
     width: 165px;
     margin-top: 20px; }
   .billboard .controls a {
-    margin: 20px 10px; }
+    margin: 20px 10px;
+    position: relative;
+    padding-right: 40px; }
     .billboard .controls a i {
-      margin-left: 20px; }
+      position: absolute;
+      right: 10px;
+      top: 40%;
+      line-height: 36px;
+      margin-top: -13px; }
   .billboard .featured-items-wrap .featured-items-item {
     position: relative;
     margin-left: 30px; }
@@ -6257,6 +6269,9 @@ section {
     background-color: #fcfcfc;
     min-height: 290px;
     padding: 10px 10px 40px 10px; }
+  .billboard .featured-items-wrap .featured-items-img-wrap {
+    text-align: center;
+    height: 155px; }
   .billboard .featured-items-wrap .featured-items-img {
     max-width: 200px;
     max-height: 150px; }

@@ -37,6 +37,8 @@
     margin-left: 0; }
     .billboard .blog-list li .blog-feed-wrap {
       height: inherit; }
+  .billboard .featured-items-wrap .featured-items-img-wrap {
+    width: 100%; }
   .billboard .schools .featured-items-item-wrap img {
     float: initial;
     margin-left: 0; }
@@ -68,6 +70,9 @@
   .billboard .blog-list {
     margin-left: 0; }
     .billboard .blog-list li {
-      margin-left: 0; }
+      margin-left: 0;
+      width: 100%; }
       .billboard .blog-list li .blog-feed-wrap {
-        height: inherit; } }
+        height: inherit; }
+  .billboard .featured-items-wrap .featured-items-img {
+    width: 100%; } }
