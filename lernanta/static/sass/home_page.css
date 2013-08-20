@@ -6108,6 +6108,8 @@ h1, h2, h3, h4, h5 {
       .p2pu-navbar .top-menu li a.p2pu-tab {
         font-size: 1.6em;
         border-left: 1px solid #cccccc; }
+    .p2pu-navbar .top-menu li .dropdown-menu li a:hover {
+      color: white; }
 
 /**************Jumbotron**************/
 .jumbotron {
