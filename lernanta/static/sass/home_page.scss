@@ -32,6 +32,9 @@ body{
 h1, h2,h3, h4, h5{
   font-family: 'Arvo', serif;
 }
+a:focus{
+  outline: none;
+}
 .overflow-hidden{
   overflow: hidden;
 }
@@ -276,6 +279,7 @@ h1, h2,h3, h4, h5{
   margin: 0 0 10px 0;
   background-color: $white;
   position: relative;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.1);
   @include border-radius(15px);
   li {
     @include makeColumn($columns: 4);
@@ -286,9 +290,9 @@ h1, h2,h3, h4, h5{
       &:hover {
         text-decoration: none;
         .actions-icons{
-          -webkit-transform: scale(1.05);
-          transform: scale(1.05);
-          -moz-transform: scale(1.05);
+          -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+          -moz-transform: scale(1.2);
         }
         h2 {
           color: $apricot;
@@ -309,8 +313,8 @@ h1, h2,h3, h4, h5{
       .actions-icons{
         float: left;
         margin-right: 20px;
-        height: 90px;
-        width: 90px;
+        height: 60px;
+        width: 60px;
       }
     }
 
