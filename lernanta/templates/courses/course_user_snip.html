@@ -2,7 +2,7 @@
 {% load i18n %}
 
 <li class="user-tile">
-  <div style="font-weight: bold">{{user.username}}</div>
+  <div><strong>{{user.username}}</strong></div>
   <a href="{% locale_url users_profile_view username=user.username %}">
     <img src="{{ user.profile_image_url }}" alt="{{user.username}}">
   </a>
