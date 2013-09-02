@@ -64,6 +64,19 @@
             }
         );
       });
+
+
+        $('#MDCStrigger').popover({
+            html: true,
+            content: function () {
+                return $('#markdown-cheatsheet').html();
+            },
+            placement: 'top',
+            trigger: 'focus'
+        }).click(function(e) {
+           e.preventDefault();
+           //$(this).focus();
+       });
     });
   </script>
 {% endblock %}
