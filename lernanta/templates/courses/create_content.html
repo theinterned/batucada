@@ -61,10 +61,8 @@
             {
                 "content":$("#id_content").attr("value"),
                 "csrfmiddlewaretoken": "{{ csrf_token }}"
-            }
-        );
-      });
-
+            });
+        });
 
         $('#MDCStrigger').bind('click', function(e){
             $('#md-cheatsheet').tab('show');
