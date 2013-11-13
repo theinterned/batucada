@@ -120,7 +120,7 @@ footer{
   li {
     width: 28%;
     margin-left: 5%;
-    margin-top: 30px;
+    margin-top: 10px;
     float: left;
     a {
       display: block;
@@ -140,12 +140,12 @@ footer{
         background-size: cover;
       }
       $i: 0%;
-      @each $icon in courses, badges, schools , moocs, blog, community{
+      @each $icon in courses, badges, schools , moocs, blog, community, reports{
         &.icon-#{$icon}
           .actions-icons{
             background-position: $i 1px
           }
-        $i: $i + 20%
+        $i: $i + 16.3%
       }
       .actions-icons{
         float: left;
@@ -258,8 +258,8 @@ footer{
   }
   .community-members-list{
     .community-member{
-      width: 80px;
-      height: 80px;
+      width: 84px;
+      height: 84px;
       margin-right: -5px;
     }
   }
@@ -303,6 +303,7 @@ footer{
   }
   .blog-list{
     margin-left: -30px;
+    margin-bottom: 50px;
     li{
       .blog-feed-wrap{
         height: 140px;

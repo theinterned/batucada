@@ -136,7 +136,7 @@ footer {
   .actions li {
     width: 28%;
     margin-left: 5%;
-    margin-top: 30px;
+    margin-top: 10px;
     float: left; }
     .actions li a {
       display: block; }
@@ -156,19 +156,22 @@ footer {
         background-position: 0% 1px; }
       .actions li a.icon-badges
       .actions-icons {
-        background-position: 20% 1px; }
+        background-position: 16.3% 1px; }
       .actions li a.icon-schools
       .actions-icons {
-        background-position: 40% 1px; }
+        background-position: 32.6% 1px; }
       .actions li a.icon-moocs
       .actions-icons {
-        background-position: 60% 1px; }
+        background-position: 48.9% 1px; }
       .actions li a.icon-blog
       .actions-icons {
-        background-position: 80% 1px; }
+        background-position: 65.2% 1px; }
       .actions li a.icon-community
       .actions-icons {
-        background-position: 100% 1px; }
+        background-position: 81.5% 1px; }
+      .actions li a.icon-reports
+      .actions-icons {
+        background-position: 97.8% 1px; }
       .actions li a .actions-icons {
         float: left;
         margin-right: 20px;
@@ -241,8 +244,8 @@ footer {
   .billboard .schools .featured-items-item-wrap {
     min-height: 200px; }
   .billboard .community-members-list .community-member {
-    width: 80px;
-    height: 80px;
+    width: 84px;
+    height: 84px;
     margin-right: -5px; }
   .billboard .community-member-tooltip {
     display: none; }
@@ -276,7 +279,8 @@ footer {
       .billboard .we-are li .caption {
         text-align: left; }
   .billboard .blog-list {
-    margin-left: -30px; }
+    margin-left: -30px;
+    margin-bottom: 50px; }
     .billboard .blog-list li .blog-feed-wrap {
       height: 140px; }
     .billboard .blog-list li img {
