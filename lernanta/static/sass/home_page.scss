@@ -120,8 +120,26 @@ footer{
   li {
     width: 28%;
     margin-left: 5%;
-    margin-top: 30px;
+    margin-top: 10px;
     float: left;
+    &:nth-child(3n + 1):last-child {
+      float: none;
+      text-align: center;
+      clear: both;
+      margin: 0 auto 10px auto;
+      padding-top: 20px;
+      width: 45%;
+      a{
+        margin: 25px 0 0 28%;
+        h2{
+          float: left;
+        }
+      }
+      p{
+        float: left;
+      }
+    }
+
     a {
       display: block;
       &:hover {
@@ -140,12 +158,12 @@ footer{
         background-size: cover;
       }
       $i: 0%;
-      @each $icon in courses, badges, schools , moocs, blog, community{
+      @each $icon in courses, badges, schools , moocs, blog, community, reports{
         &.icon-#{$icon}
           .actions-icons{
             background-position: $i 1px
           }
-        $i: $i + 20%
+        $i: $i + 17.3%
       }
       .actions-icons{
         float: left;
@@ -258,8 +276,8 @@ footer{
   }
   .community-members-list{
     .community-member{
-      width: 80px;
-      height: 80px;
+      width: 84px;
+      height: 84px;
       margin-right: -5px;
     }
   }
@@ -303,6 +321,7 @@ footer{
   }
   .blog-list{
     margin-left: -30px;
+    margin-bottom: 50px;
     li{
       .blog-feed-wrap{
         height: 140px;
