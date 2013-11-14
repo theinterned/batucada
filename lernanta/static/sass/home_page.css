@@ -138,6 +138,19 @@ footer {
     margin-left: 5%;
     margin-top: 10px;
     float: left; }
+    .actions li:nth-child(3n + 1):last-child {
+      float: none;
+      text-align: center;
+      clear: both;
+      margin: 0 auto 10px auto;
+      padding-top: 20px;
+      width: 45%; }
+      .actions li:nth-child(3n + 1):last-child a {
+        margin: 25px 0 0 28%; }
+        .actions li:nth-child(3n + 1):last-child a h2 {
+          float: left; }
+      .actions li:nth-child(3n + 1):last-child p {
+        float: left; }
     .actions li a {
       display: block; }
       .actions li a:hover {
@@ -156,22 +169,22 @@ footer {
         background-position: 0% 1px; }
       .actions li a.icon-badges
       .actions-icons {
-        background-position: 16.3% 1px; }
+        background-position: 17.3% 1px; }
       .actions li a.icon-schools
       .actions-icons {
-        background-position: 32.6% 1px; }
+        background-position: 34.6% 1px; }
       .actions li a.icon-moocs
       .actions-icons {
-        background-position: 48.9% 1px; }
+        background-position: 51.9% 1px; }
       .actions li a.icon-blog
       .actions-icons {
-        background-position: 65.2% 1px; }
+        background-position: 69.2% 1px; }
       .actions li a.icon-community
       .actions-icons {
-        background-position: 81.5% 1px; }
+        background-position: 86.5% 1px; }
       .actions li a.icon-reports
       .actions-icons {
-        background-position: 97.8% 1px; }
+        background-position: 103.8% 1px; }
       .actions li a .actions-icons {
         float: left;
         margin-right: 20px;

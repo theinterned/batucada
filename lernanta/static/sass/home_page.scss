@@ -122,6 +122,24 @@ footer{
     margin-left: 5%;
     margin-top: 10px;
     float: left;
+    &:nth-child(3n + 1):last-child {
+      float: none;
+      text-align: center;
+      clear: both;
+      margin: 0 auto 10px auto;
+      padding-top: 20px;
+      width: 45%;
+      a{
+        margin: 25px 0 0 28%;
+        h2{
+          float: left;
+        }
+      }
+      p{
+        float: left;
+      }
+    }
+
     a {
       display: block;
       &:hover {
@@ -145,7 +163,7 @@ footer{
           .actions-icons{
             background-position: $i 1px
           }
-        $i: $i + 16.3%
+        $i: $i + 17.3%
       }
       .actions-icons{
         float: left;
