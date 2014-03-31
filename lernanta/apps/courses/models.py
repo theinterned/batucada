@@ -324,6 +324,8 @@ def unpublish_course(course_uri):
 
 
 def delete_spam_course(course_uri):
+    """ Delete a course and remove listing from index """
+    # TODO - this doesn't do anything special for spam, maybe rename the function
     course_db = _get_course_db(course_uri)
     course_db.deleted = True
     course_db.save()
