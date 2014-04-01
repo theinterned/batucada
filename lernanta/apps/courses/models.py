@@ -99,7 +99,7 @@ def get_courses(title=None, hashtag=None, language=None, organizer_uri=None, dra
     if language:
         filters['language'] = language
     if organizer_uri:
-        filters['organizer_uri'] = organizer_uri
+        filters['creator_uri'] = organizer_uri
     if draft != None:
         filters['draft'] = draft
     if archived != None:
