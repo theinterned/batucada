@@ -13,8 +13,8 @@ register = template.Library()
 def convert_content( markdown_text ):
     html = markdown.markdown(markdown_text, ['tables'])
     html = bleach.linkify(html, target="_blank", tokenizer=HTMLTokenizer)
-    regex = re.compile(r'(?P<preblock>\<pre\>.*?</pre\>)', re.IGNORECASE|re.DOTALL)
-    f = lambda m: re.sub(r'&lt;', '<', re.sub(r'&gt;', '>', re.sub(r'&amp;', '&', m.group(0))))
+    regex = re.compile(r'<pre\>.*?</pre\>', re.IGNORECASE|re.DOTALL)
+    f = lambda m: re.sub(r'&amp;', '&', m.group(0))
     html = regex.sub(f, html)
     return html
 
