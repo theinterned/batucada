@@ -114,6 +114,7 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.locale.LocaleMiddleware',
     'users.middleware.ProfileExistMiddleware',
+    'tracker.middleware.PageViewTrackerMiddleware',
     'users.middleware.UserActivityMiddleware',
 )
 
@@ -181,7 +182,8 @@ INSTALLED_APPS = (
     'lernanta.apps.media',
     'oauth2app',
     'oauthprovider',
-    'lrmi'
+    'lrmi',
+    'lernanta.apps.spam',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -318,16 +320,15 @@ LOGGING = {
 }
 
 TRACKING_PREFIXES = [
-    r'^/\w{2}/groups/[\w-]+/content/[\w-]+/$',
-    r'^/\w{2}/groups/[\w-]+/$',
-    r'^/\w{2}/schools/[\w-]+/sets/[\w-]+/$',
-    r'^/\w{2}/schools/[\w-]+/$',
+    r'^/\w{2}/courses/create/$',
 ]
 
 BOT_NAMES =['Googlebot', 'Slurp', 'Twiceler', 'msnbot',
     'KaloogaBot', 'YodaoBot', 'Baiduspider', 'googlebot',
     'Speedy Spider', 'DotBot', 'Sogou', 'YoudaoBot',
     'YandexBot', 'rogerbot']
+
+HELP_URL = 'http://thepeople.p2pu.org/t/user-support-help-p2pu-org/18'
 
 ##################################################################
 # Badges integration settings
