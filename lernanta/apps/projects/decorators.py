@@ -15,7 +15,7 @@ def deprecated(func):
     def decorated(*args, **kwargs):
         request = args[0]
         project = kwargs['slug']
-        msg = _('This course is using a format that we no longer support. It will be changed to read-only in the near future. If that will be a problem, tell us at <a href="http://community.p2pu.org/category/tech">community.p2pu.org</a> and we can help you.')
+        msg = _('This course will be changed to read-only in the near future. Tell us at <a href="http://community.p2pu.org/category/tech">community.p2pu.org</a> if that will be a problem.')
         messages.warning(request, msg, safe=True)
         return func(*args, **kwargs)
     return decorated
