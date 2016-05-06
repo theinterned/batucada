@@ -2,7 +2,7 @@
 Lernanta
 =========
 
-*** This project is outdated. If you would like to run your own course, have a look at http://howto.p2pu.org. The source is still around and there may be some useful pieces. ***
+** This project is outdated. If you would like to run your own course, have a look at http://howto.p2pu.org. The source is still around and there may be some useful pieces. **
 
 Lernanta is the software that supports P2PU's site, which started as a fork of Mozilla drumbeat's Batucada project. 
 
