@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load l10n_tags %}
+<section>
+    <span id="badges" class="top-offset-span">&nbsp;</span>
+
+    <div class="container">
+        <a href="#top-page" class="pull-right back-to-top-link"><i class="icon-angle-up"> </i></a>
+        <h1 class="section-title">{% trans 'Badges' %}</h1>
+        <div class="billboard clearfix">
+            <div class="featured-items-wrap badges">
+                <div class="section-caption span3">
+
+                    <p>
+                        {% blocktrans %}At Peer 2 Peer University, Badges are a form of feedback that learners give to each other
+                        in order to improve their projects. You can create a new Badge, submit a Project for a Badge,
+                        or, if you are an "Expert" and already have a Badge, award it to someone else.{% endblocktrans %}
+                    </p>
+
+                    <div class="controls">
+                        <a class="btn btn-success" href="http://badges.p2pu.org">Get your Badges <i
+                                class="icon-chevron-sign-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <ul class="unstyled featured-items-list">
+                  {% for badge in badges %}
+                    <li class="featured-items-item span3">
+                        <div class="thumbnail featured-items-item-wrap">
+                            <img class="featured-items-img"
+                                 src="{{ badge.image_url }}">
+                            <div class="featured-items-item-caption">
+                                <h4>{{ badge.title }}</h4>
+                                <p>{{ badge.description }}</p>
+                            </div>
+                            <div class="featured-items-item-controls">
+                                <a href="{{ badge.url }}" target="_blank"
+                                   class="btn btn-primary btn-mini">{% trans 'Submit a project' %}</a>
+                            </div>
+                        </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</section>

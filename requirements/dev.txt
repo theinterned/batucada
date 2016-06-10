@@ -1,9 +1,0 @@
--r prod.txt
-
-ipython==0.10.1
-nose==0.11.1
-jinja2==2.5.5  # only required for test-utils
-
--e git://github.com/jbalogh/django-nose#egg=django-nose
--e git://github.com/jbalogh/test-utils#egg=test-utils
--e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar

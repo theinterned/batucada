@@ -1,0 +1,14 @@
+{% load l10n_tags %}
+<div class="thumbnail">
+  <a href="{{ project.url }}">
+    {% if project.thumbnail_url %}
+      <img src="{{ project.thumbnail_url }}" width="203" height="125" alt="{{ project.title }}"/>
+    {% else %}
+      <img src="{{ STATIC_URL}}images/project-missing.png" width="203" height="125" alt="{{ project.title }}"/>
+    {% endif %}
+  </a>
+  <div class="caption">
+    <h3><a href="{{ project.url }}">{{ project.title }}<br /></a></h3>
+    <p>{{ project.description }}</p>
+  </div>
+</div>

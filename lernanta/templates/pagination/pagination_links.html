@@ -1,0 +1,6 @@
+{% if prev_page_url or next_page_url %}
+  <div class="pager">
+    <li class="previous {% if not prev_page_url%}disabled{% endif %}"><a class="previous" href="{{ prev_page_url }}">← {{ _('previous') }}</a></li>
+    <li class="next {% if not next_page_url%}disabled{% endif %}"><a class="next" href="{{ next_page_url }}">{{ _('next') }} →</a></li>
+  </div>
+{% endif %}

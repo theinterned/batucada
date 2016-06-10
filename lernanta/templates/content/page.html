@@ -1,0 +1,78 @@
+{% extends "projects/base.html" %}
+{% load l10n_tags %}
+{% load embed %}
+{% load project_tags %}
+{% load comment_threads %}
+{% load pagination_tags %}
+{% load content_tags %}
+
+{% block project_title %}{{ page.title }}{% endblock %}
+
+{% block bodyid %}page{% endblock %}
+
+{% block project_breadcrumbs %} 
+  <li class="active"><span class="divider">&rsaquo;</span>{{ page.title }}</li>
+{% endblock %}
+
+{% block breadcrumbs_actions%}
+  {% if can_edit %}
+    <a class="btn" href="{% locale_url page_edit slug=project.slug page_slug=page.slug %}">{{ _('Edit') }}</a>
+    {% if page.listed %}<a class="btn" href="{% locale_url page_delete slug=project.slug page_slug=page.slug %}">{{ _('Delete') }}</a>{% endif %}
+  {% endif %}
+  <a class="btn btn-primary" href="{% locale_url page_history slug=project.slug page_slug=page.slug %}">{{ _('View History') }}</a>
+{% endblock %}
+
+{% block body %}
+{% sidebar %}
+<div class="content-wrapper">
+<div id="main" class="content_page">
+  <!-- margin-top is a temporary hack until we get this page all bootstraperized -->
+        <div class="dropdown pull-right" style="margin-top: 5px;">
+          <a class="btn dropdown-toggle" data-toggle="dropdown">{{ _('Task Navigation') }}&nbsp;<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            {% for task in all_listed_pages %}
+	          <li class=""><a href="{{ task.get_absolute_url }}">{{ forloop.counter }}. {{ task.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+
+  {% if user.is_authenticated %}
+    <p class="supplemental_actions"><a class="report abuse action" href="{% locale_url drumbeat_abuse model="page" app_label="content" pk=page.id %}">{{_('Report Abuse')}}</a></p>
+  {% endif %}
+  <h1 class="{% if page.collaborative %}collaborative{% endif %} tasks-title school_header">{{ page.title }}</h1>
+  {% if is_challenge %}
+    <br>{{ page.sub_header|default:"" }}
+  {% endif %}
+  <hr />
+
+  <div id="task-body">
+    {{ page.content|embed|safe }}
+  </div>
+
+  {% if is_challenge %}
+    <div id="task-footer-toggle-completion">
+      {% task_toggle_completion request page %}
+    </div>
+  {% endif %}
+</div><!--main-->
+
+  <div id="task-discussion" class="content_page">
+    {% if can_comment %}
+      <a class="button post-task-comment" href="{{ new_comment_url }}">{{ _('Post Comment') }}</a>
+    {% endif %}
+    <h1 class="tasks-title">{{_('Task Discussion')}}</h1>
+    <br>
+    <ul id="posts">
+      <div id="task-link-submit-jquery-comment-placeholder"></div>
+      {% with comments=pagination_current_page.object_list %}
+        {% comment_threads %}
+      {% endwith %}
+    </ul>
+    {% with prefix='' page_url=page.get_absolute_url %}
+      {% pagination_links %}
+    {% endwith %}
+  </div>
+ </div>
+{% endblock %}
+

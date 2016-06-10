@@ -1,0 +1,53 @@
+
+
+#splash #content header h1{
+  font-size: 48px;
+}
+
+#intro-links a {
+  font-size: 36px;
+}
+
+#intro-links a.big-run-course {
+  padding-left: 33px;
+}
+
+#main-nav a.top-level {
+  padding: 4px 6px 8px 0px;
+}
+
+#footer-wrapper h6 {
+  font-size: 16px;
+}
+
+#footer-wrapper a {
+  font-size: 95%;
+}
+
+#user-nav #user-actions {
+  padding-bottom: 20px;
+}
+
+.project-kind-challenge #main-people h3.peers-challenge, #project_user_list.project-kind-challenge #main h3.peers-challenge {
+  width: 240px;
+  margin-left: 180px;
+}
+
+#user {
+  min-width: 170px;
+}
+
+#language-nav {
+    width: 240px;
+    font-size: 10px;
+}
+
+#language-nav a {
+    margin-left: 2px;
+}
+
+#join-p2pu-section h1 {
+    font-size: 27px;
+    margin-top: -10px;
+}
+

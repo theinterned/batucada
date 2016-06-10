@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="all" name="P2PU" basedir=".">
+
+
+    <!-- load shell environment -->
+    <property environment="ENV" />
+
+    <property name="build.dir" location="build" />
+    <property name="test.dir" location="test" />
+
+    <property name="reports.build.dir" location="${build.dir}/reports" />
+    <property name="sauce.test.dir" location="${test.dir}/sauce" />
+
+    <target name="all" depends="init, saucetest" />
+
+    <target name="init">
+        <delete dir="${build.dir}" />
+        <mkdir dir="${build.dir}" />
+    </target>
+
+    <target name="test" depends="init, saucetest" />
+
+    <target name="saucetest" depends="init">
+        <echo>Starting Sauce browser tests...</echo>
+        <!--
+            Run tests against Firefox 3.6 to find any immediate problems... 
+         -->
+        <echo>Running tests on Firefox 3.6</echo>
+        <exec dir="${sauce.test.dir}" executable="phpunit" failonerror="true">
+            <arg line="--bootstrap bootstrap-ff36.php --log-junit ${reports.build.dir}/sauce-report-ff36.xml" />
+        </exec>
+        
+        <!-- 
+            ...then run the rest of the browsers in parallel to catch everything else.
+            FIXME: Figure out why the tests fail when they are run in parallel.
+         -->
+        <!--parallel-->
+            <echo>Running tests on Internet Explorer 8</echo>         
+            <exec dir="${sauce.test.dir}" executable="phpunit" failonerror="true">
+                <arg line="--bootstrap bootstrap-ie8.php --log-junit ${reports.build.dir}/sauce-report-ie8.xml" />
+            </exec>
+
+            <echo>Running tests on Internet Explorer 7</echo>         
+            <exec dir="${sauce.test.dir}" executable="phpunit" failonerror="true">
+                <arg line="--bootstrap bootstrap-ie7.php --log-junit ${reports.build.dir}/sauce-report-ie7.xml" />
+            </exec>
+        <!--/parallel-->
+        <echo>Finished running Sauce tests!</echo>
+    </target>
+</project>

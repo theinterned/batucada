@@ -1,0 +1,12 @@
+#intro-links a {
+    font-size: 26px;
+}
+
+#user {
+  min-width: 160px;
+}
+
+#language-nav {
+    width: 280px;
+    font-size: 10px;
+}

@@ -1,0 +1,432 @@
+[
+    {
+        "pk": 1, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "use the Mozilla Developer Network HTML reference [0] to identify and use basic HTML tags "
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "translate HTML tags like <div>, <p> into real world structures"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "communicate what DNS is by using  different types of media"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "have a domain name that can be used to further explore DNS"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "configure a DNS to point at a personal hosting account"
+        }
+    },
+    {
+        "pk": 6, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "provide valuable information on web hosting services"
+        }
+    },
+    {
+        "pk": 7, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "install an FTP or SFTP client"
+        }
+    },
+    {
+        "pk": 8, 
+        "model": "badges.rubric", 
+        "fields": {
+            "question": "upload content that is visible live in a browser"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's Introduce Yourself challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "introduce-yourself", 
+            "created_on": "2011-10-02 22:28:29",  
+            "logic": 4, 
+            "image": "images/sow_badges/introduce-yourself.png", 
+            "name": "Introduce Yourself"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's Writing HTML by Hand challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "writing-html-by-hand", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/writing-html-by-hand.png", 
+            "name": "Writing HTML by Hand"
+        }
+    },
+    {
+        "pk": 3, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's Choose Your Weapon challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "text-editor", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/text-editor.png", 
+            "name": "Text Editor"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's HTML Hunting in the World Around You challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "html-is-all-around-you", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/html-is-all-around-you.png", 
+            "name": "HTML is All Around You"
+        }
+    },
+    {
+        "pk": 5, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's Your Domain challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "domain-name", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/domain-name.png", 
+            "name": "Domain Name"
+        }
+    },
+    {
+        "pk": 6, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's Your Hosting challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "your-webspace", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/your-webspace.png", 
+            "name": "Your Webspace"
+        }
+    },
+    {
+        "pk": 7, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded upon marking all Webmaking101's You're Live challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "you-re-live", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/you-re-live.png", 
+            "name": "You're LIVE"
+        }
+    },
+    {
+        "pk": 8, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "This Badge is automatically awarded to you upon marking all Webmaking101 challenge tasks as completed.", 
+            "requirements": "",
+            "creator": null, 
+            "prerequisites": [1,2,3,4,5,6,7], 
+            "rubrics": [], 
+            "slug": "webmaking101-basic", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/webmaking101-basic.png", 
+            "name": "Webmaking101 Basic"
+        }
+    },
+    {
+        "pk": 9, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "This Badge is automatically awarded to you for helping us test the Beta Webmaking101 challenges!", 
+            "requirements": "You need to mark all tasks as completed in at least one Webmaking101's challenge.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "beta-hero", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 4, 
+            "image": "images/sow_badges/beta-hero.png", 
+            "name": "Beta Hero"
+        }
+    },
+    {
+        "pk": 10, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Badge awarded by peers as a way to say hello (wave) to each other.", 
+            "requirements": "You need at least 1 peer to award you this badge.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "wave", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 2, 
+            "image": "images/sow_badges/wave.png", 
+            "name": "Wave"
+        }
+    },
+    {
+        "pk": 11, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Super Blogger Badge recognizes the ability to consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences.", 
+            "requirements": "You need at least 1 peer to say that you consistently write informative, engaging and well presented blog posts while explain clearly and concisely concepts to various audiences.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "super-blogger", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 3, 
+            "image": "images/sow_badges/super-blogger.png", 
+            "name": "Super Blogger"
+        }
+    },
+    {
+        "pk": 12, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Helpful Feedback Badge recognizes the ability to provide helpful and interesting feedback while maintaining a respectful tone.", 
+            "requirements": "You need at least 1 peer to say that you provide helpful and interesting feedback while maintaining a respectful tone.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "helpful-feedback", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 2, 
+            "image": "images/sow_badges/helpful-feedback.png", 
+            "name": "Helpful Feedback"
+        }
+    },
+    {
+        "pk": 13, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Team Player badge recognizes members who help push work forward within the community and motivate other team members to do so.", 
+            "requirements": "You need at least 1 peer to say that you help push work forward within the community and motivate other team members to do so.",
+            "creator": null, 
+            "prerequisites": [12], 
+            "rubrics": [], 
+            "slug": "team-player", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 2, 
+            "image": "images/sow_badges/team-player.png", 
+            "name": "Team Player"
+        }
+    },
+    {
+        "pk": 14, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "Learners create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.", 
+            "requirements": "You need at least 1 peer to say that you create multiple representations such as text, diagrams, media, sketches, physical forms to record and express ideas in creative ways.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "creative-presentation", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 3, 
+            "image": "images/sow_badges/creative-presentation.png", 
+            "name": "Creative Presentation"
+        }
+    },
+    {
+        "pk": 15, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The HTML Basic Badge recognizes the ability to write an html page by making basic use of HTML tags.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can use the Mozilla Developer Network HTML reference [0] to identify and use basic HTML tags , translate HTML tags like &lt;div&gt; , &lt;p&gt; into real world structures.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [1,2], 
+            "slug": "html-basic", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 1, 
+            "image": "images/sow_badges/html-basic.png", 
+            "name": "HTML Basic"
+        }
+    },
+    {
+        "pk": 16, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The DNS Badge recognizes the ability to describe what DNS is and how it works.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can communicate what DNS is by using different types of media, have a domain name that can be used to further explore DNS.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [3,4], 
+            "slug": "dns-basic", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 1, 
+            "image": "images/sow_badges/dns-basic.png", 
+            "name": "DNS Basic"
+        }
+    },
+    {
+        "pk": 17, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Hosting Badge recognizes the ability to implement web hosting services to set up your own domain.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can configure a DNS to point at a personal hosting account, provide valuable information on web hosting services.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [5,6], 
+            "slug": "hosting", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 1, 
+            "image": "images/sow_badges/hosting.png", 
+            "name": "Hosting"
+        }
+    },
+    {
+        "pk": 18, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Publishing Badge recognizes the ability to take content from a local computer, publish it live on the web and be able to view it in a browser.", 
+            "requirements": "More than 3 peers -- by an average rating of 3 -- have said that you can install an FTP or SFTP client, upload content that is visible live in a browser.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [7,8], 
+            "slug": "publishing", 
+            "created_on": "2011-10-02 22:28:29", 
+            "logic": 1, 
+            "image": "images/sow_badges/publishing.png", 
+            "name": "Publishing"
+        }
+    },
+    {
+        "pk": 19, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Organizer badge recognizes anyone at P2PU who has organized a course or a study group with at least one person completing it.", 
+            "requirements": "You have organized a course or a study group with at least one person completing it. This is a manually awarded badge.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "organizer", 
+            "created_on": "2011-10-25 22:28:29", 
+            "logic": 5, 
+            "image": "images/sow_badges/organizer.png", 
+            "name": "Organizer"
+        }
+    },
+    {
+        "pk": 20, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The challenge creator recognizes anyone who has authored a challenge.", 
+            "requirements": "You have authored a challenge. This is a manually awarded badge.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "challenge-creator", 
+            "created_on": "2011-10-25 22:28:29", 
+            "logic": 5, 
+            "image": "images/sow_badges/challenge-creator.png", 
+            "name": "Challenge Creator"
+        }
+    },
+    {
+        "pk": 21, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Mentor badge recognizes peers who have signed up to help others learn on a one-on-one basis.", 
+            "requirements": "You have signed up to help others learn on a one-on-one basis. This is a manually awarded badge.",
+            "creator": null, 
+            "prerequisites": [],  
+            "rubrics": [], 
+            "slug": "mentor", 
+            "created_on": "2011-10-25 22:28:29", 
+            "logic": 5, 
+            "image": "images/sow_badges/mentor.png", 
+            "name": "Mentor"
+        }
+    },
+    {
+        "pk": 22, 
+        "model": "badges.badge", 
+        "fields": {
+            "groups": [], 
+            "description": "The Adopter Badge recognizes community members who have adopted a challenge.", 
+            "requirements": "You have offered your help in a challenge after completing all its tasks. This is a manually awarded badge.",
+            "creator": null, 
+            "prerequisites": [], 
+            "rubrics": [], 
+            "slug": "adopter", 
+            "created_on": "2011-10-25 22:28:29", 
+            "logic": 5, 
+            "image": "images/sow_badges/adopter.png", 
+            "name": "Adopter"
+        }
+    }
+]

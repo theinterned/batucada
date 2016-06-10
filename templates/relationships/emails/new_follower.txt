@@ -1,7 +1,0 @@
-{{ user.name }} is now following {% if project %}your project{% else %}you{% endif %} on Drumbeat.org! 
-
-You can see their profile here:
-http://www.drumbeat.org{{ user.get_absolute_url }}
-
-Sincerely,
-The Drumbeat Team

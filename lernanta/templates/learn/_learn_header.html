@@ -1,0 +1,18 @@
+{% load l10n_tags %}
+
+  {% if learn_community %}
+    {{ _('Featured - Community Picks') }}
+  {% else %}{% if learn_showcase %}
+    {{ _('Featured - Showcase')}}
+  {% else %}{% if learn_fresh %}
+    {{ _('Featured - Fresh Additions') }}
+  {% else %}{% if learn_school %}
+      <a href="{{ learn_school.get_absolute_url }}">
+         {{ learn_school.name }}
+      </a>
+  {% else %}{% if learn_tag %}
+    {{ _('Tags - ') }} '{{ learn_tag }}'
+  {% else %}
+    {{ _('All') }}
+  {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
+

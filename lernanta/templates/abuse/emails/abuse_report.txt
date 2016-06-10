@@ -1,0 +1,4 @@
+{% load l10n_tags %}
+{% load i18n %}
+{% blocktrans %}{{ user }} has reported {{ url }} as {{ reason }}.'{% endblocktrans %}
+{% blocktrans %}More info: {{ other }}{% endblocktrans %}

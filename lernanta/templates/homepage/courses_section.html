@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load l10n_tags %}
+{% load learn_tags %}
+<section>
+	<span id="courses" class="top-offset-span">&nbsp;</span>
+
+	<div class="container">
+		<a href="#top-page" class="pull-right back-to-top-link"><i class="icon-angle-up"> </i></a>
+
+		<h1 class="section-title">{% trans 'Courses' %}</h1>
+
+		<div class="billboard clearfix">
+
+			<div class="featured-items-wrap courses">
+				<div class="section-caption span3">
+					<h4>{% trans 'Check out our great courses' %}</h4>
+
+					<p>
+						{% blocktrans %}P2PU courses are different. They bring together learners who work as peers.
+						                Who take ownership of their own learning. And who help others learn.
+						                Our community has run hundreds of courses. Find something you want to learn.
+						                Or create a new course{% endblocktrans %}
+					</p>
+
+					<div class="controls">
+						<a class="btn btn-option" href="{% learn_default %}" target="_blank">
+							{% trans 'Find a course' %}<i
+								class="icon-chevron-sign-right"></i>
+						</a>
+					</div>
+				</div>
+				<ul class="featured-items-list unstyled pull-right">
+					{% for course in courses %}
+						<li class="featured-items-item span3">
+							<div class="thumbnail featured-items-item-wrap">
+								<div class="featured-items-img-wrap">
+									<img class="featured-items-img"
+									     src="{{ course.thumbnail_url }}">
+								</div>
+								<div class="featured-items-item-caption">
+									<h4 class="featured-items-item-caption-title">{{ course.title }}</h4>
+
+									<p class="featured-items-item-caption-text">
+										{{ course.description|truncatewords:25 }}
+									</p>
+								</div>
+								<div class="featured-items-item-controls">
+									<a href="{{ course.url }}" target="_blank"
+									   class="btn btn-primary btn-mini">{% trans 'Learn' %}</a>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</section>

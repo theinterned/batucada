@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% load project_tags %}
+{% load learn_tags %}
+
+{% block description %}{{ project.name }}: {{ project.short_description }}{% endblock %}
+{% block title %}{{ project.name }} | {% block project_title %}{% endblock %}{% endblock %}
+{% block bodyclasses %}project-kind-{{ project.category|slugify }}{% endblock%}
+
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/course.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/batucada.css?v=1">
+{% endblock %}
+
+{% block links %}
+{% if project %}
+  <meta name="thumbnail" property="og:image" content="{{ project.get_image_url }}" />
+{% endif %}
+{% if project.accepted_school %}<link rel="stylesheet" href="{% locale_url schools_css slug=project.accepted_school.slug %}?v=1">{% endif %}
+{% block project_links %}{% endblock %}
+{% endblock %}
+
+{% block breadcrumbs_title %}
+  <h1 id="project-name"><a href="{{ project.get_absolute_url }}" class="school_header">{{ project.name }}</a></h1>
+{% endblock %}
+{% block breadcrumbs %}
+  {% if is_challenge and project.accepted_school %}
+  <li>
+    <span class="divider">&rsaquo;</span>
+    <a href="{{ project.accepted_school.get_absolute_url }}">{{ project.accepted_school }}</a>
+  </li>
+  {% endif %}
+  <li>
+    <span class="divider">&rsaquo;</span>
+    <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+  </li>
+  {% block project_breadcrumbs %}{% endblock %}
+{% endblock %}

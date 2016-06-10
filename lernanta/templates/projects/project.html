@@ -1,0 +1,61 @@
+{% extends "projects/base.html" %}
+{% load l10n_tags %}
+{% load project_tags %}
+{% load activity_tags %}
+{% load pagination_tags %}
+{% load join_p2pu_tags %}
+{% load reviews_tags %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block project_links %}
+<link rel="alternate" type="application/atom+xml" href="{% locale_url activity_project_feed slug=project.slug %}" />
+{% endblock %}
+
+{% block bodyid %}project_landing{% endblock %}
+
+{% block join_p2pu_section %}{% join_p2pu request %}{% endblock %}
+
+{% block breadcrumbs_actions%}
+  {% if is_challenge and organizing %}
+    <a class="button" href="{% locale_url page_create slug=project.slug %}">{{ _('New Task') }}</a>
+    <a class="button" href="{% locale_url projects_edit slug=project.slug %}">{{ _('Admin') }} {{ project.kind|title }}</a>
+    {% if project.under_development %}
+      <a href="{% locale_url projects_publish slug=project.slug %}" class="button">Publish</a>
+    {% endif %}
+
+  {% endif %}
+  {% project_review_action project user %}
+{% endblock %}
+
+
+{% block body %}
+
+{% sidebar %}
+
+<div class="content-wrapper">
+<div id="main">
+
+  {% if is_challenge %}
+    {% tasks_list_wall request project user toggled_tasks %}
+  {% else %}
+    {% task_list project user show_all_tasks %}
+    <div id="wall_section">
+      <h2 class="school_header"><span>{{ _('Activity Wall') }}</span></h2>
+    </div>
+    {% project_wall request project %}
+  {% endif %}
+
+</div> <!-- /#main -->
+
+{% if is_challenge %}
+  <div id="main-people">
+    <section id="people" class="panel">
+      {% project_user_list request project 168 "True" %}
+    </section>
+  </div>
+{% endif %}
+</div>
+
+{% endblock %}
+

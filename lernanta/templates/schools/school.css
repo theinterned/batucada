@@ -1,0 +1,55 @@
+h1.school_header, h2.school_header, h3.school_header, a.school_header,
+span.school_header, #beta-tag {
+  color: {{ school.headers_color }};
+}
+
+#participate_button a {
+  background-color: {{ school.headers_color }};
+}
+
+#participate_button a:hover {
+    background-color: {{ school.header_color_light }};
+}
+
+{% if school.background %}
+body {
+  background: url('{{ MEDIA_URL }}{{ school.background }}');
+}
+{% endif %}
+
+{% if school.site_logo %}
+#logo { 
+    background-image: url("{{ MEDIA_URL }}{{ school.site_logo }}");
+}
+{% endif %}
+
+#school_home #sidebar {
+    width: {{ school.sidebar_width }};
+}
+
+/* #main-nav, #breadcrumbs, #language-nav, #main, #sidebar, */
+/* footer[role="main"] ul > li:first-child, .card-list .card, */
+/* .modal article, #splash #content header, .modal.nav article, */
+/* .signin .modal article >h1, .signin.openid .or span, #project_landing h2 span { */
+/*    background-color: {{ school.background_color }}; */
+/* } */
+
+.menu.open, .menu.open a, .menu.open ul, .menu.open li, #user:hover,
+#follow_button button, #unfollow_button button {
+    background-color:  {{ school.menu_color }};
+}
+
+#follow_button button:hover, #unfollow_button button:hover {
+    background-color: {{ school.menu_color_light }};
+}
+
+a#beta-tag:hover {
+    color:  {{ school.menu_color }};
+}
+
+.menu.open a {
+    border-top: 1px solid {{ school.menu_color }};
+}
+
+{{ school.extra_styles|safe }}
+

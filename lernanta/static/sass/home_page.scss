@@ -1,0 +1,463 @@
+// Bootstrap
+//@import "p2pu-css-framework/lib/bootstrap";
+// Bootstrap Responsive
+//@import "p2pu-css-framework/lib/responsive";
+// Mixins already created for P2PU
+//@import "p2pu-css-framework/p2pu/p2pu-mixins";
+
+@import "p2pu-css-framework/p2pu/p2pu-override-variables";
+@import "p2pu-css-framework/lib/mixins";
+@import "p2pu-css-framework/p2pu/p2pu-mixins";
+
+body{
+  font-family: $altFontFamily;
+  background-image: url('/static/images/homepage/bgtexture.png');
+}
+h1, h2,h3, h4, h5{
+  font-family: 'Arvo', serif;
+}
+a:focus{
+  outline: none;
+}
+section{
+  border-top: 1px solid #d8dbde;
+  box-shadow: inset 0 5px 5px -3px rgba(0,0,0,0.1);
+  background: $cloud;
+  background: url('/static/images/homepage/bgtexture.png'),-moz-linear-gradient(top, $cloud 0%, $white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-webkit-gradient(linear, left top, left bottom, color-stop(0%,$cloud), color-stop(100%,$white));
+  background: url('/static/images/homepage/bgtexture.png'),-webkit-linear-gradient(top, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-o-linear-gradient(top, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),-ms-linear-gradient(top, $cloud 0%,$white 100%);
+  background: url('/static/images/homepage/bgtexture.png'),linear-gradient(to bottom, $cloud 0%,$white 100%);
+}
+footer{
+  margin: 0 !important;
+  padding: 1em 0 50px 0;
+  background-color: #e1e1e1;
+}
+.overflow-hidden{
+  overflow: hidden;
+}
+.top-offset-span{
+  margin-top: -67px;
+  display: block;
+}
+
+.text-appricot {
+  color: $apricot;
+}
+
+.text-cyan {
+  color: $cyan;
+}
+
+/********* Navigation bar ****************/
+.navbar .brand{
+  background: url('/static/images/homepage/logo-p2pu-menu.png') !important;
+}
+.action{
+  margin: 0;
+}
+/**************Jumbotron**************/
+.jumbotron {
+  margin-bottom: 50px;
+  text-align: center;
+  position: relative;
+  background-image: url('/static/images/homepage/jumbotron/photo-learn_one.jpg');
+  background-size: cover;
+  background-position: 50% 44%;
+  text-align: center;
+  height: 334px;
+  margin-bottom: -60px;
+  font-size: 21px;
+  line-height: 1.3em;
+  text-shadow: 0 0 12px rgba(0,0,0,0.5),0 0 32px rgba(0,0,0,0.25),0 1px rgba(0,0,0,0.75);
+  position: relative;
+  .masthead{
+    position: relative;
+    bottom: -80px;
+  }
+  .main-feature{
+    color: $white;
+  }
+  .lead {
+    color: $white;
+    font-size: 21px;
+    font-weight: 200;
+    text-transform: uppercase;
+    line-height: 50px;
+    margin-left: 15px;
+    font-family: $baseFontFamily;
+    margin-bottom: 0;
+  }
+
+  .do-something{
+    height: 60px;
+    text-align: left;
+  }
+}
+.p2pu-tour {
+  padding: 17px 25px 17px 0;
+  font-weight: bold;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.call-to-action{
+  margin: 0 20px;
+  font-weight: bold;
+  color: $white;
+}
+/*******Main Menu *******/
+.actions {
+  padding: 0 20px 20px 0;
+  margin: 0 0 10px 0;
+  background-color: $white;
+  position: relative;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.1);
+  @include border-radius(15px);
+  li {
+    width: 28%;
+    margin-left: 5%;
+    margin-top: 10px;
+    float: left;
+    &:nth-child(3n + 1):last-child {
+      float: none;
+      text-align: center;
+      clear: both;
+      margin: 0 auto 10px auto;
+      padding-top: 20px;
+      width: 45%;
+      a{
+        margin: 25px 0 0 28%;
+        h2{
+          float: left;
+        }
+      }
+      p{
+        float: left;
+      }
+    }
+
+    a {
+      display: block;
+      &:hover {
+        text-decoration: none;
+        .actions-icons{
+          -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+          -moz-transform: scale(1.2);
+        }
+        h2 {
+          color: $apricot;
+        }
+      }
+      .actions-icons{
+        background: url('/static/images/homepage/icons_sprite.png') 0px 3px no-repeat;
+        background-size: cover;
+      }
+      $i: 0%;
+      @each $icon in courses, badges, schools , moocs, blog, community, reports{
+        &.icon-#{$icon}
+          .actions-icons{
+            background-position: $i 1px
+          }
+        $i: $i + 17.3%
+      }
+      .actions-icons{
+        float: left;
+        margin-right: 20px;
+        height: 60px;
+        width: 60px;
+      }
+    }
+
+    p {
+      overflow: hidden;
+    }
+
+  }
+}
+
+.billboard {
+  padding: 20px 0;
+  margin-bottom: 40px;
+  zoom: 1;
+  @extend .clearfix;
+  &.top{
+    margin-top: 0;
+  }
+  .img-large {
+    @extend .img-polaroid;
+    float: left;
+    margin-right: 20px;
+    width: 165px;
+    margin-top: 20px;
+  }
+  .controls {
+    a {
+      @extend .pull-right;
+      margin: 20px 10px;
+      position: relative;
+      padding-right: 40px;
+      i {
+        position: absolute;
+        right: 10px;
+        top: 40%;
+        line-height: 36px;
+        margin-top: -13px;
+      }
+    }
+  }
+  .featured-items-wrap{
+    .featured-items-item{
+      position: relative;
+      margin-left: 30px;
+    }
+    .featured-items-item-wrap{
+      background-color: $snow;
+      min-height: 290px;
+      padding: 10px 10px 40px 10px;
+    }
+    .featured-items-img-wrap{
+      text-align: center;
+      height: 155px;
+    }
+    .featured-items-img{
+      max-width: 200px;
+      max-height: 150px;
+    }
+    .featured-items-item-controls{
+      position: absolute;
+      bottom: 15px;
+    }
+  }
+  .courses{
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
+    }
+  }
+  .badges{
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
+    }
+    .featured-items-img{
+      width: auto;
+      height: auto;
+    }
+  }
+  .schools{
+    .featured-items-item-wrap > img,
+    .featured-items-img{
+      width: auto;
+      height: auto;
+      float: left;
+      margin-right: 15px;
+      margin-top: 10px;
+    }
+    .featured-items-item-caption{
+      overflow: hidden;
+    }
+    .featured-items-item-controls{
+      right: 15px;
+    }
+    .featured-items-item-wrap{
+      min-height: 200px;
+    }
+  }
+  .community-members-list{
+    .community-member{
+      width: 84px;
+      height: 84px;
+      margin-right: -5px;
+    }
+  }
+  .community-member-tooltip{
+      display: none;
+    }
+  .we-are{
+    list-style-type: none;
+    margin-left: 0;
+    @extend .clearfix;
+    li{
+      margin: 10px;
+      position: relative;
+      text-align: center;
+      background: #fff;
+      padding: 10px;
+      width: 68px;
+      height: 80px;
+      border: 1px solid #aaa;
+      float: left;
+      cursor: pointer;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      &:first-child{
+        margin-left: 0;
+      }
+      img{
+        width: 68px;
+        height: 68px;
+      }
+      .caption{
+        text-align: left;
+      }
+    }
+  }
+  .blog-list{
+    margin-left: -30px;
+    margin-bottom: 50px;
+    li{
+      .blog-feed-wrap{
+        height: 140px;
+      }
+      img{
+        @extend .img-polaroid;
+        width: 100px;
+        height: 100px;
+        float: left;
+        margin-right: 20px;
+      }
+      h4{
+        color: $cyan;
+      }
+      a{
+        font-weight: bold;
+        width: 80%;
+        display: block;
+        position: relative;
+        &:hover{
+          text-decoration: none;
+          h3{
+            color: $apricot;
+          }
+
+        }
+      }
+      .icon-chevron-right{
+        position: absolute;
+        right: -19%;
+        top: 20%;
+      }
+    }
+  }
+  .moocs{
+    .section-caption{
+      margin-left: 0;
+      a{
+        float: left;
+        margin: 20px 10px 20px 0;
+      }
+    }
+    .featured-items-item{
+      margin-bottom: 20px;
+    }
+    .featured-items-item-controls{
+      right: 15px;
+    }
+  }
+  .description{
+    overflow: hidden;
+  }
+}
+.timeline{
+  .text-align-center{
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+}
+.timeline-events {
+  margin: 0 auto;
+  padding: 0;
+  width: 7px;
+  height: 760px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: #848689 url(/static/images/timeline-bg.jpg) no-repeat bottom center;
+  position: relative;
+  margin-top: 50px;
+}
+
+.timeline-events li {
+  background: $white;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  border: 5px solid #848689;
+  list-style: none;
+  margin-bottom: 107px;
+  margin-left: -12px;
+  position: relative;
+  .popover{
+    opacity: 1;
+    background: #e8ebef;
+    color: #848689;
+    padding: 15px 0 15px 0;
+    font-size: 18px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    display: block;
+    top: -20px;
+    .arrow{
+      top:20%;
+    }
+    &.top{
+      top: -150px;
+      left: -113px;
+      .arrow{
+        top:auto;
+      }
+    }
+    &.left{
+      left: -250px;
+    }
+    &.right{
+      left: 30px;
+    }
+  }
+}
+
+.power-users{
+  .thumbnail{
+    background-color: $white;
+    padding-left: 20px;
+  }
+  .power-user-img{
+    margin-right: 30px;
+    width: 120px;
+    height: 120px;
+    margin-top: 30px;
+  }
+  .caption{
+    overflow: hidden;
+  }
+  .user-courses{
+    li{
+      float: left;
+      margin-right: 30px;
+      img{
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+}

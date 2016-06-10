@@ -1,0 +1,21 @@
+{% load l10n_tags %}
+{% load no_follow %}
+{% load truncate_chars %}
+
+{% spaceless %}
+  {% if show_actor %}
+    <a href="{{ activity.actor.get_absolute_url }}">{{ activity.actor }}</a>
+  {% endif %}
+{% endspaceless %} {% spaceless %}
+  {{ activity.friendly_verb }}
+{% endspaceless %} {% spaceless %}
+  {% if not activity.target_object.get_absolute_url %}
+    {{ activity.target_object }}
+  {% else %}
+    {% if activity.target_object.get_absolute_url == activity.get_absolute_url %}
+      {{ activity.target_object|nofollow|safe }}
+    {% else %}
+      <a rel="nofollow" href="{{ activity.target_object.get_absolute_url }}">{{ activity.target_object }}</a>.
+    {% endif %}
+  {% endif %}
+{% endspaceless %}

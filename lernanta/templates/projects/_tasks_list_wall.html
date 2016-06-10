@@ -1,0 +1,29 @@
+{% load l10n_tags %}
+{% load project_tags %}
+
+<div id="task_list_wall" class="{% if toggled_tasks %}toggled_tasks{% else %}toggled_discussions{% endif %}">
+  {% if participating and tasks_count %}
+    {% tasks_completed_msg project user hidde_tasks_complete_msg adopter_request %}
+  {% endif %}
+  <div id="task_list_wall_toogle">
+		<input type="radio" id="radio1" name="radio" {% if toggled_tasks %}checked="checked"{% endif %} /><label for="radio1">{{ _('Tasks') }}</label>
+		<input type="radio" id="radio2" name="radio" {% if not toggled_tasks %}checked="checked"{% endif %} /><label for="radio2">{{ _('Discussions') }}</label>
+	</div>
+  {% if participating and tasks_count %}
+      <div id="progress">
+        <div id="progressbar" value="{{ progressbar_value }}"></div>
+        <p><span id="completed_count">{{ completed_count }}</span>/<span id="total_count">{{ tasks_count }}</span> {{ _('Completed') }}</p>
+      </div>
+  {% endif %}
+  {% task_list project user %}
+  {% project_wall request project discussion_area %}
+  {% if next_badges %}
+        <div class="next-steps">
+          <h3>{{ _('Badges you can earn in this challenge:') }}</h3>
+          <br>
+            {% for badge in next_badges %}
+              <a href="{{ badge.get_absolute_url }}" title="{{ badge|title }}"><img src="{{ badge.get_image_url }}" width="70" height="70" alt="{{ badge|title }}" /></a>
+            {% endfor %}
+        </div>
+   {% endif %}
+</div>

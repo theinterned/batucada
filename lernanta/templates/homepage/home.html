@@ -1,0 +1,35 @@
+{% extends 'homepage/base.html' %}
+{% load i18n %}
+
+{% block body %}
+	{% include 'homepage/jumbotron_section.html' %}
+
+	<section>
+		<div class="container">
+			{% include 'homepage/action_menu.html' %}
+
+			<span id="blog" class="top-offset-span">&nbsp;</span>
+
+			<div class="billboard top">
+				{% include 'homepage/blog_feed.html' %}
+
+				{% include 'homepage/community_section.html' %}
+
+			</div>
+		</div>
+		<!-- /container -->
+	</section>
+	<!-- Moocs Section -->
+	{% include 'homepage/mooc_section.html' %}
+	<!-- Reports Section -->
+	{% include 'homepage/reports_section.html' %}
+	<!-- Badges Section -->
+	{% include 'homepage/badges_section.html' %}
+	<!-- Schools Section -->
+	{% include 'homepage/schools_section.html' %}
+	<!-- Courses Section -->
+	{% include 'homepage/courses_section.html' %}
+
+{% endblock %}
+
+

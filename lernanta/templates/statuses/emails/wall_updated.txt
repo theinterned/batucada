@@ -1,0 +1,24 @@
+{% load l10n_tags %}
+{% load i18n %}
+{{ project.name|safe }}{{ _(' update.') }}
+
+{% if status.important %}
+{% blocktrans with username=status.author %} Update from the flight deck: {{ username }} posted an urgent message:{% endblocktrans %}
+{% else %}
+{% blocktrans with username=status.author %} Update from the flight deck: {{ username }} made an update:{% endblocktrans %}
+{% endif %}
+
+{{ status.status|striptags|safe }}
+
+{{ _('See what they said at:') }} http://{{domain}}{{ status.get_absolute_url }}
+
+{{ _('You can reply to this comment by email! Just type your reply at the top.') }}
+
+{{ _('Go get \'em,') }}
+{{ _('The P2PU Team') }}
+
+{% if status.important %}
+{{ _('This message was marked as important by an organizer. Participants can not turn off notifications for important updates.') }}
+{% else %}
+{{ _('Manage how often you get these delightful messages at:') }} http://{{domain}}/profile/edit/notifications/
+{% endif %}

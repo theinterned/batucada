@@ -1,0 +1,126 @@
+/* IPhone size */
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+  body{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  nav, section{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .jumbotron{
+    .masthead{
+      bottom: 0;
+    }
+    .main-feature{
+      font-size: 1.2em;
+      line-height: 35px;
+      margin-bottom: 10px;
+    }
+    .lead{
+      line-height: 30px;
+      font-size: 0.8em;
+    }
+  }
+  .actions{
+    li{
+      width: auto;
+      a{
+        .actions-icons{
+          height: 55px;
+          width: 55px;
+          background-size: cover;
+        }
+      }
+    }
+  }
+  .section-title-wrap{
+    .back-to-top-link{
+      margin-top:-23px;
+    }
+  }
+  .billboard{
+    .controls{
+      a{
+        margin: inherit;
+        float: none;
+      }
+    }
+    .top{
+      margin-top: -50px;
+    }
+    .blog-list{
+      margin-left: 0;
+      li .blog-feed-wrap{
+        height: inherit;
+      }
+    }
+    .featured-items-wrap{
+      .featured-items-img-wrap{
+        width: 100%;
+      }
+    }
+    .schools{
+      .featured-items-item-wrap{
+        img{
+          float: initial;
+          margin-left: 0;
+        }
+
+      }
+    }
+  }
+  .top-offset-span{
+    margin-top: 0;
+  }
+}
+/*iPad in portrait*/
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)
+and (orientation : portrait) {
+  body{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /*******P2PU Panel*******/
+  .p2pu-panel-wrap {
+    .panel-contents {
+      .connect{
+        float: left;
+        margin: 0 20px;
+        width: 90%;
+      }
+    }
+  }
+  .jumbotron{
+    .masthead{
+      bottom: 0;
+    }
+    .main-feature{
+      font-size: 1.2em;
+      line-height: 35px;
+      margin-bottom: 10px;
+    }
+    .lead{
+      line-height: 30px;
+      font-size: 0.8em;
+    }
+  }
+  .billboard{
+    .blog-list{
+      margin-left: 0;
+      li{
+        margin-left: 0;
+        width: 100%;
+        .blog-feed-wrap{
+          height: inherit;
+        }
+      }
+    }
+    .featured-items-wrap{
+      .featured-items-img{
+        width: 100%;
+      }
+    }
+  }
+}

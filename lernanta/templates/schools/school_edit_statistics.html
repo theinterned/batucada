@@ -1,0 +1,43 @@
+{% extends "schools/school_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}school edit statistics{% endblock %}
+
+{% block form %}
+<fieldset id="school_edit_statistics" class="school edit statistics tabpane">
+  <h2>{{ _('Statistics') }}</h2>
+  <p class="hint">{{ _('Statistics for this school') }} <sup>1</sup> .</p>
+  <h3>{{ _('Groups') }}</h3>
+  <ul>
+  {% for key, value in project_counts %}
+      <li>{{ key|title }} : {{ value }}</li>  
+  {% endfor %}
+  </ul>
+
+  <h3>{{ _('People') }}</h3>
+  <ul>
+    <li>{{ _('Organizers') }} : {{ organizers_count }}</li>
+    <li>{{ _('Participants') }} : {{ participants_count }}</li>
+    <li>{{ _('Followers') }} : {{ followers_count }}</li>
+  </ul>
+  
+  <h3>{{ _('Activity') }}</h3>
+  <ul>
+    <li>{{ _('Page Comments') }} <sup>2</sup> : {{ page_comments_count }}</li>
+    <li>{{ _('Wall Messages') }} <sup>3</sup> : {{ statuses_count }}</li>
+    <li>{{ _('Activity Replies') }} <sup>4</sup> : {{ activity_comments_count }}</li>
+    <li>{{ _('Page Edits') }} <sup>5</sup> : {{ page_edits_count }}</li>
+    <li>{{ _('Sign-Up Answers') }} <sup>6</sup> : {{ signup_answers_count }}</li>
+    <li>{{ _('Sign-Up Comments') }} <sup>7</sup> : {{ signup_comments_count }}</li>
+  </ul>
+  
+  <p class="hint">
+    <sup>1</sup> {{ _('The numbers on this page do not include data from the old p2pu site.') }}<br>
+    <sup>2</sup> {{ _('Comments at the full description and task pages.') }}<br>
+    <sup>3</sup> {{ _('Messages posted to the wall by organizers and participants.') }}<br>
+    <sup>4</sup> {{ _('Comments in the discusion threads of wall activities.') }}<br>
+    <sup>5</sup> {{ _('Edits to the full description and task pages. Does not include minor updates.') }}<br>
+    <sup>6</sup> {{ _('Includes both accepted and non-accepted answers.') }}<br>
+    <sup>7</sup> {{ _('Comments at the sign-up pages. It includes automatic "wellcome to the group" replies.') }}<br>
+  </p>
+</fieldset>
+{% endblock %}

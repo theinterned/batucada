@@ -1,0 +1,33 @@
+{% extends "projects/project_edit.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit links{% endblock %}
+
+{% block form %}
+<fieldset id="project_edit_links" class="project edit links tabpane">
+<h2>{{ _('Links') }}</h2>
+<p class="hint">{% block form_hint %}{% endblock %}</p>
+<form action="{% block form_url %}{% endblock %}" method="post">
+  {% csrf_token %}
+  <p>
+    <div class="field link name{% if form.name.errors %} error{% endif %}">
+      <label for="id_name">{{ _('Name') }}</label>
+      {{ form.name }}
+      {{ form.name.errors }}
+    </div>
+    <div class="field link url{% if form.url.errors %} error{% endif %}">
+      <label for="id_url">{{ _('Url') }}</label>
+      {{ form.url }}
+      {{ form.url.errors }}
+    </div>
+    <!--<div class="field link subscribe {% if form.subscribe.errors %} error{% endif %}">
+        <label for="id_subscribe">{{ _('Subscribe') }}</label>
+        {{ form.subscribe }}
+    </div>-->
+  </p>
+  <p class="buttons add-link">
+    <button type="submit">{% block button_text %}{% endblock %}</button>
+  </p>
+</form>
+{% block after_form %}{% endblock %}
+</fieldset>
+{% endblock %}

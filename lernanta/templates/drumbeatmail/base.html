@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+
+{% block body %}
+
+<section class="modal">
+  <article>
+    <h1>{% block heading %}{% endblock %}</h1>
+    <fieldset>
+      <form method="post" action="{% block action %}{% endblock %}" class="form-full-width">
+        {% csrf_token %}
+	<div class="field{% if form.recipient.errors %} error{% endif %}">
+	  <label for="id_recipient">{{ _('To') }}</label>
+	  {{ form.recipient }}
+	  {{ form.recipient.errors }}
+	</div>
+	<div class="field{% if form.subject.errors %} error{% endif %}">
+	  <label for="id_subject">{{ _('Subject') }}</label>
+	  {{ form.subject }}
+	  {{ form.subject.errors }}
+	</div>
+	<div class="field{% if form.body.errors %} error{% endif %}">
+	  <label for="id_body">{{ _('Message') }}</label>
+	  {{ form.body }}
+	  {{ form.body.errors }}
+	</div>
+	{% block recaptcha%} 
+        {% if settings.RECAPTCHA_PRIVATE_KEY %}
+          <div class="field{% if form.recaptcha.errors %} error{% endif %}">
+             <!-- Note: though recaptcha is localized the "Play sound again" and "Download sound as MP3" are in English -->
+             {{ form.recaptcha }}
+             {{ form.recaptcha.errors }}
+          </div>
+        {% else %}
+          <p class="hint">
+            {{ _('Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at will.') }}
+          </p>
+        {% endif %}
+    {%endblock%}
+	<p class="buttons">
+	  <a class="btn" href="{% locale_url drumbeatmail_inbox %}">{{ _('Cancel') }}</a>
+	  <button type="submit" class="btn-olive" value="{{ _('Send') }}">{{ _('Send') }}</button>
+	</p>
+      </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}
+
+{% block js %}
+  {% if settings.RECAPTCHA_PRIVATE_KEY %}
+    <script type="text/javascript">
+      var RecaptchaOptions = {
+        theme : 'white',
+        lang : '{{ _('en') }}'
+      };
+    </script>
+    <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
+ {% endif %}
+{% endblock %}

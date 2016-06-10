@@ -1,0 +1,98 @@
+{% load l10n_tags %}
+{% load school_tags %}
+
+  <br style="clear: both;">
+
+<footer class="schools">
+  {% schools_footer %}
+</footer>
+
+<footer>
+  <div class="container">
+    <div class="custom-footer">
+	  <div class="row-fluid">
+	    <div class="span12">
+          <div class="span4">
+            <h1>{{ _('What is P2PU?') }}</h1>
+            <p>{{ _('The Peer 2 Peer University is a grassroots open education project that organizes learning outside of institutional walls and gives learners recognition for their achievements. P2PU creates a model for lifelong learning alongside traditional formal higher education. Leveraging the internet and educational materials openly available online, P2PU enables high-quality low-cost education opportunities.') }}</p>
+          </div>
+		  <div class="span4">  
+            <h1>{{ _('Connect With Us') }}</h1>
+            <ul class="connect-links">
+              <hr />
+			  <li><a href="http://www.facebook.com/P2PUniversity" target="_blank">{{ _('Facebook') }}<img src="{{ STATIC_URL }}images/facebook-new.png" width="9px" height="16px" alt="F" /></a></li>
+			  <hr />
+		      <li><a href="http://twitter.com/p2pu" target="_blank">{{ _('Twitter') }}<img src="{{ STATIC_URL }}images/twitter-new.png" width="19px" height="16px" alt="T" /></a></li>
+			  <hr />
+		      <li><a href="http://info.p2pu.org/get-involved/" target="_blank">{{ _('Get Involved') }}</a></li>
+			  <hr />
+              <li><a href="http://info.p2pu.org/" target="_blank">{{ _('Blog') }}</a></li>
+			  <hr />
+              <li><a href="http://info.p2pu.org/contact/" target="_blank">{{ _('Send us an email') }}</a></li>
+            </ul>
+          </div>
+	      <div class="span4">
+            <h1>{{ _('Some of Our Supporters') }}</h1>
+            <a href="http://www.hewlett.org/" target="_blank"><img class="supporter-image" src="{{ STATIC_URL }}images/footer-hewlett.png" height="64" width="353" alt="William and Flora Hewlett Foundation"></a>
+            <a href="http://www.shuttleworthfoundation.org/" target="_blank"><img class="supporter-image" src="{{ STATIC_URL }}images/footer-shuttleworth.png" height="64" width="353" alt="Shuttleworth Foundation"></a>
+		    <a class="align-supporter-link-right" href="http://info.p2pu.org/about/org/" target="_blank">{{ _('View all of our supporters') }}</a>
+		  </div>
+	    </div>
+	  </div>
+	  <hr />
+	  <div class="row-fluid">
+	    <div class="span12">
+		  <div class="span4">
+			<div class="language-box">
+			  <table class="table">
+				<tbody>
+				  <tr>
+						<td>
+						  <img src="{{ STATIC_URL }}images/globe-icon-new.png" height="22px" width="20px" alt="globe icon">
+						</td>
+						<td>
+		          <ul>
+                  <li><a href="/en/">English</a></li>
+			            <li><a href="/nl/">Nederlands</a></li>
+			            <li><a href="/zh-CN/">中文</a></li>
+		          </ul>
+		          <ul>
+                  <li><a href="/es/">Español</a></li>
+                  <li><a href="/sv/">Svenska</a></li>
+                  <li><a href="/he/">עברית</a></li>
+		          </ul>
+              <ul>
+                  <li><a href="/ko/">한국의</a></li>
+                  <li><a href="https://github.com/p2pu/lernanta/wiki/Translating-Lernanta">{{ _('(more)') }}</a></li>
+              </ul>
+						</td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+		  </div>
+		  <div class="span6">
+			<div class="info-links-box">
+	          <ul>
+	            <li><a href="{{ settings.HELP_URL }}"><span>{{ _('Help') }}</span></a></li>
+	            <li><a href="http://info.p2pu.org/about/" target="_blank">{{ _('About') }} P2PU</a></li>
+	            <li><a href="http://community.p2pu.org" target="_blank">{{ _('Forum') }}</a></li>
+	            <li><a href="{{ settings.HELP_URL }}" target="_blank">{{ _('Found a Bug?') }}</a></li>
+	          </ul>
+			  <ul>
+			    <li><a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license" target="_blank">{{ _('Creative Commons') }}</a></li>
+                <li><a href="{% locale_url static_page_show 'license' %}">{{ _('Share-Alike') }}</a></li>
+                <li><a href="{% locale_url static_page_show 'privacy' %}">{{ _('Privacy Guidelines') }}</a></li>
+                <li><a href="{% locale_url static_page_show 'terms-of-use' %}">{{ _('Terms of Use') }}</a></li>
+              </ul>
+            </div>
+		  </div>
+		  <div class="span2 pull-right">
+		    <img class="cc-icons-image" src="{{ STATIC_URL }}images/cc-icons.png" height="44" width="162" alt="CC Icons" />
+		  </div>
+	    </div>
+	  </div>
+    </div>
+  </div>
+</footer>
+

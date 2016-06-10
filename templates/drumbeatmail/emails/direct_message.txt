@@ -1,8 +1,0 @@
-You have received a new direct message from {{sender}}:
-
-{{ message }}
-
-Reply: http://www.drumbeat.org{{ reply_url }}
-
-Sincerely,
-The Drumbeat Team

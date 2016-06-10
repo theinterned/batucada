@@ -1,0 +1,11 @@
+<phpunit>
+    <php>
+        <ini name="memory_limit" value="512M" />
+    </php>
+
+    <testsuites>
+        <testsuite name="P2PU_Sauce_Tests">
+            <directory>.</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

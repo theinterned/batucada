@@ -1,0 +1,47 @@
+{% extends "projects/project_edit_links_base.html" %}
+{% load l10n_tags %}
+
+
+{% block form_hint %}{{ _('Add links to websites associated with this ') }} {{ project.kind|lower }} {{ _(' such as a blog, homepage, twitter profile, github repository etc.') }}{% endblock %}
+{% block form_url %}{% locale_url projects_edit_links slug=project.slug %}{% endblock %}
+{% block button_text %}{{ _('Add') }}{% endblock %}
+
+{% block after_form %}
+{% if links %}
+<table>
+<thead>
+  <tr>
+    <th>{{ _('Name') }}</th>
+    <th>{{ _('URL') }}</th>
+    <!--<th>{{ _('Subscribed') }}</th>-->
+    <th>{{ _('Actions') }}</th>
+  </tr>
+</thead>
+<tbody>
+  {% for link in links %}
+    <tr>
+      <td class="name">{{ link.name }}</td>
+      <td class="url"><a href="{{ link.url }}" title="{{ link.url }}">{{ link.url }}</a></td>
+      <!--<td class="subscription">
+	      {% if link.subscribe %}
+	        {% if link.subscription.verified %}<span class="yes" title="{{_('Subscribed.') }}">{{ _('yes') }}</span>
+	        {% else %}<span class="error" title="{{_('Error saving subscription.') }}">{{ _('error') }}</span>
+	        {% endif %}
+          {% else %}
+            <span class="no" title="{{_('Not subscribed.') }}">{{ _('no') }}</span>
+          {% endif %}</td>-->
+      <td class="actions">
+        <form action="{% locale_url projects_edit_links_edit slug=project.slug link=link.id %}" method="get">
+          <button type="submit" value="{{ _('Edit') }}">{{ _('Edit') }}</button>
+        </form>
+        <form action="{% locale_url projects_edit_links_delete slug=project.slug link=link.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="{{ _('Delete') }}">{{ _('Delete') }}</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% endblock %}

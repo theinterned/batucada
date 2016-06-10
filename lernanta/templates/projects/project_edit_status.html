@@ -1,0 +1,72 @@
+{% extends "projects/project_edit.html" %}
+{% load i18n %}
+{% load l10n_tags %}
+{% block bodyclasses %}project edit status{% endblock %}
+
+{% block form %}
+<fieldset id="project_edit_status" class="project edit status tabpane">
+
+{% if is_challenge %}
+  <h2>{{ _('Status &amp; Duration') }}</h2>
+{% else %}
+  <h2>{{ _('Status &amp; Dates') }}</h2>
+{% endif %}
+
+  <form action="{% locale_url projects_edit_status slug=project.slug %}" method="post">
+  {% csrf_token %} 
+  <p class="hint">{% blocktrans with kind=project.kind|lower %}Configure your {{ kind }}'s status so that it appears in the appropriate lists.{% endblocktrans %}</p>
+   <p>
+    <label for="id_under_development">
+    {{ form.under_development }}
+    {{ _('Under Development.') }}
+    </label>
+    {{ form.under_development.errors }}
+  </p>
+  <p>
+    <label for="id_not_listed">
+    {{ form.not_listed }}
+    {{ _('Not Listed.') }}
+    </label>
+    {{ form.not_listed.errors }}
+  </p>
+  <p>
+    <label for="id_archived">
+    {{ form.archived }}
+    {{ _('Archived.') }}
+    </label>
+    {{ form.archived.errors }}
+  </p>
+
+  {% if is_challenge %}
+  
+  <p>
+      <span class="field duration {% if form.duration.errors %} error{% endif %} "> 
+        <label for="id_duration">{{ _('How many hours will this challenge take to complete?') }} {{ form.duration }}</label>
+        {{ form.duration.errors }}
+      </span>
+  </p>
+
+  {% else %}
+
+  <p class="hint">{% blocktrans with kind=project.kind|lower %}Optionally, provide the period of time in which you expect the {{ kind }} to be active. These dates are optional and will be displayed on the home page.{% endblocktrans %}</p>
+  <p>
+      <span class="field start_date {% if form.start_date.errors %} error{% endif %} "> 
+        <label for="id_start_date">{{ _('Active from') }}</label>
+        {{ form.start_date }}
+      </span>
+       
+      <span class="field end_date {% if form.end_date.errors %} error{% endif %}"> 
+        <label for="id_end_date">{{ _('to') }}</label>
+        {{ form.end_date }}
+        {{ form.start_date.errors }}
+        {{ form.end_date.errors }}
+      </span>
+  </p>
+  {% endif %}
+  <p class="buttons">
+    <a class="button" href="{% locale_url projects_show slug=project.slug %}">{{ _('Cancel') }}</a>
+    <button type="submit" value="{{ _('Save') }}">{{ _('Save') }}</button>
+  </p>
+</form>
+</fieldset>
+{% endblock %}

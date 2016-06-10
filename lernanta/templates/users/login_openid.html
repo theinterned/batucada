@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load l10n_tags %}
+
+{% block title %}{{ _('Sign In') }}{% endblock %}
+{% block bodyid %}signin_openid{% endblock %}
+{% block bodyclasses %}signin openid{% endblock %}
+{% block body %}
+<section class="modal">
+  <article>
+  <h1>{{ _('Sign In with OpenID') }} <small>or <a href="{% locale_url users_register %}">{{ _('create an account') }}</a></small></h1>
+    <fieldset>
+        <form action="{% locale_url users_login_openid %}" method="post">
+        {% csrf_token %}
+        {% include "users/_openid_providers.html" %}
+	</form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}

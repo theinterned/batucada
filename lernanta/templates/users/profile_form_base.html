@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load l10n_tags %}
+{% block bodyclasses %}signin{% endblock %}
+
+{% block body %}
+<section class="modal">
+  <article>
+    <h1>{% block heading %}{% endblock %}</h1>
+    <fieldset>
+      <form action="{% block action %}{% endblock %}" method="post">
+        {% csrf_token %}
+        <div class="field{% if form.full_name.errors %} error{% endif %}">
+          <label for="id_full_name">{{ _('Display Name') }}</label>
+          {{ form.full_name }}
+          {{ form.full_name.errors }}
+          <small class="hint">{{ _('A name that will identify you to other users. This is optional.') }}</small>
+        </div>
+        <div id="username" class="field{% if form.username.errors %} error{% endif %}">
+          <label for="id_username">{{ _('Username') }}</label>
+          {{ form.username }}
+          {{ form.username.errors }}
+          <small class="hint">{{ _('Your public profile:') }} http://{{ domain }}/<b>{{ _('username') }}</b></small>
+          <small class="hint" id="availability"></small>
+        </div>
+        {% block password_fields %}{% endblock %}
+        <div class="field{% if form.email.errors %} error{% endif %}">
+          <label for="id_email">{{ _('Email Address') }}</label>
+          {{ form.email }}
+          {{ form.email.errors }}
+          <small class="hint">{{ _('Required to send you notifications about your P2PU account.') }}</small>
+        </div>
+        <div class="field{% if form.email_confirm.errors %} error{% endif %}">
+          <label for="id_email_confirm">{{ _('Re-enter Email Address') }}</label>
+          {{ form.email_confirm }}
+          {{ form.email_confirm.errors }}
+        </div>
+        <div class="preflang">
+          <label for="preflang">{{ _('Preferred Language') }}</label>
+          {{ form.preflang }}
+          {{ form.preflang.errors }}
+        </div>
+        <br>
+        {% if settings.RECAPTCHA_PRIVATE_KEY %}
+          <div class="field{% if form.recaptcha.errors %} error{% endif %}">
+               <!-- Note: though recaptcha is localized the "Play sound again" and "Download sound as MP3" are in English -->
+               {{ form.recaptcha }}
+               {{ form.recaptcha.errors }}
+          </div>
+        {% else %}
+          <p class="hint">
+            {{ _('Welcome Robots, ReCaptcha has been disabled for your convenience. Spam at will.') }}
+          </p>
+        {% endif %}
+        <p>
+          {{ _('By creating an account on') }} {{ domain }}{{ _(', you accept our') }} <a href="{% locale_url static_page_show 'privacy' %}">{{ _('privacy guidelines') }}</a> , <a href="{% locale_url static_page_show 'license' %}">{{ _('license provisions') }}</a> {{ _('and') }} <a href="{% locale_url static_page_show 'terms-of-use' %}">{{ _('terms of use') }}</a>. {{ _('By default all content you create on this site is publicly viewable.') }}
+        </p>
+        <p class="submit">
+          <button class="btn-olive" type="submit">{% block button_label %}{% endblock %}</button>          
+          <a class="btn" href="{% locale_url splash %}" tabindex="5">{{ _('Cancel')}}</a>
+          {% block openid_link %}{% endblock %}
+        </p>
+      </form>
+    </fieldset>
+  </article>
+</section>
+{% endblock %}
+
+{% block js %}
+  {% if settings.RECAPTCHA_PRIVATE_KEY %}
+    <script type="text/javascript">
+      var RecaptchaOptions = {
+        theme : 'white',
+        lang : '{{ _('en') }}'
+      };
+    </script>
+    <script type="text/javascript" src="{{ settings.RECAPTCHA_URL }}"></script>
+  {% endif %}
+{% endblock %}
